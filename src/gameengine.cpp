@@ -1,9 +1,11 @@
 #include "gameengine.h"
-//#include "generator.h"
+#include <string>
 
 GameEngine* GameEngine::s_engine = 0;
 
 GameEngine::GameEngine ()
+: m_screen ()
+, m_map()
 {
 
 }
@@ -24,4 +26,14 @@ void GameEngine::generateMap (int seed /* = 0 */)
     //Generator l_generator (m_map);
     //if (seed) l_generator.setSeed (seed);
     //l_generator.generate();
+}
+    
+void GameEngine::loadMap (const std::string& mapName)
+{
+
+}
+
+void GameEngine::execute ()
+{
+    m_screen.init();    
 }

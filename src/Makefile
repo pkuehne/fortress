@@ -1,7 +1,7 @@
 CC=g++
 CFLAGS=-c -g -Wall -I. -I/usr/include 
-LDFLAGS=
-LIBRARIES=#-lpthread -lncurses
+LDFLAGS= 
+LIBRARIES=-lpthread -lGL -lGLU -lglut -lc -lm
 SOURCES=$(wildcard *.cpp)
 OBJECTS=$(SOURCES:.cpp=.o)
 EXECUTABLE=fortress
