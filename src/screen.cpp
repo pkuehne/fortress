@@ -37,6 +37,9 @@ GLubyte letters[][13] = {
     {0x00, 0x00, 0xff, 0xc0, 0xc0, 0x60, 0x30, 0x7e, 0x0c, 0x06, 0x03, 0x03, 0xff}
 };
 
+static const int charHeight = 13;
+static const int charWidth  = 8;
+
 bool keys[256] = {0};
 GLuint fontOffset;
 
@@ -49,7 +52,7 @@ void makeRasterFont(void)
     fontOffset = glGenLists (128);
     for (i = 0,j = 'A'; i < 26; i++,j++) {
         glNewList (fontOffset + j, GL_COMPILE);
-        glBitmap (8, 13, 0.0, 2.0, 10.0, 0.0, letters[i]);
+        glBitmap (charWidth, charHeight, 0.0, 2.0, 10.0, 0.0, letters[i]);
         glEndList();
     }
 
@@ -68,7 +71,10 @@ static void initialise (void)
 
 void printString (int x, int y, const char *s)
 {
-    glRasterPos2i (x, y);
+    int xPos = x * (charWidth  + 2);
+    int yPos = glutGet (GLUT_WINDOW_HEIGHT) - (y * (charHeight + 2));
+    glRasterPos2i (xPos, yPos);
+
     glPushAttrib (GL_LIST_BIT);
     glListBase (fontOffset);
     glCallLists (strlen (s), GL_UNSIGNED_BYTE, (GLubyte *) s);
@@ -94,12 +100,10 @@ static void display (void)
 
     glClear(GL_COLOR_BUFFER_BIT);
     glColor3f (1.0, 1.0, 1.0);
-    glRasterPos2i (300, 500);
-    printString ("WELCOME TO FORTRESS");
+    printString (3, 5, "WELCOME TO FORTRESS");
     if (keys['f']) {
         glColor3f (1.0, 0.0, 0.0);
-        glRasterPos2i (350, 480);
-        printString ("BY PETER KUEHNE");
+        printString (6, 8, "BY PETER KUEHNE");
     }
 
     glFlush();
