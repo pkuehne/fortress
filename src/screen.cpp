@@ -2,6 +2,7 @@
 #include <string.h>
 #include <GL/glut.h>
 #include <iostream>
+#include <lodepng/lodepng.h>
 #include "screen.h"
 #include "tile.h"
 #include "gameengine.h"
@@ -37,6 +38,9 @@ GLubyte letters[][13] = {
     {0x00, 0x00, 0xff, 0xc0, 0xc0, 0x60, 0x30, 0x7e, 0x0c, 0x06, 0x03, 0x03, 0xff}
 };
 
+static unsigned char* fgImage = 0;
+static unsigned char* bgImage = 0;
+
 static const int charHeight = 13;
 static const int charWidth  = 8;
 
@@ -62,11 +66,54 @@ void makeRasterFont(void)
     glEndList();
 }
 
+void loadImages ()
+{
+    static std::vector<unsigned char> bgVector;
+    static std::vector<unsigned char> fgVector;
+
+    const char* fgFile = "../images/rendered/test-fg.png";
+    const char* bgFile = "../images/rendered/test-bg.png";
+    unsigned int width = 0;
+    unsigned int height = 0;
+    unsigned int error = 0;
+
+    std::cout << "Loading FG image: " << fgFile << std::endl;
+    error = lodepng::decode (fgVector, width, height, fgFile);
+    if (error) {
+        std::cout   
+            << "Error: " << error 
+            << " - " << lodepng_error_text (error) 
+            << std::endl;
+    } else {
+        std::cout << "Image width: " << width << " height: " << height << std::endl;
+    }
+    fgImage = new unsigned char[height*width*4];
+    for (unsigned int ii = 0; ii < height * width * 4; ii++) {
+        fgImage[ii] = fgVector[ii];
+    }
+
+    std::cout << "Loading BG image: " << bgFile << std::endl;
+    error = lodepng::decode (bgVector, width, height, bgFile);
+    if (error) {
+        std::cout   
+            << "Error: " << error 
+            << " - " << lodepng_error_text (error) 
+            << std::endl;
+    } else {
+        std::cout << "Image width: " << width << " height: " << height << std::endl;
+    }
+    bgImage = new unsigned char[height*width*4];
+    for (unsigned int ii = 0; ii < height * width * 4; ii++) {
+        bgImage[ii] = bgVector[ii];
+    }
+}
+
 static void initialise (void)
 {
     glPixelStorei (GL_UNPACK_ALIGNMENT, 1);
     glClearColor (0.0, 0.0, 0.0, 0.0);
     makeRasterFont ();
+    loadImages ();
 }
 
 void printString (int x, int y, const char *s)
@@ -97,15 +144,27 @@ static void display (void)
             const Tile& l_tile = l_map.getTile (ww, hh); 
         }
     }*/
-
     glClear(GL_COLOR_BUFFER_BIT);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
     glColor3f (1.0, 1.0, 1.0);
     printString (3, 5, "WELCOME TO FORTRESS");
     if (keys['f']) {
         glColor3f (1.0, 0.0, 0.0);
         printString (6, 8, "BY PETER KUEHNE");
     }
+    
+    glDrawPixels (20, 20, 
+        GL_RGBA,
+        GL_UNSIGNED_BYTE,
+        bgImage);
 
+    glDrawPixels (20, 20, 
+        GL_RGBA,
+        GL_UNSIGNED_BYTE,
+        fgImage);
+        
     glFlush();
 }
 
