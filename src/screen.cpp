@@ -1,221 +1,49 @@
+#include "graphics.h"
+#include "screen.h"
+#include "gameengine.h"
+#include "window.h"
 #include <stdlib.h>
 #include <string.h>
-#include <GL/glut.h>
 #include <iostream>
-#include <lodepng/lodepng.h>
-#include "screen.h"
-#include "tile.h"
-#include "gameengine.h"
-
-GLubyte space[] =
-    {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
-GLubyte letters[][13] = {
-    {0x00, 0x00, 0xc3, 0xc3, 0xc3, 0xc3, 0xff, 0xc3, 0xc3, 0xc3, 0x66, 0x3c, 0x18},
-    {0x00, 0x00, 0xfe, 0xc7, 0xc3, 0xc3, 0xc7, 0xfe, 0xc7, 0xc3, 0xc3, 0xc7, 0xfe},
-    {0x00, 0x00, 0x7e, 0xe7, 0xc0, 0xc0, 0xc0, 0xc0, 0xc0, 0xc0, 0xc0, 0xe7, 0x7e},
-    {0x00, 0x00, 0xfc, 0xce, 0xc7, 0xc3, 0xc3, 0xc3, 0xc3, 0xc3, 0xc7, 0xce, 0xfc},
-    {0x00, 0x00, 0xff, 0xc0, 0xc0, 0xc0, 0xc0, 0xfc, 0xc0, 0xc0, 0xc0, 0xc0, 0xff},
-    {0x00, 0x00, 0xc0, 0xc0, 0xc0, 0xc0, 0xc0, 0xc0, 0xfc, 0xc0, 0xc0, 0xc0, 0xff},
-    {0x00, 0x00, 0x7e, 0xe7, 0xc3, 0xc3, 0xcf, 0xc0, 0xc0, 0xc0, 0xc0, 0xe7, 0x7e},
-    {0x00, 0x00, 0xc3, 0xc3, 0xc3, 0xc3, 0xc3, 0xff, 0xc3, 0xc3, 0xc3, 0xc3, 0xc3},
-    {0x00, 0x00, 0x7e, 0x18, 0x18, 0x18, 0x18, 0x18, 0x18, 0x18, 0x18, 0x18, 0x7e},
-    {0x00, 0x00, 0x7c, 0xee, 0xc6, 0x06, 0x06, 0x06, 0x06, 0x06, 0x06, 0x06, 0x06},
-    {0x00, 0x00, 0xc3, 0xc6, 0xcc, 0xd8, 0xf0, 0xe0, 0xf0, 0xd8, 0xcc, 0xc6, 0xc3},
-    {0x00, 0x00, 0xff, 0xc0, 0xc0, 0xc0, 0xc0, 0xc0, 0xc0, 0xc0, 0xc0, 0xc0, 0xc0},
-    {0x00, 0x00, 0xc3, 0xc3, 0xc3, 0xc3, 0xc3, 0xc3, 0xdb, 0xff, 0xff, 0xe7, 0xc3},
-    {0x00, 0x00, 0xc7, 0xc7, 0xcf, 0xcf, 0xdf, 0xdb, 0xfb, 0xf3, 0xf3, 0xe3, 0xe3},
-    {0x00, 0x00, 0x7e, 0xe7, 0xc3, 0xc3, 0xc3, 0xc3, 0xc3, 0xc3, 0xc3, 0xe7, 0x7e},
-    {0x00, 0x00, 0xc0, 0xc0, 0xc0, 0xc0, 0xc0, 0xfe, 0xc7, 0xc3, 0xc3, 0xc7, 0xfe},
-    {0x00, 0x00, 0x3f, 0x6e, 0xdf, 0xdb, 0xc3, 0xc3, 0xc3, 0xc3, 0xc3, 0x66, 0x3c},
-    {0x00, 0x00, 0xc3, 0xc6, 0xcc, 0xd8, 0xf0, 0xfe, 0xc7, 0xc3, 0xc3, 0xc7, 0xfe},
-    {0x00, 0x00, 0x7e, 0xe7, 0x03, 0x03, 0x07, 0x7e, 0xe0, 0xc0, 0xc0, 0xe7, 0x7e},
-    {0x00, 0x00, 0x18, 0x18, 0x18, 0x18, 0x18, 0x18, 0x18, 0x18, 0x18, 0x18, 0xff},
-    {0x00, 0x00, 0x7e, 0xe7, 0xc3, 0xc3, 0xc3, 0xc3, 0xc3, 0xc3, 0xc3, 0xc3, 0xc3},
-    {0x00, 0x00, 0x18, 0x3c, 0x3c, 0x66, 0x66, 0xc3, 0xc3, 0xc3, 0xc3, 0xc3, 0xc3},
-    {0x00, 0x00, 0xc3, 0xe7, 0xff, 0xff, 0xdb, 0xdb, 0xc3, 0xc3, 0xc3, 0xc3, 0xc3},
-    {0x00, 0x00, 0xc3, 0x66, 0x66, 0x3c, 0x3c, 0x18, 0x3c, 0x3c, 0x66, 0x66, 0xc3},
-    {0x00, 0x00, 0x18, 0x18, 0x18, 0x18, 0x18, 0x18, 0x3c, 0x3c, 0x66, 0x66, 0xc3},
-    {0x00, 0x00, 0xff, 0xc0, 0xc0, 0x60, 0x30, 0x7e, 0x0c, 0x06, 0x03, 0x03, 0xff}
-};
-
-static unsigned char* fgImage = 0;
-static unsigned char* bgImage = 0;
-
-static const int charHeight = 13;
-static const int charWidth  = 8;
-
-bool keys[256] = {0};
-GLuint fontOffset;
-
-void makeRasterFont(void)
-{
-    GLuint i = 0;
-    GLuint j = 0;
-    glPixelStorei (GL_UNPACK_ALIGNMENT, 1);
-
-    fontOffset = glGenLists (128);
-    for (i = 0,j = 'A'; i < 26; i++,j++) {
-        glNewList (fontOffset + j, GL_COMPILE);
-        glBitmap (charWidth, charHeight, 0.0, 2.0, 10.0, 0.0, letters[i]);
-        glEndList();
-    }
-
-    // Register the space
-    glNewList (fontOffset + ' ', GL_COMPILE);
-    glBitmap (8, 13, 0.0, 2.0, 10.0, 0.0, space);
-    glEndList();
-}
-
-void loadImages ()
-{
-    static std::vector<unsigned char> bgVector;
-    static std::vector<unsigned char> fgVector;
-
-    const char* fgFile = "../images/rendered/test-fg.png";
-    const char* bgFile = "../images/rendered/test-bg.png";
-    unsigned int width = 0;
-    unsigned int height = 0;
-    unsigned int error = 0;
-
-    std::cout << "Loading FG image: " << fgFile << std::endl;
-    error = lodepng::decode (fgVector, width, height, fgFile);
-    if (error) {
-        std::cout   
-            << "Error: " << error 
-            << " - " << lodepng_error_text (error) 
-            << std::endl;
-    } else {
-        std::cout << "Image width: " << width << " height: " << height << std::endl;
-    }
-    fgImage = new unsigned char[height*width*4];
-    for (unsigned int ii = 0; ii < height * width * 4; ii++) {
-        fgImage[ii] = fgVector[ii];
-    }
-
-    std::cout << "Loading BG image: " << bgFile << std::endl;
-    error = lodepng::decode (bgVector, width, height, bgFile);
-    if (error) {
-        std::cout   
-            << "Error: " << error 
-            << " - " << lodepng_error_text (error) 
-            << std::endl;
-    } else {
-        std::cout << "Image width: " << width << " height: " << height << std::endl;
-    }
-    bgImage = new unsigned char[height*width*4];
-    for (unsigned int ii = 0; ii < height * width * 4; ii++) {
-        bgImage[ii] = bgVector[ii];
-    }
-}
-
-static void initialise (void)
-{
-    glPixelStorei (GL_UNPACK_ALIGNMENT, 1);
-    glClearColor (0.0, 0.0, 0.0, 0.0);
-    makeRasterFont ();
-    loadImages ();
-}
-
-void printString (int x, int y, const char *s)
-{
-    int xPos = x * (charWidth  + 2);
-    int yPos = glutGet (GLUT_WINDOW_HEIGHT) - (y * (charHeight + 2));
-    glRasterPos2i (xPos, yPos);
-
-    glPushAttrib (GL_LIST_BIT);
-    glListBase (fontOffset);
-    glCallLists (strlen (s), GL_UNSIGNED_BYTE, (GLubyte *) s);
-    glPopAttrib ();
-}
-
-int getHeight() { return 1; }
-int getWidth() { return 1; }
-
-static void display (void)
-{
-    /*
-    GameEngine* l_engine = GameEngine::getEngine();
-    const Map&  l_map = l_engine->getMap();
-    
-    int m_mapY = 1;
-    int m_mapX = 1;
-    for (int hh = m_mapY; hh < m_mapY + getHeight(); hh++) {
-        for (int ww = m_mapX; ww < m_mapX + getWidth(); ww++) {
-            const Tile& l_tile = l_map.getTile (ww, hh); 
-        }
-    }*/
-    glClear(GL_COLOR_BUFFER_BIT);
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-    glColor3f (1.0, 1.0, 1.0);
-    printString (3, 5, "WELCOME TO FORTRESS");
-    if (keys['f']) {
-        glColor3f (1.0, 0.0, 0.0);
-        printString (6, 8, "BY PETER KUEHNE");
-    }
-    
-    glDrawPixels (20, 20, 
-        GL_RGBA,
-        GL_UNSIGNED_BYTE,
-        bgImage);
-
-    glDrawPixels (20, 20, 
-        GL_RGBA,
-        GL_UNSIGNED_BYTE,
-        fgImage);
-        
-    glFlush();
-}
-
-static void reshape (int w, int h)
-{
-    glViewport(0, 0, (GLsizei) w, (GLsizei) h);
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    glOrtho (0, w, 0, h, -1.0, 1.0);
-    glMatrixMode(GL_MODELVIEW);
-}
-
-static void keyDown (unsigned char key, int x, int y)
-{
-    keys[key] = true;
-    switch (key) {
-        case 27:
-            exit (0);
-            break;
-    }
-    glutPostRedisplay();
-}
-
-static void keyUp (unsigned char key, int x, int y)
-{
-    keys[key] = false;
-    glutPostRedisplay();
-}
 
 Screen::Screen ()
+: m_mapWindow ()
+, m_screenHeight (600)
+, m_screenWidth (800)
 {
-    glutInitDisplayMode (GLUT_SINGLE | GLUT_RGB);
-    glutInitWindowSize (800, 600);
-    glutInitWindowPosition (100, 100);
-    glutCreateWindow ("FORTRESS - by Peter Kuehne");
-
-    initialise ();
-
-    // register function handlers
-    glutReshapeFunc (reshape);
-    glutKeyboardFunc (keyDown);
-    glutKeyboardUpFunc (keyUp);
-    glutDisplayFunc (display);
 }
 
 Screen::~Screen()
 {
 }
 
-void Screen::init ()
+void Screen::initialise ()
 {
-    std::cout << "testing" << std::endl;
-    glutMainLoop ();
+    setup_graphics();
+}
+
+void Screen::start ()
+{
+    m_mapWindow.initialise();
+    start_graphics();
+}
+
+void Screen::keyDown (unsigned char key)
+{
+    m_mapWindow.keyDown (key);
+}
+
+void Screen::keyUp (unsigned char key)
+{
+    m_mapWindow.keyUp (key);
+}
+
+void Screen::redraw ()
+{
+    m_mapWindow.redraw ();
+}
+
+void Screen::resize (int width, int height)
+{
+    m_mapWindow.resize (width, height);
 }

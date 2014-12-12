@@ -21,18 +21,18 @@ class Map {
         int getMaxHeight() const { return MAP_HEIGHT; }
         int getMapSize() const { return MAP_WIDTH*MAP_HEIGHT; }
 
-        void getNeighbours (int index, int neighbours[4]);
+        void getNeighbours (int index, int neighbours[4]) const;
 
         static int getIndex (int x, int y);
         static int getxAdj (int dir) { return Map::xAdj[dir]; }
         static int getyAdj (int dir) { return Map::yAdj[dir]; }
         static int getDirections () { return Map::dir; }
 
-    private:
-        Tile* m_tiles;
-
         static const int xAdj[];
         static const int yAdj[];
         static const int dir;
+
+    private:
+        Tile* m_tiles;
 };
 #endif

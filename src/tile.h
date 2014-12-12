@@ -4,39 +4,41 @@
 typedef enum {
     TILE_PLAIN = 1,
     TILE_WATER = 2,
-    TILE_HILL  = 3,
-    TILE_MARSH = 4,
-    TILE_FORD  = 5,
-    TILE_ROAD  = 6,
-    TILE_MOUNT = 7,
-    TILE_VOID  = 99
+    TILE_MAX 
     } TILE;
 
+typedef enum {
+    CON_EMPTY   = 0,
+    CON_WALL    = 1,
+    CON_ROAD    = 2,
+    CON_MAX
+} CONSTRUCTION;
 
 class Tile {
 public:
 	Tile();
-	Tile (char symbol, int x, int y);
+	Tile (TILE type, int x, int y);
 	~Tile();
 
         // Const getters
-	char getSymbol () const;
 	int getX () const { return m_x; }
 	int getY () const { return m_y; }
-        int getType() const { return m_type; }
+        TILE getBackground() const { return m_background; }
+        CONSTRUCTION getConstruction() const { return m_construction; }
         int getElevation() const { return m_elevation; }
-        int getCost () const;
-        bool isBlocked () const { return m_blocked; }
 
-        void setType (int type) { m_type = type; }
+        void setBackground (TILE bg) { m_background = bg; }
+        void setConstruction (CONSTRUCTION con) { m_construction = con; }
         void setElevation (int elevation) { m_elevation = elevation; }
+
+        int getCost () const;
+        int getUnitPathCost() const;
 private:
-    char    m_symbol;
-    int	    m_x;
-    int	    m_y;
-    int     m_type;
-    int     m_elevation;
-    bool    m_blocked;
+    int	            m_x;
+    int	            m_y;
+    TILE            m_background;
+    CONSTRUCTION    m_construction;
+    int             m_elevation;
 };
 
 #endif

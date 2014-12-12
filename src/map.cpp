@@ -1,4 +1,5 @@
 #include "map.h"
+#include "tile.h"
 
 const int Map::xAdj[] = {1, 0, -1, 0};
 const int Map::yAdj[] = {0, 1, 0, -1};
@@ -9,12 +10,28 @@ const int Map::dir = sizeof(xAdj) / sizeof(xAdj[0]);
 Map::Map ()
 : m_tiles (0)
 {
+    TILE type = TILE_PLAIN;
     m_tiles = new Tile[MAP_WIDTH * MAP_HEIGHT];
     for (int hh = 1; hh <= MAP_HEIGHT; hh++)
     {
         for (int ww = 1; ww <= MAP_WIDTH; ww++)
         {
-            Tile l_tile (46, ww, hh);
+            if (hh == 1 || hh == MAP_HEIGHT ||
+                ww == 1 || ww == MAP_WIDTH) {
+                type = TILE_WATER;
+            } else {
+                type = TILE_PLAIN;
+            }
+            Tile l_tile (type, ww, hh);
+            
+            if (((hh == 5 || hh == 9) && (ww > 5 && ww < 13)) ||
+                ((ww == 6 || ww == 12) && (hh > 4 && hh < 10)))
+            {
+                if (!(ww == 9 && hh == 5))
+                    l_tile.setConstruction (CON_WALL);
+            }
+
+
             m_tiles[getIndex (ww, hh)] = l_tile;
         }
     }
@@ -50,7 +67,7 @@ const Tile& Map::getTile (int index) const
     return m_tiles[index];
 }
 
-void Map::getNeighbours (int index, int neighbours[4]) 
+void Map::getNeighbours (int index, int neighbours[4]) const
 {
     int x = m_tiles[index].getX();
     int y = m_tiles[index].getY();
@@ -64,9 +81,6 @@ void Map::getNeighbours (int index, int neighbours[4])
         // Check boundaries
         if (newx > MAP_WIDTH || newx < 1 ||
             newy > MAP_HEIGHT || newy < 1) {
-            continue;
-        }
-        if (m_tiles[newi].isBlocked()) {
             continue;
         }
         neighbours[ii] = newi;
