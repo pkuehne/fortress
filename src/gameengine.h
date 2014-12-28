@@ -18,7 +18,8 @@ public:
 
     UnitList& getUnits() { return m_units; }
 
-    void execute (void);
+    bool& isDefender() { return m_isDefender; }
+    void start (void);
     void tick (void);
 
 private:
@@ -26,12 +27,17 @@ private:
     ~GameEngine ();
     static GameEngine*  s_engine;
 
+    void checkVictoryConditions();
     void updateUnitPath ();
+    void checkUnitSurroundings();
+    void updateFights ();
 
 private:
     Screen      m_screen;
     Map         m_map;
     UnitList    m_units;
+    bool        m_isDefender;
+    unsigned long long  m_tick;
 };
 
 #endif

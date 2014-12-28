@@ -1,14 +1,50 @@
 #include "window.h"
 #include "graphics.h"
 #include "gameengine.h"
-#include "algorithm.h"
+#include "algorithm.h" 
 #include "lodepng/lodepng.h"
 #include <GL/glut.h>
 #include <iostream>
 #include <vector>
 
-static int mapXOffset = 0;
-static int mapYOffset = 80;
+static int s_mapXOffset = 0;
+static int s_mapYOffset = 80;
+static int s_tileSize   = 20;
+
+// Temporary test functions
+void demoPath (int x, int y)
+{
+    GameEngine* l_engine = GameEngine::getEngine();
+    Unit& l_unit = l_engine->getUnits().getUnit(0);
+    l_unit.setNewDestination (x, y);
+}
+
+void toggleUnitSwim (void)
+{
+    GameEngine* l_engine = GameEngine::getEngine();
+    Unit& l_unit = l_engine->getUnits().getUnit(0);
+    l_unit.canSwim() = ! l_unit.canSwim();
+}
+
+int Window::screenXToMapX (int screenX)
+{
+    return ((screenX - s_mapXOffset) / s_tileSize) + m_mapX;
+}
+
+int Window::screenYToMapY (int screenY)
+{
+    return ((screenY - s_mapYOffset) / s_tileSize) + m_mapY;
+}
+
+int Window::mapXToScreenX (int mapX)
+{
+    return ((mapX - m_mapX) * s_tileSize) + s_mapXOffset;
+}
+
+int Window::mapYToScreenY (int mapY)
+{
+    return ((mapY - m_mapY) * s_tileSize) + s_mapYOffset;
+}
 
 void Window::loadImages ()
 {
@@ -21,7 +57,7 @@ void Window::loadImages ()
         = loadImage ("../images/rendered/cn-wall.png");
 
     m_units[UNIT_WARRIOR]
-        = loadImage ("../images/rendered/test-bg.png");
+        = loadImage ("../images/rendered/un-warrior.png");
 }
 
 void Window::initialise (void)
@@ -35,7 +71,7 @@ void Window::initialise (void)
 
 void Window::setMapY (int newY)
 {
-    int max = GameEngine::getEngine()->getMap().getMaxHeight() - m_mapHeight + 1;
+    int max = GameEngine::getEngine()->getMap().getMapHeight() - m_mapHeight + 1;
     if (newY > max) {
         m_mapY = max;
     } else if (newY < 1) {
@@ -47,7 +83,7 @@ void Window::setMapY (int newY)
 
 void Window::setMapX (int newX)
 {
-    int max = GameEngine::getEngine()->getMap().getMaxWidth() - m_mapWidth + 1;
+    int max = GameEngine::getEngine()->getMap().getMapWidth() - m_mapWidth + 1;
     if (newX > max) {
         m_mapX = max;
     } else if (newX < 1) {
@@ -55,7 +91,6 @@ void Window::setMapX (int newX)
     } else {
         m_mapX = newX;
     }
-
 }
 
 void Window::destroy (void)
@@ -65,11 +100,11 @@ void Window::destroy (void)
 
 void Window::resize (int width, int height)
 {
-    int maxHeight = GameEngine::getEngine()->getMap().getMaxHeight();
-    int maxWidth  = GameEngine::getEngine()->getMap().getMaxWidth();
+    int maxHeight = GameEngine::getEngine()->getMap().getMapHeight();
+    int maxWidth  = GameEngine::getEngine()->getMap().getMapWidth();
 
-    m_mapHeight = (height - mapYOffset) / 20;
-    m_mapWidth  = (width - mapXOffset) / 20;
+    m_mapHeight = (height - s_mapYOffset) / s_tileSize;
+    m_mapWidth  = (width - s_mapXOffset) / s_tileSize;
     if (m_mapHeight > maxHeight) m_mapHeight = maxHeight;
     if (m_mapWidth > maxWidth) m_mapWidth = maxWidth;
 
@@ -84,6 +119,8 @@ void Window::resize (int width, int height)
 void Window::keyDown (unsigned char key)
 {
     ascii_keys[key] = true;
+    if (ascii_keys['n']) m_showNames = !m_showNames;
+    if (ascii_keys['c']) toggleUnitSwim();
     //glutPostRedisplay();
 }
 
@@ -93,15 +130,13 @@ void Window::keyUp (unsigned char key)
     //glutPostRedisplay();
 }
 
-void demoPath (int x, int y)
+void Window::mouseDown (int x, int y, int button)
 {
-    GameEngine* l_engine = GameEngine::getEngine();
-    Unit& l_unit = l_engine->getUnits().getUnit(0);
-    std::vector<int> l_path;
-    Algorithm::findPath (   Map::getIndex (l_unit.getX(),l_unit.getY()), 
-                            Map::getIndex (x, y), 
-                            l_path);
-    l_unit.setNewPath (l_path);
+    demoPath (screenXToMapX(x), screenYToMapY(y));
+}
+
+void Window::mouseUp (int x, int y, int button)
+{
 }
 
 void Window::processKeys ()
@@ -116,7 +151,6 @@ void Window::processKeys ()
     if (ascii_keys['a']) setMapX (m_mapX - 1);
     if (ascii_keys['d']) setMapX (m_mapX + 1);
     if (ascii_keys['r']) demoPath (9, 7);
-    if (ascii_keys['t']) demoPath (9, 11);
 }
 
 void Window::redraw ()
@@ -143,37 +177,28 @@ void Window::drawTitle ()
     printString (30, 2, "WELCOME TO FORTRESS");
 }
 
+//void Window::mapTileToImage
 void Window::drawMap () {
     GameEngine* l_engine = GameEngine::getEngine();
     const Map&  l_map = l_engine->getMap();
     Screen l_screen = l_engine->getScreen();
     
-    //std::cout 
-    //    << " MapY = " << m_mapY 
-    //    << " MapX = " << m_mapX 
-    //    << std::endl;
-
     for (int hh = m_mapY; hh < m_mapY + m_mapHeight; hh++) {
         for (int ww = m_mapX; ww < m_mapX + m_mapWidth; ww++) {
             const Tile& l_tile = l_map.getTile (ww, hh); 
-            //std::cout 
-            //    << " H: " << hh 
-            //    << " W: " << ww
-            //    << " T: " << l_tile.getBackground() << std::endl;
-
             // Draw background
             drawImage (
-                ((ww - m_mapX) * 20) + mapXOffset, 
-                ((hh - m_mapY) * 20) + mapYOffset,
+                mapXToScreenX (ww), 
+                mapYToScreenY (hh),
                 m_backgrounds[l_tile.getBackground()]);
 
             if (l_tile.getConstruction() != CON_EMPTY) {
+                // Draw Construction
                 drawImage (
-                    ((ww - m_mapX) * 20) + mapXOffset, 
-                    ((hh - m_mapY) * 20) + mapYOffset,
+                    mapXToScreenX (ww), 
+                    mapYToScreenY (hh),
                     m_constructions[l_tile.getConstruction()]);
             }
-            // Draw construction
         }
     }
 }
@@ -182,19 +207,36 @@ void Window::drawUnits () {
     GameEngine* l_engine = GameEngine::getEngine();
     UnitList& l_units = l_engine->getUnits();
 
-    UnitVector::iterator iter = l_units.getUnits().begin();
-    for (; iter != l_units.getUnits().end(); iter++)
+    for (int ii = 0; ii < l_units.getNumUnits(); ii++)
     {
-        Unit l_unit = *iter;
+        Unit& l_unit = l_units.getUnit (ii);
         if ((l_unit.getX() >= m_mapX && 
                 l_unit.getX() < m_mapWidth + m_mapX) &&
             (l_unit.getY() >= m_mapY && 
                 l_unit.getY() < m_mapHeight + m_mapY)) { 
 
             drawImage (
-                ((l_unit.getX() - m_mapX) * 20) + mapXOffset, 
-                ((l_unit.getY() - m_mapY) * 20) + mapYOffset,
+                mapXToScreenX (l_unit.getX()), 
+                mapYToScreenY (l_unit.getY()),
                 m_units[l_unit.getType()]);
+            if (l_unit.getHitPoints() <= 0) {
+                drawString (
+                    mapXToScreenX (l_unit.getX()), 
+                    mapYToScreenY (l_unit.getY()),
+                    "Dead");
+            } else if (l_unit.getTarget()) {
+                drawString (
+                    mapXToScreenX (l_unit.getX()), 
+                    mapYToScreenY (l_unit.getY()),
+                    "Fighting");
+            } else if (m_showNames) {
+                std::string l_name ("Warrior");
+                if (l_unit.canSwim()) l_name.append (" Swimmer");
+                drawString (
+                    mapXToScreenX (l_unit.getX()), 
+                    mapYToScreenY (l_unit.getY()),
+                    l_name.c_str());
+            }
         }
     }
 }

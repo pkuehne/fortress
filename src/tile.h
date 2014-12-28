@@ -2,8 +2,8 @@
 #define __TILE_H__
 
 typedef enum {
-    TILE_PLAIN = 1,
-    TILE_WATER = 2,
+    TILE_PLAIN = 0,
+    TILE_WATER = 1,
     TILE_MAX 
     } TILE;
 
@@ -23,6 +23,8 @@ public:
         // Const getters
 	int getX () const { return m_x; }
 	int getY () const { return m_y; }
+        void setX (int x) { m_x = x; }
+        void setY (int y) { m_y = y; }
         TILE getBackground() const { return m_background; }
         CONSTRUCTION getConstruction() const { return m_construction; }
         int getElevation() const { return m_elevation; }
@@ -31,14 +33,16 @@ public:
         void setConstruction (CONSTRUCTION con) { m_construction = con; }
         void setElevation (int elevation) { m_elevation = elevation; }
 
-        int getCost () const;
-        int getUnitPathCost() const;
+        int getUnit () { return m_unit; }
+        void setUnit (int unit) { m_unit = unit; }
+
 private:
     int	            m_x;
     int	            m_y;
     TILE            m_background;
     CONSTRUCTION    m_construction;
     int             m_elevation;
+    int             m_unit;
 };
 
 #endif

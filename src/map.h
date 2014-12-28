@@ -4,22 +4,23 @@
 #include <vector>
 #include "tile.h"
 
-const int MAP_WIDTH = 65;
-const int MAP_HEIGHT= 65;
-
 class Map {
     public:
         Map();
         ~Map();
+
+        void loadMap ();
+        void resizeMap (int width, int height);
         const Tile& getTile (int x, int y) const;
         const Tile& getTile (int index) const;
 
         Tile& getTile (int x, int y);
         Tile& getTile (int index);
-
-        int getMaxWidth() const { return MAP_WIDTH; }
-        int getMaxHeight() const { return MAP_HEIGHT; }
-        int getMapSize() const { return MAP_WIDTH*MAP_HEIGHT; }
+        
+        void setMapSize (int width, int height) { s_mapWidth = width; s_mapHeight = height; }
+        int getMapWidth() const { return s_mapWidth; }
+        int getMapHeight() const { return s_mapHeight; }
+        int getMapSize() const { return getMapWidth()*getMapHeight(); }
 
         void getNeighbours (int index, int neighbours[4]) const;
 
@@ -31,6 +32,8 @@ class Map {
         static const int xAdj[];
         static const int yAdj[];
         static const int dir;
+        static int s_mapHeight;
+        static int s_mapWidth;
 
     private:
         Tile* m_tiles;

@@ -1,3 +1,4 @@
+#include "graphics.h"
 #include "screen.h"
 #include "gameengine.h"
 #include "window.h"
@@ -39,10 +40,17 @@ void printString (int x, int y, const char* s)
     const int charHeight = 13;
 
     int xPos = x * (charWidth  + 2);
-    int yPos = glutGet (GLUT_WINDOW_HEIGHT) - (y * (charHeight + 2));
-    int len = strlen (s);
+    int yPos = y * (charHeight + 2);
+    
+    drawString (xPos, yPos, s);
+}
 
-    glRasterPos2i (xPos, yPos);
+void drawString (int x, int y, const char* s)
+{    
+    int len = strlen (s);
+    y = glutGet (GLUT_WINDOW_HEIGHT) - y;
+
+    glRasterPos2i (x, y);
     for (int ii = 0; ii < len; ii++) {
         glutBitmapCharacter (GLUT_BITMAP_8_BY_13, s[ii]);
     }
@@ -54,6 +62,7 @@ void drawImage (int x, int y, const unsigned char* image)
     int yPos = glutGet (GLUT_WINDOW_HEIGHT) - y;
     glRasterPos2i (xPos, yPos);
 
+    glPixelZoom (1.0, -1.0);
     glDrawPixels (20, 20,
         GL_RGBA,
         GL_UNSIGNED_BYTE,
@@ -91,6 +100,16 @@ static void keyUp (unsigned char key, int x, int y)
     l_screen.keyUp (key);
 }
 
+static void mouseClick (int button, int state, int x, int y)
+{
+    Screen& l_screen = GameEngine::getEngine()->getScreen();
+    if (state) {
+        l_screen.mouseUp (x, y, button);
+    } else {
+        l_screen.mouseDown (x, y, button);
+    }
+}
+
 void setup_graphics ()
 {
     Screen& l_screen = GameEngine::getEngine()->getScreen();
@@ -106,6 +125,7 @@ void setup_graphics ()
     glutReshapeFunc     (resize);
     glutKeyboardFunc    (keyDown);
     glutKeyboardUpFunc  (keyUp);
+    glutMouseFunc       (mouseClick);
     glutDisplayFunc     (display);
     glutIdleFunc        (display);
 }

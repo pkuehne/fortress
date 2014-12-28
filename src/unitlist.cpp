@@ -3,17 +3,32 @@
 #include "map.h"
 
 UnitList::UnitList ()
+: m_units ()
 {
-    Unit l_unit (UNIT_WARRIOR, 20, 20);
-    PathVector l_path;
-    
-    l_path.push_back (Map::getIndex (19, 20));
-    l_path.push_back (Map::getIndex (18, 20));
-    l_path.push_back (Map::getIndex (17, 20));
-    l_path.push_back (Map::getIndex (16, 20));
-    l_path.push_back (Map::getIndex (15, 20));
-    l_path.push_back (Map::getIndex (14, 20));
-    l_path.push_back (Map::getIndex (13, 20));
-    l_unit.setNewPath (l_path);
-    m_units.push_back (l_unit);
+
+}
+
+Unit& UnitList::getUnit (int id)
+{
+    UnitIter iter = m_units.find (id);
+    if (iter != m_units.end()) return iter->second;
+
+    return Unit();
+}
+
+void UnitList::getUnitList (std::vector<int>& list)
+{
+    UnitIter iter = m_units.begin();
+
+    for (; iter != m_units.end(); iter++) 
+    {
+        list.push_back (iter->first); 
+    }
+}
+
+void UnitList::removeUnit (int id) 
+{
+    UnitIter iter = m_units.find (id);
+    if (iter == m_units.end()) return; // Weird, but OK
+    m_units.erase (iter); 
 }

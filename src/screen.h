@@ -12,6 +12,8 @@ public:
 
     void keyDown (unsigned char key);
     void keyUp (unsigned char key);
+    void mouseDown (int x, int y, int button);
+    void mouseUp (int x, int y, int button);
     void redraw ();
     void resize (int width, int height);
     void initialise ();

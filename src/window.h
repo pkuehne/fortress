@@ -11,6 +11,8 @@ public:
     void destroy (void);
     void keyDown (unsigned char key);
     void keyUp (unsigned char key);
+    void mouseDown (int x, int y, int button);
+    void mouseUp (int x, int y, int button);
     void redraw ();
     void resize (int width, int height);
     
@@ -25,6 +27,11 @@ private:
     void drawMap ();
     void drawUnits ();
 
+    int screenXToMapX (int screenX);
+    int screenYToMapY (int screenY);
+    int mapXToScreenX (int mapX);
+    int mapYToScreenY (int mapY);
+
 private:
     bool ascii_keys[256];
     bool special_keys[256];
@@ -37,6 +44,7 @@ private:
     int m_mapX;
     int m_mapY;
 
+    bool m_showNames;
 };
 
 #endif

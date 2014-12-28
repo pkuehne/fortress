@@ -2,21 +2,23 @@
 #define __UNITLIST_H__
 
 #include "unit.h"
-#include <vector>
+#include <map>
 
-typedef std::vector<Unit>   UnitVector;
-typedef std::vector<Unit>::iterator UnitIter;
+typedef std::map<int, Unit> UnitMap;
+typedef UnitMap::iterator   UnitIter;
 
 class UnitList {
 public:
-    UnitList();
+    UnitList ();
 
-    void        loadUnits() {}
-    UnitVector& getUnits() { return m_units; }
-    Unit&       getUnit (int u) { return m_units[u]; }
+    Unit& getUnit (int id);
+    void addUnit (Unit& unit) { m_units[unit.getId()] = unit; }
+    void removeUnit (int id);
     
+    int getNumUnits () { return m_units.size(); }
+    void getUnitList (std::vector<int>& list);
 private:
-    UnitVector  m_units;
+    UnitMap  m_units;
 };
 
 #endif 

@@ -1,5 +1,5 @@
-#include "graphics.h"
 #include "screen.h"
+#include "graphics.h"
 #include "gameengine.h"
 #include "window.h"
 #include <stdlib.h>
@@ -36,6 +36,16 @@ void Screen::keyDown (unsigned char key)
 void Screen::keyUp (unsigned char key)
 {
     m_mapWindow.keyUp (key);
+}
+
+void Screen::mouseDown (int x, int y, int button)
+{
+    m_mapWindow.mouseDown (x, y, button);
+}
+
+void Screen::mouseUp (int x, int y, int button)
+{
+    m_mapWindow.mouseUp (x, y, button);
 }
 
 void Screen::redraw ()

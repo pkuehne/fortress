@@ -1,6 +1,8 @@
 #ifndef __ALGORITHM_H__
 #define __ALGORITHM_H__
 
+#include "tile.h"
+#include "unit.h"
 #include <map>
 #include <vector>
 
@@ -31,12 +33,20 @@ public:
 
 typedef std::map<int, Node>             NodeMap;
 typedef std::map<int, Node>::iterator   NodeMapIter;
+typedef int (* costFunc ) (const Tile&, void* input);
 
 class Algorithm {
 public:
+    static void findUnitPath (  int startIndex, 
+                                int endIndex, 
+                                Unit& unit, 
+                                PathVector& path);
+
     static void findPath (  int startIndex, 
                             int endIndex, 
-                            std::vector<int>& retPath);
+                            costFunc costFunction,
+                            void* costInput,
+                            PathVector& retPath);
 
 };
 
