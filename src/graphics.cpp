@@ -6,32 +6,9 @@
 #include <string.h>
 #include <GL/glut.h>
 #include <iostream>
-#include <lodepng/lodepng.h>
+//#include <lodepng/lodepng.h>
+#include <SOIL.h>
 
-static GLuint tex;
-
-unsigned char* loadImage (const char* filename, unsigned int& width, unsigned int& height)
-{
-    std::vector<unsigned char> pixels;
-    unsigned char* image = 0;
-    unsigned int error = 0;
-
-    std::cout << "Loading image: " << filename << std::endl;
-    error = lodepng::decode (pixels, width, height, filename);
-    if (error) {
-        std::cout
-            << "Error: " << error
-            << " - " << lodepng_error_text (error)
-            << std::endl;
-        return 0;
-    }
-
-    image = new unsigned char[height*width*4];
-    for (unsigned int ii = 0; ii < height * width * 4; ii++) {
-        image[ii] = pixels[ii];
-    }
-    return image;
-}
 
 void drawString (int y, int x, const char* string)
 {
@@ -72,8 +49,6 @@ static void display (void)
     l_engine->getCurrentWindow()->beforeRedraw();
     l_engine->getCurrentWindow()->redraw();
     l_engine->getCurrentWindow()->afterRedraw();
-
-    //l_engine->getScreen().redraw();
 }
 
 static void resize (int w, int h)
@@ -83,8 +58,6 @@ static void resize (int w, int h)
     glLoadIdentity();
     glOrtho (0, w, 0, h, -1.0, 1.0);
     glMatrixMode(GL_MODELVIEW);
-
-    //l_screen.resize (w, h);
 }
 
 static void keyDown (unsigned char key, int x, int y)
@@ -105,17 +78,14 @@ static void mouseClick (int button, int state, int x, int y)
     GameEngine* l_engine = GameEngine::getEngine();
     if (state) {
         l_engine->getCurrentWindow()->mouseUp (x, y, button);
-        //l_screen.mouseUp (x, y, button);
     } else {
         l_engine->getCurrentWindow()->mouseDown (x, y, button);
-        //l_screen.mouseDown (x, y, button);
     }
 }
 
 void setup_graphics ()
 {
     glutInitDisplayMode (GLUT_SINGLE | GLUT_RGBA);
-    //glutInitWindowSize (l_screen.getWidth(), l_screen.getHeight());
     glutInitWindowSize (800, 600);
     glutInitWindowPosition (100, 100);
     glutCreateWindow ("FORTRESS");
@@ -125,7 +95,9 @@ void setup_graphics ()
 
     glEnable (GL_TEXTURE_2D);
     glEnable(GL_BLEND);
+    glDisable (GL_DEPTH_TEST);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     glutReshapeFunc     (resize);
     glutKeyboardFunc    (keyDown);
@@ -134,22 +106,21 @@ void setup_graphics ()
     glutDisplayFunc     (display);
     glutIdleFunc        (display);
 
-    unsigned int width = 0;
-    unsigned int height = 0;
-    unsigned char* pixels = loadImage ("12x12.png", width, height);
-    //unsigned char* pixels = loadImage ("../images/rendered/un-warrior.png", width, height);
-
-    glGenTextures(1, &tex);
+    std::string l_textureName ("12x12.png");
+    std::cout << "Loading texture: " << l_textureName << std::endl;
+    GLuint tex = SOIL_load_OGL_texture (l_textureName.c_str(),
+                                		SOIL_LOAD_AUTO,
+                                		SOIL_CREATE_NEW_ID,
+		                                SOIL_FLAG_MIPMAPS |
+                                        SOIL_FLAG_NTSC_SAFE_RGB |
+                                        SOIL_FLAG_COMPRESS_TO_DXT);
     glBindTexture(GL_TEXTURE_2D, tex);
-
-    std::cout << "width: " << width << " height: " << height << std::endl;
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
-    delete pixels;
+    //delete pixels;
 }
 
 void start_graphics ()

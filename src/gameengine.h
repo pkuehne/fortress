@@ -5,7 +5,9 @@
 #include "event_manager.h"
 #include "entity_manager.h"
 #include "window_manager.h"
+
 #include "movement_system.h"
+#include "sprite_system.h"
 
 #include <string>
 
@@ -42,6 +44,7 @@ private:
     WindowManager       m_windowManager;
 
     MovementSystem      m_moveSystem;
+    SpriteSystem        m_spriteSystem;
 };
 
 #endif

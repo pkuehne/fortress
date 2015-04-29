@@ -1,8 +1,6 @@
 #include "gameengine.h"
+#include "generator.h"
 #include <string>
-// #include <iostream>
-// #include <fstream>
-// #include <cmath>
 
 GameEngine* GameEngine::s_engine = 0;
 
@@ -31,25 +29,20 @@ void GameEngine::initialise ()
     m_eventManager.initialise();
 
     m_eventManager.registerHandler (m_moveSystem);
+    m_eventManager.registerHandler (m_spriteSystem);
 
-    loadMap ("");
     setup_graphics();
 }
 
 void GameEngine::loadMap (const std::string& mapName)
 {
-    m_entityManager.createPlayerEntity (10, 10);
-    m_entityManager.createEnemyEntity (12, 12);
 
-    m_entityManager.createWallEntity ( 9,  9);
-    m_entityManager.createWallEntity ( 9, 10);
-    m_entityManager.createWallEntity ( 9, 11);
-    m_entityManager.createWallEntity ( 9, 12);
-    m_entityManager.createWallEntity (10,  9);
-    m_entityManager.createWallEntity (11,  9);
-    m_entityManager.createWallEntity (12,  9);
+    GEN_PARAMS params;
+    params.height   = 50;
+    params.width    = 50;
+    params.rooms    = 1;
+    generateDungeon (params);
 
-    m_entityManager.createRoom (17, 19, 25, 35);
 }
 
 void GameEngine::tick ()
@@ -61,6 +54,8 @@ void GameEngine::tick ()
     m_eventManager.processEvents();
 
     //Update Systems
+    m_moveSystem.update();
+    m_spriteSystem.update();
 
     return;
 }

@@ -26,7 +26,7 @@ protected:
 class AddEntityEvent : public Event {
 public:
     AddEntityEvent () : Event (EVENT_ADD_ENTITY) { }
-    Entity  entity;
+    Entity*     entity;
 };
 
 class MoveEntityEvent : public Event {
@@ -40,7 +40,7 @@ public:
     };
 
     MoveEntityEvent () : Event (EVENT_MOVE_ENTITY) { }
-    Entity          entity;
+    Entity*         entity;
     enum DIRECTION  direction;
 };
 

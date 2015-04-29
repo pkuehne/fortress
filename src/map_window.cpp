@@ -4,14 +4,22 @@
 #include "event.h"
 #include <cstdlib>
 
+void MapWindow::initialise() {
+    std::string l_mapName ("");
+
+    GameEngine* l_engine = GameEngine::getEngine();
+    std::cout << "Loading map: " << l_mapName << std::endl;
+    l_engine->loadMap(l_mapName);
+}
+
 void MapWindow::redraw() {
 
     if (getKey(27)) exit (0);
 
     GameEngine* l_engine = GameEngine::getEngine();
     //std::cout << "Updating Graphics System" << std::endl;
-    std::map<Entity, SpriteComponent>& l_sprites = l_engine->getEntities().getSprites().getAll();
-    std::map<Entity, SpriteComponent>::iterator it = l_sprites.begin();
+    std::map<Entity*, SpriteComponent>& l_sprites = l_engine->getEntities().getSprites().getAll();
+    std::map<Entity*, SpriteComponent>::iterator it = l_sprites.begin();
     for (; it != l_sprites.end(); it++) {
         SpriteComponent& l_sprite = it->second;
         //std::cout << "Drawing Tile" << std::endl;
@@ -33,7 +41,7 @@ void MapWindow::keyDown (unsigned char key) {
     }
     if (l_dir != MoveEntityEvent::NONE) {
         MoveEntityEvent* l_event = new MoveEntityEvent;
-        l_event->entity = 0;
+        l_event->entity = l_engine->getEntities().getEntity("Player");
         l_event->direction = l_dir;
         l_engine->raiseEvent (l_event);
     }

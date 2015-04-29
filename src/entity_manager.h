@@ -5,27 +5,28 @@
 #include "component_manager.h"
 #include "sprite_component.h"
 #include "collider_component.h"
+#include <map>
 
 class EntityManager {
 public:
     void initialise();
     void destroy();
 
-    //Entity& getEntity (unsigned long id) { return m_entities[id]; }
-    //void addEntity (Entity& entity);
+    Entity* createEntity (const std::string& name = "empty");
 
-    //void loadEntities ();
-    Entity createEntity () { return maxId++; }
-
-    void createWallEntity (unsigned int x, unsigned int y);
-    void createPlayerEntity (unsigned int x, unsigned int y);
-    void createEnemyEntity (unsigned int x, unsigned int y);
-    void createRoom (unsigned int xStart, unsigned int yStart, unsigned int xEnd, unsigned int yEnd);
+    void createWallPrefab (unsigned int x, unsigned int y);
+    void createPlayerPrefab (unsigned int x, unsigned int y);
+    void createEnemyPrefab (unsigned int x, unsigned int y);
 
     ComponentManager<SpriteComponent>& getSprites() { return m_sprites; }
     ComponentManager<ColliderComponent>& getColliders() { return m_colliders; }
+    Entity* getEntity (std::string name);
+    Entity* getEntity (EntityId id);
+
 private:
-    unsigned long   maxId;
+    unsigned long                       maxId;
+    std::map<EntityId, Entity*>         m_idMap;
+    std::map<std::string, Entity*>      m_nameMap;
     ComponentManager<SpriteComponent>   m_sprites;
     ComponentManager<ColliderComponent> m_colliders;
 

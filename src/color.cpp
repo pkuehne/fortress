@@ -21,5 +21,7 @@ Color::Color (COLOR color)
             m_red = 1; m_green = 1; m_blue = 1; break;
         case BLACK:
             m_red = 0; m_green = 0; m_blue = 0; break;
+        case GREY:
+            m_red = 128.0/256.0; m_green = 128.0/256.0; m_blue = 128.0/256.0; break;
     }
 }
