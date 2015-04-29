@@ -1,6 +1,4 @@
 #include "algorithm.h"
-#include "map.h"
-#include "tile.h"
 #include "gameengine.h"
 #include <cstdio>
 #include <cstdlib>
@@ -11,30 +9,33 @@
 #include <map>
 #include <iostream>
 
+/*
 bool operator< (const Node& lhs, const Node& rhs)
 {
     return lhs.priority > rhs.priority;
 }
 
 int getUnitPathCost (const Tile& tile, void* unit)
-{ Unit* l_unit = static_cast<Unit*> (unit); 
-    if (tile.getConstruction() != CON_EMPTY) return -1;    
+{
+    Unit* l_unit = static_cast<Unit*> (unit);
+    //if (tile.getUnit() != 0 && tile.getUnit() != l_unit->getId()) return -1;
+    if (tile.getConstruction() != CON_EMPTY) return -1;
     if (tile.getBackground() == TILE_PLAIN) return 1;
     if (tile.getBackground() == TILE_WATER && l_unit->canSwim()) return 3;
 
     return -1;
 }
 
-void Algorithm::findUnitPath (  int startIndex, 
-                                int endIndex, 
-                                Unit& unit, 
+void Algorithm::findUnitPath (  int startIndex,
+                                int endIndex,
+                                Unit& unit,
                                 std::vector<int>& path)
 {
     findPath (startIndex, endIndex, getUnitPathCost, &unit, path);
 }
 
-void Algorithm::findPath (  int startIndex, 
-                            int endIndex, 
+void Algorithm::findPath (  int startIndex,
+                            int endIndex,
                             costFunc costFunction,
                             void* costInput,
                             std::vector<int>& retPath)
@@ -45,7 +46,7 @@ void Algorithm::findPath (  int startIndex,
 
     std::priority_queue<Node> l_priority;
     Node startNode (startIndex, 0, 0, 0);
-   
+
     if (startIndex < 0 || startIndex > l_map.getMapSize()) return;
     if (endIndex < 0 || endIndex > l_map.getMapSize()) return;
 
@@ -62,7 +63,7 @@ void Algorithm::findPath (  int startIndex,
 
         l_open.erase (l_current.index);
         l_closed[l_current.index] = l_current;
-        
+
         // Check whether target node
         if (l_current.index == endIndex) {
             int index = l_current.index;
@@ -76,10 +77,10 @@ void Algorithm::findPath (  int startIndex,
 
             return;
         }
-       
+
         // Process neighbours
         int neighbours[Map::dir];
-        l_map.getNeighbours (l_current.index, neighbours); 
+        l_map.getNeighbours (l_current.index, neighbours);
 
         for (int ii = 0; ii< Map::dir; ii++) {
             if (neighbours[ii] < 0) continue; // Not a valid neighbour
@@ -87,9 +88,9 @@ void Algorithm::findPath (  int startIndex,
             // If cost is -ve, we will close the node
 
             int path = l_current.distance + cost;
-            int priority = path 
-                         + (abs(endx - l_map.getTile(neighbours[ii]).getX()) 
-                         +  abs(endy - l_map.getTile(neighbours[ii]).getY())) 
+            int priority = path
+                         + (abs(endx - l_map.getTile(neighbours[ii]).getX())
+                         +  abs(endy - l_map.getTile(neighbours[ii]).getY()))
                          * 1 ;
             Node neighbour (neighbours[ii], path, priority, l_current.index);
 
@@ -109,7 +110,7 @@ void Algorithm::findPath (  int startIndex,
                 // Remove it from open if there's a better path now
                 //l_open.erase(open_iter);
             } else if (cost > 0) {
-                // Neighbour not in open   
+                // Neighbour not in open
                 l_open[neighbours[ii]] = neighbour;
                 l_priority.push (neighbour);
             }
@@ -117,3 +118,5 @@ void Algorithm::findPath (  int startIndex,
     }
     return;
 }
+
+*/

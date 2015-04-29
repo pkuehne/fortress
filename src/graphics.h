@@ -1,12 +1,20 @@
 #ifndef __GRAPHICS_H__
 #define __GRAPHICS_H__
 
+#include "color.h"
+
 void setup_graphics ();
 void start_graphics ();
 
 unsigned char* loadImage (const char* filename);
-void printString (int x, int y, const char* s);
-void drawString (int x, int y, const char* s);
-void drawImage (int x, int y, const unsigned char* image);
+void drawString (int y, int x, const char* s);
+void drawTile (int y, int x, unsigned int tile, Color fg, Color bg);
+void beginScreenUpdate();
+void endScreenUpdate();
+
+typedef enum {
+    ICON_BRICK = 247,
+    ICON_MAX = 12*48
+} ICON_TYPE;
 
 #endif

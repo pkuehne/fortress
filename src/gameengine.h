@@ -1,43 +1,47 @@
 #ifndef __GAMEENGINE_H__
 #define __GAMEENGINE_H__
 
-#include "map.h"
-#include "screen.h"
-#include "unitlist.h"
+#include "graphics.h"
+#include "event_manager.h"
+#include "entity_manager.h"
+#include "window_manager.h"
+#include "movement_system.h"
+
 #include <string>
 
 class GameEngine {
 public:
     static GameEngine* getEngine ();
 
-    const Map& getMap() { return m_map; }
-    void generateMap (int seed = 0);
+    void initialise (void);
+    void tick (void);
+    void start (void) { start_graphics(); }
+
+    bool& isPaused() { return m_paused; }
+
+    void raiseEvent (Event* event) { m_eventManager.raiseEvent (event); }
+    EntityManager& getEntities() { return m_entityManager; }
+
     void loadMap (const std::string& mapName);
 
-    Screen& getScreen() { return m_screen; } 
-
-    UnitList& getUnits() { return m_units; }
-
-    bool& isDefender() { return m_isDefender; }
-    void start (void);
-    void tick (void);
+    unsigned long long getTick() { return m_tick; }
+    WindowManager& getWindows() { return m_windowManager; }
+    Window* getCurrentWindow() { return m_windowManager.getWindow(); }
 
 private:
     GameEngine ();
     ~GameEngine ();
     static GameEngine*  s_engine;
 
-    void checkVictoryConditions();
-    void updateUnitPath ();
-    void checkUnitSurroundings();
-    void updateFights ();
-
 private:
-    Screen      m_screen;
-    Map         m_map;
-    UnitList    m_units;
-    bool        m_isDefender;
     unsigned long long  m_tick;
+    bool                m_paused;
+
+    EntityManager       m_entityManager;
+    EventManager        m_eventManager;
+    WindowManager       m_windowManager;
+
+    MovementSystem      m_moveSystem;
 };
 
 #endif
