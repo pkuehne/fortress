@@ -63,7 +63,7 @@ void EntityManager::createPlayerPrefab (unsigned int x, unsigned int y)
 
     //Sprite Component
     SpriteComponent l_sprite;
-    l_sprite.fgColor    = Color (RED);
+    l_sprite.fgColor    = Color (WHITE);
     l_sprite.bgColor    = Color (BLACK);
     l_sprite.sprite     = '@';
     l_sprite.xPos       = x;
@@ -84,9 +84,13 @@ void EntityManager::createEnemyPrefab (unsigned int x, unsigned int y)
     SpriteComponent l_sprite;
     l_sprite.fgColor    = Color (RED);
     l_sprite.bgColor    = Color (BLACK);
-    l_sprite.sprite     = 'I';
+    l_sprite.sprite     = 'O';
     l_sprite.xPos       = x;
     l_sprite.yPos       = y;
     getSprites().add (l_entity, l_sprite);
+
+    //Collider Component
+    ColliderComponent l_collider;
+    getColliders().add (l_entity, l_collider);
 
 }

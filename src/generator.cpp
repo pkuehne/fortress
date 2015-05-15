@@ -28,6 +28,9 @@ void generateDungeon (GEN_PARAMS params) {
                 l_engine->getEntities().createPlayerPrefab (yy, xx);
                 playerPlaced = true;
             }
+            if (map[yy*params.width+xx] == 'M') {
+                l_engine->getEntities().createEnemyPrefab (yy, xx);
+            }
         }
     }
 }
@@ -35,8 +38,8 @@ void generateDungeon (GEN_PARAMS params) {
 bool generateRoom (GEN_PARAMS params, char* map) {
     unsigned int xMid = rand() % (params.width-1) + 1;
     unsigned int yMid = rand() % (params.height-1) + 1;
-    unsigned int length = rand() % 5 + 2;
-    unsigned int height = rand() % 5 + 2;
+    unsigned int length = rand() % 6 + 3;
+    unsigned int height = rand() % 6 + 3;
 
     unsigned int startY = yMid - height;
     unsigned int startX = xMid - length;
@@ -64,5 +67,7 @@ bool generateRoom (GEN_PARAMS params, char* map) {
         map[endY*params.width+xx] = 'W';
     }
     map[yMid*params.width+xMid] = 'P';
+    map[yMid*params.width+xMid+2] = 'M';
+
     return true;
 }
