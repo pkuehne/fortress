@@ -23,10 +23,18 @@ void MovementSystem::handleEvent (const Event* event)
                 case MoveEntityEvent::RIGHT: newX++; break;
                 default: return;
             }
+
+            //Check if we're running into a collidable or something
             std::map<Entity*, SpriteComponent>& l_sprites = l_engine->getEntities().getSprites().getAll();
             std::map<Entity*, SpriteComponent>::iterator it = l_sprites.begin();
             for (; it != l_sprites.end(); it++) {
                 if (it->second.xPos == newX && it->second.yPos == newY) {
+                    // There is an entity here
+
+                    //Check if it's an enemy
+                    
+
+                    // Check if it's a collidable
                     if (l_engine->getEntities().getColliders().get (it->first)) return;
                 }
 
