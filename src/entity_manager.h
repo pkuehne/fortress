@@ -17,6 +17,7 @@ public:
     void createWallPrefab (unsigned int x, unsigned int y);
     void createPlayerPrefab (unsigned int x, unsigned int y);
     void createEnemyPrefab (unsigned int x, unsigned int y);
+    void createTilePrefab (unsigned int x, unsigned int y);
 
     ComponentManager<SpriteComponent>& getSprites() { return m_sprites; }
     ComponentManager<ColliderComponent>& getColliders() { return m_colliders; }

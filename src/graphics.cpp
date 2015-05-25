@@ -42,6 +42,28 @@ void drawTile (int y, int x, unsigned int tile, Color fg, Color bg)
     glEnd();
 }
 
+void drawBorder (int y, int x, int height, int width)
+{
+    // Draw Corners
+    drawTile (y, x, 201, WHITE, WHITE);
+    drawTile (y+1+height, x, 200, WHITE, WHITE);
+    drawTile (y, x+1+width, 187, WHITE, WHITE);
+    drawTile (y+1+height, x+1+width, 188, WHITE, WHITE);
+
+    // Draw Horizontals
+    for (int xx = x+1; xx <= x+width; xx++) {
+        drawTile (y, xx, 205, WHITE, WHITE);
+        drawTile (y+height+1, xx, 205, WHITE, WHITE);
+    }
+
+    for (int yy = y+1; yy <= y+height; yy++) {
+        drawTile (yy, x, 186, WHITE, WHITE);
+        drawTile (yy, x+width+1, 186, WHITE, WHITE);
+    }
+    // Draw Verticals
+}
+
+
 static void display (void)
 {
     GameEngine* l_engine = GameEngine::getEngine();
