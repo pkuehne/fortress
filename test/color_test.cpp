@@ -21,3 +21,12 @@ TEST (Color, RGBConstructor)
     EXPECT_EQ(green, color.Green());
     EXPECT_EQ(blue, color.Blue());
 }
+
+TEST (Color, EnumConstructor)
+{
+    Color color (RED);
+
+    EXPECT_EQ(1, color.Red());
+    EXPECT_EQ(0, color.Green());
+    EXPECT_EQ(0, color.Blue());
+}

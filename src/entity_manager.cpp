@@ -6,6 +6,7 @@
 void EntityManager::initialise()
 {
     maxId = 0;
+    m_engine = GameEngine::getEngine();
 }
 
 void EntityManager::destroy ()
@@ -22,7 +23,7 @@ Entity* EntityManager::createEntity (const std::string& name) {
 
     AddEntityEvent* l_event = new AddEntityEvent;
     l_event->entity = l_entity;
-    GameEngine::getEngine()->raiseEvent (l_event);
+    m_engine->raiseEvent (l_event);
 
     return l_entity;
 }
@@ -39,7 +40,7 @@ Entity* EntityManager::getEntity (EntityId id) {
     return it->second;
 }
 
-void EntityManager::createWallPrefab (unsigned int x, unsigned int y)
+Entity* EntityManager::createWallPrefab (unsigned int x, unsigned int y)
 {
     Entity* l_entity = createEntity("Wall");
 
@@ -55,9 +56,11 @@ void EntityManager::createWallPrefab (unsigned int x, unsigned int y)
     //Collider Component
     ColliderComponent l_collider;
     getColliders().add (l_entity, l_collider);
+
+    return l_entity;
 }
 
-void EntityManager::createPlayerPrefab (unsigned int x, unsigned int y)
+Entity* EntityManager::createPlayerPrefab (unsigned int x, unsigned int y)
 {
     Entity* l_entity = createEntity("Player");
 
@@ -74,9 +77,11 @@ void EntityManager::createPlayerPrefab (unsigned int x, unsigned int y)
     //Collider Component
     ColliderComponent l_collider;
     getColliders().add (l_entity, l_collider);
+
+    return l_entity;
 }
 
-void EntityManager::createEnemyPrefab (unsigned int x, unsigned int y)
+Entity* EntityManager::createEnemyPrefab (unsigned int x, unsigned int y)
 {
     Entity* l_entity = createEntity("Enemy");
 
@@ -93,19 +98,21 @@ void EntityManager::createEnemyPrefab (unsigned int x, unsigned int y)
     ColliderComponent l_collider;
     getColliders().add (l_entity, l_collider);
 
+    return l_entity;
 }
 
-void EntityManager::createTilePrefab (unsigned int x, unsigned int y)
+Entity* EntityManager::createTilePrefab (unsigned int x, unsigned int y)
 {
-        Entity* l_entity = createEntity("Tile");
+    Entity* l_entity = createEntity("Tile");
 
-        //Sprite Component
-        SpriteComponent l_sprite;
-        l_sprite.fgColor    = Color (GREY);
-        l_sprite.bgColor    = Color (BLACK);
-        l_sprite.sprite     = '.';
-        l_sprite.xPos       = x;
-        l_sprite.yPos       = y;
-        getSprites().add (l_entity, l_sprite);
+    //Sprite Component
+    SpriteComponent l_sprite;
+    l_sprite.fgColor    = Color (GREY);
+    l_sprite.bgColor    = Color (BLACK);
+    l_sprite.sprite     = '.';
+    l_sprite.xPos       = x;
+    l_sprite.yPos       = y;
+    getSprites().add (l_entity, l_sprite);
 
+    return l_entity;
 }

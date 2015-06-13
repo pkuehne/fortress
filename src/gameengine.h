@@ -1,6 +1,7 @@
 #ifndef __GAMEENGINE_H__
 #define __GAMEENGINE_H__
 
+#include "game_engine_interface.h"
 #include "graphics.h"
 #include "event_manager.h"
 #include "entity_manager.h"
@@ -11,7 +12,7 @@
 
 #include <string>
 
-class GameEngine {
+class GameEngine : public GameEngineInterface {
 public:
     static GameEngine* getEngine ();
 
@@ -30,9 +31,10 @@ public:
     WindowManager& getWindows() { return m_windowManager; }
     Window* getCurrentWindow() { return m_windowManager.getWindow(); }
 
-private:
     GameEngine ();
     ~GameEngine ();
+
+private:
     static GameEngine*  s_engine;
 
 private:
