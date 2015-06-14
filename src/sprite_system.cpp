@@ -4,9 +4,6 @@
 #include "sprite_component.h"
 #include <iostream>
 
-static Entity* findWallEntity (unsigned int x, unsigned int y);
-static void updateWallSprite (Entity* a_entity);
-
 void SpriteSystem::handleEvent (const Event* event) {
     switch (event->getType()) {
         case EVENT_MOVE_ENTITY: {
@@ -41,7 +38,7 @@ void SpriteSystem::handleEvent (const Event* event) {
 
 }
 
-void updateWallSprite (Entity* a_entity) {
+void SpriteSystem::updateWallSprite (Entity* a_entity) {
     SpriteComponent* l_sprite = m_engine->getEntities().getSprites().get (a_entity);
 
     Entity* left    = findWallEntity (l_sprite->xPos-1, l_sprite->yPos);
@@ -76,7 +73,7 @@ void updateWallSprite (Entity* a_entity) {
 
 }
 
-Entity* findWallEntity (unsigned int x, unsigned int y) {
+Entity* SpriteSystem::findWallEntity (unsigned int x, unsigned int y) {
     std::map<Entity*, SpriteComponent>& l_sprites = m_engine->getEntities().getSprites().getAll();
     std::map<Entity*, SpriteComponent>::iterator iter = l_sprites.begin();
     for (; iter != l_sprites.end(); iter++) {

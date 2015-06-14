@@ -3,10 +3,10 @@
 #include <fstream>
 #include <iostream>
 
-void EntityManager::initialise()
+void EntityManager::initialise (GameEngineInterface* engine)
 {
     maxId = 0;
-    m_engine = GameEngine::getEngine();
+    m_engine = engine;
 }
 
 void EntityManager::destroy ()

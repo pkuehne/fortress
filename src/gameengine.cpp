@@ -24,12 +24,16 @@ GameEngine* GameEngine::getEngine ()
 
 void GameEngine::initialise ()
 {
-    m_windowManager.initialise();
-    m_entityManager.initialise();
-    m_eventManager.initialise();
+    // Initialise Managers
+    m_windowManager.initialise (this);
+    m_entityManager.initialise (this);
+    m_eventManager.initialise  (this);
 
+    // Initialise Systems
     m_moveSystem.initialise (this);
     m_spriteSystem.initialise (this);
+
+    // Register Systems with Event Manager
     m_eventManager.registerHandler (m_moveSystem);
     m_eventManager.registerHandler (m_spriteSystem);
 

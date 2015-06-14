@@ -10,10 +10,9 @@
 
 class EntityManager {
 public:
-    void initialise();
+    void initialise (GameEngineInterface* engine);
     void destroy();
 
-    void setGameEngineRef (GameEngineInterface* engine) { m_engine = engine; }
     Entity* createEntity (const std::string& name = "empty");
 
     Entity* createWallPrefab (unsigned int x, unsigned int y);

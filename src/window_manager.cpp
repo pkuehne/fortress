@@ -1,7 +1,9 @@
 #include "window_manager.h"
 #include "splash_window.h"
 
-void WindowManager::initialise() {
+void WindowManager::initialise (GameEngineInterface* engine) {
+    m_engine = engine;
+    
     Window* l_window = new SplashWindow();
     l_window->initialise();
     addWindow (l_window);
