@@ -1,14 +1,14 @@
 CC=g++
-CFLAGS=-c -g -Wall -I. -I/usr/include 
-LDFLAGS= 
+CFLAGS=-c -g -rdynamic -Wall -I. -I/usr/include
+LDFLAGS= -g -rdynamic
 LIBRARIES=-lpthread -lGL -lGLU -lglut -lc -lm -lSOIL
-SOURCES=$(wildcard *.cpp) 
-OBJECTS=$(SOURCES:.cpp=.o) 
+SOURCES=$(wildcard *.cpp)
+OBJECTS=$(SOURCES:.cpp=.o)
 EXECUTABLE=fortress
 
 all: $(SOURCES) $(EXECUTABLE)
 
-clean: 
+clean:
 	@rm $(OBJECTS) $(EXECUTABLE) ||:
 
 $(EXECUTABLE): $(OBJECTS)
