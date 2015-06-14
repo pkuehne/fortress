@@ -56,6 +56,9 @@ TEST (EntityManager, createWallPrefab)
     EXPECT_EQ (1, sprite->xPos);
     EXPECT_EQ (2, sprite->yPos);
     EXPECT_EQ (247, sprite->sprite);
+
+    ColliderComponent* collider = manager.getColliders().get(entity);
+    EXPECT_NE (static_cast<ColliderComponent*>(0), collider);
 }
 
 TEST (EntityManager, createPlayerPrefab)
@@ -79,6 +82,9 @@ TEST (EntityManager, createPlayerPrefab)
     EXPECT_EQ (1, sprite->xPos);
     EXPECT_EQ (2, sprite->yPos);
     EXPECT_EQ ('@', sprite->sprite);
+
+    ColliderComponent* collider = manager.getColliders().get(entity);
+    EXPECT_NE (static_cast<ColliderComponent*>(0), collider);
 }
 
 TEST (EntityManager, createEnemyPrefab)
@@ -102,6 +108,9 @@ TEST (EntityManager, createEnemyPrefab)
     EXPECT_EQ (1, sprite->xPos);
     EXPECT_EQ (2, sprite->yPos);
     EXPECT_EQ ('O', sprite->sprite);
+
+    ColliderComponent* collider = manager.getColliders().get(entity);
+    EXPECT_NE (static_cast<ColliderComponent*>(0), collider);
 }
 
 TEST (EntityManager, createTilePrefab)
@@ -125,4 +134,7 @@ TEST (EntityManager, createTilePrefab)
     EXPECT_EQ (2, sprite->yPos);
     EXPECT_EQ ('.', sprite->sprite);
     EXPECT_EQ (entity, manager.getEntity (0));
+
+    ColliderComponent* collider = manager.getColliders().get(entity);
+    EXPECT_NE (static_cast<ColliderComponent*>(0), collider);
 }
