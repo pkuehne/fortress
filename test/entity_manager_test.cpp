@@ -44,12 +44,18 @@ TEST (EntityManager, createWallPrefab)
     manager.initialise();
     manager.setGameEngineRef (&engine);
 
-    Entity* entity = manager.createWallPrefab (0, 0);
+    Entity* entity = manager.createWallPrefab (1, 2);
     EXPECT_NE (static_cast<Entity*>(0), entity);
     EXPECT_EQ (0, entity->getId());
     EXPECT_EQ ("Wall", entity->getName());
     EXPECT_EQ (entity, manager.getEntity ("Wall"));
     EXPECT_EQ (entity, manager.getEntity (0));
+
+    SpriteComponent* sprite = manager.getSprites().get (entity);
+    EXPECT_NE (static_cast<SpriteComponent*>(0), sprite);
+    EXPECT_EQ (1, sprite->xPos);
+    EXPECT_EQ (2, sprite->yPos);
+    EXPECT_EQ (247, sprite->sprite);
 }
 
 TEST (EntityManager, createPlayerPrefab)
@@ -61,12 +67,18 @@ TEST (EntityManager, createPlayerPrefab)
     manager.initialise();
     manager.setGameEngineRef (&engine);
 
-    Entity* entity = manager.createPlayerPrefab (0, 0);
+    Entity* entity = manager.createPlayerPrefab (1, 2);
     EXPECT_NE (static_cast<Entity*>(0), entity);
     EXPECT_EQ (0, entity->getId());
     EXPECT_EQ ("Player", entity->getName());
     EXPECT_EQ (entity, manager.getEntity ("Player"));
     EXPECT_EQ (entity, manager.getEntity (0));
+
+    SpriteComponent* sprite = manager.getSprites().get (entity);
+    EXPECT_NE (static_cast<SpriteComponent*>(0), sprite);
+    EXPECT_EQ (1, sprite->xPos);
+    EXPECT_EQ (2, sprite->yPos);
+    EXPECT_EQ ('@', sprite->sprite);
 }
 
 TEST (EntityManager, createEnemyPrefab)
@@ -78,12 +90,18 @@ TEST (EntityManager, createEnemyPrefab)
     manager.initialise();
     manager.setGameEngineRef (&engine);
 
-    Entity* entity = manager.createEnemyPrefab (0, 0);
+    Entity* entity = manager.createEnemyPrefab (1, 2);
     EXPECT_NE (static_cast<Entity*>(0), entity);
     EXPECT_EQ (0, entity->getId());
     EXPECT_EQ ("Enemy", entity->getName());
     EXPECT_EQ (entity, manager.getEntity ("Enemy"));
     EXPECT_EQ (entity, manager.getEntity (0));
+
+    SpriteComponent* sprite = manager.getSprites().get (entity);
+    EXPECT_NE (static_cast<SpriteComponent*>(0), sprite);
+    EXPECT_EQ (1, sprite->xPos);
+    EXPECT_EQ (2, sprite->yPos);
+    EXPECT_EQ ('O', sprite->sprite);
 }
 
 TEST (EntityManager, createTilePrefab)
@@ -95,10 +113,16 @@ TEST (EntityManager, createTilePrefab)
     manager.initialise();
     manager.setGameEngineRef (&engine);
 
-    Entity* entity = manager.createTilePrefab (0, 0);
+    Entity* entity = manager.createTilePrefab (1, 2);
     EXPECT_NE (static_cast<Entity*>(0), entity);
     EXPECT_EQ (0, entity->getId());
     EXPECT_EQ ("Tile", entity->getName());
     EXPECT_EQ (entity, manager.getEntity ("Tile"));
+
+    SpriteComponent* sprite = manager.getSprites().get (entity);
+    EXPECT_NE (static_cast<SpriteComponent*>(0), sprite);
+    EXPECT_EQ (1, sprite->xPos);
+    EXPECT_EQ (2, sprite->yPos);
+    EXPECT_EQ ('.', sprite->sprite);
     EXPECT_EQ (entity, manager.getEntity (0));
 }
