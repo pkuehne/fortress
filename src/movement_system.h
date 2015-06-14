@@ -5,6 +5,8 @@
 
 class MovementSystem : public BaseSystem {
 public:
+    virtual ~MovementSystem() { }
+    virtual void initialise (GameEngineInterface* engine) {m_engine = engine; }
     virtual void handleEvent (const Event* event);
 
 private:

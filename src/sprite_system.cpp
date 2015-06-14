@@ -8,13 +8,11 @@ static Entity* findWallEntity (unsigned int x, unsigned int y);
 static void updateWallSprite (Entity* a_entity);
 
 void SpriteSystem::handleEvent (const Event* event) {
-    GameEngine* l_engine = GameEngine::getEngine();
-
     switch (event->getType()) {
         case EVENT_MOVE_ENTITY: {
             const MoveEntityEvent* l_event = dynamic_cast<const MoveEntityEvent*> (event);
             Entity* l_entity = l_event->entity;
-            SpriteComponent* l_sprite = l_engine->getEntities().getSprites().get (l_entity);
+            SpriteComponent* l_sprite = m_engine->getEntities().getSprites().get (l_entity);
             if (!l_sprite) return;
             break;
         }
@@ -25,7 +23,7 @@ void SpriteSystem::handleEvent (const Event* event) {
 
             updateWallSprite (l_entity);
 
-            SpriteComponent* l_sprite = l_engine->getEntities().getSprites().get (l_entity);
+            SpriteComponent* l_sprite = m_engine->getEntities().getSprites().get (l_entity);
             Entity* left    = findWallEntity (l_sprite->xPos-1, l_sprite->yPos);
             Entity* up      = findWallEntity (l_sprite->xPos, l_sprite->yPos-1);
             Entity* right   = findWallEntity (l_sprite->xPos+1, l_sprite->yPos);
@@ -44,8 +42,7 @@ void SpriteSystem::handleEvent (const Event* event) {
 }
 
 void updateWallSprite (Entity* a_entity) {
-    GameEngine* l_engine = GameEngine::getEngine();
-    SpriteComponent* l_sprite = l_engine->getEntities().getSprites().get (a_entity);
+    SpriteComponent* l_sprite = m_engine->getEntities().getSprites().get (a_entity);
 
     Entity* left    = findWallEntity (l_sprite->xPos-1, l_sprite->yPos);
     Entity* up      = findWallEntity (l_sprite->xPos, l_sprite->yPos-1);
@@ -80,9 +77,7 @@ void updateWallSprite (Entity* a_entity) {
 }
 
 Entity* findWallEntity (unsigned int x, unsigned int y) {
-    GameEngine* l_engine = GameEngine::getEngine();
-
-    std::map<Entity*, SpriteComponent>& l_sprites = l_engine->getEntities().getSprites().getAll();
+    std::map<Entity*, SpriteComponent>& l_sprites = m_engine->getEntities().getSprites().getAll();
     std::map<Entity*, SpriteComponent>::iterator iter = l_sprites.begin();
     for (; iter != l_sprites.end(); iter++) {
         if (iter->second.xPos == x &&

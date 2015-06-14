@@ -5,6 +5,8 @@
 
 class SpriteSystem : public BaseSystem {
 public:
+    virtual ~SpriteSystem() { }
+    virtual void initialise (GameEngineInterface* engine){m_engine = engine; }
     virtual void handleEvent (const Event* event);
 
 };

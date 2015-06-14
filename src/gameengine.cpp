@@ -28,6 +28,8 @@ void GameEngine::initialise ()
     m_entityManager.initialise();
     m_eventManager.initialise();
 
+    m_moveSystem.initialise (this);
+    m_spriteSystem.initialise (this);
     m_eventManager.registerHandler (m_moveSystem);
     m_eventManager.registerHandler (m_spriteSystem);
 
