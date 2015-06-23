@@ -17,7 +17,6 @@ void MapWindow::redraw() {
     if (getKey(27)) exit (0);
 
     drawMap();
-    drawLog();
 }
 
 void MapWindow::keyDown (unsigned char key) {
@@ -50,8 +49,4 @@ void MapWindow::drawMap() {
         //std::cout << "Drawing Tile" << std::endl;
         drawTile (l_sprite.yPos, l_sprite.xPos, l_sprite.sprite, l_sprite.fgColor, l_sprite.bgColor);
     }
-}
-
-void MapWindow::drawLog() {
-    drawBorder (1, 1, 10, 20);
 }

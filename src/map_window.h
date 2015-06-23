@@ -11,7 +11,6 @@ public:
 
 private:
     void drawMap ();
-    void drawLog ();
 };
 
 #endif
