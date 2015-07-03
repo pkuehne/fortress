@@ -2,8 +2,9 @@
 #define __WINDOW_MANAGER_H__
 
 #include "window.h"
-#include "game_engine_interface.h"
 #include <vector>
+
+class GameEngineInterface;
 
 class WindowManager {
 public:

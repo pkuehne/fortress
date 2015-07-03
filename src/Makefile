@@ -1,3 +1,4 @@
+.PHONY: all clean build
 CC=g++
 CFLAGS=-c -g -rdynamic -Wall -I. -I/usr/include
 LDFLAGS= -g -rdynamic
@@ -9,7 +10,9 @@ EXECUTABLE=fortress
 all: $(SOURCES) $(EXECUTABLE)
 
 clean:
-	@rm $(OBJECTS) $(EXECUTABLE) ||:
+	@rm -f $(OBJECTS) $(EXECUTABLE) ||:
+
+build: $(EXECUTABLE)
 
 $(EXECUTABLE): $(OBJECTS)
 	$(CC) $(LDFLAGS) $(OBJECTS) $(LIBRARIES) -o $@

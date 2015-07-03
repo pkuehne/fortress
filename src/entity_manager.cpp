@@ -9,11 +9,6 @@ void EntityManager::initialise (GameEngineInterface* engine)
     m_engine = engine;
 }
 
-void EntityManager::destroy ()
-{
-
-}
-
 Entity* EntityManager::createEntity (const std::string& name) {
     Entity* l_entity = new Entity();
     l_entity->setId (maxId++);

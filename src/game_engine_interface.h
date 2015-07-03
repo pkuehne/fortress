@@ -2,11 +2,11 @@
 #define __GAME_ENGINE_INTERFACE_H__
 
 #include <string>
-//#include "window_manager.h"
-
-class WindowManager;
+#include "window_manager.h"
+#include "entity_manager.h"
+//class WindowManager;
 class Window;
-class EntityManager;
+//class EntityManager;
 class Event;
 
 class GameEngineInterface

@@ -1,12 +1,11 @@
 #ifndef __MOVEMENT_SYSTEM_H__
 #define __MOVEMENT_SYSTEM_H__
 
-#include "base_system.h"
+#include "game_system_base.h"
 
-class MovementSystem : public BaseSystem {
+class MovementSystem : public GameSystemBase {
 public:
     virtual ~MovementSystem() { }
-    virtual void initialise (GameEngineInterface* engine) {m_engine = engine; }
     virtual void handleEvent (const Event* event);
 
 private:

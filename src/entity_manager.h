@@ -2,16 +2,17 @@
 #define __ENTITY_MANAGER_H__
 
 #include "entity.h"
-#include "game_engine_interface.h"
 #include "component_manager.h"
 #include "sprite_component.h"
 #include "collider_component.h"
 #include <map>
 
+class GameEngineInterface;
+
 class EntityManager {
 public:
     void initialise (GameEngineInterface* engine);
-    void destroy();
+    void destroy() {}
 
     Entity* createEntity (const std::string& name = "empty");
 

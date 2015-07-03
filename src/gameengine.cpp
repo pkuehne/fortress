@@ -34,8 +34,8 @@ void GameEngine::initialise ()
     m_spriteSystem.initialise (this);
 
     // Register Systems with Event Manager
-    m_eventManager.registerHandler (m_moveSystem);
-    m_eventManager.registerHandler (m_spriteSystem);
+    m_eventManager.registerHandler (&m_moveSystem);
+    m_eventManager.registerHandler (&m_spriteSystem);
 
     setup_graphics();
 }

@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 #include <entity_manager.h>
 #include <game_engine_mock.h>
+#include <window_manager.h>
 
 using namespace ::testing;
 
@@ -11,8 +12,7 @@ TEST (EntityManager, createEntity)
     //EXPECT_CALL (engine, raiseEvent(WhenDynamicCastTo<AddEntityEvent*>(Not(IsNull()))));
     EXPECT_CALL (engine, raiseEvent(_));
 
-    manager.initialise();
-    manager.setGameEngineRef (&engine);
+    manager.initialise(&engine);
 
     Entity* entity = manager.createEntity("test");
     EXPECT_NE (static_cast<Entity*>(0), entity);
@@ -28,8 +28,7 @@ TEST (EntityManager, getEntityEmpty)
     GameEngineMock  engine;
     EXPECT_CALL (engine, raiseEvent(_)).Times(0);
 
-    manager.initialise();
-    manager.setGameEngineRef (&engine);
+    manager.initialise(&engine);
 
     EXPECT_EQ (static_cast<Entity*>(0), manager.getEntity ("test"));
     EXPECT_EQ (static_cast<Entity*>(0), manager.getEntity (0));
@@ -41,8 +40,7 @@ TEST (EntityManager, createWallPrefab)
     GameEngineMock  engine;
     EXPECT_CALL (engine, raiseEvent(_)).Times(1);
 
-    manager.initialise();
-    manager.setGameEngineRef (&engine);
+    manager.initialise(&engine);
 
     Entity* entity = manager.createWallPrefab (1, 2);
     EXPECT_NE (static_cast<Entity*>(0), entity);
@@ -67,8 +65,7 @@ TEST (EntityManager, createPlayerPrefab)
     GameEngineMock  engine;
     EXPECT_CALL (engine, raiseEvent(_)).Times(1);
 
-    manager.initialise();
-    manager.setGameEngineRef (&engine);
+    manager.initialise(&engine);
 
     Entity* entity = manager.createPlayerPrefab (1, 2);
     EXPECT_NE (static_cast<Entity*>(0), entity);
@@ -93,8 +90,7 @@ TEST (EntityManager, createEnemyPrefab)
     GameEngineMock  engine;
     EXPECT_CALL (engine, raiseEvent(_)).Times(1);
 
-    manager.initialise();
-    manager.setGameEngineRef (&engine);
+    manager.initialise(&engine);
 
     Entity* entity = manager.createEnemyPrefab (1, 2);
     EXPECT_NE (static_cast<Entity*>(0), entity);
@@ -119,8 +115,7 @@ TEST (EntityManager, createTilePrefab)
     GameEngineMock  engine;
     EXPECT_CALL (engine, raiseEvent(_)).Times(1);
 
-    manager.initialise();
-    manager.setGameEngineRef (&engine);
+    manager.initialise(&engine);
 
     Entity* entity = manager.createTilePrefab (1, 2);
     EXPECT_NE (static_cast<Entity*>(0), entity);
@@ -136,5 +131,5 @@ TEST (EntityManager, createTilePrefab)
     EXPECT_EQ (entity, manager.getEntity (0));
 
     ColliderComponent* collider = manager.getColliders().get(entity);
-    //EXPECT_NE (static_cast<ColliderComponent*>(0), collider);
+    EXPECT_EQ (static_cast<ColliderComponent*>(0), collider);
 }
