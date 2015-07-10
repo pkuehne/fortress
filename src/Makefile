@@ -1,15 +1,20 @@
+.PHONY: all clean build run
 CC=g++
-CFLAGS=-c -g -Wall -I. -I/usr/include 
-LDFLAGS= 
+CFLAGS=-c -g -rdynamic -Wall -I. -I/usr/include
+LDFLAGS= -g -rdynamic
 LIBRARIES=-lpthread -lGL -lGLU -lglut -lc -lm -lSOIL
-SOURCES=$(wildcard *.cpp) 
-OBJECTS=$(SOURCES:.cpp=.o) 
+SOURCES=$(wildcard *.cpp)
+OBJECTS=$(SOURCES:.cpp=.o)
 EXECUTABLE=fortress
 
 all: $(SOURCES) $(EXECUTABLE)
 
-clean: 
-	@rm $(OBJECTS) $(EXECUTABLE) ||:
+run:
+	./fortress
+clean:
+	@rm -f $(OBJECTS) $(EXECUTABLE) ||:
+
+build: $(EXECUTABLE)
 
 $(EXECUTABLE): $(OBJECTS)
 	$(CC) $(LDFLAGS) $(OBJECTS) $(LIBRARIES) -o $@

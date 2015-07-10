@@ -1,9 +1,10 @@
 #ifndef __WINDOW_H__
 #define __WINDOW_H__
 
+#include "window_interface.h"
 #include "graphics.h"
 
-class Window
+class Window : public WindowInterface
 {
 public:
     Window() { }
