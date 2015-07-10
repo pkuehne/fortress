@@ -2,12 +2,13 @@
 #define __GAME_ENGINE_INTERFACE_H__
 
 #include <string>
-#include "window_manager.h"
+//#include "window_manager_interface.h"
 #include "entity_manager.h"
 #include "graphics_interface.h"
 
 //class WindowManager;
 class Event;
+class WindowManagerInterface;
 
 class GameEngineInterface
 {
@@ -26,7 +27,7 @@ public:
     virtual void loadMap (const std::string& mapName) = 0;
 
     virtual unsigned long long getTick()    = 0;
-    virtual WindowManager* getWindows()     = 0;
+    virtual WindowManagerInterface* getWindows()     = 0;
 
     virtual GraphicsInterface* getGraphics() = 0;
 

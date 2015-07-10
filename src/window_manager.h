@@ -1,12 +1,13 @@
 #ifndef __WINDOW_MANAGER_H__
 #define __WINDOW_MANAGER_H__
 
+#include "window_manager_interface.h"
 #include "window.h"
 #include <vector>
 
 class GameEngineInterface;
 
-class WindowManager {
+class WindowManager : public WindowManagerInterface {
 public:
     void initialise (GameEngineInterface* engine);
     void addWindow (Window* win) { m_windows.push_back (win); }

@@ -31,6 +31,7 @@ static void mouseClick (int button, int state, int x, int y)
 GameEngine::GameEngine (GraphicsInterface* a_graphics)
 : m_tick (0)
 , m_paused (false)
+, m_windowManager (0)
 , m_graphics (a_graphics)
 {
     g_engine = this;
@@ -41,17 +42,13 @@ GameEngine::~GameEngine ()
 
 }
 
-/*
-GameEngine* GameEngine::getEngine ()
-{
-    //if (!s_engine) s_engine = new GameEngine;
-    return s_engine;
-}
-*/
 void GameEngine::initialise ()
 {
+    // Create if not exist
+    if (!m_windowManager) m_windowManager = new WindowManager();
+
     // Initialise Managers
-    m_windowManager.initialise (this);
+    m_windowManager->initialise (this);
     m_entityManager.initialise (this);
     m_eventManager.initialise  (this);
 

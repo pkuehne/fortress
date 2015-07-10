@@ -28,7 +28,7 @@ public:
     void loadMap (const std::string& mapName);
 
     unsigned long long getTick() { return m_tick; }
-    WindowManager* getWindows() { return &m_windowManager; }
+    WindowManagerInterface* getWindows() { return m_windowManager; }
 
     GraphicsInterface* getGraphics() { return m_graphics; }
 
@@ -36,14 +36,14 @@ private:
     unsigned long long  m_tick;
     bool                m_paused;
 
-    EntityManager       m_entityManager;
-    EventManager        m_eventManager;
-    WindowManager       m_windowManager;
+    EntityManager           m_entityManager;
+    EventManager            m_eventManager;
+    WindowManagerInterface* m_windowManager;
 
-    MovementSystem      m_moveSystem;
-    SpriteSystem        m_spriteSystem;
+    MovementSystem          m_moveSystem;
+    SpriteSystem            m_spriteSystem;
 
-    GraphicsInterface*  m_graphics;
+    GraphicsInterface*      m_graphics;
 };
 
 #endif
