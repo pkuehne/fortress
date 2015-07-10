@@ -68,9 +68,6 @@ static void display (void)
 {
     GameEngine* l_engine = GameEngine::getEngine();
     l_engine->tick();
-    l_engine->getCurrentWindow()->beforeRedraw();
-    l_engine->getCurrentWindow()->redraw();
-    l_engine->getCurrentWindow()->afterRedraw();
 }
 
 static void resize (int w, int h)

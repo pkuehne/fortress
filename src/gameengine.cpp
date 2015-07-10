@@ -53,15 +53,18 @@ void GameEngine::loadMap (const std::string& mapName)
 
 void GameEngine::tick ()
 {
-    if (m_paused) return;
+    if (!m_paused) {
+        m_tick++; // Move the engine on
 
-    m_tick++; // Move the engine on
+        m_eventManager.processEvents();
 
-    m_eventManager.processEvents();
-
-    //Update Systems
-    m_moveSystem.update();
-    m_spriteSystem.update();
+        //Update Systems
+        m_moveSystem.update();
+        m_spriteSystem.update();
+        }
+    getCurrentWindow()->beforeRedraw();
+    getCurrentWindow()->redraw();
+    getCurrentWindow()->afterRedraw();
 
     return;
 }
