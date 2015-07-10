@@ -2,26 +2,51 @@
 #include "generator.h"
 #include <string>
 
-GameEngine* GameEngine::s_engine = 0;
+GameEngine* g_engine = 0;
 
-GameEngine::GameEngine ()
+static void keyDown (unsigned char key, int x, int y)
+{
+    g_engine->getWindows()->getActive()->keyDown (key);
+}
+
+static void keyUp (unsigned char key, int x, int y)
+{
+    g_engine->getWindows()->getActive()->keyUp (key);
+}
+static void display (void)
+{
+    g_engine->tick();
+}
+
+static void mouseClick (int button, int state, int x, int y)
+{
+    if (state) {
+        g_engine->getWindows()->getActive()->mouseUp (x, y, button);
+    } else {
+        g_engine->getWindows()->getActive()->mouseDown (x, y, button);
+    }
+}
+
+GameEngine::GameEngine (GraphicsInterface* a_graphics)
 : m_tick (0)
 , m_paused (false)
+, m_graphics (a_graphics)
 {
-
+    g_engine = this;
 }
 
 GameEngine::~GameEngine ()
 {
-    if (s_engine) delete s_engine;
+    
 }
 
+/*
 GameEngine* GameEngine::getEngine ()
 {
-    if (!s_engine) s_engine = new GameEngine;
+    //if (!s_engine) s_engine = new GameEngine;
     return s_engine;
 }
-
+*/
 void GameEngine::initialise ()
 {
     // Initialise Managers
@@ -37,7 +62,10 @@ void GameEngine::initialise ()
     m_eventManager.registerHandler (&m_moveSystem);
     m_eventManager.registerHandler (&m_spriteSystem);
 
-    setup_graphics();
+    m_graphics->setKeyboardFunc (keyDown);
+    m_graphics->setKeyboardFunc (keyUp);
+    m_graphics->setDisplayFunc  (display);
+    m_graphics->setMouseFunc    (mouseClick);
 }
 
 void GameEngine::loadMap (const std::string& mapName)
@@ -47,7 +75,7 @@ void GameEngine::loadMap (const std::string& mapName)
     params.height   = 50;
     params.width    = 50;
     params.rooms    = 1;
-    generateDungeon (params);
+    generateDungeon (this, params);
 
 }
 
@@ -62,9 +90,9 @@ void GameEngine::tick ()
         m_moveSystem.update();
         m_spriteSystem.update();
         }
-    getCurrentWindow()->beforeRedraw();
-    getCurrentWindow()->redraw();
-    getCurrentWindow()->afterRedraw();
+    getWindows()->getActive()->beforeRedraw();
+    getWindows()->getActive()->redraw();
+    getWindows()->getActive()->afterRedraw();
 
     return;
 }

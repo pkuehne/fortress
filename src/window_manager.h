@@ -12,7 +12,7 @@ public:
     void addWindow (Window* win) { m_windows.push_back (win); }
     void popWindow ();
     void replaceWindow (Window* win) ;
-    Window* getWindow() { return m_windows.back(); }
+    Window* getActive() { return m_windows.back(); }
 
 private:
     GameEngineInterface*    m_engine;

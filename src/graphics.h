@@ -1,18 +1,29 @@
-#ifndef __GRAPHICS_H__
-#define __GRAPHICS_H__
+#ifndef GRAPHICS_H
+#define GRAPHICS_H
 
 #include "color.h"
+#include "graphics_interface.h"
 
-void setup_graphics ();
+class Graphics : public GraphicsInterface {
+public:
+    virtual void initialise(int argc, char** argv);
+    virtual void spin();
+
+    virtual void drawString (int y, int x, const char* s);
+    virtual void drawTile (int y, int x, unsigned int tile, Color fg, Color bg);
+    virtual void drawBorder (int y, int x, int height, int width);
+
+    virtual void beginScreenUpdate();
+    virtual void endScreenUpdate();
+
+    virtual void setKeyboardFunc (KeyboardFuncPtr func);
+    virtual void setKeyboardUpFunc (KeyboardFuncPtr func);
+    virtual void setDisplayFunc (DisplayFuncPtr func);
+    virtual void setMouseFunc (MouseFuncPtr func);
+
+};
+
 void start_graphics ();
-
-unsigned char* loadImage (const char* filename);
-void drawString (int y, int x, const char* s);
-void drawTile (int y, int x, unsigned int tile, Color fg, Color bg);
-void drawBorder (int y, int x, int height, int width);
-
-void beginScreenUpdate();
-void endScreenUpdate();
 
 typedef enum {
     ICON_BRICK = 247,

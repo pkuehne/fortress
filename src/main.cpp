@@ -1,5 +1,7 @@
 #include "gameengine.h"
-#include <GL/glut.h>
+#include "graphics.h"
+//#include <GL/glut.h>
+#include <cstdlib>
 #include <iostream>
 #include <execinfo.h>
 #include <signal.h>
@@ -31,15 +33,17 @@ int main (int argc, char** argv)
     signal(SIGSEGV, handler);
 
     try {
-        glutInit (&argc, argv);
         std::string l_map("testmap.txt");
         if (argc > 1) {
             l_map = argv[1];
         }
 
-        GameEngine* l_engine = GameEngine::getEngine();
+        Graphics*   l_graphics = new Graphics();
+        l_graphics->initialise(argc, argv);
+        GameEngine* l_engine = new GameEngine (l_graphics);
+
         l_engine->initialise();
-        l_engine->start();
+        l_graphics->spin();
     } catch (char const * err) {
         std::cout << err << std::endl;
     }

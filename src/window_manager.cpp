@@ -3,9 +3,9 @@
 
 void WindowManager::initialise (GameEngineInterface* engine) {
     m_engine = engine;
-    
+
     Window* l_window = new SplashWindow();
-    l_window->initialise();
+    l_window->initialise(m_engine);
     addWindow (l_window);
 }
 

@@ -7,6 +7,7 @@ clean:
 	$(MAKE) -C test clean
 
 build: tags
+	clear
 	$(MAKE) -C src build
 
 test:

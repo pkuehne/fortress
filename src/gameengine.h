@@ -2,7 +2,7 @@
 #define __GAMEENGINE_H__
 
 #include "game_engine_interface.h"
-#include "graphics.h"
+#include "graphics_interface.h"
 #include "event_manager.h"
 #include "entity_manager.h"
 #include "window_manager.h"
@@ -14,11 +14,11 @@
 
 class GameEngine : public GameEngineInterface {
 public:
-    static GameEngine* getEngine ();
+    GameEngine (GraphicsInterface* a_graphics);
+    ~GameEngine ();
 
     void initialise (void);
     void tick (void);
-    void start (void) { start_graphics(); }
 
     bool& isPaused() { return m_paused; }
 
@@ -28,14 +28,9 @@ public:
     void loadMap (const std::string& mapName);
 
     unsigned long long getTick() { return m_tick; }
-    WindowManager& getWindows() { return m_windowManager; }
-    Window* getCurrentWindow() { return m_windowManager.getWindow(); }
+    WindowManager* getWindows() { return &m_windowManager; }
 
-    GameEngine ();
-    ~GameEngine ();
-
-private:
-    static GameEngine*  s_engine;
+    GraphicsInterface* getGraphics() { return m_graphics; }
 
 private:
     unsigned long long  m_tick;
@@ -47,6 +42,8 @@ private:
 
     MovementSystem      m_moveSystem;
     SpriteSystem        m_spriteSystem;
+
+    GraphicsInterface*  m_graphics;
 };
 
 #endif
