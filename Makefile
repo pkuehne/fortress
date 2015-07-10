@@ -11,6 +11,7 @@ build: tags
 	$(MAKE) -C src build
 
 test:
+	clear
 	$(MAKE) -C test test
 
 tags:
