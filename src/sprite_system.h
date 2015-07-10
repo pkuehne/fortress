@@ -13,9 +13,6 @@ private:
     Entity* findWallEntity (unsigned int x, unsigned int y);
     void updateWallSprite (Entity* a_entity);
 
-
-private:
-    GameEngineInterface*    m_engine;
 };
 
 #endif

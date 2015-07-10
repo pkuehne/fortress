@@ -1,4 +1,4 @@
-.PHONY: all clean build test tags coverage
+.PHONY: all clean build test tags coverage run
 
 all: clean build test
 
@@ -23,3 +23,6 @@ coverage:
 	$(MAKE) -C test clean
 	$(MAKE) -C test test
 	gcovr -r src
+
+run: build
+	$(MAKE) -C src run
