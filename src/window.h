@@ -7,7 +7,7 @@ class GameEngineInterface;
 class Window : public WindowInterface
 {
 public:
-    Window() { }
+    Window(): m_engine(0) { }
     virtual ~Window() { }
     virtual void initialise (GameEngineInterface* a_engine);
     virtual void destroy (void);
@@ -19,7 +19,7 @@ public:
     virtual void mouseDown (int x, int y, int button);
     virtual void mouseUp (int x, int y, int button);
     virtual void beforeRedraw();
-    virtual void redraw () = 0;
+    virtual void redraw () { };
     virtual void afterRedraw();
     virtual void resize (int width, int height);
 
