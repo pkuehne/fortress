@@ -13,6 +13,7 @@ static void keyUp (unsigned char key, int x, int y)
 {
     g_engine->getWindows()->getActive()->keyUp (key);
 }
+
 static void display (void)
 {
     g_engine->tick();
@@ -37,7 +38,7 @@ GameEngine::GameEngine (GraphicsInterface* a_graphics)
 
 GameEngine::~GameEngine ()
 {
-    
+
 }
 
 /*
@@ -63,7 +64,7 @@ void GameEngine::initialise ()
     m_eventManager.registerHandler (&m_spriteSystem);
 
     m_graphics->setKeyboardFunc (keyDown);
-    m_graphics->setKeyboardFunc (keyUp);
+    m_graphics->setKeyboardUpFunc (keyUp);
     m_graphics->setDisplayFunc  (display);
     m_graphics->setMouseFunc    (mouseClick);
 }
