@@ -9,6 +9,8 @@ void start_graphics ();
 unsigned char* loadImage (const char* filename);
 void drawString (int y, int x, const char* s);
 void drawTile (int y, int x, unsigned int tile, Color fg, Color bg);
+void drawBorder (int y, int x, int height, int width);
+
 void beginScreenUpdate();
 void endScreenUpdate();
 

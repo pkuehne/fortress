@@ -3,27 +3,29 @@
 
 #include <queue>
 #include <vector>
-#include "base_system.h"
+#include "game_system_interface.h"
 #include "event.h"
+#include "game_engine_interface.h"
 
 typedef std::queue<Event*> EventQueue;
-typedef std::vector<BaseSystem*> Handlers;
+typedef std::vector<GameSystemInterface*> Handlers;
 typedef Handlers::iterator HandlersIter;
 
 class EventManager {
 public:
 
-    void initialise () { }
+    void initialise (GameEngineInterface* engine) { m_engine = engine; }
 
-    void registerHandler (BaseSystem& system) { m_handlers.push_back (&system); }
+    void registerHandler (GameSystemInterface* system) { m_handlers.push_back (system); }
 
     void raiseEvent (Event* event) { m_events.push (event); }
 
     void processEvents ();
 
 private:
-    EventQueue      m_events;
-    Handlers        m_handlers;
+    GameEngineInterface*    m_engine;
+    EventQueue              m_events;
+    Handlers                m_handlers;
 };
 
 #endif

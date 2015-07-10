@@ -12,7 +12,7 @@ void generateDungeon (GEN_PARAMS params) {
 
     bool playerPlaced = false;
     char map[params.height*params.width];
-    memset (map, '.', params.height*params.width);
+    memset (map, ' ', params.height*params.width);
 
     for (unsigned r = 0; r < params.rooms; r++) {
         while (!generateRoom (params, map));
@@ -28,6 +28,12 @@ void generateDungeon (GEN_PARAMS params) {
                 l_engine->getEntities().createPlayerPrefab (yy, xx);
                 playerPlaced = true;
             }
+            if (map[yy*params.width+xx] == 'M') {
+                l_engine->getEntities().createEnemyPrefab (yy, xx);
+            }
+            if (map[yy*params.width+xx] == '.') {
+                l_engine->getEntities().createTilePrefab (yy, xx);
+            }
         }
     }
 }
@@ -35,8 +41,8 @@ void generateDungeon (GEN_PARAMS params) {
 bool generateRoom (GEN_PARAMS params, char* map) {
     unsigned int xMid = rand() % (params.width-1) + 1;
     unsigned int yMid = rand() % (params.height-1) + 1;
-    unsigned int length = rand() % 5 + 2;
-    unsigned int height = rand() % 5 + 2;
+    unsigned int length = rand() % 6 + 3;
+    unsigned int height = rand() % 6 + 3;
 
     unsigned int startY = yMid - height;
     unsigned int startX = xMid - length;
@@ -63,6 +69,13 @@ bool generateRoom (GEN_PARAMS params, char* map) {
         map[startY*params.width+xx] = 'W';
         map[endY*params.width+xx] = 'W';
     }
+    for (unsigned int yy = startY+1; yy < endY; yy++) {
+        for (unsigned int xx = startX+1; xx < endX; xx++) {
+            map[yy*params.width+xx] = '.';
+        }
+    }
     map[yMid*params.width+xMid] = 'P';
+    map[yMid*params.width+xMid+2] = 'M';
+
     return true;
 }

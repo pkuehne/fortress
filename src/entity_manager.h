@@ -7,16 +7,19 @@
 #include "collider_component.h"
 #include <map>
 
+class GameEngineInterface;
+
 class EntityManager {
 public:
-    void initialise();
-    void destroy();
+    void initialise (GameEngineInterface* engine);
+    void destroy() {}
 
     Entity* createEntity (const std::string& name = "empty");
 
-    void createWallPrefab (unsigned int x, unsigned int y);
-    void createPlayerPrefab (unsigned int x, unsigned int y);
-    void createEnemyPrefab (unsigned int x, unsigned int y);
+    Entity* createWallPrefab (unsigned int x, unsigned int y);
+    Entity* createPlayerPrefab (unsigned int x, unsigned int y);
+    Entity* createEnemyPrefab (unsigned int x, unsigned int y);
+    Entity* createTilePrefab (unsigned int x, unsigned int y);
 
     ComponentManager<SpriteComponent>& getSprites() { return m_sprites; }
     ComponentManager<ColliderComponent>& getColliders() { return m_colliders; }
@@ -24,6 +27,7 @@ public:
     Entity* getEntity (EntityId id);
 
 private:
+    GameEngineInterface*                m_engine;
     unsigned long                       maxId;
     std::map<EntityId, Entity*>         m_idMap;
     std::map<std::string, Entity*>      m_nameMap;

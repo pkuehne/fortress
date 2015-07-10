@@ -16,15 +16,7 @@ void MapWindow::redraw() {
 
     if (getKey(27)) exit (0);
 
-    GameEngine* l_engine = GameEngine::getEngine();
-    //std::cout << "Updating Graphics System" << std::endl;
-    std::map<Entity*, SpriteComponent>& l_sprites = l_engine->getEntities().getSprites().getAll();
-    std::map<Entity*, SpriteComponent>::iterator it = l_sprites.begin();
-    for (; it != l_sprites.end(); it++) {
-        SpriteComponent& l_sprite = it->second;
-        //std::cout << "Drawing Tile" << std::endl;
-        drawTile (l_sprite.yPos, l_sprite.xPos, l_sprite.sprite, l_sprite.fgColor, l_sprite.bgColor);
-    }
+    drawMap();
 }
 
 void MapWindow::keyDown (unsigned char key) {
@@ -44,5 +36,17 @@ void MapWindow::keyDown (unsigned char key) {
         l_event->entity = l_engine->getEntities().getEntity("Player");
         l_event->direction = l_dir;
         l_engine->raiseEvent (l_event);
+    }
+}
+
+void MapWindow::drawMap() {
+    GameEngine* l_engine = GameEngine::getEngine();
+    //std::cout << "Updating Graphics System" << std::endl;
+    std::map<Entity*, SpriteComponent>& l_sprites = l_engine->getEntities().getSprites().getAll();
+    std::map<Entity*, SpriteComponent>::iterator it = l_sprites.begin();
+    for (; it != l_sprites.end(); it++) {
+        SpriteComponent& l_sprite = it->second;
+        //std::cout << "Drawing Tile" << std::endl;
+        drawTile (l_sprite.yPos, l_sprite.xPos, l_sprite.sprite, l_sprite.fgColor, l_sprite.bgColor);
     }
 }

@@ -3,14 +3,10 @@
 #include <fstream>
 #include <iostream>
 
-void EntityManager::initialise()
+void EntityManager::initialise (GameEngineInterface* engine)
 {
     maxId = 0;
-}
-
-void EntityManager::destroy ()
-{
-
+    m_engine = engine;
 }
 
 Entity* EntityManager::createEntity (const std::string& name) {
@@ -22,7 +18,7 @@ Entity* EntityManager::createEntity (const std::string& name) {
 
     AddEntityEvent* l_event = new AddEntityEvent;
     l_event->entity = l_entity;
-    GameEngine::getEngine()->raiseEvent (l_event);
+    m_engine->raiseEvent (l_event);
 
     return l_entity;
 }
@@ -39,7 +35,7 @@ Entity* EntityManager::getEntity (EntityId id) {
     return it->second;
 }
 
-void EntityManager::createWallPrefab (unsigned int x, unsigned int y)
+Entity* EntityManager::createWallPrefab (unsigned int x, unsigned int y)
 {
     Entity* l_entity = createEntity("Wall");
 
@@ -55,15 +51,17 @@ void EntityManager::createWallPrefab (unsigned int x, unsigned int y)
     //Collider Component
     ColliderComponent l_collider;
     getColliders().add (l_entity, l_collider);
+
+    return l_entity;
 }
 
-void EntityManager::createPlayerPrefab (unsigned int x, unsigned int y)
+Entity* EntityManager::createPlayerPrefab (unsigned int x, unsigned int y)
 {
     Entity* l_entity = createEntity("Player");
 
     //Sprite Component
     SpriteComponent l_sprite;
-    l_sprite.fgColor    = Color (RED);
+    l_sprite.fgColor    = Color (WHITE);
     l_sprite.bgColor    = Color (BLACK);
     l_sprite.sprite     = '@';
     l_sprite.xPos       = x;
@@ -74,9 +72,11 @@ void EntityManager::createPlayerPrefab (unsigned int x, unsigned int y)
     //Collider Component
     ColliderComponent l_collider;
     getColliders().add (l_entity, l_collider);
+
+    return l_entity;
 }
 
-void EntityManager::createEnemyPrefab (unsigned int x, unsigned int y)
+Entity* EntityManager::createEnemyPrefab (unsigned int x, unsigned int y)
 {
     Entity* l_entity = createEntity("Enemy");
 
@@ -84,9 +84,30 @@ void EntityManager::createEnemyPrefab (unsigned int x, unsigned int y)
     SpriteComponent l_sprite;
     l_sprite.fgColor    = Color (RED);
     l_sprite.bgColor    = Color (BLACK);
-    l_sprite.sprite     = 'I';
+    l_sprite.sprite     = 'O';
     l_sprite.xPos       = x;
     l_sprite.yPos       = y;
     getSprites().add (l_entity, l_sprite);
 
+    //Collider Component
+    ColliderComponent l_collider;
+    getColliders().add (l_entity, l_collider);
+
+    return l_entity;
+}
+
+Entity* EntityManager::createTilePrefab (unsigned int x, unsigned int y)
+{
+    Entity* l_entity = createEntity("Tile");
+
+    //Sprite Component
+    SpriteComponent l_sprite;
+    l_sprite.fgColor    = Color (GREY);
+    l_sprite.bgColor    = Color (BLACK);
+    l_sprite.sprite     = '.';
+    l_sprite.xPos       = x;
+    l_sprite.yPos       = y;
+    getSprites().add (l_entity, l_sprite);
+
+    return l_entity;
 }

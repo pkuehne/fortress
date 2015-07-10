@@ -8,6 +8,9 @@ public:
     virtual void initialise();
     virtual void redraw();
     virtual void keyDown (unsigned char key);
+
+private:
+    void drawMap ();
 };
 
 #endif
