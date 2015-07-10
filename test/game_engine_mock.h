@@ -12,6 +12,6 @@ public:
     MOCK_METHOD0 (getEntities, EntityManager&());
     MOCK_METHOD1 (loadMap, void (const std::string& mapName));
     MOCK_METHOD0 (getTick, unsigned long long ());
-    MOCK_METHOD0 (getWindows, WindowManager*());
+    MOCK_METHOD0 (getWindows, WindowManagerInterface*());
     MOCK_METHOD0 (getGraphics, GraphicsInterface* ());
 };
