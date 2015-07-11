@@ -5,11 +5,10 @@
 #include "component_manager.h"
 #include "sprite_component.h"
 #include "collider_component.h"
+#include "entity_manager_interface.h"
 #include <map>
 
-class GameEngineInterface;
-
-class EntityManager {
+class EntityManager : public EntityManagerInterface {
 public:
     void initialise (GameEngineInterface* engine);
     void destroy() {}

@@ -7,6 +7,8 @@ class GameEngineInterface;
 class Window : public WindowInterface
 {
 public:
+    static const int MAX_BUTTONS = 5;
+
     Window(): m_engine(0) { }
     virtual ~Window() { }
     virtual void initialise (GameEngineInterface* a_engine);
@@ -18,14 +20,16 @@ public:
     virtual bool getKey (unsigned char key) { return ascii_keys[key]; }
     virtual void mouseDown (int x, int y, int button);
     virtual void mouseUp (int x, int y, int button);
+    virtual bool getMouseButton (int button);
     virtual void beforeRedraw();
     virtual void redraw () { };
     virtual void afterRedraw();
     virtual void resize (int width, int height);
 
 private:
-    bool                ascii_keys[256];
-    bool                special_keys[256];
+    bool                    ascii_keys[256];
+    bool                    special_keys[256];
+    int                     m_buttons[MAX_BUTTONS];
     GameEngineInterface*    m_engine;
 };
 

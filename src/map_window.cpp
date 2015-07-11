@@ -33,7 +33,7 @@ void MapWindow::keyDown (unsigned char key) {
     }
     if (l_dir != MoveEntityEvent::NONE) {
         MoveEntityEvent* l_event = new MoveEntityEvent;
-        l_event->entity = getEngine()->getEntities().getEntity("Player");
+        l_event->entity = getEngine()->getEntities()->getEntity("Player");
         l_event->direction = l_dir;
         getEngine()->raiseEvent (l_event);
     }
@@ -41,7 +41,7 @@ void MapWindow::keyDown (unsigned char key) {
 
 void MapWindow::drawMap() {
 
-    std::map<Entity*, SpriteComponent>& l_sprites = getEngine()->getEntities().getSprites().getAll();
+    std::map<Entity*, SpriteComponent>& l_sprites = getEngine()->getEntities()->getSprites().getAll();
     std::map<Entity*, SpriteComponent>::iterator it = l_sprites.begin();
     for (; it != l_sprites.end(); it++) {
         SpriteComponent& l_sprite = it->second;

@@ -21,17 +21,17 @@ void generateDungeon (GameEngineInterface* a_engine, GEN_PARAMS params) {
     for (unsigned int yy = 0; yy < params.height; yy++) {
         for (unsigned int xx = 0; xx < params.width; xx++) {
             if (map[yy*params.width+xx] == 'W') {
-                a_engine->getEntities().createWallPrefab (yy, xx);
+                a_engine->getEntities()->createWallPrefab (yy, xx);
             }
             if (map[yy*params.width+xx] == 'P' && !playerPlaced) {
-                a_engine->getEntities().createPlayerPrefab (yy, xx);
+                a_engine->getEntities()->createPlayerPrefab (yy, xx);
                 playerPlaced = true;
             }
             if (map[yy*params.width+xx] == 'M') {
-                a_engine->getEntities().createEnemyPrefab (yy, xx);
+                a_engine->getEntities()->createEnemyPrefab (yy, xx);
             }
             if (map[yy*params.width+xx] == '.') {
-                a_engine->getEntities().createTilePrefab (yy, xx);
+                a_engine->getEntities()->createTilePrefab (yy, xx);
             }
         }
     }

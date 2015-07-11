@@ -23,7 +23,7 @@ public:
     bool& isPaused() { return m_paused; }
 
     void raiseEvent (Event* event) { m_eventManager.raiseEvent (event); }
-    EntityManager& getEntities() { return m_entityManager; }
+    EntityManagerInterface* getEntities() { return m_entityManager; }
 
     void loadMap (const std::string& mapName);
 
@@ -36,7 +36,7 @@ private:
     unsigned long long  m_tick;
     bool                m_paused;
 
-    EntityManager           m_entityManager;
+    EntityManagerInterface* m_entityManager;
     EventManager            m_eventManager;
     WindowManagerInterface* m_windowManager;
 

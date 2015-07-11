@@ -28,10 +28,22 @@ void Window::resize (int width, int height)
 
 void Window::mouseDown (int x, int y, int button)
 {
-
+    if (button < MAX_BUTTONS) {
+        m_buttons[button] = true;
+    }
 }
 
 void Window::mouseUp (int x, int y, int button)
 {
+    if (button < MAX_BUTTONS) {
+        m_buttons[button] = false;
+    }
+}
 
+bool Window::getMouseButton (int button)
+{
+    if (button < MAX_BUTTONS) {
+        return m_buttons[button];
+    }
+    return false;
 }

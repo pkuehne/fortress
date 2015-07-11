@@ -9,7 +9,7 @@ public:
     MOCK_METHOD0 (start, void());
     MOCK_METHOD0 (isPaused, bool&());
     MOCK_METHOD1 (raiseEvent, void (Event* event));
-    MOCK_METHOD0 (getEntities, EntityManager&());
+    MOCK_METHOD0 (getEntities, EntityManagerInterface*());
     MOCK_METHOD1 (loadMap, void (const std::string& mapName));
     MOCK_METHOD0 (getTick, unsigned long long ());
     MOCK_METHOD0 (getWindows, WindowManagerInterface*());

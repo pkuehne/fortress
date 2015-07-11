@@ -3,7 +3,7 @@
 
 #include <string>
 //#include "window_manager_interface.h"
-#include "entity_manager.h"
+#include "entity_manager_interface.h"
 #include "graphics_interface.h"
 
 //class WindowManager;
@@ -22,7 +22,7 @@ public:
     virtual bool& isPaused()        = 0;
 
     virtual void raiseEvent (Event* event)  = 0;
-    virtual EntityManager& getEntities()    = 0;
+    virtual EntityManagerInterface* getEntities()    = 0;
 
     virtual void loadMap (const std::string& mapName) = 0;
 
