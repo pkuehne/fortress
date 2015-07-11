@@ -3,6 +3,7 @@
 #include "entity_manager_mock.h"
 #include "component_manager_mock.h"
 #include "graphics_mock.h"
+#include "event.h"
 #include <gtest/gtest.h>
 
 using namespace ::testing;
@@ -42,10 +43,21 @@ TEST (MapWindow, keyDownMovesPlayer)
 {
     MapWindow       l_win;
     GameEngineMock  l_engine;
+    EntityManagerMock   l_entities;
+    Entity          l_entity;
+    std::string     l_playerStr ("Player");
+    MoveEntityEvent* l_event = new MoveEntityEvent;
+
+    l_event->entity     = &l_entity;
+    l_event->direction  = MoveEntityEvent::UP;
+
 
     EXPECT_CALL (l_engine, loadMap (StrEq(""))).Times(1);
+    EXPECT_CALL (l_engine, getEntities()).Times(1).WillOnce(Return (&l_entities));
+    EXPECT_CALL (l_entities, getEntity(TypedEq<std::string>(l_playerStr))).WillOnce (Return (&l_entity));
+    EXPECT_CALL (l_engine, raiseEvent (_)).Times(1);
 
     l_win.initialise (&l_engine);
     l_win.keyDown ('w');
-    
+
 }
