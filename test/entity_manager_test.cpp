@@ -49,13 +49,13 @@ TEST (EntityManager, createWallPrefab)
     EXPECT_EQ (entity, manager.getEntity ("Wall"));
     EXPECT_EQ (entity, manager.getEntity (0));
 
-    SpriteComponent* sprite = manager.getSprites().get (entity);
+    SpriteComponent* sprite = manager.getSprites()->get (entity);
     EXPECT_NE (static_cast<SpriteComponent*>(0), sprite);
     EXPECT_EQ (1, sprite->xPos);
     EXPECT_EQ (2, sprite->yPos);
     EXPECT_EQ (247, sprite->sprite);
 
-    ColliderComponent* collider = manager.getColliders().get(entity);
+    ColliderComponent* collider = manager.getColliders()->get(entity);
     EXPECT_NE (static_cast<ColliderComponent*>(0), collider);
 }
 
@@ -74,13 +74,13 @@ TEST (EntityManager, createPlayerPrefab)
     EXPECT_EQ (entity, manager.getEntity ("Player"));
     EXPECT_EQ (entity, manager.getEntity (0));
 
-    SpriteComponent* sprite = manager.getSprites().get (entity);
+    SpriteComponent* sprite = manager.getSprites()->get (entity);
     EXPECT_NE (static_cast<SpriteComponent*>(0), sprite);
     EXPECT_EQ (1, sprite->xPos);
     EXPECT_EQ (2, sprite->yPos);
     EXPECT_EQ ('@', sprite->sprite);
 
-    ColliderComponent* collider = manager.getColliders().get(entity);
+    ColliderComponent* collider = manager.getColliders()->get(entity);
     EXPECT_NE (static_cast<ColliderComponent*>(0), collider);
 }
 
@@ -99,13 +99,13 @@ TEST (EntityManager, createEnemyPrefab)
     EXPECT_EQ (entity, manager.getEntity ("Enemy"));
     EXPECT_EQ (entity, manager.getEntity (0));
 
-    SpriteComponent* sprite = manager.getSprites().get (entity);
+    SpriteComponent* sprite = manager.getSprites()->get (entity);
     EXPECT_NE (static_cast<SpriteComponent*>(0), sprite);
     EXPECT_EQ (1, sprite->xPos);
     EXPECT_EQ (2, sprite->yPos);
     EXPECT_EQ ('O', sprite->sprite);
 
-    ColliderComponent* collider = manager.getColliders().get(entity);
+    ColliderComponent* collider = manager.getColliders()->get(entity);
     EXPECT_NE (static_cast<ColliderComponent*>(0), collider);
 }
 
@@ -123,13 +123,13 @@ TEST (EntityManager, createTilePrefab)
     EXPECT_EQ ("Tile", entity->getName());
     EXPECT_EQ (entity, manager.getEntity ("Tile"));
 
-    SpriteComponent* sprite = manager.getSprites().get (entity);
+    SpriteComponent* sprite = manager.getSprites()->get (entity);
     EXPECT_NE (static_cast<SpriteComponent*>(0), sprite);
     EXPECT_EQ (1, sprite->xPos);
     EXPECT_EQ (2, sprite->yPos);
     EXPECT_EQ ('.', sprite->sprite);
     EXPECT_EQ (entity, manager.getEntity (0));
 
-    ColliderComponent* collider = manager.getColliders().get(entity);
+    ColliderComponent* collider = manager.getColliders()->get(entity);
     EXPECT_EQ (static_cast<ColliderComponent*>(0), collider);
 }

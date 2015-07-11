@@ -13,10 +13,8 @@ public:
     MOCK_METHOD2 (createEnemyPrefab, Entity* (unsigned int x, unsigned int y));
     MOCK_METHOD2 (createTilePrefab, Entity* (unsigned int x, unsigned int y));
 
-    MOCK_METHOD0 (getSprites, ComponentManager<SpriteComponent>& ());
-    MOCK_METHOD0 (getColliders, ComponentManager<ColliderComponent>& ());
+    MOCK_METHOD0 (getSprites, ComponentManagerInterface<SpriteComponent>* ());
+    MOCK_METHOD0 (getColliders, ComponentManagerInterface<ColliderComponent>* ());
     MOCK_METHOD1 (getEntity, Entity* (std::string name));
     MOCK_METHOD1 (getEntity, Entity* (EntityId id));
-
-
 };

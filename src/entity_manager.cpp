@@ -46,11 +46,11 @@ Entity* EntityManager::createWallPrefab (unsigned int x, unsigned int y)
     l_sprite.sprite     = 247;
     l_sprite.xPos       = x;
     l_sprite.yPos       = y;
-    getSprites().add (l_entity, l_sprite);
+    getSprites()->add (l_entity, l_sprite);
 
     //Collider Component
     ColliderComponent l_collider;
-    getColliders().add (l_entity, l_collider);
+    getColliders()->add (l_entity, l_collider);
 
     return l_entity;
 }
@@ -66,12 +66,12 @@ Entity* EntityManager::createPlayerPrefab (unsigned int x, unsigned int y)
     l_sprite.sprite     = '@';
     l_sprite.xPos       = x;
     l_sprite.yPos       = y;
-    getSprites().add (l_entity, l_sprite);
+    getSprites()->add (l_entity, l_sprite);
 
 
     //Collider Component
     ColliderComponent l_collider;
-    getColliders().add (l_entity, l_collider);
+    getColliders()->add (l_entity, l_collider);
 
     return l_entity;
 }
@@ -87,11 +87,11 @@ Entity* EntityManager::createEnemyPrefab (unsigned int x, unsigned int y)
     l_sprite.sprite     = 'O';
     l_sprite.xPos       = x;
     l_sprite.yPos       = y;
-    getSprites().add (l_entity, l_sprite);
+    getSprites()->add (l_entity, l_sprite);
 
     //Collider Component
     ColliderComponent l_collider;
-    getColliders().add (l_entity, l_collider);
+    getColliders()->add (l_entity, l_collider);
 
     return l_entity;
 }
@@ -107,7 +107,7 @@ Entity* EntityManager::createTilePrefab (unsigned int x, unsigned int y)
     l_sprite.sprite     = '.';
     l_sprite.xPos       = x;
     l_sprite.yPos       = y;
-    getSprites().add (l_entity, l_sprite);
+    getSprites()->add (l_entity, l_sprite);
 
     return l_entity;
 }

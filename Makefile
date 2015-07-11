@@ -8,11 +8,11 @@ clean:
 
 build: tags
 	clear
-	$(MAKE) -C src build
+	$(MAKE) -C src build -j 8
 
 test:
 	clear
-	$(MAKE) -C test test
+	$(MAKE) -C test test -j 8
 
 tags:
 	ctags --recurse=yes
@@ -23,7 +23,7 @@ coverage:
 	rm -f src/*.gcno
 	rm -f test/*.gcno
 	$(MAKE) -C test clean
-	$(MAKE) -C test test
+	$(MAKE) -C test test -j 8
 	gcovr -r src
 
 run: build

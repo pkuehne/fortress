@@ -21,8 +21,8 @@ public:
     virtual Entity* createEnemyPrefab (unsigned int x, unsigned int y) = 0;
     virtual Entity* createTilePrefab (unsigned int x, unsigned int y) = 0;
 
-    virtual ComponentManager<SpriteComponent>& getSprites() = 0;
-    virtual ComponentManager<ColliderComponent>& getColliders() = 0;
+    virtual ComponentManagerInterface<SpriteComponent>* getSprites() = 0;
+    virtual ComponentManagerInterface<ColliderComponent>* getColliders() = 0;
     virtual Entity* getEntity (std::string name) = 0;
     virtual Entity* getEntity (EntityId id) = 0;
 

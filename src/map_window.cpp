@@ -41,7 +41,7 @@ void MapWindow::keyDown (unsigned char key) {
 
 void MapWindow::drawMap() {
 
-    std::map<Entity*, SpriteComponent>& l_sprites = getEngine()->getEntities()->getSprites().getAll();
+    std::map<Entity*, SpriteComponent>& l_sprites = getEngine()->getEntities()->getSprites()->getAll();
     std::map<Entity*, SpriteComponent>::iterator it = l_sprites.begin();
     for (; it != l_sprites.end(); it++) {
         SpriteComponent& l_sprite = it->second;
