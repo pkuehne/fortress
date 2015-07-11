@@ -40,5 +40,12 @@ TEST (MapWindow, redraw)
 
 TEST (MapWindow, keyDownMovesPlayer)
 {
-    FAIL() << "Not finished";
+    MapWindow       l_win;
+    GameEngineMock  l_engine;
+
+    EXPECT_CALL (l_engine, loadMap (StrEq(""))).Times(1);
+
+    l_win.initialise (&l_engine);
+    l_win.keyDown ('w');
+    
 }
