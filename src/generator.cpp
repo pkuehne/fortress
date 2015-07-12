@@ -5,41 +5,39 @@
 #include <cstring>
 #include <iostream>
 
-static bool generateRoom (GEN_PARAMS params, char*);
-
-void generateDungeon (GameEngineInterface* a_engine, GEN_PARAMS params) {
+void Generator::generate () {
     srand(time(0));
 
     bool playerPlaced = false;
-    char map[params.height*params.width];
-    memset (map, ' ', params.height*params.width);
+    char map[m_mapHeight*m_mapWidth];
+    memset (map, ' ', m_mapHeight*m_mapWidth);
 
-    for (unsigned r = 0; r < params.rooms; r++) {
-        while (!generateRoom (params, map));
+    for (unsigned r = 0; r < m_rooms; r++) {
+        while (!generateRoom (map));
     }
 
-    for (unsigned int yy = 0; yy < params.height; yy++) {
-        for (unsigned int xx = 0; xx < params.width; xx++) {
-            if (map[yy*params.width+xx] == 'W') {
-                a_engine->getEntities()->createWallPrefab (yy, xx);
+    for (unsigned int yy = 0; yy < m_mapHeight; yy++) {
+        for (unsigned int xx = 0; xx < m_mapWidth; xx++) {
+            if (map[yy*m_mapWidth+xx] == 'W') {
+                m_engine->getEntities()->createWallPrefab (yy, xx);
             }
-            if (map[yy*params.width+xx] == 'P' && !playerPlaced) {
-                a_engine->getEntities()->createPlayerPrefab (yy, xx);
+            if (map[yy*m_mapWidth+xx] == 'P' && !playerPlaced) {
+                m_engine->getEntities()->createPlayerPrefab (yy, xx);
                 playerPlaced = true;
             }
-            if (map[yy*params.width+xx] == 'M') {
-                a_engine->getEntities()->createEnemyPrefab (yy, xx);
+            if (map[yy*m_mapWidth+xx] == 'M') {
+                m_engine->getEntities()->createEnemyPrefab (yy, xx);
             }
-            if (map[yy*params.width+xx] == '.') {
-                a_engine->getEntities()->createTilePrefab (yy, xx);
+            if (map[yy*m_mapWidth+xx] == '.') {
+                m_engine->getEntities()->createTilePrefab (yy, xx);
             }
         }
     }
 }
 
-bool generateRoom (GEN_PARAMS params, char* map) {
-    unsigned int xMid = rand() % (params.width-1) + 1;
-    unsigned int yMid = rand() % (params.height-1) + 1;
+bool Generator::generateRoom (char* map) {
+    unsigned int xMid = rand() % (m_mapWidth-1) + 1;
+    unsigned int yMid = rand() % (m_mapHeight-1) + 1;
     unsigned int length = rand() % 6 + 3;
     unsigned int height = rand() % 6 + 3;
 
@@ -48,33 +46,33 @@ bool generateRoom (GEN_PARAMS params, char* map) {
     unsigned int endY = yMid + height;
     unsigned int endX = xMid + length;
 
-    if (startY < 2 || startX < 2 || endY > params.height - 2 || endX > params.width - 2) {
+    if (startY < 2 || startX < 2 || endY > m_mapHeight - 2 || endX > m_mapWidth - 2) {
         std::cout << "Failed dimensions" << std::endl;
         return false;
     }
     for (unsigned int yy = startY; yy <= endY; yy++) {
-        if (map[yy*params.width+startX] == 'W' || map[yy*params.width+endX] == 'W') {
+        if (map[yy*m_mapWidth+startX] == 'W' || map[yy*m_mapWidth+endX] == 'W') {
             std::cout << "Failed vertical wall check" << std::endl;
             return false;
         }
-        map[yy*params.width+startX] = 'W';
-        map[yy*params.width+endX] = 'W';
+        map[yy*m_mapWidth+startX] = 'W';
+        map[yy*m_mapWidth+endX] = 'W';
     }
     for (unsigned int xx = startX+1; xx <= endX-1; xx++) {
-        if (map[startY*params.width+xx] == 'W' || map[endY*params.width+xx] == 'W') {
+        if (map[startY*m_mapWidth+xx] == 'W' || map[endY*m_mapWidth+xx] == 'W') {
             std::cout << "Failed horizontal wall check" << std::endl;
             return false;
         }
-        map[startY*params.width+xx] = 'W';
-        map[endY*params.width+xx] = 'W';
+        map[startY*m_mapWidth+xx] = 'W';
+        map[endY*m_mapWidth+xx] = 'W';
     }
     for (unsigned int yy = startY+1; yy < endY; yy++) {
         for (unsigned int xx = startX+1; xx < endX; xx++) {
-            map[yy*params.width+xx] = '.';
+            map[yy*m_mapWidth+xx] = '.';
         }
     }
-    map[yMid*params.width+xMid] = 'P';
-    map[yMid*params.width+xMid+2] = 'M';
+    map[yMid*m_mapWidth+xMid] = 'P';
+    map[yMid*m_mapWidth+xMid+2] = 'M';
 
     return true;
 }

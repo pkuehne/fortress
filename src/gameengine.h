@@ -3,11 +3,11 @@
 
 #include "game_engine_interface.h"
 #include "graphics_interface.h"
-#include "event_manager.h"
-#include "entity_manager.h"
-#include "window_manager.h"
+#include "entity_manager_interface.h"
+#include "window_manager_interface.h"
 #include "game_system_interface.h"
 #include "event_manager_interface.h"
+#include "generator_interface.h"
 
 #include <string>
 #include <cstdlib>
@@ -38,7 +38,7 @@ public:
 
     void setSpriteSystem (GameSystemInterface* a_system) { m_spriteSystem = a_system; }
     void setMoveSystem (GameSystemInterface* a_system) { m_moveSystem = a_system; }
-
+    void setGenerator (GeneratorInterface* a_generator) { m_generator = a_generator; }
 private:
     unsigned long long  m_tick;
     bool                m_paused;
@@ -51,6 +51,7 @@ private:
     GameSystemInterface*    m_spriteSystem;
 
     GraphicsInterface*      m_graphics;
+    GeneratorInterface*     m_generator;
 };
 
 #endif
