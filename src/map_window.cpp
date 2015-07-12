@@ -2,7 +2,6 @@
 #include "map_window.h"
 #include "gameengine.h"
 #include "event.h"
-#include <cstdlib>
 
 void MapWindow::initialise(GameEngineInterface* a_engine) {
     Window::initialise (a_engine);
@@ -29,7 +28,7 @@ void MapWindow::keyDown (unsigned char key) {
         case 'a': l_dir = MoveEntityEvent::LEFT; break;
         case 's': l_dir = MoveEntityEvent::DOWN; break;
         case 'd': l_dir = MoveEntityEvent::RIGHT; break;
-        case 27: exit(0); break;
+        case 27: getEngine()->quit(); break;
     }
     if (l_dir != MoveEntityEvent::NONE) {
         MoveEntityEvent* l_event = new MoveEntityEvent;

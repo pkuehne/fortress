@@ -8,6 +8,7 @@ public:
     MOCK_METHOD0 (tick, void());
     MOCK_METHOD0 (start, void());
     MOCK_METHOD0 (isPaused, bool&());
+    MOCK_METHOD0 (quit, void (void));
     MOCK_METHOD1 (raiseEvent, void (Event* event));
     MOCK_METHOD0 (getEntities, EntityManagerInterface*());
     MOCK_METHOD1 (loadMap, void (const std::string& mapName));

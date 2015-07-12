@@ -11,6 +11,7 @@
 #include "sprite_system.h"
 
 #include <string>
+#include <cstdlib>
 
 class GameEngine : public GameEngineInterface {
 public:
@@ -21,7 +22,7 @@ public:
     void tick (void);
 
     bool& isPaused() { return m_paused; }
-
+    void quit() { exit (0); }
     void raiseEvent (Event* event) { m_eventManager.raiseEvent (event); }
     EntityManagerInterface* getEntities() { return m_entityManager; }
 

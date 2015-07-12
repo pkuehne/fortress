@@ -77,4 +77,7 @@ TEST (MapWindow, keyDownMovesPlayer)
     l_event->direction  = MoveEntityEvent::RIGHT;
     l_win.keyDown ('d');
 
+    EXPECT_CALL (l_engine, quit()).Times(1);
+    l_win.keyDown (27);
+
 }

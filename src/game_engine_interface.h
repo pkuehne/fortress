@@ -20,6 +20,7 @@ public:
     virtual void tick (void)        = 0;
 
     virtual bool& isPaused()        = 0;
+    virtual void quit()             = 0;
 
     virtual void raiseEvent (Event* event)  = 0;
     virtual EntityManagerInterface* getEntities()    = 0;
