@@ -10,6 +10,7 @@ public:
     virtual void handleEvent (const Event* event);
 
 private:
+    void handleAddWallEvent (Entity* a_entity);
     Entity* findWallEntity (unsigned int x, unsigned int y);
     void updateWallSprite (Entity* a_entity);
 

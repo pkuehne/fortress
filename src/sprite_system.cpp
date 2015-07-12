@@ -6,40 +6,38 @@
 
 void SpriteSystem::handleEvent (const Event* event) {
     switch (event->getType()) {
-        case EVENT_MOVE_ENTITY: {
-            const MoveEntityEvent* l_event = dynamic_cast<const MoveEntityEvent*> (event);
-            Entity* l_entity = l_event->entity;
-            SpriteComponent* l_sprite = m_engine->getEntities()->getSprites()->get (l_entity);
-            if (!l_sprite) return;
-            break;
-        }
         case EVENT_ADD_ENTITY: {
             const AddEntityEvent* l_event = dynamic_cast<const AddEntityEvent*> (event);
-            Entity* l_entity = l_event->entity;
-            if (l_entity->getName() != "Wall") break;
-
-            updateWallSprite (l_entity);
-
-            SpriteComponent* l_sprite = m_engine->getEntities()->getSprites()->get (l_entity);
-            Entity* left    = findWallEntity (l_sprite->xPos-1, l_sprite->yPos);
-            Entity* up      = findWallEntity (l_sprite->xPos, l_sprite->yPos-1);
-            Entity* right   = findWallEntity (l_sprite->xPos+1, l_sprite->yPos);
-            Entity* down    = findWallEntity (l_sprite->xPos, l_sprite->yPos+1);
-
-            if (left)   updateWallSprite (left);
-            if (up)     updateWallSprite (up);
-            if (right)  updateWallSprite (right);
-            if (down)   updateWallSprite (down);
-
+            if (!l_event->entity) break;
+            if (l_event->entity->getName() == "Wall") {
+                handleAddWallEvent (l_event->entity);
+            }
             break;
         }
         default: break;
     }
+}
 
+void SpriteSystem::handleAddWallEvent (Entity* a_entity) {
+    updateWallSprite (a_entity);
+
+    SpriteComponent* l_sprite = m_engine->getEntities()->getSprites()->get (a_entity);
+    if (!l_sprite) return;
+
+    Entity* left    = findWallEntity (l_sprite->xPos-1, l_sprite->yPos);
+    Entity* up      = findWallEntity (l_sprite->xPos, l_sprite->yPos-1);
+    Entity* right   = findWallEntity (l_sprite->xPos+1, l_sprite->yPos);
+    Entity* down    = findWallEntity (l_sprite->xPos, l_sprite->yPos+1);
+
+    if (left)   updateWallSprite (left);
+    if (up)     updateWallSprite (up);
+    if (right)  updateWallSprite (right);
+    if (down)   updateWallSprite (down);
 }
 
 void SpriteSystem::updateWallSprite (Entity* a_entity) {
     SpriteComponent* l_sprite = m_engine->getEntities()->getSprites()->get (a_entity);
+    if (!l_sprite) return;
 
     Entity* left    = findWallEntity (l_sprite->xPos-1, l_sprite->yPos);
     Entity* up      = findWallEntity (l_sprite->xPos, l_sprite->yPos-1);
