@@ -2,6 +2,10 @@
 #include "generator.h"
 #include <string>
 
+#include "movement_system.h"
+#include "sprite_system.h"
+
+
 GameEngine* g_engine = 0;
 
 static void keyDown (unsigned char key, int x, int y)
@@ -32,7 +36,10 @@ GameEngine::GameEngine (GraphicsInterface* a_graphics)
 : m_tick (0)
 , m_paused (false)
 , m_entityManager (0)
+, m_eventManager (0)
 , m_windowManager (0)
+, m_moveSystem (0)
+, m_spriteSystem (0)
 , m_graphics (a_graphics)
 {
     g_engine = this;
@@ -47,20 +54,23 @@ void GameEngine::initialise ()
 {
     // Create if not exist
     if (!m_windowManager) m_windowManager = new WindowManager();
+    if (!m_eventManager)  m_eventManager  = new EventManager();
     if (!m_entityManager) m_entityManager = new EntityManager();
-    
+    if (!m_moveSystem)    m_moveSystem    = new MovementSystem();
+    if (!m_spriteSystem)  m_spriteSystem  = new SpriteSystem();
+
     // Initialise Managers
     m_windowManager->initialise (this);
     m_entityManager->initialise (this);
-    m_eventManager.initialise  (this);
+    m_eventManager->initialise  (this);
 
     // Initialise Systems
-    m_moveSystem.initialise (this);
-    m_spriteSystem.initialise (this);
+    m_moveSystem->initialise (this);
+    m_spriteSystem->initialise (this);
 
     // Register Systems with Event Manager
-    m_eventManager.registerHandler (&m_moveSystem);
-    m_eventManager.registerHandler (&m_spriteSystem);
+    m_eventManager->registerHandler (m_moveSystem);
+    m_eventManager->registerHandler (m_spriteSystem);
 
     m_graphics->setKeyboardFunc (keyDown);
     m_graphics->setKeyboardUpFunc (keyUp);
@@ -84,12 +94,12 @@ void GameEngine::tick ()
     if (!m_paused) {
         m_tick++; // Move the engine on
 
-        m_eventManager.processEvents();
+        m_eventManager->processEvents();
 
         //Update Systems
-        m_moveSystem.update();
-        m_spriteSystem.update();
-        }
+        m_moveSystem->update();
+        m_spriteSystem->update();
+    }
     getWindows()->getActive()->beforeRedraw();
     getWindows()->getActive()->redraw();
     getWindows()->getActive()->afterRedraw();

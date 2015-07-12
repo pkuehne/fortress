@@ -6,9 +6,8 @@
 #include "event_manager.h"
 #include "entity_manager.h"
 #include "window_manager.h"
-
-#include "movement_system.h"
-#include "sprite_system.h"
+#include "game_system_interface.h"
+#include "event_manager_interface.h"
 
 #include <string>
 #include <cstdlib>
@@ -23,7 +22,7 @@ public:
 
     bool& isPaused() { return m_paused; }
     void quit() { exit (0); }
-    void raiseEvent (Event* event) { m_eventManager.raiseEvent (event); }
+    void raiseEvent (Event* event) { m_eventManager->raiseEvent (event); }
     EntityManagerInterface* getEntities() { return m_entityManager; }
 
     void loadMap (const std::string& mapName);
@@ -33,16 +32,23 @@ public:
 
     GraphicsInterface* getGraphics() { return m_graphics; }
 
+    void setEntityManager (EntityManagerInterface* a_manager) { m_entityManager = a_manager; }
+    void setWindowManager (WindowManagerInterface* a_manager) { m_windowManager = a_manager; }
+    void setEventManager (EventManagerInterface* a_manager) { m_eventManager = a_manager; }
+
+    void setSpriteSystem (GameSystemInterface* a_system) { m_spriteSystem = a_system; }
+    void setMoveSystem (GameSystemInterface* a_system) { m_moveSystem = a_system; }
+
 private:
     unsigned long long  m_tick;
     bool                m_paused;
 
     EntityManagerInterface* m_entityManager;
-    EventManager            m_eventManager;
+    EventManagerInterface*  m_eventManager;
     WindowManagerInterface* m_windowManager;
 
-    MovementSystem          m_moveSystem;
-    SpriteSystem            m_spriteSystem;
+    GameSystemInterface*    m_moveSystem;
+    GameSystemInterface*    m_spriteSystem;
 
     GraphicsInterface*      m_graphics;
 };
