@@ -1,6 +1,5 @@
 #include "graphics.h"
-#include "gameengine.h"
-#include "window.h"
+//#include "window.h"
 #include "event.h"
 #include <stdlib.h>
 #include <string.h>
@@ -9,15 +8,18 @@
 //#include <lodepng/lodepng.h>
 #include <SOIL.h>
 
+static void empty (void) {
 
-void drawString (int y, int x, const char* string)
+}
+
+void Graphics::drawString (int y, int x, const char* string)
 {
     int offset = 0;
     while (*string != '\0')
         drawTile (y, x+offset++, static_cast<unsigned int>(*string++), Color (WHITE), Color (BLACK));
 }
 
-void drawTile (int y, int x, unsigned int tile, Color fg, Color bg)
+void Graphics::drawTile (int y, int x, unsigned int tile, Color fg, Color bg)
 {
     int iconSize = 12;
     float tileWidth = 1.0/16;
@@ -42,7 +44,7 @@ void drawTile (int y, int x, unsigned int tile, Color fg, Color bg)
     glEnd();
 }
 
-void drawBorder (int y, int x, int height, int width)
+void Graphics::drawBorder (int y, int x, int height, int width)
 {
     // Draw Corners
     drawTile (y, x, 201, WHITE, WHITE);
@@ -63,16 +65,6 @@ void drawBorder (int y, int x, int height, int width)
     // Draw Verticals
 }
 
-
-static void display (void)
-{
-    GameEngine* l_engine = GameEngine::getEngine();
-    l_engine->tick();
-    l_engine->getCurrentWindow()->beforeRedraw();
-    l_engine->getCurrentWindow()->redraw();
-    l_engine->getCurrentWindow()->afterRedraw();
-}
-
 static void resize (int w, int h)
 {
     glViewport(0, 0, (GLsizei) w, (GLsizei) h);
@@ -82,31 +74,46 @@ static void resize (int w, int h)
     glMatrixMode(GL_MODELVIEW);
 }
 
-static void keyDown (unsigned char key, int x, int y)
+void Graphics::setKeyboardFunc (KeyboardFuncPtr func)
 {
-    GameEngine* l_engine = GameEngine::getEngine();
-    l_engine->getCurrentWindow()->keyDown (key);
-
+    glutKeyboardFunc (func);
 }
 
-static void keyUp (unsigned char key, int x, int y)
+void Graphics::setKeyboardUpFunc (KeyboardFuncPtr func)
 {
-    GameEngine* l_engine = GameEngine::getEngine();
-    l_engine->getCurrentWindow()->keyUp (key);
+    glutKeyboardUpFunc (func);
 }
 
-static void mouseClick (int button, int state, int x, int y)
+void Graphics::setDisplayFunc (DisplayFuncPtr func)
 {
-    GameEngine* l_engine = GameEngine::getEngine();
-    if (state) {
-        l_engine->getCurrentWindow()->mouseUp (x, y, button);
-    } else {
-        l_engine->getCurrentWindow()->mouseDown (x, y, button);
-    }
+    glutDisplayFunc (func);
+    glutIdleFunc    (func);
 }
 
-void setup_graphics ()
+void Graphics::setMouseFunc (MouseFuncPtr func)
 {
+    glutMouseFunc (func);
+}
+
+void Graphics::spin ()
+{
+    glutMainLoop();
+}
+
+void Graphics::beginScreenUpdate()
+{
+    glClear(GL_COLOR_BUFFER_BIT);
+}
+
+void Graphics::endScreenUpdate()
+{
+    glFlush();
+}
+
+void Graphics::initialise (int argc, char** argv)
+{
+    glutInit (&argc, argv);
+
     glutInitDisplayMode (GLUT_SINGLE | GLUT_RGBA);
     glutInitWindowSize (800, 600);
     glutInitWindowPosition (100, 100);
@@ -122,11 +129,10 @@ void setup_graphics ()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     glutReshapeFunc     (resize);
-    glutKeyboardFunc    (keyDown);
-    glutKeyboardUpFunc  (keyUp);
-    glutMouseFunc       (mouseClick);
-    glutDisplayFunc     (display);
-    glutIdleFunc        (display);
+    setKeyboardFunc     (NULL);
+    setKeyboardUpFunc   (NULL);
+    setMouseFunc        (NULL);
+    setDisplayFunc      (empty);
 
     std::string l_textureName ("12x12.png");
     std::cout << "Loading texture: " << l_textureName << std::endl;
@@ -143,19 +149,4 @@ void setup_graphics ()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
     //delete pixels;
-}
-
-void start_graphics ()
-{
-    glutMainLoop();
-}
-
-void beginScreenUpdate()
-{
-    glClear(GL_COLOR_BUFFER_BIT);
-}
-
-void endScreenUpdate()
-{
-    glFlush();
 }

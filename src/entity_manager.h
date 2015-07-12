@@ -2,14 +2,13 @@
 #define __ENTITY_MANAGER_H__
 
 #include "entity.h"
-#include "component_manager.h"
+#include "component_manager_interface.h"
 #include "sprite_component.h"
 #include "collider_component.h"
+#include "entity_manager_interface.h"
 #include <map>
 
-class GameEngineInterface;
-
-class EntityManager {
+class EntityManager : public EntityManagerInterface {
 public:
     void initialise (GameEngineInterface* engine);
     void destroy() {}
@@ -21,8 +20,8 @@ public:
     Entity* createEnemyPrefab (unsigned int x, unsigned int y);
     Entity* createTilePrefab (unsigned int x, unsigned int y);
 
-    ComponentManager<SpriteComponent>& getSprites() { return m_sprites; }
-    ComponentManager<ColliderComponent>& getColliders() { return m_colliders; }
+    ComponentManagerInterface<SpriteComponent>* getSprites() { return &m_sprites; }
+    ComponentManagerInterface<ColliderComponent>* getColliders() { return &m_colliders; }
     Entity* getEntity (std::string name);
     Entity* getEntity (EntityId id);
 

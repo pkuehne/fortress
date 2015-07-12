@@ -1,11 +1,12 @@
 #ifndef __COMPONENT_MANAGER_H__
 #define __COMPONENT_MANAGER_H__
 
+#include "component_manager_interface.h"
 #include "entity.h"
 #include <map>
 
 template <class T>
-class ComponentManager {
+class ComponentManager : public ComponentManagerInterface<T> {
 public:
     void add (Entity* entity, T component);
     T* get (Entity* entity);

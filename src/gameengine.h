@@ -2,51 +2,55 @@
 #define __GAMEENGINE_H__
 
 #include "game_engine_interface.h"
-#include "graphics.h"
+#include "graphics_interface.h"
 #include "event_manager.h"
 #include "entity_manager.h"
 #include "window_manager.h"
-
-#include "movement_system.h"
-#include "sprite_system.h"
+#include "game_system_interface.h"
+#include "event_manager_interface.h"
 
 #include <string>
+#include <cstdlib>
 
 class GameEngine : public GameEngineInterface {
 public:
-    static GameEngine* getEngine ();
+    GameEngine (GraphicsInterface* a_graphics);
+    ~GameEngine ();
 
     void initialise (void);
     void tick (void);
-    void start (void) { start_graphics(); }
 
     bool& isPaused() { return m_paused; }
-
-    void raiseEvent (Event* event) { m_eventManager.raiseEvent (event); }
-    EntityManager& getEntities() { return m_entityManager; }
+    void quit() { exit (0); }
+    void raiseEvent (Event* event) { m_eventManager->raiseEvent (event); }
+    EntityManagerInterface* getEntities() { return m_entityManager; }
 
     void loadMap (const std::string& mapName);
 
     unsigned long long getTick() { return m_tick; }
-    WindowManager& getWindows() { return m_windowManager; }
-    Window* getCurrentWindow() { return m_windowManager.getWindow(); }
+    WindowManagerInterface* getWindows() { return m_windowManager; }
 
-    GameEngine ();
-    ~GameEngine ();
+    GraphicsInterface* getGraphics() { return m_graphics; }
 
-private:
-    static GameEngine*  s_engine;
+    void setEntityManager (EntityManagerInterface* a_manager) { m_entityManager = a_manager; }
+    void setWindowManager (WindowManagerInterface* a_manager) { m_windowManager = a_manager; }
+    void setEventManager (EventManagerInterface* a_manager) { m_eventManager = a_manager; }
+
+    void setSpriteSystem (GameSystemInterface* a_system) { m_spriteSystem = a_system; }
+    void setMoveSystem (GameSystemInterface* a_system) { m_moveSystem = a_system; }
 
 private:
     unsigned long long  m_tick;
     bool                m_paused;
 
-    EntityManager       m_entityManager;
-    EventManager        m_eventManager;
-    WindowManager       m_windowManager;
+    EntityManagerInterface* m_entityManager;
+    EventManagerInterface*  m_eventManager;
+    WindowManagerInterface* m_windowManager;
 
-    MovementSystem      m_moveSystem;
-    SpriteSystem        m_spriteSystem;
+    GameSystemInterface*    m_moveSystem;
+    GameSystemInterface*    m_spriteSystem;
+
+    GraphicsInterface*      m_graphics;
 };
 
 #endif

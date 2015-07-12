@@ -2,42 +2,80 @@
 #include "generator.h"
 #include <string>
 
-GameEngine* GameEngine::s_engine = 0;
+#include "movement_system.h"
+#include "sprite_system.h"
 
-GameEngine::GameEngine ()
+
+GameEngine* g_engine = 0;
+
+static void keyDown (unsigned char key, int x, int y)
+{
+    g_engine->getWindows()->getActive()->keyDown (key);
+}
+
+static void keyUp (unsigned char key, int x, int y)
+{
+    g_engine->getWindows()->getActive()->keyUp (key);
+}
+
+static void display (void)
+{
+    g_engine->tick();
+}
+
+static void mouseClick (int button, int state, int x, int y)
+{
+    if (state) {
+        g_engine->getWindows()->getActive()->mouseUp (x, y, button);
+    } else {
+        g_engine->getWindows()->getActive()->mouseDown (x, y, button);
+    }
+}
+
+GameEngine::GameEngine (GraphicsInterface* a_graphics)
 : m_tick (0)
 , m_paused (false)
+, m_entityManager (0)
+, m_eventManager (0)
+, m_windowManager (0)
+, m_moveSystem (0)
+, m_spriteSystem (0)
+, m_graphics (a_graphics)
 {
-
+    g_engine = this;
 }
 
 GameEngine::~GameEngine ()
 {
-    if (s_engine) delete s_engine;
-}
 
-GameEngine* GameEngine::getEngine ()
-{
-    if (!s_engine) s_engine = new GameEngine;
-    return s_engine;
 }
 
 void GameEngine::initialise ()
 {
+    // Create if not exist
+    if (!m_windowManager) m_windowManager = new WindowManager();
+    if (!m_eventManager)  m_eventManager  = new EventManager();
+    if (!m_entityManager) m_entityManager = new EntityManager();
+    if (!m_moveSystem)    m_moveSystem    = new MovementSystem();
+    if (!m_spriteSystem)  m_spriteSystem  = new SpriteSystem();
+
     // Initialise Managers
-    m_windowManager.initialise (this);
-    m_entityManager.initialise (this);
-    m_eventManager.initialise  (this);
+    m_windowManager->initialise (this);
+    m_entityManager->initialise (this);
+    m_eventManager->initialise  (this);
 
     // Initialise Systems
-    m_moveSystem.initialise (this);
-    m_spriteSystem.initialise (this);
+    m_moveSystem->initialise (this);
+    m_spriteSystem->initialise (this);
 
     // Register Systems with Event Manager
-    m_eventManager.registerHandler (&m_moveSystem);
-    m_eventManager.registerHandler (&m_spriteSystem);
+    m_eventManager->registerHandler (m_moveSystem);
+    m_eventManager->registerHandler (m_spriteSystem);
 
-    setup_graphics();
+    m_graphics->setKeyboardFunc (keyDown);
+    m_graphics->setKeyboardUpFunc (keyUp);
+    m_graphics->setDisplayFunc  (display);
+    m_graphics->setMouseFunc    (mouseClick);
 }
 
 void GameEngine::loadMap (const std::string& mapName)
@@ -47,21 +85,24 @@ void GameEngine::loadMap (const std::string& mapName)
     params.height   = 50;
     params.width    = 50;
     params.rooms    = 1;
-    generateDungeon (params);
+    generateDungeon (this, params);
 
 }
 
 void GameEngine::tick ()
 {
-    if (m_paused) return;
+    if (!m_paused) {
+        m_tick++; // Move the engine on
 
-    m_tick++; // Move the engine on
+        m_eventManager->processEvents();
 
-    m_eventManager.processEvents();
-
-    //Update Systems
-    m_moveSystem.update();
-    m_spriteSystem.update();
+        //Update Systems
+        m_moveSystem->update();
+        m_spriteSystem->update();
+    }
+    getWindows()->getActive()->beforeRedraw();
+    getWindows()->getActive()->redraw();
+    getWindows()->getActive()->afterRedraw();
 
     return;
 }

@@ -8,10 +8,11 @@ public:
     MOCK_METHOD0 (tick, void());
     MOCK_METHOD0 (start, void());
     MOCK_METHOD0 (isPaused, bool&());
+    MOCK_METHOD0 (quit, void (void));
     MOCK_METHOD1 (raiseEvent, void (Event* event));
-    MOCK_METHOD0 (getEntities, EntityManager&());
+    MOCK_METHOD0 (getEntities, EntityManagerInterface*());
     MOCK_METHOD1 (loadMap, void (const std::string& mapName));
     MOCK_METHOD0 (getTick, unsigned long long ());
-    MOCK_METHOD0 (getWindows, WindowManager&());
-    MOCK_METHOD0 (getCurrentWindow, Window*());
+    MOCK_METHOD0 (getWindows, WindowManagerInterface*());
+    MOCK_METHOD0 (getGraphics, GraphicsInterface* ());
 };

@@ -1,3 +1,4 @@
+.PHONY: all clean test shuffle
 CC=g++
 CFLAGS=-c -g -Wall -I. -I/usr/include -I../src/ -fprofile-arcs -ftest-coverage
 LDFLAGS=
@@ -32,7 +33,10 @@ clean:
 
 test:
 	$(MAKE) all
-	./unit_test
+	./unit_test --gtest_shuffle
+
+shuffle:
+	./unit_test --gtest_repeat=100 --gtest_shuffle
 
 $(EXECUTABLE): $(OBJECTS)
 	$(CC) $(LDFLAGS) $(OBJECTS) $(LIBRARIES) -o $@

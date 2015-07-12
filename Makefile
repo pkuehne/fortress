@@ -1,4 +1,4 @@
-.PHONY: all clean build test tags coverage run
+.PHONY: all clean build test tags coverage run shuffle
 
 all: clean build test
 
@@ -7,11 +7,15 @@ clean:
 	$(MAKE) -C test clean
 
 build: tags
-	$(MAKE) -C src build
+	clear
+	$(MAKE) -C src build -j 8
 
 test:
-	$(MAKE) -C test test
+	clear
+	$(MAKE) -C test test -j 8
 
+shuffle:
+	$(MAKE) -C test shuffle
 tags:
 	ctags --recurse=yes
 
@@ -21,7 +25,7 @@ coverage:
 	rm -f src/*.gcno
 	rm -f test/*.gcno
 	$(MAKE) -C test clean
-	$(MAKE) -C test test
+	$(MAKE) -C test test -j 8
 	gcovr -r src
 
 run: build

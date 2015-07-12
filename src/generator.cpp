@@ -7,7 +7,7 @@
 
 static bool generateRoom (GEN_PARAMS params, char*);
 
-void generateDungeon (GEN_PARAMS params) {
+void generateDungeon (GameEngineInterface* a_engine, GEN_PARAMS params) {
     srand(time(0));
 
     bool playerPlaced = false;
@@ -18,21 +18,20 @@ void generateDungeon (GEN_PARAMS params) {
         while (!generateRoom (params, map));
     }
 
-    GameEngine* l_engine = GameEngine::getEngine();
     for (unsigned int yy = 0; yy < params.height; yy++) {
         for (unsigned int xx = 0; xx < params.width; xx++) {
             if (map[yy*params.width+xx] == 'W') {
-                l_engine->getEntities().createWallPrefab (yy, xx);
+                a_engine->getEntities()->createWallPrefab (yy, xx);
             }
             if (map[yy*params.width+xx] == 'P' && !playerPlaced) {
-                l_engine->getEntities().createPlayerPrefab (yy, xx);
+                a_engine->getEntities()->createPlayerPrefab (yy, xx);
                 playerPlaced = true;
             }
             if (map[yy*params.width+xx] == 'M') {
-                l_engine->getEntities().createEnemyPrefab (yy, xx);
+                a_engine->getEntities()->createEnemyPrefab (yy, xx);
             }
             if (map[yy*params.width+xx] == '.') {
-                l_engine->getEntities().createTilePrefab (yy, xx);
+                a_engine->getEntities()->createTilePrefab (yy, xx);
             }
         }
     }
