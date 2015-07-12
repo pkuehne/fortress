@@ -27,13 +27,16 @@ TEST (MapWindow, redraw)
     ComponentManager<SpriteComponent>   l_component;
     Entity              l_entity;
     SpriteComponent     l_sprite;
+    l_sprite.yPos   = 1;
+    l_sprite.xPos   = 1;
+    l_sprite.sprite = 180;
     l_component.add (&l_entity, l_sprite);
 
     EXPECT_CALL (l_engine, loadMap (StrEq(""))).Times(1);
     EXPECT_CALL (l_engine, getEntities()).Times(1).WillOnce(Return (&l_entities));
     EXPECT_CALL (l_engine, getGraphics()).Times(1).WillRepeatedly (Return (&l_graphics));
     EXPECT_CALL (l_entities, getSprites()).Times(1).WillOnce (Return (&l_component));
-    EXPECT_CALL (l_graphics, drawTile(Eq(1), Eq(0), Eq(0), _, _)).Times(1);
+    EXPECT_CALL (l_graphics, drawTile(Eq(l_sprite.yPos), Eq(l_sprite.xPos), Eq(l_sprite.sprite), _, _)).Times(1);
     l_win.initialise (&l_engine);
     l_win.redraw();
     //FAIL() << "Not finished";

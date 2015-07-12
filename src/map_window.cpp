@@ -7,8 +7,6 @@ void MapWindow::initialise(GameEngineInterface* a_engine) {
     Window::initialise (a_engine);
 
     std::string l_mapName ("");
-
-    std::cout << "Loading map: " << l_mapName << std::endl;
     getEngine()->loadMap(l_mapName);
 }
 

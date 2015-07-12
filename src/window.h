@@ -1,6 +1,7 @@
 #ifndef __WINDOW_H__
 #define __WINDOW_H__
 
+#include <cstring>
 #include "window_interface.h"
 class GameEngineInterface;
 
@@ -9,7 +10,7 @@ class Window : public WindowInterface
 public:
     static const int MAX_BUTTONS = 5;
 
-    Window(): m_engine(0) { }
+    Window(): m_engine(0) { memset (ascii_keys, false, sizeof(ascii_keys)); }
     virtual ~Window() { }
     virtual void initialise (GameEngineInterface* a_engine);
     virtual void destroy (void);

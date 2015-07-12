@@ -26,12 +26,8 @@ void MovementSystem::handleEvent (const Event* event)
             std::map<Entity*, SpriteComponent>& l_sprites = m_engine->getEntities()->getSprites()->getAll();
             std::map<Entity*, SpriteComponent>::iterator it = l_sprites.begin();
             for (; it != l_sprites.end(); it++) {
+                // There is an entity here
                 if (it->second.xPos == newX && it->second.yPos == newY) {
-                    // There is an entity here
-
-                    //Check if it's an enemy
-
-
                     // Check if it's a collidable
                     if (m_engine->getEntities()->getColliders()->get (it->first)) return;
                 }

@@ -1,4 +1,4 @@
-.PHONY: all clean build test tags coverage run
+.PHONY: all clean build test tags coverage run shuffle
 
 all: clean build test
 
@@ -14,6 +14,8 @@ test:
 	clear
 	$(MAKE) -C test test -j 8
 
+shuffle:
+	$(MAKE) -C test shuffle
 tags:
 	ctags --recurse=yes
 
