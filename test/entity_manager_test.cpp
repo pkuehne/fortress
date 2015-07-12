@@ -20,6 +20,8 @@ TEST (EntityManager, createEntity)
     EXPECT_EQ ("test", entity->getName());
     EXPECT_EQ (entity, manager.getEntity ("test"));
     EXPECT_EQ (entity, manager.getEntity (0));
+
+    manager.destroy();
 }
 
 TEST (EntityManager, getEntityEmpty)
