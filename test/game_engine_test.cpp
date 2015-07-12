@@ -6,6 +6,7 @@
 #include "window_manager_mock.h"
 #include "window_mock.h"
 #include "base_system_mock.h"
+#include "generator_mock.h"
 
 using namespace ::testing;
 
@@ -27,18 +28,21 @@ TEST (GameEngine, tick)
     BaseSystemMock      l_moveSystem;
     BaseSystemMock      l_spriteSystem;
     WindowMock          l_window;
+    GeneratorMock       l_generator;
 
     l_engine.setEntityManager (&l_entities);
     l_engine.setEventManager (&l_events);
     l_engine.setWindowManager (&l_windows);
     l_engine.setMoveSystem (&l_moveSystem);
     l_engine.setSpriteSystem (&l_spriteSystem);
+    l_engine.setGenerator (&l_generator);
 
     EXPECT_CALL (l_entities, initialise(Eq(&l_engine))).Times(1);
     EXPECT_CALL (l_events, initialise(Eq(&l_engine))).Times(1);
     EXPECT_CALL (l_windows, initialise(Eq(&l_engine))).Times(1);
     EXPECT_CALL (l_moveSystem, initialise(Eq(&l_engine))).Times(1);
     EXPECT_CALL (l_spriteSystem, initialise(Eq(&l_engine))).Times(1);
+    EXPECT_CALL (l_generator, initialise(Eq(&l_engine))).Times(1);
 
     EXPECT_CALL (l_events, registerHandler(Eq(&l_moveSystem))).Times(1);
     EXPECT_CALL (l_events, registerHandler(Eq(&l_spriteSystem))).Times(1);
@@ -155,5 +159,26 @@ TEST (GameEngine, graphicsFuncPointersCallWindow)
 
     EXPECT_CALL (l_window, mouseUp (Eq (1), Eq(1), Eq(1))).Times(1);
     mouseFunc (1, 1, 1, 1);
+
+}
+
+TEST (GameEngine, generator)
+{
+    GraphicsMock    l_graphics;
+    GameEngine      l_engine (&l_graphics);
+
+    GeneratorMock   l_generator;
+    l_engine.setGenerator (&l_generator);
+
+    unsigned int l_height;
+    unsigned int l_width;
+    unsigned int l_rooms;
+
+    EXPECT_CALL (l_generator, mapHeight()).WillOnce (ReturnRef (l_height));
+    EXPECT_CALL (l_generator, mapWidth()).WillOnce (ReturnRef (l_width));
+    EXPECT_CALL (l_generator, numberOfRooms()).WillOnce (ReturnRef (l_rooms));
+
+    EXPECT_CALL (l_generator, generate()).Times(1);
+    l_engine.loadMap ("");
 
 }
