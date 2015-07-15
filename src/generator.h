@@ -1,14 +1,25 @@
-#ifndef __GENERATOR_H__
-#define __GENERATOR_H__
+#ifndef GENERATOR_H
+#define GENERATOR_H
 
-#include "game_engine_interface.h"
+#include "generator_interface.h"
 
-typedef struct {
-    unsigned int height;
-    unsigned int width;
-    unsigned int rooms;
-} GEN_PARAMS;
+class Generator : public GeneratorInterface {
+public:
+    void initialise (GameEngineInterface* a_engine) { m_engine = a_engine; }
+    void generate();
 
-void generateDungeon (GameEngineInterface* a_engine, GEN_PARAMS params);
+    unsigned int& mapHeight() { return m_mapHeight; }
+    unsigned int& mapWidth() { return m_mapWidth; }
+    unsigned int& numberOfRooms() { return m_rooms; }
+
+private:
+    bool generateRoom (char* map);
+
+private:
+    GameEngineInterface*    m_engine;
+    unsigned int            m_mapHeight;
+    unsigned int            m_mapWidth;
+    unsigned int            m_rooms;
+};
 
 #endif

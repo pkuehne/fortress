@@ -1,10 +1,12 @@
 #include "gameengine.h"
-#include "generator.h"
 #include <string>
 
+#include "generator.h"
+#include "event_manager.h"
+#include "entity_manager.h"
+#include "window_manager.h"
 #include "movement_system.h"
 #include "sprite_system.h"
-
 
 GameEngine* g_engine = 0;
 
@@ -41,6 +43,7 @@ GameEngine::GameEngine (GraphicsInterface* a_graphics)
 , m_moveSystem (0)
 , m_spriteSystem (0)
 , m_graphics (a_graphics)
+, m_generator (0)
 {
     g_engine = this;
 }
@@ -58,6 +61,7 @@ void GameEngine::initialise ()
     if (!m_entityManager) m_entityManager = new EntityManager();
     if (!m_moveSystem)    m_moveSystem    = new MovementSystem();
     if (!m_spriteSystem)  m_spriteSystem  = new SpriteSystem();
+    if (!m_generator)     m_generator     = new Generator();
 
     // Initialise Managers
     m_windowManager->initialise (this);
@@ -68,6 +72,9 @@ void GameEngine::initialise ()
     m_moveSystem->initialise (this);
     m_spriteSystem->initialise (this);
 
+    // Initialise Map Generator
+    m_generator->initialise (this);
+
     // Register Systems with Event Manager
     m_eventManager->registerHandler (m_moveSystem);
     m_eventManager->registerHandler (m_spriteSystem);
@@ -76,17 +83,16 @@ void GameEngine::initialise ()
     m_graphics->setKeyboardUpFunc (keyUp);
     m_graphics->setDisplayFunc  (display);
     m_graphics->setMouseFunc    (mouseClick);
+
 }
 
 void GameEngine::loadMap (const std::string& mapName)
 {
+    m_generator->mapHeight() = 50;
+    m_generator->mapWidth() = 50;
+    m_generator->numberOfRooms() = 1;
 
-    GEN_PARAMS params;
-    params.height   = 50;
-    params.width    = 50;
-    params.rooms    = 1;
-    generateDungeon (this, params);
-
+    m_generator->generate();
 }
 
 void GameEngine::tick ()
