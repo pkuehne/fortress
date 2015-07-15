@@ -30,3 +30,16 @@ coverage:
 
 run: build
 	$(MAKE) -C src run
+
+doxy:
+	doxygen Doxyfile
+
+pages:
+	git checkout gh-pages
+	git reset --hard master
+	$(MAKE) doxy
+	git add doxygen/*
+	git commit -m"Updated documentation"
+	git push origin gh-pages --force
+	git checkout master
+    
