@@ -30,6 +30,12 @@ public:
     Entity*     entity;
 };
 
+class RemoveEntityEvent : public Event {
+public:
+    RemoveEntityEvent () : Event (EVENT_REMOVE_ENTITY) { }
+    Entity*     entity;
+};
+
 class MoveEntityEvent : public Event {
 public:
     enum DIRECTION {
@@ -48,7 +54,7 @@ public:
 class AttackEntityEvent : public Event {
 public:
     AttackEntityEvent () : Event (EVENT_ATTACK_ENTITY) { }
-    Entity          entity;    
+    Entity          entity;
 };
 
 #endif

@@ -7,6 +7,7 @@ SOURCES=$(wildcard *.cpp)
 SOURCES+= \
 ../src/algorithm.cpp \
 ../src/color.cpp \
+../src/combat_system.cpp \
 ../src/component_manager.cpp \
 ../src/entity.cpp \
 ../src/entity_manager.cpp \

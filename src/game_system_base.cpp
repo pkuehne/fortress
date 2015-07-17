@@ -1,4 +1,5 @@
 #include "game_system_base.h"
+#include <iostream>
 
 std::vector<Entity*> GameSystemBase::findEntitiesAt (unsigned int x, unsigned int y)
 {
