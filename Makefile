@@ -33,6 +33,7 @@ run: build
 
 doxy:
 	doxygen Doxyfile
+	cp -r doxygen/html/* /var/www/html/fortress/
 
 pages:
 	git checkout gh-pages
