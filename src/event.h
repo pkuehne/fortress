@@ -10,6 +10,7 @@ typedef enum {
     EVENT_ADD_ENTITY        = 1,
     EVENT_REMOVE_ENTITY     = 2,
     EVENT_MOVE_ENTITY       = 3,
+    EVENT_ATTACK_ENTITY     = 4,
     EVENT_MAX
 } EventType;
 
@@ -42,6 +43,12 @@ public:
     MoveEntityEvent () : Event (EVENT_MOVE_ENTITY) { }
     Entity*         entity;
     enum DIRECTION  direction;
+};
+
+class AttackEntityEvent : public Event {
+public:
+    AttackEntityEvent () : Event (EVENT_ATTACK_ENTITY) { }
+    Entity          entity;    
 };
 
 #endif

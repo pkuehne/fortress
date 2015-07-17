@@ -5,7 +5,7 @@
 
 using namespace ::testing;
 
-TEST (MovementSystem, Create)
+TEST (MovementSystem, handleEvent)
 {
     MovementSystem  l_system;
     GameEngineMock  l_engine;

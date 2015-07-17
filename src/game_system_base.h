@@ -4,6 +4,7 @@
 #include "event.h"
 #include "game_system_interface.h"
 #include "game_engine_interface.h"
+#include <vector>
 
 class GameSystemBase : public GameSystemInterface {
 public:
@@ -14,6 +15,9 @@ public:
     virtual void update () { }
 
     virtual ~GameSystemBase() { }
+
+    virtual std::vector<Entity*> findEntitiesAt (unsigned int x, unsigned int y);
+    virtual std::vector<Entity*> findEntitiesToThe (MoveEntityEvent::DIRECTION a_direction, Entity* a_entity);
 protected:
     GameEngineInterface*    m_engine;
 };
