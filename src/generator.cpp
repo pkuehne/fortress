@@ -23,10 +23,12 @@ void Generator::generate () {
             }
             if (map[yy*m_mapWidth+xx] == 'P' && !playerPlaced) {
                 m_engine->getEntities()->createPlayerPrefab (yy, xx);
+                m_engine->getEntities()->createTilePrefab (yy, xx);
                 playerPlaced = true;
             }
             if (map[yy*m_mapWidth+xx] == 'M') {
                 m_engine->getEntities()->createEnemyPrefab (yy, xx);
+                m_engine->getEntities()->createTilePrefab (yy, xx);
             }
             if (map[yy*m_mapWidth+xx] == '.') {
                 m_engine->getEntities()->createTilePrefab (yy, xx);

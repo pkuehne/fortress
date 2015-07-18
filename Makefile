@@ -36,7 +36,7 @@ doxy:
 	cp -r doxygen/html/* /var/www/html/fortress/
 
 pages:
-	git checkout gh-pages
+	git checkout gh-pages --force
 	git reset --hard master
 	$(MAKE) doxy
 	git add doxygen/*
