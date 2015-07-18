@@ -32,10 +32,7 @@ bool CombatSystem::checkForEnemies (MoveEntityEvent::DIRECTION dir)
 
     for (unsigned int ii = 0; ii < l_entities.size(); ii++) {
         if (l_entities[ii]->getName() == std::string("Orc")) {
-            RemoveEntityEvent* l_event = new RemoveEntityEvent();
-            l_event->entity = l_entities[ii];
-            std::cout << "Raising remove event" << std::endl;
-            m_engine->raiseEvent (l_event);
+            m_engine->getEntities()->destroyEntity (l_entities[ii]->getName());
             return true;
         }
     }

@@ -13,8 +13,8 @@ public:
     void initialise (GameEngineInterface* engine);
     void destroy() {}
 
-    Entity* createEntity (const std::string& name = "empty");
-
+    Entity* createEntity (const std::string& name);
+    void destroyEntity (const std::string& name);
     Entity* createWallPrefab (unsigned int x, unsigned int y);
     Entity* createPlayerPrefab (unsigned int x, unsigned int y);
     Entity* createEnemyPrefab (unsigned int x, unsigned int y);

@@ -42,7 +42,7 @@ TEST (MapWindow, redraw)
     //FAIL() << "Not finished";
 }
 
-TEST (MapWindow, keyDownMovesPlayer)
+TEST (MapWindow, WASDMovesPlayer)
 {
     MapWindow       l_win;
     GameEngineMock  l_engine;
@@ -82,5 +82,22 @@ TEST (MapWindow, keyDownMovesPlayer)
 
     EXPECT_CALL (l_engine, quit()).Times(1);
     l_win.keyDown (27);
+}
+
+TEST (MapWindow, KAttacksEnemies)
+{
+    MapWindow       l_win;
+    GameEngineMock  l_engine;
+    EntityManagerMock   l_entities;
+    Event*          l_event = 0;
+    EXPECT_CALL (l_engine, loadMap (StrEq(""))).Times(1);
+    l_win.initialise (&l_engine);
+
+    //EXPECT_CALL (l_engine, getEntities()).Times(1).WillOnce(Return (&l_entities));
+    //EXPECT_CALL (l_entities, getEntity(TypedEq<std::string>(l_playerStr))).WillOnce (Return (&l_entity));
+    EXPECT_CALL (l_engine, raiseEvent (_)).Times(1).WillOnce(SaveArg<0>(&l_event));
+    l_win.keyDown ('k');
+    ASSERT_NE (static_cast<Event*>(0), l_event);
+    EXPECT_EQ (EVENT_ATTACK_ENTITY, l_event->getType());
 
 }

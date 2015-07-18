@@ -39,6 +39,7 @@ public:
     void setSpriteSystem (GameSystemInterface* a_system) { m_spriteSystem = a_system; }
     void setMoveSystem (GameSystemInterface* a_system) { m_moveSystem = a_system; }
     void setGenerator (GeneratorInterface* a_generator) { m_generator = a_generator; }
+    void setCombatSystem (GameSystemInterface* a_system) { m_combatSystem = a_system; }
 private:
     unsigned long long  m_tick;
     bool                m_paused;
@@ -49,6 +50,7 @@ private:
 
     GameSystemInterface*    m_moveSystem;
     GameSystemInterface*    m_spriteSystem;
+    GameSystemInterface*    m_combatSystem;
 
     GraphicsInterface*      m_graphics;
     GeneratorInterface*     m_generator;

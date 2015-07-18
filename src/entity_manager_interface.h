@@ -14,7 +14,8 @@ public:
     virtual void initialise (GameEngineInterface* engine) = 0;
     virtual void destroy() = 0;
 
-    virtual Entity* createEntity (const std::string& name = "empty") = 0;
+    virtual Entity* createEntity (const std::string& name) = 0;
+    virtual void destroyEntity (const std::string& name) = 0;
 
     virtual Entity* createWallPrefab (unsigned int x, unsigned int y) = 0;
     virtual Entity* createPlayerPrefab (unsigned int x, unsigned int y) = 0;

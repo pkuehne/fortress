@@ -7,7 +7,7 @@ public:
     MOCK_METHOD0 (destroy, void ());
 
     MOCK_METHOD1 (createEntity, Entity* (const std::string& name));
-
+    MOCK_METHOD1 (destroyEntity, void (const std::string& name));
     MOCK_METHOD2 (createWallPrefab, Entity* (unsigned int x, unsigned int y));
     MOCK_METHOD2 (createPlayerPrefab, Entity* (unsigned int x, unsigned int y));
     MOCK_METHOD2 (createEnemyPrefab, Entity* (unsigned int x, unsigned int y));

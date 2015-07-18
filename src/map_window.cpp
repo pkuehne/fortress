@@ -34,6 +34,10 @@ void MapWindow::keyDown (unsigned char key) {
         l_event->direction = l_dir;
         getEngine()->raiseEvent (l_event);
     }
+    if (key == 'k') {
+        AttackEntityEvent* l_event = new AttackEntityEvent();
+        getEngine()->raiseEvent (l_event);
+    }
 }
 
 void MapWindow::drawMap() {

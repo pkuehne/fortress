@@ -23,6 +23,19 @@ Entity* EntityManager::createEntity (const std::string& name) {
     return l_entity;
 }
 
+void EntityManager::destroyEntity (const std::string& name) {
+    std::map<std::string, Entity*>::iterator it = m_nameMap.find (name);
+    if (it == m_nameMap.end()) return;
+
+    getColliders()->remove (it->second);
+    getSprites()->remove (it->second);
+    RemoveEntityEvent* l_event = new RemoveEntityEvent();
+    l_event->entity = it->second;
+    m_engine->raiseEvent (l_event);
+    
+    m_nameMap.erase (it);
+}
+
 Entity* EntityManager::getEntity (std::string name) {
     std::map<std::string, Entity*>::iterator it = m_nameMap.find (name);
     if (it == m_nameMap.end()) return 0;
@@ -78,7 +91,7 @@ Entity* EntityManager::createPlayerPrefab (unsigned int x, unsigned int y)
 
 Entity* EntityManager::createEnemyPrefab (unsigned int x, unsigned int y)
 {
-    Entity* l_entity = createEntity("Enemy");
+    Entity* l_entity = createEntity("Orc");
 
     //Sprite Component
     SpriteComponent l_sprite;

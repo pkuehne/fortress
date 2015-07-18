@@ -27,6 +27,7 @@ TEST (GameEngine, tick)
     WindowManagerMock   l_windows;
     BaseSystemMock      l_moveSystem;
     BaseSystemMock      l_spriteSystem;
+    BaseSystemMock      l_combatSystem;
     WindowMock          l_window;
     GeneratorMock       l_generator;
 
@@ -35,17 +36,20 @@ TEST (GameEngine, tick)
     l_engine.setWindowManager (&l_windows);
     l_engine.setMoveSystem (&l_moveSystem);
     l_engine.setSpriteSystem (&l_spriteSystem);
+    l_engine.setCombatSystem (&l_combatSystem);
     l_engine.setGenerator (&l_generator);
 
     EXPECT_CALL (l_entities, initialise(Eq(&l_engine))).Times(1);
     EXPECT_CALL (l_events, initialise(Eq(&l_engine))).Times(1);
     EXPECT_CALL (l_windows, initialise(Eq(&l_engine))).Times(1);
     EXPECT_CALL (l_moveSystem, initialise(Eq(&l_engine))).Times(1);
+    EXPECT_CALL (l_combatSystem, initialise(Eq(&l_engine))).Times(1);
     EXPECT_CALL (l_spriteSystem, initialise(Eq(&l_engine))).Times(1);
     EXPECT_CALL (l_generator, initialise(Eq(&l_engine))).Times(1);
 
     EXPECT_CALL (l_events, registerHandler(Eq(&l_moveSystem))).Times(1);
     EXPECT_CALL (l_events, registerHandler(Eq(&l_spriteSystem))).Times(1);
+    EXPECT_CALL (l_events, registerHandler(Eq(&l_combatSystem))).Times(1);
 
     KeyboardFuncPtr keyboardFunc;
     KeyboardFuncPtr keyboardUpFunc;
@@ -62,6 +66,7 @@ TEST (GameEngine, tick)
     EXPECT_CALL (l_events, processEvents()).Times(2);
     EXPECT_CALL (l_moveSystem, update()).Times(2);
     EXPECT_CALL (l_spriteSystem, update()).Times(2);
+    EXPECT_CALL (l_combatSystem, update()).Times(2);
 
     EXPECT_CALL (l_windows, getActive()).WillRepeatedly (Return (&l_window));
     EXPECT_CALL (l_window, beforeRedraw()).Times(3);
@@ -117,6 +122,7 @@ TEST (GameEngine, graphicsFuncPointersCallWindow)
     WindowManagerMock   l_windows;
     BaseSystemMock      l_moveSystem;
     BaseSystemMock      l_spriteSystem;
+    BaseSystemMock      l_combatSystem;
     WindowMock          l_window;
 
     l_engine.setEntityManager (&l_entities);
@@ -124,15 +130,18 @@ TEST (GameEngine, graphicsFuncPointersCallWindow)
     l_engine.setWindowManager (&l_windows);
     l_engine.setMoveSystem (&l_moveSystem);
     l_engine.setSpriteSystem (&l_spriteSystem);
+    l_engine.setCombatSystem (&l_combatSystem);
 
     EXPECT_CALL (l_entities, initialise(Eq(&l_engine))).Times(1);
     EXPECT_CALL (l_events, initialise(Eq(&l_engine))).Times(1);
     EXPECT_CALL (l_windows, initialise(Eq(&l_engine))).Times(1);
     EXPECT_CALL (l_moveSystem, initialise(Eq(&l_engine))).Times(1);
+    EXPECT_CALL (l_combatSystem, initialise(Eq(&l_engine))).Times(1);
     EXPECT_CALL (l_spriteSystem, initialise(Eq(&l_engine))).Times(1);
 
     EXPECT_CALL (l_events, registerHandler(Eq(&l_moveSystem))).Times(1);
     EXPECT_CALL (l_events, registerHandler(Eq(&l_spriteSystem))).Times(1);
+    EXPECT_CALL (l_events, registerHandler(Eq(&l_combatSystem))).Times(1);
 
     KeyboardFuncPtr keyboardFunc;
     KeyboardFuncPtr keyboardUpFunc;

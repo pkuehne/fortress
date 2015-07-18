@@ -12,6 +12,7 @@ TEST (CombatSystem, handleAttackEvent)
     AttackEntityEvent   l_attackEvent;
     Event*              l_removeEvent = 0;
     EntityManager       l_entities;
+    Entity*             l_entity = 0;
 
     EXPECT_CALL (l_engine, raiseEvent(NotNull())).Times (2);
     l_entities.initialise (&l_engine);
@@ -31,6 +32,11 @@ TEST (CombatSystem, handleAttackEvent)
     l_entities.getSprites()->add (l_entityPlayer,  l_spritePlayer);
     l_entities.getSprites()->add (l_entityOrc,     l_spriteOrc);
 
+    l_entities.initialise (&l_engine);
+
+    l_entity = l_entities.getEntity ("Orc");
+    EXPECT_NE (static_cast<Entity*>(0), l_entity);
+
     EXPECT_CALL (l_engine, getEntities()).WillRepeatedly (Return (&l_entities));
     l_system.initialise (&l_engine);
 
@@ -39,4 +45,7 @@ TEST (CombatSystem, handleAttackEvent)
     ASSERT_NE (static_cast<Event*> (0), l_removeEvent);
     ASSERT_EQ (EVENT_REMOVE_ENTITY, l_removeEvent->getType());
     EXPECT_EQ (l_entityOrc, dynamic_cast<RemoveEntityEvent*>(l_removeEvent)->entity);
+
+    l_entity = l_entities.getEntity ("Orc");
+    EXPECT_EQ (static_cast<Entity*>(0), l_entity);
 }

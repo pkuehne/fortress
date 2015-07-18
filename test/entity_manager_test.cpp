@@ -9,17 +9,42 @@ TEST (EntityManager, createEntity)
 {
     EntityManager   manager;
     GameEngineMock  engine;
-    //EXPECT_CALL (engine, raiseEvent(WhenDynamicCastTo<AddEntityEvent*>(Not(IsNull()))));
     EXPECT_CALL (engine, raiseEvent(_));
 
     manager.initialise(&engine);
 
     Entity* entity = manager.createEntity("test");
-    EXPECT_NE (static_cast<Entity*>(0), entity);
+    ASSERT_NE (static_cast<Entity*>(0), entity);
     EXPECT_EQ (0, entity->getId());
     EXPECT_EQ ("test", entity->getName());
     EXPECT_EQ (entity, manager.getEntity ("test"));
     EXPECT_EQ (entity, manager.getEntity (0));
+
+    manager.destroy();
+}
+
+
+TEST (EntityManager, destroyEntity)
+{
+    EntityManager   manager;
+    GameEngineMock  engine;
+    Entity*         entity = 0;
+    EXPECT_CALL (engine, raiseEvent(_)).Times(3);
+
+    manager.initialise(&engine);
+
+    manager.createEntity("test");
+    manager.createEntity("test2");
+    entity = manager.getEntity ("test");
+    ASSERT_NE (static_cast<Entity*>(0), entity);
+    entity = manager.getEntity ("test2");
+    ASSERT_NE (static_cast<Entity*>(0), entity);
+
+    manager.destroyEntity ("test");
+    entity = manager.getEntity ("test");
+    ASSERT_EQ (static_cast<Entity*>(0), entity);
+    entity = manager.getEntity ("test2");
+    ASSERT_NE (static_cast<Entity*>(0), entity);
 
     manager.destroy();
 }
@@ -97,8 +122,8 @@ TEST (EntityManager, createEnemyPrefab)
     Entity* entity = manager.createEnemyPrefab (1, 2);
     EXPECT_NE (static_cast<Entity*>(0), entity);
     EXPECT_EQ (0, entity->getId());
-    EXPECT_EQ ("Enemy", entity->getName());
-    EXPECT_EQ (entity, manager.getEntity ("Enemy"));
+    EXPECT_EQ ("Orc", entity->getName());
+    EXPECT_EQ (entity, manager.getEntity ("Orc"));
     EXPECT_EQ (entity, manager.getEntity (0));
 
     SpriteComponent* sprite = manager.getSprites()->get (entity);
