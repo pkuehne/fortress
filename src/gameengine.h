@@ -10,6 +10,7 @@
 #include "generator_interface.h"
 
 #include <string>
+#include <vector>
 #include <cstdlib>
 
 class GameEngine : public GameEngineInterface {
@@ -38,10 +39,8 @@ public:
     void setWindowManager (WindowManagerInterface* a_manager) { m_windowManager = a_manager; }
     void setEventManager (EventManagerInterface* a_manager) { m_eventManager = a_manager; }
 
-    void setSpriteSystem (GameSystemInterface* a_system) { m_spriteSystem = a_system; }
-    void setMoveSystem (GameSystemInterface* a_system) { m_moveSystem = a_system; }
+    void addSystem (GameSystemInterface* a_system) { m_systems.push_back(a_system); }
     void setGenerator (GeneratorInterface* a_generator) { m_generator = a_generator; }
-    void setCombatSystem (GameSystemInterface* a_system) { m_combatSystem = a_system; }
 private:
     unsigned long long  m_tick;
     bool                m_playerTurn;
@@ -50,9 +49,7 @@ private:
     EventManagerInterface*  m_eventManager;
     WindowManagerInterface* m_windowManager;
 
-    GameSystemInterface*    m_moveSystem;
-    GameSystemInterface*    m_spriteSystem;
-    GameSystemInterface*    m_combatSystem;
+    std::vector<GameSystemInterface*>   m_systems;
 
     GraphicsInterface*      m_graphics;
     GeneratorInterface*     m_generator;

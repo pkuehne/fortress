@@ -7,6 +7,8 @@ class NpcSystem : public GameSystemBase {
 public:
     virtual void handleEvent (const Event* event);
     virtual void update ();
+private:
+    MoveEntityEvent::DIRECTION getRandomDirection ();
 };
 
 

@@ -41,9 +41,6 @@ GameEngine::GameEngine (GraphicsInterface* a_graphics)
 , m_entityManager (0)
 , m_eventManager (0)
 , m_windowManager (0)
-, m_moveSystem (0)
-, m_spriteSystem (0)
-, m_combatSystem (0)
 , m_graphics (a_graphics)
 , m_generator (0)
 {
@@ -61,28 +58,21 @@ void GameEngine::initialise ()
     if (!m_windowManager) m_windowManager = new WindowManager();
     if (!m_eventManager)  m_eventManager  = new EventManager();
     if (!m_entityManager) m_entityManager = new EntityManager();
-    if (!m_moveSystem)    m_moveSystem    = new MovementSystem();
-    if (!m_spriteSystem)  m_spriteSystem  = new SpriteSystem();
     if (!m_generator)     m_generator     = new Generator();
-    if (!m_combatSystem)  m_combatSystem  = new CombatSystem();
 
     // Initialise Managers
     m_windowManager->initialise (this);
     m_entityManager->initialise (this);
     m_eventManager->initialise  (this);
 
-    // Initialise Systems
-    m_moveSystem->initialise (this);
-    m_spriteSystem->initialise (this);
-    m_combatSystem->initialise (this);
-
     // Initialise Map Generator
     m_generator->initialise (this);
 
-    // Register Systems with Event Manager
-    m_eventManager->registerHandler (m_moveSystem);
-    m_eventManager->registerHandler (m_spriteSystem);
-    m_eventManager->registerHandler (m_combatSystem);
+    // Initialise Systems
+    for (unsigned int ii = 0; ii < m_systems.size(); ii++) {
+        m_systems[ii]->initialise (this);
+        m_eventManager->registerHandler (m_systems[ii]);
+    }
 
     m_graphics->setKeyboardFunc (keyDown);
     m_graphics->setKeyboardUpFunc (keyUp);
@@ -107,9 +97,9 @@ void GameEngine::tick ()
     m_eventManager->processEvents();
 
     //Update Systems
-    m_moveSystem->update();
-    m_spriteSystem->update();
-    m_combatSystem->update();
+    for (unsigned int ii = 0; ii < m_systems.size(); ii++) {
+        m_systems[ii]->update();
+    }
     getWindows()->getActive()->beforeRedraw();
     getWindows()->getActive()->redraw();
     getWindows()->getActive()->afterRedraw();

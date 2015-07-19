@@ -38,6 +38,7 @@ void MapWindow::keyDown (unsigned char key) {
         AttackEntityEvent* l_event = new AttackEntityEvent();
         getEngine()->raiseEvent (l_event);
     }
+    getEngine()->swapTurn();
 }
 
 void MapWindow::drawMap() {
