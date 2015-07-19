@@ -25,14 +25,14 @@ void CombatSystem::handleEvent (const Event* event)
 
 bool CombatSystem::checkForEnemies (MoveEntityEvent::DIRECTION dir)
 {
-    Entity* player = m_engine->getEntities()->getEntity ("Player");
+    Entity* player = m_engine->getEntities()->getPlayer();
 
     std::vector<Entity*> l_entities;
     l_entities = findEntitiesToThe (dir, player);
 
     for (unsigned int ii = 0; ii < l_entities.size(); ii++) {
-        if (l_entities[ii]->getName() == std::string("Orc")) {
-            m_engine->getEntities()->destroyEntity (l_entities[ii]->getName());
+        if (l_entities[ii]->hasTag (MONSTER)) {
+            m_engine->getEntities()->destroyEntity (l_entities[ii]->getId());
             return true;
         }
     }

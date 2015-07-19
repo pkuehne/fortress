@@ -17,8 +17,7 @@ TEST (EntityManager, createEntity)
     ASSERT_NE (static_cast<Entity*>(0), entity);
     EXPECT_EQ (0, entity->getId());
     EXPECT_EQ ("test", entity->getName());
-    EXPECT_EQ (entity, manager.getEntity ("test"));
-    EXPECT_EQ (entity, manager.getEntity (0));
+    EXPECT_EQ (entity, manager.getEntity (entity->getId()));
 
     manager.destroy();
 }
@@ -28,23 +27,21 @@ TEST (EntityManager, destroyEntity)
 {
     EntityManager   manager;
     GameEngineMock  engine;
-    Entity*         entity = 0;
+    Entity*         entity1 = 0;
+    Entity*         entity2 = 0;
     EXPECT_CALL (engine, raiseEvent(_)).Times(3);
 
     manager.initialise(&engine);
 
-    manager.createEntity("test");
-    manager.createEntity("test2");
-    entity = manager.getEntity ("test");
-    ASSERT_NE (static_cast<Entity*>(0), entity);
-    entity = manager.getEntity ("test2");
-    ASSERT_NE (static_cast<Entity*>(0), entity);
+    entity1 = manager.createEntity("test");
+    entity2 = manager.createEntity("test2");
 
-    manager.destroyEntity ("test");
-    entity = manager.getEntity ("test");
-    ASSERT_EQ (static_cast<Entity*>(0), entity);
-    entity = manager.getEntity ("test2");
-    ASSERT_NE (static_cast<Entity*>(0), entity);
+    ASSERT_EQ (entity1, manager.getEntity (entity1->getId()));
+    ASSERT_EQ (entity2, manager.getEntity (entity2->getId()));
+
+    manager.destroyEntity (entity1->getId());
+    ASSERT_NE (entity1, manager.getEntity (entity1->getId()));
+    ASSERT_EQ (entity2, manager.getEntity (entity2->getId()));
 
     manager.destroy();
 }
@@ -57,8 +54,8 @@ TEST (EntityManager, getEntityEmpty)
 
     manager.initialise(&engine);
 
-    EXPECT_EQ (static_cast<Entity*>(0), manager.getEntity ("test"));
     EXPECT_EQ (static_cast<Entity*>(0), manager.getEntity (0));
+    EXPECT_EQ (static_cast<Entity*>(0), manager.getPlayer());
 }
 
 TEST (EntityManager, createWallPrefab)
@@ -73,7 +70,6 @@ TEST (EntityManager, createWallPrefab)
     EXPECT_NE (static_cast<Entity*>(0), entity);
     EXPECT_EQ (0, entity->getId());
     EXPECT_EQ ("Wall", entity->getName());
-    EXPECT_EQ (entity, manager.getEntity ("Wall"));
     EXPECT_EQ (entity, manager.getEntity (0));
 
     SpriteComponent* sprite = manager.getSprites()->get (entity);
@@ -84,6 +80,7 @@ TEST (EntityManager, createWallPrefab)
 
     ColliderComponent* collider = manager.getColliders()->get(entity);
     EXPECT_NE (static_cast<ColliderComponent*>(0), collider);
+    EXPECT_TRUE (entity->hasTag (WALL));
 }
 
 TEST (EntityManager, createPlayerPrefab)
@@ -98,7 +95,6 @@ TEST (EntityManager, createPlayerPrefab)
     EXPECT_NE (static_cast<Entity*>(0), entity);
     EXPECT_EQ (0, entity->getId());
     EXPECT_EQ ("Player", entity->getName());
-    EXPECT_EQ (entity, manager.getEntity ("Player"));
     EXPECT_EQ (entity, manager.getEntity (0));
 
     SpriteComponent* sprite = manager.getSprites()->get (entity);
@@ -109,6 +105,7 @@ TEST (EntityManager, createPlayerPrefab)
 
     ColliderComponent* collider = manager.getColliders()->get(entity);
     EXPECT_NE (static_cast<ColliderComponent*>(0), collider);
+    EXPECT_TRUE (entity->hasTag (PLAYER));
 }
 
 TEST (EntityManager, createEnemyPrefab)
@@ -123,7 +120,6 @@ TEST (EntityManager, createEnemyPrefab)
     EXPECT_NE (static_cast<Entity*>(0), entity);
     EXPECT_EQ (0, entity->getId());
     EXPECT_EQ ("Orc", entity->getName());
-    EXPECT_EQ (entity, manager.getEntity ("Orc"));
     EXPECT_EQ (entity, manager.getEntity (0));
 
     SpriteComponent* sprite = manager.getSprites()->get (entity);
@@ -134,6 +130,7 @@ TEST (EntityManager, createEnemyPrefab)
 
     ColliderComponent* collider = manager.getColliders()->get(entity);
     EXPECT_NE (static_cast<ColliderComponent*>(0), collider);
+    EXPECT_TRUE (entity->hasTag (MONSTER));
 }
 
 TEST (EntityManager, createTilePrefab)
@@ -148,7 +145,6 @@ TEST (EntityManager, createTilePrefab)
     EXPECT_NE (static_cast<Entity*>(0), entity);
     EXPECT_EQ (0, entity->getId());
     EXPECT_EQ ("Tile", entity->getName());
-    EXPECT_EQ (entity, manager.getEntity ("Tile"));
 
     SpriteComponent* sprite = manager.getSprites()->get (entity);
     EXPECT_NE (static_cast<SpriteComponent*>(0), sprite);
@@ -159,4 +155,22 @@ TEST (EntityManager, createTilePrefab)
 
     ColliderComponent* collider = manager.getColliders()->get(entity);
     EXPECT_EQ (static_cast<ColliderComponent*>(0), collider);
+}
+
+TEST (EntityManager, getPlayer)
+{
+    EntityManager   manager;
+    GameEngineMock  engine;
+    EXPECT_CALL (engine, raiseEvent(_)).Times(2);
+
+    manager.initialise(&engine);
+    EXPECT_EQ (static_cast<Entity*>(0), manager.getPlayer());
+
+    Entity* tile = manager.createTilePrefab (1, 2);
+    EXPECT_EQ (static_cast<Entity*>(0), manager.getPlayer());
+
+    Entity* player = manager.createPlayerPrefab (1, 2);
+    EXPECT_EQ (player, manager.getPlayer());
+    EXPECT_NE (tile, manager.getPlayer());
+
 }

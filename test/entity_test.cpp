@@ -24,6 +24,9 @@ TEST (Entity, Tags)
     entity.addTag (MONSTER);
     EXPECT_EQ (1, entity.getTags().size());
     EXPECT_EQ (MONSTER, *(entity.getTags().begin()));
+
+    EXPECT_TRUE (entity.hasTag (MONSTER));
+    EXPECT_FALSE (entity.hasTag (PLAYER));
 }
 
 TEST (Entity, IdComparator)

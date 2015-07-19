@@ -15,7 +15,9 @@ public:
     virtual void destroy() = 0;
 
     virtual Entity* createEntity (const std::string& name) = 0;
-    virtual void destroyEntity (const std::string& name) = 0;
+    virtual void destroyEntity (EntityId id) = 0;
+    virtual Entity* getPlayer () = 0;
+
 
     virtual Entity* createWallPrefab (unsigned int x, unsigned int y) = 0;
     virtual Entity* createPlayerPrefab (unsigned int x, unsigned int y) = 0;
@@ -24,7 +26,6 @@ public:
 
     virtual ComponentManagerInterface<SpriteComponent>* getSprites() = 0;
     virtual ComponentManagerInterface<ColliderComponent>* getColliders() = 0;
-    virtual Entity* getEntity (std::string name) = 0;
     virtual Entity* getEntity (EntityId id) = 0;
 
 };

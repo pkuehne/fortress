@@ -7,6 +7,7 @@ void EntityManager::initialise (GameEngineInterface* engine)
 {
     maxId = 0;
     m_engine = engine;
+    m_player = 0;
 }
 
 Entity* EntityManager::createEntity (const std::string& name) {
@@ -23,24 +24,32 @@ Entity* EntityManager::createEntity (const std::string& name) {
     return l_entity;
 }
 
-void EntityManager::destroyEntity (const std::string& name) {
-    std::map<std::string, Entity*>::iterator it = m_nameMap.find (name);
-    if (it == m_nameMap.end()) return;
+void EntityManager::destroyEntity (EntityId id) {
+    std::map<EntityId, Entity*>::iterator it = m_idMap.find (id);
+    if (it == m_idMap.end()) return;
 
     getColliders()->remove (it->second);
     getSprites()->remove (it->second);
     RemoveEntityEvent* l_event = new RemoveEntityEvent();
     l_event->entity = it->second;
     m_engine->raiseEvent (l_event);
-    
-    m_nameMap.erase (it);
+
+    m_idMap.erase (it);
 }
 
-Entity* EntityManager::getEntity (std::string name) {
-    std::map<std::string, Entity*>::iterator it = m_nameMap.find (name);
-    if (it == m_nameMap.end()) return 0;
-    return it->second;
+
+Entity* EntityManager::getPlayer () {
+    if (m_player == 0) {
+        std::map<EntityId, Entity*>::iterator it = m_idMap.begin();
+        for (; it != m_idMap.end(); it++) {
+            if (it->second->hasTag(PLAYER)) {
+                m_player = it->second;
+            }
+        }
+    }
+    return m_player;
 }
+
 
 Entity* EntityManager::getEntity (EntityId id) {
     std::map<EntityId, Entity*>::iterator it = m_idMap.find (id);
@@ -51,7 +60,7 @@ Entity* EntityManager::getEntity (EntityId id) {
 Entity* EntityManager::createWallPrefab (unsigned int x, unsigned int y)
 {
     Entity* l_entity = createEntity("Wall");
-
+    l_entity->addTag (WALL);
     //Sprite Component
     SpriteComponent l_sprite;
     l_sprite.fgColor    = Color (GREY);
@@ -71,6 +80,7 @@ Entity* EntityManager::createWallPrefab (unsigned int x, unsigned int y)
 Entity* EntityManager::createPlayerPrefab (unsigned int x, unsigned int y)
 {
     Entity* l_entity = createEntity("Player");
+    l_entity->addTag (PLAYER);
 
     //Sprite Component
     SpriteComponent l_sprite;
@@ -92,6 +102,7 @@ Entity* EntityManager::createPlayerPrefab (unsigned int x, unsigned int y)
 Entity* EntityManager::createEnemyPrefab (unsigned int x, unsigned int y)
 {
     Entity* l_entity = createEntity("Orc");
+    l_entity->addTag (MONSTER);
 
     //Sprite Component
     SpriteComponent l_sprite;

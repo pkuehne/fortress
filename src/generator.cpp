@@ -75,6 +75,7 @@ bool Generator::generateRoom (char* map) {
     }
     map[yMid*m_mapWidth+xMid] = 'P';
     map[yMid*m_mapWidth+xMid+2] = 'M';
+    map[(yMid+2)*m_mapWidth+xMid] = 'M';
 
     return true;
 }

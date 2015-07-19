@@ -14,7 +14,9 @@ public:
     void destroy() {}
 
     Entity* createEntity (const std::string& name);
-    void destroyEntity (const std::string& name);
+    void destroyEntity (EntityId);
+    Entity* getPlayer ();
+
     Entity* createWallPrefab (unsigned int x, unsigned int y);
     Entity* createPlayerPrefab (unsigned int x, unsigned int y);
     Entity* createEnemyPrefab (unsigned int x, unsigned int y);
@@ -22,12 +24,13 @@ public:
 
     ComponentManagerInterface<SpriteComponent>* getSprites() { return &m_sprites; }
     ComponentManagerInterface<ColliderComponent>* getColliders() { return &m_colliders; }
-    Entity* getEntity (std::string name);
+    //Entity* getEntity (std::string name);
     Entity* getEntity (EntityId id);
 
 private:
     GameEngineInterface*                m_engine;
     unsigned long                       maxId;
+    Entity*                             m_player;
     std::map<EntityId, Entity*>         m_idMap;
     std::map<std::string, Entity*>      m_nameMap;
     ComponentManager<SpriteComponent>   m_sprites;
