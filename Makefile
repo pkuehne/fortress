@@ -3,19 +3,19 @@
 all: clean build test
 
 clean:
-	$(MAKE) -C src clean
-	$(MAKE) -C test clean
+	$(MAKE) -C src --no-print-directory clean
+	$(MAKE) -C test --no-print-directory clean
 
 build: tags
 	clear
-	$(MAKE) -C src build -j 8
+	$(MAKE) -C src --no-print-directory build -j 8
 
 test:
 	clear
-	$(MAKE) -C test test -j 8
+	$(MAKE) -C test --no-print-directory test -j 8
 
 shuffle:
-	$(MAKE) -C test shuffle
+	$(MAKE) -C test --no-print-directory shuffle
 tags:
 	ctags --recurse=yes
 
@@ -24,12 +24,12 @@ coverage:
 	rm -f test/*.gcda
 	rm -f src/*.gcno
 	rm -f test/*.gcno
-	$(MAKE) -C test clean
-	$(MAKE) -C test test -j 8
+	$(MAKE) -C test --no-print-directory clean
+	$(MAKE) -C test --no-print-directory test -j 8
 	gcovr -r src
 
 run: build
-	$(MAKE) -C src run
+	$(MAKE) -C src --no-print-directory run
 
 doxy:
 	doxygen Doxyfile
@@ -38,7 +38,7 @@ doxy:
 pages:
 	git checkout gh-pages --force
 	git reset --hard master
-	$(MAKE) doxy
+	$(MAKE) --no-print-directory doxy
 	git add doxygen/*
 	git commit -m"Updated documentation"
 	git push origin gh-pages --force

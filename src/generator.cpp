@@ -4,34 +4,40 @@
 #include <cstdlib>
 #include <cstring>
 #include <iostream>
+#include <fstream>
 
 void Generator::generate () {
     srand(time(0));
 
     bool playerPlaced = false;
+    m_mapHeight = 50;
+    m_mapWidth = 50;
     char map[m_mapHeight*m_mapWidth];
     memset (map, ' ', m_mapHeight*m_mapWidth);
 
+    /*
     for (unsigned r = 0; r < m_rooms; r++) {
         while (!generateRoom (map));
     }
+    */
+    loadMap (map);
 
     for (unsigned int yy = 0; yy < m_mapHeight; yy++) {
         for (unsigned int xx = 0; xx < m_mapWidth; xx++) {
             if (map[yy*m_mapWidth+xx] == 'W') {
-                m_engine->getEntities()->createWallPrefab (yy, xx);
+                m_engine->getEntities()->createWallPrefab (xx, yy);
             }
             if (map[yy*m_mapWidth+xx] == 'P' && !playerPlaced) {
-                m_engine->getEntities()->createPlayerPrefab (yy, xx);
-                m_engine->getEntities()->createTilePrefab (yy, xx);
+                m_engine->getEntities()->createPlayerPrefab (xx, yy);
+                m_engine->getEntities()->createTilePrefab (xx, yy);
                 playerPlaced = true;
             }
-            if (map[yy*m_mapWidth+xx] == 'M') {
-                m_engine->getEntities()->createEnemyPrefab (yy, xx);
-                m_engine->getEntities()->createTilePrefab (yy, xx);
+            if (map[yy*m_mapWidth+xx] == 'O') {
+                m_engine->getEntities()->createEnemyPrefab (xx, yy);
+                m_engine->getEntities()->createTilePrefab (xx, yy);
             }
             if (map[yy*m_mapWidth+xx] == '.') {
-                m_engine->getEntities()->createTilePrefab (yy, xx);
+                m_engine->getEntities()->createTilePrefab (xx, yy);
             }
         }
     }
@@ -74,8 +80,21 @@ bool Generator::generateRoom (char* map) {
         }
     }
     map[yMid*m_mapWidth+xMid] = 'P';
-    map[yMid*m_mapWidth+xMid+2] = 'M';
-    map[(yMid+2)*m_mapWidth+xMid] = 'M';
+    map[yMid*m_mapWidth+xMid+2] = 'O';
+    map[(yMid+2)*m_mapWidth+xMid] = 'O';
 
     return true;
+}
+
+void Generator::loadMap (char* map)
+{
+    std::ifstream file ("../maps/test.map");
+    char line[m_mapWidth];
+    int lineCnt = 0;
+    do {
+        memset (line, ' ', sizeof (line));
+        file.getline (line, sizeof (line));
+        memcpy (map+(m_mapWidth*lineCnt), line, sizeof(line));
+        lineCnt++;
+    } while (file.gcount() > 0);
 }

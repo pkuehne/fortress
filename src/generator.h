@@ -14,6 +14,7 @@ public:
 
 private:
     bool generateRoom (char* map);
+    void loadMap (char* map);
 
 private:
     GameEngineInterface*    m_engine;
