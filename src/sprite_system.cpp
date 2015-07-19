@@ -77,8 +77,7 @@ Entity* SpriteSystem::findWallEntity (unsigned int x, unsigned int y) {
     for (; iter != l_sprites.end(); iter++) {
         if (iter->second.xPos == x &&
             iter->second.yPos == y &&
-            iter->second.sprite > 180 &&
-            iter->second.sprite < 211) {
+            iter->first->hasTag(WALL)) {
             return iter->first;
         }
     }

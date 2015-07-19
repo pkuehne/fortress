@@ -65,7 +65,7 @@ Entity* EntityManager::createWallPrefab (unsigned int x, unsigned int y)
     SpriteComponent l_sprite;
     l_sprite.fgColor    = Color (GREY);
     l_sprite.bgColor    = Color (BLACK);
-    l_sprite.sprite     = 247;
+    l_sprite.sprite     = 'W';
     l_sprite.xPos       = x;
     l_sprite.yPos       = y;
     getSprites()->add (l_entity, l_sprite);
