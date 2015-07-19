@@ -20,7 +20,7 @@ TEST (Generator, SingleRoom)
     EXPECT_CALL (l_entities, createWallPrefab(_,_)).Times (AtLeast(1));
     EXPECT_CALL (l_entities, createTilePrefab(_,_)).Times (AtLeast(1));
     EXPECT_CALL (l_entities, createPlayerPrefab(_,_)).Times (1);
-    EXPECT_CALL (l_entities, createEnemyPrefab(_,_)).Times (2);
+    EXPECT_CALL (l_entities, createEnemyPrefab(_,_)).Times (AtLeast(2));
 
     l_generator.generate();
 }

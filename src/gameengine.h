@@ -20,8 +20,10 @@ public:
     void initialise (void);
     void tick (void);
 
-    bool& isPaused() { return m_paused; }
     void quit() { exit (0); }
+    bool isPlayerTurn() { return m_playerTurn; }
+    void swapTurn() {m_playerTurn = !m_playerTurn; }
+
     void raiseEvent (Event* event) { m_eventManager->raiseEvent (event); }
     EntityManagerInterface* getEntities() { return m_entityManager; }
 
@@ -42,7 +44,7 @@ public:
     void setCombatSystem (GameSystemInterface* a_system) { m_combatSystem = a_system; }
 private:
     unsigned long long  m_tick;
-    bool                m_paused;
+    bool                m_playerTurn;
 
     EntityManagerInterface* m_entityManager;
     EventManagerInterface*  m_eventManager;

@@ -63,28 +63,19 @@ TEST (GameEngine, tick)
 
     l_engine.initialise();
 
-    EXPECT_CALL (l_events, processEvents()).Times(2);
-    EXPECT_CALL (l_moveSystem, update()).Times(2);
-    EXPECT_CALL (l_spriteSystem, update()).Times(2);
-    EXPECT_CALL (l_combatSystem, update()).Times(2);
+    EXPECT_CALL (l_events, processEvents()).Times(1);
+    EXPECT_CALL (l_moveSystem, update()).Times(1);
+    EXPECT_CALL (l_spriteSystem, update()).Times(1);
+    EXPECT_CALL (l_combatSystem, update()).Times(1);
 
     EXPECT_CALL (l_windows, getActive()).WillRepeatedly (Return (&l_window));
-    EXPECT_CALL (l_window, beforeRedraw()).Times(3);
-    EXPECT_CALL (l_window, redraw()).Times(3);
-    EXPECT_CALL (l_window, afterRedraw()).Times(3);
+    EXPECT_CALL (l_window, beforeRedraw()).Times(1);
+    EXPECT_CALL (l_window, redraw()).Times(1);
+    EXPECT_CALL (l_window, afterRedraw()).Times(1);
 
     EXPECT_EQ (0, l_engine.getTick());
     l_engine.tick();
     EXPECT_EQ (1, l_engine.getTick());
-
-    l_engine.isPaused() = true;
-
-    l_engine.tick();
-    EXPECT_EQ (1, l_engine.getTick());
-
-    l_engine.isPaused() = false;
-    displayFunc();
-    EXPECT_EQ (2, l_engine.getTick());
 }
 
 TEST (GameEngine, raiseEventCallsEventManager)

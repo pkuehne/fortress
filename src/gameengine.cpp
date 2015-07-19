@@ -37,7 +37,7 @@ static void mouseClick (int button, int state, int x, int y)
 
 GameEngine::GameEngine (GraphicsInterface* a_graphics)
 : m_tick (0)
-, m_paused (false)
+, m_playerTurn (true)
 , m_entityManager (0)
 , m_eventManager (0)
 , m_windowManager (0)
@@ -102,16 +102,14 @@ void GameEngine::loadMap (const std::string& mapName)
 
 void GameEngine::tick ()
 {
-    if (!m_paused) {
-        m_tick++; // Move the engine on
+    m_tick++; // Move the engine on
 
-        m_eventManager->processEvents();
+    m_eventManager->processEvents();
 
-        //Update Systems
-        m_moveSystem->update();
-        m_spriteSystem->update();
-        m_combatSystem->update();
-    }
+    //Update Systems
+    m_moveSystem->update();
+    m_spriteSystem->update();
+    m_combatSystem->update();
     getWindows()->getActive()->beforeRedraw();
     getWindows()->getActive()->redraw();
     getWindows()->getActive()->afterRedraw();

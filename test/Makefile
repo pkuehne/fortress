@@ -19,6 +19,7 @@ SOURCES+= \
 ../src/graphics.cpp \
 ../src/map_window.cpp \
 ../src/movement_system.cpp \
+../src/npc_system.cpp \
 ../src/splash_window.cpp \
 ../src/sprite_system.cpp \
 ../src/window.cpp \
