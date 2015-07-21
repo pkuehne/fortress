@@ -3,20 +3,27 @@
 
 std::vector<Entity*> GameSystemBase::findEntitiesAt (unsigned int x, unsigned int y)
 {
+    return findEntitiesNear (x, y, 0);
+}
+
+std::vector<Entity*> GameSystemBase::findEntitiesNear (unsigned int x, unsigned int y, unsigned radius)
+{
     std::vector<Entity*> l_entities;
 
     std::map<Entity*, SpriteComponent>& l_sprites = m_engine->getEntities()->getSprites()->getAll();
     std::map<Entity*, SpriteComponent>::iterator it = l_sprites.begin();
     for (; it != l_sprites.end(); it++) {
-        if (it->second.xPos == x && it->second.yPos == y) {
+        if (it->second.xPos >= x - radius &&
+            it->second.xPos <= x + radius &&
+            it->second.yPos >= y - radius &&
+            it->second.yPos <= y + radius) {
             l_entities.push_back (it->first);
         }
-
     }
 
     return l_entities;
-}
 
+}
 
 std::vector<Entity*> GameSystemBase::findEntitiesToThe (MoveEntityEvent::DIRECTION a_direction, Entity* a_entity)
 {

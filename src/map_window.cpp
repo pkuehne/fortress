@@ -12,7 +12,7 @@ void MapWindow::initialise(GameEngineInterface* a_engine) {
 
 void MapWindow::redraw() {
 
-    if (getKey(27)) exit (0);
+    //if (getKey(27)) exit (0);
 
     drawMap();
 }
@@ -37,6 +37,9 @@ void MapWindow::keyDown (unsigned char key) {
     if (key == 'k') {
         AttackEntityEvent* l_event = new AttackEntityEvent();
         getEngine()->raiseEvent (l_event);
+    }
+    if (key == 't') {
+
     }
     getEngine()->swapTurn();
 }

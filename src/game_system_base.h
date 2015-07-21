@@ -16,6 +16,7 @@ public:
 
     virtual ~GameSystemBase() { }
 
+    virtual std::vector<Entity*> findEntitiesNear (unsigned int x, unsigned int y, unsigned radius);
     virtual std::vector<Entity*> findEntitiesAt (unsigned int x, unsigned int y);
     virtual std::vector<Entity*> findEntitiesToThe (MoveEntityEvent::DIRECTION a_direction, Entity* a_entity);
 protected:

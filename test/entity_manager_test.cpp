@@ -76,7 +76,7 @@ TEST (EntityManager, createWallPrefab)
     EXPECT_NE (static_cast<SpriteComponent*>(0), sprite);
     EXPECT_EQ (1, sprite->xPos);
     EXPECT_EQ (2, sprite->yPos);
-    EXPECT_EQ (247, sprite->sprite);
+    EXPECT_EQ ('W', sprite->sprite);
 
     ColliderComponent* collider = manager.getColliders()->get(entity);
     EXPECT_NE (static_cast<ColliderComponent*>(0), collider);

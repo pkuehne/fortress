@@ -53,6 +53,7 @@ TEST (MapWindow, WASDMovesPlayer)
     l_event->entity     = &l_entity;
 
     EXPECT_CALL (l_engine, loadMap (StrEq(""))).Times(1);
+    EXPECT_CALL (l_engine, swapTurn()).Times(5);
     l_win.initialise (&l_engine);
 
     EXPECT_CALL (l_engine, getEntities()).Times(1).WillOnce(Return (&l_entities));
@@ -93,6 +94,7 @@ TEST (MapWindow, KAttacksEnemies)
     l_win.initialise (&l_engine);
 
     EXPECT_CALL (l_engine, raiseEvent (_)).Times(1).WillOnce(SaveArg<0>(&l_event));
+    EXPECT_CALL (l_engine, swapTurn()).Times(1);
     l_win.keyDown ('k');
     ASSERT_NE (static_cast<Event*>(0), l_event);
     EXPECT_EQ (EVENT_ATTACK_ENTITY, l_event->getType());
