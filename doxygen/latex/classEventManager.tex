@@ -1,0 +1,98 @@
+\hypertarget{classEventManager}{\section{Event\-Manager Class Reference}
+\label{classEventManager}\index{Event\-Manager@{Event\-Manager}}
+}
+
+
+{\ttfamily \#include $<$event\-\_\-manager.\-h$>$}
+
+Inheritance diagram for Event\-Manager\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classEventManager}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classEventManager_a93b64a8bc38a9842d10ee1526016671f}{initialise} (\hyperlink{classGameEngineInterface}{Game\-Engine\-Interface} $\ast$engine)
+\item 
+void \hyperlink{classEventManager_ae7c1bd23bc1beafa64b748553b471dce}{register\-Handler} (\hyperlink{classGameSystemInterface}{Game\-System\-Interface} $\ast$system)
+\item 
+void \hyperlink{classEventManager_abce64060a5fb8cc3d51803b0d43f222f}{raise\-Event} (\hyperlink{classEvent}{Event} $\ast$event)
+\item 
+void \hyperlink{classEventManager_ad40f65674444d1944159dd85888740d3}{process\-Events} ()
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classGameEngineInterface}{Game\-Engine\-Interface} $\ast$ \hyperlink{classEventManager_ab26aa30e5a4ceb6f8c604b81991e7c39}{m\-\_\-engine}
+\item 
+\hyperlink{event__manager_8h_aa72a6ddd7c2b54a7df7b25928521b296}{Event\-Queue} \hyperlink{classEventManager_abc0dbcdc9126d867671acb49c48f6d36}{m\-\_\-events}
+\item 
+\hyperlink{event__manager_8h_a4d71a6d029a74348b1e4fbdc42f7acbd}{Handlers} \hyperlink{classEventManager_a0d6a8d7439edfb5e23402437ea0f1c4c}{m\-\_\-handlers}
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classEventManager_a93b64a8bc38a9842d10ee1526016671f}{\index{Event\-Manager@{Event\-Manager}!initialise@{initialise}}
+\index{initialise@{initialise}!EventManager@{Event\-Manager}}
+\subsubsection[{initialise}]{\setlength{\rightskip}{0pt plus 5cm}void Event\-Manager\-::initialise (
+\begin{DoxyParamCaption}
+\item[{{\bf Game\-Engine\-Interface} $\ast$}]{engine}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{classEventManager_a93b64a8bc38a9842d10ee1526016671f}
+
+
+Implements \hyperlink{classEventManagerInterface_a13e851b9fa61887ab99dc0bba907bd05}{Event\-Manager\-Interface}.
+
+\hypertarget{classEventManager_ad40f65674444d1944159dd85888740d3}{\index{Event\-Manager@{Event\-Manager}!process\-Events@{process\-Events}}
+\index{process\-Events@{process\-Events}!EventManager@{Event\-Manager}}
+\subsubsection[{process\-Events}]{\setlength{\rightskip}{0pt plus 5cm}void Event\-Manager\-::process\-Events (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classEventManager_ad40f65674444d1944159dd85888740d3}
+
+
+Implements \hyperlink{classEventManagerInterface_a4c8fb510a0ada3125e798c8d584b6e5f}{Event\-Manager\-Interface}.
+
+\hypertarget{classEventManager_abce64060a5fb8cc3d51803b0d43f222f}{\index{Event\-Manager@{Event\-Manager}!raise\-Event@{raise\-Event}}
+\index{raise\-Event@{raise\-Event}!EventManager@{Event\-Manager}}
+\subsubsection[{raise\-Event}]{\setlength{\rightskip}{0pt plus 5cm}void Event\-Manager\-::raise\-Event (
+\begin{DoxyParamCaption}
+\item[{{\bf Event} $\ast$}]{event}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{classEventManager_abce64060a5fb8cc3d51803b0d43f222f}
+
+
+Implements \hyperlink{classEventManagerInterface_acaf7d1c9783158264d756c51f8d933fc}{Event\-Manager\-Interface}.
+
+\hypertarget{classEventManager_ae7c1bd23bc1beafa64b748553b471dce}{\index{Event\-Manager@{Event\-Manager}!register\-Handler@{register\-Handler}}
+\index{register\-Handler@{register\-Handler}!EventManager@{Event\-Manager}}
+\subsubsection[{register\-Handler}]{\setlength{\rightskip}{0pt plus 5cm}void Event\-Manager\-::register\-Handler (
+\begin{DoxyParamCaption}
+\item[{{\bf Game\-System\-Interface} $\ast$}]{system}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{classEventManager_ae7c1bd23bc1beafa64b748553b471dce}
+
+
+Implements \hyperlink{classEventManagerInterface_ad200ac2b9ee453cc3c954199e79f903d}{Event\-Manager\-Interface}.
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classEventManager_ab26aa30e5a4ceb6f8c604b81991e7c39}{\index{Event\-Manager@{Event\-Manager}!m\-\_\-engine@{m\-\_\-engine}}
+\index{m\-\_\-engine@{m\-\_\-engine}!EventManager@{Event\-Manager}}
+\subsubsection[{m\-\_\-engine}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Game\-Engine\-Interface}$\ast$ Event\-Manager\-::m\-\_\-engine\hspace{0.3cm}{\ttfamily [private]}}}\label{classEventManager_ab26aa30e5a4ceb6f8c604b81991e7c39}
+\hypertarget{classEventManager_abc0dbcdc9126d867671acb49c48f6d36}{\index{Event\-Manager@{Event\-Manager}!m\-\_\-events@{m\-\_\-events}}
+\index{m\-\_\-events@{m\-\_\-events}!EventManager@{Event\-Manager}}
+\subsubsection[{m\-\_\-events}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Event\-Queue} Event\-Manager\-::m\-\_\-events\hspace{0.3cm}{\ttfamily [private]}}}\label{classEventManager_abc0dbcdc9126d867671acb49c48f6d36}
+\hypertarget{classEventManager_a0d6a8d7439edfb5e23402437ea0f1c4c}{\index{Event\-Manager@{Event\-Manager}!m\-\_\-handlers@{m\-\_\-handlers}}
+\index{m\-\_\-handlers@{m\-\_\-handlers}!EventManager@{Event\-Manager}}
+\subsubsection[{m\-\_\-handlers}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Handlers} Event\-Manager\-::m\-\_\-handlers\hspace{0.3cm}{\ttfamily [private]}}}\label{classEventManager_a0d6a8d7439edfb5e23402437ea0f1c4c}
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{event__manager_8h}{event\-\_\-manager.\-h}\item 
+\hyperlink{event__manager_8cpp}{event\-\_\-manager.\-cpp}\end{DoxyCompactItemize}

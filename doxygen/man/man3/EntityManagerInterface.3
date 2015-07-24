@@ -1,0 +1,121 @@
+.TH "EntityManagerInterface" 3 "Fri Jul 24 2015" "Fortress" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+EntityManagerInterface \- 
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <entity_manager_interface\&.h>\fP
+.PP
+Inherited by \fBEntityManager\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "virtual \fB~EntityManagerInterface\fP ()"
+.br
+.ti -1c
+.RI "virtual void \fBinitialise\fP (\fBGameEngineInterface\fP *engine)=0"
+.br
+.ti -1c
+.RI "virtual void \fBdestroy\fP ()=0"
+.br
+.ti -1c
+.RI "virtual \fBEntity\fP * \fBcreateEntity\fP (const std::string &name)=0"
+.br
+.ti -1c
+.RI "virtual void \fBdestroyEntity\fP (\fBEntityId\fP id)=0"
+.br
+.ti -1c
+.RI "virtual \fBEntity\fP * \fBgetPlayer\fP ()=0"
+.br
+.ti -1c
+.RI "virtual \fBEntity\fP * \fBcreateWallPrefab\fP (unsigned int x, unsigned int y)=0"
+.br
+.ti -1c
+.RI "virtual \fBEntity\fP * \fBcreatePlayerPrefab\fP (unsigned int x, unsigned int y)=0"
+.br
+.ti -1c
+.RI "virtual \fBEntity\fP * \fBcreateEnemyPrefab\fP (unsigned int x, unsigned int y)=0"
+.br
+.ti -1c
+.RI "virtual \fBEntity\fP * \fBcreateTilePrefab\fP (unsigned int x, unsigned int y)=0"
+.br
+.ti -1c
+.RI "virtual 
+.br
+\fBComponentManagerInterface\fP
+.br
+< \fBSpriteComponent\fP > * \fBgetSprites\fP ()=0"
+.br
+.ti -1c
+.RI "virtual 
+.br
+\fBComponentManagerInterface\fP
+.br
+< \fBColliderComponent\fP > * \fBgetColliders\fP ()=0"
+.br
+.ti -1c
+.RI "virtual \fBEntity\fP * \fBgetEntity\fP (\fBEntityId\fP id)=0"
+.br
+.in -1c
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "virtual EntityManagerInterface::~EntityManagerInterface ()\fC [inline]\fP, \fC [virtual]\fP"
+
+.SH "Member Function Documentation"
+.PP 
+.SS "virtual \fBEntity\fP* EntityManagerInterface::createEnemyPrefab (unsigned intx, unsigned inty)\fC [pure virtual]\fP"
+
+.PP
+Implemented in \fBEntityManager\fP\&.
+.SS "virtual \fBEntity\fP* EntityManagerInterface::createEntity (const std::string &name)\fC [pure virtual]\fP"
+
+.PP
+Implemented in \fBEntityManager\fP\&.
+.SS "virtual \fBEntity\fP* EntityManagerInterface::createPlayerPrefab (unsigned intx, unsigned inty)\fC [pure virtual]\fP"
+
+.PP
+Implemented in \fBEntityManager\fP\&.
+.SS "virtual \fBEntity\fP* EntityManagerInterface::createTilePrefab (unsigned intx, unsigned inty)\fC [pure virtual]\fP"
+
+.PP
+Implemented in \fBEntityManager\fP\&.
+.SS "virtual \fBEntity\fP* EntityManagerInterface::createWallPrefab (unsigned intx, unsigned inty)\fC [pure virtual]\fP"
+
+.PP
+Implemented in \fBEntityManager\fP\&.
+.SS "virtual void EntityManagerInterface::destroy ()\fC [pure virtual]\fP"
+
+.PP
+Implemented in \fBEntityManager\fP\&.
+.SS "virtual void EntityManagerInterface::destroyEntity (\fBEntityId\fPid)\fC [pure virtual]\fP"
+
+.PP
+Implemented in \fBEntityManager\fP\&.
+.SS "virtual \fBComponentManagerInterface\fP<\fBColliderComponent\fP>* EntityManagerInterface::getColliders ()\fC [pure virtual]\fP"
+
+.PP
+Implemented in \fBEntityManager\fP\&.
+.SS "virtual \fBEntity\fP* EntityManagerInterface::getEntity (\fBEntityId\fPid)\fC [pure virtual]\fP"
+
+.PP
+Implemented in \fBEntityManager\fP\&.
+.SS "virtual \fBEntity\fP* EntityManagerInterface::getPlayer ()\fC [pure virtual]\fP"
+
+.PP
+Implemented in \fBEntityManager\fP\&.
+.SS "virtual \fBComponentManagerInterface\fP<\fBSpriteComponent\fP>* EntityManagerInterface::getSprites ()\fC [pure virtual]\fP"
+
+.PP
+Implemented in \fBEntityManager\fP\&.
+.SS "virtual void EntityManagerInterface::initialise (\fBGameEngineInterface\fP *engine)\fC [pure virtual]\fP"
+
+.PP
+Implemented in \fBEntityManager\fP\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Fortress from the source code\&.

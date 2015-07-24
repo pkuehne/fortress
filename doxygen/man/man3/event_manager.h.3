@@ -1,0 +1,54 @@
+.TH "event_manager.h" 3 "Fri Jul 24 2015" "Fortress" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+event_manager.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <queue>\fP
+.br
+\fC#include <vector>\fP
+.br
+\fC#include 'game_system_interface\&.h'\fP
+.br
+\fC#include 'event\&.h'\fP
+.br
+\fC#include 'game_engine_interface\&.h'\fP
+.br
+\fC#include 'event_manager_interface\&.h'\fP
+.br
+
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "class \fBEventManager\fP"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef std::queue< \fBEvent\fP * > \fBEventQueue\fP"
+.br
+.ti -1c
+.RI "typedef std::vector
+.br
+< \fBGameSystemInterface\fP * > \fBHandlers\fP"
+.br
+.ti -1c
+.RI "typedef Handlers::iterator \fBHandlersIter\fP"
+.br
+.in -1c
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef std::queue<\fBEvent\fP*> \fBEventQueue\fP"
+
+.SS "typedef std::vector<\fBGameSystemInterface\fP*> \fBHandlers\fP"
+
+.SS "typedef Handlers::iterator \fBHandlersIter\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Fortress from the source code\&.

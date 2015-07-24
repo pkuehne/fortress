@@ -1,0 +1,197 @@
+\hypertarget{classWindowInterface}{\section{Window\-Interface Class Reference}
+\label{classWindowInterface}\index{Window\-Interface@{Window\-Interface}}
+}
+
+
+{\ttfamily \#include $<$window\-\_\-interface.\-h$>$}
+
+Inheritance diagram for Window\-Interface\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classWindowInterface}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual \hyperlink{classWindowInterface_a38329b7b17b5ae765d81e40e8093f4c5}{$\sim$\-Window\-Interface} ()
+\item 
+virtual void \hyperlink{classWindowInterface_a8277c1eb7d3ae7b3f13e06081ffcf66a}{initialise} (\hyperlink{classGameEngineInterface}{Game\-Engine\-Interface} $\ast$a\-\_\-engine)=0
+\item 
+virtual void \hyperlink{classWindowInterface_afeaed24b8e350acb196964106f2a0146}{destroy} (void)=0
+\item 
+virtual \hyperlink{classGameEngineInterface}{Game\-Engine\-Interface} $\ast$ \hyperlink{classWindowInterface_ac5970434199b518109a95a5cb645814a}{get\-Engine} ()=0
+\item 
+virtual void \hyperlink{classWindowInterface_a874548802028401146c44f7ba3e54d1d}{key\-Down} (unsigned char key)=0
+\item 
+virtual void \hyperlink{classWindowInterface_aa776c5cf4ef3d93a49613e08c79cab77}{key\-Up} (unsigned char key)=0
+\item 
+virtual bool \hyperlink{classWindowInterface_ab67d23a3dee052fd5901a87518b86e4d}{get\-Key} (unsigned char key)=0
+\item 
+virtual void \hyperlink{classWindowInterface_a5e6ba2b8e6560e9e3b74794cfd123d59}{mouse\-Down} (int x, int y, int button)=0
+\item 
+virtual void \hyperlink{classWindowInterface_a482961a40e4a07d7f7ac81fe62ee7762}{mouse\-Up} (int x, int y, int button)=0
+\item 
+virtual void \hyperlink{classWindowInterface_a8aa6ce7a663628e3bd0480d4566191d2}{before\-Redraw} ()=0
+\item 
+virtual void \hyperlink{classWindowInterface_a9baf4b0e9c1fdd73b1fe14af4173c699}{redraw} ()=0
+\item 
+virtual void \hyperlink{classWindowInterface_a37e350fc8f4a97333400c03e8544b2eb}{after\-Redraw} ()=0
+\item 
+virtual void \hyperlink{classWindowInterface_aa7109fc50fd3e90b0589bdd2a5e6972e}{resize} (int width, int height)=0
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classWindowInterface_a38329b7b17b5ae765d81e40e8093f4c5}{\index{Window\-Interface@{Window\-Interface}!$\sim$\-Window\-Interface@{$\sim$\-Window\-Interface}}
+\index{$\sim$\-Window\-Interface@{$\sim$\-Window\-Interface}!WindowInterface@{Window\-Interface}}
+\subsubsection[{$\sim$\-Window\-Interface}]{\setlength{\rightskip}{0pt plus 5cm}virtual Window\-Interface\-::$\sim$\-Window\-Interface (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{classWindowInterface_a38329b7b17b5ae765d81e40e8093f4c5}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classWindowInterface_a37e350fc8f4a97333400c03e8544b2eb}{\index{Window\-Interface@{Window\-Interface}!after\-Redraw@{after\-Redraw}}
+\index{after\-Redraw@{after\-Redraw}!WindowInterface@{Window\-Interface}}
+\subsubsection[{after\-Redraw}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Window\-Interface\-::after\-Redraw (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}}\label{classWindowInterface_a37e350fc8f4a97333400c03e8544b2eb}
+
+
+Implemented in \hyperlink{classWindow_a05b1d6673e37db442ecd80c54d10e6b7}{Window}.
+
+\hypertarget{classWindowInterface_a8aa6ce7a663628e3bd0480d4566191d2}{\index{Window\-Interface@{Window\-Interface}!before\-Redraw@{before\-Redraw}}
+\index{before\-Redraw@{before\-Redraw}!WindowInterface@{Window\-Interface}}
+\subsubsection[{before\-Redraw}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Window\-Interface\-::before\-Redraw (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}}\label{classWindowInterface_a8aa6ce7a663628e3bd0480d4566191d2}
+
+
+Implemented in \hyperlink{classWindow_a1344118a395cb2fc48d4a2359372b074}{Window}.
+
+\hypertarget{classWindowInterface_afeaed24b8e350acb196964106f2a0146}{\index{Window\-Interface@{Window\-Interface}!destroy@{destroy}}
+\index{destroy@{destroy}!WindowInterface@{Window\-Interface}}
+\subsubsection[{destroy}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Window\-Interface\-::destroy (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}}\label{classWindowInterface_afeaed24b8e350acb196964106f2a0146}
+
+
+Implemented in \hyperlink{classWindow_ae0ed7fd17df30f2d262cb684560e0469}{Window}.
+
+\hypertarget{classWindowInterface_ac5970434199b518109a95a5cb645814a}{\index{Window\-Interface@{Window\-Interface}!get\-Engine@{get\-Engine}}
+\index{get\-Engine@{get\-Engine}!WindowInterface@{Window\-Interface}}
+\subsubsection[{get\-Engine}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf Game\-Engine\-Interface}$\ast$ Window\-Interface\-::get\-Engine (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}}\label{classWindowInterface_ac5970434199b518109a95a5cb645814a}
+
+
+Implemented in \hyperlink{classWindow_a55a6e31e36665bd3bcffcd844f5f0385}{Window}.
+
+\hypertarget{classWindowInterface_ab67d23a3dee052fd5901a87518b86e4d}{\index{Window\-Interface@{Window\-Interface}!get\-Key@{get\-Key}}
+\index{get\-Key@{get\-Key}!WindowInterface@{Window\-Interface}}
+\subsubsection[{get\-Key}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool Window\-Interface\-::get\-Key (
+\begin{DoxyParamCaption}
+\item[{unsigned char}]{key}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}}\label{classWindowInterface_ab67d23a3dee052fd5901a87518b86e4d}
+
+
+Implemented in \hyperlink{classWindow_ac0927d0b89776959c4a95dd6737f841f}{Window}.
+
+\hypertarget{classWindowInterface_a8277c1eb7d3ae7b3f13e06081ffcf66a}{\index{Window\-Interface@{Window\-Interface}!initialise@{initialise}}
+\index{initialise@{initialise}!WindowInterface@{Window\-Interface}}
+\subsubsection[{initialise}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Window\-Interface\-::initialise (
+\begin{DoxyParamCaption}
+\item[{{\bf Game\-Engine\-Interface} $\ast$}]{a\-\_\-engine}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}}\label{classWindowInterface_a8277c1eb7d3ae7b3f13e06081ffcf66a}
+
+
+Implemented in \hyperlink{classWindow_a3dcd22169bd4d40f4b35eafdea31f6dd}{Window}, and \hyperlink{classMapWindow_affdeec7b3b899c38f16d04d170970e70}{Map\-Window}.
+
+\hypertarget{classWindowInterface_a874548802028401146c44f7ba3e54d1d}{\index{Window\-Interface@{Window\-Interface}!key\-Down@{key\-Down}}
+\index{key\-Down@{key\-Down}!WindowInterface@{Window\-Interface}}
+\subsubsection[{key\-Down}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Window\-Interface\-::key\-Down (
+\begin{DoxyParamCaption}
+\item[{unsigned char}]{key}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}}\label{classWindowInterface_a874548802028401146c44f7ba3e54d1d}
+
+
+Implemented in \hyperlink{classWindow_a25a5308909ec422bebb480c803e1233c}{Window}, and \hyperlink{classMapWindow_a289795e503a5aa600e4091f5aa8b0b8c}{Map\-Window}.
+
+\hypertarget{classWindowInterface_aa776c5cf4ef3d93a49613e08c79cab77}{\index{Window\-Interface@{Window\-Interface}!key\-Up@{key\-Up}}
+\index{key\-Up@{key\-Up}!WindowInterface@{Window\-Interface}}
+\subsubsection[{key\-Up}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Window\-Interface\-::key\-Up (
+\begin{DoxyParamCaption}
+\item[{unsigned char}]{key}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}}\label{classWindowInterface_aa776c5cf4ef3d93a49613e08c79cab77}
+
+
+Implemented in \hyperlink{classWindow_a249f5a9513be00e59428a1df37502c63}{Window}.
+
+\hypertarget{classWindowInterface_a5e6ba2b8e6560e9e3b74794cfd123d59}{\index{Window\-Interface@{Window\-Interface}!mouse\-Down@{mouse\-Down}}
+\index{mouse\-Down@{mouse\-Down}!WindowInterface@{Window\-Interface}}
+\subsubsection[{mouse\-Down}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Window\-Interface\-::mouse\-Down (
+\begin{DoxyParamCaption}
+\item[{int}]{x, }
+\item[{int}]{y, }
+\item[{int}]{button}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}}\label{classWindowInterface_a5e6ba2b8e6560e9e3b74794cfd123d59}
+
+
+Implemented in \hyperlink{classWindow_ace3bd5e6614510fce97263eccc35c0ab}{Window}.
+
+\hypertarget{classWindowInterface_a482961a40e4a07d7f7ac81fe62ee7762}{\index{Window\-Interface@{Window\-Interface}!mouse\-Up@{mouse\-Up}}
+\index{mouse\-Up@{mouse\-Up}!WindowInterface@{Window\-Interface}}
+\subsubsection[{mouse\-Up}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Window\-Interface\-::mouse\-Up (
+\begin{DoxyParamCaption}
+\item[{int}]{x, }
+\item[{int}]{y, }
+\item[{int}]{button}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}}\label{classWindowInterface_a482961a40e4a07d7f7ac81fe62ee7762}
+
+
+Implemented in \hyperlink{classWindow_a2e2c7592975405513a05a2da6a512b1c}{Window}.
+
+\hypertarget{classWindowInterface_a9baf4b0e9c1fdd73b1fe14af4173c699}{\index{Window\-Interface@{Window\-Interface}!redraw@{redraw}}
+\index{redraw@{redraw}!WindowInterface@{Window\-Interface}}
+\subsubsection[{redraw}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Window\-Interface\-::redraw (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}}\label{classWindowInterface_a9baf4b0e9c1fdd73b1fe14af4173c699}
+
+
+Implemented in \hyperlink{classWindow_aa8b52b7035a78ef960c194c9bb4a7c36}{Window}, \hyperlink{classMapWindow_a5759338c3758b2a3252ffc691958dff8}{Map\-Window}, and \hyperlink{classSplashWindow_aad27778951eb9dd5dbb03635f2bda114}{Splash\-Window}.
+
+\hypertarget{classWindowInterface_aa7109fc50fd3e90b0589bdd2a5e6972e}{\index{Window\-Interface@{Window\-Interface}!resize@{resize}}
+\index{resize@{resize}!WindowInterface@{Window\-Interface}}
+\subsubsection[{resize}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Window\-Interface\-::resize (
+\begin{DoxyParamCaption}
+\item[{int}]{width, }
+\item[{int}]{height}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}}\label{classWindowInterface_aa7109fc50fd3e90b0589bdd2a5e6972e}
+
+
+Implemented in \hyperlink{classWindow_a6e4274c73728009132b7e0dfad42a8de}{Window}.
+
+
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{window__interface_8h}{window\-\_\-interface.\-h}\end{DoxyCompactItemize}

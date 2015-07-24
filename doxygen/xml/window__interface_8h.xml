@@ -1,0 +1,163 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.6">
+  <compounddef id="window__interface_8h" kind="file">
+    <compoundname>window_interface.h</compoundname>
+    <includedby refid="window__manager__interface_8h" local="yes">window_manager_interface.h</includedby>
+    <includedby refid="window__manager_8h" local="yes">window_manager.h</includedby>
+    <includedby refid="window_8h" local="yes">window.h</includedby>
+    <invincdepgraph>
+      <node id="1040">
+        <label>window_manager.cpp</label>
+        <link refid="window__manager_8cpp"/>
+      </node>
+      <node id="1035">
+        <label>map_window.cpp</label>
+        <link refid="map__window_8cpp"/>
+      </node>
+      <node id="1037">
+        <label>splash_window.cpp</label>
+        <link refid="splash__window_8cpp"/>
+      </node>
+      <node id="1031">
+        <label>entity_manager.cpp</label>
+        <link refid="entity__manager_8cpp"/>
+      </node>
+      <node id="1039">
+        <label>window_manager.h</label>
+        <link refid="window__manager_8h"/>
+        <childnode refid="1032" relation="include">
+        </childnode>
+        <childnode refid="1040" relation="include">
+        </childnode>
+      </node>
+      <node id="1043">
+        <label>splash_window.h</label>
+        <link refid="splash__window_8h"/>
+        <childnode refid="1037" relation="include">
+        </childnode>
+        <childnode refid="1040" relation="include">
+        </childnode>
+      </node>
+      <node id="1027">
+        <label>window_interface.h</label>
+        <link refid="window_interface.h"/>
+        <childnode refid="1028" relation="include">
+        </childnode>
+        <childnode refid="1039" relation="include">
+        </childnode>
+        <childnode refid="1041" relation="include">
+        </childnode>
+      </node>
+      <node id="1044">
+        <label>window.cpp</label>
+        <link refid="window_8cpp"/>
+      </node>
+      <node id="1034">
+        <label>main.cpp</label>
+        <link refid="main_8cpp"/>
+      </node>
+      <node id="1041">
+        <label>window.h</label>
+        <link refid="window_8h"/>
+        <childnode refid="1035" relation="include">
+        </childnode>
+        <childnode refid="1042" relation="include">
+        </childnode>
+        <childnode refid="1043" relation="include">
+        </childnode>
+        <childnode refid="1044" relation="include">
+        </childnode>
+      </node>
+      <node id="1033">
+        <label>generator.cpp</label>
+        <link refid="generator_8cpp"/>
+      </node>
+      <node id="1032">
+        <label>gameengine.cpp</label>
+        <link refid="gameengine_8cpp"/>
+      </node>
+      <node id="1030">
+        <label>algorithm.cpp</label>
+        <link refid="algorithm_8cpp"/>
+      </node>
+      <node id="1042">
+        <label>map_window.h</label>
+        <link refid="map__window_8h"/>
+        <childnode refid="1035" relation="include">
+        </childnode>
+        <childnode refid="1037" relation="include">
+        </childnode>
+      </node>
+      <node id="1036">
+        <label>movement_system.cpp</label>
+        <link refid="movement__system_8cpp"/>
+      </node>
+      <node id="1038">
+        <label>sprite_system.cpp</label>
+        <link refid="sprite__system_8cpp"/>
+      </node>
+      <node id="1028">
+        <label>window_manager_interface.h</label>
+        <link refid="window__manager__interface_8h"/>
+        <childnode refid="1029" relation="include">
+        </childnode>
+        <childnode refid="1039" relation="include">
+        </childnode>
+      </node>
+      <node id="1029">
+        <label>gameengine.h</label>
+        <link refid="gameengine_8h"/>
+        <childnode refid="1030" relation="include">
+        </childnode>
+        <childnode refid="1031" relation="include">
+        </childnode>
+        <childnode refid="1032" relation="include">
+        </childnode>
+        <childnode refid="1033" relation="include">
+        </childnode>
+        <childnode refid="1034" relation="include">
+        </childnode>
+        <childnode refid="1035" relation="include">
+        </childnode>
+        <childnode refid="1036" relation="include">
+        </childnode>
+        <childnode refid="1037" relation="include">
+        </childnode>
+        <childnode refid="1038" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="classWindowInterface" prot="public">WindowInterface</innerclass>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="preprocessor">#ifndef<sp/>WINDOW_INTERFACE_H</highlight></codeline>
+<codeline lineno="2"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>WINDOW_INTERFACE_H</highlight></codeline>
+<codeline lineno="3"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="classGameEngineInterface" kindref="compound">GameEngineInterface</ref>;</highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight></codeline>
+<codeline lineno="6" refid="classWindowInterface" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="classWindowInterface" kindref="compound">WindowInterface</ref><sp/>{</highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="8" refid="classWindowInterface_1a38329b7b17b5ae765d81e40e8093f4c5" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/><ref refid="classWindowInterface_1a38329b7b17b5ae765d81e40e8093f4c5" kindref="member">~WindowInterface</ref>()<sp/>{}</highlight></codeline>
+<codeline lineno="9"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classWindowInterface_1a8277c1eb7d3ae7b3f13e06081ffcf66a" kindref="member">initialise</ref><sp/>(<ref refid="classGameEngineInterface" kindref="compound">GameEngineInterface</ref>*<sp/>a_engine)<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="10"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classWindowInterface_1afeaed24b8e350acb196964106f2a0146" kindref="member">destroy</ref><sp/>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">)<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight></codeline>
+<codeline lineno="12"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/><ref refid="classGameEngineInterface" kindref="compound">GameEngineInterface</ref>*<sp/><ref refid="classWindowInterface_1ac5970434199b518109a95a5cb645814a" kindref="member">getEngine</ref>()<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="13"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classWindowInterface_1a874548802028401146c44f7ba3e54d1d" kindref="member">keyDown</ref><sp/>(</highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>key)<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="14"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classWindowInterface_1aa776c5cf4ef3d93a49613e08c79cab77" kindref="member">keyUp</ref><sp/>(</highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>key)<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="15"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="classWindowInterface_1ab67d23a3dee052fd5901a87518b86e4d" kindref="member">getKey</ref><sp/>(</highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>key)<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="16"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classWindowInterface_1a5e6ba2b8e6560e9e3b74794cfd123d59" kindref="member">mouseDown</ref><sp/>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>x,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>y,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>button)<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="17"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classWindowInterface_1a482961a40e4a07d7f7ac81fe62ee7762" kindref="member">mouseUp</ref><sp/>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>x,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>y,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>button)<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="18"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classWindowInterface_1a8aa6ce7a663628e3bd0480d4566191d2" kindref="member">beforeRedraw</ref>()<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="19"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classWindowInterface_1a9baf4b0e9c1fdd73b1fe14af4173c699" kindref="member">redraw</ref><sp/>()<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="20"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classWindowInterface_1a37e350fc8f4a97333400c03e8544b2eb" kindref="member">afterRedraw</ref>()<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="21"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classWindowInterface_1aa7109fc50fd3e90b0589bdd2a5e6972e" kindref="member">resize</ref><sp/>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>width,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>height)<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="22"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="23"><highlight class="normal"></highlight></codeline>
+<codeline lineno="24"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+    </programlisting>
+    <location file="/home/peter/Development/fortress/src/window_interface.h"/>
+  </compounddef>
+</doxygen>

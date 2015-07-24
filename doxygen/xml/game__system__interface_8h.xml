@@ -1,0 +1,218 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.6">
+  <compounddef id="game__system__interface_8h" kind="file">
+    <compoundname>game_system_interface.h</compoundname>
+    <includes refid="event_8h" local="yes">event.h</includes>
+    <includedby refid="gameengine_8h" local="yes">gameengine.h</includedby>
+    <includedby refid="game__system__base_8h" local="yes">game_system_base.h</includedby>
+    <includedby refid="event__manager_8h" local="yes">event_manager.h</includedby>
+    <incdepgraph>
+      <node id="536">
+        <label>event.h</label>
+        <link refid="event_8h"/>
+        <childnode refid="537" relation="include">
+        </childnode>
+        <childnode refid="538" relation="include">
+        </childnode>
+        <childnode refid="539" relation="include">
+        </childnode>
+      </node>
+      <node id="541">
+        <label>string</label>
+      </node>
+      <node id="539">
+        <label>entity.h</label>
+        <link refid="entity_8h"/>
+        <childnode refid="540" relation="include">
+        </childnode>
+        <childnode refid="541" relation="include">
+        </childnode>
+      </node>
+      <node id="537">
+        <label>map</label>
+      </node>
+      <node id="538">
+        <label>iostream</label>
+      </node>
+      <node id="540">
+        <label>set</label>
+      </node>
+      <node id="535">
+        <label>game_system_interface.h</label>
+        <link refid="game_system_interface.h"/>
+        <childnode refid="536" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="556">
+        <label>game_system_base.cpp</label>
+        <link refid="game__system__base_8cpp"/>
+      </node>
+      <node id="553">
+        <label>game_system_base.h</label>
+        <link refid="game__system__base_8h"/>
+        <childnode refid="554" relation="include">
+        </childnode>
+        <childnode refid="556" relation="include">
+        </childnode>
+        <childnode refid="557" relation="include">
+        </childnode>
+        <childnode refid="558" relation="include">
+        </childnode>
+        <childnode refid="559" relation="include">
+        </childnode>
+      </node>
+      <node id="557">
+        <label>movement_system.h</label>
+        <link refid="movement__system_8h"/>
+        <childnode refid="546" relation="include">
+        </childnode>
+        <childnode refid="548" relation="include">
+        </childnode>
+        <childnode refid="550" relation="include">
+        </childnode>
+      </node>
+      <node id="554">
+        <label>combat_system.h</label>
+        <link refid="combat__system_8h"/>
+        <childnode refid="555" relation="include">
+        </childnode>
+        <childnode refid="546" relation="include">
+        </childnode>
+        <childnode refid="548" relation="include">
+        </childnode>
+      </node>
+      <node id="555">
+        <label>combat_system.cpp</label>
+        <link refid="combat__system_8cpp"/>
+      </node>
+      <node id="562">
+        <label>event_manager.cpp</label>
+        <link refid="event__manager_8cpp"/>
+      </node>
+      <node id="549">
+        <label>map_window.cpp</label>
+        <link refid="map__window_8cpp"/>
+      </node>
+      <node id="551">
+        <label>splash_window.cpp</label>
+        <link refid="splash__window_8cpp"/>
+      </node>
+      <node id="545">
+        <label>entity_manager.cpp</label>
+        <link refid="entity__manager_8cpp"/>
+      </node>
+      <node id="561">
+        <label>event_manager.h</label>
+        <link refid="event__manager_8h"/>
+        <childnode refid="562" relation="include">
+        </childnode>
+        <childnode refid="546" relation="include">
+        </childnode>
+      </node>
+      <node id="559">
+        <label>npc_system.h</label>
+        <link refid="npc__system_8h"/>
+        <childnode refid="548" relation="include">
+        </childnode>
+        <childnode refid="560" relation="include">
+        </childnode>
+      </node>
+      <node id="558">
+        <label>sprite_system.h</label>
+        <link refid="sprite__system_8h"/>
+        <childnode refid="546" relation="include">
+        </childnode>
+        <childnode refid="548" relation="include">
+        </childnode>
+        <childnode refid="552" relation="include">
+        </childnode>
+      </node>
+      <node id="548">
+        <label>main.cpp</label>
+        <link refid="main_8cpp"/>
+      </node>
+      <node id="547">
+        <label>generator.cpp</label>
+        <link refid="generator_8cpp"/>
+      </node>
+      <node id="546">
+        <label>gameengine.cpp</label>
+        <link refid="gameengine_8cpp"/>
+      </node>
+      <node id="544">
+        <label>algorithm.cpp</label>
+        <link refid="algorithm_8cpp"/>
+      </node>
+      <node id="550">
+        <label>movement_system.cpp</label>
+        <link refid="movement__system_8cpp"/>
+      </node>
+      <node id="542">
+        <label>game_system_interface.h</label>
+        <link refid="game_system_interface.h"/>
+        <childnode refid="543" relation="include">
+        </childnode>
+        <childnode refid="553" relation="include">
+        </childnode>
+        <childnode refid="561" relation="include">
+        </childnode>
+      </node>
+      <node id="552">
+        <label>sprite_system.cpp</label>
+        <link refid="sprite__system_8cpp"/>
+      </node>
+      <node id="543">
+        <label>gameengine.h</label>
+        <link refid="gameengine_8h"/>
+        <childnode refid="544" relation="include">
+        </childnode>
+        <childnode refid="545" relation="include">
+        </childnode>
+        <childnode refid="546" relation="include">
+        </childnode>
+        <childnode refid="547" relation="include">
+        </childnode>
+        <childnode refid="548" relation="include">
+        </childnode>
+        <childnode refid="549" relation="include">
+        </childnode>
+        <childnode refid="550" relation="include">
+        </childnode>
+        <childnode refid="551" relation="include">
+        </childnode>
+        <childnode refid="552" relation="include">
+        </childnode>
+      </node>
+      <node id="560">
+        <label>npc_system.cpp</label>
+        <link refid="npc__system_8cpp"/>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="classGameSystemInterface" prot="public">GameSystemInterface</innerclass>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="preprocessor">#ifndef<sp/>GAME_SYSTEM_INTERFACE_H</highlight></codeline>
+<codeline lineno="2"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>GAME_SYSTEM_INTERFACE_H</highlight></codeline>
+<codeline lineno="3"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="event_8h" kindref="compound">event.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="classGameEngineInterface" kindref="compound">GameEngineInterface</ref>;</highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight></codeline>
+<codeline lineno="8" refid="classGameSystemInterface" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="classGameSystemInterface" kindref="compound">GameSystemInterface</ref><sp/>{</highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="10"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classGameSystemInterface_1a29079ef1f35027150b751c3fcb025091" kindref="member">initialise</ref><sp/>(<ref refid="classGameEngineInterface" kindref="compound">GameEngineInterface</ref>*<sp/>engine)<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="11"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classGameSystemInterface_1a386bcebd68725d6229f2fc84f1c762c7" kindref="member">handleEvent</ref><sp/>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="classEvent" kindref="compound">Event</ref>*<sp/>event)<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="12"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classGameSystemInterface_1a531f5e7c6ca9881a67932cc4fded0a2e" kindref="member">update</ref><sp/>()<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="13" refid="classGameSystemInterface_1ad4d59070ee87e375529ad1250850d1c6" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/><ref refid="classGameSystemInterface_1ad4d59070ee87e375529ad1250850d1c6" kindref="member">~GameSystemInterface</ref>()<sp/>{<sp/>}</highlight></codeline>
+<codeline lineno="14"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight></codeline>
+<codeline lineno="16"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+    </programlisting>
+    <location file="/home/peter/Development/fortress/src/game_system_interface.h"/>
+  </compounddef>
+</doxygen>

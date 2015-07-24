@@ -1,0 +1,308 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.6">
+  <compounddef id="entity__manager__interface_8h" kind="file">
+    <compoundname>entity_manager_interface.h</compoundname>
+    <includes refid="component__manager_8h" local="no">component_manager.h</includes>
+    <includes refid="sprite__component_8h" local="no">sprite_component.h</includes>
+    <includes refid="collider__component_8h" local="no">collider_component.h</includes>
+    <includedby refid="game__engine__interface_8h" local="yes">game_engine_interface.h</includedby>
+    <includedby refid="gameengine_8h" local="yes">gameengine.h</includedby>
+    <includedby refid="entity__manager_8h" local="yes">entity_manager.h</includedby>
+    <incdepgraph>
+      <node id="328">
+        <label>collider_component.h</label>
+        <link refid="collider__component_8h"/>
+      </node>
+      <node id="320">
+        <label>component_manager.h</label>
+        <link refid="component__manager_8h"/>
+        <childnode refid="321" relation="include">
+        </childnode>
+        <childnode refid="322" relation="include">
+        </childnode>
+        <childnode refid="325" relation="include">
+        </childnode>
+      </node>
+      <node id="327">
+        <label>color.h</label>
+        <link refid="color_8h"/>
+      </node>
+      <node id="321">
+        <label>component_manager_interface.h</label>
+        <link refid="component__manager__interface_8h"/>
+        <childnode refid="322" relation="include">
+        </childnode>
+        <childnode refid="325" relation="include">
+        </childnode>
+      </node>
+      <node id="324">
+        <label>string</label>
+      </node>
+      <node id="322">
+        <label>entity.h</label>
+        <link refid="entity_8h"/>
+        <childnode refid="323" relation="include">
+        </childnode>
+        <childnode refid="324" relation="include">
+        </childnode>
+      </node>
+      <node id="325">
+        <label>map</label>
+      </node>
+      <node id="319">
+        <label>entity_manager_interface.h</label>
+        <link refid="entity_manager_interface.h"/>
+        <childnode refid="320" relation="include">
+        </childnode>
+        <childnode refid="326" relation="include">
+        </childnode>
+        <childnode refid="328" relation="include">
+        </childnode>
+      </node>
+      <node id="323">
+        <label>set</label>
+      </node>
+      <node id="326">
+        <label>sprite_component.h</label>
+        <link refid="sprite__component_8h"/>
+        <childnode refid="327" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="343">
+        <label>window_manager.cpp</label>
+        <link refid="window__manager_8cpp"/>
+      </node>
+      <node id="347">
+        <label>game_system_base.cpp</label>
+        <link refid="game__system__base_8cpp"/>
+      </node>
+      <node id="344">
+        <label>game_system_base.h</label>
+        <link refid="game__system__base_8h"/>
+        <childnode refid="345" relation="include">
+        </childnode>
+        <childnode refid="347" relation="include">
+        </childnode>
+        <childnode refid="348" relation="include">
+        </childnode>
+        <childnode refid="349" relation="include">
+        </childnode>
+        <childnode refid="350" relation="include">
+        </childnode>
+      </node>
+      <node id="348">
+        <label>movement_system.h</label>
+        <link refid="movement__system_8h"/>
+        <childnode refid="334" relation="include">
+        </childnode>
+        <childnode refid="336" relation="include">
+        </childnode>
+        <childnode refid="338" relation="include">
+        </childnode>
+      </node>
+      <node id="345">
+        <label>combat_system.h</label>
+        <link refid="combat__system_8h"/>
+        <childnode refid="346" relation="include">
+        </childnode>
+        <childnode refid="334" relation="include">
+        </childnode>
+        <childnode refid="336" relation="include">
+        </childnode>
+      </node>
+      <node id="346">
+        <label>combat_system.cpp</label>
+        <link refid="combat__system_8cpp"/>
+      </node>
+      <node id="353">
+        <label>event_manager.cpp</label>
+        <link refid="event__manager_8cpp"/>
+      </node>
+      <node id="337">
+        <label>map_window.cpp</label>
+        <link refid="map__window_8cpp"/>
+      </node>
+      <node id="339">
+        <label>splash_window.cpp</label>
+        <link refid="splash__window_8cpp"/>
+      </node>
+      <node id="333">
+        <label>entity_manager.cpp</label>
+        <link refid="entity__manager_8cpp"/>
+      </node>
+      <node id="352">
+        <label>event_manager.h</label>
+        <link refid="event__manager_8h"/>
+        <childnode refid="353" relation="include">
+        </childnode>
+        <childnode refid="334" relation="include">
+        </childnode>
+      </node>
+      <node id="350">
+        <label>npc_system.h</label>
+        <link refid="npc__system_8h"/>
+        <childnode refid="336" relation="include">
+        </childnode>
+        <childnode refid="351" relation="include">
+        </childnode>
+      </node>
+      <node id="329">
+        <label>entity_manager_interface.h</label>
+        <link refid="entity_manager_interface.h"/>
+        <childnode refid="330" relation="include">
+        </childnode>
+        <childnode refid="331" relation="include">
+        </childnode>
+        <childnode refid="355" relation="include">
+        </childnode>
+      </node>
+      <node id="349">
+        <label>sprite_system.h</label>
+        <link refid="sprite__system_8h"/>
+        <childnode refid="334" relation="include">
+        </childnode>
+        <childnode refid="336" relation="include">
+        </childnode>
+        <childnode refid="340" relation="include">
+        </childnode>
+      </node>
+      <node id="342">
+        <label>window_manager.h</label>
+        <link refid="window__manager_8h"/>
+        <childnode refid="334" relation="include">
+        </childnode>
+        <childnode refid="343" relation="include">
+        </childnode>
+      </node>
+      <node id="354">
+        <label>window.cpp</label>
+        <link refid="window_8cpp"/>
+      </node>
+      <node id="336">
+        <label>main.cpp</label>
+        <link refid="main_8cpp"/>
+      </node>
+      <node id="335">
+        <label>generator.cpp</label>
+        <link refid="generator_8cpp"/>
+      </node>
+      <node id="355">
+        <label>entity_manager.h</label>
+        <link refid="entity__manager_8h"/>
+        <childnode refid="333" relation="include">
+        </childnode>
+        <childnode refid="334" relation="include">
+        </childnode>
+      </node>
+      <node id="334">
+        <label>gameengine.cpp</label>
+        <link refid="gameengine_8cpp"/>
+      </node>
+      <node id="332">
+        <label>algorithm.cpp</label>
+        <link refid="algorithm_8cpp"/>
+      </node>
+      <node id="330">
+        <label>game_engine_interface.h</label>
+        <link refid="game__engine__interface_8h"/>
+        <childnode refid="331" relation="include">
+        </childnode>
+        <childnode refid="341" relation="include">
+        </childnode>
+        <childnode refid="344" relation="include">
+        </childnode>
+        <childnode refid="352" relation="include">
+        </childnode>
+        <childnode refid="349" relation="include">
+        </childnode>
+        <childnode refid="354" relation="include">
+        </childnode>
+      </node>
+      <node id="338">
+        <label>movement_system.cpp</label>
+        <link refid="movement__system_8cpp"/>
+      </node>
+      <node id="340">
+        <label>sprite_system.cpp</label>
+        <link refid="sprite__system_8cpp"/>
+      </node>
+      <node id="341">
+        <label>window_manager_interface.h</label>
+        <link refid="window__manager__interface_8h"/>
+        <childnode refid="331" relation="include">
+        </childnode>
+        <childnode refid="342" relation="include">
+        </childnode>
+      </node>
+      <node id="331">
+        <label>gameengine.h</label>
+        <link refid="gameengine_8h"/>
+        <childnode refid="332" relation="include">
+        </childnode>
+        <childnode refid="333" relation="include">
+        </childnode>
+        <childnode refid="334" relation="include">
+        </childnode>
+        <childnode refid="335" relation="include">
+        </childnode>
+        <childnode refid="336" relation="include">
+        </childnode>
+        <childnode refid="337" relation="include">
+        </childnode>
+        <childnode refid="338" relation="include">
+        </childnode>
+        <childnode refid="339" relation="include">
+        </childnode>
+        <childnode refid="340" relation="include">
+        </childnode>
+      </node>
+      <node id="351">
+        <label>npc_system.cpp</label>
+        <link refid="npc__system_8cpp"/>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="classEntityManagerInterface" prot="public">EntityManagerInterface</innerclass>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="preprocessor">#ifndef<sp/>ENTITY_MANAGER_H</highlight></codeline>
+<codeline lineno="2"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>ENTITY_MANAGER_H</highlight></codeline>
+<codeline lineno="3"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="classGameEngineInterface" kindref="compound">GameEngineInterface</ref>;</highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="classEntity" kindref="compound">Entity</ref>;</highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="component__manager_8h" kindref="compound">component_manager.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="sprite__component_8h" kindref="compound">sprite_component.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="collider__component_8h" kindref="compound">collider_component.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight></codeline>
+<codeline lineno="10" refid="classEntityManagerInterface" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="classEntityManagerInterface" kindref="compound">EntityManagerInterface</ref><sp/>{</highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="12" refid="classEntityManagerInterface_1a4991d0d31ad6f551335bbc2c65383a9f" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/><ref refid="classEntityManagerInterface_1a4991d0d31ad6f551335bbc2c65383a9f" kindref="member">~EntityManagerInterface</ref>()<sp/>{<sp/>}</highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight></codeline>
+<codeline lineno="14"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classEntityManagerInterface_1aeb1fd14604e776e874765fa708a7ce26" kindref="member">initialise</ref><sp/>(<ref refid="classGameEngineInterface" kindref="compound">GameEngineInterface</ref>*<sp/>engine)<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="15"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classEntityManagerInterface_1ab27d9f7d97a914785cc5955076c10d70" kindref="member">destroy</ref>()<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="16"><highlight class="normal"></highlight></codeline>
+<codeline lineno="17"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/><ref refid="classEntity" kindref="compound">Entity</ref>*<sp/><ref refid="classEntityManagerInterface_1a95ba3a0c18e752b97de7b6a3ffd0301f" kindref="member">createEntity</ref><sp/>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>std::string&amp;<sp/>name)<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="18"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classEntityManagerInterface_1a01d56437b2df1ba882da83e5f6aaa163" kindref="member">destroyEntity</ref><sp/>(<ref refid="entity_8h_1a3812b46f7256476cf244cbc0f4a3bde9" kindref="member">EntityId</ref><sp/></highlight><highlight class="keywordtype">id</highlight><highlight class="normal">)<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="19"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/><ref refid="classEntity" kindref="compound">Entity</ref>*<sp/><ref refid="classEntityManagerInterface_1af59c4f44e337dc04fd7aac61e80b2660" kindref="member">getPlayer</ref><sp/>()<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="20"><highlight class="normal"></highlight></codeline>
+<codeline lineno="21"><highlight class="normal"></highlight></codeline>
+<codeline lineno="22"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/><ref refid="classEntity" kindref="compound">Entity</ref>*<sp/><ref refid="classEntityManagerInterface_1a9aae8cf72f08ee33ea110325148ef613" kindref="member">createWallPrefab</ref><sp/>(</highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>x,<sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>y)<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="23"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/><ref refid="classEntity" kindref="compound">Entity</ref>*<sp/><ref refid="classEntityManagerInterface_1aca4bf34ec9006329027f134575a8b844" kindref="member">createPlayerPrefab</ref><sp/>(</highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>x,<sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>y)<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="24"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/><ref refid="classEntity" kindref="compound">Entity</ref>*<sp/><ref refid="classEntityManagerInterface_1a9060a65f6799126b3b7827bdd2636e92" kindref="member">createEnemyPrefab</ref><sp/>(</highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>x,<sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>y)<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="25"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/><ref refid="classEntity" kindref="compound">Entity</ref>*<sp/><ref refid="classEntityManagerInterface_1aa98d0ba0e59103d9aeb7a367fe04c571" kindref="member">createTilePrefab</ref><sp/>(</highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>x,<sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>y)<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="26"><highlight class="normal"></highlight></codeline>
+<codeline lineno="27"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/><ref refid="classComponentManagerInterface" kindref="compound">ComponentManagerInterface&lt;SpriteComponent&gt;</ref>*<sp/><ref refid="classEntityManagerInterface_1a91bd6cea03b2b69ddec735e116420dd6" kindref="member">getSprites</ref>()<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="28"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/><ref refid="classComponentManagerInterface" kindref="compound">ComponentManagerInterface&lt;ColliderComponent&gt;</ref>*<sp/><ref refid="classEntityManagerInterface_1acc684c426594345b02b206efb74b0adc" kindref="member">getColliders</ref>()<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="29"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/><ref refid="classEntity" kindref="compound">Entity</ref>*<sp/><ref refid="classEntityManagerInterface_1a00346fa684da1972fbd086599b949ed9" kindref="member">getEntity</ref><sp/>(<ref refid="entity_8h_1a3812b46f7256476cf244cbc0f4a3bde9" kindref="member">EntityId</ref><sp/></highlight><highlight class="keywordtype">id</highlight><highlight class="normal">)<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+    </programlisting>
+    <location file="/home/peter/Development/fortress/src/entity_manager_interface.h"/>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,65 @@
+.TH "entity.h" 3 "Fri Jul 24 2015" "Fortress" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+entity.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <set>\fP
+.br
+\fC#include <string>\fP
+.br
+
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "class \fBEntity\fP"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef unsigned long \fBEntityId\fP"
+.br
+.in -1c
+.SS "Enumerations"
+
+.in +1c
+.ti -1c
+.RI "enum \fBTag\fP { \fBPLAYER\fP, \fBMONSTER\fP, \fBWALL\fP }"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "bool \fBoperator<\fP (const \fBEntity\fP &lhs, const \fBEntity\fP &rhs)"
+.br
+.in -1c
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef unsigned long \fBEntityId\fP"
+
+.SH "Enumeration Type Documentation"
+.PP 
+.SS "enum \fBTag\fP"
+
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fIPLAYER \fP\fP
+.TP
+\fB\fIMONSTER \fP\fP
+.TP
+\fB\fIWALL \fP\fP
+.SH "Function Documentation"
+.PP 
+.SS "bool operator< (const \fBEntity\fP &lhs, const \fBEntity\fP &rhs)"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Fortress from the source code\&.

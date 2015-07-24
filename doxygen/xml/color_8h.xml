@@ -1,0 +1,346 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.6">
+  <compounddef id="color_8h" kind="file">
+    <compoundname>color.h</compoundname>
+    <includedby refid="graphics__interface_8h" local="yes">graphics_interface.h</includedby>
+    <includedby refid="color_8cpp" local="yes">color.cpp</includedby>
+    <includedby refid="sprite__component_8h" local="yes">sprite_component.h</includedby>
+    <includedby refid="graphics_8h" local="yes">graphics.h</includedby>
+    <invincdepgraph>
+      <node id="81">
+        <label>window_manager.cpp</label>
+        <link refid="window__manager_8cpp"/>
+      </node>
+      <node id="85">
+        <label>game_system_base.cpp</label>
+        <link refid="game__system__base_8cpp"/>
+      </node>
+      <node id="82">
+        <label>game_system_base.h</label>
+        <link refid="game__system__base_8h"/>
+        <childnode refid="83" relation="include">
+        </childnode>
+        <childnode refid="85" relation="include">
+        </childnode>
+        <childnode refid="86" relation="include">
+        </childnode>
+        <childnode refid="87" relation="include">
+        </childnode>
+        <childnode refid="88" relation="include">
+        </childnode>
+      </node>
+      <node id="94">
+        <label>graphics.cpp</label>
+        <link refid="graphics_8cpp"/>
+      </node>
+      <node id="67">
+        <label>graphics_interface.h</label>
+        <link refid="graphics__interface_8h"/>
+        <childnode refid="68" relation="include">
+        </childnode>
+        <childnode refid="69" relation="include">
+        </childnode>
+        <childnode refid="93" relation="include">
+        </childnode>
+      </node>
+      <node id="86">
+        <label>movement_system.h</label>
+        <link refid="movement__system_8h"/>
+        <childnode refid="72" relation="include">
+        </childnode>
+        <childnode refid="74" relation="include">
+        </childnode>
+        <childnode refid="76" relation="include">
+        </childnode>
+      </node>
+      <node id="83">
+        <label>combat_system.h</label>
+        <link refid="combat__system_8h"/>
+        <childnode refid="84" relation="include">
+        </childnode>
+        <childnode refid="72" relation="include">
+        </childnode>
+        <childnode refid="74" relation="include">
+        </childnode>
+      </node>
+      <node id="84">
+        <label>combat_system.cpp</label>
+        <link refid="combat__system_8cpp"/>
+      </node>
+      <node id="91">
+        <label>event_manager.cpp</label>
+        <link refid="event__manager_8cpp"/>
+      </node>
+      <node id="66">
+        <label>color.h</label>
+        <link refid="color.h"/>
+        <childnode refid="67" relation="include">
+        </childnode>
+        <childnode refid="95" relation="include">
+        </childnode>
+        <childnode refid="96" relation="include">
+        </childnode>
+        <childnode refid="93" relation="include">
+        </childnode>
+      </node>
+      <node id="75">
+        <label>map_window.cpp</label>
+        <link refid="map__window_8cpp"/>
+      </node>
+      <node id="77">
+        <label>splash_window.cpp</label>
+        <link refid="splash__window_8cpp"/>
+      </node>
+      <node id="71">
+        <label>entity_manager.cpp</label>
+        <link refid="entity__manager_8cpp"/>
+      </node>
+      <node id="90">
+        <label>event_manager.h</label>
+        <link refid="event__manager_8h"/>
+        <childnode refid="91" relation="include">
+        </childnode>
+        <childnode refid="72" relation="include">
+        </childnode>
+      </node>
+      <node id="88">
+        <label>npc_system.h</label>
+        <link refid="npc__system_8h"/>
+        <childnode refid="74" relation="include">
+        </childnode>
+        <childnode refid="89" relation="include">
+        </childnode>
+      </node>
+      <node id="97">
+        <label>entity_manager_interface.h</label>
+        <link refid="entity__manager__interface_8h"/>
+        <childnode refid="68" relation="include">
+        </childnode>
+        <childnode refid="69" relation="include">
+        </childnode>
+        <childnode refid="98" relation="include">
+        </childnode>
+      </node>
+      <node id="87">
+        <label>sprite_system.h</label>
+        <link refid="sprite__system_8h"/>
+        <childnode refid="72" relation="include">
+        </childnode>
+        <childnode refid="74" relation="include">
+        </childnode>
+        <childnode refid="78" relation="include">
+        </childnode>
+      </node>
+      <node id="80">
+        <label>window_manager.h</label>
+        <link refid="window__manager_8h"/>
+        <childnode refid="72" relation="include">
+        </childnode>
+        <childnode refid="81" relation="include">
+        </childnode>
+      </node>
+      <node id="92">
+        <label>window.cpp</label>
+        <link refid="window_8cpp"/>
+      </node>
+      <node id="74">
+        <label>main.cpp</label>
+        <link refid="main_8cpp"/>
+      </node>
+      <node id="73">
+        <label>generator.cpp</label>
+        <link refid="generator_8cpp"/>
+      </node>
+      <node id="93">
+        <label>graphics.h</label>
+        <link refid="graphics_8h"/>
+        <childnode refid="94" relation="include">
+        </childnode>
+        <childnode refid="74" relation="include">
+        </childnode>
+        <childnode refid="77" relation="include">
+        </childnode>
+      </node>
+      <node id="98">
+        <label>entity_manager.h</label>
+        <link refid="entity__manager_8h"/>
+        <childnode refid="71" relation="include">
+        </childnode>
+        <childnode refid="72" relation="include">
+        </childnode>
+      </node>
+      <node id="72">
+        <label>gameengine.cpp</label>
+        <link refid="gameengine_8cpp"/>
+      </node>
+      <node id="70">
+        <label>algorithm.cpp</label>
+        <link refid="algorithm_8cpp"/>
+      </node>
+      <node id="95">
+        <label>color.cpp</label>
+        <link refid="color_8cpp"/>
+      </node>
+      <node id="68">
+        <label>game_engine_interface.h</label>
+        <link refid="game__engine__interface_8h"/>
+        <childnode refid="69" relation="include">
+        </childnode>
+        <childnode refid="79" relation="include">
+        </childnode>
+        <childnode refid="82" relation="include">
+        </childnode>
+        <childnode refid="90" relation="include">
+        </childnode>
+        <childnode refid="87" relation="include">
+        </childnode>
+        <childnode refid="92" relation="include">
+        </childnode>
+      </node>
+      <node id="76">
+        <label>movement_system.cpp</label>
+        <link refid="movement__system_8cpp"/>
+      </node>
+      <node id="78">
+        <label>sprite_system.cpp</label>
+        <link refid="sprite__system_8cpp"/>
+      </node>
+      <node id="79">
+        <label>window_manager_interface.h</label>
+        <link refid="window__manager__interface_8h"/>
+        <childnode refid="69" relation="include">
+        </childnode>
+        <childnode refid="80" relation="include">
+        </childnode>
+      </node>
+      <node id="69">
+        <label>gameengine.h</label>
+        <link refid="gameengine_8h"/>
+        <childnode refid="70" relation="include">
+        </childnode>
+        <childnode refid="71" relation="include">
+        </childnode>
+        <childnode refid="72" relation="include">
+        </childnode>
+        <childnode refid="73" relation="include">
+        </childnode>
+        <childnode refid="74" relation="include">
+        </childnode>
+        <childnode refid="75" relation="include">
+        </childnode>
+        <childnode refid="76" relation="include">
+        </childnode>
+        <childnode refid="77" relation="include">
+        </childnode>
+        <childnode refid="78" relation="include">
+        </childnode>
+      </node>
+      <node id="96">
+        <label>sprite_component.h</label>
+        <link refid="sprite__component_8h"/>
+        <childnode refid="97" relation="include">
+        </childnode>
+        <childnode refid="98" relation="include">
+        </childnode>
+        <childnode refid="78" relation="include">
+        </childnode>
+      </node>
+      <node id="89">
+        <label>npc_system.cpp</label>
+        <link refid="npc__system_8cpp"/>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="classColor" prot="public">Color</innerclass>
+      <sectiondef kind="enum">
+      <memberdef kind="enum" id="color_8h_1af90824509586333cf45ce757d2711ce3" prot="public" static="no">
+        <name>COLOR</name>
+        <enumvalue id="color_8h_1af90824509586333cf45ce757d2711ce3af80f9a890089d211842d59625e561f88" prot="public">
+          <name>RED</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="color_8h_1af90824509586333cf45ce757d2711ce3aa60bd322f93178d68184e30e162571ca" prot="public">
+          <name>GREEN</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="color_8h_1af90824509586333cf45ce757d2711ce3a35d6719cb4d7577c031b3d79057a1b79" prot="public">
+          <name>BLUE</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="color_8h_1af90824509586333cf45ce757d2711ce3a283fc479650da98250635b9c3c0e7e50" prot="public">
+          <name>WHITE</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="color_8h_1af90824509586333cf45ce757d2711ce3af77fb67151d0c18d397069ad8c271ba3" prot="public">
+          <name>BLACK</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="color_8h_1af90824509586333cf45ce757d2711ce3a38566822dbd9408c447abfd3ed4a85d2" prot="public">
+          <name>GREY</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/peter/Development/fortress/src/color.h" line="5" column="1" bodyfile="/home/peter/Development/fortress/src/color.h" bodystart="5" bodyend="12"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="preprocessor">#ifndef<sp/>__COLOR_H__</highlight></codeline>
+<codeline lineno="2"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>__COLOR_H__</highlight></codeline>
+<codeline lineno="3"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight></codeline>
+<codeline lineno="5" refid="color_8h_1af90824509586333cf45ce757d2711ce3" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="6" refid="color_8h_1af90824509586333cf45ce757d2711ce3af80f9a890089d211842d59625e561f88" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="color_8h_1af90824509586333cf45ce757d2711ce3af80f9a890089d211842d59625e561f88" kindref="member">RED</ref>,</highlight></codeline>
+<codeline lineno="7" refid="color_8h_1af90824509586333cf45ce757d2711ce3aa60bd322f93178d68184e30e162571ca" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="color_8h_1af90824509586333cf45ce757d2711ce3aa60bd322f93178d68184e30e162571ca" kindref="member">GREEN</ref>,</highlight></codeline>
+<codeline lineno="8" refid="color_8h_1af90824509586333cf45ce757d2711ce3a35d6719cb4d7577c031b3d79057a1b79" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="color_8h_1af90824509586333cf45ce757d2711ce3a35d6719cb4d7577c031b3d79057a1b79" kindref="member">BLUE</ref>,</highlight></codeline>
+<codeline lineno="9" refid="color_8h_1af90824509586333cf45ce757d2711ce3a283fc479650da98250635b9c3c0e7e50" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="color_8h_1af90824509586333cf45ce757d2711ce3a283fc479650da98250635b9c3c0e7e50" kindref="member">WHITE</ref>,</highlight></codeline>
+<codeline lineno="10" refid="color_8h_1af90824509586333cf45ce757d2711ce3af77fb67151d0c18d397069ad8c271ba3" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="color_8h_1af90824509586333cf45ce757d2711ce3af77fb67151d0c18d397069ad8c271ba3" kindref="member">BLACK</ref>,</highlight></codeline>
+<codeline lineno="11" refid="color_8h_1af90824509586333cf45ce757d2711ce3a38566822dbd9408c447abfd3ed4a85d2" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="color_8h_1af90824509586333cf45ce757d2711ce3a38566822dbd9408c447abfd3ed4a85d2" kindref="member">GREY</ref></highlight></codeline>
+<codeline lineno="12"><highlight class="normal">}<sp/><ref refid="color_8h_1af90824509586333cf45ce757d2711ce3" kindref="member">COLOR</ref>;</highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight></codeline>
+<codeline lineno="14" refid="classColor" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="classColor" kindref="compound">Color</ref><sp/>{</highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="16" refid="classColor_1a9a742cbe9f9f4037f5d9f4e81a9b2428" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="classColor_1a9a742cbe9f9f4037f5d9f4e81a9b2428" kindref="member">Color</ref>()<sp/>:<sp/><ref refid="classColor_1a6da1cc1b1358e18dce5fc0335a8abdb6" kindref="member">m_red</ref><sp/>(0),<sp/><ref refid="classColor_1a6c884c0a93f4e23c5db71d003ec2857a" kindref="member">m_green</ref><sp/>(0),<sp/><ref refid="classColor_1a68e36f358a0d335e9a7cadd748cb67b5" kindref="member">m_blue</ref><sp/>(0)<sp/>{<sp/>}</highlight></codeline>
+<codeline lineno="17"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="classColor_1a9a742cbe9f9f4037f5d9f4e81a9b2428" kindref="member">Color</ref><sp/>(</highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>red,<sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>green,<sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/>blue);</highlight></codeline>
+<codeline lineno="18"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="classColor_1a9a742cbe9f9f4037f5d9f4e81a9b2428" kindref="member">Color</ref><sp/>(<ref refid="color_8h_1af90824509586333cf45ce757d2711ce3" kindref="member">COLOR</ref><sp/>color);</highlight></codeline>
+<codeline lineno="19" refid="classColor_1ae212502d1420f4b935dad02b9b17131a" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/><ref refid="classColor_1ae212502d1420f4b935dad02b9b17131a" kindref="member">Red</ref><sp/>()<sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/><ref refid="classColor_1a6da1cc1b1358e18dce5fc0335a8abdb6" kindref="member">m_red</ref>;<sp/>}</highlight></codeline>
+<codeline lineno="20" refid="classColor_1a6fac5c8fc1822b01d2f5500ba906eb6e" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/><ref refid="classColor_1a6fac5c8fc1822b01d2f5500ba906eb6e" kindref="member">Green</ref>()<sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/><ref refid="classColor_1a6c884c0a93f4e23c5db71d003ec2857a" kindref="member">m_green</ref>;<sp/>}</highlight></codeline>
+<codeline lineno="21" refid="classColor_1a9bba5de22a953eb924173eb1c207f667" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/><ref refid="classColor_1a9bba5de22a953eb924173eb1c207f667" kindref="member">Blue</ref><sp/>()<sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/><ref refid="classColor_1a68e36f358a0d335e9a7cadd748cb67b5" kindref="member">m_blue</ref>;<sp/>}</highlight></codeline>
+<codeline lineno="22"><highlight class="normal"></highlight></codeline>
+<codeline lineno="23"><highlight class="normal"></highlight><highlight class="keyword">private</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="24" refid="classColor_1a6da1cc1b1358e18dce5fc0335a8abdb6" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/><ref refid="classColor_1a6da1cc1b1358e18dce5fc0335a8abdb6" kindref="member">m_red</ref>;</highlight></codeline>
+<codeline lineno="25" refid="classColor_1a6c884c0a93f4e23c5db71d003ec2857a" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/><ref refid="classColor_1a6c884c0a93f4e23c5db71d003ec2857a" kindref="member">m_green</ref>;</highlight></codeline>
+<codeline lineno="26" refid="classColor_1a68e36f358a0d335e9a7cadd748cb67b5" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">float</highlight><highlight class="normal"><sp/><ref refid="classColor_1a68e36f358a0d335e9a7cadd748cb67b5" kindref="member">m_blue</ref>;</highlight></codeline>
+<codeline lineno="27"><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+    </programlisting>
+    <location file="/home/peter/Development/fortress/src/color.h"/>
+  </compounddef>
+</doxygen>

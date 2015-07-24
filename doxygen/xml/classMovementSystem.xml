@@ -1,0 +1,231 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.6">
+  <compounddef id="classMovementSystem" kind="class" prot="public">
+    <compoundname>MovementSystem</compoundname>
+    <basecompoundref refid="classGameSystemBase" prot="public" virt="non-virtual">GameSystemBase</basecompoundref>
+    <includes refid="movement__system_8h" local="no">movement_system.h</includes>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classMovementSystem_1a51ef4a49db0f68096e421b3430954716" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type></type>
+        <definition>virtual MovementSystem::~MovementSystem</definition>
+        <argsstring>()</argsstring>
+        <name>~MovementSystem</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/peter/Development/fortress/src/movement_system.h" line="8" column="1" bodyfile="/home/peter/Development/fortress/src/movement_system.h" bodystart="8" bodyend="8"/>
+      </memberdef>
+      <memberdef kind="function" id="classMovementSystem_1ac2c594a6deb6349a376cd72f189971a3" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void MovementSystem::handleEvent</definition>
+        <argsstring>(const Event *event)</argsstring>
+        <name>handleEvent</name>
+        <reimplements refid="classGameSystemBase_1a007b3ece290b1ad0dc3e397c5264d44d">handleEvent</reimplements>
+        <param>
+          <type>const <ref refid="classEvent" kindref="compound">Event</ref> *</type>
+          <declname>event</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/peter/Development/fortress/src/movement_system.h" line="9" column="1" bodyfile="/home/peter/Development/fortress/src/movement_system.cpp" bodystart="7" bodyend="42"/>
+      </memberdef>
+      <memberdef kind="function" id="classGameSystemBase_1a55b4fc27cbfccd3c724c2e5984d78625" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>void</type>
+        <definition>virtual void GameSystemBase::initialise</definition>
+        <argsstring>(GameEngineInterface *engine)</argsstring>
+        <name>initialise</name>
+        <reimplements refid="classGameSystemInterface_1a29079ef1f35027150b751c3fcb025091">initialise</reimplements>
+        <param>
+          <type><ref refid="classGameEngineInterface" kindref="compound">GameEngineInterface</ref> *</type>
+          <declname>engine</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/peter/Development/fortress/src/game_system_base.h" line="12" column="1" bodyfile="/home/peter/Development/fortress/src/game_system_base.h" bodystart="12" bodyend="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classGameSystemBase_1a1954c5a1c79963554805bc25b2cd6072" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type><ref refid="classGameEngineInterface" kindref="compound">GameEngineInterface</ref> *</type>
+        <definition>virtual GameEngineInterface* GameSystemBase::getEngineRef</definition>
+        <argsstring>()</argsstring>
+        <name>getEngineRef</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/peter/Development/fortress/src/game_system_base.h" line="13" column="1" bodyfile="/home/peter/Development/fortress/src/game_system_base.h" bodystart="13" bodyend="13"/>
+      </memberdef>
+      <memberdef kind="function" id="classGameSystemBase_1a039d3086ac7fe50abdb110b569520d69" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>void</type>
+        <definition>virtual void GameSystemBase::update</definition>
+        <argsstring>()</argsstring>
+        <name>update</name>
+        <reimplements refid="classGameSystemInterface_1a531f5e7c6ca9881a67932cc4fded0a2e">update</reimplements>
+        <reimplementedby refid="classNpcSystem_1a88d87a8ec981e5cf1f4ed4340123a9d8">update</reimplementedby>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/peter/Development/fortress/src/game_system_base.h" line="15" column="1" bodyfile="/home/peter/Development/fortress/src/game_system_base.h" bodystart="15" bodyend="15"/>
+      </memberdef>
+      <memberdef kind="function" id="classGameSystemBase_1aae270a88f1077a091e6033514b889abd" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>std::vector&lt; <ref refid="classEntity" kindref="compound">Entity</ref> * &gt;</type>
+        <definition>std::vector&lt; Entity * &gt; GameSystemBase::findEntitiesNear</definition>
+        <argsstring>(unsigned int x, unsigned int y, unsigned radius)</argsstring>
+        <name>findEntitiesNear</name>
+        <param>
+          <type>unsigned int</type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type>unsigned int</type>
+          <declname>y</declname>
+        </param>
+        <param>
+          <type>unsigned</type>
+          <declname>radius</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/peter/Development/fortress/src/game_system_base.h" line="19" column="1" bodyfile="/home/peter/Development/fortress/src/game_system_base.cpp" bodystart="9" bodyend="26"/>
+      </memberdef>
+      <memberdef kind="function" id="classGameSystemBase_1a7aa9912fc078d990dbfb480e411bd3bc" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>std::vector&lt; <ref refid="classEntity" kindref="compound">Entity</ref> * &gt;</type>
+        <definition>std::vector&lt; Entity * &gt; GameSystemBase::findEntitiesAt</definition>
+        <argsstring>(unsigned int x, unsigned int y)</argsstring>
+        <name>findEntitiesAt</name>
+        <param>
+          <type>unsigned int</type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type>unsigned int</type>
+          <declname>y</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/peter/Development/fortress/src/game_system_base.h" line="20" column="1" bodyfile="/home/peter/Development/fortress/src/game_system_base.cpp" bodystart="4" bodyend="7"/>
+      </memberdef>
+      <memberdef kind="function" id="classGameSystemBase_1a44456ef40ac565b9d6b65f3b1531a4ef" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>std::vector&lt; <ref refid="classEntity" kindref="compound">Entity</ref> * &gt;</type>
+        <definition>std::vector&lt; Entity * &gt; GameSystemBase::findEntitiesToThe</definition>
+        <argsstring>(MoveEntityEvent::DIRECTION a_direction, Entity *a_entity)</argsstring>
+        <name>findEntitiesToThe</name>
+        <param>
+          <type><ref refid="classMoveEntityEvent_1a7058a943643bee9164a21e62e3392807" kindref="member">MoveEntityEvent::DIRECTION</ref></type>
+          <declname>a_direction</declname>
+        </param>
+        <param>
+          <type><ref refid="classEntity" kindref="compound">Entity</ref> *</type>
+          <declname>a_entity</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/peter/Development/fortress/src/game_system_base.h" line="21" column="1" bodyfile="/home/peter/Development/fortress/src/game_system_base.cpp" bodystart="28" bodyend="45"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="protected-attrib">
+      <memberdef kind="variable" id="classGameSystemBase_1aa9044eb22399f0c0ddd8f049738c62e5" prot="protected" static="no" mutable="no">
+        <type><ref refid="classGameEngineInterface" kindref="compound">GameEngineInterface</ref> *</type>
+        <definition>GameEngineInterface* GameSystemBase::m_engine</definition>
+        <argsstring></argsstring>
+        <name>m_engine</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/peter/Development/fortress/src/game_system_base.h" line="23" column="1" bodyfile="/home/peter/Development/fortress/src/game_system_base.h" bodystart="23" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="158">
+        <label>GameSystemBase</label>
+        <link refid="classGameSystemBase"/>
+        <childnode refid="159" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="157">
+        <label>MovementSystem</label>
+        <link refid="classMovementSystem"/>
+        <childnode refid="158" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="159">
+        <label>GameSystemInterface</label>
+        <link refid="classGameSystemInterface"/>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="161">
+        <label>GameSystemBase</label>
+        <link refid="classGameSystemBase"/>
+        <childnode refid="162" relation="public-inheritance">
+        </childnode>
+        <childnode refid="163" relation="usage">
+          <edgelabel>m_engine</edgelabel>
+        </childnode>
+      </node>
+      <node id="160">
+        <label>MovementSystem</label>
+        <link refid="classMovementSystem"/>
+        <childnode refid="161" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="162">
+        <label>GameSystemInterface</label>
+        <link refid="classGameSystemInterface"/>
+      </node>
+      <node id="163">
+        <label>GameEngineInterface</label>
+        <link refid="classGameEngineInterface"/>
+      </node>
+    </collaborationgraph>
+    <location file="/home/peter/Development/fortress/src/movement_system.h" line="6" column="1" bodyfile="/home/peter/Development/fortress/src/movement_system.h" bodystart="6" bodyend="13"/>
+    <listofallmembers>
+      <member refid="classGameSystemBase_1a7aa9912fc078d990dbfb480e411bd3bc" prot="public" virt="virtual"><scope>MovementSystem</scope><name>findEntitiesAt</name></member>
+      <member refid="classGameSystemBase_1aae270a88f1077a091e6033514b889abd" prot="public" virt="virtual"><scope>MovementSystem</scope><name>findEntitiesNear</name></member>
+      <member refid="classGameSystemBase_1a44456ef40ac565b9d6b65f3b1531a4ef" prot="public" virt="virtual"><scope>MovementSystem</scope><name>findEntitiesToThe</name></member>
+      <member refid="classGameSystemBase_1a328ace5c41637f72e450083ce7159f66" prot="public" virt="non-virtual"><scope>MovementSystem</scope><name>GameSystemBase</name></member>
+      <member refid="classGameSystemBase_1a1954c5a1c79963554805bc25b2cd6072" prot="public" virt="virtual"><scope>MovementSystem</scope><name>getEngineRef</name></member>
+      <member refid="classMovementSystem_1ac2c594a6deb6349a376cd72f189971a3" prot="public" virt="virtual"><scope>MovementSystem</scope><name>handleEvent</name></member>
+      <member refid="classGameSystemBase_1a55b4fc27cbfccd3c724c2e5984d78625" prot="public" virt="virtual"><scope>MovementSystem</scope><name>initialise</name></member>
+      <member refid="classGameSystemBase_1aa9044eb22399f0c0ddd8f049738c62e5" prot="protected" virt="non-virtual"><scope>MovementSystem</scope><name>m_engine</name></member>
+      <member refid="classGameSystemBase_1a039d3086ac7fe50abdb110b569520d69" prot="public" virt="virtual"><scope>MovementSystem</scope><name>update</name></member>
+      <member refid="classGameSystemBase_1a96f76df170673523b71d6c1dab8a7efd" prot="public" virt="virtual"><scope>MovementSystem</scope><name>~GameSystemBase</name></member>
+      <member refid="classGameSystemInterface_1ad4d59070ee87e375529ad1250850d1c6" prot="public" virt="virtual"><scope>MovementSystem</scope><name>~GameSystemInterface</name></member>
+      <member refid="classMovementSystem_1a51ef4a49db0f68096e421b3430954716" prot="public" virt="virtual"><scope>MovementSystem</scope><name>~MovementSystem</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

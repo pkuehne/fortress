@@ -1,0 +1,205 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.6">
+  <compounddef id="window__manager__interface_8h" kind="file">
+    <compoundname>window_manager_interface.h</compoundname>
+    <includes refid="window__interface_8h" local="yes">window_interface.h</includes>
+    <includes refid="game__engine__interface_8h" local="yes">game_engine_interface.h</includes>
+    <includedby refid="gameengine_8h" local="yes">gameengine.h</includedby>
+    <includedby refid="window__manager_8h" local="yes">window_manager.h</includedby>
+    <incdepgraph>
+      <node id="1098">
+        <label>graphics_interface.h</label>
+        <link refid="graphics__interface_8h"/>
+        <childnode refid="1096" relation="include">
+        </childnode>
+      </node>
+      <node id="1097">
+        <label>collider_component.h</label>
+        <link refid="collider__component_8h"/>
+      </node>
+      <node id="1090">
+        <label>component_manager.h</label>
+        <link refid="component__manager_8h"/>
+        <childnode refid="1091" relation="include">
+        </childnode>
+        <childnode refid="1092" relation="include">
+        </childnode>
+        <childnode refid="1094" relation="include">
+        </childnode>
+      </node>
+      <node id="1096">
+        <label>color.h</label>
+        <link refid="color_8h"/>
+      </node>
+      <node id="1091">
+        <label>component_manager_interface.h</label>
+        <link refid="component__manager__interface_8h"/>
+        <childnode refid="1092" relation="include">
+        </childnode>
+        <childnode refid="1094" relation="include">
+        </childnode>
+      </node>
+      <node id="1088">
+        <label>string</label>
+      </node>
+      <node id="1092">
+        <label>entity.h</label>
+        <link refid="entity_8h"/>
+        <childnode refid="1093" relation="include">
+        </childnode>
+        <childnode refid="1088" relation="include">
+        </childnode>
+      </node>
+      <node id="1094">
+        <label>map</label>
+      </node>
+      <node id="1089">
+        <label>entity_manager_interface.h</label>
+        <link refid="entity__manager__interface_8h"/>
+        <childnode refid="1090" relation="include">
+        </childnode>
+        <childnode refid="1095" relation="include">
+        </childnode>
+        <childnode refid="1097" relation="include">
+        </childnode>
+      </node>
+      <node id="1086">
+        <label>window_interface.h</label>
+        <link refid="window__interface_8h"/>
+      </node>
+      <node id="1087">
+        <label>game_engine_interface.h</label>
+        <link refid="game__engine__interface_8h"/>
+        <childnode refid="1088" relation="include">
+        </childnode>
+        <childnode refid="1089" relation="include">
+        </childnode>
+        <childnode refid="1098" relation="include">
+        </childnode>
+      </node>
+      <node id="1093">
+        <label>set</label>
+      </node>
+      <node id="1085">
+        <label>window_manager_interface.h</label>
+        <link refid="window_manager_interface.h"/>
+        <childnode refid="1086" relation="include">
+        </childnode>
+        <childnode refid="1087" relation="include">
+        </childnode>
+      </node>
+      <node id="1095">
+        <label>sprite_component.h</label>
+        <link refid="sprite__component_8h"/>
+        <childnode refid="1096" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="1111">
+        <label>window_manager.cpp</label>
+        <link refid="window__manager_8cpp"/>
+      </node>
+      <node id="1106">
+        <label>map_window.cpp</label>
+        <link refid="map__window_8cpp"/>
+      </node>
+      <node id="1108">
+        <label>splash_window.cpp</label>
+        <link refid="splash__window_8cpp"/>
+      </node>
+      <node id="1102">
+        <label>entity_manager.cpp</label>
+        <link refid="entity__manager_8cpp"/>
+      </node>
+      <node id="1110">
+        <label>window_manager.h</label>
+        <link refid="window__manager_8h"/>
+        <childnode refid="1103" relation="include">
+        </childnode>
+        <childnode refid="1111" relation="include">
+        </childnode>
+      </node>
+      <node id="1105">
+        <label>main.cpp</label>
+        <link refid="main_8cpp"/>
+      </node>
+      <node id="1104">
+        <label>generator.cpp</label>
+        <link refid="generator_8cpp"/>
+      </node>
+      <node id="1103">
+        <label>gameengine.cpp</label>
+        <link refid="gameengine_8cpp"/>
+      </node>
+      <node id="1101">
+        <label>algorithm.cpp</label>
+        <link refid="algorithm_8cpp"/>
+      </node>
+      <node id="1107">
+        <label>movement_system.cpp</label>
+        <link refid="movement__system_8cpp"/>
+      </node>
+      <node id="1109">
+        <label>sprite_system.cpp</label>
+        <link refid="sprite__system_8cpp"/>
+      </node>
+      <node id="1099">
+        <label>window_manager_interface.h</label>
+        <link refid="window_manager_interface.h"/>
+        <childnode refid="1100" relation="include">
+        </childnode>
+        <childnode refid="1110" relation="include">
+        </childnode>
+      </node>
+      <node id="1100">
+        <label>gameengine.h</label>
+        <link refid="gameengine_8h"/>
+        <childnode refid="1101" relation="include">
+        </childnode>
+        <childnode refid="1102" relation="include">
+        </childnode>
+        <childnode refid="1103" relation="include">
+        </childnode>
+        <childnode refid="1104" relation="include">
+        </childnode>
+        <childnode refid="1105" relation="include">
+        </childnode>
+        <childnode refid="1106" relation="include">
+        </childnode>
+        <childnode refid="1107" relation="include">
+        </childnode>
+        <childnode refid="1108" relation="include">
+        </childnode>
+        <childnode refid="1109" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="classWindowManagerInterface" prot="public">WindowManagerInterface</innerclass>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="preprocessor">#ifndef<sp/>WINDOW_MANAGER_INTERFACE_H</highlight></codeline>
+<codeline lineno="2"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>WINDOW_MANAGER_INTERFACE_H</highlight></codeline>
+<codeline lineno="3"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="window__interface_8h" kindref="compound">window_interface.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="game__engine__interface_8h" kindref="compound">game_engine_interface.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight></codeline>
+<codeline lineno="7" refid="classWindowManagerInterface" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="classWindowManagerInterface" kindref="compound">WindowManagerInterface</ref><sp/>{</highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="9" refid="classWindowManagerInterface_1aec641c997562e0ca7af76c723ccf7330" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/><ref refid="classWindowManagerInterface_1aec641c997562e0ca7af76c723ccf7330" kindref="member">~WindowManagerInterface</ref>()<sp/>{<sp/>}</highlight></codeline>
+<codeline lineno="10"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classWindowManagerInterface_1aa5332643f381faff81e0bb4af1c1941e" kindref="member">initialise</ref><sp/>(<ref refid="classGameEngineInterface" kindref="compound">GameEngineInterface</ref>*<sp/>engine)<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="11"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classWindowManagerInterface_1aac36e2671a3d60b6b14469176da14c70" kindref="member">addWindow</ref><sp/>(<ref refid="classWindowInterface" kindref="compound">WindowInterface</ref>*<sp/>win)<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="12"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classWindowManagerInterface_1a4e9b4365650eeb65babbab6ddff30677" kindref="member">popWindow</ref><sp/>()<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="13"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classWindowManagerInterface_1a776651d54dbdcdbe4d09b03f22cb0cdb" kindref="member">replaceWindow</ref><sp/>(<ref refid="classWindowInterface" kindref="compound">WindowInterface</ref>*<sp/>win)<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="14"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/><ref refid="classWindowInterface" kindref="compound">WindowInterface</ref>*<sp/><ref refid="classWindowManagerInterface_1a67c7bd0f3376cd9bd9be6970902d871a" kindref="member">getActive</ref>()<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight></codeline>
+<codeline lineno="16"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="17"><highlight class="normal"></highlight></codeline>
+<codeline lineno="18"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+    </programlisting>
+    <location file="/home/peter/Development/fortress/src/window_manager_interface.h"/>
+  </compounddef>
+</doxygen>

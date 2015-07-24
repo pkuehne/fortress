@@ -1,0 +1,229 @@
+\hypertarget{classEntityManager}{\section{Entity\-Manager Class Reference}
+\label{classEntityManager}\index{Entity\-Manager@{Entity\-Manager}}
+}
+
+
+{\ttfamily \#include $<$entity\-\_\-manager.\-h$>$}
+
+Inheritance diagram for Entity\-Manager\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classEntityManager}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classEntityManager_a97a7e5a629a5ffe85a2859384e5ce701}{initialise} (\hyperlink{classGameEngineInterface}{Game\-Engine\-Interface} $\ast$engine)
+\item 
+void \hyperlink{classEntityManager_af84b8842db8f732039c41dc4bc30b0c1}{destroy} ()
+\item 
+\hyperlink{classEntity}{Entity} $\ast$ \hyperlink{classEntityManager_af54f317708b43ec7c22be0495a8ce3c0}{create\-Entity} (const std\-::string \&name)
+\item 
+void \hyperlink{classEntityManager_afe54803a7170a4a2d2614348ed9f7cab}{destroy\-Entity} (\hyperlink{entity_8h_a3812b46f7256476cf244cbc0f4a3bde9}{Entity\-Id})
+\item 
+\hyperlink{classEntity}{Entity} $\ast$ \hyperlink{classEntityManager_a098b4e50944a8caffb723e7d0dffbb70}{get\-Player} ()
+\item 
+\hyperlink{classEntity}{Entity} $\ast$ \hyperlink{classEntityManager_a6d7f11fe8bfe9821377108874b6248e3}{create\-Wall\-Prefab} (unsigned int x, unsigned int y)
+\item 
+\hyperlink{classEntity}{Entity} $\ast$ \hyperlink{classEntityManager_aa450f3815645d947e41bec34fd7c628e}{create\-Player\-Prefab} (unsigned int x, unsigned int y)
+\item 
+\hyperlink{classEntity}{Entity} $\ast$ \hyperlink{classEntityManager_a8110b8b5376e15127609753e52bd779f}{create\-Enemy\-Prefab} (unsigned int x, unsigned int y)
+\item 
+\hyperlink{classEntity}{Entity} $\ast$ \hyperlink{classEntityManager_a37c9debe4a2ecb9316441ea19fdbe04e}{create\-Tile\-Prefab} (unsigned int x, unsigned int y)
+\item 
+\hyperlink{classComponentManagerInterface}{Component\-Manager\-Interface}\\*
+$<$ \hyperlink{structSpriteComponent}{Sprite\-Component} $>$ $\ast$ \hyperlink{classEntityManager_a0af107dd34e63fa9e84d7b0e0e81d5ba}{get\-Sprites} ()
+\item 
+\hyperlink{classComponentManagerInterface}{Component\-Manager\-Interface}\\*
+$<$ \hyperlink{structColliderComponent}{Collider\-Component} $>$ $\ast$ \hyperlink{classEntityManager_ab024c88ff91734e8ba57bba27c985dca}{get\-Colliders} ()
+\item 
+\hyperlink{classEntity}{Entity} $\ast$ \hyperlink{classEntityManager_a23e110f8bc01067e5bd953e8b7008273}{get\-Entity} (\hyperlink{entity_8h_a3812b46f7256476cf244cbc0f4a3bde9}{Entity\-Id} id)
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classGameEngineInterface}{Game\-Engine\-Interface} $\ast$ \hyperlink{classEntityManager_aa6e686169c3667ffd84e6a3f0e2cfc62}{m\-\_\-engine}
+\item 
+unsigned long \hyperlink{classEntityManager_a73390a51b55cd69d0d09254894d484b3}{max\-Id}
+\item 
+\hyperlink{classEntity}{Entity} $\ast$ \hyperlink{classEntityManager_ac966d9cc295a8222c01a835246206d36}{m\-\_\-player}
+\item 
+std\-::map$<$ \hyperlink{entity_8h_a3812b46f7256476cf244cbc0f4a3bde9}{Entity\-Id}, \hyperlink{classEntity}{Entity} $\ast$ $>$ \hyperlink{classEntityManager_ab85b819de6db421c0272e76d5089bfbf}{m\-\_\-id\-Map}
+\item 
+std\-::map$<$ std\-::string, \hyperlink{classEntity}{Entity} $\ast$ $>$ \hyperlink{classEntityManager_aba0769f85d9f51fe54494ab68e1ebf0e}{m\-\_\-name\-Map}
+\item 
+\hyperlink{classComponentManager}{Component\-Manager}$<$ \hyperlink{structSpriteComponent}{Sprite\-Component} $>$ \hyperlink{classEntityManager_ab0ca6f699c4b0380acc8c0c2dd0fa778}{m\-\_\-sprites}
+\item 
+\hyperlink{classComponentManager}{Component\-Manager}\\*
+$<$ \hyperlink{structColliderComponent}{Collider\-Component} $>$ \hyperlink{classEntityManager_acdcb4eaa4584972dcfe49dc11f08e196}{m\-\_\-colliders}
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classEntityManager_a8110b8b5376e15127609753e52bd779f}{\index{Entity\-Manager@{Entity\-Manager}!create\-Enemy\-Prefab@{create\-Enemy\-Prefab}}
+\index{create\-Enemy\-Prefab@{create\-Enemy\-Prefab}!EntityManager@{Entity\-Manager}}
+\subsubsection[{create\-Enemy\-Prefab}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Entity} $\ast$ Entity\-Manager\-::create\-Enemy\-Prefab (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{x, }
+\item[{unsigned int}]{y}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classEntityManager_a8110b8b5376e15127609753e52bd779f}
+
+
+Implements \hyperlink{classEntityManagerInterface_a9060a65f6799126b3b7827bdd2636e92}{Entity\-Manager\-Interface}.
+
+\hypertarget{classEntityManager_af54f317708b43ec7c22be0495a8ce3c0}{\index{Entity\-Manager@{Entity\-Manager}!create\-Entity@{create\-Entity}}
+\index{create\-Entity@{create\-Entity}!EntityManager@{Entity\-Manager}}
+\subsubsection[{create\-Entity}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Entity} $\ast$ Entity\-Manager\-::create\-Entity (
+\begin{DoxyParamCaption}
+\item[{const std\-::string \&}]{name}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classEntityManager_af54f317708b43ec7c22be0495a8ce3c0}
+
+
+Implements \hyperlink{classEntityManagerInterface_a95ba3a0c18e752b97de7b6a3ffd0301f}{Entity\-Manager\-Interface}.
+
+\hypertarget{classEntityManager_aa450f3815645d947e41bec34fd7c628e}{\index{Entity\-Manager@{Entity\-Manager}!create\-Player\-Prefab@{create\-Player\-Prefab}}
+\index{create\-Player\-Prefab@{create\-Player\-Prefab}!EntityManager@{Entity\-Manager}}
+\subsubsection[{create\-Player\-Prefab}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Entity} $\ast$ Entity\-Manager\-::create\-Player\-Prefab (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{x, }
+\item[{unsigned int}]{y}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classEntityManager_aa450f3815645d947e41bec34fd7c628e}
+
+
+Implements \hyperlink{classEntityManagerInterface_aca4bf34ec9006329027f134575a8b844}{Entity\-Manager\-Interface}.
+
+\hypertarget{classEntityManager_a37c9debe4a2ecb9316441ea19fdbe04e}{\index{Entity\-Manager@{Entity\-Manager}!create\-Tile\-Prefab@{create\-Tile\-Prefab}}
+\index{create\-Tile\-Prefab@{create\-Tile\-Prefab}!EntityManager@{Entity\-Manager}}
+\subsubsection[{create\-Tile\-Prefab}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Entity} $\ast$ Entity\-Manager\-::create\-Tile\-Prefab (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{x, }
+\item[{unsigned int}]{y}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classEntityManager_a37c9debe4a2ecb9316441ea19fdbe04e}
+
+
+Implements \hyperlink{classEntityManagerInterface_aa98d0ba0e59103d9aeb7a367fe04c571}{Entity\-Manager\-Interface}.
+
+\hypertarget{classEntityManager_a6d7f11fe8bfe9821377108874b6248e3}{\index{Entity\-Manager@{Entity\-Manager}!create\-Wall\-Prefab@{create\-Wall\-Prefab}}
+\index{create\-Wall\-Prefab@{create\-Wall\-Prefab}!EntityManager@{Entity\-Manager}}
+\subsubsection[{create\-Wall\-Prefab}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Entity} $\ast$ Entity\-Manager\-::create\-Wall\-Prefab (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{x, }
+\item[{unsigned int}]{y}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classEntityManager_a6d7f11fe8bfe9821377108874b6248e3}
+
+
+Implements \hyperlink{classEntityManagerInterface_a9aae8cf72f08ee33ea110325148ef613}{Entity\-Manager\-Interface}.
+
+\hypertarget{classEntityManager_af84b8842db8f732039c41dc4bc30b0c1}{\index{Entity\-Manager@{Entity\-Manager}!destroy@{destroy}}
+\index{destroy@{destroy}!EntityManager@{Entity\-Manager}}
+\subsubsection[{destroy}]{\setlength{\rightskip}{0pt plus 5cm}void Entity\-Manager\-::destroy (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{classEntityManager_af84b8842db8f732039c41dc4bc30b0c1}
+
+
+Implements \hyperlink{classEntityManagerInterface_ab27d9f7d97a914785cc5955076c10d70}{Entity\-Manager\-Interface}.
+
+\hypertarget{classEntityManager_afe54803a7170a4a2d2614348ed9f7cab}{\index{Entity\-Manager@{Entity\-Manager}!destroy\-Entity@{destroy\-Entity}}
+\index{destroy\-Entity@{destroy\-Entity}!EntityManager@{Entity\-Manager}}
+\subsubsection[{destroy\-Entity}]{\setlength{\rightskip}{0pt plus 5cm}void Entity\-Manager\-::destroy\-Entity (
+\begin{DoxyParamCaption}
+\item[{{\bf Entity\-Id}}]{id}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classEntityManager_afe54803a7170a4a2d2614348ed9f7cab}
+
+
+Implements \hyperlink{classEntityManagerInterface_a01d56437b2df1ba882da83e5f6aaa163}{Entity\-Manager\-Interface}.
+
+\hypertarget{classEntityManager_ab024c88ff91734e8ba57bba27c985dca}{\index{Entity\-Manager@{Entity\-Manager}!get\-Colliders@{get\-Colliders}}
+\index{get\-Colliders@{get\-Colliders}!EntityManager@{Entity\-Manager}}
+\subsubsection[{get\-Colliders}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Component\-Manager\-Interface}$<${\bf Collider\-Component}$>$$\ast$ Entity\-Manager\-::get\-Colliders (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{classEntityManager_ab024c88ff91734e8ba57bba27c985dca}
+
+
+Implements \hyperlink{classEntityManagerInterface_acc684c426594345b02b206efb74b0adc}{Entity\-Manager\-Interface}.
+
+\hypertarget{classEntityManager_a23e110f8bc01067e5bd953e8b7008273}{\index{Entity\-Manager@{Entity\-Manager}!get\-Entity@{get\-Entity}}
+\index{get\-Entity@{get\-Entity}!EntityManager@{Entity\-Manager}}
+\subsubsection[{get\-Entity}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Entity} $\ast$ Entity\-Manager\-::get\-Entity (
+\begin{DoxyParamCaption}
+\item[{{\bf Entity\-Id}}]{id}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classEntityManager_a23e110f8bc01067e5bd953e8b7008273}
+
+
+Implements \hyperlink{classEntityManagerInterface_a00346fa684da1972fbd086599b949ed9}{Entity\-Manager\-Interface}.
+
+\hypertarget{classEntityManager_a098b4e50944a8caffb723e7d0dffbb70}{\index{Entity\-Manager@{Entity\-Manager}!get\-Player@{get\-Player}}
+\index{get\-Player@{get\-Player}!EntityManager@{Entity\-Manager}}
+\subsubsection[{get\-Player}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Entity} $\ast$ Entity\-Manager\-::get\-Player (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classEntityManager_a098b4e50944a8caffb723e7d0dffbb70}
+
+
+Implements \hyperlink{classEntityManagerInterface_af59c4f44e337dc04fd7aac61e80b2660}{Entity\-Manager\-Interface}.
+
+\hypertarget{classEntityManager_a0af107dd34e63fa9e84d7b0e0e81d5ba}{\index{Entity\-Manager@{Entity\-Manager}!get\-Sprites@{get\-Sprites}}
+\index{get\-Sprites@{get\-Sprites}!EntityManager@{Entity\-Manager}}
+\subsubsection[{get\-Sprites}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Component\-Manager\-Interface}$<${\bf Sprite\-Component}$>$$\ast$ Entity\-Manager\-::get\-Sprites (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{classEntityManager_a0af107dd34e63fa9e84d7b0e0e81d5ba}
+
+
+Implements \hyperlink{classEntityManagerInterface_a91bd6cea03b2b69ddec735e116420dd6}{Entity\-Manager\-Interface}.
+
+\hypertarget{classEntityManager_a97a7e5a629a5ffe85a2859384e5ce701}{\index{Entity\-Manager@{Entity\-Manager}!initialise@{initialise}}
+\index{initialise@{initialise}!EntityManager@{Entity\-Manager}}
+\subsubsection[{initialise}]{\setlength{\rightskip}{0pt plus 5cm}void Entity\-Manager\-::initialise (
+\begin{DoxyParamCaption}
+\item[{{\bf Game\-Engine\-Interface} $\ast$}]{engine}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classEntityManager_a97a7e5a629a5ffe85a2859384e5ce701}
+
+
+Implements \hyperlink{classEntityManagerInterface_aeb1fd14604e776e874765fa708a7ce26}{Entity\-Manager\-Interface}.
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classEntityManager_acdcb4eaa4584972dcfe49dc11f08e196}{\index{Entity\-Manager@{Entity\-Manager}!m\-\_\-colliders@{m\-\_\-colliders}}
+\index{m\-\_\-colliders@{m\-\_\-colliders}!EntityManager@{Entity\-Manager}}
+\subsubsection[{m\-\_\-colliders}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Component\-Manager}$<${\bf Collider\-Component}$>$ Entity\-Manager\-::m\-\_\-colliders\hspace{0.3cm}{\ttfamily [private]}}}\label{classEntityManager_acdcb4eaa4584972dcfe49dc11f08e196}
+\hypertarget{classEntityManager_aa6e686169c3667ffd84e6a3f0e2cfc62}{\index{Entity\-Manager@{Entity\-Manager}!m\-\_\-engine@{m\-\_\-engine}}
+\index{m\-\_\-engine@{m\-\_\-engine}!EntityManager@{Entity\-Manager}}
+\subsubsection[{m\-\_\-engine}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Game\-Engine\-Interface}$\ast$ Entity\-Manager\-::m\-\_\-engine\hspace{0.3cm}{\ttfamily [private]}}}\label{classEntityManager_aa6e686169c3667ffd84e6a3f0e2cfc62}
+\hypertarget{classEntityManager_ab85b819de6db421c0272e76d5089bfbf}{\index{Entity\-Manager@{Entity\-Manager}!m\-\_\-id\-Map@{m\-\_\-id\-Map}}
+\index{m\-\_\-id\-Map@{m\-\_\-id\-Map}!EntityManager@{Entity\-Manager}}
+\subsubsection[{m\-\_\-id\-Map}]{\setlength{\rightskip}{0pt plus 5cm}std\-::map$<${\bf Entity\-Id}, {\bf Entity}$\ast$$>$ Entity\-Manager\-::m\-\_\-id\-Map\hspace{0.3cm}{\ttfamily [private]}}}\label{classEntityManager_ab85b819de6db421c0272e76d5089bfbf}
+\hypertarget{classEntityManager_aba0769f85d9f51fe54494ab68e1ebf0e}{\index{Entity\-Manager@{Entity\-Manager}!m\-\_\-name\-Map@{m\-\_\-name\-Map}}
+\index{m\-\_\-name\-Map@{m\-\_\-name\-Map}!EntityManager@{Entity\-Manager}}
+\subsubsection[{m\-\_\-name\-Map}]{\setlength{\rightskip}{0pt plus 5cm}std\-::map$<$std\-::string, {\bf Entity}$\ast$$>$ Entity\-Manager\-::m\-\_\-name\-Map\hspace{0.3cm}{\ttfamily [private]}}}\label{classEntityManager_aba0769f85d9f51fe54494ab68e1ebf0e}
+\hypertarget{classEntityManager_ac966d9cc295a8222c01a835246206d36}{\index{Entity\-Manager@{Entity\-Manager}!m\-\_\-player@{m\-\_\-player}}
+\index{m\-\_\-player@{m\-\_\-player}!EntityManager@{Entity\-Manager}}
+\subsubsection[{m\-\_\-player}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Entity}$\ast$ Entity\-Manager\-::m\-\_\-player\hspace{0.3cm}{\ttfamily [private]}}}\label{classEntityManager_ac966d9cc295a8222c01a835246206d36}
+\hypertarget{classEntityManager_ab0ca6f699c4b0380acc8c0c2dd0fa778}{\index{Entity\-Manager@{Entity\-Manager}!m\-\_\-sprites@{m\-\_\-sprites}}
+\index{m\-\_\-sprites@{m\-\_\-sprites}!EntityManager@{Entity\-Manager}}
+\subsubsection[{m\-\_\-sprites}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Component\-Manager}$<${\bf Sprite\-Component}$>$ Entity\-Manager\-::m\-\_\-sprites\hspace{0.3cm}{\ttfamily [private]}}}\label{classEntityManager_ab0ca6f699c4b0380acc8c0c2dd0fa778}
+\hypertarget{classEntityManager_a73390a51b55cd69d0d09254894d484b3}{\index{Entity\-Manager@{Entity\-Manager}!max\-Id@{max\-Id}}
+\index{max\-Id@{max\-Id}!EntityManager@{Entity\-Manager}}
+\subsubsection[{max\-Id}]{\setlength{\rightskip}{0pt plus 5cm}unsigned long Entity\-Manager\-::max\-Id\hspace{0.3cm}{\ttfamily [private]}}}\label{classEntityManager_a73390a51b55cd69d0d09254894d484b3}
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{entity__manager_8h}{entity\-\_\-manager.\-h}\item 
+\hyperlink{entity__manager_8cpp}{entity\-\_\-manager.\-cpp}\end{DoxyCompactItemize}

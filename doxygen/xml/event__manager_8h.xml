@@ -1,0 +1,235 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.6">
+  <compounddef id="event__manager_8h" kind="file">
+    <compoundname>event_manager.h</compoundname>
+    <includes local="no">queue</includes>
+    <includes local="no">vector</includes>
+    <includes refid="game__system__interface_8h" local="yes">game_system_interface.h</includes>
+    <includes refid="event_8h" local="yes">event.h</includes>
+    <includes refid="game__engine__interface_8h" local="yes">game_engine_interface.h</includes>
+    <includes refid="event__manager__interface_8h" local="yes">event_manager_interface.h</includes>
+    <includedby refid="event__manager_8cpp" local="yes">event_manager.cpp</includedby>
+    <includedby refid="gameengine_8cpp" local="yes">gameengine.cpp</includedby>
+    <incdepgraph>
+      <node id="415">
+        <label>queue</label>
+      </node>
+      <node id="431">
+        <label>graphics_interface.h</label>
+        <link refid="graphics__interface_8h"/>
+        <childnode refid="429" relation="include">
+        </childnode>
+      </node>
+      <node id="430">
+        <label>collider_component.h</label>
+        <link refid="collider__component_8h"/>
+      </node>
+      <node id="426">
+        <label>component_manager.h</label>
+        <link refid="component__manager_8h"/>
+        <childnode refid="427" relation="include">
+        </childnode>
+        <childnode refid="421" relation="include">
+        </childnode>
+        <childnode refid="419" relation="include">
+        </childnode>
+      </node>
+      <node id="429">
+        <label>color.h</label>
+        <link refid="color_8h"/>
+      </node>
+      <node id="427">
+        <label>component_manager_interface.h</label>
+        <link refid="component__manager__interface_8h"/>
+        <childnode refid="421" relation="include">
+        </childnode>
+        <childnode refid="419" relation="include">
+        </childnode>
+      </node>
+      <node id="418">
+        <label>event.h</label>
+        <link refid="event_8h"/>
+        <childnode refid="419" relation="include">
+        </childnode>
+        <childnode refid="420" relation="include">
+        </childnode>
+        <childnode refid="421" relation="include">
+        </childnode>
+      </node>
+      <node id="423">
+        <label>string</label>
+      </node>
+      <node id="421">
+        <label>entity.h</label>
+        <link refid="entity_8h"/>
+        <childnode refid="422" relation="include">
+        </childnode>
+        <childnode refid="423" relation="include">
+        </childnode>
+      </node>
+      <node id="419">
+        <label>map</label>
+      </node>
+      <node id="432">
+        <label>event_manager_interface.h</label>
+        <link refid="event__manager__interface_8h"/>
+      </node>
+      <node id="414">
+        <label>event_manager.h</label>
+        <link refid="event_manager.h"/>
+        <childnode refid="415" relation="include">
+        </childnode>
+        <childnode refid="416" relation="include">
+        </childnode>
+        <childnode refid="417" relation="include">
+        </childnode>
+        <childnode refid="418" relation="include">
+        </childnode>
+        <childnode refid="424" relation="include">
+        </childnode>
+        <childnode refid="432" relation="include">
+        </childnode>
+      </node>
+      <node id="425">
+        <label>entity_manager_interface.h</label>
+        <link refid="entity__manager__interface_8h"/>
+        <childnode refid="426" relation="include">
+        </childnode>
+        <childnode refid="428" relation="include">
+        </childnode>
+        <childnode refid="430" relation="include">
+        </childnode>
+      </node>
+      <node id="416">
+        <label>vector</label>
+      </node>
+      <node id="420">
+        <label>iostream</label>
+      </node>
+      <node id="424">
+        <label>game_engine_interface.h</label>
+        <link refid="game__engine__interface_8h"/>
+        <childnode refid="423" relation="include">
+        </childnode>
+        <childnode refid="425" relation="include">
+        </childnode>
+        <childnode refid="431" relation="include">
+        </childnode>
+      </node>
+      <node id="422">
+        <label>set</label>
+      </node>
+      <node id="417">
+        <label>game_system_interface.h</label>
+        <link refid="game__system__interface_8h"/>
+        <childnode refid="418" relation="include">
+        </childnode>
+      </node>
+      <node id="428">
+        <label>sprite_component.h</label>
+        <link refid="sprite__component_8h"/>
+        <childnode refid="429" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="434">
+        <label>event_manager.cpp</label>
+        <link refid="event__manager_8cpp"/>
+      </node>
+      <node id="433">
+        <label>event_manager.h</label>
+        <link refid="event_manager.h"/>
+        <childnode refid="434" relation="include">
+        </childnode>
+        <childnode refid="435" relation="include">
+        </childnode>
+      </node>
+      <node id="435">
+        <label>gameengine.cpp</label>
+        <link refid="gameengine_8cpp"/>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="classEventManager" prot="public">EventManager</innerclass>
+      <sectiondef kind="typedef">
+      <memberdef kind="typedef" id="event__manager_8h_1aa72a6ddd7c2b54a7df7b25928521b296" prot="public" static="no">
+        <type>std::queue&lt; <ref refid="classEvent" kindref="compound">Event</ref> * &gt;</type>
+        <definition>typedef std::queue&lt;Event*&gt; EventQueue</definition>
+        <argsstring></argsstring>
+        <name>EventQueue</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/peter/Development/fortress/src/event_manager.h" line="11" column="1" bodyfile="/home/peter/Development/fortress/src/event_manager.h" bodystart="11" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="event__manager_8h_1a4d71a6d029a74348b1e4fbdc42f7acbd" prot="public" static="no">
+        <type>std::vector&lt; <ref refid="classGameSystemInterface" kindref="compound">GameSystemInterface</ref> * &gt;</type>
+        <definition>typedef std::vector&lt;GameSystemInterface*&gt; Handlers</definition>
+        <argsstring></argsstring>
+        <name>Handlers</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/peter/Development/fortress/src/event_manager.h" line="12" column="1" bodyfile="/home/peter/Development/fortress/src/event_manager.h" bodystart="12" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="event__manager_8h_1a90ee1cc8700b6642c47b1268bd0d4ea2" prot="public" static="no">
+        <type>Handlers::iterator</type>
+        <definition>typedef Handlers::iterator HandlersIter</definition>
+        <argsstring></argsstring>
+        <name>HandlersIter</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/peter/Development/fortress/src/event_manager.h" line="13" column="1" bodyfile="/home/peter/Development/fortress/src/event_manager.h" bodystart="13" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="preprocessor">#ifndef<sp/>__EVENT_MANAGER_H__</highlight></codeline>
+<codeline lineno="2"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>__EVENT_MANAGER_H__</highlight></codeline>
+<codeline lineno="3"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;queue&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;vector&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="game__system__interface_8h" kindref="compound">game_system_interface.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="event_8h" kindref="compound">event.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="game__engine__interface_8h" kindref="compound">game_engine_interface.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="event__manager__interface_8h" kindref="compound">event_manager_interface.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight></codeline>
+<codeline lineno="11" refid="event__manager_8h_1aa72a6ddd7c2b54a7df7b25928521b296" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/>std::queue&lt;Event*&gt;<sp/><ref refid="event__manager_8h_1aa72a6ddd7c2b54a7df7b25928521b296" kindref="member">EventQueue</ref>;</highlight></codeline>
+<codeline lineno="12" refid="event__manager_8h_1a4d71a6d029a74348b1e4fbdc42f7acbd" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/>std::vector&lt;GameSystemInterface*&gt;<sp/><ref refid="event__manager_8h_1a4d71a6d029a74348b1e4fbdc42f7acbd" kindref="member">Handlers</ref>;</highlight></codeline>
+<codeline lineno="13" refid="event__manager_8h_1a90ee1cc8700b6642c47b1268bd0d4ea2" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/>Handlers::iterator<sp/><ref refid="event__manager_8h_1a90ee1cc8700b6642c47b1268bd0d4ea2" kindref="member">HandlersIter</ref>;</highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight></codeline>
+<codeline lineno="15" refid="classEventManager" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="classEventManager" kindref="compound">EventManager</ref><sp/>:<sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/><ref refid="classEventManagerInterface" kindref="compound">EventManagerInterface</ref><sp/>{</highlight></codeline>
+<codeline lineno="16"><highlight class="normal"></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="17"><highlight class="normal"></highlight></codeline>
+<codeline lineno="18" refid="classEventManager_1a93b64a8bc38a9842d10ee1526016671f" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classEventManager_1a93b64a8bc38a9842d10ee1526016671f" kindref="member">initialise</ref><sp/>(<ref refid="classGameEngineInterface" kindref="compound">GameEngineInterface</ref>*<sp/>engine)<sp/>{<sp/><ref refid="classEventManager_1ab26aa30e5a4ceb6f8c604b81991e7c39" kindref="member">m_engine</ref><sp/>=<sp/>engine;<sp/>}</highlight></codeline>
+<codeline lineno="19"><highlight class="normal"></highlight></codeline>
+<codeline lineno="20" refid="classEventManager_1ae7c1bd23bc1beafa64b748553b471dce" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classEventManager_1ae7c1bd23bc1beafa64b748553b471dce" kindref="member">registerHandler</ref><sp/>(<ref refid="classGameSystemInterface" kindref="compound">GameSystemInterface</ref>*<sp/>system)<sp/>{<sp/><ref refid="classEventManager_1a0d6a8d7439edfb5e23402437ea0f1c4c" kindref="member">m_handlers</ref>.push_back<sp/>(system);<sp/>}</highlight></codeline>
+<codeline lineno="21"><highlight class="normal"></highlight></codeline>
+<codeline lineno="22" refid="classEventManager_1abce64060a5fb8cc3d51803b0d43f222f" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classEventManager_1abce64060a5fb8cc3d51803b0d43f222f" kindref="member">raiseEvent</ref><sp/>(<ref refid="classEvent" kindref="compound">Event</ref>*<sp/>event)<sp/>{<sp/><ref refid="classEventManager_1abc0dbcdc9126d867671acb49c48f6d36" kindref="member">m_events</ref>.push<sp/>(event);<sp/>}</highlight></codeline>
+<codeline lineno="23"><highlight class="normal"></highlight></codeline>
+<codeline lineno="24"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classEventManager_1ad40f65674444d1944159dd85888740d3" kindref="member">processEvents</ref><sp/>();</highlight></codeline>
+<codeline lineno="25"><highlight class="normal"></highlight></codeline>
+<codeline lineno="26"><highlight class="normal"></highlight><highlight class="keyword">private</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="27" refid="classEventManager_1ab26aa30e5a4ceb6f8c604b81991e7c39" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="classGameEngineInterface" kindref="compound">GameEngineInterface</ref>*<sp/><sp/><sp/><sp/><ref refid="classEventManager_1ab26aa30e5a4ceb6f8c604b81991e7c39" kindref="member">m_engine</ref>;</highlight></codeline>
+<codeline lineno="28" refid="classEventManager_1abc0dbcdc9126d867671acb49c48f6d36" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="event__manager_8h_1aa72a6ddd7c2b54a7df7b25928521b296" kindref="member">EventQueue</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classEventManager_1abc0dbcdc9126d867671acb49c48f6d36" kindref="member">m_events</ref>;</highlight></codeline>
+<codeline lineno="29" refid="classEventManager_1a0d6a8d7439edfb5e23402437ea0f1c4c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="event__manager_8h_1a4d71a6d029a74348b1e4fbdc42f7acbd" kindref="member">Handlers</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classEventManager_1a0d6a8d7439edfb5e23402437ea0f1c4c" kindref="member">m_handlers</ref>;</highlight></codeline>
+<codeline lineno="30"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+    </programlisting>
+    <location file="/home/peter/Development/fortress/src/event_manager.h"/>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,131 @@
+\hypertarget{classCombatSystem}{\section{Combat\-System Class Reference}
+\label{classCombatSystem}\index{Combat\-System@{Combat\-System}}
+}
+
+
+{\ttfamily \#include $<$combat\-\_\-system.\-h$>$}
+
+Inheritance diagram for Combat\-System\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classCombatSystem}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{classCombatSystem_afba5db4bb69a947c3a2303005f74d5d7}{handle\-Event} (const \hyperlink{classEvent}{Event} $\ast$event)
+\item 
+virtual void \hyperlink{classGameSystemBase_a55b4fc27cbfccd3c724c2e5984d78625}{initialise} (\hyperlink{classGameEngineInterface}{Game\-Engine\-Interface} $\ast$engine)
+\item 
+virtual \hyperlink{classGameEngineInterface}{Game\-Engine\-Interface} $\ast$ \hyperlink{classGameSystemBase_a1954c5a1c79963554805bc25b2cd6072}{get\-Engine\-Ref} ()
+\item 
+virtual void \hyperlink{classGameSystemBase_a039d3086ac7fe50abdb110b569520d69}{update} ()
+\item 
+virtual std\-::vector$<$ \hyperlink{classEntity}{Entity} $\ast$ $>$ \hyperlink{classGameSystemBase_aae270a88f1077a091e6033514b889abd}{find\-Entities\-Near} (unsigned int x, unsigned int y, unsigned radius)
+\item 
+virtual std\-::vector$<$ \hyperlink{classEntity}{Entity} $\ast$ $>$ \hyperlink{classGameSystemBase_a7aa9912fc078d990dbfb480e411bd3bc}{find\-Entities\-At} (unsigned int x, unsigned int y)
+\item 
+virtual std\-::vector$<$ \hyperlink{classEntity}{Entity} $\ast$ $>$ \hyperlink{classGameSystemBase_a44456ef40ac565b9d6b65f3b1531a4ef}{find\-Entities\-To\-The} (\hyperlink{classMoveEntityEvent_a7058a943643bee9164a21e62e3392807}{Move\-Entity\-Event\-::\-D\-I\-R\-E\-C\-T\-I\-O\-N} a\-\_\-direction, \hyperlink{classEntity}{Entity} $\ast$a\-\_\-entity)
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classGameEngineInterface}{Game\-Engine\-Interface} $\ast$ \hyperlink{classGameSystemBase_aa9044eb22399f0c0ddd8f049738c62e5}{m\-\_\-engine}
+\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{classCombatSystem_aa60d601edd993b6a7bded45d0e786595}{check\-For\-Enemies} (\hyperlink{classMoveEntityEvent_a7058a943643bee9164a21e62e3392807}{Move\-Entity\-Event\-::\-D\-I\-R\-E\-C\-T\-I\-O\-N} dir)
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classCombatSystem_aa60d601edd993b6a7bded45d0e786595}{\index{Combat\-System@{Combat\-System}!check\-For\-Enemies@{check\-For\-Enemies}}
+\index{check\-For\-Enemies@{check\-For\-Enemies}!CombatSystem@{Combat\-System}}
+\subsubsection[{check\-For\-Enemies}]{\setlength{\rightskip}{0pt plus 5cm}bool Combat\-System\-::check\-For\-Enemies (
+\begin{DoxyParamCaption}
+\item[{{\bf Move\-Entity\-Event\-::\-D\-I\-R\-E\-C\-T\-I\-O\-N}}]{dir}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}}\label{classCombatSystem_aa60d601edd993b6a7bded45d0e786595}
+\hypertarget{classGameSystemBase_a7aa9912fc078d990dbfb480e411bd3bc}{\index{Combat\-System@{Combat\-System}!find\-Entities\-At@{find\-Entities\-At}}
+\index{find\-Entities\-At@{find\-Entities\-At}!CombatSystem@{Combat\-System}}
+\subsubsection[{find\-Entities\-At}]{\setlength{\rightskip}{0pt plus 5cm}std\-::vector$<$ {\bf Entity} $\ast$ $>$ Game\-System\-Base\-::find\-Entities\-At (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{x, }
+\item[{unsigned int}]{y}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}, {\ttfamily [inherited]}}}\label{classGameSystemBase_a7aa9912fc078d990dbfb480e411bd3bc}
+\hypertarget{classGameSystemBase_aae270a88f1077a091e6033514b889abd}{\index{Combat\-System@{Combat\-System}!find\-Entities\-Near@{find\-Entities\-Near}}
+\index{find\-Entities\-Near@{find\-Entities\-Near}!CombatSystem@{Combat\-System}}
+\subsubsection[{find\-Entities\-Near}]{\setlength{\rightskip}{0pt plus 5cm}std\-::vector$<$ {\bf Entity} $\ast$ $>$ Game\-System\-Base\-::find\-Entities\-Near (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{x, }
+\item[{unsigned int}]{y, }
+\item[{unsigned}]{radius}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}, {\ttfamily [inherited]}}}\label{classGameSystemBase_aae270a88f1077a091e6033514b889abd}
+\hypertarget{classGameSystemBase_a44456ef40ac565b9d6b65f3b1531a4ef}{\index{Combat\-System@{Combat\-System}!find\-Entities\-To\-The@{find\-Entities\-To\-The}}
+\index{find\-Entities\-To\-The@{find\-Entities\-To\-The}!CombatSystem@{Combat\-System}}
+\subsubsection[{find\-Entities\-To\-The}]{\setlength{\rightskip}{0pt plus 5cm}std\-::vector$<$ {\bf Entity} $\ast$ $>$ Game\-System\-Base\-::find\-Entities\-To\-The (
+\begin{DoxyParamCaption}
+\item[{{\bf Move\-Entity\-Event\-::\-D\-I\-R\-E\-C\-T\-I\-O\-N}}]{a\-\_\-direction, }
+\item[{{\bf Entity} $\ast$}]{a\-\_\-entity}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}, {\ttfamily [inherited]}}}\label{classGameSystemBase_a44456ef40ac565b9d6b65f3b1531a4ef}
+\hypertarget{classGameSystemBase_a1954c5a1c79963554805bc25b2cd6072}{\index{Combat\-System@{Combat\-System}!get\-Engine\-Ref@{get\-Engine\-Ref}}
+\index{get\-Engine\-Ref@{get\-Engine\-Ref}!CombatSystem@{Combat\-System}}
+\subsubsection[{get\-Engine\-Ref}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf Game\-Engine\-Interface}$\ast$ Game\-System\-Base\-::get\-Engine\-Ref (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}, {\ttfamily [inherited]}}}\label{classGameSystemBase_a1954c5a1c79963554805bc25b2cd6072}
+\hypertarget{classCombatSystem_afba5db4bb69a947c3a2303005f74d5d7}{\index{Combat\-System@{Combat\-System}!handle\-Event@{handle\-Event}}
+\index{handle\-Event@{handle\-Event}!CombatSystem@{Combat\-System}}
+\subsubsection[{handle\-Event}]{\setlength{\rightskip}{0pt plus 5cm}void Combat\-System\-::handle\-Event (
+\begin{DoxyParamCaption}
+\item[{const {\bf Event} $\ast$}]{event}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classCombatSystem_afba5db4bb69a947c3a2303005f74d5d7}
+
+
+Reimplemented from \hyperlink{classGameSystemBase_a007b3ece290b1ad0dc3e397c5264d44d}{Game\-System\-Base}.
+
+\hypertarget{classGameSystemBase_a55b4fc27cbfccd3c724c2e5984d78625}{\index{Combat\-System@{Combat\-System}!initialise@{initialise}}
+\index{initialise@{initialise}!CombatSystem@{Combat\-System}}
+\subsubsection[{initialise}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Game\-System\-Base\-::initialise (
+\begin{DoxyParamCaption}
+\item[{{\bf Game\-Engine\-Interface} $\ast$}]{engine}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}, {\ttfamily [inherited]}}}\label{classGameSystemBase_a55b4fc27cbfccd3c724c2e5984d78625}
+
+
+Implements \hyperlink{classGameSystemInterface_a29079ef1f35027150b751c3fcb025091}{Game\-System\-Interface}.
+
+\hypertarget{classGameSystemBase_a039d3086ac7fe50abdb110b569520d69}{\index{Combat\-System@{Combat\-System}!update@{update}}
+\index{update@{update}!CombatSystem@{Combat\-System}}
+\subsubsection[{update}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Game\-System\-Base\-::update (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}, {\ttfamily [inherited]}}}\label{classGameSystemBase_a039d3086ac7fe50abdb110b569520d69}
+
+
+Implements \hyperlink{classGameSystemInterface_a531f5e7c6ca9881a67932cc4fded0a2e}{Game\-System\-Interface}.
+
+
+
+Reimplemented in \hyperlink{classNpcSystem_a88d87a8ec981e5cf1f4ed4340123a9d8}{Npc\-System}.
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classGameSystemBase_aa9044eb22399f0c0ddd8f049738c62e5}{\index{Combat\-System@{Combat\-System}!m\-\_\-engine@{m\-\_\-engine}}
+\index{m\-\_\-engine@{m\-\_\-engine}!CombatSystem@{Combat\-System}}
+\subsubsection[{m\-\_\-engine}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Game\-Engine\-Interface}$\ast$ Game\-System\-Base\-::m\-\_\-engine\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}}\label{classGameSystemBase_aa9044eb22399f0c0ddd8f049738c62e5}
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{combat__system_8h}{combat\-\_\-system.\-h}\item 
+\hyperlink{combat__system_8cpp}{combat\-\_\-system.\-cpp}\end{DoxyCompactItemize}

@@ -1,0 +1,83 @@
+.TH "MoveEntityEvent" 3 "Fri Jul 24 2015" "Fortress" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+MoveEntityEvent \- 
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <event\&.h>\fP
+.PP
+Inherits \fBEvent\fP\&.
+.SS "Public Types"
+
+.in +1c
+.ti -1c
+.RI "enum \fBDIRECTION\fP { \fBNONE\fP = 0, \fBUP\fP = 1, \fBRIGHT\fP = 2, \fBDOWN\fP = 3, \fBLEFT\fP = 4 }"
+.br
+.in -1c
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBMoveEntityEvent\fP ()"
+.br
+.ti -1c
+.RI "\fBEventType\fP \fBgetType\fP () const "
+.br
+.in -1c
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "\fBEntity\fP * \fBentity\fP"
+.br
+.ti -1c
+.RI "enum \fBDIRECTION\fP \fBdirection\fP"
+.br
+.in -1c
+.SS "Protected Attributes"
+
+.in +1c
+.ti -1c
+.RI "\fBEventType\fP \fBm_type\fP"
+.br
+.in -1c
+.SH "Member Enumeration Documentation"
+.PP 
+.SS "enum \fBMoveEntityEvent::DIRECTION\fP"
+
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fINONE \fP\fP
+.TP
+\fB\fIUP \fP\fP
+.TP
+\fB\fIRIGHT \fP\fP
+.TP
+\fB\fIDOWN \fP\fP
+.TP
+\fB\fILEFT \fP\fP
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "MoveEntityEvent::MoveEntityEvent ()\fC [inline]\fP"
+
+.SH "Member Function Documentation"
+.PP 
+.SS "\fBEventType\fP Event::getType () const\fC [inline]\fP, \fC [inherited]\fP"
+
+.SH "Member Data Documentation"
+.PP 
+.SS "enum \fBDIRECTION\fP MoveEntityEvent::direction"
+
+.SS "\fBEntity\fP* MoveEntityEvent::entity"
+
+.SS "\fBEventType\fP Event::m_type\fC [protected]\fP, \fC [inherited]\fP"
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Fortress from the source code\&.

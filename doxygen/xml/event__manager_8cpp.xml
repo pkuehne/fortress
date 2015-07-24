@@ -1,0 +1,164 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.6">
+  <compounddef id="event__manager_8cpp" kind="file">
+    <compoundname>event_manager.cpp</compoundname>
+    <includes refid="event__manager_8h" local="yes">event_manager.h</includes>
+    <includes local="no">iostream</includes>
+    <incdepgraph>
+      <node id="395">
+        <label>queue</label>
+      </node>
+      <node id="411">
+        <label>graphics_interface.h</label>
+        <link refid="graphics__interface_8h"/>
+        <childnode refid="409" relation="include">
+        </childnode>
+      </node>
+      <node id="410">
+        <label>collider_component.h</label>
+        <link refid="collider__component_8h"/>
+      </node>
+      <node id="406">
+        <label>component_manager.h</label>
+        <link refid="component__manager_8h"/>
+        <childnode refid="407" relation="include">
+        </childnode>
+        <childnode refid="401" relation="include">
+        </childnode>
+        <childnode refid="399" relation="include">
+        </childnode>
+      </node>
+      <node id="393">
+        <label>event_manager.cpp</label>
+        <link refid="event_manager.cpp"/>
+        <childnode refid="394" relation="include">
+        </childnode>
+        <childnode refid="400" relation="include">
+        </childnode>
+      </node>
+      <node id="409">
+        <label>color.h</label>
+        <link refid="color_8h"/>
+      </node>
+      <node id="407">
+        <label>component_manager_interface.h</label>
+        <link refid="component__manager__interface_8h"/>
+        <childnode refid="401" relation="include">
+        </childnode>
+        <childnode refid="399" relation="include">
+        </childnode>
+      </node>
+      <node id="398">
+        <label>event.h</label>
+        <link refid="event_8h"/>
+        <childnode refid="399" relation="include">
+        </childnode>
+        <childnode refid="400" relation="include">
+        </childnode>
+        <childnode refid="401" relation="include">
+        </childnode>
+      </node>
+      <node id="403">
+        <label>string</label>
+      </node>
+      <node id="401">
+        <label>entity.h</label>
+        <link refid="entity_8h"/>
+        <childnode refid="402" relation="include">
+        </childnode>
+        <childnode refid="403" relation="include">
+        </childnode>
+      </node>
+      <node id="399">
+        <label>map</label>
+      </node>
+      <node id="412">
+        <label>event_manager_interface.h</label>
+        <link refid="event__manager__interface_8h"/>
+      </node>
+      <node id="394">
+        <label>event_manager.h</label>
+        <link refid="event__manager_8h"/>
+        <childnode refid="395" relation="include">
+        </childnode>
+        <childnode refid="396" relation="include">
+        </childnode>
+        <childnode refid="397" relation="include">
+        </childnode>
+        <childnode refid="398" relation="include">
+        </childnode>
+        <childnode refid="404" relation="include">
+        </childnode>
+        <childnode refid="412" relation="include">
+        </childnode>
+      </node>
+      <node id="405">
+        <label>entity_manager_interface.h</label>
+        <link refid="entity__manager__interface_8h"/>
+        <childnode refid="406" relation="include">
+        </childnode>
+        <childnode refid="408" relation="include">
+        </childnode>
+        <childnode refid="410" relation="include">
+        </childnode>
+      </node>
+      <node id="396">
+        <label>vector</label>
+      </node>
+      <node id="400">
+        <label>iostream</label>
+      </node>
+      <node id="404">
+        <label>game_engine_interface.h</label>
+        <link refid="game__engine__interface_8h"/>
+        <childnode refid="403" relation="include">
+        </childnode>
+        <childnode refid="405" relation="include">
+        </childnode>
+        <childnode refid="411" relation="include">
+        </childnode>
+      </node>
+      <node id="402">
+        <label>set</label>
+      </node>
+      <node id="397">
+        <label>game_system_interface.h</label>
+        <link refid="game__system__interface_8h"/>
+        <childnode refid="398" relation="include">
+        </childnode>
+      </node>
+      <node id="408">
+        <label>sprite_component.h</label>
+        <link refid="sprite__component_8h"/>
+        <childnode refid="409" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="preprocessor">#include<sp/>&quot;<ref refid="event__manager_8h" kindref="compound">event_manager.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;iostream&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classEventManager_1ad40f65674444d1944159dd85888740d3" kindref="member">EventManager::processEvents</ref><sp/>()</highlight></codeline>
+<codeline lineno="5"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="6"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">while</highlight><highlight class="normal"><sp/>(!<ref refid="classEventManager_1abc0dbcdc9126d867671acb49c48f6d36" kindref="member">m_events</ref>.empty())<sp/>{</highlight></codeline>
+<codeline lineno="7"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classEvent" kindref="compound">Event</ref>*<sp/>l_event<sp/>=<sp/><ref refid="classEventManager_1abc0dbcdc9126d867671acb49c48f6d36" kindref="member">m_events</ref>.front();</highlight></codeline>
+<codeline lineno="8"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classEventManager_1abc0dbcdc9126d867671acb49c48f6d36" kindref="member">m_events</ref>.pop();</highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//std::cout<sp/>&lt;&lt;<sp/>*l_event<sp/>&lt;&lt;<sp/>std::endl;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight></codeline>
+<codeline lineno="12"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(<sp/><sp/><sp/><ref refid="event__manager_8h_1a90ee1cc8700b6642c47b1268bd0d4ea2" kindref="member">HandlersIter</ref><sp/>iter<sp/>=<sp/><ref refid="classEventManager_1a0d6a8d7439edfb5e23402437ea0f1c4c" kindref="member">m_handlers</ref>.begin();</highlight></codeline>
+<codeline lineno="13"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>iter<sp/>!=<sp/><ref refid="classEventManager_1a0d6a8d7439edfb5e23402437ea0f1c4c" kindref="member">m_handlers</ref>.end();</highlight></codeline>
+<codeline lineno="14"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>iter++)<sp/>{</highlight></codeline>
+<codeline lineno="15"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(*iter)-&gt;handleEvent<sp/>(l_event);</highlight></codeline>
+<codeline lineno="16"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="17"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">delete</highlight><highlight class="normal"><sp/>l_event;</highlight></codeline>
+<codeline lineno="18"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="19"><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="/home/peter/Development/fortress/src/event_manager.cpp"/>
+  </compounddef>
+</doxygen>

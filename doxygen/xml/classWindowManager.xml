@@ -1,0 +1,179 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.6">
+  <compounddef id="classWindowManager" kind="class" prot="public">
+    <compoundname>WindowManager</compoundname>
+    <basecompoundref refid="classWindowManagerInterface" prot="public" virt="non-virtual">WindowManagerInterface</basecompoundref>
+    <includes refid="window__manager_8h" local="no">window_manager.h</includes>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classWindowManager_1ae1fb8500f2391518ba8c7b2cfb6f30f7" prot="private" static="no" mutable="no">
+        <type><ref refid="classGameEngineInterface" kindref="compound">GameEngineInterface</ref> *</type>
+        <definition>GameEngineInterface* WindowManager::m_engine</definition>
+        <argsstring></argsstring>
+        <name>m_engine</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/peter/Development/fortress/src/window_manager.h" line="19" column="1" bodyfile="/home/peter/Development/fortress/src/window_manager.h" bodystart="19" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classWindowManager_1ad3b8bc0fa911812f00a871c195944c65" prot="private" static="no" mutable="no">
+        <type>std::vector&lt; <ref refid="classWindowInterface" kindref="compound">WindowInterface</ref> * &gt;</type>
+        <definition>std::vector&lt;WindowInterface*&gt; WindowManager::m_windows</definition>
+        <argsstring></argsstring>
+        <name>m_windows</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/peter/Development/fortress/src/window_manager.h" line="20" column="1" bodyfile="/home/peter/Development/fortress/src/window_manager.h" bodystart="20" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classWindowManager_1a8a4daf5be17d22415df9b5c9a577ebe0" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void WindowManager::initialise</definition>
+        <argsstring>(GameEngineInterface *engine)</argsstring>
+        <name>initialise</name>
+        <reimplements refid="classWindowManagerInterface_1aa5332643f381faff81e0bb4af1c1941e">initialise</reimplements>
+        <param>
+          <type><ref refid="classGameEngineInterface" kindref="compound">GameEngineInterface</ref> *</type>
+          <declname>engine</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/peter/Development/fortress/src/window_manager.h" line="12" column="1" bodyfile="/home/peter/Development/fortress/src/window_manager.cpp" bodystart="4" bodyend="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classWindowManager_1a1686c44231c43bff5c8b262d2f0b7c86" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>void</type>
+        <definition>void WindowManager::addWindow</definition>
+        <argsstring>(WindowInterface *win)</argsstring>
+        <name>addWindow</name>
+        <reimplements refid="classWindowManagerInterface_1aac36e2671a3d60b6b14469176da14c70">addWindow</reimplements>
+        <param>
+          <type><ref refid="classWindowInterface" kindref="compound">WindowInterface</ref> *</type>
+          <declname>win</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/peter/Development/fortress/src/window_manager.h" line="13" column="1" bodyfile="/home/peter/Development/fortress/src/window_manager.h" bodystart="13" bodyend="13"/>
+      </memberdef>
+      <memberdef kind="function" id="classWindowManager_1a42dae7b3b11730f2a4fe629cdc22ee6d" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void WindowManager::popWindow</definition>
+        <argsstring>()</argsstring>
+        <name>popWindow</name>
+        <reimplements refid="classWindowManagerInterface_1a4e9b4365650eeb65babbab6ddff30677">popWindow</reimplements>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/peter/Development/fortress/src/window_manager.h" line="14" column="1" bodyfile="/home/peter/Development/fortress/src/window_manager.cpp" bodystart="12" bodyend="17"/>
+      </memberdef>
+      <memberdef kind="function" id="classWindowManager_1af5e3a6217eaba1bbbf4b7f1d45707467" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void WindowManager::replaceWindow</definition>
+        <argsstring>(WindowInterface *win)</argsstring>
+        <name>replaceWindow</name>
+        <reimplements refid="classWindowManagerInterface_1a776651d54dbdcdbe4d09b03f22cb0cdb">replaceWindow</reimplements>
+        <param>
+          <type><ref refid="classWindowInterface" kindref="compound">WindowInterface</ref> *</type>
+          <declname>win</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/peter/Development/fortress/src/window_manager.h" line="15" column="1" bodyfile="/home/peter/Development/fortress/src/window_manager.cpp" bodystart="19" bodyend="25"/>
+      </memberdef>
+      <memberdef kind="function" id="classWindowManager_1aa6e650ff5d24dab3930abb578a3a3e63" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type><ref refid="classWindowInterface" kindref="compound">WindowInterface</ref> *</type>
+        <definition>WindowInterface * WindowManager::getActive</definition>
+        <argsstring>()</argsstring>
+        <name>getActive</name>
+        <reimplements refid="classWindowManagerInterface_1a67c7bd0f3376cd9bd9be6970902d871a">getActive</reimplements>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/peter/Development/fortress/src/window_manager.h" line="16" column="1" bodyfile="/home/peter/Development/fortress/src/window_manager.cpp" bodystart="27" bodyend="31"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="212">
+        <label>WindowManager</label>
+        <link refid="classWindowManager"/>
+        <childnode refid="213" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="213">
+        <label>WindowManagerInterface</label>
+        <link refid="classWindowManagerInterface"/>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="216">
+        <label>std::vector&lt; WindowInterface * &gt;</label>
+        <childnode refid="217" relation="usage">
+          <edgelabel>elements</edgelabel>
+        </childnode>
+      </node>
+      <node id="217">
+        <label>WindowInterface</label>
+        <link refid="classWindowInterface"/>
+      </node>
+      <node id="218">
+        <label>GameEngineInterface</label>
+        <link refid="classGameEngineInterface"/>
+      </node>
+      <node id="214">
+        <label>WindowManager</label>
+        <link refid="classWindowManager"/>
+        <childnode refid="215" relation="public-inheritance">
+        </childnode>
+        <childnode refid="216" relation="usage">
+          <edgelabel>m_windows</edgelabel>
+        </childnode>
+        <childnode refid="218" relation="usage">
+          <edgelabel>m_engine</edgelabel>
+        </childnode>
+      </node>
+      <node id="215">
+        <label>WindowManagerInterface</label>
+        <link refid="classWindowManagerInterface"/>
+      </node>
+    </collaborationgraph>
+    <location file="/home/peter/Development/fortress/src/window_manager.h" line="10" column="1" bodyfile="/home/peter/Development/fortress/src/window_manager.h" bodystart="10" bodyend="21"/>
+    <listofallmembers>
+      <member refid="classWindowManager_1a1686c44231c43bff5c8b262d2f0b7c86" prot="public" virt="virtual"><scope>WindowManager</scope><name>addWindow</name></member>
+      <member refid="classWindowManager_1aa6e650ff5d24dab3930abb578a3a3e63" prot="public" virt="virtual"><scope>WindowManager</scope><name>getActive</name></member>
+      <member refid="classWindowManager_1a8a4daf5be17d22415df9b5c9a577ebe0" prot="public" virt="virtual"><scope>WindowManager</scope><name>initialise</name></member>
+      <member refid="classWindowManager_1ae1fb8500f2391518ba8c7b2cfb6f30f7" prot="private" virt="non-virtual"><scope>WindowManager</scope><name>m_engine</name></member>
+      <member refid="classWindowManager_1ad3b8bc0fa911812f00a871c195944c65" prot="private" virt="non-virtual"><scope>WindowManager</scope><name>m_windows</name></member>
+      <member refid="classWindowManager_1a42dae7b3b11730f2a4fe629cdc22ee6d" prot="public" virt="virtual"><scope>WindowManager</scope><name>popWindow</name></member>
+      <member refid="classWindowManager_1af5e3a6217eaba1bbbf4b7f1d45707467" prot="public" virt="virtual"><scope>WindowManager</scope><name>replaceWindow</name></member>
+      <member refid="classWindowManagerInterface_1aec641c997562e0ca7af76c723ccf7330" prot="public" virt="virtual"><scope>WindowManager</scope><name>~WindowManagerInterface</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

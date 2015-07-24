@@ -1,0 +1,101 @@
+\hypertarget{classWindowManagerInterface}{\section{Window\-Manager\-Interface Class Reference}
+\label{classWindowManagerInterface}\index{Window\-Manager\-Interface@{Window\-Manager\-Interface}}
+}
+
+
+{\ttfamily \#include $<$window\-\_\-manager\-\_\-interface.\-h$>$}
+
+Inheritance diagram for Window\-Manager\-Interface\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classWindowManagerInterface}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual \hyperlink{classWindowManagerInterface_aec641c997562e0ca7af76c723ccf7330}{$\sim$\-Window\-Manager\-Interface} ()
+\item 
+virtual void \hyperlink{classWindowManagerInterface_aa5332643f381faff81e0bb4af1c1941e}{initialise} (\hyperlink{classGameEngineInterface}{Game\-Engine\-Interface} $\ast$engine)=0
+\item 
+virtual void \hyperlink{classWindowManagerInterface_aac36e2671a3d60b6b14469176da14c70}{add\-Window} (\hyperlink{classWindowInterface}{Window\-Interface} $\ast$win)=0
+\item 
+virtual void \hyperlink{classWindowManagerInterface_a4e9b4365650eeb65babbab6ddff30677}{pop\-Window} ()=0
+\item 
+virtual void \hyperlink{classWindowManagerInterface_a776651d54dbdcdbe4d09b03f22cb0cdb}{replace\-Window} (\hyperlink{classWindowInterface}{Window\-Interface} $\ast$win)=0
+\item 
+virtual \hyperlink{classWindowInterface}{Window\-Interface} $\ast$ \hyperlink{classWindowManagerInterface_a67c7bd0f3376cd9bd9be6970902d871a}{get\-Active} ()=0
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classWindowManagerInterface_aec641c997562e0ca7af76c723ccf7330}{\index{Window\-Manager\-Interface@{Window\-Manager\-Interface}!$\sim$\-Window\-Manager\-Interface@{$\sim$\-Window\-Manager\-Interface}}
+\index{$\sim$\-Window\-Manager\-Interface@{$\sim$\-Window\-Manager\-Interface}!WindowManagerInterface@{Window\-Manager\-Interface}}
+\subsubsection[{$\sim$\-Window\-Manager\-Interface}]{\setlength{\rightskip}{0pt plus 5cm}virtual Window\-Manager\-Interface\-::$\sim$\-Window\-Manager\-Interface (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{classWindowManagerInterface_aec641c997562e0ca7af76c723ccf7330}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classWindowManagerInterface_aac36e2671a3d60b6b14469176da14c70}{\index{Window\-Manager\-Interface@{Window\-Manager\-Interface}!add\-Window@{add\-Window}}
+\index{add\-Window@{add\-Window}!WindowManagerInterface@{Window\-Manager\-Interface}}
+\subsubsection[{add\-Window}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Window\-Manager\-Interface\-::add\-Window (
+\begin{DoxyParamCaption}
+\item[{{\bf Window\-Interface} $\ast$}]{win}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}}\label{classWindowManagerInterface_aac36e2671a3d60b6b14469176da14c70}
+
+
+Implemented in \hyperlink{classWindowManager_a1686c44231c43bff5c8b262d2f0b7c86}{Window\-Manager}.
+
+\hypertarget{classWindowManagerInterface_a67c7bd0f3376cd9bd9be6970902d871a}{\index{Window\-Manager\-Interface@{Window\-Manager\-Interface}!get\-Active@{get\-Active}}
+\index{get\-Active@{get\-Active}!WindowManagerInterface@{Window\-Manager\-Interface}}
+\subsubsection[{get\-Active}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf Window\-Interface}$\ast$ Window\-Manager\-Interface\-::get\-Active (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}}\label{classWindowManagerInterface_a67c7bd0f3376cd9bd9be6970902d871a}
+
+
+Implemented in \hyperlink{classWindowManager_aa6e650ff5d24dab3930abb578a3a3e63}{Window\-Manager}.
+
+\hypertarget{classWindowManagerInterface_aa5332643f381faff81e0bb4af1c1941e}{\index{Window\-Manager\-Interface@{Window\-Manager\-Interface}!initialise@{initialise}}
+\index{initialise@{initialise}!WindowManagerInterface@{Window\-Manager\-Interface}}
+\subsubsection[{initialise}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Window\-Manager\-Interface\-::initialise (
+\begin{DoxyParamCaption}
+\item[{{\bf Game\-Engine\-Interface} $\ast$}]{engine}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}}\label{classWindowManagerInterface_aa5332643f381faff81e0bb4af1c1941e}
+
+
+Implemented in \hyperlink{classWindowManager_a8a4daf5be17d22415df9b5c9a577ebe0}{Window\-Manager}.
+
+\hypertarget{classWindowManagerInterface_a4e9b4365650eeb65babbab6ddff30677}{\index{Window\-Manager\-Interface@{Window\-Manager\-Interface}!pop\-Window@{pop\-Window}}
+\index{pop\-Window@{pop\-Window}!WindowManagerInterface@{Window\-Manager\-Interface}}
+\subsubsection[{pop\-Window}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Window\-Manager\-Interface\-::pop\-Window (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}}\label{classWindowManagerInterface_a4e9b4365650eeb65babbab6ddff30677}
+
+
+Implemented in \hyperlink{classWindowManager_a42dae7b3b11730f2a4fe629cdc22ee6d}{Window\-Manager}.
+
+\hypertarget{classWindowManagerInterface_a776651d54dbdcdbe4d09b03f22cb0cdb}{\index{Window\-Manager\-Interface@{Window\-Manager\-Interface}!replace\-Window@{replace\-Window}}
+\index{replace\-Window@{replace\-Window}!WindowManagerInterface@{Window\-Manager\-Interface}}
+\subsubsection[{replace\-Window}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Window\-Manager\-Interface\-::replace\-Window (
+\begin{DoxyParamCaption}
+\item[{{\bf Window\-Interface} $\ast$}]{win}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}}\label{classWindowManagerInterface_a776651d54dbdcdbe4d09b03f22cb0cdb}
+
+
+Implemented in \hyperlink{classWindowManager_af5e3a6217eaba1bbbf4b7f1d45707467}{Window\-Manager}.
+
+
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{window__manager__interface_8h}{window\-\_\-manager\-\_\-interface.\-h}\end{DoxyCompactItemize}

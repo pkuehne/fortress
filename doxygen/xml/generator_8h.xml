@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.6">
+  <compounddef id="generator_8h" kind="file">
+    <compoundname>generator.h</compoundname>
+    <includes refid="generator__interface_8h" local="yes">generator_interface.h</includes>
+    <includedby refid="gameengine_8cpp" local="yes">gameengine.cpp</includedby>
+    <includedby refid="generator_8cpp" local="yes">generator.cpp</includedby>
+    <incdepgraph>
+      <node id="656">
+        <label>generator.h</label>
+        <link refid="generator.h"/>
+        <childnode refid="657" relation="include">
+        </childnode>
+      </node>
+      <node id="657">
+        <label>generator_interface.h</label>
+        <link refid="generator__interface_8h"/>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="658">
+        <label>generator.h</label>
+        <link refid="generator.h"/>
+        <childnode refid="659" relation="include">
+        </childnode>
+        <childnode refid="660" relation="include">
+        </childnode>
+      </node>
+      <node id="660">
+        <label>generator.cpp</label>
+        <link refid="generator_8cpp"/>
+      </node>
+      <node id="659">
+        <label>gameengine.cpp</label>
+        <link refid="gameengine_8cpp"/>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="classGenerator" prot="public">Generator</innerclass>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="preprocessor">#ifndef<sp/>GENERATOR_H</highlight></codeline>
+<codeline lineno="2"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>GENERATOR_H</highlight></codeline>
+<codeline lineno="3"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="generator__interface_8h" kindref="compound">generator_interface.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight></codeline>
+<codeline lineno="6" refid="classGenerator" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="classGenerator" kindref="compound">Generator</ref><sp/>:<sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/><ref refid="classGeneratorInterface" kindref="compound">GeneratorInterface</ref><sp/>{</highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="8" refid="classGenerator_1a3f690e7b3bb96571346bb51ca2adbe11" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classGenerator_1a3f690e7b3bb96571346bb51ca2adbe11" kindref="member">initialise</ref><sp/>(<ref refid="classGameEngineInterface" kindref="compound">GameEngineInterface</ref>*<sp/>a_engine)<sp/>{<sp/><ref refid="classGenerator_1a67bf71e434d74b280377b4f7acc3dc1d" kindref="member">m_engine</ref><sp/>=<sp/>a_engine;<sp/>}</highlight></codeline>
+<codeline lineno="9"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classGenerator_1a16cdfb04efdcc06650b99b2121d1b9b9" kindref="member">generate</ref>();</highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight></codeline>
+<codeline lineno="11" refid="classGenerator_1adddb6dfba9dbda6ea3fd9d08ff250bde" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal">&amp;<sp/><ref refid="classGenerator_1adddb6dfba9dbda6ea3fd9d08ff250bde" kindref="member">mapHeight</ref>()<sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/><ref refid="classGenerator_1a39fb4ca747e84f5422d313b4c57feb58" kindref="member">m_mapHeight</ref>;<sp/>}</highlight></codeline>
+<codeline lineno="12" refid="classGenerator_1a6558f2a519d5b8e67ecc3a6620a7fb5f" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal">&amp;<sp/><ref refid="classGenerator_1a6558f2a519d5b8e67ecc3a6620a7fb5f" kindref="member">mapWidth</ref>()<sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/><ref refid="classGenerator_1aab82506c17f83cef3b1449ee32760e4b" kindref="member">m_mapWidth</ref>;<sp/>}</highlight></codeline>
+<codeline lineno="13" refid="classGenerator_1a9c3012dc9e8788ffd1014a6511238be2" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal">&amp;<sp/><ref refid="classGenerator_1a9c3012dc9e8788ffd1014a6511238be2" kindref="member">numberOfRooms</ref>()<sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/><ref refid="classGenerator_1ad1cdb1fdc53ea37a7652c505dfdda628" kindref="member">m_rooms</ref>;<sp/>}</highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight><highlight class="keyword">private</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="16"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="classGenerator_1a5f40352b20fe2c4534523e18121cb0e6" kindref="member">generateRoom</ref><sp/>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/>map);</highlight></codeline>
+<codeline lineno="17"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classGenerator_1a9daa14b13068fbe9efb1d14f55f629d1" kindref="member">loadMap</ref><sp/>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/>map);</highlight></codeline>
+<codeline lineno="18"><highlight class="normal"></highlight></codeline>
+<codeline lineno="19"><highlight class="normal"></highlight><highlight class="keyword">private</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="20" refid="classGenerator_1a67bf71e434d74b280377b4f7acc3dc1d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="classGameEngineInterface" kindref="compound">GameEngineInterface</ref>*<sp/><sp/><sp/><sp/><ref refid="classGenerator_1a67bf71e434d74b280377b4f7acc3dc1d" kindref="member">m_engine</ref>;</highlight></codeline>
+<codeline lineno="21" refid="classGenerator_1a39fb4ca747e84f5422d313b4c57feb58" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classGenerator_1a39fb4ca747e84f5422d313b4c57feb58" kindref="member">m_mapHeight</ref>;</highlight></codeline>
+<codeline lineno="22" refid="classGenerator_1aab82506c17f83cef3b1449ee32760e4b" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classGenerator_1aab82506c17f83cef3b1449ee32760e4b" kindref="member">m_mapWidth</ref>;</highlight></codeline>
+<codeline lineno="23" refid="classGenerator_1ad1cdb1fdc53ea37a7652c505dfdda628" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classGenerator_1ad1cdb1fdc53ea37a7652c505dfdda628" kindref="member">m_rooms</ref>;</highlight></codeline>
+<codeline lineno="24"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="25"><highlight class="normal"></highlight></codeline>
+<codeline lineno="26"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+    </programlisting>
+    <location file="/home/peter/Development/fortress/src/generator.h"/>
+  </compounddef>
+</doxygen>

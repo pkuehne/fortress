@@ -1,0 +1,224 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.6">
+  <compounddef id="classGenerator" kind="class" prot="public">
+    <compoundname>Generator</compoundname>
+    <basecompoundref refid="classGeneratorInterface" prot="public" virt="non-virtual">GeneratorInterface</basecompoundref>
+    <includes refid="generator_8h" local="no">generator.h</includes>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classGenerator_1a67bf71e434d74b280377b4f7acc3dc1d" prot="private" static="no" mutable="no">
+        <type><ref refid="classGameEngineInterface" kindref="compound">GameEngineInterface</ref> *</type>
+        <definition>GameEngineInterface* Generator::m_engine</definition>
+        <argsstring></argsstring>
+        <name>m_engine</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/peter/Development/fortress/src/generator.h" line="20" column="1" bodyfile="/home/peter/Development/fortress/src/generator.h" bodystart="20" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classGenerator_1a39fb4ca747e84f5422d313b4c57feb58" prot="private" static="no" mutable="no">
+        <type>unsigned int</type>
+        <definition>unsigned int Generator::m_mapHeight</definition>
+        <argsstring></argsstring>
+        <name>m_mapHeight</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/peter/Development/fortress/src/generator.h" line="21" column="1" bodyfile="/home/peter/Development/fortress/src/generator.h" bodystart="21" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classGenerator_1aab82506c17f83cef3b1449ee32760e4b" prot="private" static="no" mutable="no">
+        <type>unsigned int</type>
+        <definition>unsigned int Generator::m_mapWidth</definition>
+        <argsstring></argsstring>
+        <name>m_mapWidth</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/peter/Development/fortress/src/generator.h" line="22" column="1" bodyfile="/home/peter/Development/fortress/src/generator.h" bodystart="22" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classGenerator_1ad1cdb1fdc53ea37a7652c505dfdda628" prot="private" static="no" mutable="no">
+        <type>unsigned int</type>
+        <definition>unsigned int Generator::m_rooms</definition>
+        <argsstring></argsstring>
+        <name>m_rooms</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/peter/Development/fortress/src/generator.h" line="23" column="1" bodyfile="/home/peter/Development/fortress/src/generator.h" bodystart="23" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classGenerator_1a3f690e7b3bb96571346bb51ca2adbe11" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>void</type>
+        <definition>void Generator::initialise</definition>
+        <argsstring>(GameEngineInterface *a_engine)</argsstring>
+        <name>initialise</name>
+        <reimplements refid="classGeneratorInterface_1ae0466ff42c3ea7f068df9e70f3f12171">initialise</reimplements>
+        <param>
+          <type><ref refid="classGameEngineInterface" kindref="compound">GameEngineInterface</ref> *</type>
+          <declname>a_engine</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/peter/Development/fortress/src/generator.h" line="8" column="1" bodyfile="/home/peter/Development/fortress/src/generator.h" bodystart="8" bodyend="8"/>
+      </memberdef>
+      <memberdef kind="function" id="classGenerator_1a16cdfb04efdcc06650b99b2121d1b9b9" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void Generator::generate</definition>
+        <argsstring>()</argsstring>
+        <name>generate</name>
+        <reimplements refid="classGeneratorInterface_1a428214973b697b3e52a9993a730c6678">generate</reimplements>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/peter/Development/fortress/src/generator.h" line="9" column="1" bodyfile="/home/peter/Development/fortress/src/generator.cpp" bodystart="9" bodyend="44"/>
+      </memberdef>
+      <memberdef kind="function" id="classGenerator_1adddb6dfba9dbda6ea3fd9d08ff250bde" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>unsigned int &amp;</type>
+        <definition>unsigned int&amp; Generator::mapHeight</definition>
+        <argsstring>()</argsstring>
+        <name>mapHeight</name>
+        <reimplements refid="classGeneratorInterface_1adea269531309861c989f24e88caf2bc0">mapHeight</reimplements>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/peter/Development/fortress/src/generator.h" line="11" column="1" bodyfile="/home/peter/Development/fortress/src/generator.h" bodystart="11" bodyend="11"/>
+      </memberdef>
+      <memberdef kind="function" id="classGenerator_1a6558f2a519d5b8e67ecc3a6620a7fb5f" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>unsigned int &amp;</type>
+        <definition>unsigned int&amp; Generator::mapWidth</definition>
+        <argsstring>()</argsstring>
+        <name>mapWidth</name>
+        <reimplements refid="classGeneratorInterface_1ac5748c03cd757f3025c002237d08bc2d">mapWidth</reimplements>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/peter/Development/fortress/src/generator.h" line="12" column="1" bodyfile="/home/peter/Development/fortress/src/generator.h" bodystart="12" bodyend="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classGenerator_1a9c3012dc9e8788ffd1014a6511238be2" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>unsigned int &amp;</type>
+        <definition>unsigned int&amp; Generator::numberOfRooms</definition>
+        <argsstring>()</argsstring>
+        <name>numberOfRooms</name>
+        <reimplements refid="classGeneratorInterface_1a23c74580b39bdec747a93a8ead071d9b">numberOfRooms</reimplements>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/peter/Development/fortress/src/generator.h" line="13" column="1" bodyfile="/home/peter/Development/fortress/src/generator.h" bodystart="13" bodyend="13"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-func">
+      <memberdef kind="function" id="classGenerator_1a5f40352b20fe2c4534523e18121cb0e6" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool Generator::generateRoom</definition>
+        <argsstring>(char *map)</argsstring>
+        <name>generateRoom</name>
+        <param>
+          <type>char *</type>
+          <declname>map</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/peter/Development/fortress/src/generator.h" line="16" column="1" bodyfile="/home/peter/Development/fortress/src/generator.cpp" bodystart="46" bodyend="87"/>
+      </memberdef>
+      <memberdef kind="function" id="classGenerator_1a9daa14b13068fbe9efb1d14f55f629d1" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void Generator::loadMap</definition>
+        <argsstring>(char *map)</argsstring>
+        <name>loadMap</name>
+        <param>
+          <type>char *</type>
+          <declname>map</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/peter/Development/fortress/src/generator.h" line="17" column="1" bodyfile="/home/peter/Development/fortress/src/generator.cpp" bodystart="89" bodyend="100"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="122">
+        <label>Generator</label>
+        <link refid="classGenerator"/>
+        <childnode refid="123" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="123">
+        <label>GeneratorInterface</label>
+        <link refid="classGeneratorInterface"/>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="124">
+        <label>Generator</label>
+        <link refid="classGenerator"/>
+        <childnode refid="125" relation="public-inheritance">
+        </childnode>
+        <childnode refid="126" relation="usage">
+          <edgelabel>m_engine</edgelabel>
+        </childnode>
+      </node>
+      <node id="126">
+        <label>GameEngineInterface</label>
+        <link refid="classGameEngineInterface"/>
+      </node>
+      <node id="125">
+        <label>GeneratorInterface</label>
+        <link refid="classGeneratorInterface"/>
+      </node>
+    </collaborationgraph>
+    <location file="/home/peter/Development/fortress/src/generator.h" line="6" column="1" bodyfile="/home/peter/Development/fortress/src/generator.h" bodystart="6" bodyend="24"/>
+    <listofallmembers>
+      <member refid="classGenerator_1a16cdfb04efdcc06650b99b2121d1b9b9" prot="public" virt="virtual"><scope>Generator</scope><name>generate</name></member>
+      <member refid="classGenerator_1a5f40352b20fe2c4534523e18121cb0e6" prot="private" virt="non-virtual"><scope>Generator</scope><name>generateRoom</name></member>
+      <member refid="classGenerator_1a3f690e7b3bb96571346bb51ca2adbe11" prot="public" virt="virtual"><scope>Generator</scope><name>initialise</name></member>
+      <member refid="classGenerator_1a9daa14b13068fbe9efb1d14f55f629d1" prot="private" virt="non-virtual"><scope>Generator</scope><name>loadMap</name></member>
+      <member refid="classGenerator_1a67bf71e434d74b280377b4f7acc3dc1d" prot="private" virt="non-virtual"><scope>Generator</scope><name>m_engine</name></member>
+      <member refid="classGenerator_1a39fb4ca747e84f5422d313b4c57feb58" prot="private" virt="non-virtual"><scope>Generator</scope><name>m_mapHeight</name></member>
+      <member refid="classGenerator_1aab82506c17f83cef3b1449ee32760e4b" prot="private" virt="non-virtual"><scope>Generator</scope><name>m_mapWidth</name></member>
+      <member refid="classGenerator_1ad1cdb1fdc53ea37a7652c505dfdda628" prot="private" virt="non-virtual"><scope>Generator</scope><name>m_rooms</name></member>
+      <member refid="classGenerator_1adddb6dfba9dbda6ea3fd9d08ff250bde" prot="public" virt="virtual"><scope>Generator</scope><name>mapHeight</name></member>
+      <member refid="classGenerator_1a6558f2a519d5b8e67ecc3a6620a7fb5f" prot="public" virt="virtual"><scope>Generator</scope><name>mapWidth</name></member>
+      <member refid="classGenerator_1a9c3012dc9e8788ffd1014a6511238be2" prot="public" virt="virtual"><scope>Generator</scope><name>numberOfRooms</name></member>
+      <member refid="classGeneratorInterface_1aa6474a64977a0b8a1613847672253f66" prot="public" virt="virtual"><scope>Generator</scope><name>~GeneratorInterface</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

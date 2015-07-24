@@ -1,0 +1,329 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.6">
+  <compounddef id="classGraphics" kind="class" prot="public">
+    <compoundname>Graphics</compoundname>
+    <basecompoundref refid="classGraphicsInterface" prot="public" virt="non-virtual">GraphicsInterface</basecompoundref>
+    <includes refid="graphics_8h" local="no">graphics.h</includes>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classGraphics_1ab564a5716ae0bdaa73dde9f257e769d6" prot="private" static="no" mutable="no">
+        <type><ref refid="classConfigManager" kindref="compound">ConfigManager</ref></type>
+        <definition>ConfigManager Graphics::m_config</definition>
+        <argsstring></argsstring>
+        <name>m_config</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/peter/Development/fortress/src/graphics.h" line="26" column="1" bodyfile="/home/peter/Development/fortress/src/graphics.h" bodystart="26" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classGraphics_1a66b2e289d2963868a7c79cee2941942b" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void Graphics::initialise</definition>
+        <argsstring>(int argc, char **argv)</argsstring>
+        <name>initialise</name>
+        <reimplements refid="classGraphicsInterface_1a3a47a8e69b8f31a962bed451b3f7c498">initialise</reimplements>
+        <param>
+          <type>int</type>
+          <declname>argc</declname>
+        </param>
+        <param>
+          <type>char **</type>
+          <declname>argv</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/peter/Development/fortress/src/graphics.h" line="10" column="1" bodyfile="/home/peter/Development/fortress/src/graphics.cpp" bodystart="110" bodyend="149"/>
+      </memberdef>
+      <memberdef kind="function" id="classGraphics_1aec5a37f9c17f75ced39db3cf1167fa4a" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void Graphics::spin</definition>
+        <argsstring>()</argsstring>
+        <name>spin</name>
+        <reimplements refid="classGraphicsInterface_1a7eab61b47e23240090b339151809eb1d">spin</reimplements>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/peter/Development/fortress/src/graphics.h" line="11" column="1" bodyfile="/home/peter/Development/fortress/src/graphics.cpp" bodystart="95" bodyend="98"/>
+      </memberdef>
+      <memberdef kind="function" id="classGraphics_1adcad998ac1340c761645ed0c00412522" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void Graphics::drawString</definition>
+        <argsstring>(int y, int x, const char *s)</argsstring>
+        <name>drawString</name>
+        <reimplements refid="classGraphicsInterface_1aa58e5f8df996b8d64a456dedaa3bb549">drawString</reimplements>
+        <param>
+          <type>int</type>
+          <declname>y</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type>const char *</type>
+          <declname>s</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/peter/Development/fortress/src/graphics.h" line="13" column="1" bodyfile="/home/peter/Development/fortress/src/graphics.cpp" bodystart="12" bodyend="17"/>
+      </memberdef>
+      <memberdef kind="function" id="classGraphics_1a2bf550e92188fd991939f5d1429b7d4d" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void Graphics::drawTile</definition>
+        <argsstring>(int y, int x, unsigned int tile, Color fg, Color bg)</argsstring>
+        <name>drawTile</name>
+        <reimplements refid="classGraphicsInterface_1af46b9a83803b47cda354449d3afced25">drawTile</reimplements>
+        <param>
+          <type>int</type>
+          <declname>y</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type>unsigned int</type>
+          <declname>tile</declname>
+        </param>
+        <param>
+          <type><ref refid="classColor" kindref="compound">Color</ref></type>
+          <declname>fg</declname>
+        </param>
+        <param>
+          <type><ref refid="classColor" kindref="compound">Color</ref></type>
+          <declname>bg</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/peter/Development/fortress/src/graphics.h" line="14" column="1" bodyfile="/home/peter/Development/fortress/src/graphics.cpp" bodystart="19" bodyend="42"/>
+      </memberdef>
+      <memberdef kind="function" id="classGraphics_1a0193f21f1333dcbe93c4759fcf1fb7d7" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void Graphics::drawBorder</definition>
+        <argsstring>(int y, int x, int height, int width)</argsstring>
+        <name>drawBorder</name>
+        <reimplements refid="classGraphicsInterface_1a5ee4a7b699755b8348955b7e166c154b">drawBorder</reimplements>
+        <param>
+          <type>int</type>
+          <declname>y</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>height</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>width</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/peter/Development/fortress/src/graphics.h" line="15" column="1" bodyfile="/home/peter/Development/fortress/src/graphics.cpp" bodystart="44" bodyend="63"/>
+      </memberdef>
+      <memberdef kind="function" id="classGraphics_1a3bb97ab19f7abb7ad61f17614bdeb82e" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void Graphics::beginScreenUpdate</definition>
+        <argsstring>()</argsstring>
+        <name>beginScreenUpdate</name>
+        <reimplements refid="classGraphicsInterface_1a31ab6e9004825ec7ea337c2dd530114a">beginScreenUpdate</reimplements>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/peter/Development/fortress/src/graphics.h" line="17" column="1" bodyfile="/home/peter/Development/fortress/src/graphics.cpp" bodystart="100" bodyend="103"/>
+      </memberdef>
+      <memberdef kind="function" id="classGraphics_1aaf60fa961c17a3007f3bb8ebddaa3006" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void Graphics::endScreenUpdate</definition>
+        <argsstring>()</argsstring>
+        <name>endScreenUpdate</name>
+        <reimplements refid="classGraphicsInterface_1aa6d993639a30dee68aa9aacd9ba1ad5c">endScreenUpdate</reimplements>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/peter/Development/fortress/src/graphics.h" line="18" column="1" bodyfile="/home/peter/Development/fortress/src/graphics.cpp" bodystart="105" bodyend="108"/>
+      </memberdef>
+      <memberdef kind="function" id="classGraphics_1a92c097e9ac471b361c9e72af40898cb9" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void Graphics::setKeyboardFunc</definition>
+        <argsstring>(KeyboardFuncPtr func)</argsstring>
+        <name>setKeyboardFunc</name>
+        <reimplements refid="classGraphicsInterface_1a306cf250c51013ff35c3a657d694f921">setKeyboardFunc</reimplements>
+        <param>
+          <type><ref refid="graphics__interface_8h_1ae8b5bc37678d3ba69d310ca3c6e7393f" kindref="member">KeyboardFuncPtr</ref></type>
+          <declname>func</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/peter/Development/fortress/src/graphics.h" line="20" column="1" bodyfile="/home/peter/Development/fortress/src/graphics.cpp" bodystart="74" bodyend="77"/>
+      </memberdef>
+      <memberdef kind="function" id="classGraphics_1aaf99a21378b7bbc86d665212d8151f77" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void Graphics::setKeyboardUpFunc</definition>
+        <argsstring>(KeyboardFuncPtr func)</argsstring>
+        <name>setKeyboardUpFunc</name>
+        <reimplements refid="classGraphicsInterface_1ac79f6dfb01b2915fb2ce51efabd692c5">setKeyboardUpFunc</reimplements>
+        <param>
+          <type><ref refid="graphics__interface_8h_1ae8b5bc37678d3ba69d310ca3c6e7393f" kindref="member">KeyboardFuncPtr</ref></type>
+          <declname>func</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/peter/Development/fortress/src/graphics.h" line="21" column="1" bodyfile="/home/peter/Development/fortress/src/graphics.cpp" bodystart="79" bodyend="82"/>
+      </memberdef>
+      <memberdef kind="function" id="classGraphics_1a134f47e4496f56affd656660c6037e1d" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void Graphics::setDisplayFunc</definition>
+        <argsstring>(DisplayFuncPtr func)</argsstring>
+        <name>setDisplayFunc</name>
+        <reimplements refid="classGraphicsInterface_1a83af0372a01cd878a724ed81722b62cd">setDisplayFunc</reimplements>
+        <param>
+          <type><ref refid="graphics__interface_8h_1a71f99ab7c9bb1fb2ae09a63a9d4d422b" kindref="member">DisplayFuncPtr</ref></type>
+          <declname>func</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/peter/Development/fortress/src/graphics.h" line="22" column="1" bodyfile="/home/peter/Development/fortress/src/graphics.cpp" bodystart="84" bodyend="88"/>
+      </memberdef>
+      <memberdef kind="function" id="classGraphics_1aa20c019aad3ded8495620a1b6d9bbbc1" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void Graphics::setMouseFunc</definition>
+        <argsstring>(MouseFuncPtr func)</argsstring>
+        <name>setMouseFunc</name>
+        <reimplements refid="classGraphicsInterface_1a5730723c0b0e2d676ff11882076c1e6c">setMouseFunc</reimplements>
+        <param>
+          <type><ref refid="graphics__interface_8h_1a60715b4a82a8c09c76ddd8b483d768ef" kindref="member">MouseFuncPtr</ref></type>
+          <declname>func</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/peter/Development/fortress/src/graphics.h" line="23" column="1" bodyfile="/home/peter/Development/fortress/src/graphics.cpp" bodystart="90" bodyend="93"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="131">
+        <label>GraphicsInterface</label>
+        <link refid="classGraphicsInterface"/>
+      </node>
+      <node id="130">
+        <label>Graphics</label>
+        <link refid="classGraphics"/>
+        <childnode refid="131" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="136">
+        <label>TagValue</label>
+        <link refid="structTagValue"/>
+        <childnode refid="137" relation="usage">
+          <edgelabel>str</edgelabel>
+        </childnode>
+      </node>
+      <node id="133">
+        <label>GraphicsInterface</label>
+        <link refid="classGraphicsInterface"/>
+      </node>
+      <node id="138">
+        <label>std::basic_string&lt; char &gt;</label>
+      </node>
+      <node id="134">
+        <label>ConfigManager</label>
+        <link refid="classConfigManager"/>
+        <childnode refid="135" relation="usage">
+          <edgelabel>m_tags</edgelabel>
+        </childnode>
+      </node>
+      <node id="132">
+        <label>Graphics</label>
+        <link refid="classGraphics"/>
+        <childnode refid="133" relation="public-inheritance">
+        </childnode>
+        <childnode refid="134" relation="usage">
+          <edgelabel>m_config</edgelabel>
+        </childnode>
+      </node>
+      <node id="137">
+        <label>std::string</label>
+        <childnode refid="138" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="135">
+        <label>std::map&lt; std::string, TagValue &gt;</label>
+        <childnode refid="136" relation="usage">
+          <edgelabel>elements</edgelabel>
+        </childnode>
+        <childnode refid="137" relation="usage">
+          <edgelabel>keys</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/home/peter/Development/fortress/src/graphics.h" line="8" column="1" bodyfile="/home/peter/Development/fortress/src/graphics.h" bodystart="8" bodyend="27"/>
+    <listofallmembers>
+      <member refid="classGraphics_1a3bb97ab19f7abb7ad61f17614bdeb82e" prot="public" virt="virtual"><scope>Graphics</scope><name>beginScreenUpdate</name></member>
+      <member refid="classGraphics_1a0193f21f1333dcbe93c4759fcf1fb7d7" prot="public" virt="virtual"><scope>Graphics</scope><name>drawBorder</name></member>
+      <member refid="classGraphics_1adcad998ac1340c761645ed0c00412522" prot="public" virt="virtual"><scope>Graphics</scope><name>drawString</name></member>
+      <member refid="classGraphics_1a2bf550e92188fd991939f5d1429b7d4d" prot="public" virt="virtual"><scope>Graphics</scope><name>drawTile</name></member>
+      <member refid="classGraphics_1aaf60fa961c17a3007f3bb8ebddaa3006" prot="public" virt="virtual"><scope>Graphics</scope><name>endScreenUpdate</name></member>
+      <member refid="classGraphics_1a66b2e289d2963868a7c79cee2941942b" prot="public" virt="virtual"><scope>Graphics</scope><name>initialise</name></member>
+      <member refid="classGraphics_1ab564a5716ae0bdaa73dde9f257e769d6" prot="private" virt="non-virtual"><scope>Graphics</scope><name>m_config</name></member>
+      <member refid="classGraphics_1a134f47e4496f56affd656660c6037e1d" prot="public" virt="virtual"><scope>Graphics</scope><name>setDisplayFunc</name></member>
+      <member refid="classGraphics_1a92c097e9ac471b361c9e72af40898cb9" prot="public" virt="virtual"><scope>Graphics</scope><name>setKeyboardFunc</name></member>
+      <member refid="classGraphics_1aaf99a21378b7bbc86d665212d8151f77" prot="public" virt="virtual"><scope>Graphics</scope><name>setKeyboardUpFunc</name></member>
+      <member refid="classGraphics_1aa20c019aad3ded8495620a1b6d9bbbc1" prot="public" virt="virtual"><scope>Graphics</scope><name>setMouseFunc</name></member>
+      <member refid="classGraphics_1aec5a37f9c17f75ced39db3cf1167fa4a" prot="public" virt="virtual"><scope>Graphics</scope><name>spin</name></member>
+      <member refid="classGraphicsInterface_1ada388bd981edb66e9d47c23a3ab11e70" prot="public" virt="virtual"><scope>Graphics</scope><name>~GraphicsInterface</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,92 @@
+.TH "GameSystemBase" 3 "Fri Jul 24 2015" "Fortress" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+GameSystemBase \- 
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <game_system_base\&.h>\fP
+.PP
+Inherits \fBGameSystemInterface\fP\&.
+.PP
+Inherited by \fBCombatSystem\fP, \fBMovementSystem\fP, \fBNpcSystem\fP, and \fBSpriteSystem\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBGameSystemBase\fP ()"
+.br
+.ti -1c
+.RI "virtual void \fBinitialise\fP (\fBGameEngineInterface\fP *engine)"
+.br
+.ti -1c
+.RI "virtual \fBGameEngineInterface\fP * \fBgetEngineRef\fP ()"
+.br
+.ti -1c
+.RI "virtual void \fBhandleEvent\fP (const \fBEvent\fP *event)"
+.br
+.ti -1c
+.RI "virtual void \fBupdate\fP ()"
+.br
+.ti -1c
+.RI "virtual \fB~GameSystemBase\fP ()"
+.br
+.ti -1c
+.RI "virtual std::vector< \fBEntity\fP * > \fBfindEntitiesNear\fP (unsigned int x, unsigned int y, unsigned radius)"
+.br
+.ti -1c
+.RI "virtual std::vector< \fBEntity\fP * > \fBfindEntitiesAt\fP (unsigned int x, unsigned int y)"
+.br
+.ti -1c
+.RI "virtual std::vector< \fBEntity\fP * > \fBfindEntitiesToThe\fP (\fBMoveEntityEvent::DIRECTION\fP a_direction, \fBEntity\fP *a_entity)"
+.br
+.in -1c
+.SS "Protected Attributes"
+
+.in +1c
+.ti -1c
+.RI "\fBGameEngineInterface\fP * \fBm_engine\fP"
+.br
+.in -1c
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "GameSystemBase::GameSystemBase ()\fC [inline]\fP"
+
+.SS "virtual GameSystemBase::~GameSystemBase ()\fC [inline]\fP, \fC [virtual]\fP"
+
+.SH "Member Function Documentation"
+.PP 
+.SS "std::vector< \fBEntity\fP * > GameSystemBase::findEntitiesAt (unsigned intx, unsigned inty)\fC [virtual]\fP"
+
+.SS "std::vector< \fBEntity\fP * > GameSystemBase::findEntitiesNear (unsigned intx, unsigned inty, unsignedradius)\fC [virtual]\fP"
+
+.SS "std::vector< \fBEntity\fP * > GameSystemBase::findEntitiesToThe (\fBMoveEntityEvent::DIRECTION\fPa_direction, \fBEntity\fP *a_entity)\fC [virtual]\fP"
+
+.SS "virtual \fBGameEngineInterface\fP* GameSystemBase::getEngineRef ()\fC [inline]\fP, \fC [virtual]\fP"
+
+.SS "virtual void GameSystemBase::handleEvent (const \fBEvent\fP *event)\fC [inline]\fP, \fC [virtual]\fP"
+
+.PP
+Implements \fBGameSystemInterface\fP\&.
+.PP
+Reimplemented in \fBSpriteSystem\fP, \fBMovementSystem\fP, \fBNpcSystem\fP, and \fBCombatSystem\fP\&.
+.SS "virtual void GameSystemBase::initialise (\fBGameEngineInterface\fP *engine)\fC [inline]\fP, \fC [virtual]\fP"
+
+.PP
+Implements \fBGameSystemInterface\fP\&.
+.SS "virtual void GameSystemBase::update ()\fC [inline]\fP, \fC [virtual]\fP"
+
+.PP
+Implements \fBGameSystemInterface\fP\&.
+.PP
+Reimplemented in \fBNpcSystem\fP\&.
+.SH "Member Data Documentation"
+.PP 
+.SS "\fBGameEngineInterface\fP* GameSystemBase::m_engine\fC [protected]\fP"
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Fortress from the source code\&.

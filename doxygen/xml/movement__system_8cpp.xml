@@ -1,0 +1,238 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.6">
+  <compounddef id="movement__system_8cpp" kind="file">
+    <compoundname>movement_system.cpp</compoundname>
+    <includes refid="movement__system_8h" local="yes">movement_system.h</includes>
+    <includes refid="event_8h" local="yes">event.h</includes>
+    <includes refid="gameengine_8h" local="yes">gameengine.h</includes>
+    <includes refid="entity_8h" local="yes">entity.h</includes>
+    <includes local="no">iostream</includes>
+    <incdepgraph>
+      <node id="796">
+        <label>game_system_base.h</label>
+        <link refid="game__system__base_8h"/>
+        <childnode refid="797" relation="include">
+        </childnode>
+        <childnode refid="803" relation="include">
+        </childnode>
+        <childnode refid="804" relation="include">
+        </childnode>
+        <childnode refid="812" relation="include">
+        </childnode>
+      </node>
+      <node id="811">
+        <label>graphics_interface.h</label>
+        <link refid="graphics__interface_8h"/>
+        <childnode refid="809" relation="include">
+        </childnode>
+      </node>
+      <node id="810">
+        <label>collider_component.h</label>
+        <link refid="collider__component_8h"/>
+      </node>
+      <node id="795">
+        <label>movement_system.h</label>
+        <link refid="movement__system_8h"/>
+        <childnode refid="796" relation="include">
+        </childnode>
+      </node>
+      <node id="806">
+        <label>component_manager.h</label>
+        <link refid="component__manager_8h"/>
+        <childnode refid="807" relation="include">
+        </childnode>
+        <childnode refid="800" relation="include">
+        </childnode>
+        <childnode refid="798" relation="include">
+        </childnode>
+      </node>
+      <node id="809">
+        <label>color.h</label>
+        <link refid="color_8h"/>
+      </node>
+      <node id="807">
+        <label>component_manager_interface.h</label>
+        <link refid="component__manager__interface_8h"/>
+        <childnode refid="800" relation="include">
+        </childnode>
+        <childnode refid="798" relation="include">
+        </childnode>
+      </node>
+      <node id="797">
+        <label>event.h</label>
+        <link refid="event_8h"/>
+        <childnode refid="798" relation="include">
+        </childnode>
+        <childnode refid="799" relation="include">
+        </childnode>
+        <childnode refid="800" relation="include">
+        </childnode>
+      </node>
+      <node id="802">
+        <label>string</label>
+      </node>
+      <node id="800">
+        <label>entity.h</label>
+        <link refid="entity_8h"/>
+        <childnode refid="801" relation="include">
+        </childnode>
+        <childnode refid="802" relation="include">
+        </childnode>
+      </node>
+      <node id="798">
+        <label>map</label>
+      </node>
+      <node id="816">
+        <label>event_manager_interface.h</label>
+        <link refid="event__manager__interface_8h"/>
+      </node>
+      <node id="805">
+        <label>entity_manager_interface.h</label>
+        <link refid="entity__manager__interface_8h"/>
+        <childnode refid="806" relation="include">
+        </childnode>
+        <childnode refid="808" relation="include">
+        </childnode>
+        <childnode refid="810" relation="include">
+        </childnode>
+      </node>
+      <node id="815">
+        <label>window_interface.h</label>
+        <link refid="window__interface_8h"/>
+      </node>
+      <node id="812">
+        <label>vector</label>
+      </node>
+      <node id="817">
+        <label>generator_interface.h</label>
+        <link refid="generator__interface_8h"/>
+      </node>
+      <node id="818">
+        <label>cstdlib</label>
+      </node>
+      <node id="799">
+        <label>iostream</label>
+      </node>
+      <node id="804">
+        <label>game_engine_interface.h</label>
+        <link refid="game__engine__interface_8h"/>
+        <childnode refid="802" relation="include">
+        </childnode>
+        <childnode refid="805" relation="include">
+        </childnode>
+        <childnode refid="811" relation="include">
+        </childnode>
+      </node>
+      <node id="794">
+        <label>movement_system.cpp</label>
+        <link refid="movement_system.cpp"/>
+        <childnode refid="795" relation="include">
+        </childnode>
+        <childnode refid="797" relation="include">
+        </childnode>
+        <childnode refid="813" relation="include">
+        </childnode>
+        <childnode refid="800" relation="include">
+        </childnode>
+        <childnode refid="799" relation="include">
+        </childnode>
+      </node>
+      <node id="801">
+        <label>set</label>
+      </node>
+      <node id="803">
+        <label>game_system_interface.h</label>
+        <link refid="game__system__interface_8h"/>
+        <childnode refid="797" relation="include">
+        </childnode>
+      </node>
+      <node id="814">
+        <label>window_manager_interface.h</label>
+        <link refid="window__manager__interface_8h"/>
+        <childnode refid="815" relation="include">
+        </childnode>
+        <childnode refid="804" relation="include">
+        </childnode>
+      </node>
+      <node id="813">
+        <label>gameengine.h</label>
+        <link refid="gameengine_8h"/>
+        <childnode refid="804" relation="include">
+        </childnode>
+        <childnode refid="811" relation="include">
+        </childnode>
+        <childnode refid="805" relation="include">
+        </childnode>
+        <childnode refid="814" relation="include">
+        </childnode>
+        <childnode refid="803" relation="include">
+        </childnode>
+        <childnode refid="816" relation="include">
+        </childnode>
+        <childnode refid="817" relation="include">
+        </childnode>
+        <childnode refid="802" relation="include">
+        </childnode>
+        <childnode refid="812" relation="include">
+        </childnode>
+        <childnode refid="818" relation="include">
+        </childnode>
+      </node>
+      <node id="808">
+        <label>sprite_component.h</label>
+        <link refid="sprite__component_8h"/>
+        <childnode refid="809" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="preprocessor">#include<sp/>&quot;<ref refid="movement__system_8h" kindref="compound">movement_system.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="event_8h" kindref="compound">event.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="gameengine_8h" kindref="compound">gameengine.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="entity_8h" kindref="compound">entity.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;iostream&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classMovementSystem_1ac2c594a6deb6349a376cd72f189971a3" kindref="member">MovementSystem::handleEvent</ref><sp/>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="classEvent" kindref="compound">Event</ref>*<sp/>event)</highlight></codeline>
+<codeline lineno="8"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="9"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">switch</highlight><highlight class="normal"><sp/>(event-&gt;<ref refid="classEvent_1ab0c2e30730d5859851f3126258c0126e" kindref="member">getType</ref>())<sp/>{</highlight></codeline>
+<codeline lineno="10"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="event_8h_1a2628ea8d12e8b2563c32f05dc7fff6faa069813852afd9d2af45dbd228abcea43" kindref="member">EVENT_MOVE_ENTITY</ref>:<sp/>{</highlight></codeline>
+<codeline lineno="11"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="classMoveEntityEvent" kindref="compound">MoveEntityEvent</ref>*<sp/>l_event<sp/>=<sp/></highlight><highlight class="keyword">dynamic_cast&lt;</highlight><highlight class="keyword">const<sp/></highlight><highlight class="normal"><ref refid="classMoveEntityEvent" kindref="compound">MoveEntityEvent</ref>*</highlight><highlight class="keyword">&gt;</highlight><highlight class="normal"><sp/>(event);</highlight></codeline>
+<codeline lineno="12"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classEntity" kindref="compound">Entity</ref>*<sp/>l_entity<sp/>=<sp/>l_event-&gt;<ref refid="classMoveEntityEvent_1aab414806813e40d92ac4c93fbf981a2b" kindref="member">entity</ref>;</highlight></codeline>
+<codeline lineno="13"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structSpriteComponent" kindref="compound">SpriteComponent</ref>*<sp/>l_sprite<sp/>=<sp/><ref refid="classGameSystemBase_1aa9044eb22399f0c0ddd8f049738c62e5" kindref="member">m_engine</ref>-&gt;<ref refid="classGameEngineInterface_1ac7b9bb5c99fd8fec773a64d492d1869e" kindref="member">getEntities</ref>()-&gt;<ref refid="classEntityManagerInterface_1a91bd6cea03b2b69ddec735e116420dd6" kindref="member">getSprites</ref>()-&gt;<ref refid="classComponentManagerInterface_1aa56b700c4ea98e708c68ebbde3205fd9" kindref="member">get</ref><sp/>(l_entity);</highlight></codeline>
+<codeline lineno="14"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(!l_sprite)<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="15"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>newX<sp/>=<sp/>l_sprite-&gt;<ref refid="structSpriteComponent_1af3b4dbdac3f132358f2dd983ec487a9e" kindref="member">xPos</ref>;</highlight></codeline>
+<codeline lineno="16"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>newY<sp/>=<sp/>l_sprite-&gt;<ref refid="structSpriteComponent_1aabf6f09bdbf8531b41ceb6f9bc20a773" kindref="member">yPos</ref>;</highlight></codeline>
+<codeline lineno="17"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">switch</highlight><highlight class="normal"><sp/>(l_event-&gt;<ref refid="classMoveEntityEvent_1ac55de930d27e83d1eb92968e9c3f41eb" kindref="member">direction</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="18"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="classMoveEntityEvent_1a7058a943643bee9164a21e62e3392807aeef1cc5f9516b00bb914bd41a8e6b5af" kindref="member">MoveEntityEvent::UP</ref>:<sp/><sp/><sp/><sp/>newY--;<sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="19"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="classMoveEntityEvent_1a7058a943643bee9164a21e62e3392807af65f060ef91fd8719accae8025ffb053" kindref="member">MoveEntityEvent::DOWN</ref>:<sp/><sp/>newY++;<sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="20"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="classMoveEntityEvent_1a7058a943643bee9164a21e62e3392807ae59ae25b0255eaf1ca0a083301281d7a" kindref="member">MoveEntityEvent::LEFT</ref>:<sp/><sp/>newX--;<sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="21"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="classMoveEntityEvent_1a7058a943643bee9164a21e62e3392807ab4b62f7c78d9716e7a25b52216ab5695" kindref="member">MoveEntityEvent::RIGHT</ref>:<sp/>newX++;<sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="22"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">default</highlight><highlight class="normal">:<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="23"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="24"><highlight class="normal"></highlight></codeline>
+<codeline lineno="25"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//Check<sp/>if<sp/>we&apos;re<sp/>running<sp/>into<sp/>a<sp/>collidable<sp/>or<sp/>something</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="26"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>std::map&lt;Entity*,<sp/>SpriteComponent&gt;&amp;<sp/>l_sprites<sp/>=<sp/><ref refid="classGameSystemBase_1aa9044eb22399f0c0ddd8f049738c62e5" kindref="member">m_engine</ref>-&gt;<ref refid="classGameEngineInterface_1ac7b9bb5c99fd8fec773a64d492d1869e" kindref="member">getEntities</ref>()-&gt;<ref refid="classEntityManagerInterface_1a91bd6cea03b2b69ddec735e116420dd6" kindref="member">getSprites</ref>()-&gt;<ref refid="classComponentManagerInterface_1a2ea45742be30438171b9b24fb36a5761" kindref="member">getAll</ref>();</highlight></codeline>
+<codeline lineno="27"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>std::map&lt;Entity*,<sp/>SpriteComponent&gt;::iterator<sp/>it<sp/>=<sp/>l_sprites.begin();</highlight></codeline>
+<codeline lineno="28"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(;<sp/>it<sp/>!=<sp/>l_sprites.end();<sp/>it++)<sp/>{</highlight></codeline>
+<codeline lineno="29"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>There<sp/>is<sp/>an<sp/>entity<sp/>here</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(it-&gt;second.xPos<sp/>==<sp/>newX<sp/>&amp;&amp;<sp/>it-&gt;second.yPos<sp/>==<sp/>newY)<sp/>{</highlight></codeline>
+<codeline lineno="31"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Check<sp/>if<sp/>it&apos;s<sp/>a<sp/>collidable</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="classGameSystemBase_1aa9044eb22399f0c0ddd8f049738c62e5" kindref="member">m_engine</ref>-&gt;<ref refid="classGameEngineInterface_1ac7b9bb5c99fd8fec773a64d492d1869e" kindref="member">getEntities</ref>()-&gt;<ref refid="classEntityManagerInterface_1acc684c426594345b02b206efb74b0adc" kindref="member">getColliders</ref>()-&gt;<ref refid="classComponentManagerInterface_1aa56b700c4ea98e708c68ebbde3205fd9" kindref="member">get</ref><sp/>(it-&gt;first))<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="33"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="36"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>l_sprite-&gt;<ref refid="structSpriteComponent_1af3b4dbdac3f132358f2dd983ec487a9e" kindref="member">xPos</ref><sp/>=<sp/>newX;</highlight></codeline>
+<codeline lineno="37"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>l_sprite-&gt;<ref refid="structSpriteComponent_1aabf6f09bdbf8531b41ceb6f9bc20a773" kindref="member">yPos</ref><sp/>=<sp/>newY;</highlight></codeline>
+<codeline lineno="38"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="39"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="40"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">default</highlight><highlight class="normal">:<sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="41"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="42"><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="/home/peter/Development/fortress/src/movement_system.cpp"/>
+  </compounddef>
+</doxygen>

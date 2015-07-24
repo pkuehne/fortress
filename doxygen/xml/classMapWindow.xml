@@ -1,0 +1,345 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.6">
+  <compounddef id="classMapWindow" kind="class" prot="public">
+    <compoundname>MapWindow</compoundname>
+    <basecompoundref refid="classWindow" prot="public" virt="non-virtual">Window</basecompoundref>
+    <includes refid="map__window_8h" local="no">map_window.h</includes>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classMapWindow_1affdeec7b3b899c38f16d04d170970e70" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void MapWindow::initialise</definition>
+        <argsstring>(GameEngineInterface *a_engine)</argsstring>
+        <name>initialise</name>
+        <reimplements refid="classWindow_1a3dcd22169bd4d40f4b35eafdea31f6dd">initialise</reimplements>
+        <param>
+          <type><ref refid="classGameEngineInterface" kindref="compound">GameEngineInterface</ref> *</type>
+          <declname>a_engine</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/peter/Development/fortress/src/map_window.h" line="8" column="1" bodyfile="/home/peter/Development/fortress/src/map_window.cpp" bodystart="6" bodyend="11"/>
+      </memberdef>
+      <memberdef kind="function" id="classMapWindow_1a5759338c3758b2a3252ffc691958dff8" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void MapWindow::redraw</definition>
+        <argsstring>()</argsstring>
+        <name>redraw</name>
+        <reimplements refid="classWindow_1aa8b52b7035a78ef960c194c9bb4a7c36">redraw</reimplements>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/peter/Development/fortress/src/map_window.h" line="9" column="1" bodyfile="/home/peter/Development/fortress/src/map_window.cpp" bodystart="13" bodyend="18"/>
+      </memberdef>
+      <memberdef kind="function" id="classMapWindow_1a289795e503a5aa600e4091f5aa8b0b8c" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void MapWindow::keyDown</definition>
+        <argsstring>(unsigned char key)</argsstring>
+        <name>keyDown</name>
+        <reimplements refid="classWindow_1a25a5308909ec422bebb480c803e1233c">keyDown</reimplements>
+        <param>
+          <type>unsigned char</type>
+          <declname>key</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/peter/Development/fortress/src/map_window.h" line="10" column="1" bodyfile="/home/peter/Development/fortress/src/map_window.cpp" bodystart="20" bodyend="45"/>
+      </memberdef>
+      <memberdef kind="function" id="classWindow_1ae0ed7fd17df30f2d262cb684560e0469" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void Window::destroy</definition>
+        <argsstring>(void)</argsstring>
+        <name>destroy</name>
+        <reimplements refid="classWindowInterface_1afeaed24b8e350acb196964106f2a0146">destroy</reimplements>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/peter/Development/fortress/src/window.h" line="16" column="1" bodyfile="/home/peter/Development/fortress/src/window.cpp" bodystart="19" bodyend="22"/>
+      </memberdef>
+      <memberdef kind="function" id="classWindow_1a55a6e31e36665bd3bcffcd844f5f0385" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type><ref refid="classGameEngineInterface" kindref="compound">GameEngineInterface</ref> *</type>
+        <definition>virtual GameEngineInterface* Window::getEngine</definition>
+        <argsstring>()</argsstring>
+        <name>getEngine</name>
+        <reimplements refid="classWindowInterface_1ac5970434199b518109a95a5cb645814a">getEngine</reimplements>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/peter/Development/fortress/src/window.h" line="18" column="1" bodyfile="/home/peter/Development/fortress/src/window.h" bodystart="18" bodyend="18"/>
+      </memberdef>
+      <memberdef kind="function" id="classWindow_1a249f5a9513be00e59428a1df37502c63" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>void</type>
+        <definition>virtual void Window::keyUp</definition>
+        <argsstring>(unsigned char key)</argsstring>
+        <name>keyUp</name>
+        <reimplements refid="classWindowInterface_1aa776c5cf4ef3d93a49613e08c79cab77">keyUp</reimplements>
+        <param>
+          <type>unsigned char</type>
+          <declname>key</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/peter/Development/fortress/src/window.h" line="20" column="1" bodyfile="/home/peter/Development/fortress/src/window.h" bodystart="20" bodyend="20"/>
+      </memberdef>
+      <memberdef kind="function" id="classWindow_1ac0927d0b89776959c4a95dd6737f841f" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>bool</type>
+        <definition>virtual bool Window::getKey</definition>
+        <argsstring>(unsigned char key)</argsstring>
+        <name>getKey</name>
+        <reimplements refid="classWindowInterface_1ab67d23a3dee052fd5901a87518b86e4d">getKey</reimplements>
+        <param>
+          <type>unsigned char</type>
+          <declname>key</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/peter/Development/fortress/src/window.h" line="21" column="1" bodyfile="/home/peter/Development/fortress/src/window.h" bodystart="21" bodyend="21"/>
+      </memberdef>
+      <memberdef kind="function" id="classWindow_1ace3bd5e6614510fce97263eccc35c0ab" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void Window::mouseDown</definition>
+        <argsstring>(int x, int y, int button)</argsstring>
+        <name>mouseDown</name>
+        <reimplements refid="classWindowInterface_1a5e6ba2b8e6560e9e3b74794cfd123d59">mouseDown</reimplements>
+        <param>
+          <type>int</type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>y</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>button</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/peter/Development/fortress/src/window.h" line="22" column="1" bodyfile="/home/peter/Development/fortress/src/window.cpp" bodystart="29" bodyend="34"/>
+      </memberdef>
+      <memberdef kind="function" id="classWindow_1a2e2c7592975405513a05a2da6a512b1c" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void Window::mouseUp</definition>
+        <argsstring>(int x, int y, int button)</argsstring>
+        <name>mouseUp</name>
+        <reimplements refid="classWindowInterface_1a482961a40e4a07d7f7ac81fe62ee7762">mouseUp</reimplements>
+        <param>
+          <type>int</type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>y</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>button</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/peter/Development/fortress/src/window.h" line="23" column="1" bodyfile="/home/peter/Development/fortress/src/window.cpp" bodystart="36" bodyend="41"/>
+      </memberdef>
+      <memberdef kind="function" id="classWindow_1ab824bd52a5a055e468f7b2cc3d0b4f54" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>bool</type>
+        <definition>bool Window::getMouseButton</definition>
+        <argsstring>(int button)</argsstring>
+        <name>getMouseButton</name>
+        <param>
+          <type>int</type>
+          <declname>button</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/peter/Development/fortress/src/window.h" line="24" column="1" bodyfile="/home/peter/Development/fortress/src/window.cpp" bodystart="43" bodyend="49"/>
+      </memberdef>
+      <memberdef kind="function" id="classWindow_1a1344118a395cb2fc48d4a2359372b074" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void Window::beforeRedraw</definition>
+        <argsstring>()</argsstring>
+        <name>beforeRedraw</name>
+        <reimplements refid="classWindowInterface_1a8aa6ce7a663628e3bd0480d4566191d2">beforeRedraw</reimplements>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/peter/Development/fortress/src/window.h" line="25" column="1" bodyfile="/home/peter/Development/fortress/src/window.cpp" bodystart="9" bodyend="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classWindow_1a05b1d6673e37db442ecd80c54d10e6b7" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void Window::afterRedraw</definition>
+        <argsstring>()</argsstring>
+        <name>afterRedraw</name>
+        <reimplements refid="classWindowInterface_1a37e350fc8f4a97333400c03e8544b2eb">afterRedraw</reimplements>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/peter/Development/fortress/src/window.h" line="27" column="1" bodyfile="/home/peter/Development/fortress/src/window.cpp" bodystart="14" bodyend="17"/>
+      </memberdef>
+      <memberdef kind="function" id="classWindow_1a6e4274c73728009132b7e0dfad42a8de" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void Window::resize</definition>
+        <argsstring>(int width, int height)</argsstring>
+        <name>resize</name>
+        <reimplements refid="classWindowInterface_1aa7109fc50fd3e90b0589bdd2a5e6972e">resize</reimplements>
+        <param>
+          <type>int</type>
+          <declname>width</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>height</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/peter/Development/fortress/src/window.h" line="28" column="1" bodyfile="/home/peter/Development/fortress/src/window.cpp" bodystart="24" bodyend="27"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-func">
+      <memberdef kind="function" id="classMapWindow_1aba3e6f30eb34872bf7e01ffcb54ec94b" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void MapWindow::drawMap</definition>
+        <argsstring>()</argsstring>
+        <name>drawMap</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/peter/Development/fortress/src/map_window.h" line="13" column="1" bodyfile="/home/peter/Development/fortress/src/map_window.cpp" bodystart="47" bodyend="56"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-static-attrib">
+      <memberdef kind="variable" id="classWindow_1a78a36ba2259fdd12ad2cf3346430fb35" prot="public" static="yes" mutable="no">
+        <type>const int</type>
+        <definition>const int Window::MAX_BUTTONS</definition>
+        <argsstring></argsstring>
+        <name>MAX_BUTTONS</name>
+        <initializer>= 5</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/peter/Development/fortress/src/window.h" line="11" column="1" bodyfile="/home/peter/Development/fortress/src/window.h" bodystart="11" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="143">
+        <label>Window</label>
+        <link refid="classWindow"/>
+        <childnode refid="144" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="144">
+        <label>WindowInterface</label>
+        <link refid="classWindowInterface"/>
+      </node>
+      <node id="142">
+        <label>MapWindow</label>
+        <link refid="classMapWindow"/>
+        <childnode refid="143" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="146">
+        <label>Window</label>
+        <link refid="classWindow"/>
+        <childnode refid="147" relation="public-inheritance">
+        </childnode>
+        <childnode refid="148" relation="usage">
+          <edgelabel>m_engine</edgelabel>
+        </childnode>
+      </node>
+      <node id="147">
+        <label>WindowInterface</label>
+        <link refid="classWindowInterface"/>
+      </node>
+      <node id="148">
+        <label>GameEngineInterface</label>
+        <link refid="classGameEngineInterface"/>
+      </node>
+      <node id="145">
+        <label>MapWindow</label>
+        <link refid="classMapWindow"/>
+        <childnode refid="146" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/home/peter/Development/fortress/src/map_window.h" line="6" column="1" bodyfile="/home/peter/Development/fortress/src/map_window.h" bodystart="6" bodyend="14"/>
+    <listofallmembers>
+      <member refid="classWindow_1a05b1d6673e37db442ecd80c54d10e6b7" prot="public" virt="virtual"><scope>MapWindow</scope><name>afterRedraw</name></member>
+      <member refid="classWindow_1a1344118a395cb2fc48d4a2359372b074" prot="public" virt="virtual"><scope>MapWindow</scope><name>beforeRedraw</name></member>
+      <member refid="classWindow_1ae0ed7fd17df30f2d262cb684560e0469" prot="public" virt="virtual"><scope>MapWindow</scope><name>destroy</name></member>
+      <member refid="classMapWindow_1aba3e6f30eb34872bf7e01ffcb54ec94b" prot="private" virt="non-virtual"><scope>MapWindow</scope><name>drawMap</name></member>
+      <member refid="classWindow_1a55a6e31e36665bd3bcffcd844f5f0385" prot="public" virt="virtual"><scope>MapWindow</scope><name>getEngine</name></member>
+      <member refid="classWindow_1ac0927d0b89776959c4a95dd6737f841f" prot="public" virt="virtual"><scope>MapWindow</scope><name>getKey</name></member>
+      <member refid="classWindow_1ab824bd52a5a055e468f7b2cc3d0b4f54" prot="public" virt="virtual"><scope>MapWindow</scope><name>getMouseButton</name></member>
+      <member refid="classMapWindow_1affdeec7b3b899c38f16d04d170970e70" prot="public" virt="virtual"><scope>MapWindow</scope><name>initialise</name></member>
+      <member refid="classMapWindow_1a289795e503a5aa600e4091f5aa8b0b8c" prot="public" virt="virtual"><scope>MapWindow</scope><name>keyDown</name></member>
+      <member refid="classWindow_1a249f5a9513be00e59428a1df37502c63" prot="public" virt="virtual"><scope>MapWindow</scope><name>keyUp</name></member>
+      <member refid="classWindow_1a78a36ba2259fdd12ad2cf3346430fb35" prot="public" virt="non-virtual"><scope>MapWindow</scope><name>MAX_BUTTONS</name></member>
+      <member refid="classWindow_1ace3bd5e6614510fce97263eccc35c0ab" prot="public" virt="virtual"><scope>MapWindow</scope><name>mouseDown</name></member>
+      <member refid="classWindow_1a2e2c7592975405513a05a2da6a512b1c" prot="public" virt="virtual"><scope>MapWindow</scope><name>mouseUp</name></member>
+      <member refid="classMapWindow_1a5759338c3758b2a3252ffc691958dff8" prot="public" virt="virtual"><scope>MapWindow</scope><name>redraw</name></member>
+      <member refid="classWindow_1a6e4274c73728009132b7e0dfad42a8de" prot="public" virt="virtual"><scope>MapWindow</scope><name>resize</name></member>
+      <member refid="classWindow_1a74e6087da23d3c24e9fac0245e5ec92c" prot="public" virt="non-virtual"><scope>MapWindow</scope><name>Window</name></member>
+      <member refid="classWindow_1a62b4a97b3c2e492f1d9a46092011e2d9" prot="public" virt="virtual"><scope>MapWindow</scope><name>~Window</name></member>
+      <member refid="classWindowInterface_1a38329b7b17b5ae765d81e40e8093f4c5" prot="public" virt="virtual"><scope>MapWindow</scope><name>~WindowInterface</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

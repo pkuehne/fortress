@@ -1,0 +1,57 @@
+.TH "ComponentManagerInterface< T >" 3 "Fri Jul 24 2015" "Fortress" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+ComponentManagerInterface< T > \- 
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <component_manager_interface\&.h>\fP
+.PP
+Inherited by \fBComponentManager< T >\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "virtual \fB~ComponentManagerInterface\fP ()"
+.br
+.ti -1c
+.RI "virtual void \fBadd\fP (\fBEntity\fP *entity, T component)=0"
+.br
+.ti -1c
+.RI "virtual T * \fBget\fP (\fBEntity\fP *entity)=0"
+.br
+.ti -1c
+.RI "virtual void \fBremove\fP (\fBEntity\fP *entity)=0"
+.br
+.ti -1c
+.RI "virtual std::map< \fBEntity\fP *, T > & \fBgetAll\fP ()=0"
+.br
+.in -1c
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "template<class T> virtual \fBComponentManagerInterface\fP< T >::~\fBComponentManagerInterface\fP ()\fC [inline]\fP, \fC [virtual]\fP"
+
+.SH "Member Function Documentation"
+.PP 
+.SS "template<class T> virtual void \fBComponentManagerInterface\fP< T >::add (\fBEntity\fP *entity, Tcomponent)\fC [pure virtual]\fP"
+
+.PP
+Implemented in \fBComponentManager< T >\fP, \fBComponentManager< SpriteComponent >\fP, and \fBComponentManager< ColliderComponent >\fP\&.
+.SS "template<class T> virtual T* \fBComponentManagerInterface\fP< T >::get (\fBEntity\fP *entity)\fC [pure virtual]\fP"
+
+.PP
+Implemented in \fBComponentManager< T >\fP, \fBComponentManager< SpriteComponent >\fP, and \fBComponentManager< ColliderComponent >\fP\&.
+.SS "template<class T> virtual std::map<\fBEntity\fP*, T>& \fBComponentManagerInterface\fP< T >::getAll ()\fC [pure virtual]\fP"
+
+.PP
+Implemented in \fBComponentManager< T >\fP, \fBComponentManager< SpriteComponent >\fP, and \fBComponentManager< ColliderComponent >\fP\&.
+.SS "template<class T> virtual void \fBComponentManagerInterface\fP< T >::remove (\fBEntity\fP *entity)\fC [pure virtual]\fP"
+
+.PP
+Implemented in \fBComponentManager< T >\fP, \fBComponentManager< SpriteComponent >\fP, and \fBComponentManager< ColliderComponent >\fP\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Fortress from the source code\&.

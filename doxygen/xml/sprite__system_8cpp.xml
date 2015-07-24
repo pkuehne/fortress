@@ -1,0 +1,283 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.6">
+  <compounddef id="sprite__system_8cpp" kind="file">
+    <compoundname>sprite_system.cpp</compoundname>
+    <includes refid="sprite__system_8h" local="yes">sprite_system.h</includes>
+    <includes refid="gameengine_8h" local="yes">gameengine.h</includes>
+    <includes refid="event_8h" local="yes">event.h</includes>
+    <includes refid="sprite__component_8h" local="yes">sprite_component.h</includes>
+    <includes local="no">iostream</includes>
+    <incdepgraph>
+      <node id="953">
+        <label>game_system_base.h</label>
+        <link refid="game__system__base_8h"/>
+        <childnode refid="954" relation="include">
+        </childnode>
+        <childnode refid="960" relation="include">
+        </childnode>
+        <childnode refid="961" relation="include">
+        </childnode>
+        <childnode refid="969" relation="include">
+        </childnode>
+      </node>
+      <node id="968">
+        <label>graphics_interface.h</label>
+        <link refid="graphics__interface_8h"/>
+        <childnode refid="966" relation="include">
+        </childnode>
+      </node>
+      <node id="967">
+        <label>collider_component.h</label>
+        <link refid="collider__component_8h"/>
+      </node>
+      <node id="963">
+        <label>component_manager.h</label>
+        <link refid="component__manager_8h"/>
+        <childnode refid="964" relation="include">
+        </childnode>
+        <childnode refid="957" relation="include">
+        </childnode>
+        <childnode refid="955" relation="include">
+        </childnode>
+      </node>
+      <node id="966">
+        <label>color.h</label>
+        <link refid="color_8h"/>
+      </node>
+      <node id="964">
+        <label>component_manager_interface.h</label>
+        <link refid="component__manager__interface_8h"/>
+        <childnode refid="957" relation="include">
+        </childnode>
+        <childnode refid="955" relation="include">
+        </childnode>
+      </node>
+      <node id="954">
+        <label>event.h</label>
+        <link refid="event_8h"/>
+        <childnode refid="955" relation="include">
+        </childnode>
+        <childnode refid="956" relation="include">
+        </childnode>
+        <childnode refid="957" relation="include">
+        </childnode>
+      </node>
+      <node id="959">
+        <label>string</label>
+      </node>
+      <node id="957">
+        <label>entity.h</label>
+        <link refid="entity_8h"/>
+        <childnode refid="958" relation="include">
+        </childnode>
+        <childnode refid="959" relation="include">
+        </childnode>
+      </node>
+      <node id="955">
+        <label>map</label>
+      </node>
+      <node id="973">
+        <label>event_manager_interface.h</label>
+        <link refid="event__manager__interface_8h"/>
+      </node>
+      <node id="962">
+        <label>entity_manager_interface.h</label>
+        <link refid="entity__manager__interface_8h"/>
+        <childnode refid="963" relation="include">
+        </childnode>
+        <childnode refid="965" relation="include">
+        </childnode>
+        <childnode refid="967" relation="include">
+        </childnode>
+      </node>
+      <node id="952">
+        <label>sprite_system.h</label>
+        <link refid="sprite__system_8h"/>
+        <childnode refid="953" relation="include">
+        </childnode>
+        <childnode refid="961" relation="include">
+        </childnode>
+      </node>
+      <node id="972">
+        <label>window_interface.h</label>
+        <link refid="window__interface_8h"/>
+      </node>
+      <node id="969">
+        <label>vector</label>
+      </node>
+      <node id="974">
+        <label>generator_interface.h</label>
+        <link refid="generator__interface_8h"/>
+      </node>
+      <node id="975">
+        <label>cstdlib</label>
+      </node>
+      <node id="956">
+        <label>iostream</label>
+      </node>
+      <node id="961">
+        <label>game_engine_interface.h</label>
+        <link refid="game__engine__interface_8h"/>
+        <childnode refid="959" relation="include">
+        </childnode>
+        <childnode refid="962" relation="include">
+        </childnode>
+        <childnode refid="968" relation="include">
+        </childnode>
+      </node>
+      <node id="958">
+        <label>set</label>
+      </node>
+      <node id="960">
+        <label>game_system_interface.h</label>
+        <link refid="game__system__interface_8h"/>
+        <childnode refid="954" relation="include">
+        </childnode>
+      </node>
+      <node id="951">
+        <label>sprite_system.cpp</label>
+        <link refid="sprite_system.cpp"/>
+        <childnode refid="952" relation="include">
+        </childnode>
+        <childnode refid="970" relation="include">
+        </childnode>
+        <childnode refid="954" relation="include">
+        </childnode>
+        <childnode refid="965" relation="include">
+        </childnode>
+        <childnode refid="956" relation="include">
+        </childnode>
+      </node>
+      <node id="971">
+        <label>window_manager_interface.h</label>
+        <link refid="window__manager__interface_8h"/>
+        <childnode refid="972" relation="include">
+        </childnode>
+        <childnode refid="961" relation="include">
+        </childnode>
+      </node>
+      <node id="970">
+        <label>gameengine.h</label>
+        <link refid="gameengine_8h"/>
+        <childnode refid="961" relation="include">
+        </childnode>
+        <childnode refid="968" relation="include">
+        </childnode>
+        <childnode refid="962" relation="include">
+        </childnode>
+        <childnode refid="971" relation="include">
+        </childnode>
+        <childnode refid="960" relation="include">
+        </childnode>
+        <childnode refid="973" relation="include">
+        </childnode>
+        <childnode refid="974" relation="include">
+        </childnode>
+        <childnode refid="959" relation="include">
+        </childnode>
+        <childnode refid="969" relation="include">
+        </childnode>
+        <childnode refid="975" relation="include">
+        </childnode>
+      </node>
+      <node id="965">
+        <label>sprite_component.h</label>
+        <link refid="sprite__component_8h"/>
+        <childnode refid="966" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="preprocessor">#include<sp/>&quot;<ref refid="sprite__system_8h" kindref="compound">sprite_system.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="gameengine_8h" kindref="compound">gameengine.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="event_8h" kindref="compound">event.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="sprite__component_8h" kindref="compound">sprite_component.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;iostream&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classSpriteSystem_1a52c4236903911045c117fd4771300faf" kindref="member">SpriteSystem::handleEvent</ref><sp/>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="classEvent" kindref="compound">Event</ref>*<sp/>event)<sp/>{</highlight></codeline>
+<codeline lineno="8"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">switch</highlight><highlight class="normal"><sp/>(event-&gt;<ref refid="classEvent_1ab0c2e30730d5859851f3126258c0126e" kindref="member">getType</ref>())<sp/>{</highlight></codeline>
+<codeline lineno="9"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="event_8h_1a2628ea8d12e8b2563c32f05dc7fff6faabce34b3c8b67fbe6b11aa68eebc452dd" kindref="member">EVENT_ADD_ENTITY</ref>:<sp/>{</highlight></codeline>
+<codeline lineno="10"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="classAddEntityEvent" kindref="compound">AddEntityEvent</ref>*<sp/>l_event<sp/>=<sp/></highlight><highlight class="keyword">dynamic_cast&lt;</highlight><highlight class="keyword">const<sp/></highlight><highlight class="normal"><ref refid="classAddEntityEvent" kindref="compound">AddEntityEvent</ref>*</highlight><highlight class="keyword">&gt;</highlight><highlight class="normal"><sp/>(event);</highlight></codeline>
+<codeline lineno="11"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(!l_event-&gt;<ref refid="classAddEntityEvent_1a2c6f03064f943f33a2db0bf1438b0f93" kindref="member">entity</ref>)<sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="12"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(l_event-&gt;<ref refid="classAddEntityEvent_1a2c6f03064f943f33a2db0bf1438b0f93" kindref="member">entity</ref>-&gt;<ref refid="classEntity_1a34a6186465703be860fe32f44208619a" kindref="member">getName</ref>()<sp/>==<sp/></highlight><highlight class="stringliteral">&quot;Wall&quot;</highlight><highlight class="normal">)<sp/>{</highlight></codeline>
+<codeline lineno="13"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classSpriteSystem_1a74dfa4e4d371d3d8722e96f7c6ac399c" kindref="member">handleAddWallEvent</ref><sp/>(l_event-&gt;<ref refid="classAddEntityEvent_1a2c6f03064f943f33a2db0bf1438b0f93" kindref="member">entity</ref>);</highlight></codeline>
+<codeline lineno="14"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="15"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="16"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="17"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">default</highlight><highlight class="normal">:<sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="18"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="19"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="20"><highlight class="normal"></highlight></codeline>
+<codeline lineno="21"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classSpriteSystem_1a74dfa4e4d371d3d8722e96f7c6ac399c" kindref="member">SpriteSystem::handleAddWallEvent</ref><sp/>(<ref refid="classEntity" kindref="compound">Entity</ref>*<sp/>a_entity)<sp/>{</highlight></codeline>
+<codeline lineno="22"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="classSpriteSystem_1a76ccc3de7d715fe015a10c5fdb4b1d39" kindref="member">updateWallSprite</ref><sp/>(a_entity);</highlight></codeline>
+<codeline lineno="23"><highlight class="normal"></highlight></codeline>
+<codeline lineno="24"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="structSpriteComponent" kindref="compound">SpriteComponent</ref>*<sp/>l_sprite<sp/>=<sp/><ref refid="classGameSystemBase_1aa9044eb22399f0c0ddd8f049738c62e5" kindref="member">m_engine</ref>-&gt;<ref refid="classGameEngineInterface_1ac7b9bb5c99fd8fec773a64d492d1869e" kindref="member">getEntities</ref>()-&gt;<ref refid="classEntityManagerInterface_1a91bd6cea03b2b69ddec735e116420dd6" kindref="member">getSprites</ref>()-&gt;<ref refid="classComponentManagerInterface_1aa56b700c4ea98e708c68ebbde3205fd9" kindref="member">get</ref><sp/>(a_entity);</highlight></codeline>
+<codeline lineno="25"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(!l_sprite)<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="26"><highlight class="normal"></highlight></codeline>
+<codeline lineno="27"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="classEntity" kindref="compound">Entity</ref>*<sp/>left<sp/><sp/><sp/><sp/>=<sp/><ref refid="classSpriteSystem_1ae12fa3467ee8fdb5dc5cd85ba8181770" kindref="member">findWallEntity</ref><sp/>(l_sprite-&gt;<ref refid="structSpriteComponent_1af3b4dbdac3f132358f2dd983ec487a9e" kindref="member">xPos</ref>-1,<sp/>l_sprite-&gt;<ref refid="structSpriteComponent_1aabf6f09bdbf8531b41ceb6f9bc20a773" kindref="member">yPos</ref>);</highlight></codeline>
+<codeline lineno="28"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="classEntity" kindref="compound">Entity</ref>*<sp/>up<sp/><sp/><sp/><sp/><sp/><sp/>=<sp/><ref refid="classSpriteSystem_1ae12fa3467ee8fdb5dc5cd85ba8181770" kindref="member">findWallEntity</ref><sp/>(l_sprite-&gt;<ref refid="structSpriteComponent_1af3b4dbdac3f132358f2dd983ec487a9e" kindref="member">xPos</ref>,<sp/>l_sprite-&gt;<ref refid="structSpriteComponent_1aabf6f09bdbf8531b41ceb6f9bc20a773" kindref="member">yPos</ref>-1);</highlight></codeline>
+<codeline lineno="29"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="classEntity" kindref="compound">Entity</ref>*<sp/>right<sp/><sp/><sp/>=<sp/><ref refid="classSpriteSystem_1ae12fa3467ee8fdb5dc5cd85ba8181770" kindref="member">findWallEntity</ref><sp/>(l_sprite-&gt;<ref refid="structSpriteComponent_1af3b4dbdac3f132358f2dd983ec487a9e" kindref="member">xPos</ref>+1,<sp/>l_sprite-&gt;<ref refid="structSpriteComponent_1aabf6f09bdbf8531b41ceb6f9bc20a773" kindref="member">yPos</ref>);</highlight></codeline>
+<codeline lineno="30"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="classEntity" kindref="compound">Entity</ref>*<sp/>down<sp/><sp/><sp/><sp/>=<sp/><ref refid="classSpriteSystem_1ae12fa3467ee8fdb5dc5cd85ba8181770" kindref="member">findWallEntity</ref><sp/>(l_sprite-&gt;<ref refid="structSpriteComponent_1af3b4dbdac3f132358f2dd983ec487a9e" kindref="member">xPos</ref>,<sp/>l_sprite-&gt;<ref refid="structSpriteComponent_1aabf6f09bdbf8531b41ceb6f9bc20a773" kindref="member">yPos</ref>+1);</highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(left)<sp/><sp/><sp/><ref refid="classSpriteSystem_1a76ccc3de7d715fe015a10c5fdb4b1d39" kindref="member">updateWallSprite</ref><sp/>(left);</highlight></codeline>
+<codeline lineno="33"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(up)<sp/><sp/><sp/><sp/><sp/><ref refid="classSpriteSystem_1a76ccc3de7d715fe015a10c5fdb4b1d39" kindref="member">updateWallSprite</ref><sp/>(up);</highlight></codeline>
+<codeline lineno="34"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(right)<sp/><sp/><ref refid="classSpriteSystem_1a76ccc3de7d715fe015a10c5fdb4b1d39" kindref="member">updateWallSprite</ref><sp/>(right);</highlight></codeline>
+<codeline lineno="35"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(down)<sp/><sp/><sp/><ref refid="classSpriteSystem_1a76ccc3de7d715fe015a10c5fdb4b1d39" kindref="member">updateWallSprite</ref><sp/>(down);</highlight></codeline>
+<codeline lineno="36"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classSpriteSystem_1a76ccc3de7d715fe015a10c5fdb4b1d39" kindref="member">SpriteSystem::updateWallSprite</ref><sp/>(<ref refid="classEntity" kindref="compound">Entity</ref>*<sp/>a_entity)<sp/>{</highlight></codeline>
+<codeline lineno="39"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="structSpriteComponent" kindref="compound">SpriteComponent</ref>*<sp/>l_sprite<sp/>=<sp/><ref refid="classGameSystemBase_1aa9044eb22399f0c0ddd8f049738c62e5" kindref="member">m_engine</ref>-&gt;<ref refid="classGameEngineInterface_1ac7b9bb5c99fd8fec773a64d492d1869e" kindref="member">getEntities</ref>()-&gt;<ref refid="classEntityManagerInterface_1a91bd6cea03b2b69ddec735e116420dd6" kindref="member">getSprites</ref>()-&gt;<ref refid="classComponentManagerInterface_1aa56b700c4ea98e708c68ebbde3205fd9" kindref="member">get</ref><sp/>(a_entity);</highlight></codeline>
+<codeline lineno="40"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(!l_sprite)<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="classEntity" kindref="compound">Entity</ref>*<sp/>left<sp/><sp/><sp/><sp/>=<sp/><ref refid="classSpriteSystem_1ae12fa3467ee8fdb5dc5cd85ba8181770" kindref="member">findWallEntity</ref><sp/>(l_sprite-&gt;<ref refid="structSpriteComponent_1af3b4dbdac3f132358f2dd983ec487a9e" kindref="member">xPos</ref>-1,<sp/>l_sprite-&gt;<ref refid="structSpriteComponent_1aabf6f09bdbf8531b41ceb6f9bc20a773" kindref="member">yPos</ref>);</highlight></codeline>
+<codeline lineno="43"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="classEntity" kindref="compound">Entity</ref>*<sp/>up<sp/><sp/><sp/><sp/><sp/><sp/>=<sp/><ref refid="classSpriteSystem_1ae12fa3467ee8fdb5dc5cd85ba8181770" kindref="member">findWallEntity</ref><sp/>(l_sprite-&gt;<ref refid="structSpriteComponent_1af3b4dbdac3f132358f2dd983ec487a9e" kindref="member">xPos</ref>,<sp/>l_sprite-&gt;<ref refid="structSpriteComponent_1aabf6f09bdbf8531b41ceb6f9bc20a773" kindref="member">yPos</ref>-1);</highlight></codeline>
+<codeline lineno="44"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="classEntity" kindref="compound">Entity</ref>*<sp/>right<sp/><sp/><sp/>=<sp/><ref refid="classSpriteSystem_1ae12fa3467ee8fdb5dc5cd85ba8181770" kindref="member">findWallEntity</ref><sp/>(l_sprite-&gt;<ref refid="structSpriteComponent_1af3b4dbdac3f132358f2dd983ec487a9e" kindref="member">xPos</ref>+1,<sp/>l_sprite-&gt;<ref refid="structSpriteComponent_1aabf6f09bdbf8531b41ceb6f9bc20a773" kindref="member">yPos</ref>);</highlight></codeline>
+<codeline lineno="45"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="classEntity" kindref="compound">Entity</ref>*<sp/>down<sp/><sp/><sp/><sp/>=<sp/><ref refid="classSpriteSystem_1ae12fa3467ee8fdb5dc5cd85ba8181770" kindref="member">findWallEntity</ref><sp/>(l_sprite-&gt;<ref refid="structSpriteComponent_1af3b4dbdac3f132358f2dd983ec487a9e" kindref="member">xPos</ref>,<sp/>l_sprite-&gt;<ref refid="structSpriteComponent_1aabf6f09bdbf8531b41ceb6f9bc20a773" kindref="member">yPos</ref>+1);</highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>sprite_key<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(left)<sp/><sp/><sp/>sprite_key<sp/>|=<sp/>8;</highlight></codeline>
+<codeline lineno="49"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(up)<sp/><sp/><sp/><sp/><sp/>sprite_key<sp/>|=<sp/>4;</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(right)<sp/><sp/>sprite_key<sp/>|=<sp/>2;</highlight></codeline>
+<codeline lineno="51"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(down)<sp/><sp/><sp/>sprite_key<sp/>|=<sp/>1;</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">switch</highlight><highlight class="normal"><sp/>(sprite_key)<sp/>{</highlight></codeline>
+<codeline lineno="54"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><sp/>0:<sp/>l_sprite-&gt;<ref refid="structSpriteComponent_1a27597e6299ef371db796928d6cdc54db" kindref="member">sprite</ref><sp/>=<sp/>206;<sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="55"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><sp/>1:<sp/>l_sprite-&gt;<ref refid="structSpriteComponent_1a27597e6299ef371db796928d6cdc54db" kindref="member">sprite</ref><sp/>=<sp/>210;<sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><sp/>2:<sp/>l_sprite-&gt;<ref refid="structSpriteComponent_1a27597e6299ef371db796928d6cdc54db" kindref="member">sprite</ref><sp/>=<sp/>198;<sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="57"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><sp/>3:<sp/>l_sprite-&gt;<ref refid="structSpriteComponent_1a27597e6299ef371db796928d6cdc54db" kindref="member">sprite</ref><sp/>=<sp/>201;<sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="58"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><sp/>4:<sp/>l_sprite-&gt;<ref refid="structSpriteComponent_1a27597e6299ef371db796928d6cdc54db" kindref="member">sprite</ref><sp/>=<sp/>208;<sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="59"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><sp/>5:<sp/>l_sprite-&gt;<ref refid="structSpriteComponent_1a27597e6299ef371db796928d6cdc54db" kindref="member">sprite</ref><sp/>=<sp/>186;<sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><sp/>6:<sp/>l_sprite-&gt;<ref refid="structSpriteComponent_1a27597e6299ef371db796928d6cdc54db" kindref="member">sprite</ref><sp/>=<sp/>200;<sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="61"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><sp/>7:<sp/>l_sprite-&gt;<ref refid="structSpriteComponent_1a27597e6299ef371db796928d6cdc54db" kindref="member">sprite</ref><sp/>=<sp/>204;<sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="62"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><sp/>8:<sp/>l_sprite-&gt;<ref refid="structSpriteComponent_1a27597e6299ef371db796928d6cdc54db" kindref="member">sprite</ref><sp/>=<sp/>181;<sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="63"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><sp/>9:<sp/>l_sprite-&gt;<ref refid="structSpriteComponent_1a27597e6299ef371db796928d6cdc54db" kindref="member">sprite</ref><sp/>=<sp/>187;<sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="64"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>10:<sp/>l_sprite-&gt;<ref refid="structSpriteComponent_1a27597e6299ef371db796928d6cdc54db" kindref="member">sprite</ref><sp/>=<sp/>205;<sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="65"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>11:<sp/>l_sprite-&gt;<ref refid="structSpriteComponent_1a27597e6299ef371db796928d6cdc54db" kindref="member">sprite</ref><sp/>=<sp/>203;<sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="66"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>12:<sp/>l_sprite-&gt;<ref refid="structSpriteComponent_1a27597e6299ef371db796928d6cdc54db" kindref="member">sprite</ref><sp/>=<sp/>188;<sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="67"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>13:<sp/>l_sprite-&gt;<ref refid="structSpriteComponent_1a27597e6299ef371db796928d6cdc54db" kindref="member">sprite</ref><sp/>=<sp/>185;<sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="68"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>14:<sp/>l_sprite-&gt;<ref refid="structSpriteComponent_1a27597e6299ef371db796928d6cdc54db" kindref="member">sprite</ref><sp/>=<sp/>202;<sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="69"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>15:<sp/>l_sprite-&gt;<ref refid="structSpriteComponent_1a27597e6299ef371db796928d6cdc54db" kindref="member">sprite</ref><sp/>=<sp/>206;<sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"></highlight></codeline>
+<codeline lineno="72"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"></highlight></codeline>
+<codeline lineno="74"><highlight class="normal"><ref refid="classEntity" kindref="compound">Entity</ref>*<sp/><ref refid="classSpriteSystem_1ae12fa3467ee8fdb5dc5cd85ba8181770" kindref="member">SpriteSystem::findWallEntity</ref><sp/>(</highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>x,<sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>y)<sp/>{</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"><sp/><sp/><sp/><sp/>std::map&lt;Entity*,<sp/>SpriteComponent&gt;&amp;<sp/>l_sprites<sp/>=<sp/><ref refid="classGameSystemBase_1aa9044eb22399f0c0ddd8f049738c62e5" kindref="member">m_engine</ref>-&gt;<ref refid="classGameEngineInterface_1ac7b9bb5c99fd8fec773a64d492d1869e" kindref="member">getEntities</ref>()-&gt;<ref refid="classEntityManagerInterface_1a91bd6cea03b2b69ddec735e116420dd6" kindref="member">getSprites</ref>()-&gt;<ref refid="classComponentManagerInterface_1a2ea45742be30438171b9b24fb36a5761" kindref="member">getAll</ref>();</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"><sp/><sp/><sp/><sp/>std::map&lt;Entity*,<sp/>SpriteComponent&gt;::iterator<sp/>iter<sp/>=<sp/>l_sprites.begin();</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(;<sp/>iter<sp/>!=<sp/>l_sprites.end();<sp/>iter++)<sp/>{</highlight></codeline>
+<codeline lineno="78"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(iter-&gt;second.xPos<sp/>==<sp/>x<sp/>&amp;&amp;</highlight></codeline>
+<codeline lineno="79"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>iter-&gt;second.yPos<sp/>==<sp/>y<sp/>&amp;&amp;</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>iter-&gt;first-&gt;hasTag(<ref refid="entity_8h_1a305263dd89ad9fde1863aece00907351afca2faad41310c7e71ec303ef789c53a" kindref="member">WALL</ref>))<sp/>{</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>iter-&gt;first;</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="84"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>0;</highlight></codeline>
+<codeline lineno="85"><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="/home/peter/Development/fortress/src/sprite_system.cpp"/>
+  </compounddef>
+</doxygen>

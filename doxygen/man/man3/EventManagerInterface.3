@@ -1,0 +1,57 @@
+.TH "EventManagerInterface" 3 "Fri Jul 24 2015" "Fortress" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+EventManagerInterface \- 
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <event_manager_interface\&.h>\fP
+.PP
+Inherited by \fBEventManager\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "virtual \fB~EventManagerInterface\fP ()"
+.br
+.ti -1c
+.RI "virtual void \fBinitialise\fP (\fBGameEngineInterface\fP *engine)=0"
+.br
+.ti -1c
+.RI "virtual void \fBregisterHandler\fP (\fBGameSystemInterface\fP *system)=0"
+.br
+.ti -1c
+.RI "virtual void \fBraiseEvent\fP (\fBEvent\fP *event)=0"
+.br
+.ti -1c
+.RI "virtual void \fBprocessEvents\fP ()=0"
+.br
+.in -1c
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "virtual EventManagerInterface::~EventManagerInterface ()\fC [inline]\fP, \fC [virtual]\fP"
+
+.SH "Member Function Documentation"
+.PP 
+.SS "virtual void EventManagerInterface::initialise (\fBGameEngineInterface\fP *engine)\fC [pure virtual]\fP"
+
+.PP
+Implemented in \fBEventManager\fP\&.
+.SS "virtual void EventManagerInterface::processEvents ()\fC [pure virtual]\fP"
+
+.PP
+Implemented in \fBEventManager\fP\&.
+.SS "virtual void EventManagerInterface::raiseEvent (\fBEvent\fP *event)\fC [pure virtual]\fP"
+
+.PP
+Implemented in \fBEventManager\fP\&.
+.SS "virtual void EventManagerInterface::registerHandler (\fBGameSystemInterface\fP *system)\fC [pure virtual]\fP"
+
+.PP
+Implemented in \fBEventManager\fP\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Fortress from the source code\&.

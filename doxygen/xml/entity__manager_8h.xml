@@ -1,0 +1,158 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.6">
+  <compounddef id="entity__manager_8h" kind="file">
+    <compoundname>entity_manager.h</compoundname>
+    <includes refid="entity_8h" local="yes">entity.h</includes>
+    <includes refid="component__manager__interface_8h" local="yes">component_manager_interface.h</includes>
+    <includes refid="sprite__component_8h" local="yes">sprite_component.h</includes>
+    <includes refid="collider__component_8h" local="yes">collider_component.h</includes>
+    <includes refid="entity__manager__interface_8h" local="yes">entity_manager_interface.h</includes>
+    <includes local="no">map</includes>
+    <includedby refid="entity__manager_8cpp" local="yes">entity_manager.cpp</includedby>
+    <includedby refid="gameengine_8cpp" local="yes">gameengine.cpp</includedby>
+    <incdepgraph>
+      <node id="313">
+        <label>collider_component.h</label>
+        <link refid="collider__component_8h"/>
+      </node>
+      <node id="315">
+        <label>component_manager.h</label>
+        <link refid="component__manager_8h"/>
+        <childnode refid="309" relation="include">
+        </childnode>
+        <childnode refid="306" relation="include">
+        </childnode>
+        <childnode refid="310" relation="include">
+        </childnode>
+      </node>
+      <node id="312">
+        <label>color.h</label>
+        <link refid="color_8h"/>
+      </node>
+      <node id="309">
+        <label>component_manager_interface.h</label>
+        <link refid="component__manager__interface_8h"/>
+        <childnode refid="306" relation="include">
+        </childnode>
+        <childnode refid="310" relation="include">
+        </childnode>
+      </node>
+      <node id="308">
+        <label>string</label>
+      </node>
+      <node id="306">
+        <label>entity.h</label>
+        <link refid="entity_8h"/>
+        <childnode refid="307" relation="include">
+        </childnode>
+        <childnode refid="308" relation="include">
+        </childnode>
+      </node>
+      <node id="310">
+        <label>map</label>
+      </node>
+      <node id="314">
+        <label>entity_manager_interface.h</label>
+        <link refid="entity__manager__interface_8h"/>
+        <childnode refid="315" relation="include">
+        </childnode>
+        <childnode refid="311" relation="include">
+        </childnode>
+        <childnode refid="313" relation="include">
+        </childnode>
+      </node>
+      <node id="305">
+        <label>entity_manager.h</label>
+        <link refid="entity_manager.h"/>
+        <childnode refid="306" relation="include">
+        </childnode>
+        <childnode refid="309" relation="include">
+        </childnode>
+        <childnode refid="311" relation="include">
+        </childnode>
+        <childnode refid="313" relation="include">
+        </childnode>
+        <childnode refid="314" relation="include">
+        </childnode>
+        <childnode refid="310" relation="include">
+        </childnode>
+      </node>
+      <node id="307">
+        <label>set</label>
+      </node>
+      <node id="311">
+        <label>sprite_component.h</label>
+        <link refid="sprite__component_8h"/>
+        <childnode refid="312" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="317">
+        <label>entity_manager.cpp</label>
+        <link refid="entity__manager_8cpp"/>
+      </node>
+      <node id="316">
+        <label>entity_manager.h</label>
+        <link refid="entity_manager.h"/>
+        <childnode refid="317" relation="include">
+        </childnode>
+        <childnode refid="318" relation="include">
+        </childnode>
+      </node>
+      <node id="318">
+        <label>gameengine.cpp</label>
+        <link refid="gameengine_8cpp"/>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="classEntityManager" prot="public">EntityManager</innerclass>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="preprocessor">#ifndef<sp/>__ENTITY_MANAGER_H__</highlight></codeline>
+<codeline lineno="2"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>__ENTITY_MANAGER_H__</highlight></codeline>
+<codeline lineno="3"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="entity_8h" kindref="compound">entity.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="component__manager__interface_8h" kindref="compound">component_manager_interface.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="sprite__component_8h" kindref="compound">sprite_component.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="collider__component_8h" kindref="compound">collider_component.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="entity__manager__interface_8h" kindref="compound">entity_manager_interface.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;map&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight></codeline>
+<codeline lineno="11" refid="classEntityManager" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="classEntityManager" kindref="compound">EntityManager</ref><sp/>:<sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/><ref refid="classEntityManagerInterface" kindref="compound">EntityManagerInterface</ref><sp/>{</highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="13"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classEntityManager_1a97a7e5a629a5ffe85a2859384e5ce701" kindref="member">initialise</ref><sp/>(<ref refid="classGameEngineInterface" kindref="compound">GameEngineInterface</ref>*<sp/>engine);</highlight></codeline>
+<codeline lineno="14" refid="classEntityManager_1af84b8842db8f732039c41dc4bc30b0c1" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classEntityManager_1af84b8842db8f732039c41dc4bc30b0c1" kindref="member">destroy</ref>()<sp/>{}</highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight></codeline>
+<codeline lineno="16"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="classEntity" kindref="compound">Entity</ref>*<sp/><ref refid="classEntityManager_1af54f317708b43ec7c22be0495a8ce3c0" kindref="member">createEntity</ref><sp/>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>std::string&amp;<sp/>name);</highlight></codeline>
+<codeline lineno="17"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classEntityManager_1afe54803a7170a4a2d2614348ed9f7cab" kindref="member">destroyEntity</ref><sp/>(<ref refid="entity_8h_1a3812b46f7256476cf244cbc0f4a3bde9" kindref="member">EntityId</ref>);</highlight></codeline>
+<codeline lineno="18"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="classEntity" kindref="compound">Entity</ref>*<sp/><ref refid="classEntityManager_1a098b4e50944a8caffb723e7d0dffbb70" kindref="member">getPlayer</ref><sp/>();</highlight></codeline>
+<codeline lineno="19"><highlight class="normal"></highlight></codeline>
+<codeline lineno="20"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="classEntity" kindref="compound">Entity</ref>*<sp/><ref refid="classEntityManager_1a6d7f11fe8bfe9821377108874b6248e3" kindref="member">createWallPrefab</ref><sp/>(</highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>x,<sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>y);</highlight></codeline>
+<codeline lineno="21"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="classEntity" kindref="compound">Entity</ref>*<sp/><ref refid="classEntityManager_1aa450f3815645d947e41bec34fd7c628e" kindref="member">createPlayerPrefab</ref><sp/>(</highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>x,<sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>y);</highlight></codeline>
+<codeline lineno="22"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="classEntity" kindref="compound">Entity</ref>*<sp/><ref refid="classEntityManager_1a8110b8b5376e15127609753e52bd779f" kindref="member">createEnemyPrefab</ref><sp/>(</highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>x,<sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>y);</highlight></codeline>
+<codeline lineno="23"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="classEntity" kindref="compound">Entity</ref>*<sp/><ref refid="classEntityManager_1a37c9debe4a2ecb9316441ea19fdbe04e" kindref="member">createTilePrefab</ref><sp/>(</highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>x,<sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>y);</highlight></codeline>
+<codeline lineno="24"><highlight class="normal"></highlight></codeline>
+<codeline lineno="25" refid="classEntityManager_1a0af107dd34e63fa9e84d7b0e0e81d5ba" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="classComponentManagerInterface" kindref="compound">ComponentManagerInterface&lt;SpriteComponent&gt;</ref>*<sp/><ref refid="classEntityManager_1a0af107dd34e63fa9e84d7b0e0e81d5ba" kindref="member">getSprites</ref>()<sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>&amp;<ref refid="classEntityManager_1ab0ca6f699c4b0380acc8c0c2dd0fa778" kindref="member">m_sprites</ref>;<sp/>}</highlight></codeline>
+<codeline lineno="26" refid="classEntityManager_1ab024c88ff91734e8ba57bba27c985dca" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="classComponentManagerInterface" kindref="compound">ComponentManagerInterface&lt;ColliderComponent&gt;</ref>*<sp/><ref refid="classEntityManager_1ab024c88ff91734e8ba57bba27c985dca" kindref="member">getColliders</ref>()<sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>&amp;<ref refid="classEntityManager_1acdcb4eaa4584972dcfe49dc11f08e196" kindref="member">m_colliders</ref>;<sp/>}</highlight></codeline>
+<codeline lineno="27"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//Entity*<sp/>getEntity<sp/>(std::string<sp/>name);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="classEntity" kindref="compound">Entity</ref>*<sp/><ref refid="classEntityManager_1a23e110f8bc01067e5bd953e8b7008273" kindref="member">getEntity</ref><sp/>(<ref refid="entity_8h_1a3812b46f7256476cf244cbc0f4a3bde9" kindref="member">EntityId</ref><sp/></highlight><highlight class="keywordtype">id</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="keyword">private</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="31" refid="classEntityManager_1aa6e686169c3667ffd84e6a3f0e2cfc62" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="classGameEngineInterface" kindref="compound">GameEngineInterface</ref>*<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classEntityManager_1aa6e686169c3667ffd84e6a3f0e2cfc62" kindref="member">m_engine</ref>;</highlight></codeline>
+<codeline lineno="32" refid="classEntityManager_1a73390a51b55cd69d0d09254894d484b3" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classEntityManager_1a73390a51b55cd69d0d09254894d484b3" kindref="member">maxId</ref>;</highlight></codeline>
+<codeline lineno="33" refid="classEntityManager_1ac966d9cc295a8222c01a835246206d36" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="classEntity" kindref="compound">Entity</ref>*<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classEntityManager_1ac966d9cc295a8222c01a835246206d36" kindref="member">m_player</ref>;</highlight></codeline>
+<codeline lineno="34" refid="classEntityManager_1ab85b819de6db421c0272e76d5089bfbf" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>std::map&lt;EntityId,<sp/>Entity*&gt;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classEntityManager_1ab85b819de6db421c0272e76d5089bfbf" kindref="member">m_idMap</ref>;</highlight></codeline>
+<codeline lineno="35" refid="classEntityManager_1aba0769f85d9f51fe54494ab68e1ebf0e" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>std::map&lt;std::string,<sp/>Entity*&gt;<sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classEntityManager_1aba0769f85d9f51fe54494ab68e1ebf0e" kindref="member">m_nameMap</ref>;</highlight></codeline>
+<codeline lineno="36" refid="classEntityManager_1ab0ca6f699c4b0380acc8c0c2dd0fa778" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="classComponentManager" kindref="compound">ComponentManager&lt;SpriteComponent&gt;</ref><sp/><sp/><sp/><ref refid="classEntityManager_1ab0ca6f699c4b0380acc8c0c2dd0fa778" kindref="member">m_sprites</ref>;</highlight></codeline>
+<codeline lineno="37" refid="classEntityManager_1acdcb4eaa4584972dcfe49dc11f08e196" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="classComponentManager" kindref="compound">ComponentManager&lt;ColliderComponent&gt;</ref><sp/><ref refid="classEntityManager_1acdcb4eaa4584972dcfe49dc11f08e196" kindref="member">m_colliders</ref>;</highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+    </programlisting>
+    <location file="/home/peter/Development/fortress/src/entity_manager.h"/>
+  </compounddef>
+</doxygen>

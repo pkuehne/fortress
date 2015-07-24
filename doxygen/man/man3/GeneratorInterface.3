@@ -1,0 +1,64 @@
+.TH "GeneratorInterface" 3 "Fri Jul 24 2015" "Fortress" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+GeneratorInterface \- 
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <generator_interface\&.h>\fP
+.PP
+Inherited by \fBGenerator\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "virtual \fB~GeneratorInterface\fP ()"
+.br
+.ti -1c
+.RI "virtual void \fBinitialise\fP (\fBGameEngineInterface\fP *)=0"
+.br
+.ti -1c
+.RI "virtual void \fBgenerate\fP ()=0"
+.br
+.ti -1c
+.RI "virtual unsigned int & \fBmapHeight\fP ()=0"
+.br
+.ti -1c
+.RI "virtual unsigned int & \fBmapWidth\fP ()=0"
+.br
+.ti -1c
+.RI "virtual unsigned int & \fBnumberOfRooms\fP ()=0"
+.br
+.in -1c
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "virtual GeneratorInterface::~GeneratorInterface ()\fC [inline]\fP, \fC [virtual]\fP"
+
+.SH "Member Function Documentation"
+.PP 
+.SS "virtual void GeneratorInterface::generate ()\fC [pure virtual]\fP"
+
+.PP
+Implemented in \fBGenerator\fP\&.
+.SS "virtual void GeneratorInterface::initialise (\fBGameEngineInterface\fP *)\fC [pure virtual]\fP"
+
+.PP
+Implemented in \fBGenerator\fP\&.
+.SS "virtual unsigned int& GeneratorInterface::mapHeight ()\fC [pure virtual]\fP"
+
+.PP
+Implemented in \fBGenerator\fP\&.
+.SS "virtual unsigned int& GeneratorInterface::mapWidth ()\fC [pure virtual]\fP"
+
+.PP
+Implemented in \fBGenerator\fP\&.
+.SS "virtual unsigned int& GeneratorInterface::numberOfRooms ()\fC [pure virtual]\fP"
+
+.PP
+Implemented in \fBGenerator\fP\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Fortress from the source code\&.

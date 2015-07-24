@@ -1,0 +1,111 @@
+.TH "GameEngineInterface" 3 "Fri Jul 24 2015" "Fortress" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+GameEngineInterface \- 
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <game_engine_interface\&.h>\fP
+.PP
+Inherited by \fBGameEngine\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBGameEngineInterface\fP ()"
+.br
+.ti -1c
+.RI "virtual \fB~GameEngineInterface\fP ()"
+.br
+.ti -1c
+.RI "virtual void \fBinitialise\fP (void)=0"
+.br
+.ti -1c
+.RI "virtual void \fBtick\fP (void)=0"
+.br
+.ti -1c
+.RI "virtual void \fBquit\fP ()=0"
+.br
+.ti -1c
+.RI "virtual bool \fBisPlayerTurn\fP ()=0"
+.br
+.ti -1c
+.RI "virtual void \fBswapTurn\fP ()=0"
+.br
+.ti -1c
+.RI "virtual void \fBraiseEvent\fP (\fBEvent\fP *event)=0"
+.br
+.ti -1c
+.RI "virtual \fBEntityManagerInterface\fP * \fBgetEntities\fP ()=0"
+.br
+.ti -1c
+.RI "virtual void \fBloadMap\fP (const std::string &mapName)=0"
+.br
+.ti -1c
+.RI "virtual unsigned long long \fBgetTick\fP ()=0"
+.br
+.ti -1c
+.RI "virtual \fBWindowManagerInterface\fP * \fBgetWindows\fP ()=0"
+.br
+.ti -1c
+.RI "virtual \fBGraphicsInterface\fP * \fBgetGraphics\fP ()=0"
+.br
+.in -1c
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "GameEngineInterface::GameEngineInterface ()\fC [inline]\fP"
+
+.SS "virtual GameEngineInterface::~GameEngineInterface ()\fC [inline]\fP, \fC [virtual]\fP"
+
+.SH "Member Function Documentation"
+.PP 
+.SS "virtual \fBEntityManagerInterface\fP* GameEngineInterface::getEntities ()\fC [pure virtual]\fP"
+
+.PP
+Implemented in \fBGameEngine\fP\&.
+.SS "virtual \fBGraphicsInterface\fP* GameEngineInterface::getGraphics ()\fC [pure virtual]\fP"
+
+.PP
+Implemented in \fBGameEngine\fP\&.
+.SS "virtual unsigned long long GameEngineInterface::getTick ()\fC [pure virtual]\fP"
+
+.PP
+Implemented in \fBGameEngine\fP\&.
+.SS "virtual \fBWindowManagerInterface\fP* GameEngineInterface::getWindows ()\fC [pure virtual]\fP"
+
+.PP
+Implemented in \fBGameEngine\fP\&.
+.SS "virtual void GameEngineInterface::initialise (void)\fC [pure virtual]\fP"
+
+.PP
+Implemented in \fBGameEngine\fP\&.
+.SS "virtual bool GameEngineInterface::isPlayerTurn ()\fC [pure virtual]\fP"
+
+.PP
+Implemented in \fBGameEngine\fP\&.
+.SS "virtual void GameEngineInterface::loadMap (const std::string &mapName)\fC [pure virtual]\fP"
+
+.PP
+Implemented in \fBGameEngine\fP\&.
+.SS "virtual void GameEngineInterface::quit ()\fC [pure virtual]\fP"
+
+.PP
+Implemented in \fBGameEngine\fP\&.
+.SS "virtual void GameEngineInterface::raiseEvent (\fBEvent\fP *event)\fC [pure virtual]\fP"
+
+.PP
+Implemented in \fBGameEngine\fP\&.
+.SS "virtual void GameEngineInterface::swapTurn ()\fC [pure virtual]\fP"
+
+.PP
+Implemented in \fBGameEngine\fP\&.
+.SS "virtual void GameEngineInterface::tick (void)\fC [pure virtual]\fP"
+
+.PP
+Implemented in \fBGameEngine\fP\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Fortress from the source code\&.

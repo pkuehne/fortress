@@ -1,0 +1,112 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.6">
+  <compounddef id="classEvent" kind="class" prot="public">
+    <compoundname>Event</compoundname>
+    <derivedcompoundref refid="classAddEntityEvent" prot="public" virt="non-virtual">AddEntityEvent</derivedcompoundref>
+    <derivedcompoundref refid="classAttackEntityEvent" prot="public" virt="non-virtual">AttackEntityEvent</derivedcompoundref>
+    <derivedcompoundref refid="classMoveEntityEvent" prot="public" virt="non-virtual">MoveEntityEvent</derivedcompoundref>
+    <derivedcompoundref refid="classRemoveEntityEvent" prot="public" virt="non-virtual">RemoveEntityEvent</derivedcompoundref>
+    <includes refid="event_8h" local="no">event.h</includes>
+      <sectiondef kind="protected-attrib">
+      <memberdef kind="variable" id="classEvent_1a38264e3fb229dc64123dff1d5a7dcf9e" prot="protected" static="no" mutable="no">
+        <type><ref refid="event_8h_1a2628ea8d12e8b2563c32f05dc7fff6fa" kindref="member">EventType</ref></type>
+        <definition>EventType Event::m_type</definition>
+        <argsstring></argsstring>
+        <name>m_type</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/peter/Development/fortress/src/event.h" line="24" column="1" bodyfile="/home/peter/Development/fortress/src/event.h" bodystart="24" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classEvent_1aa3b8f22d374f6abfe0893bccea58a5de" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>Event::Event</definition>
+        <argsstring>(EventType type)</argsstring>
+        <name>Event</name>
+        <param>
+          <type><ref refid="event_8h_1a2628ea8d12e8b2563c32f05dc7fff6fa" kindref="member">EventType</ref></type>
+          <declname>type</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/peter/Development/fortress/src/event.h" line="19" column="1" bodyfile="/home/peter/Development/fortress/src/event.h" bodystart="19" bodyend="19"/>
+      </memberdef>
+      <memberdef kind="function" id="classEvent_1ab864fd85c758006c42cd7a1b3369b483" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type></type>
+        <definition>virtual Event::~Event</definition>
+        <argsstring>()</argsstring>
+        <name>~Event</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/peter/Development/fortress/src/event.h" line="20" column="1" bodyfile="/home/peter/Development/fortress/src/event.h" bodystart="20" bodyend="20"/>
+      </memberdef>
+      <memberdef kind="function" id="classEvent_1ab0c2e30730d5859851f3126258c0126e" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="event_8h_1a2628ea8d12e8b2563c32f05dc7fff6fa" kindref="member">EventType</ref></type>
+        <definition>EventType Event::getType</definition>
+        <argsstring>() const </argsstring>
+        <name>getType</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/home/peter/Development/fortress/src/event.h" line="21" column="1" bodyfile="/home/peter/Development/fortress/src/event.h" bodystart="21" bodyend="21"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="76">
+        <label>AttackEntityEvent</label>
+        <link refid="classAttackEntityEvent"/>
+        <childnode refid="74" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="74">
+        <label>Event</label>
+        <link refid="classEvent"/>
+      </node>
+      <node id="78">
+        <label>RemoveEntityEvent</label>
+        <link refid="classRemoveEntityEvent"/>
+        <childnode refid="74" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="75">
+        <label>AddEntityEvent</label>
+        <link refid="classAddEntityEvent"/>
+        <childnode refid="74" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="77">
+        <label>MoveEntityEvent</label>
+        <link refid="classMoveEntityEvent"/>
+        <childnode refid="74" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <location file="/home/peter/Development/fortress/src/event.h" line="17" column="1" bodyfile="/home/peter/Development/fortress/src/event.h" bodystart="17" bodyend="25"/>
+    <listofallmembers>
+      <member refid="classEvent_1aa3b8f22d374f6abfe0893bccea58a5de" prot="public" virt="non-virtual"><scope>Event</scope><name>Event</name></member>
+      <member refid="classEvent_1ab0c2e30730d5859851f3126258c0126e" prot="public" virt="non-virtual"><scope>Event</scope><name>getType</name></member>
+      <member refid="classEvent_1a38264e3fb229dc64123dff1d5a7dcf9e" prot="protected" virt="non-virtual"><scope>Event</scope><name>m_type</name></member>
+      <member refid="classEvent_1ab864fd85c758006c42cd7a1b3369b483" prot="public" virt="virtual"><scope>Event</scope><name>~Event</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>
