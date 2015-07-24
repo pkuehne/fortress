@@ -9,6 +9,8 @@ public:
     virtual void update ();
 private:
     MoveEntityEvent::DIRECTION getRandomDirection ();
+    MoveEntityEvent::DIRECTION getPlayerDirectionIfNearby (Entity* entity);
+
 };
 
 

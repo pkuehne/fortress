@@ -18,3 +18,5 @@ A simple [ASCII](http://www.ascii-codes.com/) [Roguelike](https://en.wikipedia.o
 * Orcs move towards Player within certain distance
 * Orcs can attack and hurt Player
 * Multiple levels accessible through up/down stairs
+* Procedurally generated rooms and caverns
+* More colour!
