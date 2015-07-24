@@ -3,6 +3,7 @@
 
 #include "color.h"
 #include "graphics_interface.h"
+#include "config_manager.h"
 
 class Graphics : public GraphicsInterface {
 public:
@@ -21,6 +22,8 @@ public:
     virtual void setDisplayFunc (DisplayFuncPtr func);
     virtual void setMouseFunc (MouseFuncPtr func);
 
+private:
+    ConfigManager   m_config;
 };
 
 void start_graphics ();

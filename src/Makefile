@@ -1,6 +1,6 @@
 .PHONY: all clean build run
 CC=g++
-CFLAGS=-c -g -rdynamic -Wall -Werror -I. -I/usr/include
+CFLAGS=-c -g -rdynamic -Wall -Werror -I. -I/usr/include -std=c++11
 LDFLAGS= -g -rdynamic
 LIBRARIES=-lpthread -lGL -lGLU -lglut -lc -lm -lSOIL
 SOURCES=$(wildcard *.cpp)

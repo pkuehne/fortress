@@ -1,11 +1,8 @@
 #include "graphics.h"
-//#include "window.h"
-#include "event.h"
 #include <stdlib.h>
 #include <string.h>
 #include <GL/glut.h>
 #include <iostream>
-//#include <lodepng/lodepng.h>
 #include <SOIL.h>
 
 static void empty (void) {
@@ -21,9 +18,9 @@ void Graphics::drawString (int y, int x, const char* string)
 
 void Graphics::drawTile (int y, int x, unsigned int tile, Color fg, Color bg)
 {
-    int iconSize = 12;
+    long iconSize = m_config.getTag("IconSize").num;
     float tileWidth = 1.0/16;
-    float tileHeight = 1.0/48;
+    float tileHeight = 1.0/16;
     unsigned int tileCol = 0;
     unsigned int tileRow = 0;
     tileCol = tile % 16;
@@ -114,8 +111,10 @@ void Graphics::initialise (int argc, char** argv)
 {
     glutInit (&argc, argv);
 
+    m_config.readFile ("../config/graphics.cfg");
+std::cout << "Width: " << m_config.getTag("WindowWidth").num << std::endl;
     glutInitDisplayMode (GLUT_SINGLE | GLUT_RGBA);
-    glutInitWindowSize (800, 600);
+    glutInitWindowSize (m_config.getTag("WindowWidth").num, m_config.getTag("WindowHeight").num);
     glutInitWindowPosition (100, 100);
     glutCreateWindow ("FORTRESS");
 
@@ -134,9 +133,7 @@ void Graphics::initialise (int argc, char** argv)
     setMouseFunc        (NULL);
     setDisplayFunc      (empty);
 
-    std::string l_textureName ("12x12.png");
-    std::cout << "Loading texture: " << l_textureName << std::endl;
-    GLuint tex = SOIL_load_OGL_texture (l_textureName.c_str(),
+    GLuint tex = SOIL_load_OGL_texture (m_config.getTag("Tileset").str.c_str(),
                                 		SOIL_LOAD_AUTO,
                                 		SOIL_CREATE_NEW_ID,
 		                                SOIL_FLAG_MIPMAPS |

@@ -1,6 +1,6 @@
 .PHONY: all clean test shuffle
 CC=g++
-CFLAGS=-c -g -Wall -I. -I/usr/include -I../src/ -fprofile-arcs -ftest-coverage
+CFLAGS=-c -g -Wall -I. -I/usr/include -I../src/ -fprofile-arcs -ftest-coverage -std=c++11
 LDFLAGS=
 LIBRARIES=-lGL -lGLU -lglut -lc -lm -lSOIL -lgtest -lgmock -lpthread -lgcov
 SOURCES=$(wildcard *.cpp)
@@ -9,6 +9,7 @@ SOURCES+= \
 ../src/color.cpp \
 ../src/combat_system.cpp \
 ../src/component_manager.cpp \
+../src/config_manager.cpp \
 ../src/entity.cpp \
 ../src/entity_manager.cpp \
 ../src/event.cpp \
