@@ -12,45 +12,38 @@ TEST (MovementSystem, handleEvent)
     MoveEntityEvent l_event;
     EntityManager   l_entities;
 
-    Entity          l_entityMiddle;
-    l_entityMiddle.setId (5);
-    l_entityMiddle.setName ("Wall");
-    SpriteComponent l_spriteMiddle;
-    l_spriteMiddle.xPos  = 2;
-    l_spriteMiddle.yPos  = 2;
-    l_spriteMiddle.sprite= 181;
-
-    l_entities.getSprites()->add (&l_entityMiddle,     l_spriteMiddle);
+    l_system.initialise (&l_engine);
+    l_entities.initialise (&l_engine);
+    Entity*         l_entityMiddle = l_entities.createEnemyPrefab (2, 2);
 
     EXPECT_CALL (l_engine, getEntities()).WillRepeatedly (Return (&l_entities));
-    l_system.initialise (&l_engine);
 
-    l_event.entity      = &l_entityMiddle;
+    l_event.entity      = l_entityMiddle->getId();
 
     l_event.direction   = MoveEntityEvent::UP;
     l_system.handleEvent (&l_event);
-    EXPECT_EQ (1, l_entities.getSprites()->get(&l_entityMiddle)->yPos);
-    EXPECT_EQ (2, l_entities.getSprites()->get(&l_entityMiddle)->xPos);
+    EXPECT_EQ (1, l_entities.getSprites()->get(l_entityMiddle)->yPos);
+    EXPECT_EQ (2, l_entities.getSprites()->get(l_entityMiddle)->xPos);
 
     l_event.direction   = MoveEntityEvent::DOWN;
     l_system.handleEvent (&l_event);
-    EXPECT_EQ (2, l_entities.getSprites()->get(&l_entityMiddle)->yPos);
-    EXPECT_EQ (2, l_entities.getSprites()->get(&l_entityMiddle)->xPos);
+    EXPECT_EQ (2, l_entities.getSprites()->get(l_entityMiddle)->yPos);
+    EXPECT_EQ (2, l_entities.getSprites()->get(l_entityMiddle)->xPos);
 
     l_event.direction   = MoveEntityEvent::RIGHT;
     l_system.handleEvent (&l_event);
-    EXPECT_EQ (2, l_entities.getSprites()->get(&l_entityMiddle)->yPos);
-    EXPECT_EQ (3, l_entities.getSprites()->get(&l_entityMiddle)->xPos);
+    EXPECT_EQ (2, l_entities.getSprites()->get(l_entityMiddle)->yPos);
+    EXPECT_EQ (3, l_entities.getSprites()->get(l_entityMiddle)->xPos);
 
     l_event.direction   = MoveEntityEvent::LEFT;
     l_system.handleEvent (&l_event);
-    EXPECT_EQ (2, l_entities.getSprites()->get(&l_entityMiddle)->yPos);
-    EXPECT_EQ (2, l_entities.getSprites()->get(&l_entityMiddle)->xPos);
+    EXPECT_EQ (2, l_entities.getSprites()->get(l_entityMiddle)->yPos);
+    EXPECT_EQ (2, l_entities.getSprites()->get(l_entityMiddle)->xPos);
 
     l_event.direction   = MoveEntityEvent::NONE;
     l_system.handleEvent (&l_event);
-    EXPECT_EQ (2, l_entities.getSprites()->get(&l_entityMiddle)->yPos);
-    EXPECT_EQ (2, l_entities.getSprites()->get(&l_entityMiddle)->xPos);
+    EXPECT_EQ (2, l_entities.getSprites()->get(l_entityMiddle)->yPos);
+    EXPECT_EQ (2, l_entities.getSprites()->get(l_entityMiddle)->xPos);
 
 }
 
@@ -87,7 +80,7 @@ TEST (MovementSystem, CollidersBlockMovement)
     EXPECT_CALL (l_engine, getEntities()).WillRepeatedly (Return (&l_entities));
     l_system.initialise (&l_engine);
 
-    l_event.entity      = &l_entityMiddle;
+    l_event.entity      = l_entityMiddle.getId();
 
     l_event.direction   = MoveEntityEvent::RIGHT;
     l_system.handleEvent (&l_event);

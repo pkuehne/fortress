@@ -27,13 +27,13 @@ protected:
 class AddEntityEvent : public Event {
 public:
     AddEntityEvent () : Event (EVENT_ADD_ENTITY) { }
-    Entity*     entity;
+    EntityId     entity;
 };
 
 class RemoveEntityEvent : public Event {
 public:
     RemoveEntityEvent () : Event (EVENT_REMOVE_ENTITY) { }
-    Entity*     entity;
+    EntityId     entity;
 };
 
 class MoveEntityEvent : public Event {
@@ -47,14 +47,15 @@ public:
     };
 
     MoveEntityEvent () : Event (EVENT_MOVE_ENTITY) { }
-    Entity*         entity;
+    EntityId         entity;
     enum DIRECTION  direction;
 };
 
 class AttackEntityEvent : public Event {
 public:
     AttackEntityEvent () : Event (EVENT_ATTACK_ENTITY) { }
-    Entity          entity;
+    EntityId        attacker;
+    EntityId        target;
 };
 
 #endif

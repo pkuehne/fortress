@@ -1,6 +1,6 @@
 .PHONY: all clean test shuffle
 CC=g++
-CFLAGS=-c -g -Wall -I. -I/usr/include -I../src/ -fprofile-arcs -ftest-coverage -std=c++11
+CFLAGS=-c -g -Wall -I. -I/usr/include -I../src/ -std=c++11
 LDFLAGS=
 LIBRARIES=-lGL -lGLU -lglut -lc -lm -lSOIL -lgtest -lgmock -lpthread -lgcov
 SOURCES=$(wildcard *.cpp)
@@ -25,6 +25,10 @@ SOURCES+= \
 ../src/sprite_system.cpp \
 ../src/window.cpp \
 ../src/window_manager.cpp \
+
+ifeq ($(COVERAGE), Y)
+  CFLAGS+= -fprofile-arcs -ftest-coverage
+endif
 
 OBJECTS=$(SOURCES:.cpp=.o)
 EXECUTABLE=unit_test

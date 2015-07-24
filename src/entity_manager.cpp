@@ -18,7 +18,7 @@ Entity* EntityManager::createEntity (const std::string& name) {
     m_nameMap[l_entity->getName()]   = l_entity;
 
     AddEntityEvent* l_event = new AddEntityEvent;
-    l_event->entity = l_entity;
+    l_event->entity = l_entity->getId();
     m_engine->raiseEvent (l_event);
 
     return l_entity;
@@ -31,7 +31,7 @@ void EntityManager::destroyEntity (EntityId id) {
     getColliders()->remove (it->second);
     getSprites()->remove (it->second);
     RemoveEntityEvent* l_event = new RemoveEntityEvent();
-    l_event->entity = it->second;
+    l_event->entity = it->second->getId();
     m_engine->raiseEvent (l_event);
 
     m_idMap.erase (it);

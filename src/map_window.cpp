@@ -30,7 +30,7 @@ void MapWindow::keyDown (unsigned char key) {
     }
     if (l_dir != MoveEntityEvent::NONE) {
         MoveEntityEvent* l_event = new MoveEntityEvent;
-        l_event->entity = getEngine()->getEntities()->getPlayer();
+        l_event->entity = getEngine()->getEntities()->getPlayer()->getId();
         l_event->direction = l_dir;
         getEngine()->raiseEvent (l_event);
     }

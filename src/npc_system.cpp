@@ -21,7 +21,7 @@ void NpcSystem::update ()
             dir = getRandomDirection();
         }
         MoveEntityEvent* l_event = new MoveEntityEvent();
-        l_event->entity = iter->first;
+        l_event->entity = iter->first->getId();
         l_event->direction = dir;
         getEngineRef()->raiseEvent (l_event);
     }

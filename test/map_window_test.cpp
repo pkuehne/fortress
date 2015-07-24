@@ -50,7 +50,7 @@ TEST (MapWindow, WASDMovesPlayer)
     Entity          l_entity;
     MoveEntityEvent* l_event = new MoveEntityEvent;
 
-    l_event->entity     = &l_entity;
+    l_event->entity     = l_entity.getId();
 
     EXPECT_CALL (l_engine, loadMap (StrEq(""))).Times(1);
     EXPECT_CALL (l_engine, swapTurn()).Times(5);

@@ -30,7 +30,7 @@ TEST (CombatSystem, handleAttackEvent)
 
     ASSERT_NE (static_cast<Event*> (0), l_removeEvent);
     ASSERT_EQ (EVENT_REMOVE_ENTITY, l_removeEvent->getType());
-    EXPECT_EQ (l_entityOrc, dynamic_cast<RemoveEntityEvent*>(l_removeEvent)->entity);
+    EXPECT_EQ (l_entityOrc->getId(), dynamic_cast<RemoveEntityEvent*>(l_removeEvent)->entity);
 
     EXPECT_EQ (static_cast<Entity*>(0), l_entities.getEntity (l_entityOrc->getId()));
     EXPECT_NE (static_cast<Entity*>(0), l_entities.getEntity (l_entityOrc2->getId()));

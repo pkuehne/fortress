@@ -31,7 +31,7 @@ TEST (SpriteSystem, AlignCornersThreeWaysAndMiddle)
     EXPECT_CALL (l_engine, getEntities()).WillRepeatedly (Return (&l_entities));
     l_system.initialise (&l_engine);
 
-    l_event.entity = l_entityMiddle;
+    l_event.entity = l_entityMiddle->getId();
     l_system.handleEvent (&l_event);
     EXPECT_EQ ('W', l_entities.getSprites()->get(l_entityNorthWest)->sprite);
     EXPECT_EQ (203, l_entities.getSprites()->get(l_entityNorth)->sprite);
@@ -43,7 +43,7 @@ TEST (SpriteSystem, AlignCornersThreeWaysAndMiddle)
     EXPECT_EQ (202, l_entities.getSprites()->get(l_entitySouth)->sprite);
     EXPECT_EQ ('W', l_entities.getSprites()->get(l_entitySouthEast)->sprite);
 
-    l_event.entity = l_entityNorthWest;
+    l_event.entity = l_entityNorthWest->getId();
     l_system.handleEvent (&l_event);
     EXPECT_EQ (201, l_entities.getSprites()->get(l_entityNorthWest)->sprite);
     EXPECT_EQ (203, l_entities.getSprites()->get(l_entityNorth)->sprite);
@@ -55,7 +55,7 @@ TEST (SpriteSystem, AlignCornersThreeWaysAndMiddle)
     EXPECT_EQ (202, l_entities.getSprites()->get(l_entitySouth)->sprite);
     EXPECT_EQ ('W', l_entities.getSprites()->get(l_entitySouthEast)->sprite);
 
-    l_event.entity = l_entityNorthEast;
+    l_event.entity = l_entityNorthEast->getId();
     l_system.handleEvent (&l_event);
     EXPECT_EQ (201, l_entities.getSprites()->get(l_entityNorthWest)->sprite);
     EXPECT_EQ (203, l_entities.getSprites()->get(l_entityNorth)->sprite);
@@ -67,7 +67,7 @@ TEST (SpriteSystem, AlignCornersThreeWaysAndMiddle)
     EXPECT_EQ (202, l_entities.getSprites()->get(l_entitySouth)->sprite);
     EXPECT_EQ ('W', l_entities.getSprites()->get(l_entitySouthEast)->sprite);
 
-    l_event.entity = l_entitySouthWest;
+    l_event.entity = l_entitySouthWest->getId();
     l_system.handleEvent (&l_event);
     EXPECT_EQ (201, l_entities.getSprites()->get(l_entityNorthWest)->sprite);
     EXPECT_EQ (203, l_entities.getSprites()->get(l_entityNorth)->sprite);
@@ -79,7 +79,7 @@ TEST (SpriteSystem, AlignCornersThreeWaysAndMiddle)
     EXPECT_EQ (202, l_entities.getSprites()->get(l_entitySouth)->sprite);
     EXPECT_EQ ('W', l_entities.getSprites()->get(l_entitySouthEast)->sprite);
 
-    l_event.entity = l_entitySouthEast;
+    l_event.entity = l_entitySouthEast->getId();
     l_system.handleEvent (&l_event);
     EXPECT_EQ (201, l_entities.getSprites()->get(l_entityNorthWest)->sprite);
     EXPECT_EQ (203, l_entities.getSprites()->get(l_entityNorth)->sprite);
@@ -111,7 +111,7 @@ TEST (SpriteSystem, alignSouthEastbyItself)
     EXPECT_CALL (l_engine, getEntities()).WillRepeatedly (Return (&l_entities));
     l_system.initialise (&l_engine);
 
-    l_event->entity = l_entitySouthEast;
+    l_event->entity = l_entitySouthEast->getId();
     l_system.handleEvent (l_event);
 
     EXPECT_EQ (210, l_entities.getSprites()->get(l_entityEast)->sprite);
@@ -143,7 +143,7 @@ TEST (SpriteSystem, allignEndsAndSideWalls)
     EXPECT_CALL (l_engine, getEntities()).WillRepeatedly (Return (&l_entities));
     l_system.initialise (&l_engine);
 
-    l_event.entity = l_entityNorth;
+    l_event.entity = l_entityNorth->getId();
     l_system.handleEvent (&l_event);
     EXPECT_EQ (201, l_entities.getSprites()->get(l_entityNorthWest)->sprite);
     EXPECT_EQ (205, l_entities.getSprites()->get(l_entityNorth)->sprite);
@@ -153,7 +153,7 @@ TEST (SpriteSystem, allignEndsAndSideWalls)
     EXPECT_EQ ('W', l_entities.getSprites()->get(l_entitySouthWest)->sprite);
     EXPECT_EQ ('W', l_entities.getSprites()->get(l_entitySouth)->sprite);
 
-    l_event.entity = l_entityWest;
+    l_event.entity = l_entityWest->getId();
     l_system.handleEvent (&l_event);
     EXPECT_EQ (201, l_entities.getSprites()->get(l_entityNorthWest)->sprite);
     EXPECT_EQ (205, l_entities.getSprites()->get(l_entityNorth)->sprite);
@@ -163,7 +163,7 @@ TEST (SpriteSystem, allignEndsAndSideWalls)
     EXPECT_EQ (200, l_entities.getSprites()->get(l_entitySouthWest)->sprite);
     EXPECT_EQ ('W', l_entities.getSprites()->get(l_entitySouth)->sprite);
 
-    l_event.entity = l_entityEast;
+    l_event.entity = l_entityEast->getId();
     l_system.handleEvent (&l_event);
     EXPECT_EQ (201, l_entities.getSprites()->get(l_entityNorthWest)->sprite);
     EXPECT_EQ (205, l_entities.getSprites()->get(l_entityNorth)->sprite);
@@ -173,7 +173,7 @@ TEST (SpriteSystem, allignEndsAndSideWalls)
     EXPECT_EQ (200, l_entities.getSprites()->get(l_entitySouthWest)->sprite);
     EXPECT_EQ ('W', l_entities.getSprites()->get(l_entitySouth)->sprite);
 
-    l_event.entity = l_entitySouth;
+    l_event.entity = l_entitySouth->getId();
     l_system.handleEvent (&l_event);
     EXPECT_EQ (201, l_entities.getSprites()->get(l_entityNorthWest)->sprite);
     EXPECT_EQ (205, l_entities.getSprites()->get(l_entityNorth)->sprite);
@@ -206,9 +206,9 @@ TEST (SpriteSystem, alignSingle)
 
     l_entities.getSprites()->add (&l_entityMiddle,     l_spriteMiddle);
 
-    l_event.entity = &l_entityMiddle;
+    l_event.entity = l_entityMiddle.getId();
     l_system.handleEvent (&l_event);
-    EXPECT_EQ (206, l_entities.getSprites()->get(&l_entityMiddle)->sprite);
+    EXPECT_EQ (181, l_entities.getSprites()->get(&l_entityMiddle)->sprite);
 
 }
 

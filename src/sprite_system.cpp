@@ -8,9 +8,10 @@ void SpriteSystem::handleEvent (const Event* event) {
     switch (event->getType()) {
         case EVENT_ADD_ENTITY: {
             const AddEntityEvent* l_event = dynamic_cast<const AddEntityEvent*> (event);
-            if (!l_event->entity) break;
-            if (l_event->entity->getName() == "Wall") {
-                handleAddWallEvent (l_event->entity);
+            Entity* l_entity = m_engine->getEntities()->getEntity (l_event->entity);
+            if (!l_entity) break;
+            if (l_entity->getName() == "Wall") {
+                handleAddWallEvent (l_entity);
             }
             break;
         }
