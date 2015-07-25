@@ -15,10 +15,10 @@ void MovementSystem::handleEvent (const Event* event)
             unsigned int newX = l_sprite->xPos;
             unsigned int newY = l_sprite->yPos;
             switch (l_event->direction) {
-                case MoveEntityEvent::UP:    newY--; break;
-                case MoveEntityEvent::DOWN:  newY++; break;
-                case MoveEntityEvent::LEFT:  newX--; break;
-                case MoveEntityEvent::RIGHT: newX++; break;
+                case Direction::North:  newY--; break;
+                case Direction::South:  newY++; break;
+                case Direction::West:   newX--; break;
+                case Direction::East:   newX++; break;
                 default: return;
             }
 

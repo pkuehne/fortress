@@ -12,6 +12,7 @@ TEST (MovementSystem, handleEvent)
     MoveEntityEvent l_event;
     EntityManager   l_entities;
 
+    EXPECT_CALL (l_engine, raiseEvent(_)).Times(1);
     l_system.initialise (&l_engine);
     l_entities.initialise (&l_engine);
     Entity*         l_entityMiddle = l_entities.createEnemyPrefab (2, 2);
@@ -20,27 +21,27 @@ TEST (MovementSystem, handleEvent)
 
     l_event.entity      = l_entityMiddle->getId();
 
-    l_event.direction   = MoveEntityEvent::UP;
+    l_event.direction   = Direction::North;
     l_system.handleEvent (&l_event);
     EXPECT_EQ (1, l_entities.getSprites()->get(l_entityMiddle)->yPos);
     EXPECT_EQ (2, l_entities.getSprites()->get(l_entityMiddle)->xPos);
 
-    l_event.direction   = MoveEntityEvent::DOWN;
+    l_event.direction   = Direction::South;
     l_system.handleEvent (&l_event);
     EXPECT_EQ (2, l_entities.getSprites()->get(l_entityMiddle)->yPos);
     EXPECT_EQ (2, l_entities.getSprites()->get(l_entityMiddle)->xPos);
 
-    l_event.direction   = MoveEntityEvent::RIGHT;
+    l_event.direction   = Direction::East;
     l_system.handleEvent (&l_event);
     EXPECT_EQ (2, l_entities.getSprites()->get(l_entityMiddle)->yPos);
     EXPECT_EQ (3, l_entities.getSprites()->get(l_entityMiddle)->xPos);
 
-    l_event.direction   = MoveEntityEvent::LEFT;
+    l_event.direction   = Direction::West;
     l_system.handleEvent (&l_event);
     EXPECT_EQ (2, l_entities.getSprites()->get(l_entityMiddle)->yPos);
     EXPECT_EQ (2, l_entities.getSprites()->get(l_entityMiddle)->xPos);
 
-    l_event.direction   = MoveEntityEvent::NONE;
+    l_event.direction   = Direction::None;
     l_system.handleEvent (&l_event);
     EXPECT_EQ (2, l_entities.getSprites()->get(l_entityMiddle)->yPos);
     EXPECT_EQ (2, l_entities.getSprites()->get(l_entityMiddle)->xPos);
@@ -82,7 +83,7 @@ TEST (MovementSystem, CollidersBlockMovement)
 
     l_event.entity      = l_entityMiddle.getId();
 
-    l_event.direction   = MoveEntityEvent::RIGHT;
+    l_event.direction   = Direction::East;
     l_system.handleEvent (&l_event);
     EXPECT_EQ (2, l_entities.getSprites()->get(&l_entityMiddle)->yPos);
     EXPECT_EQ (2, l_entities.getSprites()->get(&l_entityMiddle)->xPos);

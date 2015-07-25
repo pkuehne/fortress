@@ -5,16 +5,16 @@ void CombatSystem::handleEvent (const Event* event)
 {
     switch (event->getType()) {
         case EVENT_ATTACK_ENTITY: {
-            if (checkForEnemies (MoveEntityEvent::UP)) {
+            if (checkForEnemies (Direction::North)) {
                 return;
             }
-            if (checkForEnemies (MoveEntityEvent::RIGHT)) {
+            if (checkForEnemies (Direction::East)) {
                 return;
             }
-            if (checkForEnemies (MoveEntityEvent::DOWN)) {
+            if (checkForEnemies (Direction::South)) {
                 return;
             }
-            if (checkForEnemies (MoveEntityEvent::LEFT)) {
+            if (checkForEnemies (Direction::West)) {
                 return;
             }
         } break;
@@ -23,7 +23,7 @@ void CombatSystem::handleEvent (const Event* event)
 }
 
 
-bool CombatSystem::checkForEnemies (MoveEntityEvent::DIRECTION dir)
+bool CombatSystem::checkForEnemies (DIRECTION dir)
 {
     Entity* player = m_engine->getEntities()->getPlayer();
 

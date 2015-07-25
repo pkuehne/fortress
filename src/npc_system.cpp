@@ -16,8 +16,8 @@ void NpcSystem::update ()
         if (!iter->first->hasTag (MONSTER)) continue;
 
         // Check if player is nearby
-        MoveEntityEvent::DIRECTION dir = getPlayerDirectionIfNearby (iter->first);
-        if (dir == MoveEntityEvent::NONE) {
+        DIRECTION dir = getPlayerDirectionIfNearby (iter->first);
+        if (dir == Direction::None) {
             dir = getRandomDirection();
         }
         MoveEntityEvent* l_event = new MoveEntityEvent();
@@ -28,12 +28,11 @@ void NpcSystem::update ()
     getEngineRef()->swapTurn();
 }
 
-MoveEntityEvent::DIRECTION NpcSystem::getRandomDirection () {
-    unsigned int dir = rand () % 5;
-    return static_cast<MoveEntityEvent::DIRECTION>(dir);
+DIRECTION NpcSystem::getRandomDirection () {
+    return rand () % Direction::NorthEast;
 }
 
-MoveEntityEvent::DIRECTION NpcSystem::getPlayerDirectionIfNearby (Entity* enemy)
+DIRECTION NpcSystem::getPlayerDirectionIfNearby (Entity* enemy)
 {
     Entity* player = getEngineRef()->getEntities()->getPlayer();
     SpriteComponent* playerSprite = getEngineRef()->getEntities()->getSprites()->get (player);
@@ -46,14 +45,14 @@ MoveEntityEvent::DIRECTION NpcSystem::getPlayerDirectionIfNearby (Entity* enemy)
         (yDiff > -5 && yDiff < 5)) {
         if (abs(xDiff) > abs(yDiff)) {
             // Move horizontally first
-            if (xDiff > 0) return MoveEntityEvent::RIGHT;
-            return MoveEntityEvent::LEFT;
+            if (xDiff > 0) return Direction::East;
+            return Direction::West;
         } else {
             // Move vertically first
-            if (xDiff > 0) return MoveEntityEvent::DOWN;
-            return MoveEntityEvent::UP;
+            if (xDiff > 0) return Direction::South;
+            return Direction::North;
         }
     }
 
-    return MoveEntityEvent::NONE;
+    return Direction::None;
 }

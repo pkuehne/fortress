@@ -20,15 +20,15 @@ void MapWindow::redraw() {
 void MapWindow::keyDown (unsigned char key) {
     Window::keyDown (key);
 
-    enum MoveEntityEvent::DIRECTION l_dir = MoveEntityEvent::NONE;
+    DIRECTION l_dir = Direction::None;
     switch (key) {
-        case 'w': l_dir = MoveEntityEvent::UP; break;
-        case 'a': l_dir = MoveEntityEvent::LEFT; break;
-        case 's': l_dir = MoveEntityEvent::DOWN; break;
-        case 'd': l_dir = MoveEntityEvent::RIGHT; break;
+        case 'w': l_dir = Direction::North; break;
+        case 'a': l_dir = Direction::West; break;
+        case 's': l_dir = Direction::South; break;
+        case 'd': l_dir = Direction::East; break;
         case 27: getEngine()->quit(); break;
     }
-    if (l_dir != MoveEntityEvent::NONE) {
+    if (l_dir != Direction::None) {
         MoveEntityEvent* l_event = new MoveEntityEvent;
         l_event->entity = getEngine()->getEntities()->getPlayer()->getId();
         l_event->direction = l_dir;

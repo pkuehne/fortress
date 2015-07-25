@@ -59,25 +59,25 @@ TEST (MapWindow, WASDMovesPlayer)
     EXPECT_CALL (l_engine, getEntities()).Times(1).WillOnce(Return (&l_entities));
     EXPECT_CALL (l_entities, getPlayer()).WillOnce (Return (&l_entity));
     EXPECT_CALL (l_engine, raiseEvent (_)).Times(1);
-    l_event->direction  = MoveEntityEvent::UP;
+    l_event->direction  = Direction::North;
     l_win.keyDown ('w');
 
     EXPECT_CALL (l_engine, getEntities()).Times(1).WillOnce(Return (&l_entities));
     EXPECT_CALL (l_entities, getPlayer()).WillOnce (Return (&l_entity));
     EXPECT_CALL (l_engine, raiseEvent (_)).Times(1);
-    l_event->direction  = MoveEntityEvent::DOWN;
+    l_event->direction  = Direction::South;
     l_win.keyDown ('s');
 
     EXPECT_CALL (l_engine, getEntities()).Times(1).WillOnce(Return (&l_entities));
     EXPECT_CALL (l_entities, getPlayer()).WillOnce (Return (&l_entity));
     EXPECT_CALL (l_engine, raiseEvent (_)).Times(1);
-    l_event->direction  = MoveEntityEvent::LEFT;
+    l_event->direction  = Direction::West;
     l_win.keyDown ('a');
 
     EXPECT_CALL (l_engine, getEntities()).Times(1).WillOnce(Return (&l_entities));
     EXPECT_CALL (l_entities, getPlayer()).WillOnce (Return (&l_entity));
     EXPECT_CALL (l_engine, raiseEvent (_)).Times(1);
-    l_event->direction  = MoveEntityEvent::RIGHT;
+    l_event->direction  = Direction::East;
     l_win.keyDown ('d');
 
     EXPECT_CALL (l_engine, quit()).Times(1);

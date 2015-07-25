@@ -25,7 +25,7 @@ std::vector<Entity*> GameSystemBase::findEntitiesNear (unsigned int x, unsigned 
 
 }
 
-std::vector<Entity*> GameSystemBase::findEntitiesToThe (MoveEntityEvent::DIRECTION a_direction, Entity* a_entity)
+std::vector<Entity*> GameSystemBase::findEntitiesToThe (DIRECTION a_direction, Entity* a_entity)
 {
     std::vector<Entity*> l_entities;
 
@@ -34,10 +34,10 @@ std::vector<Entity*> GameSystemBase::findEntitiesToThe (MoveEntityEvent::DIRECTI
     unsigned int newX = l_sprite->xPos;
     unsigned int newY = l_sprite->yPos;
     switch (a_direction) {
-        case MoveEntityEvent::UP:    newY--; break;
-        case MoveEntityEvent::DOWN:  newY++; break;
-        case MoveEntityEvent::LEFT:  newX--; break;
-        case MoveEntityEvent::RIGHT: newX++; break;
+        case Direction::North:  newY--; break;
+        case Direction::South:  newY++; break;
+        case Direction::West:   newX--; break;
+        case Direction::East:   newX++; break;
         default: return l_entities;
     }
 

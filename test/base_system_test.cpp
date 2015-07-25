@@ -96,7 +96,7 @@ TEST (GameSystemBase, findEntitiesToThe)
 
     l_base.initialise (&l_engine);
 
-    std::vector<Entity*> l_return = l_base.findEntitiesToThe (MoveEntityEvent::UP, &l_entityMiddle);
+    std::vector<Entity*> l_return = l_base.findEntitiesToThe (Direction::North, &l_entityMiddle);
     ASSERT_EQ (1, l_return.size());
     ASSERT_NE (static_cast<Entity*>(0), l_return[0]);
     EXPECT_EQ ("Orc", l_return[0]->getName());
