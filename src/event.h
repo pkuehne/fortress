@@ -47,8 +47,8 @@ public:
 class AttackEntityEvent : public Event {
 public:
     AttackEntityEvent () : Event (EVENT_ATTACK_ENTITY) { }
-    EntityId        attacker;
-    EntityId        target;
+    EntityId        entity;
+    DIRECTION       direction;
 };
 
 #endif

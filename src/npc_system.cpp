@@ -9,19 +9,20 @@ void NpcSystem::handleEvent (const Event* event)
 void NpcSystem::update ()
 {
     if (getEngineRef()->isPlayerTurn()) return;
-    std::map<Entity*, SpriteComponent>& l_sprites = getEngineRef()->getEntities()->getSprites()->getAll();
-    std::map<Entity*, SpriteComponent>::iterator iter = l_sprites.begin();
+    std::map<EntityId, SpriteComponent>& l_sprites = getEngineRef()->getEntities()->getSprites()->getAll();
+    std::map<EntityId, SpriteComponent>::iterator iter = l_sprites.begin();
 
     for (; iter != l_sprites.end(); iter++) {
-        if (!iter->first->hasTag (MONSTER)) continue;
+        Entity* l_entity = getEngineRef()->getEntities()->getEntity (iter->first);
+        if (!l_entity->hasTag (MONSTER)) continue;
 
         // Check if player is nearby
-        DIRECTION dir = getPlayerDirectionIfNearby (iter->first);
+        DIRECTION dir = getPlayerDirectionIfNearby (l_entity);
         if (dir == Direction::None) {
             dir = getRandomDirection();
         }
         MoveEntityEvent* l_event = new MoveEntityEvent();
-        l_event->entity = iter->first->getId();
+        l_event->entity = l_entity->getId();
         l_event->direction = dir;
         getEngineRef()->raiseEvent (l_event);
     }
@@ -35,8 +36,8 @@ DIRECTION NpcSystem::getRandomDirection () {
 DIRECTION NpcSystem::getPlayerDirectionIfNearby (Entity* enemy)
 {
     Entity* player = getEngineRef()->getEntities()->getPlayer();
-    SpriteComponent* playerSprite = getEngineRef()->getEntities()->getSprites()->get (player);
-    SpriteComponent* enemySprite = getEngineRef()->getEntities()->getSprites()->get (enemy);
+    SpriteComponent* playerSprite = getEngineRef()->getEntities()->getSprites()->get (player->getId());
+    SpriteComponent* enemySprite = getEngineRef()->getEntities()->getSprites()->get (enemy->getId());
 
     int xDiff = playerSprite->xPos - enemySprite->xPos;
     int yDiff = playerSprite->yPos - enemySprite->yPos;

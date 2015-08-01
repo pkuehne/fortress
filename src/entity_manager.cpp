@@ -28,8 +28,10 @@ void EntityManager::destroyEntity (EntityId id) {
     std::map<EntityId, Entity*>::iterator it = m_idMap.find (id);
     if (it == m_idMap.end()) return;
 
-    getColliders()->remove (it->second);
-    getSprites()->remove (it->second);
+    getColliders()->remove (it->second->getId());
+    getSprites()->remove (it->second->getId());
+    getHealths()->remove (it->second->getId());
+    getDescriptions()->remove (it->second->getId());
     RemoveEntityEvent* l_event = new RemoveEntityEvent();
     l_event->entity = it->second->getId();
     m_engine->raiseEvent (l_event);
@@ -61,19 +63,22 @@ Entity* EntityManager::createWallPrefab (unsigned int x, unsigned int y)
 {
     Entity* l_entity = createEntity("Wall");
     l_entity->addTag (WALL);
-    //Sprite Component
+    // Sprite Component
     SpriteComponent l_sprite;
     l_sprite.fgColor    = Color (GREY);
     l_sprite.bgColor    = Color (BLACK);
     l_sprite.sprite     = 'W';
     l_sprite.xPos       = x;
     l_sprite.yPos       = y;
-    getSprites()->add (l_entity, l_sprite);
+    getSprites()->add (l_entity->getId(), l_sprite);
 
-    //Collider Component
+    // Collider Component
     ColliderComponent l_collider;
-    getColliders()->add (l_entity, l_collider);
+    getColliders()->add (l_entity->getId(), l_collider);
 
+    DescriptionComponent l_description;
+    l_description.title = "An ordinary wall";
+    getDescriptions()->add (l_entity->getId(), l_description);
     return l_entity;
 }
 
@@ -82,19 +87,29 @@ Entity* EntityManager::createPlayerPrefab (unsigned int x, unsigned int y)
     Entity* l_entity = createEntity("Player");
     l_entity->addTag (PLAYER);
 
-    //Sprite Component
+    // Sprite Component
     SpriteComponent l_sprite;
     l_sprite.fgColor    = Color (WHITE);
     l_sprite.bgColor    = Color (BLACK);
     l_sprite.sprite     = '@';
     l_sprite.xPos       = x;
     l_sprite.yPos       = y;
-    getSprites()->add (l_entity, l_sprite);
+    getSprites()->add (l_entity->getId(), l_sprite);
 
 
-    //Collider Component
+    // Collider Component
     ColliderComponent l_collider;
-    getColliders()->add (l_entity, l_collider);
+    getColliders()->add (l_entity->getId(), l_collider);
+
+    // Description Component
+    DescriptionComponent l_description;
+    l_description.title = "This is you!";
+    getDescriptions()->add (l_entity->getId(), l_description);
+
+    // Health Component
+    HealthComponent l_health;
+    l_health.health = 1;
+    getHealths()->add (l_entity->getId(), l_health);
 
     return l_entity;
 }
@@ -104,18 +119,28 @@ Entity* EntityManager::createEnemyPrefab (unsigned int x, unsigned int y)
     Entity* l_entity = createEntity("Orc");
     l_entity->addTag (MONSTER);
 
-    //Sprite Component
+    // Sprite Component
     SpriteComponent l_sprite;
     l_sprite.fgColor    = Color (RED);
     l_sprite.bgColor    = Color (BLACK);
     l_sprite.sprite     = 'O';
     l_sprite.xPos       = x;
     l_sprite.yPos       = y;
-    getSprites()->add (l_entity, l_sprite);
+    getSprites()->add (l_entity->getId(), l_sprite);
 
-    //Collider Component
+    // Collider Component
     ColliderComponent l_collider;
-    getColliders()->add (l_entity, l_collider);
+    getColliders()->add (l_entity->getId(), l_collider);
+
+    // Description Component
+    DescriptionComponent l_description;
+    l_description.title = "A vile Orc";
+    getDescriptions()->add (l_entity->getId(), l_description);
+
+    // Health Component
+    HealthComponent l_health;
+    l_health.health = 1;
+    getHealths()->add (l_entity->getId(), l_health);
 
     return l_entity;
 }
@@ -131,7 +156,12 @@ Entity* EntityManager::createTilePrefab (unsigned int x, unsigned int y)
     l_sprite.sprite     = '.';
     l_sprite.xPos       = x;
     l_sprite.yPos       = y;
-    getSprites()->add (l_entity, l_sprite);
+    getSprites()->add (l_entity->getId(), l_sprite);
+
+    // Description Component
+    DescriptionComponent l_description;
+    l_description.title = "A scuffed tile";
+    getDescriptions()->add (l_entity->getId(), l_description);
 
     return l_entity;
 }

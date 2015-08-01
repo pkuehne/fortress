@@ -72,13 +72,13 @@ TEST (EntityManager, createWallPrefab)
     EXPECT_EQ ("Wall", entity->getName());
     EXPECT_EQ (entity, manager.getEntity (0));
 
-    SpriteComponent* sprite = manager.getSprites()->get (entity);
+    SpriteComponent* sprite = manager.getSprites()->get (entity->getId());
     EXPECT_NE (static_cast<SpriteComponent*>(0), sprite);
     EXPECT_EQ (1, sprite->xPos);
     EXPECT_EQ (2, sprite->yPos);
     EXPECT_EQ ('W', sprite->sprite);
 
-    ColliderComponent* collider = manager.getColliders()->get(entity);
+    ColliderComponent* collider = manager.getColliders()->get(entity->getId());
     EXPECT_NE (static_cast<ColliderComponent*>(0), collider);
     EXPECT_TRUE (entity->hasTag (WALL));
 }
@@ -97,13 +97,13 @@ TEST (EntityManager, createPlayerPrefab)
     EXPECT_EQ ("Player", entity->getName());
     EXPECT_EQ (entity, manager.getEntity (0));
 
-    SpriteComponent* sprite = manager.getSprites()->get (entity);
+    SpriteComponent* sprite = manager.getSprites()->get (entity->getId());
     EXPECT_NE (static_cast<SpriteComponent*>(0), sprite);
     EXPECT_EQ (1, sprite->xPos);
     EXPECT_EQ (2, sprite->yPos);
     EXPECT_EQ ('@', sprite->sprite);
 
-    ColliderComponent* collider = manager.getColliders()->get(entity);
+    ColliderComponent* collider = manager.getColliders()->get(entity->getId());
     EXPECT_NE (static_cast<ColliderComponent*>(0), collider);
     EXPECT_TRUE (entity->hasTag (PLAYER));
 }
@@ -122,13 +122,13 @@ TEST (EntityManager, createEnemyPrefab)
     EXPECT_EQ ("Orc", entity->getName());
     EXPECT_EQ (entity, manager.getEntity (0));
 
-    SpriteComponent* sprite = manager.getSprites()->get (entity);
+    SpriteComponent* sprite = manager.getSprites()->get (entity->getId());
     EXPECT_NE (static_cast<SpriteComponent*>(0), sprite);
     EXPECT_EQ (1, sprite->xPos);
     EXPECT_EQ (2, sprite->yPos);
     EXPECT_EQ ('O', sprite->sprite);
 
-    ColliderComponent* collider = manager.getColliders()->get(entity);
+    ColliderComponent* collider = manager.getColliders()->get(entity->getId());
     EXPECT_NE (static_cast<ColliderComponent*>(0), collider);
     EXPECT_TRUE (entity->hasTag (MONSTER));
 }
@@ -146,14 +146,14 @@ TEST (EntityManager, createTilePrefab)
     EXPECT_EQ (0, entity->getId());
     EXPECT_EQ ("Tile", entity->getName());
 
-    SpriteComponent* sprite = manager.getSprites()->get (entity);
+    SpriteComponent* sprite = manager.getSprites()->get (entity->getId());
     EXPECT_NE (static_cast<SpriteComponent*>(0), sprite);
     EXPECT_EQ (1, sprite->xPos);
     EXPECT_EQ (2, sprite->yPos);
     EXPECT_EQ ('.', sprite->sprite);
     EXPECT_EQ (entity, manager.getEntity (0));
 
-    ColliderComponent* collider = manager.getColliders()->get(entity);
+    ColliderComponent* collider = manager.getColliders()->get(entity->getId());
     EXPECT_EQ (static_cast<ColliderComponent*>(0), collider);
 }
 

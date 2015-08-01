@@ -6,6 +6,8 @@ class Entity;
 #include <component_manager.h>
 #include <sprite_component.h>
 #include <collider_component.h>
+#include <health_component.h>
+#include <description_component.h>
 
 class EntityManagerInterface {
 public:
@@ -26,6 +28,9 @@ public:
 
     virtual ComponentManagerInterface<SpriteComponent>* getSprites() = 0;
     virtual ComponentManagerInterface<ColliderComponent>* getColliders() = 0;
+    virtual ComponentManagerInterface<HealthComponent>* getHealths() = 0;
+    virtual ComponentManagerInterface<DescriptionComponent>* getDescriptions() = 0;
+
     virtual Entity* getEntity (EntityId id) = 0;
 
 };

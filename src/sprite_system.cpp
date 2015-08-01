@@ -22,7 +22,7 @@ void SpriteSystem::handleEvent (const Event* event) {
 void SpriteSystem::handleAddWallEvent (Entity* a_entity) {
     updateWallSprite (a_entity);
 
-    SpriteComponent* l_sprite = m_engine->getEntities()->getSprites()->get (a_entity);
+    SpriteComponent* l_sprite = m_engine->getEntities()->getSprites()->get (a_entity->getId());
     if (!l_sprite) return;
 
     Entity* left    = findWallEntity (l_sprite->xPos-1, l_sprite->yPos);
@@ -37,7 +37,7 @@ void SpriteSystem::handleAddWallEvent (Entity* a_entity) {
 }
 
 void SpriteSystem::updateWallSprite (Entity* a_entity) {
-    SpriteComponent* l_sprite = m_engine->getEntities()->getSprites()->get (a_entity);
+    SpriteComponent* l_sprite = m_engine->getEntities()->getSprites()->get (a_entity->getId());
     if (!l_sprite) return;
 
     Entity* left    = findWallEntity (l_sprite->xPos-1, l_sprite->yPos);
@@ -73,13 +73,14 @@ void SpriteSystem::updateWallSprite (Entity* a_entity) {
 }
 
 Entity* SpriteSystem::findWallEntity (unsigned int x, unsigned int y) {
-    std::map<Entity*, SpriteComponent>& l_sprites = m_engine->getEntities()->getSprites()->getAll();
-    std::map<Entity*, SpriteComponent>::iterator iter = l_sprites.begin();
+    std::map<EntityId, SpriteComponent>& l_sprites = m_engine->getEntities()->getSprites()->getAll();
+    std::map<EntityId, SpriteComponent>::iterator iter = l_sprites.begin();
     for (; iter != l_sprites.end(); iter++) {
+        Entity* l_entity = m_engine->getEntities()->getEntity(iter->first);
         if (iter->second.xPos == x &&
             iter->second.yPos == y &&
-            iter->first->hasTag(WALL)) {
-            return iter->first;
+            l_entity->hasTag(WALL)) {
+            return l_entity;
         }
     }
     return 0;

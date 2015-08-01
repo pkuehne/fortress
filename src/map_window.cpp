@@ -20,34 +20,53 @@ void MapWindow::redraw() {
 void MapWindow::keyDown (unsigned char key) {
     Window::keyDown (key);
 
-    DIRECTION l_dir = Direction::None;
-    switch (key) {
-        case 'w': l_dir = Direction::North; break;
-        case 'a': l_dir = Direction::West; break;
-        case 's': l_dir = Direction::South; break;
-        case 'd': l_dir = Direction::East; break;
-        case 27: getEngine()->quit(); break;
+    static char action = 'm';
+
+    if (key == 'w' || key == 'a' || key == 's' || key == 'd') {
+        DIRECTION l_dir = Direction::None;
+        switch (key) {
+            case 'w': l_dir = Direction::North; break;
+            case 'a': l_dir = Direction::West; break;
+            case 's': l_dir = Direction::South; break;
+            case 'd': l_dir = Direction::East; break;
+        }
+
+        if (action == 'm') {
+            MoveEntityEvent* l_event = new MoveEntityEvent;
+            l_event->entity = getEngine()->getEntities()->getPlayer()->getId();
+            l_event->direction = l_dir;
+            getEngine()->raiseEvent (l_event);
+        }
+        if (action == 'k') {
+            AttackEntityEvent* l_event = new AttackEntityEvent;
+            l_event->entity = getEngine()->getEntities()->getPlayer()->getId();
+            l_event->direction = l_dir;
+            getEngine()->raiseEvent (l_event);
+        }
+        action = 'm';
     }
-    if (l_dir != Direction::None) {
-        MoveEntityEvent* l_event = new MoveEntityEvent;
-        l_event->entity = getEngine()->getEntities()->getPlayer()->getId();
-        l_event->direction = l_dir;
-        getEngine()->raiseEvent (l_event);
+    if (key == 27) {
+        getEngine()->quit();
+    }
+    if (key == 'm') {
+        action = 'm';
     }
     if (key == 'k') {
-        AttackEntityEvent* l_event = new AttackEntityEvent();
-        getEngine()->raiseEvent (l_event);
+        action = 'k';
     }
     if (key == 't') {
 
     }
-    getEngine()->swapTurn();
+
+    if (key != 'm' && key != 'k') {
+        getEngine()->swapTurn();
+    }
 }
 
 void MapWindow::drawMap() {
 
-    std::map<Entity*, SpriteComponent>& l_sprites = getEngine()->getEntities()->getSprites()->getAll();
-    std::map<Entity*, SpriteComponent>::iterator it = l_sprites.begin();
+    std::map<EntityId, SpriteComponent>& l_sprites = getEngine()->getEntities()->getSprites()->getAll();
+    std::map<EntityId, SpriteComponent>::iterator it = l_sprites.begin();
     for (; it != l_sprites.end(); it++) {
         SpriteComponent& l_sprite = it->second;
         //std::cout << "Drawing Tile" << std::endl;

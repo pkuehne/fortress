@@ -4,7 +4,4 @@
 class CombatSystem : public GameSystemBase {
 public:
     virtual void handleEvent (const Event* event);
-
-private:
-    bool checkForEnemies (DIRECTION dir);
 };

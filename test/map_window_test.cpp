@@ -1,6 +1,7 @@
 #include "map_window.h"
 #include "game_engine_mock.h"
 #include "entity_manager_mock.h"
+#include "entity_manager.h"
 #include "component_manager_mock.h"
 #include "graphics_mock.h"
 #include "event.h"
@@ -25,12 +26,12 @@ TEST (MapWindow, redraw)
     EntityManagerMock   l_entities;
     GraphicsMock        l_graphics;
     ComponentManager<SpriteComponent>   l_component;
-    Entity              l_entity;
     SpriteComponent     l_sprite;
+
     l_sprite.yPos   = 1;
     l_sprite.xPos   = 1;
     l_sprite.sprite = 180;
-    l_component.add (&l_entity, l_sprite);
+    l_component.add (1, l_sprite);
 
     EXPECT_CALL (l_engine, loadMap (StrEq(""))).Times(1);
     EXPECT_CALL (l_engine, getEntities()).Times(1).WillOnce(Return (&l_entities));
@@ -88,14 +89,21 @@ TEST (MapWindow, KAttacksEnemies)
 {
     MapWindow       l_win;
     GameEngineMock  l_engine;
-    EntityManagerMock   l_entities;
+    EntityManager   l_entities;
     Event*          l_event = 0;
+
     EXPECT_CALL (l_engine, loadMap (StrEq(""))).Times(1);
     l_win.initialise (&l_engine);
 
+    EXPECT_CALL (l_engine, raiseEvent (_)).Times(1);
+    l_entities.initialise (&l_engine);
+    l_entities.createPlayerPrefab (1, 1);
+
+    EXPECT_CALL (l_engine, getEntities()).Times(1).WillRepeatedly (Return (&l_entities));
     EXPECT_CALL (l_engine, raiseEvent (_)).Times(1).WillOnce(SaveArg<0>(&l_event));
     EXPECT_CALL (l_engine, swapTurn()).Times(1);
     l_win.keyDown ('k');
+    l_win.keyDown ('a');
     ASSERT_NE (static_cast<Event*>(0), l_event);
     EXPECT_EQ (EVENT_ATTACK_ENTITY, l_event->getType());
 

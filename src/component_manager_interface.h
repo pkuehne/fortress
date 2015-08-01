@@ -8,10 +8,10 @@ template <class T>
 class ComponentManagerInterface {
 public:
     virtual ~ComponentManagerInterface() { }
-    virtual void add (Entity* entity, T component) = 0;
-    virtual T* get (Entity* entity) = 0;
-    virtual void remove (Entity* entity) = 0;
-    virtual std::map<Entity*, T>& getAll() = 0;
+    virtual void add (EntityId entity, T component) = 0;
+    virtual T* get (EntityId entity) = 0;
+    virtual void remove (EntityId entity) = 0;
+    virtual std::map<EntityId, T>& getAll() = 0;
 };
 
 #endif
