@@ -10,12 +10,11 @@ void InspectionWindow::keyDown (unsigned char key) {
 }
 
 void InspectionWindow::gainFocus() {
-    std::cout << "Got FOcus!" << std::endl;
-}
-
-void InspectionWindow::redraw () {
     getEngine()->getGraphics()->clearArea (10, 10, 10, 25);
     getEngine()->getGraphics()->drawBorder (10, 10, 10, 25);
 
     getEngine()->getGraphics()->drawString (12, 12, "Description");
+
+    EntityId l_entity = static_cast<EntityId>(getArgs());
+    std::cout << "Got id: " << l_entity << std::endl;
 }
