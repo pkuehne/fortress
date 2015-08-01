@@ -11,6 +11,7 @@ public:
 private:
     DIRECTION getRandomDirection ();
     DIRECTION getPlayerDirectionIfNearby (Entity* entity);
+    DIRECTION getPlayerDirectionIfAttackable (Entity* entity);
 
 };
 
