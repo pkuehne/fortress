@@ -71,6 +71,27 @@ void Graphics::clearArea (int y, int x, int height, int width)
     }
 }
 
+int Graphics::getScreenHeight ()
+{
+    long iconSize = m_config.getTag("IconSize").num;
+    return (glutGet (GLUT_WINDOW_HEIGHT)/iconSize);
+}
+
+int Graphics::getScreenWidth()
+{
+    long iconSize = m_config.getTag("IconSize").num;
+    return (glutGet (GLUT_WINDOW_WIDTH)/iconSize);
+}
+
+void Graphics::calculateWindowOffsetsFromCentre (int height, int width, int& y, int& x)
+{
+    int screenWidth = getScreenWidth();
+    int screenHeight = getScreenHeight();
+
+    x = (screenWidth/2) - (width / 2);
+    y = (screenHeight/2) - (height / 2);
+}
+
 static void resize (int w, int h)
 {
     glViewport(0, 0, (GLsizei) w, (GLsizei) h);

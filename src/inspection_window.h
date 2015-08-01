@@ -6,7 +6,7 @@
 class InspectionWindow : public Window {
 public:
     void keyDown (unsigned char key);
-    void beforeRedraw() { }
+    void beforeRedraw(){ }
 
     void gainFocus();
     void loseFocus();

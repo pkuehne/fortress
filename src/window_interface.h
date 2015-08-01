@@ -8,6 +8,13 @@ public:
     virtual ~WindowInterface() {}
     virtual void initialise (GameEngineInterface* a_engine, void* Args = 0, void* Retval = 0) = 0;
     virtual void destroy (void) = 0;
+    virtual void setDimensions (int x, int y, int width, int height) = 0;
+    virtual int getXOffset() = 0;
+    virtual int getYOffset() = 0;
+    virtual int getWidth() = 0;
+    virtual int getHeight() = 0;
+
+    virtual void drawString (int y, int x, const char* text) = 0;
 
     virtual GameEngineInterface* getEngine() = 0;
     virtual void keyDown (unsigned char key) = 0;

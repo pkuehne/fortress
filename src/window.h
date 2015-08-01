@@ -14,6 +14,13 @@ public:
     virtual ~Window() { }
     virtual void initialise (GameEngineInterface* a_engine, void* Args = 0, void* Retval = 0);
     virtual void destroy (void);
+    virtual void setDimensions (int x, int y, int width, int height);
+    virtual int getXOffset() { return m_xOffset; }
+    virtual int getYOffset() { return m_yOffset; }
+    virtual int getWidth() { return m_width; }
+    virtual int getHeight() { return m_height; }
+
+    virtual void drawString (int y, int x, const char* text);
 
     virtual GameEngineInterface* getEngine() { return m_engine; }
     virtual void keyDown (unsigned char key) { ascii_keys[key] = true; }
@@ -39,6 +46,11 @@ private:
     GameEngineInterface*    m_engine;
     void*                   m_args;
     void*                   m_retval;
+    int                     m_xOffset;
+    int                     m_yOffset;
+    int                     m_width;
+    int                     m_height;
+
 };
 
 #endif

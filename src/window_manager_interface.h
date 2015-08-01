@@ -12,7 +12,6 @@ public:
     virtual void popWindow () = 0;
     virtual void replaceWindow (WindowInterface* win) = 0;
     virtual WindowInterface* getActive() = 0;
-
 };
 
 #endif

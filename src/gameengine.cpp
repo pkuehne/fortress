@@ -100,6 +100,7 @@ void GameEngine::tick ()
     for (unsigned int ii = 0; ii < m_systems.size(); ii++) {
         m_systems[ii]->update();
     }
+
     getWindows()->getActive()->beforeRedraw();
     getWindows()->getActive()->redraw();
     getWindows()->getActive()->afterRedraw();

@@ -9,6 +9,8 @@ void MapWindow::initialise(GameEngineInterface* a_engine) {
 
     std::string l_mapName ("");
     getEngine()->loadMap(l_mapName);
+
+    setDimensions (0, 0, getEngine()->getGraphics()->getScreenWidth(), getEngine()->getGraphics()->getScreenHeight());
 }
 
 void MapWindow::redraw() {
@@ -77,11 +79,11 @@ void MapWindow::keyDown (unsigned char key) {
 
 void MapWindow::drawMap() {
 
+    drawString (1, 20, "Map");
     std::map<EntityId, SpriteComponent>& l_sprites = getEngine()->getEntities()->getSprites()->getAll();
     std::map<EntityId, SpriteComponent>::iterator it = l_sprites.begin();
     for (; it != l_sprites.end(); it++) {
         SpriteComponent& l_sprite = it->second;
-        //std::cout << "Drawing Tile" << std::endl;
-        getEngine()->getGraphics()->drawTile (l_sprite.yPos, l_sprite.xPos, l_sprite.sprite, l_sprite.fgColor, l_sprite.bgColor);
+        getEngine()->getGraphics()->drawTile (l_sprite.yPos+getYOffset(), l_sprite.xPos+getXOffset(), l_sprite.sprite, l_sprite.fgColor, l_sprite.bgColor);
     }
 }

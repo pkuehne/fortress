@@ -8,6 +8,27 @@ void Window::initialise (GameEngineInterface* a_engine, void* args, void* retval
     m_retval    = retval;
 }
 
+void Window::setDimensions (int x, int y, int width, int height)
+{
+    m_xOffset   = x;
+    m_yOffset   = y;
+    m_width     = width;
+    m_height    = height;
+
+    getEngine()->getGraphics()->calculateWindowOffsetsFromCentre (height, width, y, x);
+    if (m_xOffset == 0) {
+        m_xOffset = x;
+    }
+    if (m_yOffset == 0) {
+        m_yOffset = y;
+    }
+}
+
+void Window::drawString (int y, int x, const char* text)
+{
+    getEngine()->getGraphics()->drawString (m_yOffset+y, m_xOffset+x, text);
+}
+
 void Window::beforeRedraw()
 {
     m_engine->getGraphics()->beginScreenUpdate();
