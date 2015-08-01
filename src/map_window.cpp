@@ -55,7 +55,7 @@ void MapWindow::keyDown (unsigned char key) {
                 getEngine()->getWindows()->pushWindow (l_win);
             }
         }
-        getEngine()->swapTurn();
+        if (action != 'i') getEngine()->swapTurn();
         action = 'm';
     }
     if (key == 27) {

@@ -1,4 +1,6 @@
 #include "objectives_system.h"
+#include "game_over_window.h"
+#include "window_manager_interface.h"
 
 void ObjectivesSystem::handleEvent (const Event* event)
 {
@@ -7,6 +9,10 @@ void ObjectivesSystem::handleEvent (const Event* event)
             const RemoveEntityEvent* l_event = dynamic_cast<const RemoveEntityEvent*> (event);
             if (l_event->entity == getEngineRef()->getEntities()->getPlayer()->getId()) {
                 std::cout << "You lose!" << std::endl;
+
+                GameOverWindow* l_win = new GameOverWindow();
+                l_win->initialise(getEngineRef());
+                getEngineRef()->getWindows()->pushWindow (l_win);
             }
             break;
         }
