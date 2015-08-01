@@ -45,11 +45,15 @@ void MapWindow::keyDown (unsigned char key) {
             getEngine()->raiseEvent (l_event);
         }
         if (action == 'i') {
-            InspectionWindow* l_win = new InspectionWindow();
-            l_win->initialise(getEngine());
 
-            
-            getEngine()->getWindows()->pushWindow (l_win);
+            std::vector<EntityId> l_entities = getEngine()->getEntities()->findEntitiesToThe(l_dir, getEngine()->getEntities()->getPlayer());
+            if (l_entities.size() > 0) {
+                EntityId* l_target = new EntityId(l_entities[0]);
+
+                InspectionWindow* l_win = new InspectionWindow();
+                l_win->initialise(getEngine(), l_target);
+                getEngine()->getWindows()->pushWindow (l_win);
+            }
         }
         action = 'm';
     }

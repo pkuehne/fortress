@@ -77,7 +77,8 @@ Entity* EntityManager::createWallPrefab (unsigned int x, unsigned int y)
     getColliders()->add (l_entity->getId(), l_collider);
 
     DescriptionComponent l_description;
-    l_description.title = "An ordinary wall";
+    l_description.title = "Wall";
+    l_description.text = "A smooth granite wall";
     getDescriptions()->add (l_entity->getId(), l_description);
     return l_entity;
 }
@@ -103,7 +104,8 @@ Entity* EntityManager::createPlayerPrefab (unsigned int x, unsigned int y)
 
     // Description Component
     DescriptionComponent l_description;
-    l_description.title = "This is you!";
+    l_description.title = "You";
+    l_description.text = "Time for introspection";
     getDescriptions()->add (l_entity->getId(), l_description);
 
     // Health Component
@@ -134,7 +136,8 @@ Entity* EntityManager::createEnemyPrefab (unsigned int x, unsigned int y)
 
     // Description Component
     DescriptionComponent l_description;
-    l_description.title = "A vile Orc";
+    l_description.title = "Orc";
+    l_description.text = "A vile, stinking creature";
     getDescriptions()->add (l_entity->getId(), l_description);
 
     // Health Component
@@ -160,7 +163,8 @@ Entity* EntityManager::createTilePrefab (unsigned int x, unsigned int y)
 
     // Description Component
     DescriptionComponent l_description;
-    l_description.title = "A scuffed tile";
+    l_description.title = "Floor tile";
+    l_description.text = "It's a bit scuffed";
     getDescriptions()->add (l_entity->getId(), l_description);
 
     return l_entity;
