@@ -15,6 +15,12 @@ void InspectionWindow::gainFocus() {
 
     getEngine()->getGraphics()->drawString (12, 12, "Description");
 
-    EntityId l_entity = static_cast<EntityId>(getArgs());
-    std::cout << "Got id: " << l_entity << std::endl;
+    EntityId* l_entity = static_cast<EntityId*>(getArgs());
+    if (!l_entity) return;
+    std::cout << "Got id: " << *l_entity << std::endl;
+}
+
+void InspectionWindow::loseFocus() {
+    EntityId* l_entity = static_cast<EntityId*>(getArgs());
+    if (l_entity) delete l_entity;
 }

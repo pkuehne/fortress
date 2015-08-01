@@ -9,6 +9,8 @@
 #include "collider_component.h"
 #include "health_component.h"
 #include "description_component.h"
+#include "utility.h"
+#include <vector>
 
 class EntityManager : public EntityManagerInterface {
 public:
@@ -30,6 +32,11 @@ public:
     ComponentManagerInterface<DescriptionComponent>* getDescriptions() { return &m_descriptions; }
 
     Entity* getEntity (EntityId id);
+
+    std::vector<EntityId> findEntitiesNear (unsigned int x, unsigned int y, unsigned radius);
+    std::vector<EntityId> findEntitiesAt (unsigned int x, unsigned int y);
+    std::vector<EntityId> findEntitiesToThe (DIRECTION a_direction, Entity* a_entity);
+
 
 private:
     GameEngineInterface*                m_engine;

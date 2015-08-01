@@ -48,6 +48,7 @@ void MapWindow::keyDown (unsigned char key) {
             InspectionWindow* l_win = new InspectionWindow();
             l_win->initialise(getEngine());
 
+            
             getEngine()->getWindows()->pushWindow (l_win);
         }
         action = 'm';

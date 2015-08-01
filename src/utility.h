@@ -1,8 +1,9 @@
 #ifndef UTILITY_H
 #define UTILITY_H
 
-typedef unsigned short DIRECTION;
+#include <vector>
 
+typedef unsigned short DIRECTION;
 namespace Direction {
     const DIRECTION None        = 0;
     const DIRECTION North       = 1;
@@ -15,5 +16,8 @@ namespace Direction {
     const DIRECTION NorthWest   = 8;
 
 }
+
+namespace Utility {
+};
 
 #endif
