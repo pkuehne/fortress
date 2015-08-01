@@ -1,9 +1,11 @@
 #include "window.h"
 #include "game_engine_interface.h"
 
-void Window::initialise (GameEngineInterface* a_engine)
+void Window::initialise (GameEngineInterface* a_engine, void* args, void* retval)
 {
-    m_engine = a_engine;
+    m_engine    = a_engine;
+    m_args      = args;
+    m_retval    = retval;
 }
 
 void Window::beforeRedraw()

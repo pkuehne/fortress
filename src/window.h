@@ -12,7 +12,7 @@ public:
 
     Window(): m_engine(0) { memset (ascii_keys, false, sizeof(ascii_keys)); }
     virtual ~Window() { }
-    virtual void initialise (GameEngineInterface* a_engine);
+    virtual void initialise (GameEngineInterface* a_engine, void* Args = 0, void* Retval = 0);
     virtual void destroy (void);
 
     virtual GameEngineInterface* getEngine() { return m_engine; }
@@ -26,12 +26,19 @@ public:
     virtual void redraw () { };
     virtual void afterRedraw();
     virtual void resize (int width, int height);
+    virtual void* getArgs() { return m_args; }
+    virtual void* getRetval() { return m_retval; }
+
+    virtual void gainFocus() { };
+    virtual void loseFocus() { };
 
 private:
     bool                    ascii_keys[256];
     bool                    special_keys[256];
     int                     m_buttons[MAX_BUTTONS];
     GameEngineInterface*    m_engine;
+    void*                   m_args;
+    void*                   m_retval;
 };
 
 #endif

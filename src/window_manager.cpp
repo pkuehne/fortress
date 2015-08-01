@@ -9,9 +9,15 @@ void WindowManager::initialise (GameEngineInterface* engine) {
     pushWindow (l_window);
 }
 
+void WindowManager::pushWindow (WindowInterface* win) {
+    m_windows.push_back (win);
+    win->gainFocus();
+}
+
 void WindowManager::popWindow () {
     if (m_windows.size() == 0) return;
     WindowInterface* win = m_windows.back();
+    win->loseFocus();
     delete win;
     m_windows.pop_back();
 }

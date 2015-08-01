@@ -9,6 +9,10 @@ void InspectionWindow::keyDown (unsigned char key) {
     }
 }
 
+void InspectionWindow::gainFocus() {
+    std::cout << "Got FOcus!" << std::endl;
+}
+
 void InspectionWindow::redraw () {
     getEngine()->getGraphics()->clearArea (10, 10, 10, 25);
     getEngine()->getGraphics()->drawBorder (10, 10, 10, 25);
