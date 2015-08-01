@@ -10,7 +10,7 @@ class GameEngineInterface;
 class WindowManager : public WindowManagerInterface {
 public:
     void initialise (GameEngineInterface* engine);
-    void addWindow (WindowInterface* win) { m_windows.push_back (win); }
+    void pushWindow (WindowInterface* win) { m_windows.push_back (win); }
     void popWindow ();
     void replaceWindow (WindowInterface* win) ;
     WindowInterface* getActive();

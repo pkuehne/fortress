@@ -41,7 +41,6 @@ DIRECTION NpcSystem::getPlayerDirectionIfNearby (Entity* enemy)
 
     int xDiff = playerSprite->xPos - enemySprite->xPos;
     int yDiff = playerSprite->yPos - enemySprite->yPos;
-    //std::cout << "Diff - Enemy:" << enemy->getId() << " x= " << xDiff << " y= " << yDiff << std::endl;
     if ((xDiff > -5 && xDiff < 5) &&
         (yDiff > -5 && yDiff < 5)) {
         if (abs(xDiff) > abs(yDiff)) {

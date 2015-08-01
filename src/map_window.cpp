@@ -1,5 +1,6 @@
 #include "window.h"
 #include "map_window.h"
+#include "inspection_window.h"
 #include "gameengine.h"
 #include "event.h"
 
@@ -43,6 +44,12 @@ void MapWindow::keyDown (unsigned char key) {
             l_event->direction = l_dir;
             getEngine()->raiseEvent (l_event);
         }
+        if (action == 'i') {
+            InspectionWindow* l_win = new InspectionWindow();
+            l_win->initialise(getEngine());
+
+            getEngine()->getWindows()->pushWindow (l_win);
+        }
         action = 'm';
     }
     if (key == 27) {
@@ -54,11 +61,14 @@ void MapWindow::keyDown (unsigned char key) {
     if (key == 'k') {
         action = 'k';
     }
+    if (key == 'i') {
+        action = 'i';
+    }
     if (key == 't') {
 
     }
 
-    if (key != 'm' && key != 'k') {
+    if (key != 'm' && key != 'k' && key != 'i') {
         getEngine()->swapTurn();
     }
 }

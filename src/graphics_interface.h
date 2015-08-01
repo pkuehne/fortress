@@ -19,7 +19,7 @@ public:
     virtual void drawString (int y, int x, const char* s) = 0;
     virtual void drawTile (int y, int x, unsigned int tile, Color fg, Color bg) = 0;
     virtual void drawBorder (int y, int x, int height, int width) = 0;
-
+    virtual void clearArea (int y, int x, int height, int width) = 0;
     virtual void setKeyboardFunc (KeyboardFuncPtr func) = 0;
     virtual void setKeyboardUpFunc (KeyboardFuncPtr func) = 0;
     virtual void setDisplayFunc (DisplayFuncPtr func) = 0;

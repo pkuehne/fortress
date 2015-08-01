@@ -7,7 +7,7 @@
 class WindowManagerMock : public WindowManagerInterface {
 public:
      MOCK_METHOD1 (initialise, void (GameEngineInterface* engine));
-     MOCK_METHOD1 (addWindow, void (WindowInterface* win));
+     MOCK_METHOD1 (pushWindow, void (WindowInterface* win));
      MOCK_METHOD0 (popWindow, void ());
      MOCK_METHOD1 (replaceWindow, void (WindowInterface* win));
      MOCK_METHOD0 (getActive, WindowInterface* ());

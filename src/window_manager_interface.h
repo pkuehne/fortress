@@ -8,7 +8,7 @@ class WindowManagerInterface {
 public:
     virtual ~WindowManagerInterface() { }
     virtual void initialise (GameEngineInterface* engine) = 0;
-    virtual void addWindow (WindowInterface* win) = 0;
+    virtual void pushWindow (WindowInterface* win) = 0;
     virtual void popWindow () = 0;
     virtual void replaceWindow (WindowInterface* win) = 0;
     virtual WindowInterface* getActive() = 0;

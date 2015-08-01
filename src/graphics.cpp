@@ -62,6 +62,15 @@ void Graphics::drawBorder (int y, int x, int height, int width)
     // Draw Verticals
 }
 
+void Graphics::clearArea (int y, int x, int height, int width)
+{
+    for (int xx = x; xx <= x+width+1; xx++) {
+        for (int yy = y; yy <= y+height+1; yy++) {
+            drawTile (yy, xx, 219, BLACK, BLACK);
+        }
+    }
+}
+
 static void resize (int w, int h)
 {
     glViewport(0, 0, (GLsizei) w, (GLsizei) h);

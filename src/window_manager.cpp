@@ -6,7 +6,7 @@ void WindowManager::initialise (GameEngineInterface* engine) {
 
     Window* l_window = new SplashWindow();
     l_window->initialise(m_engine);
-    addWindow (l_window);
+    pushWindow (l_window);
 }
 
 void WindowManager::popWindow () {
@@ -21,7 +21,7 @@ void WindowManager::replaceWindow (WindowInterface* win) {
     for (int ii = 0; ii < size; ii++) {
         popWindow();
     }
-    addWindow (win);
+    pushWindow (win);
 }
 
 WindowInterface* WindowManager::getActive()
