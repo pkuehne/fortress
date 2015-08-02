@@ -9,51 +9,88 @@ void NpcSystem::handleEvent (const Event* event)
 void NpcSystem::update ()
 {
     if (getEngineRef()->isPlayerTurn()) return;
-    std::map<Entity*, SpriteComponent>& l_sprites = getEngineRef()->getEntities()->getSprites()->getAll();
-    std::map<Entity*, SpriteComponent>::iterator iter = l_sprites.begin();
+    std::map<EntityId, SpriteComponent>& l_sprites = getEngineRef()->getEntities()->getSprites()->getAll();
+    std::map<EntityId, SpriteComponent>::iterator iter = l_sprites.begin();
 
     for (; iter != l_sprites.end(); iter++) {
-        if (!iter->first->hasTag (MONSTER)) continue;
+        Entity* l_entity = getEngineRef()->getEntities()->getEntity (iter->first);
+        if (!l_entity->hasTag (MONSTER)) continue;
+
+        DIRECTION dir = Direction::None;
+        // Check if player is attackable
+        dir = getPlayerDirectionIfAttackable (l_entity);
+        if (dir != Direction::None) {
+            AttackEntityEvent* l_event = new AttackEntityEvent;
+            l_event->entity = l_entity->getId();
+            l_event->direction = dir;
+            getEngineRef()->raiseEvent (l_event);
+        }
 
         // Check if player is nearby
-        MoveEntityEvent::DIRECTION dir = getPlayerDirectionIfNearby (iter->first);
-        if (dir == MoveEntityEvent::NONE) {
+        dir = getPlayerDirectionIfNearby (l_entity);
+        if (dir == Direction::None) {
             dir = getRandomDirection();
         }
         MoveEntityEvent* l_event = new MoveEntityEvent();
-        l_event->entity = iter->first;
+        l_event->entity = l_entity->getId();
         l_event->direction = dir;
         getEngineRef()->raiseEvent (l_event);
     }
     getEngineRef()->swapTurn();
 }
 
-MoveEntityEvent::DIRECTION NpcSystem::getRandomDirection () {
-    unsigned int dir = rand () % 5;
-    return static_cast<MoveEntityEvent::DIRECTION>(dir);
+DIRECTION NpcSystem::getRandomDirection () {
+    return rand () % Direction::NorthEast;
 }
 
-MoveEntityEvent::DIRECTION NpcSystem::getPlayerDirectionIfNearby (Entity* enemy)
+DIRECTION NpcSystem::getPlayerDirectionIfNearby (Entity* enemy)
 {
     Entity* player = getEngineRef()->getEntities()->getPlayer();
-    SpriteComponent* playerSprite = getEngineRef()->getEntities()->getSprites()->get (player);
-    SpriteComponent* enemySprite = getEngineRef()->getEntities()->getSprites()->get (enemy);
+    SpriteComponent* playerSprite = getEngineRef()->getEntities()->getSprites()->get (player->getId());
+    SpriteComponent* enemySprite = getEngineRef()->getEntities()->getSprites()->get (enemy->getId());
 
     int xDiff = playerSprite->xPos - enemySprite->xPos;
     int yDiff = playerSprite->yPos - enemySprite->yPos;
-    //std::cout << "Diff - Enemy:" << enemy->getId() << " x= " << xDiff << " y= " << yDiff << std::endl;
     if ((xDiff > -5 && xDiff < 5) &&
         (yDiff > -5 && yDiff < 5)) {
         if (abs(xDiff) > abs(yDiff)) {
             // Move horizontally first
-            if (xDiff > 0) return MoveEntityEvent::RIGHT;
-            return MoveEntityEvent::LEFT;
+            if (xDiff > 0) return Direction::East;
+            return Direction::West;
         } else {
             // Move vertically first
-            if (xDiff > 0) return MoveEntityEvent::DOWN;
-            return MoveEntityEvent::UP;
+            if (xDiff > 0) return Direction::South;
+            return Direction::North;
         }
     }
 
-    return MoveEntityEvent::NONE;
+    return Direction::None;
+}
+
+DIRECTION NpcSystem::getPlayerDirectionIfAttackable (Entity* entity) {
+
+    std::vector<EntityId> l_entities;
+    EntityId player = getEngineRef()->getEntities()->getPlayer()->getId();
+
+    l_entities = getEngineRef()->getEntities()->findEntitiesToThe (Direction::North, entity);
+    for (size_t ii = 0; ii < l_entities.size(); ii++) {
+        if (l_entities[ii] == player) return Direction::North;
+    }
+
+    l_entities = getEngineRef()->getEntities()->findEntitiesToThe (Direction::East, entity);
+    for (size_t ii = 0; ii < l_entities.size(); ii++) {
+        if (l_entities[ii] == player) return Direction::East;
+    }
+
+    l_entities = getEngineRef()->getEntities()->findEntitiesToThe (Direction::South, entity);
+    for (size_t ii = 0; ii < l_entities.size(); ii++) {
+        if (l_entities[ii] == player) return Direction::South;
+    }
+
+    l_entities = getEngineRef()->getEntities()->findEntitiesToThe (Direction::West, entity);
+    for (size_t ii = 0; ii < l_entities.size(); ii++) {
+        if (l_entities[ii] == player) return Direction::West;
+    }
+
+    return Direction::None;
 }

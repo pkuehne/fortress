@@ -16,5 +16,7 @@ public:
 
     MOCK_METHOD0 (getSprites, ComponentManagerInterface<SpriteComponent>* ());
     MOCK_METHOD0 (getColliders, ComponentManagerInterface<ColliderComponent>* ());
+    MOCK_METHOD0 (getHealths, ComponentManagerInterface<HealthComponent>* ());
+    MOCK_METHOD0 (getDescriptions, ComponentManagerInterface<DescriptionComponent>* ());
     MOCK_METHOD1 (getEntity, Entity* (EntityId id));
 };

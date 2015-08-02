@@ -62,12 +62,43 @@ void Graphics::drawBorder (int y, int x, int height, int width)
     // Draw Verticals
 }
 
-static void resize (int w, int h)
+void Graphics::clearArea (int y, int x, int height, int width)
 {
-    glViewport(0, 0, (GLsizei) w, (GLsizei) h);
+    for (int xx = x; xx < x+width; xx++) {
+        for (int yy = y; yy < y+height; yy++) {
+            drawTile (yy, xx, 219, BLACK, BLACK);
+        }
+    }
+}
+
+int Graphics::getScreenHeight ()
+{
+    long iconSize = m_config.getTag("IconSize").num;
+    return (glutGet (GLUT_WINDOW_HEIGHT)/iconSize);
+}
+
+int Graphics::getScreenWidth()
+{
+    long iconSize = m_config.getTag("IconSize").num;
+    return (glutGet (GLUT_WINDOW_WIDTH)/iconSize);
+}
+
+void Graphics::calculateWindowOffsetsFromCentre (int height, int width, int& y, int& x)
+{
+    int screenWidth = getScreenWidth();
+    int screenHeight = getScreenHeight();
+
+    x = (screenWidth/2) - (width / 2);
+    y = (screenHeight/2) - (height / 2);
+}
+
+
+void Graphics::updateScreenSize (int width, int height)
+{
+    glViewport(0, 0, (GLsizei) width, (GLsizei) height);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    glOrtho (0, w, 0, h, -1.0, 1.0);
+    glOrtho (0, width, 0, height, -1.0, 1.0);
     glMatrixMode(GL_MODELVIEW);
 }
 
@@ -90,6 +121,11 @@ void Graphics::setDisplayFunc (DisplayFuncPtr func)
 void Graphics::setMouseFunc (MouseFuncPtr func)
 {
     glutMouseFunc (func);
+}
+
+void Graphics::setResizeFunc (ResizeFuncPtr func)
+{
+    glutReshapeFunc (func);
 }
 
 void Graphics::spin ()
@@ -127,8 +163,7 @@ std::cout << "Width: " << m_config.getTag("WindowWidth").num << std::endl;
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    glutReshapeFunc     (resize);
-    setKeyboardFunc     (NULL);
+    glutReshapeFunc     (NULL);
     setKeyboardUpFunc   (NULL);
     setMouseFunc        (NULL);
     setDisplayFunc      (empty);

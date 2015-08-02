@@ -53,17 +53,16 @@ TEST (GameSystemBase, findEntitiesAt)
     l_spriteNorth.yPos  = 1;
     l_spriteNorth.sprite= 181;
 
-    l_entities.getSprites()->add (&l_entityMiddle,  l_spriteMiddle);
-    l_entities.getSprites()->add (&l_entityNorth,   l_spriteNorth);
+    l_entities.getSprites()->add (l_entityMiddle.getId(),  l_spriteMiddle);
+    l_entities.getSprites()->add (l_entityNorth.getId(),   l_spriteNorth);
 
     EXPECT_CALL (l_engine, getEntities()).WillRepeatedly (Return (&l_entities));
 
     l_base.initialise (&l_engine);
 
-    std::vector<Entity*> l_return = l_base.findEntitiesAt (2, 2);
+    std::vector<EntityId> l_return = l_base.findEntitiesAt (2, 2);
     ASSERT_EQ (1, l_return.size());
-    ASSERT_NE (static_cast<Entity*>(0), l_return[0]);
-    EXPECT_EQ ("Player", l_return[0]->getName());
+    EXPECT_EQ (5, l_return[0]);
 }
 
 TEST (GameSystemBase, findEntitiesToThe)
@@ -89,16 +88,15 @@ TEST (GameSystemBase, findEntitiesToThe)
     l_spriteNorth.yPos  = 1;
     l_spriteNorth.sprite= 181;
 
-    l_entities.getSprites()->add (&l_entityMiddle,  l_spriteMiddle);
-    l_entities.getSprites()->add (&l_entityNorth,   l_spriteNorth);
+    l_entities.getSprites()->add (l_entityMiddle.getId(),  l_spriteMiddle);
+    l_entities.getSprites()->add (l_entityNorth.getId(),   l_spriteNorth);
 
     EXPECT_CALL (l_engine, getEntities()).WillRepeatedly (Return (&l_entities));
 
     l_base.initialise (&l_engine);
 
-    std::vector<Entity*> l_return = l_base.findEntitiesToThe (MoveEntityEvent::UP, &l_entityMiddle);
+    std::vector<EntityId> l_return = l_base.findEntitiesToThe (Direction::North, &l_entityMiddle);
     ASSERT_EQ (1, l_return.size());
-    ASSERT_NE (static_cast<Entity*>(0), l_return[0]);
-    EXPECT_EQ ("Orc", l_return[0]->getName());
+    EXPECT_EQ (6, l_return[0]);
 
 }

@@ -8,13 +8,13 @@ TEST (ComponentManager, testAddGetRemove)
     int                     val = 5;
     entity.setId (900000);
 
-    EXPECT_EQ (static_cast<int*>(0), manager.get (&entity));
+    EXPECT_EQ (0, manager.get (entity.getId()));
 
-    manager.add (&entity, val);
-    EXPECT_EQ (val, *(manager.get (&entity)));
+    manager.add (entity.getId(), val);
+    EXPECT_EQ (val, *(manager.get (entity.getId())));
 
-    manager.remove (&entity);
-    EXPECT_EQ (static_cast<int*>(0), manager.get (&entity));
+    manager.remove (entity.getId());
+    EXPECT_EQ (static_cast<int*>(0), manager.get (entity.getId()));
 }
 
 TEST (ComponentManager, getAll)
@@ -29,8 +29,8 @@ TEST (ComponentManager, getAll)
 
     EXPECT_EQ (0, manager.getAll().size());
 
-    manager.add (&firstEntity, firstVal);
-    manager.add (&secondEntity, secondVal);
+    manager.add (firstEntity.getId(), firstVal);
+    manager.add (secondEntity.getId(), secondVal);
 
     EXPECT_EQ (2, manager.getAll().size());
 

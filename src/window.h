@@ -12,8 +12,19 @@ public:
 
     Window(): m_engine(0) { memset (ascii_keys, false, sizeof(ascii_keys)); }
     virtual ~Window() { }
-    virtual void initialise (GameEngineInterface* a_engine);
+    virtual void initialise (GameEngineInterface* a_engine, void* Args = 0, void* Retval = 0);
     virtual void destroy (void);
+    virtual void setDimensions (int x, int y, int width, int height);
+    virtual void setTitle (const std::string& title) { m_title = title; }
+    virtual std::string getTitle () { return m_title; }
+    virtual int getXOffset() { return m_xOffset; }
+    virtual int getYOffset() { return m_yOffset; }
+    virtual int getWidth() { return m_width; }
+    virtual int getHeight() { return m_height; }
+    virtual void resize() { setDimensions (m_xOffset, m_yOffset, m_width, m_height); }
+
+    virtual void drawString (int y, int x, const char* text);
+    virtual void drawTile (int y, int x, unsigned int tile, Color fg, Color bg);
 
     virtual GameEngineInterface* getEngine() { return m_engine; }
     virtual void keyDown (unsigned char key) { ascii_keys[key] = true; }
@@ -26,12 +37,24 @@ public:
     virtual void redraw () { };
     virtual void afterRedraw();
     virtual void resize (int width, int height);
+    virtual void* getArgs() { return m_args; }
+    virtual void* getRetval() { return m_retval; }
+
+    virtual void gainFocus() { };
+    virtual void loseFocus() { };
 
 private:
     bool                    ascii_keys[256];
     bool                    special_keys[256];
     int                     m_buttons[MAX_BUTTONS];
     GameEngineInterface*    m_engine;
+    void*                   m_args;
+    void*                   m_retval;
+    int                     m_xOffset;
+    int                     m_yOffset;
+    int                     m_width;
+    int                     m_height;
+    std::string             m_title;
 };
 
 #endif

@@ -4,6 +4,7 @@
 #include <map>
 #include <iostream>
 #include "entity.h"
+#include "utility.h"
 
 typedef enum {
     EVENT_INVALID           = 0,
@@ -27,34 +28,27 @@ protected:
 class AddEntityEvent : public Event {
 public:
     AddEntityEvent () : Event (EVENT_ADD_ENTITY) { }
-    Entity*     entity;
+    EntityId     entity;
 };
 
 class RemoveEntityEvent : public Event {
 public:
     RemoveEntityEvent () : Event (EVENT_REMOVE_ENTITY) { }
-    Entity*     entity;
+    EntityId     entity;
 };
 
 class MoveEntityEvent : public Event {
 public:
-    enum DIRECTION {
-        NONE    = 0,
-        UP      = 1,
-        RIGHT   = 2,
-        DOWN    = 3,
-        LEFT    = 4
-    };
-
     MoveEntityEvent () : Event (EVENT_MOVE_ENTITY) { }
-    Entity*         entity;
-    enum DIRECTION  direction;
+    EntityId    entity;
+    DIRECTION   direction;
 };
 
 class AttackEntityEvent : public Event {
 public:
     AttackEntityEvent () : Event (EVENT_ATTACK_ENTITY) { }
-    Entity          entity;
+    EntityId        entity;
+    DIRECTION       direction;
 };
 
 #endif

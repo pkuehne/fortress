@@ -35,6 +35,12 @@ static void mouseClick (int button, int state, int x, int y)
     }
 }
 
+static void resize (int width, int height)
+{
+    g_engine->getGraphics()->updateScreenSize (width, height);
+    g_engine->getWindows()->resize();
+}
+
 GameEngine::GameEngine (GraphicsInterface* a_graphics)
 : m_tick (0)
 , m_playerTurn (true)
@@ -78,6 +84,7 @@ void GameEngine::initialise ()
     m_graphics->setKeyboardUpFunc (keyUp);
     m_graphics->setDisplayFunc  (display);
     m_graphics->setMouseFunc    (mouseClick);
+    m_graphics->setResizeFunc   (resize);
 
 }
 
@@ -100,9 +107,11 @@ void GameEngine::tick ()
     for (unsigned int ii = 0; ii < m_systems.size(); ii++) {
         m_systems[ii]->update();
     }
-    getWindows()->getActive()->beforeRedraw();
-    getWindows()->getActive()->redraw();
-    getWindows()->getActive()->afterRedraw();
+
+    getWindows()->redraw();
+//    getWindows()->getActive()->beforeRedraw();
+//    getWindows()->getActive()->redraw();
+//    getWindows()->getActive()->afterRedraw();
 
     return;
 }

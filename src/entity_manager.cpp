@@ -18,7 +18,7 @@ Entity* EntityManager::createEntity (const std::string& name) {
     m_nameMap[l_entity->getName()]   = l_entity;
 
     AddEntityEvent* l_event = new AddEntityEvent;
-    l_event->entity = l_entity;
+    l_event->entity = l_entity->getId();
     m_engine->raiseEvent (l_event);
 
     return l_entity;
@@ -28,10 +28,12 @@ void EntityManager::destroyEntity (EntityId id) {
     std::map<EntityId, Entity*>::iterator it = m_idMap.find (id);
     if (it == m_idMap.end()) return;
 
-    getColliders()->remove (it->second);
-    getSprites()->remove (it->second);
+    getColliders()->remove (it->second->getId());
+    getSprites()->remove (it->second->getId());
+    getHealths()->remove (it->second->getId());
+    getDescriptions()->remove (it->second->getId());
     RemoveEntityEvent* l_event = new RemoveEntityEvent();
-    l_event->entity = it->second;
+    l_event->entity = it->second->getId();
     m_engine->raiseEvent (l_event);
 
     m_idMap.erase (it);
@@ -61,19 +63,23 @@ Entity* EntityManager::createWallPrefab (unsigned int x, unsigned int y)
 {
     Entity* l_entity = createEntity("Wall");
     l_entity->addTag (WALL);
-    //Sprite Component
+    // Sprite Component
     SpriteComponent l_sprite;
     l_sprite.fgColor    = Color (GREY);
     l_sprite.bgColor    = Color (BLACK);
     l_sprite.sprite     = 'W';
     l_sprite.xPos       = x;
     l_sprite.yPos       = y;
-    getSprites()->add (l_entity, l_sprite);
+    getSprites()->add (l_entity->getId(), l_sprite);
 
-    //Collider Component
+    // Collider Component
     ColliderComponent l_collider;
-    getColliders()->add (l_entity, l_collider);
+    getColliders()->add (l_entity->getId(), l_collider);
 
+    DescriptionComponent l_description;
+    l_description.title = "Wall";
+    l_description.text = "A smooth granite wall";
+    getDescriptions()->add (l_entity->getId(), l_description);
     return l_entity;
 }
 
@@ -82,19 +88,30 @@ Entity* EntityManager::createPlayerPrefab (unsigned int x, unsigned int y)
     Entity* l_entity = createEntity("Player");
     l_entity->addTag (PLAYER);
 
-    //Sprite Component
+    // Sprite Component
     SpriteComponent l_sprite;
     l_sprite.fgColor    = Color (WHITE);
     l_sprite.bgColor    = Color (BLACK);
     l_sprite.sprite     = '@';
     l_sprite.xPos       = x;
     l_sprite.yPos       = y;
-    getSprites()->add (l_entity, l_sprite);
+    getSprites()->add (l_entity->getId(), l_sprite);
 
 
-    //Collider Component
+    // Collider Component
     ColliderComponent l_collider;
-    getColliders()->add (l_entity, l_collider);
+    getColliders()->add (l_entity->getId(), l_collider);
+
+    // Description Component
+    DescriptionComponent l_description;
+    l_description.title = "You";
+    l_description.text = "Time for introspection";
+    getDescriptions()->add (l_entity->getId(), l_description);
+
+    // Health Component
+    HealthComponent l_health;
+    l_health.health = 1;
+    getHealths()->add (l_entity->getId(), l_health);
 
     return l_entity;
 }
@@ -104,18 +121,29 @@ Entity* EntityManager::createEnemyPrefab (unsigned int x, unsigned int y)
     Entity* l_entity = createEntity("Orc");
     l_entity->addTag (MONSTER);
 
-    //Sprite Component
+    // Sprite Component
     SpriteComponent l_sprite;
     l_sprite.fgColor    = Color (RED);
     l_sprite.bgColor    = Color (BLACK);
     l_sprite.sprite     = 'O';
     l_sprite.xPos       = x;
     l_sprite.yPos       = y;
-    getSprites()->add (l_entity, l_sprite);
+    getSprites()->add (l_entity->getId(), l_sprite);
 
-    //Collider Component
+    // Collider Component
     ColliderComponent l_collider;
-    getColliders()->add (l_entity, l_collider);
+    getColliders()->add (l_entity->getId(), l_collider);
+
+    // Description Component
+    DescriptionComponent l_description;
+    l_description.title = "Orc";
+    l_description.text = "A vile, stinking creature";
+    getDescriptions()->add (l_entity->getId(), l_description);
+
+    // Health Component
+    HealthComponent l_health;
+    l_health.health = 1;
+    getHealths()->add (l_entity->getId(), l_health);
 
     return l_entity;
 }
@@ -131,7 +159,57 @@ Entity* EntityManager::createTilePrefab (unsigned int x, unsigned int y)
     l_sprite.sprite     = '.';
     l_sprite.xPos       = x;
     l_sprite.yPos       = y;
-    getSprites()->add (l_entity, l_sprite);
+    getSprites()->add (l_entity->getId(), l_sprite);
+
+    // Description Component
+    DescriptionComponent l_description;
+    l_description.title = "Floor tile";
+    l_description.text = "It's a bit scuffed";
+    getDescriptions()->add (l_entity->getId(), l_description);
 
     return l_entity;
+}
+
+
+std::vector<EntityId> EntityManager::findEntitiesAt (unsigned int x, unsigned int y)
+{
+    return findEntitiesNear (x, y, 0);
+}
+
+std::vector<EntityId> EntityManager::findEntitiesNear (unsigned int x, unsigned int y, unsigned radius)
+{
+    std::vector<EntityId> l_entities;
+
+    std::map<EntityId, SpriteComponent>& l_sprites = m_engine->getEntities()->getSprites()->getAll();
+    std::map<EntityId, SpriteComponent>::iterator it = l_sprites.begin();
+    for (; it != l_sprites.end(); it++) {
+        if (it->second.xPos >= x - radius &&
+            it->second.xPos <= x + radius &&
+            it->second.yPos >= y - radius &&
+            it->second.yPos <= y + radius) {
+            l_entities.push_back (it->first);
+        }
+    }
+
+    return l_entities;
+
+}
+
+std::vector<EntityId> EntityManager::findEntitiesToThe (DIRECTION a_direction, Entity* a_entity)
+{
+    std::vector<EntityId> l_entities;
+
+    SpriteComponent* l_sprite = m_engine->getEntities()->getSprites()->get (a_entity->getId());
+    if (!l_sprite) return l_entities;
+    unsigned int newX = l_sprite->xPos;
+    unsigned int newY = l_sprite->yPos;
+    switch (a_direction) {
+        case Direction::North:  newY--; break;
+        case Direction::South:  newY++; break;
+        case Direction::West:   newX--; break;
+        case Direction::East:   newX++; break;
+        default: return l_entities;
+    }
+
+    return findEntitiesAt (newX, newY);
 }

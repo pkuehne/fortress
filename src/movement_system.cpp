@@ -9,22 +9,22 @@ void MovementSystem::handleEvent (const Event* event)
     switch (event->getType()) {
         case EVENT_MOVE_ENTITY: {
             const MoveEntityEvent* l_event = dynamic_cast<const MoveEntityEvent*> (event);
-            Entity* l_entity = l_event->entity;
-            SpriteComponent* l_sprite = m_engine->getEntities()->getSprites()->get (l_entity);
+            Entity* l_entity = m_engine->getEntities()->getEntity(l_event->entity);
+            SpriteComponent* l_sprite = m_engine->getEntities()->getSprites()->get (l_entity->getId());
             if (!l_sprite) return;
             unsigned int newX = l_sprite->xPos;
             unsigned int newY = l_sprite->yPos;
             switch (l_event->direction) {
-                case MoveEntityEvent::UP:    newY--; break;
-                case MoveEntityEvent::DOWN:  newY++; break;
-                case MoveEntityEvent::LEFT:  newX--; break;
-                case MoveEntityEvent::RIGHT: newX++; break;
+                case Direction::North:  newY--; break;
+                case Direction::South:  newY++; break;
+                case Direction::West:   newX--; break;
+                case Direction::East:   newX++; break;
                 default: return;
             }
 
             //Check if we're running into a collidable or something
-            std::map<Entity*, SpriteComponent>& l_sprites = m_engine->getEntities()->getSprites()->getAll();
-            std::map<Entity*, SpriteComponent>::iterator it = l_sprites.begin();
+            std::map<EntityId, SpriteComponent>& l_sprites = m_engine->getEntities()->getSprites()->getAll();
+            std::map<EntityId, SpriteComponent>::iterator it = l_sprites.begin();
             for (; it != l_sprites.end(); it++) {
                 // There is an entity here
                 if (it->second.xPos == newX && it->second.yPos == newY) {

@@ -25,7 +25,7 @@ coverage:
 	rm -f src/*.gcno
 	rm -f test/*.gcno
 	$(MAKE) -C test --no-print-directory clean
-	$(MAKE) -C test --no-print-directory test -j 8
+	$(MAKE) -C test --no-print-directory test -j 8 COVERAGE=Y
 	gcovr -r src
 
 run: build

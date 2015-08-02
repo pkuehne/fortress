@@ -1,40 +1,24 @@
 #include "combat_system.h"
+#include "health_component.h"
 #include <iostream>
 
 void CombatSystem::handleEvent (const Event* event)
 {
     switch (event->getType()) {
         case EVENT_ATTACK_ENTITY: {
-            if (checkForEnemies (MoveEntityEvent::UP)) {
-                return;
-            }
-            if (checkForEnemies (MoveEntityEvent::RIGHT)) {
-                return;
-            }
-            if (checkForEnemies (MoveEntityEvent::DOWN)) {
-                return;
-            }
-            if (checkForEnemies (MoveEntityEvent::LEFT)) {
-                return;
+            const AttackEntityEvent* l_event = dynamic_cast<const AttackEntityEvent*> (event);
+            Entity* l_entity = m_engine->getEntities()->getEntity(l_event->entity);
+
+            std::vector<EntityId> l_targets = m_engine->getEntities()->findEntitiesToThe (l_event->direction, l_entity);
+            std::vector<EntityId>::iterator iter = l_targets.begin();
+            for (; iter != l_targets.end(); iter++) {
+                HealthComponent* l_health = m_engine->getEntities()->getHealths()->get(*iter);
+                if (l_health) {
+                    m_engine->getEntities()->destroyEntity (*iter);
+                    break;
+                }
             }
         } break;
         default:break;
     }
-}
-
-
-bool CombatSystem::checkForEnemies (MoveEntityEvent::DIRECTION dir)
-{
-    Entity* player = m_engine->getEntities()->getPlayer();
-
-    std::vector<Entity*> l_entities;
-    l_entities = findEntitiesToThe (dir, player);
-
-    for (unsigned int ii = 0; ii < l_entities.size(); ii++) {
-        if (l_entities[ii]->hasTag (MONSTER)) {
-            m_engine->getEntities()->destroyEntity (l_entities[ii]->getId());
-            return true;
-        }
-    }
-    return false;
 }

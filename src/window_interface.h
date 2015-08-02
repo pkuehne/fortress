@@ -1,13 +1,27 @@
 #ifndef WINDOW_INTERFACE_H
 #define WINDOW_INTERFACE_H
 
+#include <string>
+#include <color.h>
+
 class GameEngineInterface;
 
 class WindowInterface {
 public:
     virtual ~WindowInterface() {}
-    virtual void initialise (GameEngineInterface* a_engine) = 0;
+    virtual void initialise (GameEngineInterface* a_engine, void* Args = 0, void* Retval = 0) = 0;
     virtual void destroy (void) = 0;
+    virtual void setDimensions (int x, int y, int width, int height) = 0;
+    virtual void setTitle (const std::string& title) = 0;
+    virtual std::string getTitle () = 0;
+    virtual int getXOffset() = 0;
+    virtual int getYOffset() = 0;
+    virtual int getWidth() = 0;
+    virtual int getHeight() = 0;
+    virtual void resize() = 0;
+
+    virtual void drawString (int y, int x, const char* text) = 0;
+    virtual void drawTile (int y, int x, unsigned int tile, Color fg, Color bg) = 0;
 
     virtual GameEngineInterface* getEngine() = 0;
     virtual void keyDown (unsigned char key) = 0;
@@ -19,6 +33,13 @@ public:
     virtual void redraw () = 0;
     virtual void afterRedraw() = 0;
     virtual void resize (int width, int height) = 0;
+
+    virtual void* getArgs() = 0;
+    virtual void* getRetval() = 0;
+
+    virtual void gainFocus() = 0;
+    virtual void loseFocus() = 0;
+
 };
 
 #endif

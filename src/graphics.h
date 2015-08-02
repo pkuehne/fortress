@@ -13,17 +13,28 @@ public:
     virtual void drawString (int y, int x, const char* s);
     virtual void drawTile (int y, int x, unsigned int tile, Color fg, Color bg);
     virtual void drawBorder (int y, int x, int height, int width);
+    virtual void clearArea (int y, int x, int height, int width);
+    virtual void calculateWindowOffsetsFromCentre (int height, int width, int& y, int& x);
 
     virtual void beginScreenUpdate();
     virtual void endScreenUpdate();
+
+    virtual int getScreenHeight();
+    virtual int getScreenWidth();
+
+    virtual void updateScreenSize (int width, int height);
 
     virtual void setKeyboardFunc (KeyboardFuncPtr func);
     virtual void setKeyboardUpFunc (KeyboardFuncPtr func);
     virtual void setDisplayFunc (DisplayFuncPtr func);
     virtual void setMouseFunc (MouseFuncPtr func);
+    virtual void setResizeFunc (ResizeFuncPtr func);
+
 
 private:
     ConfigManager   m_config;
+    int             m_width;
+    int             m_height;
 };
 
 void start_graphics ();

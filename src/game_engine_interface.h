@@ -9,6 +9,7 @@
 //class WindowManager;
 class Event;
 class WindowManagerInterface;
+class GameSystemInterface;
 
 class GameEngineInterface
 {
@@ -32,6 +33,8 @@ public:
     virtual WindowManagerInterface* getWindows()     = 0;
 
     virtual GraphicsInterface* getGraphics() = 0;
+
+    virtual void addSystem (GameSystemInterface* a_system) = 0;
 
 };
 

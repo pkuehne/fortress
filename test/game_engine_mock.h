@@ -16,4 +16,6 @@ public:
     MOCK_METHOD0 (getTick, unsigned long long ());
     MOCK_METHOD0 (getWindows, WindowManagerInterface*());
     MOCK_METHOD0 (getGraphics, GraphicsInterface* ());
+    MOCK_METHOD1 (addSystem, void (GameSystemInterface* a_system));
+
 };
