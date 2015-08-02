@@ -5,9 +5,12 @@ A simple [ASCII](http://www.ascii-codes.com/) [Roguelike](https://en.wikipedia.o
 ### Gameplay
 * An adventurer that can move
 * Orcs that move randomly around
+* Orcs move towards you when close by
 * Kill Orcs with a single blow
 * Load a map from file
 * Has a splash screen
+* Descriptions of entities
+* You can lose!
 * Support for [Dwarf Fortress](http://bay12games.com/dwarves) [tilesets](http://dwarffortresswiki.org/Tileset_repository)
 
 ### Technical
@@ -15,8 +18,6 @@ A simple [ASCII](http://www.ascii-codes.com/) [Roguelike](https://en.wikipedia.o
 * Uses a [Component Based Entity Model](https://en.wikipedia.org/wiki/Entity_component_system)
 
 ## Upcoming Features
-* Orcs move towards Player within certain distance
-* Orcs can attack and hurt Player
 * Multiple levels accessible through up/down stairs
 * Procedurally generated rooms and caverns
 * More colour!
