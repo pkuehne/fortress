@@ -6,6 +6,7 @@ void Window::initialise (GameEngineInterface* a_engine, void* args, void* retval
     m_engine    = a_engine;
     m_args      = args;
     m_retval    = retval;
+    setDimensions (2, 2, 2, 2);
 }
 
 void Window::setDimensions (int x, int y, int width, int height)
@@ -31,12 +32,13 @@ void Window::drawString (int y, int x, const char* text)
 
 void Window::beforeRedraw()
 {
-    m_engine->getGraphics()->beginScreenUpdate();
+    getEngine()->getGraphics()->clearArea (m_yOffset, m_xOffset, m_height, m_width);
+    getEngine()->getGraphics()->drawBorder (m_yOffset, m_xOffset, m_height, m_width);
 }
 
 void Window::afterRedraw()
 {
-    m_engine->getGraphics()->endScreenUpdate();
+
 }
 
 void Window::destroy (void)

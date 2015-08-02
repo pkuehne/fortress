@@ -9,17 +9,14 @@ void InspectionWindow::keyDown (unsigned char key) {
     }
 }
 
-void InspectionWindow::gainFocus() {
-    int width = 30;
-    int height = 7;
+void InspectionWindow::redraw() {
 
-    setDimensions (0, 0, width, height);
-    int x = getXOffset();
-    int y = getYOffset();
+//    int x = getXOffset();
+//    int y = getYOffset();
 
     //getEngine()->getGraphics()->calculateWindowOffsetsFromCentre (height, width, x, y);
-    getEngine()->getGraphics()->clearArea (y, x, height, width);
-    getEngine()->getGraphics()->drawBorder (y, x, height, width);
+    //getEngine()->getGraphics()->clearArea (y, x, height, width);
+    //getEngine()->getGraphics()->drawBorder (y, x, height, width);
 
     drawString (2, 2, "Description: ");
 
@@ -31,6 +28,13 @@ void InspectionWindow::gainFocus() {
 
     drawString (2, 15, l_description->title.c_str());
     drawString (4,  2, l_description->text.c_str());
+}
+
+void InspectionWindow::gainFocus() {
+    int width = 30;
+    int height = 7;
+
+    setDimensions (0, 0, width, height);
 }
 
 void InspectionWindow::loseFocus() {

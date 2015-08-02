@@ -101,9 +101,10 @@ void GameEngine::tick ()
         m_systems[ii]->update();
     }
 
-    getWindows()->getActive()->beforeRedraw();
-    getWindows()->getActive()->redraw();
-    getWindows()->getActive()->afterRedraw();
+    getWindows()->redraw();
+//    getWindows()->getActive()->beforeRedraw();
+//    getWindows()->getActive()->redraw();
+//    getWindows()->getActive()->afterRedraw();
 
     return;
 }

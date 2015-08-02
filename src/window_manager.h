@@ -14,6 +14,7 @@ public:
     void popWindow ();
     void replaceWindow (WindowInterface* win) ;
     WindowInterface* getActive();
+    void redraw ();
 
 private:
     GameEngineInterface*            m_engine;
