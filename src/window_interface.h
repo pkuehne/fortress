@@ -2,6 +2,7 @@
 #define WINDOW_INTERFACE_H
 
 #include <string>
+#include <color.h>
 
 class GameEngineInterface;
 
@@ -20,6 +21,7 @@ public:
     virtual void resize() = 0;
 
     virtual void drawString (int y, int x, const char* text) = 0;
+    virtual void drawTile (int y, int x, unsigned int tile, Color fg, Color bg) = 0;
 
     virtual GameEngineInterface* getEngine() = 0;
     virtual void keyDown (unsigned char key) = 0;

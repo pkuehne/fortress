@@ -64,8 +64,8 @@ void Graphics::drawBorder (int y, int x, int height, int width)
 
 void Graphics::clearArea (int y, int x, int height, int width)
 {
-    for (int xx = x; xx <= x+width+1; xx++) {
-        for (int yy = y; yy <= y+height+1; yy++) {
+    for (int xx = x; xx < x+width; xx++) {
+        for (int yy = y; yy < y+height; yy++) {
             drawTile (yy, xx, 219, BLACK, BLACK);
         }
     }

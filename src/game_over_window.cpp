@@ -7,7 +7,7 @@ void GameOverWindow::redraw()
     drawString (3, 2, "You lose!");
 }
 
-void GameOverWindow::gainFocus()
+void GameOverWindow::resize()
 {
     setDimensions (0, 0, 13, 6);
 }

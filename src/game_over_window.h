@@ -5,7 +5,7 @@
 
 class GameOverWindow : public Window {
 public:
-    void gainFocus();
+    void resize();
     void redraw();
 };
 

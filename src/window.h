@@ -24,6 +24,7 @@ public:
     virtual void resize() { setDimensions (m_xOffset, m_yOffset, m_width, m_height); }
 
     virtual void drawString (int y, int x, const char* text);
+    virtual void drawTile (int y, int x, unsigned int tile, Color fg, Color bg);
 
     virtual GameEngineInterface* getEngine() { return m_engine; }
     virtual void keyDown (unsigned char key) { ascii_keys[key] = true; }

@@ -12,6 +12,10 @@ public:
 
 private:
     void drawMap ();
+
+private:
+    int m_mapXOffset;
+    int m_mapYOffset;
 };
 
 #endif

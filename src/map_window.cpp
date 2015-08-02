@@ -10,6 +10,9 @@ void MapWindow::gainFocus ()
     getEngine()->loadMap(l_mapName);
 
     setTitle ("Map");
+
+    m_mapXOffset = 1;
+    m_mapYOffset = 5;
 }
 
 void MapWindow::redraw() {
@@ -82,6 +85,10 @@ void MapWindow::drawMap() {
     std::map<EntityId, SpriteComponent>::iterator it = l_sprites.begin();
     for (; it != l_sprites.end(); it++) {
         SpriteComponent& l_sprite = it->second;
-        getEngine()->getGraphics()->drawTile (l_sprite.yPos+getYOffset()+1, l_sprite.xPos+getXOffset()+1, l_sprite.sprite, l_sprite.fgColor, l_sprite.bgColor);
+        drawTile (  l_sprite.yPos + m_mapYOffset,
+                    l_sprite.xPos + m_mapXOffset,
+                    l_sprite.sprite,
+                    l_sprite.fgColor,
+                    l_sprite.bgColor);
     }
 }
