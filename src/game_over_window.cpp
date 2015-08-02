@@ -9,5 +9,5 @@ void GameOverWindow::redraw()
 
 void GameOverWindow::gainFocus()
 {
-    setDimensions (0, 0, 11, 4);
+    setDimensions (0, 0, 13, 6);
 }

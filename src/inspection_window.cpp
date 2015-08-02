@@ -9,6 +9,13 @@ void InspectionWindow::keyDown (unsigned char key) {
     }
 }
 
+void InspectionWindow::resize() {
+    int width = 30;
+    int height = 7;
+
+    setDimensions (0, 0, width, height);
+}
+
 void InspectionWindow::redraw() {
 
 //    int x = getXOffset();
@@ -31,10 +38,7 @@ void InspectionWindow::redraw() {
 }
 
 void InspectionWindow::gainFocus() {
-    int width = 30;
-    int height = 7;
-
-    setDimensions (0, 0, width, height);
+    setTitle ("What?");
 }
 
 void InspectionWindow::loseFocus() {

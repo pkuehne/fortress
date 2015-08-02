@@ -12,6 +12,7 @@ void WindowManager::initialise (GameEngineInterface* engine) {
 void WindowManager::pushWindow (WindowInterface* win) {
     m_windows.push_back (win);
     win->gainFocus();
+    win->resize();
 }
 
 void WindowManager::popWindow () {
@@ -47,5 +48,13 @@ void WindowManager::redraw()
     }
 
     m_engine->getGraphics()->endScreenUpdate();
+
+}
+
+void WindowManager::resize ()
+{
+    for (size_t ii = 0; ii < m_windows.size(); ii++) {
+        m_windows[ii]->resize();
+    }
 
 }

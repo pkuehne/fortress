@@ -15,10 +15,13 @@ public:
     virtual void initialise (GameEngineInterface* a_engine, void* Args = 0, void* Retval = 0);
     virtual void destroy (void);
     virtual void setDimensions (int x, int y, int width, int height);
+    virtual void setTitle (const std::string& title) { m_title = title; }
+    virtual std::string getTitle () { return m_title; }
     virtual int getXOffset() { return m_xOffset; }
     virtual int getYOffset() { return m_yOffset; }
     virtual int getWidth() { return m_width; }
     virtual int getHeight() { return m_height; }
+    virtual void resize() { setDimensions (m_xOffset, m_yOffset, m_width, m_height); }
 
     virtual void drawString (int y, int x, const char* text);
 
@@ -50,7 +53,7 @@ private:
     int                     m_yOffset;
     int                     m_width;
     int                     m_height;
-
+    std::string             m_title;
 };
 
 #endif

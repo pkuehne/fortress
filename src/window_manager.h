@@ -15,6 +15,7 @@ public:
     void replaceWindow (WindowInterface* win) ;
     WindowInterface* getActive();
     void redraw ();
+    void resize ();
 
 private:
     GameEngineInterface*            m_engine;

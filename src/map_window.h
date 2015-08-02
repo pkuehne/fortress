@@ -5,7 +5,8 @@
 
 class MapWindow : public Window {
 public:
-    virtual void initialise(GameEngineInterface* a_engine);
+    virtual void gainFocus ();
+    virtual void resize();
     virtual void redraw();
     virtual void keyDown (unsigned char key);
 

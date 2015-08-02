@@ -32,8 +32,14 @@ void Window::drawString (int y, int x, const char* text)
 
 void Window::beforeRedraw()
 {
-    getEngine()->getGraphics()->clearArea (m_yOffset, m_xOffset, m_height, m_width);
-    getEngine()->getGraphics()->drawBorder (m_yOffset, m_xOffset, m_height, m_width);
+    getEngine()->getGraphics()->clearArea (m_yOffset, m_xOffset, m_height-2, m_width-2);
+    getEngine()->getGraphics()->drawBorder (m_yOffset, m_xOffset, m_height-2, m_width-2);
+
+    int x, y;
+    getEngine()->getGraphics()->calculateWindowOffsetsFromCentre (0, m_title.size(), y, x);
+    getEngine()->getGraphics()->clearArea (m_yOffset, x-1, 1, m_title.size());
+    drawString (0, x-m_xOffset, m_title.c_str());
+
 }
 
 void Window::afterRedraw()

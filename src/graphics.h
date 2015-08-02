@@ -22,10 +22,14 @@ public:
     virtual int getScreenHeight();
     virtual int getScreenWidth();
 
+    virtual void updateScreenSize (int width, int height);
+
     virtual void setKeyboardFunc (KeyboardFuncPtr func);
     virtual void setKeyboardUpFunc (KeyboardFuncPtr func);
     virtual void setDisplayFunc (DisplayFuncPtr func);
     virtual void setMouseFunc (MouseFuncPtr func);
+    virtual void setResizeFunc (ResizeFuncPtr func);
+
 
 private:
     ConfigManager   m_config;

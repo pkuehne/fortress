@@ -13,6 +13,7 @@ public:
     virtual void replaceWindow (WindowInterface* win) = 0;
     virtual WindowInterface* getActive() = 0;
     virtual void redraw() = 0;
+    virtual void resize () = 0;
 };
 
 #endif

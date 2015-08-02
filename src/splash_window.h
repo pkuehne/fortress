@@ -5,6 +5,7 @@
 
 class SplashWindow : public Window {
 public:
+    virtual void beforeRedraw() { }
     virtual void redraw();
 };
 

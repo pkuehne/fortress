@@ -4,20 +4,20 @@
 #include "gameengine.h"
 #include "event.h"
 
-void MapWindow::initialise(GameEngineInterface* a_engine) {
-    Window::initialise (a_engine);
-
+void MapWindow::gainFocus ()
+{
     std::string l_mapName ("");
     getEngine()->loadMap(l_mapName);
 
-    setDimensions (0, 0, getEngine()->getGraphics()->getScreenWidth(), getEngine()->getGraphics()->getScreenHeight());
+    setTitle ("Map");
 }
 
 void MapWindow::redraw() {
-
-    //if (getKey(27)) exit (0);
-
     drawMap();
+}
+
+void MapWindow::resize() {
+    setDimensions (0, 0, getEngine()->getGraphics()->getScreenWidth(), getEngine()->getGraphics()->getScreenHeight());
 }
 
 void MapWindow::keyDown (unsigned char key) {
@@ -78,12 +78,10 @@ void MapWindow::keyDown (unsigned char key) {
 }
 
 void MapWindow::drawMap() {
-
-    drawString (1, 20, "Map");
     std::map<EntityId, SpriteComponent>& l_sprites = getEngine()->getEntities()->getSprites()->getAll();
     std::map<EntityId, SpriteComponent>::iterator it = l_sprites.begin();
     for (; it != l_sprites.end(); it++) {
         SpriteComponent& l_sprite = it->second;
-        getEngine()->getGraphics()->drawTile (l_sprite.yPos+getYOffset(), l_sprite.xPos+getXOffset(), l_sprite.sprite, l_sprite.fgColor, l_sprite.bgColor);
+        getEngine()->getGraphics()->drawTile (l_sprite.yPos+getYOffset()+1, l_sprite.xPos+getXOffset()+1, l_sprite.sprite, l_sprite.fgColor, l_sprite.bgColor);
     }
 }

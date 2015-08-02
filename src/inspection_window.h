@@ -7,7 +7,8 @@ class InspectionWindow : public Window {
 public:
     void keyDown (unsigned char key);
     void redraw();
-
+    void resize();
+    
     void gainFocus();
     void loseFocus();
 };
