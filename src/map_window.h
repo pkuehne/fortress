@@ -14,8 +14,12 @@ private:
     void drawMap ();
 
 private:
-    int m_mapXOffset;
-    int m_mapYOffset;
+    unsigned int m_mapXOffset;
+    unsigned int m_mapYOffset;
+    unsigned int m_mapWidth;
+    unsigned int m_mapHeight;
+    int m_mapStartX;
+    int m_mapStartY;
 };
 
 #endif

@@ -13,6 +13,10 @@ void MapWindow::gainFocus ()
 
     m_mapXOffset = 1;
     m_mapYOffset = 5;
+    m_mapStartX = 0;
+    m_mapStartY = 0;
+    m_mapWidth  = 20;
+    m_mapHeight = 20;
 }
 
 void MapWindow::redraw() {
@@ -32,9 +36,9 @@ void MapWindow::keyDown (unsigned char key) {
         DIRECTION l_dir = Direction::None;
         switch (key) {
             case 'w': l_dir = Direction::North; break;
-            case 'a': l_dir = Direction::West; break;
+            case 'a': l_dir = Direction::West;  break;
             case 's': l_dir = Direction::South; break;
-            case 'd': l_dir = Direction::East; break;
+            case 'd': l_dir = Direction::East;  break;
         }
 
         if (action == 'm') {
@@ -81,14 +85,28 @@ void MapWindow::keyDown (unsigned char key) {
 }
 
 void MapWindow::drawMap() {
+
     std::map<EntityId, SpriteComponent>& l_sprites = getEngine()->getEntities()->getSprites()->getAll();
     std::map<EntityId, SpriteComponent>::iterator it = l_sprites.begin();
+    SpriteComponent* l_player = getEngine()->getEntities()->getSprites()->get (getEngine()->getEntities()->getPlayer()->getId());
+    if (l_player) {
+        m_mapStartX = l_player->xPos - (m_mapWidth/2);
+        m_mapStartY = l_player->yPos - (m_mapHeight/2);
+    }
     for (; it != l_sprites.end(); it++) {
         SpriteComponent& l_sprite = it->second;
-        drawTile (  l_sprite.yPos + m_mapYOffset,
-                    l_sprite.xPos + m_mapXOffset,
-                    l_sprite.sprite,
-                    l_sprite.fgColor,
-                    l_sprite.bgColor);
+        int x = l_sprite.xPos;
+        int y = l_sprite.yPos;
+        int xWidth = m_mapStartX + m_mapWidth;
+        int yWidth = m_mapStartY + m_mapHeight;
+        if (x >= m_mapStartX && x < xWidth &&
+            y >= m_mapStartY && y < yWidth) {
+
+            drawTile (  l_sprite.yPos + m_mapYOffset - m_mapStartY,
+                        l_sprite.xPos + m_mapXOffset - m_mapStartX,
+                        l_sprite.sprite,
+                        l_sprite.fgColor,
+                        l_sprite.bgColor);
+        }
     }
 }
