@@ -12,19 +12,22 @@ void MapWindow::gainFocus ()
     setTitle ("Map");
 
     m_mapXOffset = 1;
-    m_mapYOffset = 5;
+    m_mapYOffset = 9;
     m_mapStartX = 0;
     m_mapStartY = 0;
     m_mapWidth  = 20;
-    m_mapHeight = 20;
+    m_mapHeight = 25;
 }
 
 void MapWindow::redraw() {
+    drawSeparators();
     drawMap();
 }
 
 void MapWindow::resize() {
     setDimensions (0, 0, getEngine()->getGraphics()->getScreenWidth(), getEngine()->getGraphics()->getScreenHeight());
+    m_mapWidth  = getWidth() - m_mapXOffset - 1;
+    m_mapHeight = getHeight() - m_mapYOffset - 1;
 }
 
 void MapWindow::keyDown (unsigned char key) {
@@ -82,6 +85,10 @@ void MapWindow::keyDown (unsigned char key) {
     if (key == '.') {
         getEngine()->swapTurn();
     }
+}
+
+void MapWindow::drawSeparators() {
+    getEngine()->getGraphics()->drawBorder (m_mapYOffset-1, m_mapXOffset-1, m_mapHeight, m_mapWidth);
 }
 
 void MapWindow::drawMap() {
