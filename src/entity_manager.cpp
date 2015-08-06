@@ -10,7 +10,7 @@ void EntityManager::initialise (GameEngineInterface* engine)
     m_player = 0;
 }
 
-Entity* EntityManager::createEntity (const std::string& name) {
+EntityId EntityManager::createEntity (const std::string& name) {
     Entity* l_entity = new Entity();
     l_entity->setId (maxId++);
     l_entity->setName (name);
@@ -21,7 +21,7 @@ Entity* EntityManager::createEntity (const std::string& name) {
     l_event->entity = l_entity->getId();
     m_engine->raiseEvent (l_event);
 
-    return l_entity;
+    return l_entity->getId();
 }
 
 void EntityManager::destroyEntity (EntityId id) {
@@ -59,10 +59,10 @@ Entity* EntityManager::getEntity (EntityId id) {
     return it->second;
 }
 
-Entity* EntityManager::createWallPrefab (unsigned int x, unsigned int y)
+EntityId EntityManager::createWallPrefab (unsigned int x, unsigned int y)
 {
-    Entity* l_entity = createEntity("Wall");
-    l_entity->addTag (WALL);
+    EntityId l_entity = createEntity("Wall");
+    //l_entity->addTag (WALL);
     // Sprite Component
     SpriteComponent l_sprite;
     l_sprite.fgColor    = Color (GREY);
@@ -70,23 +70,23 @@ Entity* EntityManager::createWallPrefab (unsigned int x, unsigned int y)
     l_sprite.sprite     = 'W';
     l_sprite.xPos       = x;
     l_sprite.yPos       = y;
-    getSprites()->add (l_entity->getId(), l_sprite);
+    getSprites()->add (l_entity, l_sprite);
 
     // Collider Component
     ColliderComponent l_collider;
-    getColliders()->add (l_entity->getId(), l_collider);
+    getColliders()->add (l_entity, l_collider);
 
     DescriptionComponent l_description;
     l_description.title = "Wall";
     l_description.text = "A smooth granite wall";
-    getDescriptions()->add (l_entity->getId(), l_description);
+    getDescriptions()->add (l_entity, l_description);
     return l_entity;
 }
 
-Entity* EntityManager::createPlayerPrefab (unsigned int x, unsigned int y)
+EntityId EntityManager::createPlayerPrefab (unsigned int x, unsigned int y)
 {
-    Entity* l_entity = createEntity("Player");
-    l_entity->addTag (PLAYER);
+    EntityId l_entity = createEntity("Player");
+    //l_entity->addTag (PLAYER);
 
     // Sprite Component
     SpriteComponent l_sprite;
@@ -95,31 +95,31 @@ Entity* EntityManager::createPlayerPrefab (unsigned int x, unsigned int y)
     l_sprite.sprite     = '@';
     l_sprite.xPos       = x;
     l_sprite.yPos       = y;
-    getSprites()->add (l_entity->getId(), l_sprite);
+    getSprites()->add (l_entity, l_sprite);
 
 
     // Collider Component
     ColliderComponent l_collider;
-    getColliders()->add (l_entity->getId(), l_collider);
+    getColliders()->add (l_entity, l_collider);
 
     // Description Component
     DescriptionComponent l_description;
     l_description.title = "You";
     l_description.text = "Time for introspection";
-    getDescriptions()->add (l_entity->getId(), l_description);
+    getDescriptions()->add (l_entity, l_description);
 
     // Health Component
     HealthComponent l_health;
     l_health.health = 1;
-    getHealths()->add (l_entity->getId(), l_health);
+    getHealths()->add (l_entity, l_health);
 
     return l_entity;
 }
 
-Entity* EntityManager::createEnemyPrefab (unsigned int x, unsigned int y)
+EntityId EntityManager::createEnemyPrefab (unsigned int x, unsigned int y)
 {
-    Entity* l_entity = createEntity("Orc");
-    l_entity->addTag (MONSTER);
+    EntityId l_entity = createEntity("Orc");
+    //l_entity->addTag (MONSTER);
 
     // Sprite Component
     SpriteComponent l_sprite;
@@ -128,29 +128,29 @@ Entity* EntityManager::createEnemyPrefab (unsigned int x, unsigned int y)
     l_sprite.sprite     = 'O';
     l_sprite.xPos       = x;
     l_sprite.yPos       = y;
-    getSprites()->add (l_entity->getId(), l_sprite);
+    getSprites()->add (l_entity, l_sprite);
 
     // Collider Component
     ColliderComponent l_collider;
-    getColliders()->add (l_entity->getId(), l_collider);
+    getColliders()->add (l_entity, l_collider);
 
     // Description Component
     DescriptionComponent l_description;
     l_description.title = "Orc";
     l_description.text = "A vile, stinking creature";
-    getDescriptions()->add (l_entity->getId(), l_description);
+    getDescriptions()->add (l_entity, l_description);
 
     // Health Component
     HealthComponent l_health;
     l_health.health = 1;
-    getHealths()->add (l_entity->getId(), l_health);
+    getHealths()->add (l_entity, l_health);
 
     return l_entity;
 }
 
-Entity* EntityManager::createTilePrefab (unsigned int x, unsigned int y)
+EntityId EntityManager::createTilePrefab (unsigned int x, unsigned int y)
 {
-    Entity* l_entity = createEntity("Tile");
+    EntityId l_entity = createEntity("Tile");
 
     //Sprite Component
     SpriteComponent l_sprite;
@@ -159,13 +159,13 @@ Entity* EntityManager::createTilePrefab (unsigned int x, unsigned int y)
     l_sprite.sprite     = '.';
     l_sprite.xPos       = x;
     l_sprite.yPos       = y;
-    getSprites()->add (l_entity->getId(), l_sprite);
+    getSprites()->add (l_entity, l_sprite);
 
     // Description Component
     DescriptionComponent l_description;
     l_description.title = "Floor tile";
     l_description.text = "It's a bit scuffed";
-    getDescriptions()->add (l_entity->getId(), l_description);
+    getDescriptions()->add (l_entity, l_description);
 
     return l_entity;
 }

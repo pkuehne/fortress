@@ -17,14 +17,14 @@ public:
     void initialise (GameEngineInterface* engine);
     void destroy() {}
 
-    Entity* createEntity (const std::string& name);
+    EntityId createEntity (const std::string& name);
     void destroyEntity (EntityId);
     EntityId getPlayer ();
 
-    Entity* createWallPrefab (unsigned int x, unsigned int y);
-    Entity* createPlayerPrefab (unsigned int x, unsigned int y);
-    Entity* createEnemyPrefab (unsigned int x, unsigned int y);
-    Entity* createTilePrefab (unsigned int x, unsigned int y);
+    EntityId createWallPrefab (unsigned int x, unsigned int y);
+    EntityId createPlayerPrefab (unsigned int x, unsigned int y);
+    EntityId createEnemyPrefab (unsigned int x, unsigned int y);
+    EntityId createTilePrefab (unsigned int x, unsigned int y);
 
     ComponentManagerInterface<SpriteComponent>* getSprites() { return &m_sprites; }
     ComponentManagerInterface<ColliderComponent>* getColliders() { return &m_colliders; }
