@@ -47,13 +47,13 @@ void MapWindow::keyDown (unsigned char key) {
 
         if (action == 'm') {
             MoveEntityEvent* l_event = new MoveEntityEvent;
-            l_event->entity = getEngine()->getEntities()->getPlayer()->getId();
+            l_event->entity = getEngine()->getEntities()->getPlayer();
             l_event->direction = l_dir;
             getEngine()->raiseEvent (l_event);
         }
         if (action == 'k') {
             AttackEntityEvent* l_event = new AttackEntityEvent;
-            l_event->entity = getEngine()->getEntities()->getPlayer()->getId();
+            l_event->entity = getEngine()->getEntities()->getPlayer();
             l_event->direction = l_dir;
             getEngine()->raiseEvent (l_event);
         }
@@ -96,7 +96,7 @@ void MapWindow::drawMap() {
 
     std::map<EntityId, SpriteComponent>& l_sprites = getEngine()->getEntities()->getSprites()->getAll();
     std::map<EntityId, SpriteComponent>::iterator it = l_sprites.begin();
-    SpriteComponent* l_player = getEngine()->getEntities()->getSprites()->get (getEngine()->getEntities()->getPlayer()->getId());
+    SpriteComponent* l_player = getEngine()->getEntities()->getSprites()->get (getEngine()->getEntities()->getPlayer());
     if (l_player) {
         m_mapStartX = l_player->xPos - (m_mapWidth/2);
         m_mapStartY = l_player->yPos - (m_mapHeight/2);

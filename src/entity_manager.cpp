@@ -40,12 +40,12 @@ void EntityManager::destroyEntity (EntityId id) {
 }
 
 
-Entity* EntityManager::getPlayer () {
+EntityId EntityManager::getPlayer () {
     if (m_player == 0) {
         std::map<EntityId, Entity*>::iterator it = m_idMap.begin();
         for (; it != m_idMap.end(); it++) {
             if (it->second->hasTag(PLAYER)) {
-                m_player = it->second;
+                m_player = it->first;
             }
         }
     }
@@ -195,11 +195,11 @@ std::vector<EntityId> EntityManager::findEntitiesNear (unsigned int x, unsigned 
 
 }
 
-std::vector<EntityId> EntityManager::findEntitiesToThe (DIRECTION a_direction, Entity* a_entity)
+std::vector<EntityId> EntityManager::findEntitiesToThe (DIRECTION a_direction, EntityId a_entity)
 {
     std::vector<EntityId> l_entities;
 
-    SpriteComponent* l_sprite = m_engine->getEntities()->getSprites()->get (a_entity->getId());
+    SpriteComponent* l_sprite = m_engine->getEntities()->getSprites()->get (a_entity);
     if (!l_sprite) return l_entities;
     unsigned int newX = l_sprite->xPos;
     unsigned int newY = l_sprite->yPos;

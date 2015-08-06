@@ -20,7 +20,7 @@ public:
 
     virtual Entity* createEntity (const std::string& name) = 0;
     virtual void destroyEntity (EntityId id) = 0;
-    virtual Entity* getPlayer () = 0;
+    virtual EntityId getPlayer () = 0;
 
 
     virtual Entity* createWallPrefab (unsigned int x, unsigned int y) = 0;
@@ -34,10 +34,10 @@ public:
     virtual ComponentManagerInterface<DescriptionComponent>* getDescriptions() = 0;
 
     virtual Entity* getEntity (EntityId id) = 0;
-    
+
     virtual std::vector<EntityId> findEntitiesNear (unsigned int x, unsigned int y, unsigned radius) = 0;
     virtual std::vector<EntityId> findEntitiesAt (unsigned int x, unsigned int y) = 0;
-    virtual std::vector<EntityId> findEntitiesToThe (DIRECTION a_direction, Entity* a_entity) = 0;
+    virtual std::vector<EntityId> findEntitiesToThe (DIRECTION a_direction, EntityId a_entity) = 0;
 
 };
 

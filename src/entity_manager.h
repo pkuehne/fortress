@@ -19,7 +19,7 @@ public:
 
     Entity* createEntity (const std::string& name);
     void destroyEntity (EntityId);
-    Entity* getPlayer ();
+    EntityId getPlayer ();
 
     Entity* createWallPrefab (unsigned int x, unsigned int y);
     Entity* createPlayerPrefab (unsigned int x, unsigned int y);
@@ -35,13 +35,13 @@ public:
 
     std::vector<EntityId> findEntitiesNear (unsigned int x, unsigned int y, unsigned radius);
     std::vector<EntityId> findEntitiesAt (unsigned int x, unsigned int y);
-    std::vector<EntityId> findEntitiesToThe (DIRECTION a_direction, Entity* a_entity);
+    std::vector<EntityId> findEntitiesToThe (DIRECTION a_direction, EntityId a_entity);
 
 
 private:
     GameEngineInterface*                m_engine;
     unsigned long                       maxId;
-    Entity*                             m_player;
+    EntityId                            m_player;
     std::map<EntityId, Entity*>         m_idMap;
     std::map<std::string, Entity*>      m_nameMap;
     ComponentManager<SpriteComponent>   m_sprites;

@@ -18,21 +18,21 @@ void NpcSystem::update ()
 
         DIRECTION dir = Direction::None;
         // Check if player is attackable
-        dir = getPlayerDirectionIfAttackable (l_entity);
+        dir = getPlayerDirectionIfAttackable (iter->first);
         if (dir != Direction::None) {
             AttackEntityEvent* l_event = new AttackEntityEvent;
-            l_event->entity = l_entity->getId();
+            l_event->entity = iter->first;
             l_event->direction = dir;
             getEngineRef()->raiseEvent (l_event);
         }
 
         // Check if player is nearby
-        dir = getPlayerDirectionIfNearby (l_entity);
+        dir = getPlayerDirectionIfNearby (iter->first);
         if (dir == Direction::None) {
             dir = getRandomDirection();
         }
         MoveEntityEvent* l_event = new MoveEntityEvent();
-        l_event->entity = l_entity->getId();
+        l_event->entity = iter->first;
         l_event->direction = dir;
         getEngineRef()->raiseEvent (l_event);
     }
@@ -43,11 +43,11 @@ DIRECTION NpcSystem::getRandomDirection () {
     return rand () % Direction::NorthEast;
 }
 
-DIRECTION NpcSystem::getPlayerDirectionIfNearby (Entity* enemy)
+DIRECTION NpcSystem::getPlayerDirectionIfNearby (EntityId enemy)
 {
-    Entity* player = getEngineRef()->getEntities()->getPlayer();
-    SpriteComponent* playerSprite = getEngineRef()->getEntities()->getSprites()->get (player->getId());
-    SpriteComponent* enemySprite = getEngineRef()->getEntities()->getSprites()->get (enemy->getId());
+    EntityId player = getEngineRef()->getEntities()->getPlayer();
+    SpriteComponent* playerSprite = getEngineRef()->getEntities()->getSprites()->get (player);
+    SpriteComponent* enemySprite = getEngineRef()->getEntities()->getSprites()->get (enemy);
 
     int xDiff = playerSprite->xPos - enemySprite->xPos;
     int yDiff = playerSprite->yPos - enemySprite->yPos;
@@ -67,10 +67,10 @@ DIRECTION NpcSystem::getPlayerDirectionIfNearby (Entity* enemy)
     return Direction::None;
 }
 
-DIRECTION NpcSystem::getPlayerDirectionIfAttackable (Entity* entity) {
+DIRECTION NpcSystem::getPlayerDirectionIfAttackable (EntityId entity) {
 
     std::vector<EntityId> l_entities;
-    EntityId player = getEngineRef()->getEntities()->getPlayer()->getId();
+    EntityId player = getEngineRef()->getEntities()->getPlayer();
 
     l_entities = getEngineRef()->getEntities()->findEntitiesToThe (Direction::North, entity);
     for (size_t ii = 0; ii < l_entities.size(); ii++) {
