@@ -13,6 +13,7 @@ public:
 private:
     void drawMap ();
     void drawSeparators();
+    void drawMessages();
 
 private:
     unsigned int m_mapXOffset;

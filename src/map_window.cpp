@@ -22,6 +22,7 @@ void MapWindow::gainFocus ()
 void MapWindow::redraw() {
     drawSeparators();
     drawMap();
+    drawMessages();
 }
 
 void MapWindow::resize() {
@@ -115,5 +116,23 @@ void MapWindow::drawMap() {
                         l_sprite.fgColor,
                         l_sprite.bgColor);
         }
+    }
+}
+
+void MapWindow::drawMessages()
+{
+    std::vector<Message>& l_messages = getEngine()->getMessages();
+    size_t ii = l_messages.size();
+    size_t hh = m_mapYOffset-2;
+
+    for (; ii > 0 && hh > 0; hh--, ii--) {
+        Color fg;
+        switch (l_messages[ii-1].severity) {
+            case INFO: fg = Color (WHITE); break;
+            case WARN: fg = Color (RED); break;
+            case GOOD: fg = Color (GREEN); break;
+            case CRIT: fg = Color (BLUE); break;
+        }
+        drawString (hh, 1, l_messages[ii-1].message.c_str(), fg);
     }
 }
