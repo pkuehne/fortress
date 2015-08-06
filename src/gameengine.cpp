@@ -86,6 +86,7 @@ void GameEngine::initialise ()
     m_graphics->setMouseFunc    (mouseClick);
     m_graphics->setResizeFunc   (resize);
 
+    addMessage (INFO, "The air smells of Orc!");
 }
 
 void GameEngine::loadMap (const std::string& mapName)
@@ -114,4 +115,11 @@ void GameEngine::tick ()
 //    getWindows()->getActive()->afterRedraw();
 
     return;
+}
+
+void GameEngine::addMessage (const MessageType& severity, const std::string& message)
+{
+    Message msg;
+    msg.severity = severity;
+    msg.message = message;
 }

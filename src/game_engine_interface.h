@@ -11,6 +11,18 @@ class Event;
 class WindowManagerInterface;
 class GameSystemInterface;
 
+typedef enum {
+    GOOD    = 1,
+    INFO    = 0,
+    WARN    = 2,
+    CRIT    = 3
+} MessageType;
+
+typedef struct {
+    MessageType severity;
+    std::string message;
+} Message;
+
 class GameEngineInterface
 {
 public:
@@ -35,6 +47,10 @@ public:
     virtual GraphicsInterface* getGraphics() = 0;
 
     virtual void addSystem (GameSystemInterface* a_system) = 0;
+
+    virtual void addMessage (const Message& message) = 0;
+    virtual void addMessage (const MessageType&, const std::string& message) = 0 ;
+    virtual std::vector<Message>& getMessages() = 0;
 
 };
 
