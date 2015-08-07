@@ -50,12 +50,6 @@ EntityId EntityManager::getPlayer () {
 }
 
 
-Entity* EntityManager::getEntity (EntityId id) {
-    std::map<EntityId, Entity*>::iterator it = m_idMap.find (id);
-    if (it == m_idMap.end()) return 0;
-    return it->second;
-}
-
 EntityId EntityManager::createWallPrefab (unsigned int x, unsigned int y)
 {
     EntityId l_entity = createEntity("Wall");

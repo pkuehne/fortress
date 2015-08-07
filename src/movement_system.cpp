@@ -9,8 +9,8 @@ void MovementSystem::handleEvent (const Event* event)
     switch (event->getType()) {
         case EVENT_MOVE_ENTITY: {
             const MoveEntityEvent* l_event = dynamic_cast<const MoveEntityEvent*> (event);
-            Entity* l_entity = m_engine->getEntities()->getEntity(l_event->entity);
-            SpriteComponent* l_sprite = m_engine->getEntities()->getSprites()->get (l_entity->getId());
+            EntityId l_entity =l_event->entity;
+            SpriteComponent* l_sprite = m_engine->getEntities()->getSprites()->get (l_entity);
             if (!l_sprite) return;
             unsigned int newX = l_sprite->xPos;
             unsigned int newY = l_sprite->yPos;

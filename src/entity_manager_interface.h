@@ -37,8 +37,6 @@ public:
     virtual ComponentManagerInterface<PlayerComponent>* getPlayers() = 0;
     virtual ComponentManagerInterface<NpcComponent>* getNpcs() = 0;
 
-    virtual Entity* getEntity (EntityId id) = 0;
-
     virtual std::vector<EntityId> findEntitiesNear (unsigned int x, unsigned int y, unsigned radius) = 0;
     virtual std::vector<EntityId> findEntitiesAt (unsigned int x, unsigned int y) = 0;
     virtual std::vector<EntityId> findEntitiesToThe (DIRECTION a_direction, EntityId a_entity) = 0;

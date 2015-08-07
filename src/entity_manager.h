@@ -33,8 +33,6 @@ public:
     ComponentManagerInterface<PlayerComponent>* getPlayers() { return &m_players; }
     ComponentManagerInterface<NpcComponent>* getNpcs() { return &m_npcs; }
 
-    Entity* getEntity (EntityId id);
-
     std::vector<EntityId> findEntitiesNear (unsigned int x, unsigned int y, unsigned radius);
     std::vector<EntityId> findEntitiesAt (unsigned int x, unsigned int y);
     std::vector<EntityId> findEntitiesToThe (DIRECTION a_direction, EntityId a_entity);
