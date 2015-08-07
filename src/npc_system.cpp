@@ -13,8 +13,9 @@ void NpcSystem::update ()
     std::map<EntityId, SpriteComponent>::iterator iter = l_sprites.begin();
 
     for (; iter != l_sprites.end(); iter++) {
-        Entity* l_entity = getEngineRef()->getEntities()->getEntity (iter->first);
-        if (!l_entity->hasTag (MONSTER)) continue;
+        EntityId l_entity = iter->first;
+        NpcComponent* l_npc = getEngineRef()->getEntities()->getNpcs()->get (l_entity);
+        if (l_npc == 0) continue;
 
         DIRECTION dir = Direction::None;
         // Check if player is attackable

@@ -8,6 +8,8 @@ class Entity;
 #include <collider_component.h>
 #include <health_component.h>
 #include <description_component.h>
+#include <player_component.h>
+#include <npc_component.h>
 #include <vector>
 #include <utility.h>
 
@@ -32,6 +34,8 @@ public:
     virtual ComponentManagerInterface<ColliderComponent>* getColliders() = 0;
     virtual ComponentManagerInterface<HealthComponent>* getHealths() = 0;
     virtual ComponentManagerInterface<DescriptionComponent>* getDescriptions() = 0;
+    virtual ComponentManagerInterface<PlayerComponent>* getPlayers() = 0;
+    virtual ComponentManagerInterface<NpcComponent>* getNpcs() = 0;
 
     virtual Entity* getEntity (EntityId id) = 0;
 

@@ -11,7 +11,7 @@ void SpriteSystem::handleEvent (const Event* event) {
             Entity* l_entity = m_engine->getEntities()->getEntity (l_event->entity);
             if (!l_entity) break;
             if (l_entity->getName() == "Wall") {
-                handleAddWallEvent (l_entity);
+                handleAddWallEvent (l_event->entity);
             }
             break;
         }
@@ -19,16 +19,16 @@ void SpriteSystem::handleEvent (const Event* event) {
     }
 }
 
-void SpriteSystem::handleAddWallEvent (Entity* a_entity) {
+void SpriteSystem::handleAddWallEvent (EntityId a_entity) {
     updateWallSprite (a_entity);
 
-    SpriteComponent* l_sprite = m_engine->getEntities()->getSprites()->get (a_entity->getId());
+    SpriteComponent* l_sprite = m_engine->getEntities()->getSprites()->get (a_entity);
     if (!l_sprite) return;
 
-    Entity* left    = findWallEntity (l_sprite->xPos-1, l_sprite->yPos);
-    Entity* up      = findWallEntity (l_sprite->xPos, l_sprite->yPos-1);
-    Entity* right   = findWallEntity (l_sprite->xPos+1, l_sprite->yPos);
-    Entity* down    = findWallEntity (l_sprite->xPos, l_sprite->yPos+1);
+    EntityId left   = findWallEntity (l_sprite->xPos-1, l_sprite->yPos);
+    EntityId up     = findWallEntity (l_sprite->xPos, l_sprite->yPos-1);
+    EntityId right  = findWallEntity (l_sprite->xPos+1, l_sprite->yPos);
+    EntityId down   = findWallEntity (l_sprite->xPos, l_sprite->yPos+1);
 
     if (left)   updateWallSprite (left);
     if (up)     updateWallSprite (up);
@@ -36,14 +36,14 @@ void SpriteSystem::handleAddWallEvent (Entity* a_entity) {
     if (down)   updateWallSprite (down);
 }
 
-void SpriteSystem::updateWallSprite (Entity* a_entity) {
-    SpriteComponent* l_sprite = m_engine->getEntities()->getSprites()->get (a_entity->getId());
+void SpriteSystem::updateWallSprite (EntityId a_entity) {
+    SpriteComponent* l_sprite = m_engine->getEntities()->getSprites()->get (a_entity);
     if (!l_sprite) return;
 
-    Entity* left    = findWallEntity (l_sprite->xPos-1, l_sprite->yPos);
-    Entity* up      = findWallEntity (l_sprite->xPos, l_sprite->yPos-1);
-    Entity* right   = findWallEntity (l_sprite->xPos+1, l_sprite->yPos);
-    Entity* down    = findWallEntity (l_sprite->xPos, l_sprite->yPos+1);
+    EntityId left   = findWallEntity (l_sprite->xPos-1, l_sprite->yPos);
+    EntityId up     = findWallEntity (l_sprite->xPos, l_sprite->yPos-1);
+    EntityId right  = findWallEntity (l_sprite->xPos+1, l_sprite->yPos);
+    EntityId down   = findWallEntity (l_sprite->xPos, l_sprite->yPos+1);
 
     int sprite_key = 0;
     if (left)   sprite_key |= 8;
@@ -72,14 +72,15 @@ void SpriteSystem::updateWallSprite (Entity* a_entity) {
 
 }
 
-Entity* SpriteSystem::findWallEntity (unsigned int x, unsigned int y) {
+EntityId SpriteSystem::findWallEntity (unsigned int x, unsigned int y) {
     std::map<EntityId, SpriteComponent>& l_sprites = m_engine->getEntities()->getSprites()->getAll();
     std::map<EntityId, SpriteComponent>::iterator iter = l_sprites.begin();
     for (; iter != l_sprites.end(); iter++) {
-        Entity* l_entity = m_engine->getEntities()->getEntity(iter->first);
+        EntityId l_entity = iter->first;
+        DescriptionComponent* l_desc = m_engine->getEntities()->getDescriptions()->get (l_entity);
         if (iter->second.xPos == x &&
             iter->second.yPos == y &&
-            l_entity->hasTag(WALL)) {
+            l_desc->title == "Wall") {
             return l_entity;
         }
     }

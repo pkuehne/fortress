@@ -5,7 +5,7 @@
 
 void EntityManager::initialise (GameEngineInterface* engine)
 {
-    maxId = 0;
+    maxId = 1;
     m_engine = engine;
     m_player = 0;
 }
@@ -42,12 +42,9 @@ void EntityManager::destroyEntity (EntityId id) {
 
 EntityId EntityManager::getPlayer () {
     if (m_player == 0) {
-        std::map<EntityId, Entity*>::iterator it = m_idMap.begin();
-        for (; it != m_idMap.end(); it++) {
-            if (it->second->hasTag(PLAYER)) {
-                m_player = it->first;
-            }
-        }
+        std::map<EntityId, PlayerComponent>& l_players = getPlayers()->getAll();
+        std::map<EntityId, PlayerComponent>::iterator iter = l_players.begin();
+        m_player = iter->first;
     }
     return m_player;
 }
@@ -62,7 +59,7 @@ Entity* EntityManager::getEntity (EntityId id) {
 EntityId EntityManager::createWallPrefab (unsigned int x, unsigned int y)
 {
     EntityId l_entity = createEntity("Wall");
-    //l_entity->addTag (WALL);
+
     // Sprite Component
     SpriteComponent l_sprite;
     l_sprite.fgColor    = Color (GREY);
@@ -86,7 +83,6 @@ EntityId EntityManager::createWallPrefab (unsigned int x, unsigned int y)
 EntityId EntityManager::createPlayerPrefab (unsigned int x, unsigned int y)
 {
     EntityId l_entity = createEntity("Player");
-    //l_entity->addTag (PLAYER);
 
     // Sprite Component
     SpriteComponent l_sprite;
@@ -113,13 +109,16 @@ EntityId EntityManager::createPlayerPrefab (unsigned int x, unsigned int y)
     l_health.health = 1;
     getHealths()->add (l_entity, l_health);
 
+    // Player Component
+    PlayerComponent l_player;
+    getPlayers()->add (l_entity, l_player);
+
     return l_entity;
 }
 
 EntityId EntityManager::createEnemyPrefab (unsigned int x, unsigned int y)
 {
     EntityId l_entity = createEntity("Orc");
-    //l_entity->addTag (MONSTER);
 
     // Sprite Component
     SpriteComponent l_sprite;
@@ -144,6 +143,10 @@ EntityId EntityManager::createEnemyPrefab (unsigned int x, unsigned int y)
     HealthComponent l_health;
     l_health.health = 1;
     getHealths()->add (l_entity, l_health);
+
+    // NPC Component
+    NpcComponent l_npc;
+    getNpcs()->add (l_entity, l_npc);
 
     return l_entity;
 }

@@ -30,6 +30,8 @@ public:
     ComponentManagerInterface<ColliderComponent>* getColliders() { return &m_colliders; }
     ComponentManagerInterface<HealthComponent>* getHealths() { return &m_healths; }
     ComponentManagerInterface<DescriptionComponent>* getDescriptions() { return &m_descriptions; }
+    ComponentManagerInterface<PlayerComponent>* getPlayers() { return &m_players; }
+    ComponentManagerInterface<NpcComponent>* getNpcs() { return &m_npcs; }
 
     Entity* getEntity (EntityId id);
 
@@ -48,6 +50,8 @@ private:
     ComponentManager<ColliderComponent> m_colliders;
     ComponentManager<HealthComponent>   m_healths;
     ComponentManager<DescriptionComponent>  m_descriptions;
+    ComponentManager<PlayerComponent>   m_players;
+    ComponentManager<NpcComponent>      m_npcs;
 };
 
 #endif
