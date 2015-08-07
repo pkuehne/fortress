@@ -2,9 +2,9 @@
 #define LOCATION_COMPONENT_H
 
 struct LocationComponent {
-    size_t x;
-    size_t y;
-    size_t z;
+    unsigned int x;
+    unsigned int y;
+    unsigned int z;
     LocationComponent(): x(0), y(0), z(0) { }
 };
 

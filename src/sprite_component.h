@@ -8,8 +8,6 @@ struct SpriteComponent
     Color           fgColor;
     Color           bgColor;
     unsigned int    sprite;
-    unsigned int    xPos;
-    unsigned int    yPos;
 };
 
 #endif

@@ -96,22 +96,23 @@ void MapWindow::drawMap() {
 
     std::map<EntityId, SpriteComponent>& l_sprites = getEngine()->getEntities()->getSprites()->getAll();
     std::map<EntityId, SpriteComponent>::iterator it = l_sprites.begin();
-    SpriteComponent* l_player = getEngine()->getEntities()->getSprites()->get (getEngine()->getEntities()->getPlayer());
+    LocationComponent* l_player = getEngine()->getEntities()->getLocations()->get (getEngine()->getEntities()->getPlayer());
     if (l_player) {
-        m_mapStartX = l_player->xPos - (m_mapWidth/2);
-        m_mapStartY = l_player->yPos - (m_mapHeight/2);
+        m_mapStartX = l_player->x - (m_mapWidth/2);
+        m_mapStartY = l_player->y - (m_mapHeight/2);
     }
     for (; it != l_sprites.end(); it++) {
         SpriteComponent& l_sprite = it->second;
-        int x = l_sprite.xPos;
-        int y = l_sprite.yPos;
+        LocationComponent* l_location = getEngine()->getEntities()->getLocations()->get (it->first);
+        int x = l_location->x;
+        int y = l_location->y;
         int xWidth = m_mapStartX + m_mapWidth;
         int yWidth = m_mapStartY + m_mapHeight;
         if (x >= m_mapStartX && x < xWidth &&
             y >= m_mapStartY && y < yWidth) {
 
-            drawTile (  l_sprite.yPos + m_mapYOffset - m_mapStartY,
-                        l_sprite.xPos + m_mapXOffset - m_mapStartX,
+            drawTile (  l_location->y + m_mapYOffset - m_mapStartY,
+                        l_location->x + m_mapXOffset - m_mapStartX,
                         l_sprite.sprite,
                         l_sprite.fgColor,
                         l_sprite.bgColor);

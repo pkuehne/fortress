@@ -47,11 +47,11 @@ DIRECTION NpcSystem::getRandomDirection () {
 DIRECTION NpcSystem::getPlayerDirectionIfNearby (EntityId enemy)
 {
     EntityId player = getEngineRef()->getEntities()->getPlayer();
-    SpriteComponent* playerSprite = getEngineRef()->getEntities()->getSprites()->get (player);
-    SpriteComponent* enemySprite = getEngineRef()->getEntities()->getSprites()->get (enemy);
+    LocationComponent* playerLoc = getEngineRef()->getEntities()->getLocations()->get (player);
+    LocationComponent* enemyLoc = getEngineRef()->getEntities()->getLocations()->get (enemy);
 
-    int xDiff = playerSprite->xPos - enemySprite->xPos;
-    int yDiff = playerSprite->yPos - enemySprite->yPos;
+    int xDiff = playerLoc->x - enemyLoc->x;
+    int yDiff = playerLoc->y - enemyLoc->y;
     if ((xDiff > -5 && xDiff < 5) &&
         (yDiff > -5 && yDiff < 5)) {
         if (abs(xDiff) > abs(yDiff)) {

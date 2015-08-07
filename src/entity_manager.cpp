@@ -51,14 +51,16 @@ EntityId EntityManager::createWallPrefab (unsigned int x, unsigned int y)
     EntityId l_entity = createEntity();
 
     // Location Component
+    LocationComponent l_loc;
+    l_loc.x = x;
+    l_loc.y = y;
+    getLocations()->add (l_entity, l_loc);
 
     // Sprite Component
     SpriteComponent l_sprite;
     l_sprite.fgColor    = Color (GREY);
     l_sprite.bgColor    = Color (BLACK);
     l_sprite.sprite     = 'W';
-    l_sprite.xPos       = x;
-    l_sprite.yPos       = y;
     getSprites()->add (l_entity, l_sprite);
 
     // Collider Component
@@ -76,13 +78,17 @@ EntityId EntityManager::createPlayerPrefab (unsigned int x, unsigned int y)
 {
     EntityId l_entity = createEntity();
 
+    // Location Component
+    LocationComponent l_loc;
+    l_loc.x = x;
+    l_loc.y = y;
+    getLocations()->add (l_entity, l_loc);
+
     // Sprite Component
     SpriteComponent l_sprite;
     l_sprite.fgColor    = Color (WHITE);
     l_sprite.bgColor    = Color (BLACK);
     l_sprite.sprite     = '@';
-    l_sprite.xPos       = x;
-    l_sprite.yPos       = y;
     getSprites()->add (l_entity, l_sprite);
 
 
@@ -112,13 +118,17 @@ EntityId EntityManager::createEnemyPrefab (unsigned int x, unsigned int y)
 {
     EntityId l_entity = createEntity();
 
+    // Location Component
+    LocationComponent l_loc;
+    l_loc.x = x;
+    l_loc.y = y;
+    getLocations()->add (l_entity, l_loc);
+
     // Sprite Component
     SpriteComponent l_sprite;
     l_sprite.fgColor    = Color (RED);
     l_sprite.bgColor    = Color (BLACK);
     l_sprite.sprite     = 'O';
-    l_sprite.xPos       = x;
-    l_sprite.yPos       = y;
     getSprites()->add (l_entity, l_sprite);
 
     // Collider Component
@@ -147,13 +157,17 @@ EntityId EntityManager::createTilePrefab (unsigned int x, unsigned int y)
 {
     EntityId l_entity = createEntity();
 
+    // Location Component
+    LocationComponent l_loc;
+    l_loc.x = x;
+    l_loc.y = y;
+    getLocations()->add (l_entity, l_loc);
+
     //Sprite Component
     SpriteComponent l_sprite;
     l_sprite.fgColor    = Color (GREY);
     l_sprite.bgColor    = Color (BLACK);
     l_sprite.sprite     = '.';
-    l_sprite.xPos       = x;
-    l_sprite.yPos       = y;
     getSprites()->add (l_entity, l_sprite);
 
     // Description Component
@@ -175,13 +189,13 @@ std::vector<EntityId> EntityManager::findEntitiesNear (unsigned int x, unsigned 
 {
     std::vector<EntityId> l_entities;
 
-    std::map<EntityId, SpriteComponent>& l_sprites = m_engine->getEntities()->getSprites()->getAll();
-    std::map<EntityId, SpriteComponent>::iterator it = l_sprites.begin();
-    for (; it != l_sprites.end(); it++) {
-        if (it->second.xPos >= x - radius &&
-            it->second.xPos <= x + radius &&
-            it->second.yPos >= y - radius &&
-            it->second.yPos <= y + radius) {
+    std::map<EntityId, LocationComponent>& l_locations = m_engine->getEntities()->getLocations()->getAll();
+    std::map<EntityId, LocationComponent>::iterator it = l_locations.begin();
+    for (; it != l_locations.end(); it++) {
+        if (it->second.x >= x - radius &&
+            it->second.x <= x + radius &&
+            it->second.y >= y - radius &&
+            it->second.y <= y + radius) {
             l_entities.push_back (it->first);
         }
     }
@@ -194,10 +208,10 @@ std::vector<EntityId> EntityManager::findEntitiesToThe (DIRECTION a_direction, E
 {
     std::vector<EntityId> l_entities;
 
-    SpriteComponent* l_sprite = m_engine->getEntities()->getSprites()->get (a_entity);
-    if (!l_sprite) return l_entities;
-    unsigned int newX = l_sprite->xPos;
-    unsigned int newY = l_sprite->yPos;
+    LocationComponent* l_location = m_engine->getEntities()->getLocations()->get (a_entity);
+    if (!l_location) return l_entities;
+    unsigned int newX = l_location->x;
+    unsigned int newY = l_location->y;
     switch (a_direction) {
         case Direction::North:  newY--; break;
         case Direction::South:  newY++; break;
