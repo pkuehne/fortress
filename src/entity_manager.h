@@ -17,7 +17,7 @@ public:
     void initialise (GameEngineInterface* engine);
     void destroy() {}
 
-    EntityId createEntity (const std::string& name = "default");
+    EntityId createEntity ();
     void destroyEntity (EntityId);
     EntityId getPlayer ();
 
@@ -32,6 +32,7 @@ public:
     ComponentManagerInterface<DescriptionComponent>* getDescriptions() { return &m_descriptions; }
     ComponentManagerInterface<PlayerComponent>* getPlayers() { return &m_players; }
     ComponentManagerInterface<NpcComponent>* getNpcs() { return &m_npcs; }
+    ComponentManagerInterface<LocationComponent>* getLocations() { return &m_locations; }
 
     std::vector<EntityId> findEntitiesNear (unsigned int x, unsigned int y, unsigned radius);
     std::vector<EntityId> findEntitiesAt (unsigned int x, unsigned int y);
@@ -51,6 +52,7 @@ private:
     ComponentManager<DescriptionComponent>  m_descriptions;
     ComponentManager<PlayerComponent>   m_players;
     ComponentManager<NpcComponent>      m_npcs;
+    ComponentManager<LocationComponent> m_locations;
 };
 
 #endif

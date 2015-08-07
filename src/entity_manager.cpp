@@ -10,7 +10,7 @@ void EntityManager::initialise (GameEngineInterface* engine)
     m_player = 0;
 }
 
-EntityId EntityManager::createEntity (const std::string& name) {
+EntityId EntityManager::createEntity () {
     EntityId l_entity = maxId++;
 
     AddEntityEvent* l_event = new AddEntityEvent;
@@ -27,6 +27,7 @@ void EntityManager::destroyEntity (EntityId id) {
     getDescriptions()->remove (id);
     getPlayers()->remove (id);
     getNpcs()->remove (id);
+    getLocations()->remove (id);
 
     // Raise event for removal
     RemoveEntityEvent* l_event = new RemoveEntityEvent();
@@ -48,6 +49,8 @@ EntityId EntityManager::getPlayer () {
 EntityId EntityManager::createWallPrefab (unsigned int x, unsigned int y)
 {
     EntityId l_entity = createEntity();
+
+    // Location Component
 
     // Sprite Component
     SpriteComponent l_sprite;
