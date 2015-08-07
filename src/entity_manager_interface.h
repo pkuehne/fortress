@@ -20,7 +20,7 @@ public:
     virtual void initialise (GameEngineInterface* engine) = 0;
     virtual void destroy() = 0;
 
-    virtual EntityId createEntity (const std::string& name) = 0;
+    virtual EntityId createEntity (const std::string& name = "default") = 0;
     virtual void destroyEntity (EntityId id) = 0;
     virtual EntityId getPlayer () = 0;
 

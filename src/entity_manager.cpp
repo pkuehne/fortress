@@ -11,32 +11,27 @@ void EntityManager::initialise (GameEngineInterface* engine)
 }
 
 EntityId EntityManager::createEntity (const std::string& name) {
-    Entity* l_entity = new Entity();
-    l_entity->setId (maxId++);
-    l_entity->setName (name);
-    m_idMap[l_entity->getId()]     = l_entity;
-    m_nameMap[l_entity->getName()]   = l_entity;
+    EntityId l_entity = maxId++;
 
     AddEntityEvent* l_event = new AddEntityEvent;
-    l_event->entity = l_entity->getId();
+    l_event->entity = l_entity;
     m_engine->raiseEvent (l_event);
 
-    return l_entity->getId();
+    return l_entity;
 }
 
 void EntityManager::destroyEntity (EntityId id) {
-    std::map<EntityId, Entity*>::iterator it = m_idMap.find (id);
-    if (it == m_idMap.end()) return;
+    getColliders()->remove (id);
+    getSprites()->remove (id);
+    getHealths()->remove (id);
+    getDescriptions()->remove (id);
+    getPlayers()->remove (id);
+    getNpcs()->remove (id);
 
-    getColliders()->remove (it->second->getId());
-    getSprites()->remove (it->second->getId());
-    getHealths()->remove (it->second->getId());
-    getDescriptions()->remove (it->second->getId());
+    // Raise event for removal
     RemoveEntityEvent* l_event = new RemoveEntityEvent();
-    l_event->entity = it->second->getId();
+    l_event->entity = id;
     m_engine->raiseEvent (l_event);
-
-    m_idMap.erase (it);
 }
 
 
@@ -52,7 +47,7 @@ EntityId EntityManager::getPlayer () {
 
 EntityId EntityManager::createWallPrefab (unsigned int x, unsigned int y)
 {
-    EntityId l_entity = createEntity("Wall");
+    EntityId l_entity = createEntity();
 
     // Sprite Component
     SpriteComponent l_sprite;
@@ -76,7 +71,7 @@ EntityId EntityManager::createWallPrefab (unsigned int x, unsigned int y)
 
 EntityId EntityManager::createPlayerPrefab (unsigned int x, unsigned int y)
 {
-    EntityId l_entity = createEntity("Player");
+    EntityId l_entity = createEntity();
 
     // Sprite Component
     SpriteComponent l_sprite;
@@ -112,7 +107,7 @@ EntityId EntityManager::createPlayerPrefab (unsigned int x, unsigned int y)
 
 EntityId EntityManager::createEnemyPrefab (unsigned int x, unsigned int y)
 {
-    EntityId l_entity = createEntity("Orc");
+    EntityId l_entity = createEntity();
 
     // Sprite Component
     SpriteComponent l_sprite;
@@ -147,7 +142,7 @@ EntityId EntityManager::createEnemyPrefab (unsigned int x, unsigned int y)
 
 EntityId EntityManager::createTilePrefab (unsigned int x, unsigned int y)
 {
-    EntityId l_entity = createEntity("Tile");
+    EntityId l_entity = createEntity();
 
     //Sprite Component
     SpriteComponent l_sprite;

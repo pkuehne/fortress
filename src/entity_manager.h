@@ -17,7 +17,7 @@ public:
     void initialise (GameEngineInterface* engine);
     void destroy() {}
 
-    EntityId createEntity (const std::string& name);
+    EntityId createEntity (const std::string& name = "default");
     void destroyEntity (EntityId);
     EntityId getPlayer ();
 
@@ -42,8 +42,9 @@ private:
     GameEngineInterface*                m_engine;
     unsigned long                       maxId;
     EntityId                            m_player;
+
     std::map<EntityId, Entity*>         m_idMap;
-    std::map<std::string, Entity*>      m_nameMap;
+
     ComponentManager<SpriteComponent>   m_sprites;
     ComponentManager<ColliderComponent> m_colliders;
     ComponentManager<HealthComponent>   m_healths;
