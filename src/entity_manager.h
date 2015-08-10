@@ -25,6 +25,7 @@ public:
     EntityId createPlayerPrefab (unsigned int x, unsigned int y);
     EntityId createEnemyPrefab (unsigned int x, unsigned int y);
     EntityId createTilePrefab (unsigned int x, unsigned int y);
+    EntityId createMarkerPrefab (unsigned int x, unsigned int y);
 
     ComponentManagerInterface<SpriteComponent>* getSprites() { return &m_sprites; }
     ComponentManagerInterface<ColliderComponent>* getColliders() { return &m_colliders; }

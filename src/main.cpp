@@ -47,7 +47,7 @@ int main (int argc, char** argv)
         GameEngine* l_engine = new GameEngine (l_graphics);
 
         l_engine->addSystem (new MovementSystem());
-        l_engine->addSystem (new SpriteSystem());
+        //l_engine->addSystem (new SpriteSystem());
         l_engine->addSystem (new CombatSystem());
         l_engine->addSystem (new NpcSystem());
         l_engine->addSystem (new ObjectivesSystem());

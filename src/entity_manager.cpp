@@ -179,6 +179,26 @@ EntityId EntityManager::createTilePrefab (unsigned int x, unsigned int y)
     return l_entity;
 }
 
+EntityId EntityManager::createMarkerPrefab (unsigned int x, unsigned int y)
+{
+    EntityId l_entity = createEntity();
+
+    // Location Component
+    LocationComponent l_loc;
+    l_loc.x = x;
+    l_loc.y = y;
+    getLocations()->add (l_entity, l_loc);
+
+    //Sprite Component
+    SpriteComponent l_sprite;
+    l_sprite.fgColor    = Color (YELLOW);
+    l_sprite.bgColor    = Color (BLACK);
+    l_sprite.sprite     = 'X';
+    getSprites()->add (l_entity, l_sprite);
+
+    return l_entity;
+}
+
 
 std::vector<EntityId> EntityManager::findEntitiesAt (unsigned int x, unsigned int y)
 {

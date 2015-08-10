@@ -79,6 +79,7 @@ EntityId SpriteSystem::findWallEntity (unsigned int x, unsigned int y) {
     for (; iter != l_locs.end(); iter++) {
         EntityId l_entity = iter->first;
         DescriptionComponent* l_desc = m_engine->getEntities()->getDescriptions()->get (l_entity);
+        if (l_desc == 0) continue;
         if (iter->second.x == x &&
             iter->second.y == y &&
             l_desc->title == "Wall") {

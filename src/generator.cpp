@@ -9,84 +9,100 @@
 void Generator::generate () {
     srand(time(0));
 
-    bool playerPlaced = false;
-    m_mapHeight = 50;
-    m_mapWidth = 50;
-    char map[m_mapHeight*m_mapWidth];
-    memset (map, ' ', m_mapHeight*m_mapWidth);
+    m_map = new unsigned char[m_mapHeight*m_mapWidth];
+    memset (m_map, ' ', m_mapHeight*m_mapWidth);
 
-    /*
-    for (unsigned r = 0; r < m_rooms; r++) {
-        while (!generateRoom (map));
+    for (unsigned r = 0; r < m_roomTarget; r++) {
+        while (!generateRoom ());
     }
-    */
-    loadMap (map);
+    for (size_t ii = 0; ii < 1 || ii < m_rooms.size()-1; ii++) {
+        connectRooms (m_rooms[ii], m_rooms[ii+1]);
+    }
+    ///loadMap ();
+    createEntitiesFromMap();
+}
 
+void Generator::createEntitiesFromMap () {
     for (unsigned int yy = 0; yy < m_mapHeight; yy++) {
         for (unsigned int xx = 0; xx < m_mapWidth; xx++) {
-            if (map[yy*m_mapWidth+xx] == 'W') {
-                m_engine->getEntities()->createWallPrefab (xx, yy);
-            }
-            if (map[yy*m_mapWidth+xx] == 'P' && !playerPlaced) {
-                m_engine->getEntities()->createPlayerPrefab (xx, yy);
-                m_engine->getEntities()->createTilePrefab (xx, yy);
-                playerPlaced = true;
-            }
-            if (map[yy*m_mapWidth+xx] == 'O') {
-                m_engine->getEntities()->createEnemyPrefab (xx, yy);
-                m_engine->getEntities()->createTilePrefab (xx, yy);
-            }
-            if (map[yy*m_mapWidth+xx] == '.') {
-                m_engine->getEntities()->createTilePrefab (xx, yy);
+            switch (getByCoordinate(xx, yy)) {
+                case 'W':
+                //case 'C':
+                    m_engine->getEntities()->createWallPrefab (xx, yy);
+                    break;
+                case 'P':
+                    m_engine->getEntities()->createPlayerPrefab (xx, yy);
+                    m_engine->getEntities()->createTilePrefab (xx, yy);
+                    break;
+                case 'O':
+                    m_engine->getEntities()->createEnemyPrefab (xx, yy);
+                    m_engine->getEntities()->createTilePrefab (xx, yy);
+                    break;
+                case '.':
+                    m_engine->getEntities()->createTilePrefab (xx, yy);
+                    break;
+                default:
+                    EntityId l_entity = m_engine->getEntities()->createMarkerPrefab (xx, yy);
+                    m_engine->getEntities()->getSprites()->get(l_entity)->sprite = getByCoordinate (xx, yy);
+                    break;
             }
         }
     }
 }
 
-bool Generator::generateRoom (char* map) {
-    unsigned int xMid = rand() % (m_mapWidth-1) + 1;
-    unsigned int yMid = rand() % (m_mapHeight-1) + 1;
-    unsigned int length = rand() % 6 + 3;
-    unsigned int height = rand() % 6 + 3;
+bool Generator::generateRoom () {
+    unsigned int width  = rand() % 6 + 5;
+    unsigned int height = rand() % 6 + 5;
+    unsigned int left   = rand() % (m_mapWidth - width - 1) + 2;
+    unsigned int top    = rand() % (m_mapHeight - height - 1) + 2;
 
-    unsigned int startY = yMid - height;
-    unsigned int startX = xMid - length;
-    unsigned int endY = yMid + height;
-    unsigned int endX = xMid + length;
+    if (left+width >= m_mapWidth || left < 1 ||
+        top+height >= m_mapHeight || top < 1) {
+            return false;
+    }
 
-    if (startY < 2 || startX < 2 || endY > m_mapHeight - 2 || endX > m_mapWidth - 2) {
-        std::cout << "Failed dimensions" << std::endl;
-        return false;
-    }
-    for (unsigned int yy = startY; yy <= endY; yy++) {
-        if (map[yy*m_mapWidth+startX] == 'W' || map[yy*m_mapWidth+endX] == 'W') {
-            std::cout << "Failed vertical wall check" << std::endl;
-            return false;
-        }
-        map[yy*m_mapWidth+startX] = 'W';
-        map[yy*m_mapWidth+endX] = 'W';
-    }
-    for (unsigned int xx = startX+1; xx <= endX-1; xx++) {
-        if (map[startY*m_mapWidth+xx] == 'W' || map[endY*m_mapWidth+xx] == 'W') {
-            std::cout << "Failed horizontal wall check" << std::endl;
-            return false;
-        }
-        map[startY*m_mapWidth+xx] = 'W';
-        map[endY*m_mapWidth+xx] = 'W';
-    }
-    for (unsigned int yy = startY+1; yy < endY; yy++) {
-        for (unsigned int xx = startX+1; xx < endX; xx++) {
-            map[yy*m_mapWidth+xx] = '.';
+    for (unsigned int yy = top-1; yy <= top+height; yy++) {
+        for (unsigned int xx = left-1; xx <= left+width; xx++) {
+            if (getByCoordinate (xx, yy) != ' ') return false;
         }
     }
-    map[yMid*m_mapWidth+xMid] = 'P';
-    map[yMid*m_mapWidth+xMid+2] = 'O';
-    map[(yMid+2)*m_mapWidth+xMid] = 'O';
+
+    for (unsigned int yy = top-1; yy <= top+height; yy++) {
+        for (unsigned int xx = left-1; xx <= left+width; xx++) {
+            if (yy == top-1 || yy == top+height || xx == left-1 || xx == left+width) {
+                getByCoordinate(xx, yy) = '1';
+            } else if (yy == top || yy == top+height-1 || xx == left || xx == left+width-1) {
+                if ((yy <= top+1 || yy >= top+height-2) && (xx <= left+1 || xx >= left+width-2)) {
+                    getByCoordinate(xx, yy) = 'C';
+                } else {
+                    getByCoordinate(xx, yy) = 'W';
+                }
+            } else {
+                getByCoordinate(xx, yy) = '.';
+            }
+        }
+    }
+    if (!m_playerPlaced) {
+        getByCoordinate(left+width/2, top+height/2) = 'P';
+        //m_map[(top+height/2)*m_mapWidth+(left+width/2)] = 'P';
+        m_playerPlaced = true;
+    }
+    Room l_room;
+    l_room.x = left;
+    l_room.y = top;
+    l_room.width = width;
+    l_room.height = height;
+    m_rooms.push_back (l_room);
 
     return true;
 }
 
-void Generator::loadMap (char* map)
+void Generator::connectRooms (Room& start, Room& end)
+{
+
+}
+
+void Generator::loadMap ()
 {
     std::ifstream file ("../maps/test.map");
     char line[m_mapWidth];
@@ -94,7 +110,7 @@ void Generator::loadMap (char* map)
     do {
         memset (line, ' ', sizeof (line));
         file.getline (line, sizeof (line));
-        memcpy (map+(m_mapWidth*lineCnt), line, sizeof(line));
+        memcpy (m_map+(m_mapWidth*lineCnt), line, sizeof(line));
         lineCnt++;
     } while (file.gcount() > 0);
 }

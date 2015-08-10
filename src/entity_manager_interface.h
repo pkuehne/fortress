@@ -30,6 +30,7 @@ public:
     virtual EntityId createPlayerPrefab (unsigned int x, unsigned int y) = 0;
     virtual EntityId createEnemyPrefab (unsigned int x, unsigned int y) = 0;
     virtual EntityId createTilePrefab (unsigned int x, unsigned int y) = 0;
+    virtual EntityId createMarkerPrefab (unsigned int x, unsigned int y) = 0;
 
     virtual ComponentManagerInterface<SpriteComponent>*     getSprites()        = 0;
     virtual ComponentManagerInterface<ColliderComponent>*   getColliders()      = 0;
