@@ -179,9 +179,9 @@ void Generator::placeOrcs()
 {
     if (m_rooms.size() < 2) return; // No point
 
-    for (size_t ii = 0; ii < m_rooms.size(); ii++) {
-        unsigned int room = m_playerRoom;
-        std::cout << "Finding room..." << std::endl;
+    unsigned int numOrcs = rand() % (m_rooms.size() * 2) + m_rooms.size();
+    for (size_t ii = 0; ii < numOrcs; ii++) {
+        unsigned int room = 0;
         while (1) {
             room = rand() % m_rooms.size();
             if (m_playerRoom == room) continue;
