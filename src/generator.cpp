@@ -8,16 +8,14 @@
 #include <fstream>
 
 static unsigned int getDistance (unsigned int start, unsigned int end, void* customData);
-static unsigned int getPathCost (unsigned char point, void* customData);
-static unsigned int findNeighbours (unsigned int index, unsigned int* neighbours, void* customData);
+static unsigned int getPathCost (unsigned int index, void* customData);
+static unsigned int findNeighbours4 (unsigned int index, unsigned int* neighbours, void* customData);
+static unsigned int findNeighbours8 (unsigned int index, unsigned int* neighbours, void* customData);
 
 void Generator::generate () {
-    srand(time(0));
-
-    unsigned int x, y;
-    IndexToCoord (202, x, y);
-    std::cout << "x = 2, y = 4, index = " << CoordToIndex (2, 4) << std::endl;
-    std::cout << "index = 202, x = " << x << ", y = " << y << std::endl;
+    unsigned int seed = time(0);
+    //srand(1439294983);
+    srand (seed);
 
     m_map = new unsigned char[m_mapHeight*m_mapWidth];
     memset (m_map, ' ', m_mapHeight*m_mapWidth);
@@ -25,24 +23,32 @@ void Generator::generate () {
     for (unsigned r = 0; r < m_roomTarget; r++) {
         while (!generateRoom ());
     }
-    for (size_t ii = 0; ii < 1 || ii < m_rooms.size()-1; ii++) {
+    for (size_t ii = 0; ii < m_rooms.size()-1; ii++) {
         connectRooms (m_rooms[ii], m_rooms[ii+1]);
     }
+
+    placePlayer();
+    placeDownStair();
     ///loadMap ();
     createEntitiesFromMap();
+    std::cout << "Created with seed " << seed << std::endl;
 }
 
 void Generator::createEntitiesFromMap () {
+    EntityId l_entity = 0;
+
     for (unsigned int yy = 0; yy < m_mapHeight; yy++) {
         for (unsigned int xx = 0; xx < m_mapWidth; xx++) {
             switch (getByCoordinate(xx, yy)) {
                 case 'W':
-                //case 'C':
+                case 'C':
                     m_engine->getEntities()->createWallPrefab (xx, yy);
                     break;
                 case 'P':
                     m_engine->getEntities()->createPlayerPrefab (xx, yy);
-                    m_engine->getEntities()->createTilePrefab (xx, yy);
+                    //m_engine->getEntities()->createTilePrefab (xx, yy);
+                    l_entity = m_engine->getEntities()->createMarkerPrefab (xx, yy);
+                    m_engine->getEntities()->getSprites()->get(l_entity)->sprite = '<';
                     break;
                 case 'O':
                     m_engine->getEntities()->createEnemyPrefab (xx, yy);
@@ -51,8 +57,10 @@ void Generator::createEntitiesFromMap () {
                 case '.':
                     m_engine->getEntities()->createTilePrefab (xx, yy);
                     break;
+                case 'X':
+                    break;
                 default:
-                    EntityId l_entity = m_engine->getEntities()->createMarkerPrefab (xx, yy);
+                    l_entity = m_engine->getEntities()->createMarkerPrefab (xx, yy);
                     m_engine->getEntities()->getSprites()->get(l_entity)->sprite = getByCoordinate (xx, yy);
                     break;
             }
@@ -71,16 +79,16 @@ bool Generator::generateRoom () {
             return false;
     }
 
-    for (unsigned int yy = top-1; yy <= top+height; yy++) {
-        for (unsigned int xx = left-1; xx <= left+width; xx++) {
+    for (unsigned int yy = top-2; yy <= top+height+1; yy++) {
+        for (unsigned int xx = left-2; xx <= left+width+1; xx++) {
             if (getByCoordinate (xx, yy) != ' ') return false;
         }
     }
 
-    for (unsigned int yy = top-1; yy <= top+height; yy++) {
-        for (unsigned int xx = left-1; xx <= left+width; xx++) {
-            if (yy == top-1 || yy == top+height || xx == left-1 || xx == left+width) {
-                getByCoordinate(xx, yy) = '1';
+    for (unsigned int yy = top-2; yy <= top+height+1; yy++) {
+        for (unsigned int xx = left-2; xx <= left+width+1; xx++) {
+            if (yy < top || yy >= top+height || xx < left || xx >= left+width) {
+                getByCoordinate(xx, yy) = 'X';
             } else if (yy == top || yy == top+height-1 || xx == left || xx == left+width-1) {
                 if ((yy <= top+1 || yy >= top+height-2) && (xx <= left+1 || xx >= left+width-2)) {
                     getByCoordinate(xx, yy) = 'C';
@@ -103,12 +111,13 @@ bool Generator::generateRoom () {
     l_room.index = CoordToIndex (l_room.midX, l_room.midY);
     m_rooms.push_back (l_room);
 
+/*
     if (!m_playerPlaced) {
         getByCoordinate(l_room.midX, l_room.midY) = 'P';
         //m_map[(top+height/2)*m_mapWidth+(left+width/2)] = 'P';
         m_playerPlaced = true;
     }
-
+*/
     return true;
 }
 
@@ -118,15 +127,51 @@ void Generator::connectRooms (Room& start, Room& end)
     algo.setCustomData (this);
     algo.setCostFunction (getPathCost);
     algo.setDistanceFunction (getDistance);
-    algo.setNeighbourFunction (findNeighbours);
+    algo.setNeighbourFunction (findNeighbours4);
     algo.setNumNeighbours (4);
 
     PathVector l_path;
     algo.findPath (start.index, end.index, l_path);
-    std::cout << "Found a " << l_path.size() << " tile corridor" << std::endl;
+    //std::cout << "Found a " << l_path.size() << " tile corridor" << std::endl;
+
     for (size_t ii = 0; ii < l_path.size(); ii++) {
-        getByIndex(l_path[ii]) = '#';
+        unsigned char& tile = getByIndex(l_path[ii]);
+        unsigned int x, y;
+        IndexToCoord (l_path[ii], x, y);
+
+        // Create tiles and doors
+        if (tile == 'W' || tile == 'D') {
+            tile = 'D';
+        } else {
+            tile = '.';
+        }
     }
+
+    for (size_t ii = 0; ii < l_path.size(); ii++) {
+        // Wall of neighbours if necessary
+        unsigned int neighbours[8] = {0};
+        size_t count = findNeighbours8 (l_path[ii], neighbours, this);
+        for (size_t ii = 0; ii < count; ii++) {
+            unsigned char& adj = getByIndex (neighbours[ii]);
+            if (adj == ' ' || adj == 'X') {
+                adj = 'W';
+            }
+        }
+    }
+}
+
+void Generator::placePlayer()
+{
+    m_playerRoom = rand() % m_rooms.size();
+    getByCoordinate (m_rooms[m_playerRoom].midX, m_rooms[m_playerRoom].midY) = 'P';
+}
+
+void Generator::placeDownStair()
+{
+    if (m_rooms.size() < 2) return; // No point
+    unsigned int room = m_playerRoom;
+    while (room == m_playerRoom) room = rand() % m_rooms.size();
+    getByCoordinate (m_rooms[room].midX, m_rooms[room].midY) = '>';
 }
 
 void Generator::loadMap ()
@@ -142,24 +187,35 @@ void Generator::loadMap ()
     } while (file.gcount() > 0);
 }
 
-unsigned int getPathCost (unsigned char point, void* customData)
+unsigned int getPathCost (unsigned int index, void* customData)
 {
+    Generator* l_gen = static_cast<Generator*> (customData);
+    unsigned char point = l_gen->getByIndex(index);
+    unsigned int cost = 0;
     switch (point) {
         case ' ':
-            return 2;
+            cost = 3;
+            break;
         case 'W':
-        case '1':
-            return 5;
+        case 'X':
+        case 'D':
+            cost = 5;
+            break;
         case '.':
-            return 0;
+            cost = 0;
+            break;
         case 'C':
-            return 999;
+            cost = 999;
+            break;
         default:
-            return 10;
+            cost = 999;
+            break;
     }
+    //std::cout << "Returning cost: " << cost << std::endl;
+    return cost;
 }
 
-unsigned int findNeighbours (unsigned int index, unsigned int* neighbours, void* customData)
+unsigned int findNeighbours4 (unsigned int index, unsigned int* neighbours, void* customData)
 {
     Generator* l_gen = static_cast<Generator*> (customData);
     unsigned int indexX, indexY;
@@ -175,6 +231,37 @@ unsigned int findNeighbours (unsigned int index, unsigned int* neighbours, void*
         neighbours[count++] = l_gen->CoordToIndex (indexX, indexY-1);
     if (l_gen->isValidCoordinate (indexX, indexY+1))
         neighbours[count++] = l_gen->CoordToIndex (indexX, indexY+1);
+    //std::cout << "Return " << count << " neightbours" << std::endl;
+
+    return count;
+}
+
+unsigned int findNeighbours8 (unsigned int index, unsigned int* neighbours, void* customData)
+{
+    Generator* l_gen = static_cast<Generator*> (customData);
+    unsigned int indexX, indexY;
+    l_gen->IndexToCoord (index, indexX, indexY);
+
+    unsigned int count = 0;
+
+    if (l_gen->isValidCoordinate (indexX-1, indexY))
+        neighbours[count++] = l_gen->CoordToIndex (indexX-1, indexY);
+    if (l_gen->isValidCoordinate (indexX+1, indexY))
+        neighbours[count++] = l_gen->CoordToIndex (indexX+1, indexY);
+    if (l_gen->isValidCoordinate (indexX, indexY-1))
+        neighbours[count++] = l_gen->CoordToIndex (indexX, indexY-1);
+    if (l_gen->isValidCoordinate (indexX, indexY+1))
+        neighbours[count++] = l_gen->CoordToIndex (indexX, indexY+1);
+    if (l_gen->isValidCoordinate (indexX-1, indexY-1))
+        neighbours[count++] = l_gen->CoordToIndex (indexX-1, indexY-1);
+    if (l_gen->isValidCoordinate (indexX+1, indexY-1))
+        neighbours[count++] = l_gen->CoordToIndex (indexX+1, indexY-1);
+    if (l_gen->isValidCoordinate (indexX-1, indexY+1))
+        neighbours[count++] = l_gen->CoordToIndex (indexX-1, indexY+1);
+    if (l_gen->isValidCoordinate (indexX+1, indexY+1))
+        neighbours[count++] = l_gen->CoordToIndex (indexX+1, indexY+1);
+
+    //std::cout << "Return " << count << " neightbours" << std::endl;
 
     return count;
 }
@@ -184,7 +271,10 @@ unsigned int getDistance (unsigned int start, unsigned int end, void* customData
     Generator* l_gen = static_cast<Generator*> (customData);
     unsigned int startX, startY;
     unsigned int endX, endY;
+    unsigned int distance = 0;
     l_gen->IndexToCoord (start, startX, startY);
     l_gen->IndexToCoord (end, endX, endY);
-    return (abs (startX-endX)+abs(startY-endY));
+    distance = (abs (startX-endX)+abs(startY-endY));
+    //std::cout << "Returning distance: " << distance << std::endl;
+    return distance;
 }

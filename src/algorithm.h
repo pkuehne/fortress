@@ -33,7 +33,7 @@ typedef std::map<int, Node>             NodeMap;
 typedef std::map<int, Node>::iterator   NodeMapIter;
 typedef std::vector<unsigned int>       PathVector;
 
-typedef unsigned int (* costFunc ) (const unsigned char input, void* customData);
+typedef unsigned int (* costFunc ) (unsigned int input, void* customData);
 typedef unsigned int (* neighbourFunc) (unsigned int index, unsigned int* neighbours, void* customData);
 typedef unsigned int (* distanceFunc) (unsigned int start, unsigned int end, void* customData);
 

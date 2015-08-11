@@ -34,6 +34,8 @@ private:
 private:
     bool generateRoom ();
     void connectRooms (Room& start, Room& end);
+    void placePlayer();
+    void placeDownStair();
     void loadMap ();
 
 private:
@@ -42,7 +44,7 @@ private:
     unsigned int            m_mapWidth;
     unsigned int            m_roomTarget;
     unsigned char*          m_map;
-    bool                    m_playerPlaced;
+    unsigned int            m_playerRoom;
     std::vector<Room>       m_rooms;
 };
 

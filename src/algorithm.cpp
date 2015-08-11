@@ -13,7 +13,7 @@ bool operator< (const Node& lhs, const Node& rhs)
     return lhs.priority > rhs.priority;
 }
 
-unsigned int defaultCostFunction (unsigned char point, void* customData)
+unsigned int defaultCostFunction (unsigned int point, void* customData)
 {
     std::cout << "WARN: Using defaultCostFunction!" << std::endl;
     return 1;
@@ -99,8 +99,8 @@ void Algorithm::findPath (unsigned int start, unsigned int end, PathVector& outp
             NodeMapIter open_iter = l_open.find (neighbours[ii]);
             if (open_iter != l_open.end()) {
                 // Remove it from open if there's a better path now
-                //l_open.erase(open_iter);
-            } else if (cost > 0) {
+                l_open.erase(open_iter);
+            } else if (cost >= 0) {
                 // Neighbour not in open
                 l_open[neighbours[ii]] = neighbour;
                 l_priority.push (neighbour);

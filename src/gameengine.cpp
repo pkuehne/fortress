@@ -94,7 +94,7 @@ void GameEngine::loadMap (const std::string& mapName)
 {
     m_generator->mapHeight() = 50;
     m_generator->mapWidth() = 50;
-    m_generator->numberOfRooms() = 6;
+    m_generator->numberOfRooms() = 10;
 
     m_generator->generate();
 }
