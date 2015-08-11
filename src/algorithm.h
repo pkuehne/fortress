@@ -1,15 +1,16 @@
-#ifndef __ALGORITHM_H__
-#define __ALGORITHM_H__
+#ifndef ALGORITHM_H
+#define ALGORITHM_H
 
 #include <vector>
-/*
+#include <map>
+
 class Node
 {
 public:
-    int index;
-    int distance;
-    int priority;
-    int origin;
+    unsigned int index;
+    unsigned int distance;
+    unsigned int priority;
+    unsigned int origin;
 
     Node ()
     {
@@ -19,7 +20,7 @@ public:
         origin      = 0;
     }
 
-    Node (int i, int d, int p, int o)
+    Node (unsigned int i, unsigned int d, unsigned int p, unsigned int o)
     {
         index       = i;
         distance    = d;
@@ -30,22 +31,29 @@ public:
 
 typedef std::map<int, Node>             NodeMap;
 typedef std::map<int, Node>::iterator   NodeMapIter;
-typedef int (* costFunc ) (const Tile&, void* input);
+typedef std::vector<unsigned int>       PathVector;
+
+typedef unsigned int (* costFunc ) (const unsigned char input, void* customData);
+typedef unsigned int (* neighbourFunc) (unsigned int index, unsigned int* neighbours, void* customData);
+typedef unsigned int (* distanceFunc) (unsigned int start, unsigned int end, void* customData);
 
 class Algorithm {
 public:
-    static void findUnitPath (  int startIndex,
-                                int endIndex,
-                                Unit& unit,
-                                PathVector& path);
+    Algorithm();
+    void findPath (unsigned int start, unsigned int end, PathVector& output);
 
-    static void findPath (  int startIndex,
-                            int endIndex,
-                            costFunc costFunction,
-                            void* costInput,
-                            PathVector& retPath);
+    void setCostFunction (costFunc a_func) { m_costFunction = a_func; }
+    void setNeighbourFunction (neighbourFunc a_func) { m_neighbourFunction = a_func; }
+    void setNumNeighbours (unsigned int numNeighbours) { m_numNeighbours = numNeighbours; }
+    void setDistanceFunction (distanceFunc a_func) { m_distanceFunction = a_func; }
+    void setCustomData (void* data) { m_customData = data; }
+private:
+    costFunc        m_costFunction;
+    neighbourFunc   m_neighbourFunction;
+    distanceFunc    m_distanceFunction;
+    void*           m_customData;
+    unsigned int    m_numNeighbours;
 
 };
-*/
 
 #endif
