@@ -36,6 +36,7 @@ private:
     void connectRooms (Room& start, Room& end);
     void placePlayer();
     void placeDownStair();
+    void placeOrcs();
     void loadMap ();
 
 private:

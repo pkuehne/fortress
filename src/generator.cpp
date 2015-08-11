@@ -29,6 +29,7 @@ void Generator::generate () {
 
     placePlayer();
     placeDownStair();
+    placeOrcs();
     ///loadMap ();
     createEntitiesFromMap();
     std::cout << "Created with seed " << seed << std::endl;
@@ -172,6 +173,28 @@ void Generator::placeDownStair()
     unsigned int room = m_playerRoom;
     while (room == m_playerRoom) room = rand() % m_rooms.size();
     getByCoordinate (m_rooms[room].midX, m_rooms[room].midY) = '>';
+}
+
+void Generator::placeOrcs()
+{
+    if (m_rooms.size() < 2) return; // No point
+
+    for (size_t ii = 0; ii < m_rooms.size(); ii++) {
+        unsigned int room = m_playerRoom;
+        std::cout << "Finding room..." << std::endl;
+        while (1) {
+            room = rand() % m_rooms.size();
+            if (m_playerRoom == room) continue;
+            unsigned int x, y;
+            x = m_rooms[room].x + (rand() % m_rooms[room].width-2) + 1;
+            y = m_rooms[room].y + (rand() % m_rooms[room].height-2) + 1;
+            unsigned char& tile = getByCoordinate (x, y);
+            if (tile == '.') {
+                tile = 'O';
+                break;
+            }
+        }
+    }
 }
 
 void Generator::loadMap ()
