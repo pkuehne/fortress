@@ -8,6 +8,7 @@ public:
     void gainFocus();
     void resize();
     void redraw();
+    void keyDown (unsigned char key);
 };
 
 #endif

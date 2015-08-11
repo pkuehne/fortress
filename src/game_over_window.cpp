@@ -15,3 +15,8 @@ void GameOverWindow::resize()
 {
     setDimensions (0, 0, 13, 5);
 }
+
+void GameOverWindow::keyDown (unsigned char key)
+{
+    if (key == 27) getEngine()->quit();
+}
