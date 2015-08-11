@@ -10,8 +10,8 @@ public:
     virtual void update ();
 private:
     DIRECTION getRandomDirection ();
-    DIRECTION getPlayerDirectionIfNearby (Entity* entity);
-    DIRECTION getPlayerDirectionIfAttackable (Entity* entity);
+    DIRECTION getPlayerDirectionIfNearby (EntityId entity);
+    DIRECTION getPlayerDirectionIfAttackable (EntityId entity);
 
 };
 

@@ -8,10 +8,10 @@ void SpriteSystem::handleEvent (const Event* event) {
     switch (event->getType()) {
         case EVENT_ADD_ENTITY: {
             const AddEntityEvent* l_event = dynamic_cast<const AddEntityEvent*> (event);
-            Entity* l_entity = m_engine->getEntities()->getEntity (l_event->entity);
-            if (!l_entity) break;
-            if (l_entity->getName() == "Wall") {
-                handleAddWallEvent (l_entity);
+            DescriptionComponent* l_desc = m_engine->getEntities()->getDescriptions()->get (l_event->entity);
+            if (!l_desc) break;
+            if (l_desc->title == "Wall") {
+                handleAddWallEvent (l_event->entity);
             }
             break;
         }
@@ -19,16 +19,16 @@ void SpriteSystem::handleEvent (const Event* event) {
     }
 }
 
-void SpriteSystem::handleAddWallEvent (Entity* a_entity) {
+void SpriteSystem::handleAddWallEvent (EntityId a_entity) {
     updateWallSprite (a_entity);
 
-    SpriteComponent* l_sprite = m_engine->getEntities()->getSprites()->get (a_entity->getId());
-    if (!l_sprite) return;
+    LocationComponent* l_loc = m_engine->getEntities()->getLocations()->get (a_entity);
+    if (!l_loc) return;
 
-    Entity* left    = findWallEntity (l_sprite->xPos-1, l_sprite->yPos);
-    Entity* up      = findWallEntity (l_sprite->xPos, l_sprite->yPos-1);
-    Entity* right   = findWallEntity (l_sprite->xPos+1, l_sprite->yPos);
-    Entity* down    = findWallEntity (l_sprite->xPos, l_sprite->yPos+1);
+    EntityId left   = findWallEntity (l_loc->x-1, l_loc->y);
+    EntityId up     = findWallEntity (l_loc->x,   l_loc->y-1);
+    EntityId right  = findWallEntity (l_loc->x+1, l_loc->y);
+    EntityId down   = findWallEntity (l_loc->x,   l_loc->y+1);
 
     if (left)   updateWallSprite (left);
     if (up)     updateWallSprite (up);
@@ -36,14 +36,15 @@ void SpriteSystem::handleAddWallEvent (Entity* a_entity) {
     if (down)   updateWallSprite (down);
 }
 
-void SpriteSystem::updateWallSprite (Entity* a_entity) {
-    SpriteComponent* l_sprite = m_engine->getEntities()->getSprites()->get (a_entity->getId());
-    if (!l_sprite) return;
+void SpriteSystem::updateWallSprite (EntityId a_entity) {
+    SpriteComponent* l_sprite = m_engine->getEntities()->getSprites()->get (a_entity);
+    LocationComponent* l_loc = m_engine->getEntities()->getLocations()->get (a_entity);
+    if (!l_loc || !l_sprite) return;
 
-    Entity* left    = findWallEntity (l_sprite->xPos-1, l_sprite->yPos);
-    Entity* up      = findWallEntity (l_sprite->xPos, l_sprite->yPos-1);
-    Entity* right   = findWallEntity (l_sprite->xPos+1, l_sprite->yPos);
-    Entity* down    = findWallEntity (l_sprite->xPos, l_sprite->yPos+1);
+    EntityId left   = findWallEntity (l_loc->x-1, l_loc->y);
+    EntityId up     = findWallEntity (l_loc->x,   l_loc->y-1);
+    EntityId right  = findWallEntity (l_loc->x+1, l_loc->y);
+    EntityId down   = findWallEntity (l_loc->x,   l_loc->y+1);
 
     int sprite_key = 0;
     if (left)   sprite_key |= 8;
@@ -72,14 +73,16 @@ void SpriteSystem::updateWallSprite (Entity* a_entity) {
 
 }
 
-Entity* SpriteSystem::findWallEntity (unsigned int x, unsigned int y) {
-    std::map<EntityId, SpriteComponent>& l_sprites = m_engine->getEntities()->getSprites()->getAll();
-    std::map<EntityId, SpriteComponent>::iterator iter = l_sprites.begin();
-    for (; iter != l_sprites.end(); iter++) {
-        Entity* l_entity = m_engine->getEntities()->getEntity(iter->first);
-        if (iter->second.xPos == x &&
-            iter->second.yPos == y &&
-            l_entity->hasTag(WALL)) {
+EntityId SpriteSystem::findWallEntity (unsigned int x, unsigned int y) {
+    std::map<EntityId, LocationComponent>& l_locs = m_engine->getEntities()->getLocations()->getAll();
+    std::map<EntityId, LocationComponent>::iterator iter = l_locs.begin();
+    for (; iter != l_locs.end(); iter++) {
+        EntityId l_entity = iter->first;
+        DescriptionComponent* l_desc = m_engine->getEntities()->getDescriptions()->get (l_entity);
+        if (l_desc == 0) continue;
+        if (iter->second.x == x &&
+            iter->second.y == y &&
+            l_desc->title == "Wall") {
             return l_entity;
         }
     }

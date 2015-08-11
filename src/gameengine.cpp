@@ -86,13 +86,15 @@ void GameEngine::initialise ()
     m_graphics->setMouseFunc    (mouseClick);
     m_graphics->setResizeFunc   (resize);
 
+    addMessage (INFO, "You awake in a strange room.");
+    addMessage (WARN, "The air smells of Orc!");
 }
 
 void GameEngine::loadMap (const std::string& mapName)
 {
     m_generator->mapHeight() = 50;
     m_generator->mapWidth() = 50;
-    m_generator->numberOfRooms() = 1;
+    m_generator->numberOfRooms() = 10;
 
     m_generator->generate();
 }
@@ -114,4 +116,12 @@ void GameEngine::tick ()
 //    getWindows()->getActive()->afterRedraw();
 
     return;
+}
+
+void GameEngine::addMessage (const MessageType& severity, const std::string& message)
+{
+    Message msg;
+    msg.severity = severity;
+    msg.message = message;
+    addMessage (msg);
 }

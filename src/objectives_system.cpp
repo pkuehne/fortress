@@ -7,7 +7,7 @@ void ObjectivesSystem::handleEvent (const Event* event)
     switch (event->getType()) {
         case EVENT_REMOVE_ENTITY: {
             const RemoveEntityEvent* l_event = dynamic_cast<const RemoveEntityEvent*> (event);
-            if (l_event->entity == getEngineRef()->getEntities()->getPlayer()->getId()) {
+            if (l_event->entity == getEngineRef()->getEntities()->getPlayer()) {
                 std::cout << "You lose!" << std::endl;
 
                 GameOverWindow* l_win = new GameOverWindow();

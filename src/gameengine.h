@@ -41,6 +41,11 @@ public:
 
     void addSystem (GameSystemInterface* a_system) { m_systems.push_back(a_system); }
     void setGenerator (GeneratorInterface* a_generator) { m_generator = a_generator; }
+
+    void addMessage (const Message& message) { m_messages.push_back (message); }
+    void addMessage (const MessageType&, const std::string& message);
+    std::vector<Message>& getMessages() { return m_messages; }
+
 private:
     unsigned long long  m_tick;
     bool                m_playerTurn;
@@ -53,6 +58,8 @@ private:
 
     GraphicsInterface*      m_graphics;
     GeneratorInterface*     m_generator;
+
+    std::vector<Message>    m_messages;
 };
 
 #endif

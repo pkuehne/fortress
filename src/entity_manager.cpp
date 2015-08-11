@@ -5,167 +5,196 @@
 
 void EntityManager::initialise (GameEngineInterface* engine)
 {
-    maxId = 0;
+    maxId = 1;
     m_engine = engine;
     m_player = 0;
 }
 
-Entity* EntityManager::createEntity (const std::string& name) {
-    Entity* l_entity = new Entity();
-    l_entity->setId (maxId++);
-    l_entity->setName (name);
-    m_idMap[l_entity->getId()]     = l_entity;
-    m_nameMap[l_entity->getName()]   = l_entity;
+EntityId EntityManager::createEntity () {
+    EntityId l_entity = maxId++;
 
     AddEntityEvent* l_event = new AddEntityEvent;
-    l_event->entity = l_entity->getId();
+    l_event->entity = l_entity;
     m_engine->raiseEvent (l_event);
 
     return l_entity;
 }
 
 void EntityManager::destroyEntity (EntityId id) {
-    std::map<EntityId, Entity*>::iterator it = m_idMap.find (id);
-    if (it == m_idMap.end()) return;
+    getColliders()->remove (id);
+    getSprites()->remove (id);
+    getHealths()->remove (id);
+    getDescriptions()->remove (id);
+    getPlayers()->remove (id);
+    getNpcs()->remove (id);
+    getLocations()->remove (id);
 
-    getColliders()->remove (it->second->getId());
-    getSprites()->remove (it->second->getId());
-    getHealths()->remove (it->second->getId());
-    getDescriptions()->remove (it->second->getId());
+    // Raise event for removal
     RemoveEntityEvent* l_event = new RemoveEntityEvent();
-    l_event->entity = it->second->getId();
+    l_event->entity = id;
     m_engine->raiseEvent (l_event);
-
-    m_idMap.erase (it);
 }
 
 
-Entity* EntityManager::getPlayer () {
+EntityId EntityManager::getPlayer () {
     if (m_player == 0) {
-        std::map<EntityId, Entity*>::iterator it = m_idMap.begin();
-        for (; it != m_idMap.end(); it++) {
-            if (it->second->hasTag(PLAYER)) {
-                m_player = it->second;
-            }
-        }
+        std::map<EntityId, PlayerComponent>& l_players = getPlayers()->getAll();
+        std::map<EntityId, PlayerComponent>::iterator iter = l_players.begin();
+        m_player = iter->first;
     }
     return m_player;
 }
 
 
-Entity* EntityManager::getEntity (EntityId id) {
-    std::map<EntityId, Entity*>::iterator it = m_idMap.find (id);
-    if (it == m_idMap.end()) return 0;
-    return it->second;
-}
-
-Entity* EntityManager::createWallPrefab (unsigned int x, unsigned int y)
+EntityId EntityManager::createWallPrefab (unsigned int x, unsigned int y)
 {
-    Entity* l_entity = createEntity("Wall");
-    l_entity->addTag (WALL);
+    EntityId l_entity = createEntity();
+
+    // Location Component
+    LocationComponent l_loc;
+    l_loc.x = x;
+    l_loc.y = y;
+    getLocations()->add (l_entity, l_loc);
+
     // Sprite Component
     SpriteComponent l_sprite;
     l_sprite.fgColor    = Color (GREY);
     l_sprite.bgColor    = Color (BLACK);
     l_sprite.sprite     = 'W';
-    l_sprite.xPos       = x;
-    l_sprite.yPos       = y;
-    getSprites()->add (l_entity->getId(), l_sprite);
+    getSprites()->add (l_entity, l_sprite);
 
     // Collider Component
     ColliderComponent l_collider;
-    getColliders()->add (l_entity->getId(), l_collider);
+    getColliders()->add (l_entity, l_collider);
 
     DescriptionComponent l_description;
     l_description.title = "Wall";
     l_description.text = "A smooth granite wall";
-    getDescriptions()->add (l_entity->getId(), l_description);
+    getDescriptions()->add (l_entity, l_description);
     return l_entity;
 }
 
-Entity* EntityManager::createPlayerPrefab (unsigned int x, unsigned int y)
+EntityId EntityManager::createPlayerPrefab (unsigned int x, unsigned int y)
 {
-    Entity* l_entity = createEntity("Player");
-    l_entity->addTag (PLAYER);
+    EntityId l_entity = createEntity();
+
+    // Location Component
+    LocationComponent l_loc;
+    l_loc.x = x;
+    l_loc.y = y;
+    getLocations()->add (l_entity, l_loc);
 
     // Sprite Component
     SpriteComponent l_sprite;
     l_sprite.fgColor    = Color (WHITE);
     l_sprite.bgColor    = Color (BLACK);
     l_sprite.sprite     = '@';
-    l_sprite.xPos       = x;
-    l_sprite.yPos       = y;
-    getSprites()->add (l_entity->getId(), l_sprite);
+    getSprites()->add (l_entity, l_sprite);
 
 
     // Collider Component
     ColliderComponent l_collider;
-    getColliders()->add (l_entity->getId(), l_collider);
+    getColliders()->add (l_entity, l_collider);
 
     // Description Component
     DescriptionComponent l_description;
     l_description.title = "You";
     l_description.text = "Time for introspection";
-    getDescriptions()->add (l_entity->getId(), l_description);
+    getDescriptions()->add (l_entity, l_description);
 
     // Health Component
     HealthComponent l_health;
     l_health.health = 1;
-    getHealths()->add (l_entity->getId(), l_health);
+    getHealths()->add (l_entity, l_health);
+
+    // Player Component
+    PlayerComponent l_player;
+    getPlayers()->add (l_entity, l_player);
 
     return l_entity;
 }
 
-Entity* EntityManager::createEnemyPrefab (unsigned int x, unsigned int y)
+EntityId EntityManager::createEnemyPrefab (unsigned int x, unsigned int y)
 {
-    Entity* l_entity = createEntity("Orc");
-    l_entity->addTag (MONSTER);
+    EntityId l_entity = createEntity();
+
+    // Location Component
+    LocationComponent l_loc;
+    l_loc.x = x;
+    l_loc.y = y;
+    getLocations()->add (l_entity, l_loc);
 
     // Sprite Component
     SpriteComponent l_sprite;
     l_sprite.fgColor    = Color (RED);
     l_sprite.bgColor    = Color (BLACK);
     l_sprite.sprite     = 'O';
-    l_sprite.xPos       = x;
-    l_sprite.yPos       = y;
-    getSprites()->add (l_entity->getId(), l_sprite);
+    getSprites()->add (l_entity, l_sprite);
 
     // Collider Component
     ColliderComponent l_collider;
-    getColliders()->add (l_entity->getId(), l_collider);
+    getColliders()->add (l_entity, l_collider);
 
     // Description Component
     DescriptionComponent l_description;
     l_description.title = "Orc";
     l_description.text = "A vile, stinking creature";
-    getDescriptions()->add (l_entity->getId(), l_description);
+    getDescriptions()->add (l_entity, l_description);
 
     // Health Component
     HealthComponent l_health;
     l_health.health = 1;
-    getHealths()->add (l_entity->getId(), l_health);
+    getHealths()->add (l_entity, l_health);
+
+    // NPC Component
+    NpcComponent l_npc;
+    getNpcs()->add (l_entity, l_npc);
 
     return l_entity;
 }
 
-Entity* EntityManager::createTilePrefab (unsigned int x, unsigned int y)
+EntityId EntityManager::createTilePrefab (unsigned int x, unsigned int y)
 {
-    Entity* l_entity = createEntity("Tile");
+    EntityId l_entity = createEntity();
+
+    // Location Component
+    LocationComponent l_loc;
+    l_loc.x = x;
+    l_loc.y = y;
+    getLocations()->add (l_entity, l_loc);
 
     //Sprite Component
     SpriteComponent l_sprite;
     l_sprite.fgColor    = Color (GREY);
     l_sprite.bgColor    = Color (BLACK);
     l_sprite.sprite     = '.';
-    l_sprite.xPos       = x;
-    l_sprite.yPos       = y;
-    getSprites()->add (l_entity->getId(), l_sprite);
+    getSprites()->add (l_entity, l_sprite);
 
     // Description Component
     DescriptionComponent l_description;
     l_description.title = "Floor tile";
     l_description.text = "It's a bit scuffed";
-    getDescriptions()->add (l_entity->getId(), l_description);
+    getDescriptions()->add (l_entity, l_description);
+
+    return l_entity;
+}
+
+EntityId EntityManager::createMarkerPrefab (unsigned int x, unsigned int y)
+{
+    EntityId l_entity = createEntity();
+
+    // Location Component
+    LocationComponent l_loc;
+    l_loc.x = x;
+    l_loc.y = y;
+    getLocations()->add (l_entity, l_loc);
+
+    //Sprite Component
+    SpriteComponent l_sprite;
+    l_sprite.fgColor    = Color (YELLOW);
+    l_sprite.bgColor    = Color (BLACK);
+    l_sprite.sprite     = 'X';
+    getSprites()->add (l_entity, l_sprite);
 
     return l_entity;
 }
@@ -180,13 +209,13 @@ std::vector<EntityId> EntityManager::findEntitiesNear (unsigned int x, unsigned 
 {
     std::vector<EntityId> l_entities;
 
-    std::map<EntityId, SpriteComponent>& l_sprites = m_engine->getEntities()->getSprites()->getAll();
-    std::map<EntityId, SpriteComponent>::iterator it = l_sprites.begin();
-    for (; it != l_sprites.end(); it++) {
-        if (it->second.xPos >= x - radius &&
-            it->second.xPos <= x + radius &&
-            it->second.yPos >= y - radius &&
-            it->second.yPos <= y + radius) {
+    std::map<EntityId, LocationComponent>& l_locations = m_engine->getEntities()->getLocations()->getAll();
+    std::map<EntityId, LocationComponent>::iterator it = l_locations.begin();
+    for (; it != l_locations.end(); it++) {
+        if (it->second.x >= x - radius &&
+            it->second.x <= x + radius &&
+            it->second.y >= y - radius &&
+            it->second.y <= y + radius) {
             l_entities.push_back (it->first);
         }
     }
@@ -195,14 +224,14 @@ std::vector<EntityId> EntityManager::findEntitiesNear (unsigned int x, unsigned 
 
 }
 
-std::vector<EntityId> EntityManager::findEntitiesToThe (DIRECTION a_direction, Entity* a_entity)
+std::vector<EntityId> EntityManager::findEntitiesToThe (DIRECTION a_direction, EntityId a_entity)
 {
     std::vector<EntityId> l_entities;
 
-    SpriteComponent* l_sprite = m_engine->getEntities()->getSprites()->get (a_entity->getId());
-    if (!l_sprite) return l_entities;
-    unsigned int newX = l_sprite->xPos;
-    unsigned int newY = l_sprite->yPos;
+    LocationComponent* l_location = m_engine->getEntities()->getLocations()->get (a_entity);
+    if (!l_location) return l_entities;
+    unsigned int newX = l_location->x;
+    unsigned int newY = l_location->y;
     switch (a_direction) {
         case Direction::North:  newY--; break;
         case Direction::South:  newY++; break;

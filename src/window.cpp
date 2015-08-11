@@ -25,9 +25,9 @@ void Window::setDimensions (int x, int y, int width, int height)
     }
 }
 
-void Window::drawString (int y, int x, const char* text)
+void Window::drawString (int y, int x, const char* text, Color fg, Color bg)
 {
-    getEngine()->getGraphics()->drawString (m_yOffset+y, m_xOffset+x, text);
+    getEngine()->getGraphics()->drawString (m_yOffset+y, m_xOffset+x, text, fg, bg);
 }
 
 void Window::drawTile (int y, int x, unsigned int tile, Color fg, Color bg)
