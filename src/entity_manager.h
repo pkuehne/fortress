@@ -21,11 +21,11 @@ public:
     void destroyEntity (EntityId);
     EntityId getPlayer ();
 
-    EntityId createWallPrefab (unsigned int x, unsigned int y);
-    EntityId createPlayerPrefab (unsigned int x, unsigned int y);
-    EntityId createEnemyPrefab (unsigned int x, unsigned int y);
-    EntityId createTilePrefab (unsigned int x, unsigned int y);
-    EntityId createMarkerPrefab (unsigned int x, unsigned int y);
+    EntityId createWallPrefab (unsigned int x, unsigned int y, unsigned int z=0);
+    EntityId createPlayerPrefab (unsigned int x, unsigned int y, unsigned int z=0);
+    EntityId createEnemyPrefab (unsigned int x, unsigned int y, unsigned int z=0);
+    EntityId createTilePrefab (unsigned int x, unsigned int y, unsigned int z=0);
+    EntityId createMarkerPrefab (unsigned int x, unsigned int y, unsigned int z=0);
 
     ComponentManagerInterface<SpriteComponent>* getSprites() { return &m_sprites; }
     ComponentManagerInterface<ColliderComponent>* getColliders() { return &m_colliders; }

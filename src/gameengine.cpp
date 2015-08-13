@@ -49,6 +49,7 @@ GameEngine::GameEngine (GraphicsInterface* a_graphics)
 , m_windowManager (0)
 , m_graphics (a_graphics)
 , m_generator (0)
+, m_level (0)
 {
     g_engine = this;
 }
@@ -60,6 +61,9 @@ GameEngine::~GameEngine ()
 
 void GameEngine::initialise ()
 {
+    // Start us off on level 1
+    m_level = 1;
+
     // Create if not exist
     if (!m_windowManager) m_windowManager = new WindowManager();
     if (!m_eventManager)  m_eventManager  = new EventManager();
@@ -97,6 +101,9 @@ void GameEngine::loadMap (const std::string& mapName)
     m_generator->numberOfRooms() = 10;
 
     m_generator->generate();
+    m_level = 2;
+    m_generator->generate();
+    m_level = 1;
 }
 
 void GameEngine::tick ()

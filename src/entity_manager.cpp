@@ -46,7 +46,7 @@ EntityId EntityManager::getPlayer () {
 }
 
 
-EntityId EntityManager::createWallPrefab (unsigned int x, unsigned int y)
+EntityId EntityManager::createWallPrefab (unsigned int x, unsigned int y, unsigned int z)
 {
     EntityId l_entity = createEntity();
 
@@ -54,6 +54,7 @@ EntityId EntityManager::createWallPrefab (unsigned int x, unsigned int y)
     LocationComponent l_loc;
     l_loc.x = x;
     l_loc.y = y;
+    l_loc.z = (z == 0)  ? m_engine->getLevel() : z;
     getLocations()->add (l_entity, l_loc);
 
     // Sprite Component
@@ -74,7 +75,7 @@ EntityId EntityManager::createWallPrefab (unsigned int x, unsigned int y)
     return l_entity;
 }
 
-EntityId EntityManager::createPlayerPrefab (unsigned int x, unsigned int y)
+EntityId EntityManager::createPlayerPrefab (unsigned int x, unsigned int y, unsigned int z)
 {
     EntityId l_entity = createEntity();
 
@@ -82,6 +83,7 @@ EntityId EntityManager::createPlayerPrefab (unsigned int x, unsigned int y)
     LocationComponent l_loc;
     l_loc.x = x;
     l_loc.y = y;
+    l_loc.z = (z == 0)  ? m_engine->getLevel() : z;
     getLocations()->add (l_entity, l_loc);
 
     // Sprite Component
@@ -114,7 +116,7 @@ EntityId EntityManager::createPlayerPrefab (unsigned int x, unsigned int y)
     return l_entity;
 }
 
-EntityId EntityManager::createEnemyPrefab (unsigned int x, unsigned int y)
+EntityId EntityManager::createEnemyPrefab (unsigned int x, unsigned int y, unsigned int z)
 {
     EntityId l_entity = createEntity();
 
@@ -122,6 +124,7 @@ EntityId EntityManager::createEnemyPrefab (unsigned int x, unsigned int y)
     LocationComponent l_loc;
     l_loc.x = x;
     l_loc.y = y;
+    l_loc.z = (z == 0)  ? m_engine->getLevel() : z;
     getLocations()->add (l_entity, l_loc);
 
     // Sprite Component
@@ -153,7 +156,7 @@ EntityId EntityManager::createEnemyPrefab (unsigned int x, unsigned int y)
     return l_entity;
 }
 
-EntityId EntityManager::createTilePrefab (unsigned int x, unsigned int y)
+EntityId EntityManager::createTilePrefab (unsigned int x, unsigned int y, unsigned int z)
 {
     EntityId l_entity = createEntity();
 
@@ -161,6 +164,7 @@ EntityId EntityManager::createTilePrefab (unsigned int x, unsigned int y)
     LocationComponent l_loc;
     l_loc.x = x;
     l_loc.y = y;
+    l_loc.z = (z == 0)  ? m_engine->getLevel() : z;
     getLocations()->add (l_entity, l_loc);
 
     //Sprite Component
@@ -179,7 +183,7 @@ EntityId EntityManager::createTilePrefab (unsigned int x, unsigned int y)
     return l_entity;
 }
 
-EntityId EntityManager::createMarkerPrefab (unsigned int x, unsigned int y)
+EntityId EntityManager::createMarkerPrefab (unsigned int x, unsigned int y, unsigned int z)
 {
     EntityId l_entity = createEntity();
 
@@ -187,6 +191,7 @@ EntityId EntityManager::createMarkerPrefab (unsigned int x, unsigned int y)
     LocationComponent l_loc;
     l_loc.x = x;
     l_loc.y = y;
+    l_loc.z = (z == 0)  ? m_engine->getLevel() : z;
     getLocations()->add (l_entity, l_loc);
 
     //Sprite Component
@@ -215,7 +220,8 @@ std::vector<EntityId> EntityManager::findEntitiesNear (unsigned int x, unsigned 
         if (it->second.x >= x - radius &&
             it->second.x <= x + radius &&
             it->second.y >= y - radius &&
-            it->second.y <= y + radius) {
+            it->second.y <= y + radius &&
+            it->second.z == m_engine->getLevel()) {
             l_entities.push_back (it->first);
         }
     }

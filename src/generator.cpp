@@ -12,8 +12,19 @@ static unsigned int getPathCost (unsigned int index, void* customData);
 static unsigned int findNeighbours4 (unsigned int index, unsigned int* neighbours, void* customData);
 static unsigned int findNeighbours8 (unsigned int index, unsigned int* neighbours, void* customData);
 
+void Generator::reset () {
+    m_playerRoom = 0;
+    m_rooms.clear();
+
+    if (m_map) {
+        delete[] m_map;
+        m_map = 0;
+    }
+
+}
+
 void Generator::generate () {
-    unsigned int seed = time(0);
+    unsigned int seed = time(0) + m_engine->getLevel();
     //srand(1439294983);
     srand (seed);
 
@@ -32,6 +43,7 @@ void Generator::generate () {
     placeOrcs();
     ///loadMap ();
     createEntitiesFromMap();
+    reset();
     std::cout << "Created with seed " << seed << std::endl;
 }
 

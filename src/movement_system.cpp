@@ -27,7 +27,7 @@ void MovementSystem::handleEvent (const Event* event)
             std::map<EntityId, LocationComponent>::iterator it = l_locations.begin();
             for (; it != l_locations.end(); it++) {
                 // There is an entity here
-                if (it->second.x == newX && it->second.y == newY) {
+                if (it->second.x == newX && it->second.y == newY && it->second.z == m_engine->getLevel()) {
                     // Check if it's a collidable
                     if (m_engine->getEntities()->getColliders()->get (it->first)) return;
                 }
