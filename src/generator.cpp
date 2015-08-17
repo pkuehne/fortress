@@ -13,7 +13,7 @@ static unsigned int findNeighbours4 (unsigned int index, unsigned int* neighbour
 static unsigned int findNeighbours8 (unsigned int index, unsigned int* neighbours, void* customData);
 
 void Generator::reset () {
-    m_playerRoom = 0;
+    m_startRoom = 0;
     m_rooms.clear();
 
     if (m_map) {
@@ -38,7 +38,7 @@ void Generator::generate () {
         connectRooms (m_rooms[ii], m_rooms[ii+1]);
     }
 
-    placePlayer();
+    placeUpStair();
     placeDownStair();
     placeOrcs();
     ///loadMap ();
@@ -57,12 +57,12 @@ void Generator::createEntitiesFromMap () {
                 case 'C':
                     m_engine->getEntities()->createWallPrefab (xx, yy);
                     break;
-                case 'P':
+                case '<':
+                    m_engine->getEntities()->createStairPrefab (StairComponent::UP, xx, yy);
                     m_engine->getEntities()->createPlayerPrefab (xx, yy);
-                    //m_engine->getEntities()->createTilePrefab (xx, yy);
-                    l_entity = m_engine->getEntities()->createMarkerPrefab (xx, yy);
-                    m_engine->getEntities()->getSprites()->get(l_entity)->sprite = '<';
                     break;
+                case '>':
+                    m_engine->getEntities()->createStairPrefab (StairComponent::DOWN, xx, yy);
                 case 'O':
                     m_engine->getEntities()->createEnemyPrefab (xx, yy);
                     m_engine->getEntities()->createTilePrefab (xx, yy);
@@ -173,17 +173,17 @@ void Generator::connectRooms (Room& start, Room& end)
     }
 }
 
-void Generator::placePlayer()
+void Generator::placeUpStair()
 {
-    m_playerRoom = rand() % m_rooms.size();
-    getByCoordinate (m_rooms[m_playerRoom].midX, m_rooms[m_playerRoom].midY) = 'P';
+    m_startRoom = rand() % m_rooms.size();
+    getByCoordinate (m_rooms[m_startRoom].midX, m_rooms[m_startRoom].midY) = '<';
 }
 
 void Generator::placeDownStair()
 {
     if (m_rooms.size() < 2) return; // No point
-    unsigned int room = m_playerRoom;
-    while (room == m_playerRoom) room = rand() % m_rooms.size();
+    unsigned int room = m_startRoom;
+    while (room == m_startRoom) room = rand() % m_rooms.size();
     getByCoordinate (m_rooms[room].midX, m_rooms[room].midY) = '>';
 }
 
@@ -196,7 +196,7 @@ void Generator::placeOrcs()
         unsigned int room = 0;
         while (1) {
             room = rand() % m_rooms.size();
-            if (m_playerRoom == room) continue;
+            if (m_startRoom == room) continue;
             unsigned int x, y;
             x = m_rooms[room].x + (rand() % m_rooms[room].width-2) + 1;
             y = m_rooms[room].y + (rand() % m_rooms[room].height-2) + 1;

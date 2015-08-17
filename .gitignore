@@ -34,3 +34,6 @@ fortress
 
 # tags files
 tags
+
+# Others
+*.png

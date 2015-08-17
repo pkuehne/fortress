@@ -34,7 +34,7 @@ private:
     void createEntitiesFromMap();
     bool generateRoom ();
     void connectRooms (Room& start, Room& end);
-    void placePlayer();
+    void placeUpStair();
     void placeDownStair();
     void placeOrcs();
     void reset();
@@ -46,7 +46,7 @@ private:
     unsigned int            m_mapWidth;
     unsigned int            m_roomTarget;
     unsigned char*          m_map;
-    unsigned int            m_playerRoom;
+    unsigned int            m_startRoom;
     std::vector<Room>       m_rooms;
 };
 

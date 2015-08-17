@@ -11,6 +11,7 @@ class Entity;
 #include <player_component.h>
 #include <npc_component.h>
 #include <location_component.h>
+#include <stair_component.h>
 #include <vector>
 #include <utility.h>
 
@@ -26,11 +27,12 @@ public:
     virtual EntityId getPlayer () = 0;
 
 
-    virtual EntityId createWallPrefab (unsigned int x, unsigned int y, unsigned int z=0) = 0;
-    virtual EntityId createPlayerPrefab (unsigned int x, unsigned int y, unsigned int z=0) = 0;
-    virtual EntityId createEnemyPrefab (unsigned int x, unsigned int y, unsigned int z=0) = 0;
-    virtual EntityId createTilePrefab (unsigned int x, unsigned int y, unsigned int z=0) = 0;
-    virtual EntityId createMarkerPrefab (unsigned int x, unsigned int y, unsigned int z=0) = 0;
+    virtual EntityId createWallPrefab (unsigned int x, unsigned int y, unsigned int z=0)    = 0;
+    virtual EntityId createPlayerPrefab (unsigned int x, unsigned int y, unsigned int z=0)  = 0;
+    virtual EntityId createEnemyPrefab (unsigned int x, unsigned int y, unsigned int z=0)   = 0;
+    virtual EntityId createTilePrefab (unsigned int x, unsigned int y, unsigned int z=0)    = 0;
+    virtual EntityId createMarkerPrefab (unsigned int x, unsigned int y, unsigned int z=0)  = 0;
+    virtual EntityId createStairPrefab (StairComponent::STAIR dir, unsigned int x, unsigned int y, unsigned int z=0)   = 0;
 
     virtual ComponentManagerInterface<SpriteComponent>*     getSprites()        = 0;
     virtual ComponentManagerInterface<ColliderComponent>*   getColliders()      = 0;
@@ -39,6 +41,7 @@ public:
     virtual ComponentManagerInterface<PlayerComponent>*     getPlayers()        = 0;
     virtual ComponentManagerInterface<NpcComponent>*        getNpcs()           = 0;
     virtual ComponentManagerInterface<LocationComponent>*   getLocations()      = 0;
+    virtual ComponentManagerInterface<StairComponent>*      getStairs()         = 0;
 
     virtual std::vector<EntityId> findEntitiesNear (unsigned int x, unsigned int y, unsigned radius) = 0;
     virtual std::vector<EntityId> findEntitiesAt (unsigned int x, unsigned int y) = 0;

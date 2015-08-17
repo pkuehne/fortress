@@ -28,6 +28,7 @@ void EntityManager::destroyEntity (EntityId id) {
     getPlayers()->remove (id);
     getNpcs()->remove (id);
     getLocations()->remove (id);
+    getStairs()->remove(id);
 
     // Raise event for removal
     RemoveEntityEvent* l_event = new RemoveEntityEvent();
@@ -204,6 +205,33 @@ EntityId EntityManager::createMarkerPrefab (unsigned int x, unsigned int y, unsi
     return l_entity;
 }
 
+EntityId EntityManager::createStairPrefab (StairComponent::STAIR dir, unsigned int x, unsigned int y, unsigned int z)
+{
+    EntityId l_entity = createEntity();
+
+    // Location Component
+    LocationComponent l_loc;
+    l_loc.x = x;
+    l_loc.y = y;
+    l_loc.z = (z == 0)  ? m_engine->getLevel() : z;
+    getLocations()->add (l_entity, l_loc);
+
+    //Sprite Component
+    SpriteComponent l_sprite;
+    l_sprite.fgColor    = Color (WHITE);
+    l_sprite.bgColor    = Color (BLACK);
+    l_sprite.sprite     = (dir == StairComponent::DOWN) ? '>' : '<';
+    getSprites()->add (l_entity, l_sprite);
+
+    // Description Component
+    DescriptionComponent l_description;
+    l_description.title = (dir == StairComponent::DOWN) ? "A stairway down" : "A stairway up";
+    l_description.text = "It has rough-hewn steps.";
+    getDescriptions()->add (l_entity, l_description);
+
+    return l_entity;
+
+}
 
 std::vector<EntityId> EntityManager::findEntitiesAt (unsigned int x, unsigned int y)
 {
