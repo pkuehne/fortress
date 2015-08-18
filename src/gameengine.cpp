@@ -100,7 +100,7 @@ void GameEngine::loadMap (const std::string& mapName)
 {
     m_generator->mapHeight() = 50;
     m_generator->mapWidth() = 50;
-    m_generator->numberOfRooms() = 10;
+    m_generator->numberOfRooms() = 5;
 
     for (unsigned int level = 1; level <= m_maxLevel; level++) {
         m_level = level;

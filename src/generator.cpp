@@ -59,7 +59,7 @@ void Generator::createEntitiesFromMap () {
                     break;
                 case '<':
                     m_engine->getEntities()->createStairPrefab (StairComponent::UP, xx, yy);
-                    m_engine->getEntities()->createPlayerPrefab (xx, yy);
+                    if (m_engine->getLevel() == 1) m_engine->getEntities()->createPlayerPrefab (xx, yy);
                     break;
                 case '>':
                     m_engine->getEntities()->createStairPrefab (StairComponent::DOWN, xx, yy);
@@ -191,7 +191,7 @@ void Generator::placeOrcs()
 {
     if (m_rooms.size() < 2) return; // No point
 
-    unsigned int numOrcs = rand() % (m_rooms.size() * 2) + m_rooms.size();
+    unsigned int numOrcs = 0;//rand() % (m_rooms.size() * 1) + 1;
     for (size_t ii = 0; ii < numOrcs; ii++) {
         unsigned int room = 0;
         while (1) {

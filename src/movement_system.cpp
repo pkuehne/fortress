@@ -42,6 +42,18 @@ void MovementSystem::handleEvent (const Event* event)
                                 if (level < m_engine->getMaxLevel()) level++;
                             }
                             m_engine->setLevel (level);
+                            std::map<EntityId, StairComponent>& l_stairs = m_engine->getEntities()->getStairs()->getAll();
+                            std::map<EntityId, StairComponent>::iterator iter = l_stairs.begin();
+                            StairComponent::STAIR dir = l_stair->direction == StairComponent::UP ? StairComponent::DOWN : StairComponent::UP;
+                            for (; iter != l_stairs.end(); iter++) {
+                                LocationComponent* l_stairLoc = m_engine->getEntities()->getLocations()->get (iter->first);
+                                if (iter->second.direction == dir && l_stairLoc->z == m_engine->getLevel()) {
+                                    l_location->x = l_stairLoc->x;
+                                    l_location->y = l_stairLoc->y;
+                                    l_location->z = l_stairLoc->z;
+                                    return;
+                                }
+                            }
 
                         }
                     }
