@@ -41,6 +41,7 @@ void MovementSystem::handleEvent (const Event* event)
                             } else {
                                 if (level < m_engine->getMaxLevel()) level++;
                             }
+                            if (level == m_engine->getLevel()) break;
                             m_engine->setLevel (level);
                             std::map<EntityId, StairComponent>& l_stairs = m_engine->getEntities()->getStairs()->getAll();
                             std::map<EntityId, StairComponent>::iterator iter = l_stairs.begin();
