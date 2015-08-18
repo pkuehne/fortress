@@ -55,6 +55,9 @@ public:
     virtual void setLevel (unsigned int level) = 0;
     virtual unsigned int getLevel () = 0;
 
+    virtual void setMaxLevel (unsigned int level) = 0;
+    virtual unsigned int getMaxLevel () = 0;
+
 };
 
 #endif

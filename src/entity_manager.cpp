@@ -229,6 +229,11 @@ EntityId EntityManager::createStairPrefab (StairComponent::STAIR dir, unsigned i
     l_description.text = "It has rough-hewn steps.";
     getDescriptions()->add (l_entity, l_description);
 
+    // StairComponent
+    StairComponent l_stair;
+    l_stair.direction = dir;
+    getStairs()->add (l_entity, l_stair);
+    
     return l_entity;
 
 }

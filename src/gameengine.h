@@ -50,6 +50,9 @@ public:
     void setLevel (unsigned int level) { m_level = level; }
     unsigned int getLevel () { return m_level; }
 
+    void setMaxLevel (unsigned int maxLevel) { m_maxLevel = maxLevel; }
+    unsigned int getMaxLevel () { return m_maxLevel; }
+
 private:
     unsigned long long  m_tick;
     bool                m_playerTurn;
@@ -65,6 +68,7 @@ private:
 
     std::vector<Message>    m_messages;
     unsigned int            m_level;
+    unsigned int            m_maxLevel;
 };
 
 #endif

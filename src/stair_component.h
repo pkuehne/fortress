@@ -6,6 +6,7 @@ struct StairComponent {
         DOWN = 0,
         UP = 1
     } STAIR;
+    STAIR direction;
 };
 
 #endif

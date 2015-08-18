@@ -9,7 +9,7 @@ void MovementSystem::handleEvent (const Event* event)
     switch (event->getType()) {
         case EVENT_MOVE_ENTITY: {
             const MoveEntityEvent* l_event = dynamic_cast<const MoveEntityEvent*> (event);
-            EntityId l_entity =l_event->entity;
+            EntityId l_entity = l_event->entity;
             LocationComponent* l_location = m_engine->getEntities()->getLocations()->get (l_entity);
             if (!l_location) return;
             unsigned int newX = l_location->x;
@@ -23,16 +23,31 @@ void MovementSystem::handleEvent (const Event* event)
             }
 
             //Check if we're running into a collidable or something
-            std::map<EntityId, LocationComponent>& l_locations = m_engine->getEntities()->getLocations()->getAll();
-            std::map<EntityId, LocationComponent>::iterator it = l_locations.begin();
-            for (; it != l_locations.end(); it++) {
-                // There is an entity here
-                if (it->second.x == newX && it->second.y == newY && it->second.z == m_engine->getLevel()) {
-                    // Check if it's a collidable
-                    if (m_engine->getEntities()->getColliders()->get (it->first)) return;
-                }
+            {
+                std::map<EntityId, LocationComponent>& l_locations = m_engine->getEntities()->getLocations()->getAll();
+                std::map<EntityId, LocationComponent>::iterator it = l_locations.begin();
+                for (; it != l_locations.end(); it++) {
+                    // There is an entity here
+                    if (it->second.x == newX && it->second.y == newY && it->second.z == m_engine->getLevel()) {
+                        // Check if it's a collidable
+                        if (m_engine->getEntities()->getColliders()->get (it->first)) {
+                            return;
+                        }
+                        StairComponent* l_stair = m_engine->getEntities()->getStairs()->get (it->first);
+                        if (l_stair && l_entity == m_engine->getEntities()->getPlayer()) {
+                            unsigned int level = m_engine->getLevel();
+                            if (l_stair->direction == StairComponent::UP) {
+                                if (level > 1) level--;
+                            } else {
+                                if (level < m_engine->getMaxLevel()) level++;
+                            }
+                            m_engine->setLevel (level);
 
+                        }
+                    }
+                }
             }
+
             l_location->x = newX;
             l_location->y = newY;
             break;
