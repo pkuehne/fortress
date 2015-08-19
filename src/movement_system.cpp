@@ -2,6 +2,7 @@
 #include "event.h"
 #include "gameengine.h"
 #include "entity.h"
+#include "game_over_window.h"
 #include <iostream>
 
 void MovementSystem::handleEvent (const Event* event)
@@ -22,7 +23,7 @@ void MovementSystem::handleEvent (const Event* event)
                 default: return;
             }
 
-            //Check if we're running into a collidable or something
+            //Check if we're running into a collidable or stairs, etc
             {
                 std::map<EntityId, LocationComponent>& l_locations = m_engine->getEntities()->getLocations()->getAll();
                 std::map<EntityId, LocationComponent>::iterator it = l_locations.begin();
@@ -31,7 +32,7 @@ void MovementSystem::handleEvent (const Event* event)
                     if (it->second.x == newX && it->second.y == newY && it->second.z == m_engine->getLevel()) {
                         // Check if it's a collidable
                         if (m_engine->getEntities()->getColliders()->get (it->first)) {
-                            return;
+                            return; // Don't update position if it's a collidable
                         }
                         StairComponent* l_stair = m_engine->getEntities()->getStairs()->get (it->first);
                         if (l_stair && l_entity == m_engine->getEntities()->getPlayer()) {
@@ -39,7 +40,13 @@ void MovementSystem::handleEvent (const Event* event)
                             if (l_stair->direction == StairComponent::UP) {
                                 if (level > 1) level--;
                             } else {
-                                if (level < m_engine->getMaxLevel()) level++;
+                                if (level < m_engine->getMaxLevel()) {
+                                    level++;
+                                } else {
+                                    GameOverWindow* l_win = new GameOverWindow();
+                                    l_win->initialise (m_engine, &l_entity);
+                                    m_engine->getWindows()->pushWindow (l_win);
+                                }
                             }
                             if (level == m_engine->getLevel()) break;
                             m_engine->setLevel (level);
