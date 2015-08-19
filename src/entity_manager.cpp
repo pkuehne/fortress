@@ -94,7 +94,6 @@ EntityId EntityManager::createPlayerPrefab (unsigned int x, unsigned int y, unsi
     l_sprite.sprite     = '@';
     getSprites()->add (l_entity, l_sprite);
 
-
     // Collider Component
     ColliderComponent l_collider;
     getColliders()->add (l_entity, l_collider);
@@ -107,7 +106,7 @@ EntityId EntityManager::createPlayerPrefab (unsigned int x, unsigned int y, unsi
 
     // Health Component
     HealthComponent l_health;
-    l_health.health = 1;
+    l_health.health = 10;
     getHealths()->add (l_entity, l_health);
 
     // Player Component
