@@ -203,7 +203,7 @@ void Generator::placeOrcs()
 {
     if (m_rooms.size() < 2) return; // No point
 
-    unsigned int numOrcs = rand() % (m_rooms.size() -1) + 1;
+    unsigned int numOrcs = rand() % (m_rooms.size()) + m_engine->getLevel();
     for (size_t ii = 0; ii < numOrcs; ii++) {
         unsigned int room = 0;
         while (1) {
