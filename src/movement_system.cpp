@@ -57,13 +57,7 @@ void MovementSystem::handleEvent (const Event* event)
             unsigned int level = l_event->level;
             if (level == m_engine->getLevel()) break; //Weird, but OK
 
-            if (level < 1) break;
-            if (level > m_engine->getMaxLevel()) {
-                GameOverWindow* l_win = new GameOverWindow();
-                l_win->initialise (m_engine, m_engine);
-                m_engine->getWindows()->pushWindow (l_win);
-                break;
-            }
+            if (level < 1 || level > m_engine->getMaxLevel()) break;
 
             LocationComponent* l_location = m_engine->getEntities()->getLocations()->get (m_engine->getEntities()->getPlayer());
             std::map<EntityId, StairComponent>& l_stairs = m_engine->getEntities()->getStairs()->getAll();
