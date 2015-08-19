@@ -12,6 +12,7 @@ typedef enum {
     EVENT_REMOVE_ENTITY     = 2,
     EVENT_MOVE_ENTITY       = 3,
     EVENT_ATTACK_ENTITY     = 4,
+    EVENT_CHANGE_LEVEL      = 5,
     EVENT_MAX
 } EventType;
 
@@ -49,6 +50,13 @@ public:
     AttackEntityEvent () : Event (EVENT_ATTACK_ENTITY) { }
     EntityId        entity;
     DIRECTION       direction;
+};
+
+class ChangeLevelEvent : public Event {
+public:
+    ChangeLevelEvent () : Event (EVENT_CHANGE_LEVEL) { }
+    unsigned int    level;
+    STAIR           direction;
 };
 
 #endif

@@ -26,7 +26,7 @@ public:
     EntityId createEnemyPrefab (unsigned int x, unsigned int y, unsigned int z=0);
     EntityId createTilePrefab (unsigned int x, unsigned int y, unsigned int z=0);
     EntityId createMarkerPrefab (unsigned int x, unsigned int y, unsigned int z=0);
-    EntityId createStairPrefab (StairComponent::STAIR dir, unsigned int x, unsigned int y, unsigned int z=0);
+    EntityId createStairPrefab (STAIR dir, unsigned int x, unsigned int y, unsigned int z=0);
 
     ComponentManagerInterface<SpriteComponent>* getSprites() { return &m_sprites; }
     ComponentManagerInterface<ColliderComponent>* getColliders() { return &m_colliders; }

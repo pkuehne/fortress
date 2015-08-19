@@ -1,11 +1,9 @@
 #ifndef STAIR_COMPONENT_H
 #define STAIR_COMPONENT_H
 
+#include <utility.h>
+
 struct StairComponent {
-    typedef enum {
-        DOWN = 0,
-        UP = 1
-    } STAIR;
     STAIR direction;
 };
 

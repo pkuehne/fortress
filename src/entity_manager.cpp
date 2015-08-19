@@ -205,7 +205,7 @@ EntityId EntityManager::createMarkerPrefab (unsigned int x, unsigned int y, unsi
     return l_entity;
 }
 
-EntityId EntityManager::createStairPrefab (StairComponent::STAIR dir, unsigned int x, unsigned int y, unsigned int z)
+EntityId EntityManager::createStairPrefab (STAIR dir, unsigned int x, unsigned int y, unsigned int z)
 {
     EntityId l_entity = createEntity();
 
@@ -220,12 +220,12 @@ EntityId EntityManager::createStairPrefab (StairComponent::STAIR dir, unsigned i
     SpriteComponent l_sprite;
     l_sprite.fgColor    = Color (WHITE);
     l_sprite.bgColor    = Color (BLACK);
-    l_sprite.sprite     = (dir == StairComponent::DOWN) ? '>' : '<';
+    l_sprite.sprite     = (dir == STAIR_DOWN) ? '>' : '<';
     getSprites()->add (l_entity, l_sprite);
 
     // Description Component
     DescriptionComponent l_description;
-    l_description.title = (dir == StairComponent::DOWN) ? "A stairway down" : "A stairway up";
+    l_description.title = (dir == STAIR_DOWN) ? "A stairway down" : "A stairway up";
     l_description.text = "It has rough-hewn steps.";
     getDescriptions()->add (l_entity, l_description);
 
@@ -233,7 +233,7 @@ EntityId EntityManager::createStairPrefab (StairComponent::STAIR dir, unsigned i
     StairComponent l_stair;
     l_stair.direction = dir;
     getStairs()->add (l_entity, l_stair);
-    
+
     return l_entity;
 
 }

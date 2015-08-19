@@ -69,11 +69,11 @@ void Generator::createEntitiesFromMap () {
                     m_engine->getEntities()->getSprites()->get(l_entity)->sprite = WALL;
                     break;
                 case UP:
-                    m_engine->getEntities()->createStairPrefab (StairComponent::UP, xx, yy);
+                    m_engine->getEntities()->createStairPrefab (STAIR_UP, xx, yy);
                     if (m_engine->getLevel() == 1) m_engine->getEntities()->createPlayerPrefab (xx, yy);
                     break;
                 case DOWN:
-                    m_engine->getEntities()->createStairPrefab (StairComponent::DOWN, xx, yy);
+                    m_engine->getEntities()->createStairPrefab (STAIR_DOWN, xx, yy);
                 case ORC:
                     m_engine->getEntities()->createEnemyPrefab (xx, yy);
                     m_engine->getEntities()->createTilePrefab (xx, yy);

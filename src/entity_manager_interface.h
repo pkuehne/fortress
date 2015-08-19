@@ -32,7 +32,7 @@ public:
     virtual EntityId createEnemyPrefab (unsigned int x, unsigned int y, unsigned int z=0)   = 0;
     virtual EntityId createTilePrefab (unsigned int x, unsigned int y, unsigned int z=0)    = 0;
     virtual EntityId createMarkerPrefab (unsigned int x, unsigned int y, unsigned int z=0)  = 0;
-    virtual EntityId createStairPrefab (StairComponent::STAIR dir, unsigned int x, unsigned int y, unsigned int z=0)   = 0;
+    virtual EntityId createStairPrefab (STAIR dir, unsigned int x, unsigned int y, unsigned int z=0)   = 0;
 
     virtual ComponentManagerInterface<SpriteComponent>*     getSprites()        = 0;
     virtual ComponentManagerInterface<ColliderComponent>*   getColliders()      = 0;
