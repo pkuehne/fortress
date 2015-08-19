@@ -64,7 +64,7 @@ void GameEngine::initialise ()
 {
     // Start us off on level 1
     m_level = 1;
-    m_maxLevel = 2;
+    m_maxLevel = 5;
 
     // Create if not exist
     if (!m_windowManager) m_windowManager = new WindowManager();
@@ -100,7 +100,7 @@ void GameEngine::loadMap (const std::string& mapName)
 {
     m_generator->mapHeight() = 50;
     m_generator->mapWidth() = 50;
-    m_generator->numberOfRooms() = 5;
+    m_generator->numberOfRooms() = 10;
 
     for (unsigned int level = 1; level <= m_maxLevel; level++) {
         m_level = level;
