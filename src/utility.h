@@ -1,8 +1,6 @@
 #ifndef UTILITY_H
 #define UTILITY_H
 
-#include <vector>
-
 typedef unsigned short DIRECTION;
 namespace Direction {
     const DIRECTION None        = 0;
@@ -16,6 +14,11 @@ namespace Direction {
     const DIRECTION NorthWest   = 8;
 
 }
+
+typedef enum {
+    STAIR_UP    = 0,
+    STAIR_DOWN  = 1
+} STAIR;
 
 namespace Utility {
 };

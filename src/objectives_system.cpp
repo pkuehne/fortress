@@ -8,11 +8,21 @@ void ObjectivesSystem::handleEvent (const Event* event)
         case EVENT_REMOVE_ENTITY: {
             const RemoveEntityEvent* l_event = dynamic_cast<const RemoveEntityEvent*> (event);
             if (l_event->entity == getEngineRef()->getEntities()->getPlayer()) {
-                std::cout << "You lose!" << std::endl;
 
                 GameOverWindow* l_win = new GameOverWindow();
                 l_win->initialise(getEngineRef());
                 getEngineRef()->getWindows()->pushWindow (l_win);
+            }
+            break;
+        }
+        case EVENT_CHANGE_LEVEL: {
+            const ChangeLevelEvent* l_event = dynamic_cast<const ChangeLevelEvent*> (event);
+            unsigned int level = l_event->level;
+
+            if (level > m_engine->getMaxLevel()) {
+                GameOverWindow* l_win = new GameOverWindow();
+                l_win->initialise (m_engine, m_engine);
+                m_engine->getWindows()->pushWindow (l_win);
             }
             break;
         }

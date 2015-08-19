@@ -86,6 +86,14 @@ void MapWindow::keyDown (unsigned char key) {
     if (key == '.') {
         getEngine()->swapTurn();
     }
+    if (key == '1') {
+        std::cout << "Loading new level: " << 1 << std::endl;
+        getEngine()->setLevel (1);
+    }
+    if (key == '2') {
+        std::cout << "Loading new level: " << 2 << std::endl;
+        getEngine()->setLevel (2);
+    }
 }
 
 void MapWindow::drawSeparators() {
@@ -109,7 +117,8 @@ void MapWindow::drawMap() {
         int xWidth = m_mapStartX + m_mapWidth;
         int yWidth = m_mapStartY + m_mapHeight;
         if (x >= m_mapStartX && x < xWidth &&
-            y >= m_mapStartY && y < yWidth) {
+            y >= m_mapStartY && y < yWidth &&
+            l_location->z == getEngine()->getLevel()) {
 
             drawTile (  l_location->y + m_mapYOffset - m_mapStartY,
                         l_location->x + m_mapXOffset - m_mapStartX,

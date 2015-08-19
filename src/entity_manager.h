@@ -21,11 +21,12 @@ public:
     void destroyEntity (EntityId);
     EntityId getPlayer ();
 
-    EntityId createWallPrefab (unsigned int x, unsigned int y);
-    EntityId createPlayerPrefab (unsigned int x, unsigned int y);
-    EntityId createEnemyPrefab (unsigned int x, unsigned int y);
-    EntityId createTilePrefab (unsigned int x, unsigned int y);
-    EntityId createMarkerPrefab (unsigned int x, unsigned int y);
+    EntityId createWallPrefab (unsigned int x, unsigned int y, unsigned int z=0);
+    EntityId createPlayerPrefab (unsigned int x, unsigned int y, unsigned int z=0);
+    EntityId createEnemyPrefab (unsigned int x, unsigned int y, unsigned int z=0);
+    EntityId createTilePrefab (unsigned int x, unsigned int y, unsigned int z=0);
+    EntityId createMarkerPrefab (unsigned int x, unsigned int y, unsigned int z=0);
+    EntityId createStairPrefab (STAIR dir, unsigned int x, unsigned int y, unsigned int z=0);
 
     ComponentManagerInterface<SpriteComponent>* getSprites() { return &m_sprites; }
     ComponentManagerInterface<ColliderComponent>* getColliders() { return &m_colliders; }
@@ -34,6 +35,7 @@ public:
     ComponentManagerInterface<PlayerComponent>* getPlayers() { return &m_players; }
     ComponentManagerInterface<NpcComponent>* getNpcs() { return &m_npcs; }
     ComponentManagerInterface<LocationComponent>* getLocations() { return &m_locations; }
+    ComponentManagerInterface<StairComponent>* getStairs() { return &m_stairs; }
 
     std::vector<EntityId> findEntitiesNear (unsigned int x, unsigned int y, unsigned radius);
     std::vector<EntityId> findEntitiesAt (unsigned int x, unsigned int y);
@@ -54,6 +56,7 @@ private:
     ComponentManager<PlayerComponent>   m_players;
     ComponentManager<NpcComponent>      m_npcs;
     ComponentManager<LocationComponent> m_locations;
+    ComponentManager<StairComponent>    m_stairs;
 };
 
 #endif

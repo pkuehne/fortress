@@ -8,7 +8,12 @@ void GameOverWindow::gainFocus()
 
 void GameOverWindow::redraw()
 {
-    drawString (2, 2, "You lose!");
+    EntityId* l_entity = static_cast<EntityId*>(getArgs());
+    if (l_entity) {
+        drawString (2, 2, "You Win!");
+    } else {
+        drawString (2, 2, "You Lose!");
+    }
 }
 
 void GameOverWindow::resize()

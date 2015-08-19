@@ -12,13 +12,34 @@ static unsigned int getPathCost (unsigned int index, void* customData);
 static unsigned int findNeighbours4 (unsigned int index, unsigned int* neighbours, void* customData);
 static unsigned int findNeighbours8 (unsigned int index, unsigned int* neighbours, void* customData);
 
+const char WALL     = '#';
+const char CORNER   = 'C';
+const char FLOOR    = '.';
+const char DOOR     = 'D';
+const char EMPTY    = ' ';
+const char RESTRICTED = 'X';
+const char ORC      = 'O';
+const char UP       = '<';
+const char DOWN     = '>';
+
+void Generator::reset () {
+    m_startRoom = 0;
+    m_rooms.clear();
+
+    if (m_map) {
+        delete[] m_map;
+        m_map = 0;
+    }
+
+}
+
 void Generator::generate () {
-    unsigned int seed = time(0);
+    unsigned int seed = time(0) + m_engine->getLevel();
     //srand(1439294983);
     srand (seed);
 
     m_map = new unsigned char[m_mapHeight*m_mapWidth];
-    memset (m_map, ' ', m_mapHeight*m_mapWidth);
+    memset (m_map, EMPTY, m_mapHeight*m_mapWidth);
 
     for (unsigned r = 0; r < m_roomTarget; r++) {
         while (!generateRoom ());
@@ -27,11 +48,12 @@ void Generator::generate () {
         connectRooms (m_rooms[ii], m_rooms[ii+1]);
     }
 
-    placePlayer();
+    placeUpStair();
     placeDownStair();
     placeOrcs();
     ///loadMap ();
     createEntitiesFromMap();
+    reset();
     std::cout << "Created with seed " << seed << std::endl;
 }
 
@@ -41,24 +63,26 @@ void Generator::createEntitiesFromMap () {
     for (unsigned int yy = 0; yy < m_mapHeight; yy++) {
         for (unsigned int xx = 0; xx < m_mapWidth; xx++) {
             switch (getByCoordinate(xx, yy)) {
-                case 'W':
-                case 'C':
-                    m_engine->getEntities()->createWallPrefab (xx, yy);
+                case WALL:
+                case CORNER:
+                    l_entity = m_engine->getEntities()->createWallPrefab (xx, yy);
+                    m_engine->getEntities()->getSprites()->get(l_entity)->sprite = WALL;
                     break;
-                case 'P':
-                    m_engine->getEntities()->createPlayerPrefab (xx, yy);
-                    //m_engine->getEntities()->createTilePrefab (xx, yy);
-                    l_entity = m_engine->getEntities()->createMarkerPrefab (xx, yy);
-                    m_engine->getEntities()->getSprites()->get(l_entity)->sprite = '<';
+                case UP:
+                    m_engine->getEntities()->createStairPrefab (STAIR_UP, xx, yy);
+                    if (m_engine->getLevel() == 1) m_engine->getEntities()->createPlayerPrefab (xx, yy);
                     break;
-                case 'O':
+                case DOWN:
+                    m_engine->getEntities()->createStairPrefab (STAIR_DOWN, xx, yy);
+                    break;
+                case ORC:
                     m_engine->getEntities()->createEnemyPrefab (xx, yy);
                     m_engine->getEntities()->createTilePrefab (xx, yy);
                     break;
-                case '.':
+                case FLOOR:
                     m_engine->getEntities()->createTilePrefab (xx, yy);
                     break;
-                case 'X':
+                case RESTRICTED:
                     break;
                 default:
                     l_entity = m_engine->getEntities()->createMarkerPrefab (xx, yy);
@@ -82,22 +106,22 @@ bool Generator::generateRoom () {
 
     for (unsigned int yy = top-2; yy <= top+height+1; yy++) {
         for (unsigned int xx = left-2; xx <= left+width+1; xx++) {
-            if (getByCoordinate (xx, yy) != ' ') return false;
+            if (getByCoordinate (xx, yy) != EMPTY) return false;
         }
     }
 
     for (unsigned int yy = top-2; yy <= top+height+1; yy++) {
         for (unsigned int xx = left-2; xx <= left+width+1; xx++) {
             if (yy < top || yy >= top+height || xx < left || xx >= left+width) {
-                getByCoordinate(xx, yy) = 'X';
+                getByCoordinate(xx, yy) = RESTRICTED;
             } else if (yy == top || yy == top+height-1 || xx == left || xx == left+width-1) {
                 if ((yy <= top+1 || yy >= top+height-2) && (xx <= left+1 || xx >= left+width-2)) {
-                    getByCoordinate(xx, yy) = 'C';
+                    getByCoordinate(xx, yy) = CORNER;
                 } else {
-                    getByCoordinate(xx, yy) = 'W';
+                    getByCoordinate(xx, yy) = WALL;
                 }
             } else {
-                getByCoordinate(xx, yy) = '.';
+                getByCoordinate(xx, yy) = FLOOR;
             }
         }
     }
@@ -141,10 +165,10 @@ void Generator::connectRooms (Room& start, Room& end)
         IndexToCoord (l_path[ii], x, y);
 
         // Create tiles and doors
-        if (tile == 'W' || tile == 'D') {
-            tile = 'D';
+        if (tile == WALL || tile == DOOR) {
+            tile = DOOR;
         } else {
-            tile = '.';
+            tile = FLOOR;
         }
     }
 
@@ -154,43 +178,43 @@ void Generator::connectRooms (Room& start, Room& end)
         size_t count = findNeighbours8 (l_path[ii], neighbours, this);
         for (size_t ii = 0; ii < count; ii++) {
             unsigned char& adj = getByIndex (neighbours[ii]);
-            if (adj == ' ' || adj == 'X') {
-                adj = 'W';
+            if (adj == EMPTY || adj == RESTRICTED) {
+                adj = WALL;
             }
         }
     }
 }
 
-void Generator::placePlayer()
+void Generator::placeUpStair()
 {
-    m_playerRoom = rand() % m_rooms.size();
-    getByCoordinate (m_rooms[m_playerRoom].midX, m_rooms[m_playerRoom].midY) = 'P';
+    m_startRoom = rand() % m_rooms.size();
+    getByCoordinate (m_rooms[m_startRoom].midX, m_rooms[m_startRoom].midY) = UP;
 }
 
 void Generator::placeDownStair()
 {
     if (m_rooms.size() < 2) return; // No point
-    unsigned int room = m_playerRoom;
-    while (room == m_playerRoom) room = rand() % m_rooms.size();
-    getByCoordinate (m_rooms[room].midX, m_rooms[room].midY) = '>';
+    unsigned int room = m_startRoom;
+    while (room == m_startRoom) room = rand() % m_rooms.size();
+    getByCoordinate (m_rooms[room].midX, m_rooms[room].midY) = DOWN;
 }
 
 void Generator::placeOrcs()
 {
     if (m_rooms.size() < 2) return; // No point
 
-    unsigned int numOrcs = rand() % (m_rooms.size() * 2) + m_rooms.size();
+    unsigned int numOrcs = rand() % (m_rooms.size()) + m_engine->getLevel();
     for (size_t ii = 0; ii < numOrcs; ii++) {
         unsigned int room = 0;
         while (1) {
             room = rand() % m_rooms.size();
-            if (m_playerRoom == room) continue;
+            if (m_startRoom == room) continue;
             unsigned int x, y;
             x = m_rooms[room].x + (rand() % m_rooms[room].width-2) + 1;
             y = m_rooms[room].y + (rand() % m_rooms[room].height-2) + 1;
             unsigned char& tile = getByCoordinate (x, y);
-            if (tile == '.') {
-                tile = 'O';
+            if (tile == FLOOR) {
+                tile = ORC;
                 break;
             }
         }
@@ -203,7 +227,7 @@ void Generator::loadMap ()
     char line[m_mapWidth];
     int lineCnt = 0;
     do {
-        memset (line, ' ', sizeof (line));
+        memset (line, EMPTY, sizeof (line));
         file.getline (line, sizeof (line));
         memcpy (m_map+(m_mapWidth*lineCnt), line, sizeof(line));
         lineCnt++;
@@ -216,18 +240,18 @@ unsigned int getPathCost (unsigned int index, void* customData)
     unsigned char point = l_gen->getByIndex(index);
     unsigned int cost = 0;
     switch (point) {
-        case ' ':
+        case EMPTY:
             cost = 3;
             break;
-        case 'W':
-        case 'X':
-        case 'D':
+        case WALL:
+        case RESTRICTED:
+        case DOOR:
             cost = 5;
             break;
-        case '.':
+        case FLOOR:
             cost = 0;
             break;
-        case 'C':
+        case CORNER:
             cost = 999;
             break;
         default:

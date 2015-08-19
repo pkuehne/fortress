@@ -82,6 +82,7 @@ EntityId SpriteSystem::findWallEntity (unsigned int x, unsigned int y) {
         if (l_desc == 0) continue;
         if (iter->second.x == x &&
             iter->second.y == y &&
+            iter->second.z == m_engine->getLevel() &&
             l_desc->title == "Wall") {
             return l_entity;
         }

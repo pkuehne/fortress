@@ -8,7 +8,6 @@ class Generator : public GeneratorInterface {
 public:
     void initialise (GameEngineInterface* a_engine) { m_engine = a_engine; }
     void generate();
-    void createEntitiesFromMap();
 
     unsigned int& mapHeight() { return m_mapHeight; }
     unsigned int& mapWidth() { return m_mapWidth; }
@@ -32,11 +31,13 @@ private:
     };
 
 private:
+    void createEntitiesFromMap();
     bool generateRoom ();
     void connectRooms (Room& start, Room& end);
-    void placePlayer();
+    void placeUpStair();
     void placeDownStair();
     void placeOrcs();
+    void reset();
     void loadMap ();
 
 private:
@@ -45,7 +46,7 @@ private:
     unsigned int            m_mapWidth;
     unsigned int            m_roomTarget;
     unsigned char*          m_map;
-    unsigned int            m_playerRoom;
+    unsigned int            m_startRoom;
     std::vector<Room>       m_rooms;
 };
 
