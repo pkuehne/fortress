@@ -158,8 +158,11 @@ EntityId EntityManager::createEnemyPrefab (unsigned int x, unsigned int y, unsig
 
     // Euipment Component
     EquipmentComponent l_equipment;
+    l_equipment.rightHandWieldable = createWeaponPrefab();
+    l_equipment.leftHandWieldable = createShieldPrefab();
+    l_equipment.headWearable = createHelmetPrefab();
     getEquipments()->add (l_entity, l_equipment);
-    
+
     return l_entity;
 }
 
@@ -274,11 +277,9 @@ EntityId EntityManager::createHelmetPrefab ()
 {
     EntityId l_entity = createEntity();
 
-    WieldableComponent l_wieldable;
-    l_wieldable.position = WieldableRightHand;
-    l_wieldable.baseDamage  = 0;
-    l_wieldable.baseDefence = 1;
-    getWieldables()->add (l_entity, l_wieldable);
+    WearableComponent l_wearable;
+    l_wearable.position = WearableHead;
+    getWearables()->add (l_entity, l_wearable);
 
     return l_entity;
 }
