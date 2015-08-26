@@ -29,6 +29,9 @@ void EntityManager::destroyEntity (EntityId id) {
     getNpcs()->remove (id);
     getLocations()->remove (id);
     getStairs()->remove(id);
+    getEquipments()->remove (id);
+    getWearables()->remove (id);
+    getWieldables()->remove (id);
 
     // Raise event for removal
     RemoveEntityEvent* l_event = new RemoveEntityEvent();
@@ -235,6 +238,24 @@ EntityId EntityManager::createStairPrefab (STAIR dir, unsigned int x, unsigned i
 
     return l_entity;
 
+}
+
+EntityId EntityManager::createWeaponPrefab ()
+{
+    EntityId l_entity = createEntity();
+    return l_entity;
+}
+
+EntityId EntityManager::createShieldPrefab ()
+{
+    EntityId l_entity = createEntity();
+    return l_entity;
+}
+
+EntityId EntityManager::createHelmetPrefab ()
+{
+    EntityId l_entity = createEntity();
+    return l_entity;
 }
 
 std::vector<EntityId> EntityManager::findEntitiesAt (unsigned int x, unsigned int y)
