@@ -10,6 +10,7 @@ typedef enum {
 
 struct WieldableComponent {
     int                 baseDamage;
+    int                 baseDefence;
     WieldablePosition   position;
 };
 

@@ -156,6 +156,10 @@ EntityId EntityManager::createEnemyPrefab (unsigned int x, unsigned int y, unsig
     NpcComponent l_npc;
     getNpcs()->add (l_entity, l_npc);
 
+    // Euipment Component
+    EquipmentComponent l_equipment;
+    getEquipments()->add (l_entity, l_equipment);
+    
     return l_entity;
 }
 
@@ -243,18 +247,39 @@ EntityId EntityManager::createStairPrefab (STAIR dir, unsigned int x, unsigned i
 EntityId EntityManager::createWeaponPrefab ()
 {
     EntityId l_entity = createEntity();
+
+    WieldableComponent l_wieldable;
+    l_wieldable.position = WieldableRightHand;
+    l_wieldable.baseDamage  = 2;
+    l_wieldable.baseDefence = 0;
+    getWieldables()->add (l_entity, l_wieldable);
+
     return l_entity;
 }
 
 EntityId EntityManager::createShieldPrefab ()
 {
     EntityId l_entity = createEntity();
+
+    WieldableComponent l_wieldable;
+    l_wieldable.position = WieldableLeftHand;
+    l_wieldable.baseDamage  = 0;
+    l_wieldable.baseDefence = 4;
+    getWieldables()->add (l_entity, l_wieldable);
+
     return l_entity;
 }
 
 EntityId EntityManager::createHelmetPrefab ()
 {
     EntityId l_entity = createEntity();
+
+    WieldableComponent l_wieldable;
+    l_wieldable.position = WieldableRightHand;
+    l_wieldable.baseDamage  = 0;
+    l_wieldable.baseDefence = 1;
+    getWieldables()->add (l_entity, l_wieldable);
+
     return l_entity;
 }
 
