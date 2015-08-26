@@ -257,6 +257,11 @@ EntityId EntityManager::createWeaponPrefab ()
     l_wieldable.baseDefence = 0;
     getWieldables()->add (l_entity, l_wieldable);
 
+    DescriptionComponent l_description;
+    l_description.title = "A Sword";
+    l_description.text = "Stick 'em with the pointy end!";
+    getDescriptions()->add (l_entity, l_description);
+
     return l_entity;
 }
 
@@ -270,6 +275,11 @@ EntityId EntityManager::createShieldPrefab ()
     l_wieldable.baseDefence = 4;
     getWieldables()->add (l_entity, l_wieldable);
 
+    DescriptionComponent l_description;
+    l_description.title = "A Shield";
+    l_description.text = "Return to your mother...";
+    getDescriptions()->add (l_entity, l_description);
+
     return l_entity;
 }
 
@@ -280,6 +290,11 @@ EntityId EntityManager::createHelmetPrefab ()
     WearableComponent l_wearable;
     l_wearable.position = WearableHead;
     getWearables()->add (l_entity, l_wearable);
+
+    DescriptionComponent l_description;
+    l_description.title = "A helmet";
+    l_description.text = "It says: One Size Fits All";
+    getDescriptions()->add (l_entity, l_description);
 
     return l_entity;
 }
