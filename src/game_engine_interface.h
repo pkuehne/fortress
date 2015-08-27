@@ -12,8 +12,8 @@ class WindowManagerInterface;
 class GameSystemInterface;
 
 typedef enum {
-    GOOD    = 1,
     INFO    = 0,
+    GOOD    = 1,
     WARN    = 2,
     CRIT    = 3
 } MessageType;
