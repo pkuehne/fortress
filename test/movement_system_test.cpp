@@ -15,36 +15,36 @@ TEST (MovementSystem, handleEvent)
     EXPECT_CALL (l_engine, raiseEvent(_)).Times(1);
     l_system.initialise (&l_engine);
     l_entities.initialise (&l_engine);
-    Entity*         l_entityMiddle = l_entities.createEnemyPrefab (2, 2);
+    EntityId        l_entityMiddle = l_entities.createEnemyPrefab (2, 2);
 
     EXPECT_CALL (l_engine, getEntities()).WillRepeatedly (Return (&l_entities));
 
-    l_event.entity      = l_entityMiddle->getId();
+    l_event.entity      = l_entityMiddle;
 
     l_event.direction   = Direction::North;
     l_system.handleEvent (&l_event);
-    EXPECT_EQ (1, l_entities.getSprites()->get(l_entityMiddle->getId())->yPos);
-    EXPECT_EQ (2, l_entities.getSprites()->get(l_entityMiddle->getId())->xPos);
+    EXPECT_EQ (1, l_entities.getLocations()->get(l_entityMiddle)->y);
+    EXPECT_EQ (2, l_entities.getLocations()->get(l_entityMiddle)->x);
 
     l_event.direction   = Direction::South;
     l_system.handleEvent (&l_event);
-    EXPECT_EQ (2, l_entities.getSprites()->get(l_entityMiddle->getId())->yPos);
-    EXPECT_EQ (2, l_entities.getSprites()->get(l_entityMiddle->getId())->xPos);
+    EXPECT_EQ (2, l_entities.getLocations()->get(l_entityMiddle)->y);
+    EXPECT_EQ (2, l_entities.getLocations()->get(l_entityMiddle)->x);
 
     l_event.direction   = Direction::East;
     l_system.handleEvent (&l_event);
-    EXPECT_EQ (2, l_entities.getSprites()->get(l_entityMiddle->getId())->yPos);
-    EXPECT_EQ (3, l_entities.getSprites()->get(l_entityMiddle->getId())->xPos);
+    EXPECT_EQ (2, l_entities.getLocations()->get(l_entityMiddle)->y);
+    EXPECT_EQ (3, l_entities.getLocations()->get(l_entityMiddle)->x);
 
     l_event.direction   = Direction::West;
     l_system.handleEvent (&l_event);
-    EXPECT_EQ (2, l_entities.getSprites()->get(l_entityMiddle->getId())->yPos);
-    EXPECT_EQ (2, l_entities.getSprites()->get(l_entityMiddle->getId())->xPos);
+    EXPECT_EQ (2, l_entities.getLocations()->get(l_entityMiddle)->y);
+    EXPECT_EQ (2, l_entities.getLocations()->get(l_entityMiddle)->x);
 
     l_event.direction   = Direction::None;
     l_system.handleEvent (&l_event);
-    EXPECT_EQ (2, l_entities.getSprites()->get(l_entityMiddle->getId())->yPos);
-    EXPECT_EQ (2, l_entities.getSprites()->get(l_entityMiddle->getId())->xPos);
+    EXPECT_EQ (2, l_entities.getLocations()->get(l_entityMiddle)->y);
+    EXPECT_EQ (2, l_entities.getLocations()->get(l_entityMiddle)->x);
 
 }
 
@@ -61,15 +61,19 @@ TEST (MovementSystem, CollidersBlockMovement)
     l_system.initialise (&l_engine);
     l_entities.initialise (&l_engine);
 
-    Entity*         l_entityMiddle = l_entities.createWallPrefab (2, 2);
-    Entity*         l_entityOther = l_entities.createWallPrefab (3, 2);
+    EntityId        l_entityMiddle = l_entities.createWallPrefab (2, 2);
+    EntityId        l_entityOther = l_entities.createWallPrefab (3, 2);
 
-    l_event.entity      = l_entityMiddle->getId();
+    l_event.entity      = l_entityMiddle;
 
     l_event.direction   = Direction::East;
     l_system.handleEvent (&l_event);
-    EXPECT_EQ (2, l_entities.getSprites()->get(l_entityMiddle->getId())->yPos);
-    EXPECT_EQ (2, l_entities.getSprites()->get(l_entityMiddle->getId())->xPos);
+    EXPECT_EQ (2, l_entities.getLocations()->get(l_entityMiddle)->y);
+    EXPECT_EQ (2, l_entities.getLocations()->get(l_entityMiddle)->x);
+    EXPECT_NE (l_entities.getLocations()->get(l_entityOther)->y, l_entities.getLocations()->get(l_entityMiddle)->y);
+    EXPECT_NE (l_entities.getLocations()->get(l_entityOther)->x, l_entities.getLocations()->get(l_entityMiddle)->x);
+
+
 }
 
 TEST (MovementSystem, handleUnknownEvent)

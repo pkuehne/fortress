@@ -18,6 +18,7 @@ SOURCES+= \
 ../src/game_system_base.cpp \
 ../src/generator.cpp \
 ../src/graphics.cpp \
+../src/inspection_window.cpp \
 ../src/map_window.cpp \
 ../src/movement_system.cpp \
 ../src/npc_system.cpp \

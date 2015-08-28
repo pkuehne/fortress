@@ -11,6 +11,8 @@ public:
      MOCK_METHOD0 (popWindow, void ());
      MOCK_METHOD1 (replaceWindow, void (WindowInterface* win));
      MOCK_METHOD0 (getActive, WindowInterface* ());
+     MOCK_METHOD0 (redraw, void());
+     MOCK_METHOD0 (resize, void());
 
 };
 

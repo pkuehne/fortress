@@ -30,7 +30,7 @@ public:
     EntityId createWeaponPrefab ();
     EntityId createShieldPrefab ();
     EntityId createHelmetPrefab ();
-    
+
     ComponentManagerInterface<SpriteComponent>* getSprites() { return &m_sprites; }
     ComponentManagerInterface<ColliderComponent>* getColliders() { return &m_colliders; }
     ComponentManagerInterface<HealthComponent>* getHealths() { return &m_healths; }
@@ -53,7 +53,7 @@ private:
     unsigned long                       maxId;
     EntityId                            m_player;
 
-    std::map<EntityId, Entity*>         m_idMap;
+    //std::map<EntityId, Entity*>         m_idMap;
 
     ComponentManager<SpriteComponent>       m_sprites;
     ComponentManager<ColliderComponent>     m_colliders;

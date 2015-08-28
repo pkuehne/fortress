@@ -18,7 +18,6 @@ public:
     virtual int getYOffset() = 0;
     virtual int getWidth() = 0;
     virtual int getHeight() = 0;
-    virtual void resize() = 0;
 
     virtual void drawString (int y, int x, const char* text, Color fg = Color(WHITE), Color bg = Color(BLACK)) = 0;
     virtual void drawTile (int y, int x, unsigned int tile, Color fg, Color bg) = 0;
@@ -33,6 +32,7 @@ public:
     virtual void redraw () = 0;
     virtual void afterRedraw() = 0;
     virtual void resize (int width, int height) = 0;
+    virtual void resize() = 0;
 
     virtual void* getArgs() = 0;
     virtual void* getRetval() = 0;

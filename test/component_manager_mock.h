@@ -7,10 +7,10 @@
 template<class T>
 class ComponentManagerMock : public ComponentManagerInterface<T> {
 public:
-    MOCK_METHOD2_T (add, void (Entity* entity, T component));
-    MOCK_METHOD1_T (get, T* (Entity* entity));
-    MOCK_METHOD1_T (remove, void (Entity* entity));
-    MOCK_METHOD0_T (getAll, std::map<Entity*, T>&());
+    MOCK_METHOD2_T (add, void (EntityId entity, T component));
+    MOCK_METHOD1_T (get, T* (EntityId entity));
+    MOCK_METHOD1_T (remove, void (EntityId entity));
+    MOCK_METHOD0_T (getAll, std::map<EntityId, T>&());
 };
 
 #endif

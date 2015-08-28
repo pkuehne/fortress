@@ -2,7 +2,7 @@
 #define ENTITY_MANAGER_H
 
 class GameEngineInterface;
-class Entity;
+
 #include <component_manager.h>
 #include <sprite_component.h>
 #include <collider_component.h>
