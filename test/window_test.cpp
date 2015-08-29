@@ -7,15 +7,19 @@ using namespace ::testing;
 
 TEST (Window, initialise)
 {
-    GameEngineMock* m_engine = new GameEngineMock();
+    GameEngineMock m_engine;
+    GraphicsMock l_graphics;
 
     Window l_win;
 
+    EXPECT_CALL (m_engine, getGraphics()).WillRepeatedly (Return (&l_graphics));
     EXPECT_EQ (static_cast<GameEngineInterface*>(0), l_win.getEngine());
-    l_win.initialise (m_engine);
-    EXPECT_EQ (m_engine, l_win.getEngine());
+    EXPECT_CALL (l_graphics, calculateWindowOffsetsFromCentre (_,_,_,_)).Times (1);
+
+    l_win.initialise (&m_engine);
+    EXPECT_EQ (&m_engine, l_win.getEngine());
     l_win.destroy();
-    EXPECT_EQ (m_engine, l_win.getEngine()); // Since the destroy does nothing
+    EXPECT_EQ (&m_engine, l_win.getEngine()); // Since the destroy does nothing
 }
 
 TEST (Window, keyDownGetAndUp)
@@ -39,12 +43,12 @@ TEST (Window, Redraw)
     Window l_win;
 
     EXPECT_CALL (*m_engine, getGraphics())
-        .Times(2)
         .WillRepeatedly (Return(m_graphics));
-    EXPECT_CALL (*m_graphics, beginScreenUpdate())
-        .Times (1);
-    EXPECT_CALL (*m_graphics, endScreenUpdate())
-        .Times (1);
+    EXPECT_CALL (*m_graphics, calculateWindowOffsetsFromCentre (_,_,_,_))
+        .Times (2);
+    EXPECT_CALL (*m_graphics, clearArea (_,_,_,_)).Times(2);
+    EXPECT_CALL (*m_graphics, drawBorder (_,_,_,_)).Times(1);
+    EXPECT_CALL (*m_graphics, drawString (_,_,_,_,_)).Times(1);
 
     l_win.initialise (m_engine);
 

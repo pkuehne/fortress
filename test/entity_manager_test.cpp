@@ -41,8 +41,8 @@ TEST (EntityManager, destroyEntity)
     ASSERT_NE (static_cast<LocationComponent*>(0), manager.getLocations()->get (entity2));
 
     manager.destroyEntity (entity1);
-    ASSERT_NE (static_cast<LocationComponent*>(0), manager.getLocations()->get (entity1));
-    ASSERT_EQ (static_cast<LocationComponent*>(0), manager.getLocations()->get (entity2));
+    ASSERT_EQ (static_cast<LocationComponent*>(0), manager.getLocations()->get (entity1));
+    ASSERT_NE (static_cast<LocationComponent*>(0), manager.getLocations()->get (entity2));
 
     manager.destroy();
 }
@@ -52,6 +52,7 @@ TEST (EntityManager, createWallPrefab)
     EntityManager   manager;
     GameEngineMock  engine;
     EXPECT_CALL (engine, raiseEvent(_)).Times(1);
+    EXPECT_CALL (engine, getLevel()).WillRepeatedly (Return (1));
 
     manager.initialise(&engine);
 
@@ -60,7 +61,7 @@ TEST (EntityManager, createWallPrefab)
 
     SpriteComponent* sprite = manager.getSprites()->get (entity);
     EXPECT_NE (static_cast<SpriteComponent*>(0), sprite);
-    EXPECT_EQ ('#', sprite->sprite);
+    EXPECT_EQ (87, sprite->sprite);
 
     LocationComponent* loc = manager.getLocations()->get (entity);
     EXPECT_EQ (1, loc->x);
@@ -75,6 +76,7 @@ TEST (EntityManager, createPlayerPrefab)
     EntityManager   manager;
     GameEngineMock  engine;
     EXPECT_CALL (engine, raiseEvent(_)).Times(1);
+    EXPECT_CALL (engine, getLevel()).WillRepeatedly (Return (1));
 
     manager.initialise(&engine);
 
@@ -97,7 +99,8 @@ TEST (EntityManager, createEnemyPrefab)
 {
     EntityManager   manager;
     GameEngineMock  engine;
-    EXPECT_CALL (engine, raiseEvent(_)).Times(1);
+    EXPECT_CALL (engine, raiseEvent(_)).Times(4);
+    EXPECT_CALL (engine, getLevel()).WillRepeatedly (Return (1));
 
     manager.initialise(&engine);
 
@@ -121,6 +124,7 @@ TEST (EntityManager, createTilePrefab)
     EntityManager   manager;
     GameEngineMock  engine;
     EXPECT_CALL (engine, raiseEvent(_)).Times(1);
+    EXPECT_CALL (engine, getLevel()).WillRepeatedly (Return (1));
 
     manager.initialise(&engine);
 
@@ -144,6 +148,7 @@ TEST (EntityManager, getPlayer)
     EntityManager   manager;
     GameEngineMock  engine;
     EXPECT_CALL (engine, raiseEvent(_)).Times(2);
+    EXPECT_CALL (engine, getLevel()).WillRepeatedly (Return (1));
 
     manager.initialise(&engine);
     EXPECT_EQ (0, manager.getPlayer());

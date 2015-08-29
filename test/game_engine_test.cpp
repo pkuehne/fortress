@@ -42,20 +42,19 @@ TEST (GameEngine, tick)
     KeyboardFuncPtr keyboardUpFunc;
     DisplayFuncPtr  displayFunc;
     MouseFuncPtr    mouseFunc;
+    ResizeFuncPtr   resizeFunc;
 
     EXPECT_CALL (l_graphics, setKeyboardFunc(_)).Times(1).WillOnce (SaveArg<0>(&keyboardFunc));
     EXPECT_CALL (l_graphics, setKeyboardUpFunc(_)).Times(1).WillOnce (SaveArg<0>(&keyboardUpFunc));
     EXPECT_CALL (l_graphics, setDisplayFunc(_)).Times(1).WillOnce (SaveArg<0>(&displayFunc));
     EXPECT_CALL (l_graphics, setMouseFunc(_)).Times(1).WillOnce (SaveArg<0>(&mouseFunc));
+    EXPECT_CALL (l_graphics, setResizeFunc(_)).Times(1).WillOnce (SaveArg<0>(&resizeFunc));
 
     l_engine.initialise();
 
     EXPECT_CALL (l_events, processEvents()).Times(1);
 
-    EXPECT_CALL (l_windows, getActive()).WillRepeatedly (Return (&l_window));
-    EXPECT_CALL (l_window, beforeRedraw()).Times(1);
-    EXPECT_CALL (l_window, redraw()).Times(1);
-    EXPECT_CALL (l_window, afterRedraw()).Times(1);
+    EXPECT_CALL (l_windows, redraw()).Times(1);
 
     EXPECT_EQ (0, l_engine.getTick());
     l_engine.tick();
@@ -109,11 +108,13 @@ TEST (GameEngine, graphicsFuncPointersCallWindow)
     KeyboardFuncPtr keyboardUpFunc;
     DisplayFuncPtr  displayFunc;
     MouseFuncPtr    mouseFunc;
-
+    ResizeFuncPtr   resizeFunc;
+    
     EXPECT_CALL (l_graphics, setKeyboardFunc(_)).Times(1).WillOnce (SaveArg<0>(&keyboardFunc));
     EXPECT_CALL (l_graphics, setKeyboardUpFunc(_)).Times(1).WillOnce (SaveArg<0>(&keyboardUpFunc));
     EXPECT_CALL (l_graphics, setDisplayFunc(_)).Times(1).WillOnce (SaveArg<0>(&displayFunc));
     EXPECT_CALL (l_graphics, setMouseFunc(_)).Times(1).WillOnce (SaveArg<0>(&mouseFunc));
+    EXPECT_CALL (l_graphics, setResizeFunc(_)).Times(1).WillOnce (SaveArg<0>(&resizeFunc));
 
     l_engine.initialise();
 
@@ -140,6 +141,7 @@ TEST (GameEngine, generator)
 
     GeneratorMock   l_generator;
     l_engine.setGenerator (&l_generator);
+    l_engine.setMaxLevel (1);
 
     unsigned int l_height;
     unsigned int l_width;
