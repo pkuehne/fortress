@@ -17,7 +17,7 @@ void MapWindow::gainFocus ()
     m_mapStartY = 0;
     m_mapWidth  = 20;
     m_mapHeight = 25;
-    m_sidebarWidth = 10;
+    m_sidebarWidth = 20;
     m_sidebarXOffset = getWidth() - m_sidebarWidth;
 }
 
@@ -25,6 +25,7 @@ void MapWindow::redraw() {
     drawSeparators();
     drawMap();
     drawMessages();
+    drawSidebar();
 }
 
 void MapWindow::resize() {
@@ -148,5 +149,31 @@ void MapWindow::drawMessages()
             case CRIT: fg = Color (BLUE); break;
         }
         drawString (hh, 1, l_messages[ii-1].message.c_str(), fg);
+    }
+}
+
+void MapWindow::drawSidebar ()
+{
+    // Current health
+    drawString (2, m_sidebarXOffset+2, "Health:");
+    EntityId player = getEngine()->getEntities()->getPlayer();
+    HealthComponent* l_health = getEngine()->getEntities()->getHealths()->get(player);
+    if (l_health) {
+        drawProgressBar (m_sidebarXOffset+10, 2, l_health->health);
+
+    }
+
+    // Actions to take
+    drawString (getHeight()-2, m_sidebarXOffset+2, "View Inventory");
+    drawString (getHeight()-2, m_sidebarXOffset+2, "V", Color (GREEN));
+}
+
+void MapWindow::drawProgressBar (int x, int y, int value)
+{
+    float l_value = (float) value;
+    Color l_color ((1.0f-(l_value/10.0f)), l_value/10.0f, 0);
+
+    for (int xx = 0; xx < value; xx++) {
+        drawTile (y, x+xx, '#', l_color, Color(BLACK));
     }
 }

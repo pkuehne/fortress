@@ -14,6 +14,8 @@ private:
     void drawMap ();
     void drawSeparators();
     void drawMessages();
+    void drawSidebar();
+    void drawProgressBar (int x, int y, int value);
 
 private:
     unsigned int m_mapXOffset;
