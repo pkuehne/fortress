@@ -17,6 +17,8 @@ void MapWindow::gainFocus ()
     m_mapStartY = 0;
     m_mapWidth  = 20;
     m_mapHeight = 25;
+    m_sidebarWidth = 10;
+    m_sidebarXOffset = getWidth() - m_sidebarWidth;
 }
 
 void MapWindow::redraw() {
@@ -27,7 +29,8 @@ void MapWindow::redraw() {
 
 void MapWindow::resize() {
     setDimensions (0, 0, getEngine()->getGraphics()->getScreenWidth(), getEngine()->getGraphics()->getScreenHeight());
-    m_mapWidth  = getWidth() - m_mapXOffset - 1;
+    m_sidebarXOffset = getWidth() - m_sidebarWidth - 1;
+    m_mapWidth  = getWidth() - m_mapXOffset - m_sidebarWidth - 1;
     m_mapHeight = getHeight() - m_mapYOffset - 1;
 }
 
@@ -98,6 +101,7 @@ void MapWindow::keyDown (unsigned char key) {
 
 void MapWindow::drawSeparators() {
     getEngine()->getGraphics()->drawBorder (m_mapYOffset-1, m_mapXOffset-1, m_mapHeight, m_mapWidth);
+    getEngine()->getGraphics()->drawBorder (0, m_sidebarXOffset, getHeight()-2, m_sidebarWidth-1);
 }
 
 void MapWindow::drawMap() {

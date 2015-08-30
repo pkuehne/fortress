@@ -20,6 +20,10 @@ private:
     unsigned int m_mapYOffset;
     unsigned int m_mapWidth;
     unsigned int m_mapHeight;
+
+    unsigned int m_sidebarXOffset;
+    unsigned int m_sidebarWidth;
+
     int m_mapStartX;
     int m_mapStartY;
 };

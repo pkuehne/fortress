@@ -35,5 +35,10 @@ fortress
 # tags files
 tags
 
+# dependency files
+*.d
+
 # Others
 *.png
+
+
