@@ -75,7 +75,7 @@ TEST (EntityManager, createPlayerPrefab)
 {
     EntityManager   manager;
     GameEngineMock  engine;
-    EXPECT_CALL (engine, raiseEvent(_)).Times(1);
+    EXPECT_CALL (engine, raiseEvent(_)).Times(4);
     EXPECT_CALL (engine, getLevel()).WillRepeatedly (Return (1));
 
     manager.initialise(&engine);
@@ -147,7 +147,7 @@ TEST (EntityManager, getPlayer)
 {
     EntityManager   manager;
     GameEngineMock  engine;
-    EXPECT_CALL (engine, raiseEvent(_)).Times(2);
+    EXPECT_CALL (engine, raiseEvent(_)).Times(5);
     EXPECT_CALL (engine, getLevel()).WillRepeatedly (Return (1));
 
     manager.initialise(&engine);

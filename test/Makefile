@@ -12,6 +12,7 @@ SOURCES+= \
 ../src/config_manager.cpp \
 ../src/entity.cpp \
 ../src/entity_manager.cpp \
+../src/equipment_window.cpp \
 ../src/event.cpp \
 ../src/event_manager.cpp \
 ../src/gameengine.cpp \

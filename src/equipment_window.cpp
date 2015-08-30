@@ -15,7 +15,7 @@ void EquipmentWindow::resize() {
 }
 
 void EquipmentWindow::redraw() {
-
+    
 }
 
 void EquipmentWindow::keyDown (unsigned char key) {

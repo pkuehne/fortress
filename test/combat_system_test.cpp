@@ -13,7 +13,7 @@ TEST (CombatSystem, handleAttackEvent)
     Event*              l_removeEvent = 0;
     EntityManager       l_entities;
 
-    EXPECT_CALL (l_engine, raiseEvent(NotNull())).Times(9);
+    EXPECT_CALL (l_engine, raiseEvent(NotNull())).Times(12);
     EXPECT_CALL (l_engine, getLevel()).WillRepeatedly (Return (1));
     EXPECT_CALL (l_engine, addMessage (_,_)).Times(1);
     l_entities.initialise (&l_engine);
