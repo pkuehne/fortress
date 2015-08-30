@@ -1,6 +1,7 @@
 #include "window.h"
 #include "map_window.h"
 #include "inspection_window.h"
+#include "equipment_window.h"
 #include "gameengine.h"
 #include "event.h"
 
@@ -85,6 +86,11 @@ void MapWindow::keyDown (unsigned char key) {
     if (key == '.') {
         getEngine()->swapTurn();
     }
+    if (key == 'E') {
+        EquipmentWindow* l_win = new EquipmentWindow();
+        l_win->initialise(getEngine());
+        getEngine()->getWindows()->pushWindow (l_win);
+    }
 }
 
 void MapWindow::drawSeparators() {
@@ -166,8 +172,8 @@ void MapWindow::drawSidebar ()
     drawString (getHeight()-4, m_sidebarXOffset+2, "skip turn (.)");
     drawString (getHeight()-4, m_sidebarXOffset+13, ".", Color (GREEN));
 
-    drawString (getHeight()-2, m_sidebarXOffset+2, "View Inventory");
-    drawString (getHeight()-2, m_sidebarXOffset+2, "V", Color (GREEN));
+    drawString (getHeight()-2, m_sidebarXOffset+2, "View Equipment");
+    drawString (getHeight()-2, m_sidebarXOffset+7, "E", Color (GREEN));
 }
 
 void MapWindow::drawProgressBar (int x, int y, int value)
