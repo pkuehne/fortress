@@ -116,6 +116,13 @@ EntityId EntityManager::createPlayerPrefab (unsigned int x, unsigned int y, unsi
     PlayerComponent l_player;
     getPlayers()->add (l_entity, l_player);
 
+    // Euipment Component
+    EquipmentComponent l_equipment;
+    l_equipment.rightHandWieldable = createWeaponPrefab();
+    l_equipment.leftHandWieldable = createShieldPrefab();
+    l_equipment.headWearable = createHelmetPrefab();
+    getEquipments()->add (l_entity, l_equipment);
+
     return l_entity;
 }
 
