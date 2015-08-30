@@ -19,6 +19,8 @@ void MapWindow::gainFocus ()
     m_mapHeight = 25;
     m_sidebarWidth = 20;
     m_sidebarXOffset = getWidth() - m_sidebarWidth;
+
+    m_action = 'm';
 }
 
 void MapWindow::redraw() {
@@ -38,8 +40,6 @@ void MapWindow::resize() {
 void MapWindow::keyDown (unsigned char key) {
     Window::keyDown (key);
 
-    static char action = 'm';
-
     if (key == 'w' || key == 'a' || key == 's' || key == 'd') {
         DIRECTION l_dir = Direction::None;
         switch (key) {
@@ -49,20 +49,19 @@ void MapWindow::keyDown (unsigned char key) {
             case 'd': l_dir = Direction::East;  break;
         }
 
-        if (action == 'm') {
+        if (m_action == 'm') {
             MoveEntityEvent* l_event = new MoveEntityEvent;
             l_event->entity = getEngine()->getEntities()->getPlayer();
             l_event->direction = l_dir;
             getEngine()->raiseEvent (l_event);
         }
-        if (action == 'k') {
+        if (m_action == 'k') {
             AttackEntityEvent* l_event = new AttackEntityEvent;
             l_event->entity = getEngine()->getEntities()->getPlayer();
             l_event->direction = l_dir;
             getEngine()->raiseEvent (l_event);
         }
-        if (action == 'i') {
-
+        if (m_action == 'i') {
             std::vector<EntityId> l_entities = getEngine()->getEntities()->findEntitiesToThe(l_dir, getEngine()->getEntities()->getPlayer());
             if (l_entities.size() > 0) {
                 EntityId* l_target = new EntityId(l_entities[0]);
@@ -72,31 +71,19 @@ void MapWindow::keyDown (unsigned char key) {
                 getEngine()->getWindows()->pushWindow (l_win);
             }
         }
-        if (action != 'i') getEngine()->swapTurn();
-        action = 'm';
+        if (m_action != 'i') getEngine()->swapTurn();
+        m_action = 'm';
     }
     if (key == 27) {
         getEngine()->quit();
     }
-    if (key == 'm') {
-        action = 'm';
-    }
-    if (key == 'k') {
-        action = 'k';
-    }
-    if (key == 'i') {
-        action = 'i';
+    if (key == 'm' ||
+        key == 'k' ||
+        key == 'i') {
+        m_action = key;
     }
     if (key == '.') {
         getEngine()->swapTurn();
-    }
-    if (key == '1') {
-        std::cout << "Loading new level: " << 1 << std::endl;
-        getEngine()->setLevel (1);
-    }
-    if (key == '2') {
-        std::cout << "Loading new level: " << 2 << std::endl;
-        getEngine()->setLevel (2);
     }
 }
 
@@ -164,6 +151,21 @@ void MapWindow::drawSidebar ()
     }
 
     // Actions to take
+    drawString (getHeight()-7, m_sidebarXOffset+2, "move (wasd)");
+    drawString (getHeight()-7, m_sidebarXOffset+2, "m", Color (GREEN));
+    if (m_action == 'm') drawString (getHeight()-7, m_sidebarXOffset+1, ">", Color (RED));
+
+    drawString (getHeight()-6, m_sidebarXOffset+2, "attack (wasd)");
+    drawString (getHeight()-6, m_sidebarXOffset+7, "k", Color (GREEN));
+    if (m_action == 'k') drawString (getHeight()-6, m_sidebarXOffset+1, ">", Color (RED));
+
+    drawString (getHeight()-5, m_sidebarXOffset+2, "inspect (wasd)");
+    drawString (getHeight()-5, m_sidebarXOffset+2, "i", Color (GREEN));
+    if (m_action == 'i') drawString (getHeight()-5, m_sidebarXOffset+1, ">", Color (RED));
+
+    drawString (getHeight()-4, m_sidebarXOffset+2, "skip turn (.)");
+    drawString (getHeight()-4, m_sidebarXOffset+13, ".", Color (GREEN));
+
     drawString (getHeight()-2, m_sidebarXOffset+2, "View Inventory");
     drawString (getHeight()-2, m_sidebarXOffset+2, "V", Color (GREEN));
 }
@@ -174,6 +176,6 @@ void MapWindow::drawProgressBar (int x, int y, int value)
     Color l_color ((1.0f-(l_value/10.0f)), l_value/10.0f, 0);
 
     for (int xx = 0; xx < value; xx++) {
-        drawTile (y, x+xx, '#', l_color, Color(BLACK));
+        drawTile (y, x+xx, 178, l_color, Color(BLACK));
     }
 }

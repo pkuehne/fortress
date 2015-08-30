@@ -28,6 +28,8 @@ private:
 
     int m_mapStartX;
     int m_mapStartY;
+
+    char m_action;
 };
 
 #endif
