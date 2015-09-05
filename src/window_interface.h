@@ -19,7 +19,7 @@ public:
     virtual int getWidth() = 0;
     virtual int getHeight() = 0;
 
-    virtual void drawString (int y, int x, const char* text, Color fg = Color(WHITE), Color bg = Color(BLACK)) = 0;
+    virtual unsigned int drawString (int y, int x, const char* text, Color fg = Color(WHITE), Color bg = Color(BLACK)) = 0;
     virtual void drawTile (int y, int x, unsigned int tile, Color fg, Color bg) = 0;
 
     virtual GameEngineInterface* getEngine() = 0;

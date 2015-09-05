@@ -5,19 +5,13 @@
 #include <vector>
 
 struct EquipmentComponent {
-    EntityId    rightHandWearable;
-    EntityId    leftHandWearable;
-    EntityId    rightArmWearable;
-    EntityId    leftArmWearable;
     EntityId    headWearable;
     EntityId    faceWearable;
-    EntityId    torsoWearable;
     EntityId    chestWearable;
-    EntityId    lowerBodyWearable;
-    EntityId    rightLegWearable;
-    EntityId    leftLegWearable;
-    EntityId    rightFootWearable;
-    EntityId    leftFootWearable;
+    EntityId    armsWearable;
+    EntityId    handsWearable;
+    EntityId    legsWearable;
+    EntityId    feetWearable;
 
     EntityId    rightHandWieldable;
     EntityId    leftHandWieldable;
@@ -25,6 +19,17 @@ struct EquipmentComponent {
     std::vector<EntityId> carriedEquipment;
     int         maxCarryWeight;
     int         maxCarryVolume;
+    EquipmentComponent()
+        : headWearable (0)
+        , faceWearable (0)
+        , chestWearable (0)
+        , armsWearable (0)
+        , handsWearable (0)
+        , legsWearable (0)
+        , feetWearable (0)
+        , rightHandWieldable (0)
+        , leftHandWieldable (0)
+        {}
 };
 
 #endif

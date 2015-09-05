@@ -9,13 +9,14 @@ static void empty (void) {
 
 }
 
-void Graphics::drawString (int y, int x, const char* string, Color fg, Color bg)
+unsigned int Graphics::drawString (int y, int x, const char* string, Color fg, Color bg)
 {
     int offset = 0;
     while (*string != '\0') {
         drawTile (y, x+offset++, static_cast<unsigned int>(*string++), fg, bg);
         //drawTile (y, x+offset++, static_cast<unsigned int>(*string++), Color (WHITE), Color (BLACK));
     }
+    return offset;
 }
 
 void Graphics::drawTile (int y, int x, unsigned int tile, Color fg, Color bg)
