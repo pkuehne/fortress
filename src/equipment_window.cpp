@@ -65,12 +65,36 @@ void EquipmentWindow::redraw() {
     drawString (13, 11, nameOrNothing (equipment->faceWearable, getEngine()));
 
     drawBorder (0, getWidth()-18, getHeight()-2, 16);
+
+    if (m_selectedItem == 0) {
+        drawString (getHeight()/2, getWidth()-14, "Select item");
+    } else {
+        drawString (2, getWidth()-16, nameOrNothing (m_selectedItem, getEngine()));
+
+        drawString (getHeight()-2, getWidth()-16, "D", Color (GREEN));
+        drawString (getHeight()-2, getWidth()-15, "rop");
+
+        drawString (getHeight()-3, getWidth()-16, "U", Color (GREEN));
+        drawString (getHeight()-3, getWidth()-15, "nequip");
+
+        drawString (getHeight()-4, getWidth()-16, "I", Color (GREEN));
+        drawString (getHeight()-4, getWidth()-15, "nspect");
+    }
+
+
 }
 
 void EquipmentWindow::keyDown (unsigned char key) {
     Window::keyDown (key);
+    EntityId player = getEngine()->getEntities()->getPlayer();
+    EquipmentComponent* equipment = getEngine()->getEntities()->getEquipments()->get(player);
 
     if (key == 27) {
         getEngine()->getWindows()->popWindow();
+    }
+
+    switch (key) {
+        case 'r': m_selectedItem = equipment->rightHandWieldable; break;
+        default: m_selectedItem = 0;
     }
 }

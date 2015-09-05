@@ -2,6 +2,7 @@
 #define EQUIPMENT_WINDOW
 
 #include "window.h"
+#include "entity.h"
 
 class EquipmentWindow : public Window {
 public:
@@ -10,6 +11,8 @@ public:
     virtual void redraw();
     virtual void keyDown (unsigned char key);
 
+private:
+    EntityId m_selectedItem;
 };
 
 #endif
