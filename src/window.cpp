@@ -35,6 +35,14 @@ void Window::drawTile (int y, int x, unsigned int tile, Color fg, Color bg)
     getEngine()->getGraphics()->drawTile (m_yOffset+y, m_xOffset+x, tile, fg, bg);
 }
 
+void Window::drawBorder (int y, int x, int height, int width) {
+    getEngine()->getGraphics()->drawBorder (m_yOffset+y, m_xOffset+x, height, width);
+}
+
+void Window::clearArea (int y, int x, int height, int width) {
+    getEngine()->getGraphics()->clearArea (m_yOffset+y, m_xOffset+x, height, width);
+}
+    
 void Window::beforeRedraw()
 {
     getEngine()->getGraphics()->clearArea (m_yOffset, m_xOffset, m_height, m_width);

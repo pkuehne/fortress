@@ -25,6 +25,8 @@ public:
 
     virtual unsigned int drawString (int y, int x, const char* text, Color fg = Color(WHITE), Color bg = Color(BLACK));
     virtual void drawTile (int y, int x, unsigned int tile, Color fg, Color bg);
+    virtual void drawBorder (int y, int x, int height, int width);
+    virtual void clearArea (int y, int x, int height, int width);
 
     virtual GameEngineInterface* getEngine() { return m_engine; }
     virtual void keyDown (unsigned char key) { ascii_keys[key] = true; }

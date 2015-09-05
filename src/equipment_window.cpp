@@ -64,7 +64,7 @@ void EquipmentWindow::redraw() {
     drawString (13, 7, "t", Color (GREEN));
     drawString (13, 11, nameOrNothing (equipment->faceWearable, getEngine()));
 
-
+    drawBorder (0, getWidth()-18, getHeight()-2, 16);
 }
 
 void EquipmentWindow::keyDown (unsigned char key) {
