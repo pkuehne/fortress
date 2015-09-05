@@ -21,6 +21,7 @@ typedef enum {
 struct WearableComponent {
     int                 baseDamageAbsorb;
     WearablePosition    position;
+    int                 warmth;
 };
 
 #endif
