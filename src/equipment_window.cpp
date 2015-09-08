@@ -133,6 +133,10 @@ void EquipmentWindow::keyDown (unsigned char key) {
         getEngine()->raiseEvent (event);
     }
     if (m_selectedItem && key == 'u') {
-
+        UnequipItemEvent* event = new UnequipItemEvent();
+        event->entity = getEngine()->getEntities()->getPlayer();
+        event->item = m_selectedItem;
+        m_selectedItem = 0;
+        getEngine()->raiseEvent (event);
     }
 }

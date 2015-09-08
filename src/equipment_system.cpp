@@ -40,7 +40,7 @@ void EquipmentSystem::handleEvent (const Event* event) {
             loc.y = location->y;
             loc.z = location->z;
             getEngine()->getEntities()->getLocations()->add (l_event->item, loc);
-
+            getEngine()->addMessage (INFO, "You drop the item on the ground!");
             break;
         }
         case EVENT_PICKUP_EQUIPMENT: {
@@ -50,7 +50,7 @@ void EquipmentSystem::handleEvent (const Event* event) {
             getEngine()->getEntities()->getLocations()->remove(l_event->item);
 
             equipment->carriedEquipment.push_back (l_event->item);
-
+            getEngine()->addMessage (INFO, "You pick something up off the ground");
             break;
         }
         case EVENT_UNEQUIP_ITEM: {
