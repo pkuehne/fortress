@@ -53,14 +53,43 @@ void EquipmentSystem::handleEvent (const Event* event) {
 
             break;
         }
-        case EVENT_EQUIP_ITEM: {
-            break;
-        }
         case EVENT_UNEQUIP_ITEM: {
             const UnequipItemEvent* l_event = dynamic_cast<const UnequipItemEvent*> (event);
             EquipmentComponent* equipment = getEngine()->getEntities()->getEquipments()->get(l_event->entity);
-            WearableComponent* wearable = getEngine()->getEntities()->getWearables()->get(l_event->entity);
-            WieldableComponent* wieldable = getEngine()->getEntities()->getWieldables()->get(l_event->entity);
+            //WearableComponent* wearable = getEngine()->getEntities()->getWearables()->get(l_event->item);
+            //WieldableComponent* wieldable = getEngine()->getEntities()->getWieldables()->get(l_event->item);
+            if (l_event->item == equipment->rightHandWieldable) {
+                equipment->rightHandWieldable = 0;
+            }
+            if (l_event->item == equipment->leftHandWieldable) {
+                equipment->leftHandWieldable = 0;
+            }
+            if (l_event->item == equipment->headWearable) {
+                equipment->headWearable = 0;
+            }
+            if (l_event->item == equipment->faceWearable) {
+                equipment->faceWearable = 0;
+            }
+            if (l_event->item == equipment->armsWearable) {
+                equipment->armsWearable = 0;
+            }
+            if (l_event->item == equipment->chestWearable) {
+                equipment->chestWearable = 0;
+            }
+            if (l_event->item == equipment->legsWearable) {
+                equipment->legsWearable = 0;
+            }
+            if (l_event->item == equipment->feetWearable) {
+                equipment->feetWearable = 0;
+            }
+            equipment->carriedEquipment.push_back (l_event->item);
+            break;
+        }
+        case EVENT_EQUIP_ITEM: {
+            const EquipItemEvent* l_event = dynamic_cast<const EquipItemEvent*> (event);
+            EquipmentComponent* equipment = getEngine()->getEntities()->getEquipments()->get(l_event->entity);
+            WearableComponent* wearable = getEngine()->getEntities()->getWearables()->get(l_event->item);
+            WieldableComponent* wieldable = getEngine()->getEntities()->getWieldables()->get(l_event->item);
             bool equipped = false;
             if (wieldable != 0) {
                 if (wieldable->position == WieldableRightHand || wieldable->position == WieldableBothHands) {
@@ -91,9 +120,11 @@ void EquipmentSystem::handleEvent (const Event* event) {
                 }
             }
             if (equipped) {
-                for (size_t ii = 0; ii < equipment->carriedEquipment.size(); ii++) {
-                    if (equipment->carriedEquipment[ii] == l_event->item) {
-                        //equipment->carriedEquipment.delete(ii);
+                std::vector<EntityId>::iterator it = equipment->carriedEquipment.begin();
+                for (;it != equipment->carriedEquipment.end(); it++) {
+                    if (*it == l_event->item) {
+                        equipment->carriedEquipment.erase(it);
+                        break;
                     }
                 }
             }
