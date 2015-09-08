@@ -30,12 +30,12 @@ void EquipmentWindow::redraw() {
 
     drawString (2, 2, "Wielding");
 
-    if (m_selectedItem == equipment->rightHandWieldable) drawTile (3, 3, '>', Color (RED), Color (GREY));
+    if (m_selectedItem && m_selectedItem == equipment->rightHandWieldable) drawTile (3, 3, '>', Color (RED), Color (GREY));
     drawString (3, 4, "r", Color (GREEN));
     drawString (3, 5, "ight:");
     drawString (3, 11, nameOrNothing (equipment->rightHandWieldable, getEngine()));
 
-    if (m_selectedItem == equipment->leftHandWieldable) drawTile (4, 3, '>', Color (RED), Color (GREY));
+    if (m_selectedItem && m_selectedItem == equipment->leftHandWieldable) drawTile (4, 3, '>', Color (RED), Color (GREY));
     drawString (4, 4, "l", Color (GREEN));
     drawString (4, 5, "eft :");
     drawString (4, 11, nameOrNothing (equipment->leftHandWieldable, getEngine()));

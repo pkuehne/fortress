@@ -86,6 +86,29 @@ void MapWindow::keyDown (unsigned char key) {
     if (key == '.') {
         getEngine()->swapTurn();
     }
+    if (key == 'p') {
+        LocationComponent* l_playerLoc = getEngine()->getEntities()->getLocations()->get (getEngine()->getEntities()->getPlayer());
+        std::vector<EntityId> l_entities = getEngine()->getEntities()->findEntitiesAt (l_playerLoc->x, l_playerLoc->y);
+        bool foundSomethingAlready = false;
+        for (size_t ii = 0; ii < l_entities.size(); ii++) {
+            WearableComponent* wearable = getEngine()->getEntities()->getWearables()->get(l_entities[ii]);
+            WieldableComponent* wieldable = getEngine()->getEntities()->getWieldables()->get(l_entities[ii]);
+            if (wearable || wieldable) {
+                if (!foundSomethingAlready) {
+                    PickupEquipmentEvent* event = new PickupEquipmentEvent();
+                    event->entity = getEngine()->getEntities()->getPlayer();
+                    event->item = l_entities[ii];
+                    getEngine()->raiseEvent (event);
+                    foundSomethingAlready = true;
+                } else {
+                    getEngine()->addMessage(INFO, "There's something else here...");
+                    break;
+                }
+            }
+        }
+
+
+    }
     if (key == 'E') {
         EquipmentWindow* l_win = new EquipmentWindow();
         l_win->initialise(getEngine());
