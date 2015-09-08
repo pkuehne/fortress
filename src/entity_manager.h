@@ -4,12 +4,8 @@
 #include "entity.h"
 #include "component_manager_interface.h"
 #include "entity_manager_interface.h"
-#include <map>
-#include "sprite_component.h"
-#include "collider_component.h"
-#include "health_component.h"
-#include "description_component.h"
 #include "utility.h"
+#include <map>
 #include <vector>
 
 class EntityManager : public EntityManagerInterface {
@@ -42,6 +38,7 @@ public:
     ComponentManagerInterface<EquipmentComponent>* getEquipments() { return &m_equipments; }
     ComponentManagerInterface<WearableComponent>* getWearables() { return &m_wearables; }
     ComponentManagerInterface<WieldableComponent>* getWieldables() { return &m_wieldables; }
+    ComponentManagerInterface<DroppableComponent>* getDroppables() { return &m_droppables; }
 
     std::vector<EntityId> findEntitiesNear (unsigned int x, unsigned int y, unsigned radius);
     std::vector<EntityId> findEntitiesAt (unsigned int x, unsigned int y);
@@ -66,6 +63,7 @@ private:
     ComponentManager<EquipmentComponent>    m_equipments;
     ComponentManager<WearableComponent>     m_wearables;
     ComponentManager<WieldableComponent>    m_wieldables;
+    ComponentManager<DroppableComponent>    m_droppables;
 };
 
 #endif

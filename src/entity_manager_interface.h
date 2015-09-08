@@ -15,6 +15,7 @@ class GameEngineInterface;
 #include <equipment_component.h>
 #include <wearable_component.h>
 #include <wieldable_component.h>
+#include <droppable_component.h>
 #include <vector>
 #include <utility.h>
 
@@ -51,6 +52,7 @@ public:
     virtual ComponentManagerInterface<EquipmentComponent>*      getEquipments()     = 0;
     virtual ComponentManagerInterface<WearableComponent>*       getWearables()      = 0;
     virtual ComponentManagerInterface<WieldableComponent>*      getWieldables()     = 0;
+    virtual ComponentManagerInterface<DroppableComponent>*      getDroppables()     = 0;
 
     virtual std::vector<EntityId> findEntitiesNear (unsigned int x, unsigned int y, unsigned radius) = 0;
     virtual std::vector<EntityId> findEntitiesAt (unsigned int x, unsigned int y) = 0;

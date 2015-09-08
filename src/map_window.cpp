@@ -91,9 +91,8 @@ void MapWindow::keyDown (unsigned char key) {
         std::vector<EntityId> l_entities = getEngine()->getEntities()->findEntitiesAt (l_playerLoc->x, l_playerLoc->y);
         bool foundSomethingAlready = false;
         for (size_t ii = 0; ii < l_entities.size(); ii++) {
-            WearableComponent* wearable = getEngine()->getEntities()->getWearables()->get(l_entities[ii]);
-            WieldableComponent* wieldable = getEngine()->getEntities()->getWieldables()->get(l_entities[ii]);
-            if (wearable || wieldable) {
+            DroppableComponent* droppable = getEngine()->getEntities()->getDroppables()->get(l_entities[ii]);
+            if (droppable) {
                 if (!foundSomethingAlready) {
                     PickupEquipmentEvent* event = new PickupEquipmentEvent();
                     event->entity = getEngine()->getEntities()->getPlayer();

@@ -30,6 +30,13 @@ void EquipmentSystem::handleEvent (const Event* event) {
             if (l_event->item == equipment->feetWearable) {
                 equipment->feetWearable = 0;
             }
+            std::vector<EntityId>::iterator it = equipment->carriedEquipment.begin();
+            for (;it != equipment->carriedEquipment.end(); it++) {
+                if (*it == l_event->item) {
+                    equipment->carriedEquipment.erase (it);
+                    break;
+                }
+            }
             SpriteComponent sprite;
             sprite.fgColor = Color (RED);
             sprite.sprite = '*';

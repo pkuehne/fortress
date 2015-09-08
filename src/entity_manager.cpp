@@ -32,6 +32,7 @@ void EntityManager::destroyEntity (EntityId id) {
     getEquipments()->remove (id);
     getWearables()->remove (id);
     getWieldables()->remove (id);
+    getDroppables()->remove (id);
 
     // Raise event for removal
     RemoveEntityEvent* l_event = new RemoveEntityEvent();
@@ -269,6 +270,8 @@ EntityId EntityManager::createWeaponPrefab ()
     l_description.text = "Stick 'em with the pointy end!";
     getDescriptions()->add (l_entity, l_description);
 
+    DroppableComponent l_droppable;
+    getDroppables()->add (l_entity, l_droppable);
     return l_entity;
 }
 
@@ -287,6 +290,9 @@ EntityId EntityManager::createShieldPrefab ()
     l_description.text = "Return to your mother...";
     getDescriptions()->add (l_entity, l_description);
 
+    DroppableComponent l_droppable;
+    getDroppables()->add (l_entity, l_droppable);
+
     return l_entity;
 }
 
@@ -302,6 +308,9 @@ EntityId EntityManager::createHelmetPrefab ()
     l_description.title = "Helmet";
     l_description.text = "It says: One Size Fits All";
     getDescriptions()->add (l_entity, l_description);
+
+    DroppableComponent l_droppable;
+    getDroppables()->add (l_entity, l_droppable);
 
     return l_entity;
 }

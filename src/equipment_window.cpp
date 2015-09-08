@@ -38,49 +38,49 @@ void EquipmentWindow::redraw() {
 
         drawString (4, 2, "Wielding");
 
-        if (m_selectedItem && m_selectedItem == equipment->rightHandWieldable) drawTile (3, 3, '>', Color (RED), Color (GREY));
+        if (m_selectedItem && m_selectedItem == equipment->rightHandWieldable) drawTile (5, 3, '>', Color (RED), Color (GREY));
         drawString (5, 4, "r", Color (GREEN));
         drawString (5, 5, "ight:");
         drawString (5, 11, nameOrNothing (equipment->rightHandWieldable, getEngine()));
 
-        if (m_selectedItem && m_selectedItem == equipment->leftHandWieldable) drawTile (4, 3, '>', Color (RED), Color (GREY));
+        if (m_selectedItem && m_selectedItem == equipment->leftHandWieldable) drawTile (6, 3, '>', Color (RED), Color (GREY));
         drawString (6, 4, "l", Color (GREEN));
         drawString (6, 5, "eft :");
         drawString (6, 11, nameOrNothing (equipment->leftHandWieldable, getEngine()));
 
         drawString (8, 2, "Wearing");
 
-        if (m_selectedItem && m_selectedItem == equipment->headWearable) drawTile (7, 3, '>', Color (RED), Color (GREY));
+        if (m_selectedItem && m_selectedItem == equipment->headWearable) drawTile (9, 3, '>', Color (RED), Color (GREY));
         drawString (9, 4, "h", Color (GREEN));
         drawString (9, 5, "ead :");
         drawString (9, 11, nameOrNothing (equipment->headWearable, getEngine()));
 
-        if (m_selectedItem && m_selectedItem == equipment->faceWearable) drawTile (8, 3, '>', Color (RED), Color (GREY));
+        if (m_selectedItem && m_selectedItem == equipment->faceWearable) drawTile (10, 3, '>', Color (RED), Color (GREY));
         drawString (10, 4, "f", Color (GREEN));
         drawString (10, 5, "ace :");
         drawString (10, 11, nameOrNothing (equipment->faceWearable, getEngine()));
 
-        if (m_selectedItem && m_selectedItem == equipment->chestWearable) drawTile (9, 3, '>', Color (RED), Color (GREY));
+        if (m_selectedItem && m_selectedItem == equipment->chestWearable) drawTile (11, 3, '>', Color (RED), Color (GREY));
         drawString (11, 4, "c", Color (GREEN));
         drawString (11, 5, "hest:");
         drawString (11, 11, nameOrNothing (equipment->chestWearable, getEngine()));
 
-        if (m_selectedItem && m_selectedItem == equipment->armsWearable) drawTile (10, 3, '>', Color (RED), Color (GREY));
+        if (m_selectedItem && m_selectedItem == equipment->armsWearable) drawTile (12, 3, '>', Color (RED), Color (GREY));
         drawString (12, 4, "a", Color (GREEN));
         drawString (12, 5, "rms :");
         drawString (12, 11, nameOrNothing (equipment->armsWearable, getEngine()));
 
-        if (m_selectedItem && m_selectedItem == equipment->handsWearable) drawTile (11, 3, '>', Color (RED), Color (GREY));
+        if (m_selectedItem && m_selectedItem == equipment->handsWearable) drawTile (13, 3, '>', Color (RED), Color (GREY));
         drawString (13, 4, "hands:");
         drawString (13, 7, "d", Color (GREEN));
         drawString (13, 11, nameOrNothing (equipment->handsWearable, getEngine()));
 
-        if (m_selectedItem && m_selectedItem == equipment->legsWearable) drawTile (12, 3, '>', Color (RED), Color (GREY));
+        if (m_selectedItem && m_selectedItem == equipment->legsWearable) drawTile (14, 3, '>', Color (RED), Color (GREY));
         drawString (14, 4, "legs :");
         drawString (14, 5, "e", Color (GREEN));
         drawString (14, 11, nameOrNothing (equipment->legsWearable, getEngine()));
 
-        if (m_selectedItem && m_selectedItem == equipment->feetWearable) drawTile (13, 3, '>', Color (RED), Color (GREY));
+        if (m_selectedItem && m_selectedItem == equipment->feetWearable) drawTile (15, 3, '>', Color (RED), Color (GREY));
         drawString (15, 4, "feet :");
         drawString (15, 7, "t", Color (GREEN));
         drawString (15, 11, nameOrNothing (equipment->feetWearable, getEngine()));
