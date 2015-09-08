@@ -105,8 +105,9 @@ void MapWindow::keyDown (unsigned char key) {
                 }
             }
         }
-
-
+        if (!foundSomethingAlready) {
+            getEngine()->addMessage(INFO, "There's nothing here...");
+        }
     }
     if (key == 'E') {
         EquipmentWindow* l_win = new EquipmentWindow();
@@ -179,6 +180,9 @@ void MapWindow::drawSidebar ()
     }
 
     // Actions to take
+    drawString (getHeight()-8, m_sidebarXOffset+2, "pickup Items");
+    drawString (getHeight()-8, m_sidebarXOffset+2, "p", Color (GREEN));
+
     drawString (getHeight()-7, m_sidebarXOffset+2, "move (wasd)");
     drawString (getHeight()-7, m_sidebarXOffset+2, "m", Color (GREEN));
     if (m_action == 'm') drawString (getHeight()-7, m_sidebarXOffset+1, ">", Color (RED));
