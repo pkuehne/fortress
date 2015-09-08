@@ -6,6 +6,12 @@
 
 class GameEngineInterface;
 
+enum {
+    TAB = 9,
+    ESC = 27,
+    MAX = 999
+};
+
 class WindowInterface {
 public:
     virtual ~WindowInterface() {}

@@ -12,7 +12,8 @@ public:
     virtual void keyDown (unsigned char key);
 
 private:
-    EntityId m_selectedItem;
+    EntityId    m_selectedItem;
+    int         m_selectedPage;
 };
 
 #endif
