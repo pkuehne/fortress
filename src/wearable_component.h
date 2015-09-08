@@ -3,19 +3,13 @@
 
 typedef enum {
     WearableNowhere     = 0,
-    WearableRightHand,
-    WearableLeftHand,
-    WearableRightArm,
-    WearableLeftArm,
+    WearableHands,
+    WearableArms,
     WearableHead,
     WearableFace,
-    WearableTorso,
     WearableChest,
-    WearableLowerBody,
-    WearableRightLeg,
-    WearableLeftLeg,
-    WearableRightFoot,
-    WearableLeftFoot
+    WearableLegs,
+    WearableFeet
 } WearablePosition;
 
 struct WearableComponent {

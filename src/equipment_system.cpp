@@ -53,6 +53,52 @@ void EquipmentSystem::handleEvent (const Event* event) {
 
             break;
         }
+        case EVENT_EQUIP_ITEM: {
+            break;
+        }
+        case EVENT_UNEQUIP_ITEM: {
+            const UnequipItemEvent* l_event = dynamic_cast<const UnequipItemEvent*> (event);
+            EquipmentComponent* equipment = getEngine()->getEntities()->getEquipments()->get(l_event->entity);
+            WearableComponent* wearable = getEngine()->getEntities()->getWearables()->get(l_event->entity);
+            WieldableComponent* wieldable = getEngine()->getEntities()->getWieldables()->get(l_event->entity);
+            bool equipped = false;
+            if (wieldable != 0) {
+                if (wieldable->position == WieldableRightHand || wieldable->position == WieldableBothHands) {
+                    equipment->rightHandWieldable = l_event->item; equipped = true;
+                }
+                if (wieldable->position == WieldableLeftHand || wieldable->position == WieldableBothHands) {
+                    equipment->leftHandWieldable = l_event->item; equipped = true;
+                }
+            }
+            if (wearable != 0) {
+                if (wearable->position == WearableHead) {
+                    equipment->headWearable = l_event->item; equipped = true;
+                }
+                if (wearable->position == WearableFace) {
+                    equipment->faceWearable = l_event->item; equipped = true;
+                }
+                if (wearable->position == WearableArms) {
+                    equipment->armsWearable = l_event->item; equipped = true;
+                }
+                if (wearable->position == WearableChest) {
+                    equipment->chestWearable = l_event->item; equipped = true;
+                }
+                if (wearable->position == WearableLegs) {
+                    equipment->legsWearable = l_event->item; equipped = true;
+                }
+                if (wearable->position == WearableFeet) {
+                    equipment->feetWearable = l_event->item; equipped = true;
+                }
+            }
+            if (equipped) {
+                for (size_t ii = 0; ii < equipment->carriedEquipment.size(); ii++) {
+                    if (equipment->carriedEquipment[ii] == l_event->item) {
+                        //equipment->carriedEquipment.delete(ii);
+                    }
+                }
+            }
+            break;
+        }
         default: break;
     }
 }
