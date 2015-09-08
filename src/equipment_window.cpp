@@ -125,4 +125,14 @@ void EquipmentWindow::keyDown (unsigned char key) {
         l_win->initialise(getEngine(), l_target);
         getEngine()->getWindows()->pushWindow (l_win);
     }
+    if (m_selectedItem && key == 'd') {
+        DropEquipmentEvent* event = new DropEquipmentEvent();
+        event->entity = getEngine()->getEntities()->getPlayer();
+        event->item = m_selectedItem;
+        m_selectedItem = 0;
+        getEngine()->raiseEvent (event);
+    }
+    if (m_selectedItem && key == 'u') {
+
+    }
 }
