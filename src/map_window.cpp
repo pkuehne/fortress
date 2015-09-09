@@ -16,8 +16,8 @@ void MapWindow::gainFocus ()
     m_mapYOffset = 9;
     m_mapStartX = 0;
     m_mapStartY = 0;
-    m_mapWidth  = 20;
-    m_mapHeight = 25;
+    m_mapWidth  = 50;
+    m_mapHeight = 50;
     m_sidebarWidth = 20;
     m_sidebarXOffset = getWidth() - m_sidebarWidth;
 
@@ -128,7 +128,32 @@ void MapWindow::drawSeparators() {
 }
 
 void MapWindow::drawMap() {
+    LocationComponent* l_player = getEngine()->getEntities()->getLocations()->get (getEngine()->getEntities()->getPlayer());
+    if (l_player) {
+        m_mapStartX = l_player->x - (m_mapWidth/2);
+        m_mapStartY = l_player->y - (m_mapHeight/2);
+    }
+    int xWidth = m_mapStartX + m_mapWidth;
+    int yWidth = m_mapStartY + m_mapHeight;
 
+    for (int yy = m_mapStartY; yy < yWidth; yy++) {
+        for (int xx = m_mapStartX; xx < xWidth; xx++) {
+            if (!getEngine()->isValidTile (xx, yy, getEngine()->getLevel())) continue;
+            Tile& l_tile = getEngine()->getTile (xx, yy, getEngine()->getLevel());
+            for (EntityId entity : l_tile.entities) {
+                SpriteComponent* l_sprite= getEngine()->getEntities()->getSprites()->get (entity);
+                drawTile (  yy + m_mapYOffset - m_mapStartY,
+                            xx + m_mapXOffset - m_mapStartX,
+                            l_sprite->sprite,
+                            l_sprite->fgColor,
+                            l_sprite->bgColor);
+
+            }
+        }
+    }
+
+    return;
+    /*
     std::map<EntityId, SpriteComponent>& l_sprites = getEngine()->getEntities()->getSprites()->getAll();
     std::map<EntityId, SpriteComponent>::iterator it = l_sprites.begin();
     LocationComponent* l_player = getEngine()->getEntities()->getLocations()->get (getEngine()->getEntities()->getPlayer());
@@ -154,6 +179,7 @@ void MapWindow::drawMap() {
                         l_sprite.bgColor);
         }
     }
+    */
 }
 
 void MapWindow::drawMessages()

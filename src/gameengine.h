@@ -53,13 +53,20 @@ public:
     void setMaxLevel (unsigned int maxLevel) { m_maxLevel = maxLevel; }
     unsigned int getMaxLevel () { return m_maxLevel; }
 
-    Tile& getTile (unsigned int x, unsigned int y) { return getTile (map2index (x, y)); }
+    Tile& getTile (unsigned int x, unsigned int y, unsigned int z) { return getTile (map2index (x, y, z)); }
     Tile& getTile (unsigned int index) { return m_map[index]; }
 
-    int map2index (unsigned int x, unsigned int y) { return y * m_mapWidth + x; }
-    void index2map (unsigned int index, unsigned int& x, unsigned int& y) {  x = index%m_mapWidth; y = (index-x)/m_mapWidth; }
-    bool isValidTile (unsigned int x, unsigned int y) { return (x>=0 && x<m_mapWidth && y>=0 && y<m_mapHeight); }
+    int map2index (unsigned int x, unsigned int y, unsigned int z) { return (z-1)*m_mapHeight*m_mapWidth + y*m_mapHeight + x; }
+    void index2map (unsigned int index, unsigned int& x, unsigned int& y, unsigned int& z) {
+        x = index%m_mapWidth;
+        y = (index-x)/m_mapHeight;
+        z = (index-(y*m_mapWidth)+x) / (m_mapHeight*m_mapWidth) + 1;
+    }
+    bool isValidTile (unsigned int x, unsigned int y, unsigned int z) { return (x>=0 && x<m_mapWidth && y>=0 && y<m_mapHeight && z>0 && z<=m_maxLevel); }
     bool isValidTile (unsigned int index) { return (index > 0 && index < sizeof (m_map)); }
+
+    unsigned int getMapHeight() { return m_mapHeight; }
+    unsigned int getMapWidth() { return m_mapWidth; }
 
 private:
     unsigned long long  m_tick;

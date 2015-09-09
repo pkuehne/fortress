@@ -59,13 +59,16 @@ public:
     virtual void setMaxLevel (unsigned int level) = 0;
     virtual unsigned int getMaxLevel () = 0;
 
-    virtual Tile& getTile (unsigned int x, unsigned int y) = 0;
+    virtual Tile& getTile (unsigned int x, unsigned int y, unsigned int z) = 0;
     virtual Tile& getTile (unsigned int index) = 0;
 
-    virtual int map2index (unsigned int x, unsigned int y) = 0;
-    virtual void index2map (unsigned int index, unsigned int& x, unsigned int& y) = 0;
-    virtual bool isValidTile (unsigned int x, unsigned int y) = 0;
+    virtual int map2index (unsigned int x, unsigned int y, unsigned int z) = 0;
+    virtual void index2map (unsigned int index, unsigned int& x, unsigned int& y, unsigned int& z) = 0;
+    virtual bool isValidTile (unsigned int x, unsigned int y, unsigned int z) = 0;
     virtual bool isValidTile (unsigned int index) = 0;
+
+    virtual unsigned int getMapHeight() = 0;
+    virtual unsigned int getMapWidth() = 0;
 
 };
 

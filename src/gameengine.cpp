@@ -51,8 +51,8 @@ GameEngine::GameEngine (GraphicsInterface* a_graphics)
 , m_generator (0)
 , m_level (0)
 , m_maxLevel (0)
-, m_mapWidth (0)
-, m_mapHeight (0)
+, m_mapWidth (50)
+, m_mapHeight (50)
 , m_map (0)
 {
     g_engine = this;
@@ -101,11 +101,14 @@ void GameEngine::initialise ()
 
 void GameEngine::loadMap (unsigned int width, unsigned int height)
 {
-    if (m_map) delete[] m_map;
-    m_map = new Tile[width*height];
+    m_mapWidth = width;
+    m_mapHeight = height;
 
-    m_generator->mapHeight() = width;
-    m_generator->mapWidth() = height;
+    if (m_map) delete[] m_map;
+    m_map = new Tile[m_mapWidth*m_mapHeight*m_maxLevel];
+
+    m_generator->mapHeight() = m_mapHeight;
+    m_generator->mapWidth() = m_mapWidth;
     m_generator->numberOfRooms() = 10;
 
     for (unsigned int level = 1; level <= m_maxLevel; level++) {
