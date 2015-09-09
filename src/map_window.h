@@ -2,6 +2,7 @@
 #define __MAP_WINDOW_H__
 
 #include "window.h"
+#include <ctime>
 
 class MapWindow : public Window {
 public:
@@ -29,7 +30,8 @@ private:
     int m_mapStartX;
     int m_mapStartY;
 
-    char m_action;
+    char    m_action;
+    clock_t m_lastDraw;
 };
 
 #endif

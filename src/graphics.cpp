@@ -153,7 +153,11 @@ void Graphics::initialise (int argc, char** argv)
     m_config.readFile ("../config/graphics.cfg");
 std::cout << "Width: " << m_config.getTag("WindowWidth").num << std::endl;
     glutInitDisplayMode (GLUT_SINGLE | GLUT_RGBA);
-    glutInitWindowSize (m_config.getTag("WindowWidth").num, m_config.getTag("WindowHeight").num);
+    if (m_config.getTag("Fullscreen").num == 1) {
+        glutInitWindowSize (glutGet (GLUT_SCREEN_WIDTH), glutGet (GLUT_SCREEN_HEIGHT));
+    } else {
+        glutInitWindowSize (m_config.getTag("WindowWidth").num, m_config.getTag("WindowHeight").num);
+    }
     glutInitWindowPosition (100, 100);
     glutCreateWindow ("FORTRESS");
 

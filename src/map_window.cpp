@@ -5,6 +5,7 @@
 #include "gameengine.h"
 #include "event.h"
 
+
 void MapWindow::gainFocus ()
 {
     std::string l_mapName ("");
@@ -22,9 +23,15 @@ void MapWindow::gainFocus ()
     m_sidebarXOffset = getWidth() - m_sidebarWidth;
 
     m_action = 'm';
+    m_lastDraw = clock();
 }
 
 void MapWindow::redraw() {
+
+    //clock_t l_clock = clock() - m_lastDraw;
+    //double l_diff = static_cast<double> (l_clock/CLOCKS_PER_SEC);
+    //if (l_diff < 0.01f) return;
+
     drawSeparators();
     drawMap();
     drawMessages();
