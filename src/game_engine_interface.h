@@ -5,6 +5,7 @@
 //#include "window_manager_interface.h"
 #include "entity_manager_interface.h"
 #include "graphics_interface.h"
+#include "tile.h"
 
 //class WindowManager;
 class Event;
@@ -39,7 +40,7 @@ public:
     virtual void raiseEvent (Event* event)  = 0;
     virtual EntityManagerInterface* getEntities()    = 0;
 
-    virtual void loadMap (const std::string& mapName) = 0;
+    virtual void loadMap (unsigned int width, unsigned int height) = 0;
 
     virtual unsigned long long getTick()    = 0;
     virtual WindowManagerInterface* getWindows()     = 0;
@@ -57,6 +58,14 @@ public:
 
     virtual void setMaxLevel (unsigned int level) = 0;
     virtual unsigned int getMaxLevel () = 0;
+
+    virtual Tile& getTile (unsigned int x, unsigned int y) = 0;
+    virtual Tile& getTile (unsigned int index) = 0;
+
+    virtual int map2index (unsigned int x, unsigned int y) = 0;
+    virtual void index2map (unsigned int index, unsigned int& x, unsigned int& y) = 0;
+    virtual bool isValidTile (unsigned int x, unsigned int y) = 0;
+    virtual bool isValidTile (unsigned int index) = 0;
 
 };
 

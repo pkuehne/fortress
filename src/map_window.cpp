@@ -8,8 +8,7 @@
 
 void MapWindow::gainFocus ()
 {
-    std::string l_mapName ("");
-    getEngine()->loadMap(l_mapName);
+    getEngine()->loadMap(50, 50);
 
     setTitle ("Map");
 

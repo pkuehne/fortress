@@ -51,6 +51,9 @@ GameEngine::GameEngine (GraphicsInterface* a_graphics)
 , m_generator (0)
 , m_level (0)
 , m_maxLevel (0)
+, m_mapWidth (0)
+, m_mapHeight (0)
+, m_map (0)
 {
     g_engine = this;
 }
@@ -96,10 +99,13 @@ void GameEngine::initialise ()
     addMessage (WARN, "The air smells of Orc!");
 }
 
-void GameEngine::loadMap (const std::string& mapName)
+void GameEngine::loadMap (unsigned int width, unsigned int height)
 {
-    m_generator->mapHeight() = 50;
-    m_generator->mapWidth() = 50;
+    if (m_map) delete[] m_map;
+    m_map = new Tile[width*height];
+
+    m_generator->mapHeight() = width;
+    m_generator->mapWidth() = height;
     m_generator->numberOfRooms() = 10;
 
     for (unsigned int level = 1; level <= m_maxLevel; level++) {
@@ -121,10 +127,6 @@ void GameEngine::tick ()
     }
 
     getWindows()->redraw();
-//    getWindows()->getActive()->beforeRedraw();
-//    getWindows()->getActive()->redraw();
-//    getWindows()->getActive()->afterRedraw();
-
     return;
 }
 
