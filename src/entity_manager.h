@@ -43,9 +43,9 @@ public:
     ComponentManagerInterface<WieldableComponent>* getWieldables() { return &m_wieldables; }
     ComponentManagerInterface<DroppableComponent>* getDroppables() { return &m_droppables; }
 
-    std::vector<EntityId> findEntitiesNear (unsigned int x, unsigned int y, unsigned radius);
-    std::vector<EntityId> findEntitiesAt (unsigned int x, unsigned int y);
-    std::vector<EntityId> findEntitiesToThe (DIRECTION a_direction, EntityId a_entity);
+    EntityHolder findEntitiesNear (unsigned int x, unsigned int y, unsigned radius);
+    EntityHolder findEntitiesAt (unsigned int x, unsigned int y);
+    EntityHolder findEntitiesToThe (DIRECTION a_direction, EntityId a_entity);
 
     Location getLocation (EntityId entity) { return m_locations[entity]; }
     void setLocation (EntityId entity, Location& location);

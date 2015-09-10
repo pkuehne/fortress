@@ -15,16 +15,14 @@ void CombatSystem::handleEvent (const Event* event)
                 EntityId l_weapon = l_attackerEquipment->rightHandWieldable;
                 damage = m_engine->getEntities()->getWieldables()->get(l_weapon)->baseDamage;
             }
-            std::vector<EntityId> l_targets = m_engine->getEntities()->findEntitiesToThe (l_event->direction, l_event->entity);
-            std::vector<EntityId>::iterator iter = l_targets.begin();
-            for (; iter != l_targets.end(); iter++) {
-                EntityId defender = *iter;
-                HealthComponent* l_health = m_engine->getEntities()->getHealths()->get(defender);
+            EntityHolder l_targets = m_engine->getEntities()->findEntitiesToThe (l_event->direction, l_event->entity);
+            for (EntityId l_target : l_targets) {
+                HealthComponent* l_health = m_engine->getEntities()->getHealths()->get(l_target);
                 if (l_health) {
                     l_health->health -= damage;
-                    updateLog (attacker, defender, damage);
+                    updateLog (attacker, l_target, damage);
                     if (l_health->health < 1) {
-                        m_engine->getEntities()->destroyEntity (*iter);
+                        m_engine->getEntities()->destroyEntity (l_target);
                     }
                     break;
                 }

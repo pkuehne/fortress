@@ -288,49 +288,42 @@ EntityId EntityManager::createHelmetPrefab ()
     return l_entity;
 }
 
-std::vector<EntityId> EntityManager::findEntitiesAt (unsigned int x, unsigned int y)
+EntityHolder EntityManager::findEntitiesAt (unsigned int x, unsigned int y)
 {
     return findEntitiesNear (x, y, 0);
 }
 
-std::vector<EntityId> EntityManager::findEntitiesNear (unsigned int x, unsigned int y, unsigned radius)
+EntityHolder EntityManager::findEntitiesNear (unsigned int x, unsigned int y, unsigned radius)
 {
-    std::vector<EntityId> l_entities;
+    EntityHolder l_entities;
 
-/* TODO
-    std::map<EntityId, LocationComponent>& l_locations = m_engine->getEntities()->getLocations()->getAll();
-    std::map<EntityId, LocationComponent>::iterator it = l_locations.begin();
-    for (; it != l_locations.end(); it++) {
-        if (it->second.x >= x - radius &&
-            it->second.x <= x + radius &&
-            it->second.y >= y - radius &&
-            it->second.y <= y + radius &&
-            it->second.z == m_engine->getLevel()) {
-            l_entities.push_back (it->first);
+    int startx = x - radius;
+    int starty = y - radius;
+    int endx = x + radius;
+    int endy = y + radius;
+
+    for (int yy = starty; yy <= endy; yy++) {
+        for (int xx = startx; xx <= endx; xx++) {
+            for (EntityId id : m_engine->getTile (xx, yy, m_engine->getLevel()).entities) {
+                l_entities.insert (id);
+            }
         }
     }
-*/
     return l_entities;
 
 }
 
-std::vector<EntityId> EntityManager::findEntitiesToThe (DIRECTION a_direction, EntityId a_entity)
+EntityHolder EntityManager::findEntitiesToThe (DIRECTION a_direction, EntityId a_entity)
 {
-    std::vector<EntityId> l_entities;
+    EntityHolder l_entities;
 
-/* TODO!!!
-    LocationComponent* l_location = m_engine->getEntities()->getLocations()->get (a_entity);
-    if (!l_location) return l_entities;
-    unsigned int newX = l_location->x;
-    unsigned int newY = l_location->y;
+    Location l_location = m_engine->getEntities()->getLocation(a_entity);
     switch (a_direction) {
-        case Direction::North:  newY--; break;
-        case Direction::South:  newY++; break;
-        case Direction::West:   newX--; break;
-        case Direction::East:   newX++; break;
+        case Direction::North:  l_location.y--; break;
+        case Direction::South:  l_location.y++; break;
+        case Direction::West:   l_location.x--; break;
+        case Direction::East:   l_location.x++; break;
         default: return l_entities;
     }
-    return findEntitiesAt (newX, newY);
-*/
-    return l_entities; //TODO: Remove
+    return findEntitiesAt (l_location.x, l_location.y);
 }

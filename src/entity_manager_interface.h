@@ -17,6 +17,7 @@ class GameEngineInterface;
 #include <droppable_component.h>
 #include <vector>
 #include <utility.h>
+#include <tile.h>
 
 struct Location {
     unsigned int x;
@@ -58,9 +59,9 @@ public:
     virtual ComponentManagerInterface<WieldableComponent>*      getWieldables()     = 0;
     virtual ComponentManagerInterface<DroppableComponent>*      getDroppables()     = 0;
 
-    virtual std::vector<EntityId> findEntitiesNear (unsigned int x, unsigned int y, unsigned radius) = 0;
-    virtual std::vector<EntityId> findEntitiesAt (unsigned int x, unsigned int y) = 0;
-    virtual std::vector<EntityId> findEntitiesToThe (DIRECTION a_direction, EntityId a_entity) = 0;
+    virtual EntityHolder findEntitiesNear (unsigned int x, unsigned int y, unsigned radius) = 0;
+    virtual EntityHolder findEntitiesAt (unsigned int x, unsigned int y) = 0;
+    virtual EntityHolder findEntitiesToThe (DIRECTION a_direction, EntityId a_entity) = 0;
 
     virtual Location getLocation (EntityId entity) = 0;
     virtual void setLocation (EntityId entity, Location& location) = 0;

@@ -69,9 +69,9 @@ void MapWindow::keyDown (unsigned char key) {
             getEngine()->raiseEvent (l_event);
         }
         if (m_action == 'i') {
-            std::vector<EntityId> l_entities = getEngine()->getEntities()->findEntitiesToThe(l_dir, getEngine()->getEntities()->getPlayer());
+            EntityHolder l_entities = getEngine()->getEntities()->findEntitiesToThe(l_dir, getEngine()->getEntities()->getPlayer());
             if (l_entities.size() > 0) {
-                EntityId* l_target = new EntityId(l_entities[0]);
+                EntityId* l_target = new EntityId(*l_entities.begin());
 
                 InspectionWindow* l_win = new InspectionWindow();
                 l_win->initialise(getEngine(), l_target);
@@ -94,15 +94,15 @@ void MapWindow::keyDown (unsigned char key) {
     }
     if (key == 'p') {
         Location l_playerLoc = getEngine()->getEntities()->getLocation(getEngine()->getEntities()->getPlayer());
-        std::vector<EntityId> l_entities = getEngine()->getEntities()->findEntitiesAt (l_playerLoc.x, l_playerLoc.y);
+        EntityHolder l_entities = getEngine()->getEntities()->findEntitiesAt (l_playerLoc.x, l_playerLoc.y);
         bool foundSomethingAlready = false;
-        for (size_t ii = 0; ii < l_entities.size(); ii++) {
-            DroppableComponent* droppable = getEngine()->getEntities()->getDroppables()->get(l_entities[ii]);
+        for (EntityId l_entity : l_entities) {
+            DroppableComponent* droppable = getEngine()->getEntities()->getDroppables()->get(l_entity);
             if (droppable) {
                 if (!foundSomethingAlready) {
                     PickupEquipmentEvent* event = new PickupEquipmentEvent();
                     event->entity = getEngine()->getEntities()->getPlayer();
-                    event->item = l_entities[ii];
+                    event->item = l_entity;
                     getEngine()->raiseEvent (event);
                     foundSomethingAlready = true;
                 } else {

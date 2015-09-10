@@ -73,27 +73,27 @@ DIRECTION NpcSystem::getPlayerDirectionIfNearby (EntityId enemy)
 
 DIRECTION NpcSystem::getPlayerDirectionIfAttackable (EntityId entity) {
 
-    std::vector<EntityId> l_entities;
+    EntityHolder l_entities;
     EntityId player = getEngine()->getEntities()->getPlayer();
 
     l_entities = getEngine()->getEntities()->findEntitiesToThe (Direction::North, entity);
-    for (size_t ii = 0; ii < l_entities.size(); ii++) {
-        if (l_entities[ii] == player) return Direction::North;
+    for (EntityId entity : l_entities) {
+        if (entity == player) return Direction::North;
     }
 
     l_entities = getEngine()->getEntities()->findEntitiesToThe (Direction::East, entity);
-    for (size_t ii = 0; ii < l_entities.size(); ii++) {
-        if (l_entities[ii] == player) return Direction::East;
+    for (EntityId entity : l_entities) {
+            if (entity == player) return Direction::East;
     }
 
     l_entities = getEngine()->getEntities()->findEntitiesToThe (Direction::South, entity);
-    for (size_t ii = 0; ii < l_entities.size(); ii++) {
-        if (l_entities[ii] == player) return Direction::South;
+    for (EntityId entity : l_entities) {
+            if (entity == player) return Direction::South;
     }
 
     l_entities = getEngine()->getEntities()->findEntitiesToThe (Direction::West, entity);
-    for (size_t ii = 0; ii < l_entities.size(); ii++) {
-        if (l_entities[ii] == player) return Direction::West;
+    for (EntityId entity : l_entities) {
+            if (entity == player) return Direction::West;
     }
 
     return Direction::None;
