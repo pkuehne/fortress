@@ -10,7 +10,6 @@ class GameEngineInterface;
 #include <description_component.h>
 #include <player_component.h>
 #include <npc_component.h>
-#include <location_component.h>
 #include <stair_component.h>
 #include <equipment_component.h>
 #include <wearable_component.h>
@@ -53,7 +52,6 @@ public:
     virtual ComponentManagerInterface<DescriptionComponent>*    getDescriptions()   = 0;
     virtual ComponentManagerInterface<PlayerComponent>*         getPlayers()        = 0;
     virtual ComponentManagerInterface<NpcComponent>*            getNpcs()           = 0;
-    virtual ComponentManagerInterface<LocationComponent>*       getLocations()      = 0;
     virtual ComponentManagerInterface<StairComponent>*          getStairs()         = 0;
     virtual ComponentManagerInterface<EquipmentComponent>*      getEquipments()     = 0;
     virtual ComponentManagerInterface<WearableComponent>*       getWearables()      = 0;

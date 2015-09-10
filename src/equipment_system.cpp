@@ -5,7 +5,6 @@ void EquipmentSystem::handleEvent (const Event* event) {
         case EVENT_DROP_EQUIPMENT: {
             const DropEquipmentEvent* l_event = dynamic_cast<const DropEquipmentEvent*> (event);
             EquipmentComponent* equipment = getEngine()->getEntities()->getEquipments()->get(l_event->entity);
-            LocationComponent* location = getEngine()->getEntities()->getLocations()->get(l_event->entity);
             if (l_event->item == equipment->rightHandWieldable) {
                 equipment->rightHandWieldable = 0;
             }
@@ -42,11 +41,8 @@ void EquipmentSystem::handleEvent (const Event* event) {
             sprite.sprite = '*';
             getEngine()->getEntities()->getSprites()->add (l_event->item, sprite);
 
-            LocationComponent loc;
-            loc.x = location->x;
-            loc.y = location->y;
-            loc.z = location->z;
-            getEngine()->getEntities()->getLocations()->add (l_event->item, loc);
+            Location location = getEngine()->getEntities()->getLocation(l_event->entity);
+            getEngine()->getEntities()->setLocation(l_event->item, location);
             getEngine()->addMessage (INFO, "You drop the item on the ground!");
             break;
         }
@@ -54,7 +50,6 @@ void EquipmentSystem::handleEvent (const Event* event) {
             const PickupEquipmentEvent* l_event = dynamic_cast<const PickupEquipmentEvent*> (event);
             EquipmentComponent* equipment = getEngine()->getEntities()->getEquipments()->get(l_event->entity);
             getEngine()->getEntities()->getSprites()->remove(l_event->item);
-            getEngine()->getEntities()->getLocations()->remove(l_event->item);
 
             equipment->carriedEquipment.push_back (l_event->item);
             getEngine()->addMessage (INFO, "You pick something up off the ground");
@@ -63,8 +58,6 @@ void EquipmentSystem::handleEvent (const Event* event) {
         case EVENT_UNEQUIP_ITEM: {
             const UnequipItemEvent* l_event = dynamic_cast<const UnequipItemEvent*> (event);
             EquipmentComponent* equipment = getEngine()->getEntities()->getEquipments()->get(l_event->entity);
-            //WearableComponent* wearable = getEngine()->getEntities()->getWearables()->get(l_event->item);
-            //WieldableComponent* wieldable = getEngine()->getEntities()->getWieldables()->get(l_event->item);
             if (l_event->item == equipment->rightHandWieldable) {
                 equipment->rightHandWieldable = 0;
             }

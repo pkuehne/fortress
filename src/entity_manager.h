@@ -37,7 +37,6 @@ public:
     ComponentManagerInterface<DescriptionComponent>* getDescriptions() { return &m_descriptions; }
     ComponentManagerInterface<PlayerComponent>* getPlayers() { return &m_players; }
     ComponentManagerInterface<NpcComponent>* getNpcs() { return &m_npcs; }
-    ComponentManagerInterface<LocationComponent>* getLocations() { return &m_location; }
     ComponentManagerInterface<StairComponent>* getStairs() { return &m_stairs; }
     ComponentManagerInterface<EquipmentComponent>* getEquipments() { return &m_equipments; }
     ComponentManagerInterface<WearableComponent>* getWearables() { return &m_wearables; }
@@ -64,7 +63,6 @@ private:
     ComponentManager<DescriptionComponent>  m_descriptions;
     ComponentManager<PlayerComponent>       m_players;
     ComponentManager<NpcComponent>          m_npcs;
-    ComponentManager<LocationComponent>     m_location;
     ComponentManager<StairComponent>        m_stairs;
     ComponentManager<EquipmentComponent>    m_equipments;
     ComponentManager<WearableComponent>     m_wearables;

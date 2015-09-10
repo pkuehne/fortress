@@ -32,7 +32,6 @@ void EntityManager::destroyEntity (EntityId id) {
     getDescriptions()->remove (id);
     getPlayers()->remove (id);
     getNpcs()->remove (id);
-    getLocations()->remove (id);
     getStairs()->remove(id);
     getEquipments()->remove (id);
     getWearables()->remove (id);
@@ -298,6 +297,7 @@ std::vector<EntityId> EntityManager::findEntitiesNear (unsigned int x, unsigned 
 {
     std::vector<EntityId> l_entities;
 
+/* TODO
     std::map<EntityId, LocationComponent>& l_locations = m_engine->getEntities()->getLocations()->getAll();
     std::map<EntityId, LocationComponent>::iterator it = l_locations.begin();
     for (; it != l_locations.end(); it++) {
@@ -309,7 +309,7 @@ std::vector<EntityId> EntityManager::findEntitiesNear (unsigned int x, unsigned 
             l_entities.push_back (it->first);
         }
     }
-
+*/
     return l_entities;
 
 }
@@ -318,6 +318,7 @@ std::vector<EntityId> EntityManager::findEntitiesToThe (DIRECTION a_direction, E
 {
     std::vector<EntityId> l_entities;
 
+/* TODO!!!
     LocationComponent* l_location = m_engine->getEntities()->getLocations()->get (a_entity);
     if (!l_location) return l_entities;
     unsigned int newX = l_location->x;
@@ -329,6 +330,7 @@ std::vector<EntityId> EntityManager::findEntitiesToThe (DIRECTION a_direction, E
         case Direction::East:   newX++; break;
         default: return l_entities;
     }
-
     return findEntitiesAt (newX, newY);
+*/
+    return l_entities; //TODO: Remove
 }

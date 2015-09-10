@@ -15,9 +15,9 @@ void NpcSystem::update ()
     for (; iter != l_sprites.end(); iter++) {
         EntityId l_entity = iter->first;
         NpcComponent* l_npc = getEngine()->getEntities()->getNpcs()->get (l_entity);
-        LocationComponent* l_loc = getEngine()->getEntities()->getLocations()->get (l_entity);
+        Location l_loc = getEngine()->getEntities()->getLocation(l_entity);
         if (l_npc == 0) continue;
-        if (l_loc == 0 || l_loc->z != getEngine()->getLevel()) continue;
+        if (l_loc.z != getEngine()->getLevel()) continue;
 
         DIRECTION dir = Direction::None;
         // Check if player is attackable
@@ -49,14 +49,14 @@ DIRECTION NpcSystem::getRandomDirection () {
 DIRECTION NpcSystem::getPlayerDirectionIfNearby (EntityId enemy)
 {
     EntityId player = getEngine()->getEntities()->getPlayer();
-    LocationComponent* playerLoc = getEngine()->getEntities()->getLocations()->get (player);
-    LocationComponent* enemyLoc = getEngine()->getEntities()->getLocations()->get (enemy);
+    Location playerLoc = getEngine()->getEntities()->getLocation(player);
+    Location enemyLoc = getEngine()->getEntities()->getLocation(enemy);
 
-    int xDiff = playerLoc->x - enemyLoc->x;
-    int yDiff = playerLoc->y - enemyLoc->y;
+    int xDiff = playerLoc.x - enemyLoc.x;
+    int yDiff = playerLoc.y - enemyLoc.y;
     if ((xDiff > -5 && xDiff < 5) &&
         (yDiff > -5 && yDiff < 5) &&
-        (enemyLoc->z == getEngine()->getLevel())) {
+        (enemyLoc.z == getEngine()->getLevel())) {
         if (abs(xDiff) > abs(yDiff)) {
             // Move horizontally first
             if (xDiff > 0) return Direction::East;

@@ -11,10 +11,9 @@ void MovementSystem::handleEvent (const Event* event)
         case EVENT_MOVE_ENTITY: {
             const MoveEntityEvent* l_event = dynamic_cast<const MoveEntityEvent*> (event);
             EntityId l_entity = l_event->entity;
-            LocationComponent* l_location = m_engine->getEntities()->getLocations()->get (l_entity);
-            if (!l_location) return;
-            unsigned int newX = l_location->x;
-            unsigned int newY = l_location->y;
+            Location l_location = m_engine->getEntities()->getLocation(l_entity);
+            unsigned int newX = l_location.x;
+            unsigned int newY = l_location.y;
             switch (l_event->direction) {
                 case Direction::North:  newY--; break;
                 case Direction::South:  newY++; break;
@@ -24,7 +23,7 @@ void MovementSystem::handleEvent (const Event* event)
             }
 
             //Check if we're running into a collidable or stairs, etc
-            {
+            /*{
                 std::map<EntityId, LocationComponent>& l_locations = m_engine->getEntities()->getLocations()->getAll();
                 std::map<EntityId, LocationComponent>::iterator it = l_locations.begin();
                 for (; it != l_locations.end(); it++) {
@@ -46,14 +45,11 @@ void MovementSystem::handleEvent (const Event* event)
                         }
                     }
                 }
-            }
+            }*/
 
-            EntityHolder& entities = getEngine()->getTile(l_location->x, l_location->y, m_engine->getLevel()).entities;
-            entities.erase (l_event->entity);
-
-            getEngine()->getTile (newX, newY, m_engine->getLevel()).entities.insert (l_event->entity);
-            l_location->x = newX;
-            l_location->y = newY;
+            l_location.x = newX;
+            l_location.y = newY;
+            getEngine()->getEntities()->setLocation (l_event->entity, l_location);
             break;
         }
         case EVENT_CHANGE_LEVEL: {
@@ -63,16 +59,13 @@ void MovementSystem::handleEvent (const Event* event)
 
             if (level < 1 || level > m_engine->getMaxLevel()) break;
 
-            LocationComponent* l_location = m_engine->getEntities()->getLocations()->get (m_engine->getEntities()->getPlayer());
             std::map<EntityId, StairComponent>& l_stairs = m_engine->getEntities()->getStairs()->getAll();
             std::map<EntityId, StairComponent>::iterator iter = l_stairs.begin();
             STAIR dir = l_event->direction == STAIR_UP ? STAIR_DOWN : STAIR_UP;
             for (; iter != l_stairs.end(); iter++) {
-                LocationComponent* l_stairLoc = m_engine->getEntities()->getLocations()->get (iter->first);
-                if (iter->second.direction == dir && l_stairLoc->z == level) {
-                    l_location->x = l_stairLoc->x;
-                    l_location->y = l_stairLoc->y;
-                    l_location->z = l_stairLoc->z;
+                Location l_stairLoc = m_engine->getEntities()->getLocation (iter->first);
+                if (iter->second.direction == dir && l_stairLoc.z == level) {
+                    m_engine->getEntities()->setLocation (m_engine->getEntities()->getPlayer(), l_stairLoc);
                 }
             }
             m_engine->setLevel (level);

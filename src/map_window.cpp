@@ -93,8 +93,8 @@ void MapWindow::keyDown (unsigned char key) {
         getEngine()->swapTurn();
     }
     if (key == 'p') {
-        LocationComponent* l_playerLoc = getEngine()->getEntities()->getLocations()->get (getEngine()->getEntities()->getPlayer());
-        std::vector<EntityId> l_entities = getEngine()->getEntities()->findEntitiesAt (l_playerLoc->x, l_playerLoc->y);
+        Location l_playerLoc = getEngine()->getEntities()->getLocation(getEngine()->getEntities()->getPlayer());
+        std::vector<EntityId> l_entities = getEngine()->getEntities()->findEntitiesAt (l_playerLoc.x, l_playerLoc.y);
         bool foundSomethingAlready = false;
         for (size_t ii = 0; ii < l_entities.size(); ii++) {
             DroppableComponent* droppable = getEngine()->getEntities()->getDroppables()->get(l_entities[ii]);
@@ -128,11 +128,10 @@ void MapWindow::drawSeparators() {
 }
 
 void MapWindow::drawMap() {
-    LocationComponent* l_player = getEngine()->getEntities()->getLocations()->get (getEngine()->getEntities()->getPlayer());
-    if (l_player) {
-        m_mapStartX = l_player->x - (m_mapWidth/2);
-        m_mapStartY = l_player->y - (m_mapHeight/2);
-    }
+    Location l_player = getEngine()->getEntities()->getLocation(getEngine()->getEntities()->getPlayer());
+    m_mapStartX = l_player.x - (m_mapWidth/2);
+    m_mapStartY = l_player.y - (m_mapHeight/2);
+
     int xWidth = m_mapStartX + m_mapWidth;
     int yWidth = m_mapStartY + m_mapHeight;
 
@@ -153,33 +152,6 @@ void MapWindow::drawMap() {
     }
 
     return;
-    /*
-    std::map<EntityId, SpriteComponent>& l_sprites = getEngine()->getEntities()->getSprites()->getAll();
-    std::map<EntityId, SpriteComponent>::iterator it = l_sprites.begin();
-    LocationComponent* l_player = getEngine()->getEntities()->getLocations()->get (getEngine()->getEntities()->getPlayer());
-    if (l_player) {
-        m_mapStartX = l_player->x - (m_mapWidth/2);
-        m_mapStartY = l_player->y - (m_mapHeight/2);
-    }
-    for (; it != l_sprites.end(); it++) {
-        SpriteComponent& l_sprite = it->second;
-        LocationComponent* l_location = getEngine()->getEntities()->getLocations()->get (it->first);
-        int x = l_location->x;
-        int y = l_location->y;
-        int xWidth = m_mapStartX + m_mapWidth;
-        int yWidth = m_mapStartY + m_mapHeight;
-        if (x >= m_mapStartX && x < xWidth &&
-            y >= m_mapStartY && y < yWidth &&
-            l_location->z == getEngine()->getLevel()) {
-
-            drawTile (  l_location->y + m_mapYOffset - m_mapStartY,
-                        l_location->x + m_mapXOffset - m_mapStartX,
-                        l_sprite.sprite,
-                        l_sprite.fgColor,
-                        l_sprite.bgColor);
-        }
-    }
-    */
 }
 
 void MapWindow::drawMessages()

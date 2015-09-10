@@ -22,13 +22,12 @@ void SpriteSystem::handleEvent (const Event* event) {
 void SpriteSystem::handleAddWallEvent (EntityId a_entity) {
     updateWallSprite (a_entity);
 
-    LocationComponent* l_loc = m_engine->getEntities()->getLocations()->get (a_entity);
-    if (!l_loc) return;
+    Location l_loc = m_engine->getEntities()->getLocation(a_entity);
 
-    EntityId left   = findWallEntity (l_loc->x-1, l_loc->y);
-    EntityId up     = findWallEntity (l_loc->x,   l_loc->y-1);
-    EntityId right  = findWallEntity (l_loc->x+1, l_loc->y);
-    EntityId down   = findWallEntity (l_loc->x,   l_loc->y+1);
+    EntityId left   = findWallEntity (l_loc.x-1, l_loc.y);
+    EntityId up     = findWallEntity (l_loc.x,   l_loc.y-1);
+    EntityId right  = findWallEntity (l_loc.x+1, l_loc.y);
+    EntityId down   = findWallEntity (l_loc.x,   l_loc.y+1);
 
     if (left)   updateWallSprite (left);
     if (up)     updateWallSprite (up);
@@ -38,13 +37,13 @@ void SpriteSystem::handleAddWallEvent (EntityId a_entity) {
 
 void SpriteSystem::updateWallSprite (EntityId a_entity) {
     SpriteComponent* l_sprite = m_engine->getEntities()->getSprites()->get (a_entity);
-    LocationComponent* l_loc = m_engine->getEntities()->getLocations()->get (a_entity);
-    if (!l_loc || !l_sprite) return;
+    Location l_loc = m_engine->getEntities()->getLocation(a_entity);
+    if (!l_sprite) return;
 
-    EntityId left   = findWallEntity (l_loc->x-1, l_loc->y);
-    EntityId up     = findWallEntity (l_loc->x,   l_loc->y-1);
-    EntityId right  = findWallEntity (l_loc->x+1, l_loc->y);
-    EntityId down   = findWallEntity (l_loc->x,   l_loc->y+1);
+    EntityId left   = findWallEntity (l_loc.x-1, l_loc.y);
+    EntityId up     = findWallEntity (l_loc.x,   l_loc.y-1);
+    EntityId right  = findWallEntity (l_loc.x+1, l_loc.y);
+    EntityId down   = findWallEntity (l_loc.x,   l_loc.y+1);
 
     int sprite_key = 0;
     if (left)   sprite_key |= 8;
@@ -74,17 +73,13 @@ void SpriteSystem::updateWallSprite (EntityId a_entity) {
 }
 
 EntityId SpriteSystem::findWallEntity (unsigned int x, unsigned int y) {
-    std::map<EntityId, LocationComponent>& l_locs = m_engine->getEntities()->getLocations()->getAll();
-    std::map<EntityId, LocationComponent>::iterator iter = l_locs.begin();
-    for (; iter != l_locs.end(); iter++) {
-        EntityId l_entity = iter->first;
-        DescriptionComponent* l_desc = m_engine->getEntities()->getDescriptions()->get (l_entity);
+    EntityHolder& l_entities = getEngine()->getTile (x, y, getEngine()->getLevel()).entities;
+    EntityIter iter = l_entities.begin();
+    for (; iter != l_entities.end(); iter++) {
+        DescriptionComponent* l_desc = m_engine->getEntities()->getDescriptions()->get (*iter);
         if (l_desc == 0) continue;
-        if (iter->second.x == x &&
-            iter->second.y == y &&
-            iter->second.z == m_engine->getLevel() &&
-            l_desc->title == "Wall") {
-            return l_entity;
+        if (l_desc->title == "Wall") {
+            return *iter;
         }
     }
     return 0;
