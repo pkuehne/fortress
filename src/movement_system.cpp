@@ -34,7 +34,7 @@ void MovementSystem::handleEvent (const Event* event)
                         if (m_engine->getEntities()->getColliders()->get (it->first)) {
                             return; // Don't update position if it's a collidable
                         }
-                        // Check if it's a stair
+                        // Check if it's a stairs
                         StairComponent* l_stair = m_engine->getEntities()->getStairs()->get (it->first);
                         if (l_stair && l_entity == m_engine->getEntities()->getPlayer()) {
                             unsigned int level = m_engine->getLevel();
@@ -48,6 +48,15 @@ void MovementSystem::handleEvent (const Event* event)
                 }
             }
 
+            std::vector<EntityId>& entities = getEngine()->getTile(l_location->x, l_location->y, m_engine->getLevel()).entities;
+            std::vector<EntityId>::iterator it = entities.begin();
+            for (; it != entities.end(); it++) {
+                if (*it == l_event->entity) {
+                    entities.erase (it);
+                    break;
+                }
+            }
+            getEngine()->getTile (newX, newY, m_engine->getLevel()).entities.push_back (l_event->entity);
             l_location->x = newX;
             l_location->y = newY;
             break;
