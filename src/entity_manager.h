@@ -8,21 +8,25 @@
 #include <map>
 #include <vector>
 
+typedef std::map<EntityId, Location> LocationMap;
+typedef LocationMap::const_iterator LocationConstIter;
+typedef LocationMap::iterator LocationIter;
+
 class EntityManager : public EntityManagerInterface {
 public:
     void initialise (GameEngineInterface* engine);
     void destroy() {}
 
-    EntityId createEntity ();
+    EntityId createEntity (Location& location);
     void destroyEntity (EntityId);
     EntityId getPlayer ();
 
-    EntityId createWallPrefab (unsigned int x, unsigned int y, unsigned int z=0);
-    EntityId createPlayerPrefab (unsigned int x, unsigned int y, unsigned int z=0);
-    EntityId createEnemyPrefab (unsigned int x, unsigned int y, unsigned int z=0);
-    EntityId createTilePrefab (unsigned int x, unsigned int y, unsigned int z=0);
-    EntityId createMarkerPrefab (unsigned int x, unsigned int y, unsigned int z=0);
-    EntityId createStairPrefab (STAIR dir, unsigned int x, unsigned int y, unsigned int z=0);
+    EntityId createWallPrefab (Location& location);
+    EntityId createPlayerPrefab (Location& location);
+    EntityId createEnemyPrefab (Location& location);
+    EntityId createTilePrefab (Location& location);
+    EntityId createMarkerPrefab (Location& location);
+    EntityId createStairPrefab (STAIR dir, Location& location);
     EntityId createWeaponPrefab ();
     EntityId createShieldPrefab ();
     EntityId createHelmetPrefab ();
@@ -33,7 +37,7 @@ public:
     ComponentManagerInterface<DescriptionComponent>* getDescriptions() { return &m_descriptions; }
     ComponentManagerInterface<PlayerComponent>* getPlayers() { return &m_players; }
     ComponentManagerInterface<NpcComponent>* getNpcs() { return &m_npcs; }
-    ComponentManagerInterface<LocationComponent>* getLocations() { return &m_locations; }
+    ComponentManagerInterface<LocationComponent>* getLocations() { return &m_location; }
     ComponentManagerInterface<StairComponent>* getStairs() { return &m_stairs; }
     ComponentManagerInterface<EquipmentComponent>* getEquipments() { return &m_equipments; }
     ComponentManagerInterface<WearableComponent>* getWearables() { return &m_wearables; }
@@ -44,6 +48,8 @@ public:
     std::vector<EntityId> findEntitiesAt (unsigned int x, unsigned int y);
     std::vector<EntityId> findEntitiesToThe (DIRECTION a_direction, EntityId a_entity);
 
+    Location getLocation (EntityId entity) { return m_locations[entity]; }
+    void setLocation (EntityId entity, Location& location);
 
 private:
     GameEngineInterface*                m_engine;
@@ -58,12 +64,15 @@ private:
     ComponentManager<DescriptionComponent>  m_descriptions;
     ComponentManager<PlayerComponent>       m_players;
     ComponentManager<NpcComponent>          m_npcs;
-    ComponentManager<LocationComponent>     m_locations;
+    ComponentManager<LocationComponent>     m_location;
     ComponentManager<StairComponent>        m_stairs;
     ComponentManager<EquipmentComponent>    m_equipments;
     ComponentManager<WearableComponent>     m_wearables;
     ComponentManager<WieldableComponent>    m_wieldables;
     ComponentManager<DroppableComponent>    m_droppables;
+
+    LocationMap m_locations;
+
 };
 
 #endif

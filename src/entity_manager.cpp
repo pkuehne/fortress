@@ -10,8 +10,13 @@ void EntityManager::initialise (GameEngineInterface* engine)
     m_player = 0;
 }
 
-EntityId EntityManager::createEntity () {
+EntityId EntityManager::createEntity (Location& location) {
     EntityId l_entity = maxId++;
+
+    location.z = (location.z == 0) ? m_engine->getLevel() : location.z;
+
+    m_locations[l_entity] = location;
+    m_engine->getTile (location).entities.insert (l_entity);
 
     AddEntityEvent* l_event = new AddEntityEvent;
     l_event->entity = l_entity;
@@ -34,12 +39,20 @@ void EntityManager::destroyEntity (EntityId id) {
     getWieldables()->remove (id);
     getDroppables()->remove (id);
 
+    m_engine->getTile(m_locations[id]).entities.erase (id);
+
     // Raise event for removal
     RemoveEntityEvent* l_event = new RemoveEntityEvent();
     l_event->entity = id;
     m_engine->raiseEvent (l_event);
 }
 
+void EntityManager::setLocation (EntityId entity, Location& location)
+{
+    m_engine->getTile (m_locations[entity]).entities.erase (entity);
+    m_locations[entity] = location;
+    m_engine->getTile (m_locations[entity]).entities.insert (entity);
+}
 
 EntityId EntityManager::getPlayer () {
     if (m_player == 0) {
@@ -51,19 +64,9 @@ EntityId EntityManager::getPlayer () {
 }
 
 
-EntityId EntityManager::createWallPrefab (unsigned int x, unsigned int y, unsigned int z)
+EntityId EntityManager::createWallPrefab (Location& location)
 {
-    EntityId l_entity = createEntity();
-    z = (z == 0) ? m_engine->getLevel() : z;
-
-    // Location Component
-    LocationComponent l_loc;
-    l_loc.x = x;
-    l_loc.y = y;
-    l_loc.z = z;
-
-    getLocations()->add (l_entity, l_loc);
-    m_engine->getTile(x, y, z).entities.push_back (l_entity);
+    EntityId l_entity = createEntity(location);
 
     // Sprite Component
     SpriteComponent l_sprite;
@@ -83,18 +86,9 @@ EntityId EntityManager::createWallPrefab (unsigned int x, unsigned int y, unsign
     return l_entity;
 }
 
-EntityId EntityManager::createPlayerPrefab (unsigned int x, unsigned int y, unsigned int z)
+EntityId EntityManager::createPlayerPrefab (Location& location)
 {
-    EntityId l_entity = createEntity();
-    z = (z == 0) ? m_engine->getLevel() : z;
-
-    // Location Component
-    LocationComponent l_loc;
-    l_loc.x = x;
-    l_loc.y = y;
-    l_loc.z = z;
-    getLocations()->add (l_entity, l_loc);
-    m_engine->getTile (x, y, z).entities.push_back (l_entity);
+    EntityId l_entity = createEntity (location);
 
     // Sprite Component
     SpriteComponent l_sprite;
@@ -132,18 +126,9 @@ EntityId EntityManager::createPlayerPrefab (unsigned int x, unsigned int y, unsi
     return l_entity;
 }
 
-EntityId EntityManager::createEnemyPrefab (unsigned int x, unsigned int y, unsigned int z)
+EntityId EntityManager::createEnemyPrefab (Location& location)
 {
-    EntityId l_entity = createEntity();
-    z = (z == 0) ? m_engine->getLevel() : z;
-
-    // Location Component
-    LocationComponent l_loc;
-    l_loc.x = x;
-    l_loc.y = y;
-    l_loc.z = z;
-    getLocations()->add (l_entity, l_loc);
-    m_engine->getTile (x, y, z).entities.push_back (l_entity);
+    EntityId l_entity = createEntity(location);
 
     // Sprite Component
     SpriteComponent l_sprite;
@@ -181,18 +166,9 @@ EntityId EntityManager::createEnemyPrefab (unsigned int x, unsigned int y, unsig
     return l_entity;
 }
 
-EntityId EntityManager::createTilePrefab (unsigned int x, unsigned int y, unsigned int z)
+EntityId EntityManager::createTilePrefab (Location& location)
 {
-    EntityId l_entity = createEntity();
-    z = (z == 0) ? m_engine->getLevel() : z;
-
-    // Location Component
-    LocationComponent l_loc;
-    l_loc.x = x;
-    l_loc.y = y;
-    l_loc.z = z;
-    getLocations()->add (l_entity, l_loc);
-    m_engine->getTile (x, y, z).entities.push_back (l_entity);
+    EntityId l_entity = createEntity(location);
 
     //Sprite Component
     SpriteComponent l_sprite;
@@ -210,18 +186,9 @@ EntityId EntityManager::createTilePrefab (unsigned int x, unsigned int y, unsign
     return l_entity;
 }
 
-EntityId EntityManager::createMarkerPrefab (unsigned int x, unsigned int y, unsigned int z)
+EntityId EntityManager::createMarkerPrefab (Location& location)
 {
-    EntityId l_entity = createEntity();
-    z = (z == 0) ? m_engine->getLevel() : z;
-
-    // Location Component
-    LocationComponent l_loc;
-    l_loc.x = x;
-    l_loc.y = y;
-    l_loc.z = z;
-    getLocations()->add (l_entity, l_loc);
-    m_engine->getTile (x, y, z).entities.push_back (l_entity);
+    EntityId l_entity = createEntity(location);
 
     //Sprite Component
     SpriteComponent l_sprite;
@@ -233,18 +200,9 @@ EntityId EntityManager::createMarkerPrefab (unsigned int x, unsigned int y, unsi
     return l_entity;
 }
 
-EntityId EntityManager::createStairPrefab (STAIR dir, unsigned int x, unsigned int y, unsigned int z)
+EntityId EntityManager::createStairPrefab (STAIR dir, Location& location)
 {
-    EntityId l_entity = createEntity();
-    z = (z == 0) ? m_engine->getLevel() : z;
-
-    // Location Component
-    LocationComponent l_loc;
-    l_loc.x = x;
-    l_loc.y = y;
-    l_loc.z = z;
-    getLocations()->add (l_entity, l_loc);
-    m_engine->getTile (x, y, z).entities.push_back (l_entity);
+    EntityId l_entity = createEntity(location);
 
     //Sprite Component
     SpriteComponent l_sprite;
@@ -270,7 +228,8 @@ EntityId EntityManager::createStairPrefab (STAIR dir, unsigned int x, unsigned i
 
 EntityId EntityManager::createWeaponPrefab ()
 {
-    EntityId l_entity = createEntity();
+    Location location;
+    EntityId l_entity = createEntity(location);
 
     WieldableComponent l_wieldable;
     l_wieldable.position = WieldableRightHand;
@@ -290,7 +249,8 @@ EntityId EntityManager::createWeaponPrefab ()
 
 EntityId EntityManager::createShieldPrefab ()
 {
-    EntityId l_entity = createEntity();
+    Location location;
+    EntityId l_entity = createEntity(location);
 
     WieldableComponent l_wieldable;
     l_wieldable.position = WieldableLeftHand;
@@ -311,7 +271,8 @@ EntityId EntityManager::createShieldPrefab ()
 
 EntityId EntityManager::createHelmetPrefab ()
 {
-    EntityId l_entity = createEntity();
+    Location location;
+    EntityId l_entity = createEntity(location);
 
     WearableComponent l_wearable;
     l_wearable.position = WearableHead;

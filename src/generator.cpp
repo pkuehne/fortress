@@ -62,30 +62,34 @@ void Generator::createEntitiesFromMap () {
 
     for (unsigned int yy = 0; yy < m_mapHeight; yy++) {
         for (unsigned int xx = 0; xx < m_mapWidth; xx++) {
+            Location location;
+            location.x = xx;
+            location.y = yy;
+            location.z = 0;
             switch (getByCoordinate(xx, yy)) {
                 case WALL:
                 case CORNER:
-                    l_entity = m_engine->getEntities()->createWallPrefab (xx, yy);
+                    l_entity = m_engine->getEntities()->createWallPrefab (location);
                     m_engine->getEntities()->getSprites()->get(l_entity)->sprite = WALL;
                     break;
                 case UP:
-                    m_engine->getEntities()->createStairPrefab (STAIR_UP, xx, yy);
-                    if (m_engine->getLevel() == 1) m_engine->getEntities()->createPlayerPrefab (xx, yy);
+                    m_engine->getEntities()->createStairPrefab (STAIR_UP, location);
+                    if (m_engine->getLevel() == 1) m_engine->getEntities()->createPlayerPrefab (location);
                     break;
                 case DOWN:
-                    m_engine->getEntities()->createStairPrefab (STAIR_DOWN, xx, yy);
+                    m_engine->getEntities()->createStairPrefab (STAIR_DOWN, location);
                     break;
                 case ORC:
-                    m_engine->getEntities()->createEnemyPrefab (xx, yy);
-                    m_engine->getEntities()->createTilePrefab (xx, yy);
+                    m_engine->getEntities()->createEnemyPrefab (location);
+                    m_engine->getEntities()->createTilePrefab (location);
                     break;
                 case FLOOR:
-                    m_engine->getEntities()->createTilePrefab (xx, yy);
+                    m_engine->getEntities()->createTilePrefab (location);
                     break;
                 case RESTRICTED:
                     break;
                 default:
-                    l_entity = m_engine->getEntities()->createMarkerPrefab (xx, yy);
+                    l_entity = m_engine->getEntities()->createMarkerPrefab (location);
                     m_engine->getEntities()->getSprites()->get(l_entity)->sprite = getByCoordinate (xx, yy);
                     break;
             }

@@ -54,6 +54,7 @@ public:
     unsigned int getMaxLevel () { return m_maxLevel; }
 
     Tile& getTile (unsigned int x, unsigned int y, unsigned int z) { return getTile (map2index (x, y, z)); }
+    Tile& getTile (const Location& location) { return getTile (location.x, location.y, location.z); }
     Tile& getTile (unsigned int index) { return m_map[index]; }
 
     int map2index (unsigned int x, unsigned int y, unsigned int z) { return (z-1)*m_mapHeight*m_mapWidth + y*m_mapHeight + x; }

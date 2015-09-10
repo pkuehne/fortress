@@ -19,6 +19,13 @@ class GameEngineInterface;
 #include <vector>
 #include <utility.h>
 
+struct Location {
+    unsigned int x;
+    unsigned int y;
+    unsigned int z;
+    Location():x(0),y(0),z(0) {}
+};
+
 class EntityManagerInterface {
 public:
     virtual ~EntityManagerInterface() { }
@@ -26,17 +33,16 @@ public:
     virtual void initialise (GameEngineInterface* engine) = 0;
     virtual void destroy() = 0;
 
-    virtual EntityId createEntity () = 0;
+    virtual EntityId createEntity ( Location& location) = 0;
     virtual void destroyEntity (EntityId id) = 0;
     virtual EntityId getPlayer () = 0;
 
-
-    virtual EntityId createWallPrefab (unsigned int x, unsigned int y, unsigned int z=0)    = 0;
-    virtual EntityId createPlayerPrefab (unsigned int x, unsigned int y, unsigned int z=0)  = 0;
-    virtual EntityId createEnemyPrefab (unsigned int x, unsigned int y, unsigned int z=0)   = 0;
-    virtual EntityId createTilePrefab (unsigned int x, unsigned int y, unsigned int z=0)    = 0;
-    virtual EntityId createMarkerPrefab (unsigned int x, unsigned int y, unsigned int z=0)  = 0;
-    virtual EntityId createStairPrefab (STAIR dir, unsigned int x, unsigned int y, unsigned int z=0)   = 0;
+    virtual EntityId createWallPrefab (Location& location)    = 0;
+    virtual EntityId createPlayerPrefab (Location& location)  = 0;
+    virtual EntityId createEnemyPrefab (Location& location)   = 0;
+    virtual EntityId createTilePrefab (Location& location)    = 0;
+    virtual EntityId createMarkerPrefab (Location& location)  = 0;
+    virtual EntityId createStairPrefab (STAIR dir, Location& location)   = 0;
     virtual EntityId createWeaponPrefab () = 0;
     virtual EntityId createShieldPrefab () = 0;
     virtual EntityId createHelmetPrefab () = 0;
@@ -58,6 +64,8 @@ public:
     virtual std::vector<EntityId> findEntitiesAt (unsigned int x, unsigned int y) = 0;
     virtual std::vector<EntityId> findEntitiesToThe (DIRECTION a_direction, EntityId a_entity) = 0;
 
+    virtual Location getLocation (EntityId entity) = 0;
+    virtual void setLocation (EntityId entity, Location& location) = 0;
 };
 
 #endif

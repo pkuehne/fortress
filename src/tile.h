@@ -2,13 +2,16 @@
 #define TILE_H
 
 #include "entity.h"
-#include <vector>
+#include <unordered_set>
 
+typedef std::unordered_set<EntityId> EntityHolder;
+typedef EntityHolder::iterator EntityIter;
+typedef EntityHolder::const_iterator EntityConstIter;
 class Tile {
 public:
     bool isVisible;
     bool isRevealed;
-    std::vector<EntityId> entities;
+    EntityHolder entities;
 };
 
 #endif

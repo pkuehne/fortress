@@ -48,15 +48,10 @@ void MovementSystem::handleEvent (const Event* event)
                 }
             }
 
-            std::vector<EntityId>& entities = getEngine()->getTile(l_location->x, l_location->y, m_engine->getLevel()).entities;
-            std::vector<EntityId>::iterator it = entities.begin();
-            for (; it != entities.end(); it++) {
-                if (*it == l_event->entity) {
-                    entities.erase (it);
-                    break;
-                }
-            }
-            getEngine()->getTile (newX, newY, m_engine->getLevel()).entities.push_back (l_event->entity);
+            EntityHolder& entities = getEngine()->getTile(l_location->x, l_location->y, m_engine->getLevel()).entities;
+            entities.erase (l_event->entity);
+
+            getEngine()->getTile (newX, newY, m_engine->getLevel()).entities.insert (l_event->entity);
             l_location->x = newX;
             l_location->y = newY;
             break;

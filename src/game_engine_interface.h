@@ -60,6 +60,7 @@ public:
     virtual unsigned int getMaxLevel () = 0;
 
     virtual Tile& getTile (unsigned int x, unsigned int y, unsigned int z) = 0;
+    virtual Tile& getTile (const Location& location) = 0;
     virtual Tile& getTile (unsigned int index) = 0;
 
     virtual int map2index (unsigned int x, unsigned int y, unsigned int z) = 0;
