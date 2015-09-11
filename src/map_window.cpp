@@ -148,12 +148,16 @@ void MapWindow::drawMap() {
                     fgColor.Red()   *= 0.4;
                     fgColor.Green() *= 0.4;
                     fgColor.Blue()  *= 0.4;
+                } else {
+                    l_tile.isRevealed = true;
                 }
-                drawTile (  yy + m_mapYOffset - m_mapStartY,
-                            xx + m_mapXOffset - m_mapStartX,
-                            l_sprite->sprite,
-                            fgColor,
-                            l_sprite->bgColor);
+                if (l_tile.isRevealed) {
+                    drawTile (  yy + m_mapYOffset - m_mapStartY,
+                                xx + m_mapXOffset - m_mapStartX,
+                                l_sprite->sprite,
+                                fgColor,
+                                l_sprite->bgColor);
+                }
 
             }
         }
