@@ -142,10 +142,17 @@ void MapWindow::drawMap() {
             for (EntityId entity : l_tile.entities) {
                 SpriteComponent* l_sprite= getEngine()->getEntities()->getSprites()->get (entity);
                 if (!l_sprite) continue;
+                Color fgColor = l_sprite->fgColor;
+                if (    xx < (int)l_player.x - 3 || xx > (int)l_player.x + 3
+                    ||  yy < (int)l_player.y - 3 || yy > (int)l_player.y + 3) {
+                    fgColor.Red()   *= 0.4;
+                    fgColor.Green() *= 0.4;
+                    fgColor.Blue()  *= 0.4;
+                }
                 drawTile (  yy + m_mapYOffset - m_mapStartY,
                             xx + m_mapXOffset - m_mapStartX,
                             l_sprite->sprite,
-                            l_sprite->fgColor,
+                            fgColor,
                             l_sprite->bgColor);
 
             }
