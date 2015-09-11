@@ -16,8 +16,8 @@ void MapWindow::gainFocus ()
     m_mapYOffset = 9;
     m_mapStartX = 0;
     m_mapStartY = 0;
-    m_mapWidth  = 50;
-    m_mapHeight = 50;
+    m_mapWidth  = 0;
+    m_mapHeight = 0;
     m_sidebarWidth = 20;
     m_sidebarXOffset = getWidth() - m_sidebarWidth;
 
