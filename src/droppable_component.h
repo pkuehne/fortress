@@ -1,7 +1,8 @@
 #ifndef DROPPABLE_COMPONENT
 #define DROPPABLE_COMPONENT
 
-struct DroppableComponent {
+#include "base_component.h"
+struct DroppableComponent : public BaseComponent {
 
 };
 

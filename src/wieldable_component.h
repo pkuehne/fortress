@@ -1,6 +1,8 @@
 #ifndef WIELDABLE_COMPONENT
 #define WIELDABLE_COMPONENT
 
+#include "base_component.h"
+
 typedef enum {
     WieldableNowhere    = 0,
     WieldableRightHand,
@@ -8,7 +10,7 @@ typedef enum {
     WieldableBothHands,
 } WieldablePosition;
 
-struct WieldableComponent {
+struct WieldableComponent : public BaseComponent {
     int                 baseDamage;
     int                 baseDefence;
     WieldablePosition   position;
