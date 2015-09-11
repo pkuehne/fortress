@@ -141,6 +141,7 @@ void MapWindow::drawMap() {
             Tile& l_tile = getEngine()->getTile (xx, yy, getEngine()->getLevel());
             for (EntityId entity : l_tile.entities) {
                 SpriteComponent* l_sprite= getEngine()->getEntities()->getSprites()->get (entity);
+                if (!l_sprite) continue;
                 drawTile (  yy + m_mapYOffset - m_mapStartY,
                             xx + m_mapXOffset - m_mapStartX,
                             l_sprite->sprite,
