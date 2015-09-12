@@ -1,10 +1,14 @@
 #include "equipment_window.h"
 #include "gameengine.h"
 #include "inspection_window.h"
+#include "equipment_component.h"
+#include "description_component.h"
+#include "wearable_component.h"
+#include "wieldable_component.h"
 
 namespace {
     const char* nameOrNothing (EntityId item, GameEngineInterface* engine) {
-        DescriptionComponent* description = engine->getEntities()->getDescriptions()->get(item);
+        DescriptionComponent* description = engine->getComponents()->get<DescriptionComponent>(item);
         if (item == 0) return "<Nothing>";
         if (description == 0) return "?Something?";
         return description->title.c_str();
@@ -27,7 +31,7 @@ void EquipmentWindow::resize() {
 
 void EquipmentWindow::redraw() {
     EntityId player = getEngine()->getEntities()->getPlayer();
-    EquipmentComponent* equipment = getEngine()->getEntities()->getEquipments()->get(player);
+    EquipmentComponent* equipment = getEngine()->getComponents()->get<EquipmentComponent>(player);
 
     if (m_selectedPage == 0) drawTile (2, 3, '>', Color (RED), Color (GREY));
     drawString (2, 4, "Equipment", Color (GREY));
@@ -121,7 +125,7 @@ void EquipmentWindow::redraw() {
 void EquipmentWindow::keyDown (unsigned char key) {
     Window::keyDown (key);
     EntityId player = getEngine()->getEntities()->getPlayer();
-    EquipmentComponent* equipment = getEngine()->getEntities()->getEquipments()->get(player);
+    EquipmentComponent* equipment = getEngine()->getComponents()->get<EquipmentComponent>(player);
 
     if (key == ESC) {
         getEngine()->getWindows()->popWindow();

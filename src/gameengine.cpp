@@ -48,6 +48,7 @@ GameEngine::GameEngine (GraphicsInterface* a_graphics)
 , m_entityManager (0)
 , m_eventManager (0)
 , m_windowManager (0)
+, m_componentManager (0)
 , m_graphics (a_graphics)
 , m_generator (0)
 , m_level (0)
@@ -71,15 +72,16 @@ void GameEngine::initialise ()
     m_maxLevel = 5;
 
     // Create if not exist
-    if (!m_windowManager) m_windowManager = new WindowManager();
-    if (!m_eventManager)  m_eventManager  = new EventManager();
-    if (!m_entityManager) m_entityManager = new EntityManager();
-    if (!m_generator)     m_generator     = new Generator();
+    if (!m_windowManager)       m_windowManager     = new WindowManager();
+    if (!m_eventManager)        m_eventManager      = new EventManager();
+    if (!m_entityManager)       m_entityManager     = new EntityManager();
+    if (!m_generator)           m_generator         = new Generator();
+    if (!m_componentManager)    m_componentManager  = new ComponentManager();
 
     // Initialise Managers
-    m_windowManager->initialise (this);
-    m_entityManager->initialise (this);
-    m_eventManager->initialise  (this);
+    m_windowManager->initialise     (this);
+    m_entityManager->initialise     (this);
+    m_eventManager->initialise      (this);
 
     // Initialise Map Generator
     m_generator->initialise (this);

@@ -4,6 +4,8 @@
 #include "entity.h"
 #include "game_over_window.h"
 #include <iostream>
+#include "stair_component.h"
+#include "collider_component.h"
 
 void MovementSystem::handleEvent (const Event* event)
 {
@@ -24,10 +26,10 @@ void MovementSystem::handleEvent (const Event* event)
             {
                 EntityHolder& l_targets = m_engine->getTile(l_location).entities;
                 for (EntityId l_target : l_targets) {
-                    if (m_engine->getEntities()->getColliders()->get (l_target)) {
+                    if (m_engine->getComponents()->get<ColliderComponent> (l_target)) {
                         return; // Don't update position if it's a collidable
                     }
-                    StairComponent* l_stair = m_engine->getEntities()->getStairs()->get (l_target);
+                    StairComponent* l_stair = m_engine->getComponents()->get<StairComponent> (l_target);
                     if (l_stair && l_entity == m_engine->getEntities()->getPlayer()) {
                         unsigned int level = m_engine->getLevel();
                         level += l_stair->direction == STAIR_UP ? -1 : 1;
@@ -50,12 +52,12 @@ void MovementSystem::handleEvent (const Event* event)
 
             if (level < 1 || level > m_engine->getMaxLevel()) break;
 
-            std::map<EntityId, StairComponent>& l_stairs = m_engine->getEntities()->getStairs()->getAll();
-            std::map<EntityId, StairComponent>::iterator iter = l_stairs.begin();
             STAIR dir = l_event->direction == STAIR_UP ? STAIR_DOWN : STAIR_UP;
-            for (; iter != l_stairs.end(); iter++) {
-                Location l_stairLoc = m_engine->getEntities()->getLocation (iter->first);
-                if (iter->second.direction == dir && l_stairLoc.z == level) {
+            for (EntityId entity; entity < getEngine()->getEntities()->getMaxId(); entity++) {
+                StairComponent* l_stair = getEngine()->getComponents()->get<StairComponent>(entity);
+                if (!l_stair) continue;
+                Location l_stairLoc = m_engine->getEntities()->getLocation (entity);
+                if (l_stair->direction == dir && l_stairLoc.z == level) {
                     m_engine->getEntities()->setLocation (m_engine->getEntities()->getPlayer(), l_stairLoc);
                 }
             }

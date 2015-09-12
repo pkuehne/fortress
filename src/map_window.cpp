@@ -4,7 +4,9 @@
 #include "equipment_window.h"
 #include "gameengine.h"
 #include "event.h"
-
+#include "sprite_component.h"
+#include "health_component.h"
+#include "droppable_component.h"
 
 void MapWindow::gainFocus ()
 {
@@ -97,7 +99,7 @@ void MapWindow::keyDown (unsigned char key) {
         EntityHolder l_entities = getEngine()->getEntities()->findEntitiesAt (l_playerLoc.x, l_playerLoc.y);
         bool foundSomethingAlready = false;
         for (EntityId l_entity : l_entities) {
-            DroppableComponent* droppable = getEngine()->getEntities()->getDroppables()->get(l_entity);
+            DroppableComponent* droppable = getEngine()->getComponents()->get<DroppableComponent>(l_entity);
             if (droppable) {
                 if (!foundSomethingAlready) {
                     PickupEquipmentEvent* event = new PickupEquipmentEvent();
@@ -140,7 +142,7 @@ void MapWindow::drawMap() {
             if (!getEngine()->isValidTile (xx, yy, getEngine()->getLevel())) continue;
             Tile& l_tile = getEngine()->getTile (xx, yy, getEngine()->getLevel());
             for (EntityId entity : l_tile.entities) {
-                SpriteComponent* l_sprite= getEngine()->getEntities()->getSprites()->get (entity);
+                SpriteComponent* l_sprite= getEngine()->getComponents()->get<SpriteComponent> (entity);
                 if (!l_sprite) continue;
                 Color fgColor = l_sprite->fgColor;
                 if (    xx < (int)l_player.x - 3 || xx > (int)l_player.x + 3
@@ -189,7 +191,7 @@ void MapWindow::drawSidebar ()
     // Current health
     drawString (2, m_sidebarXOffset+2, "Health:");
     EntityId player = getEngine()->getEntities()->getPlayer();
-    HealthComponent* l_health = getEngine()->getEntities()->getHealths()->get(player);
+    HealthComponent* l_health = getEngine()->getComponents()->get<HealthComponent>(player);
     if (l_health) {
         drawProgressBar (m_sidebarXOffset+10, 2, l_health->health);
 

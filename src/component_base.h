@@ -2,7 +2,7 @@
 #define COMPONENT_BASE
 
 struct ComponentBase {
-
+    virtual ~ComponentBase() { }
 };
 
 #endif

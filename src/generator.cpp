@@ -6,6 +6,7 @@
 #include <cstring>
 #include <iostream>
 #include <fstream>
+#include "sprite_component.h"
 
 static unsigned int getDistance (unsigned int start, unsigned int end, void* customData);
 static unsigned int getPathCost (unsigned int index, void* customData);
@@ -70,7 +71,7 @@ void Generator::createEntitiesFromMap () {
                 case WALL:
                 case CORNER:
                     l_entity = m_engine->getEntities()->createWallPrefab (location);
-                    m_engine->getEntities()->getSprites()->get(l_entity)->sprite = WALL;
+                    m_engine->getComponents()->get<SpriteComponent>(l_entity)->sprite = WALL;
                     break;
                 case UP:
                     m_engine->getEntities()->createStairPrefab (STAIR_UP, location);
@@ -90,7 +91,7 @@ void Generator::createEntitiesFromMap () {
                     break;
                 default:
                     l_entity = m_engine->getEntities()->createMarkerPrefab (location);
-                    m_engine->getEntities()->getSprites()->get(l_entity)->sprite = getByCoordinate (xx, yy);
+                    m_engine->getComponents()->get<SpriteComponent>(l_entity)->sprite = getByCoordinate (xx, yy);
                     break;
             }
         }

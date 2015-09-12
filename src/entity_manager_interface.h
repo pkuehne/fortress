@@ -3,18 +3,6 @@
 
 class GameEngineInterface;
 
-#include <component_manager.h>
-#include <sprite_component.h>
-#include <collider_component.h>
-#include <health_component.h>
-#include <description_component.h>
-#include <player_component.h>
-#include <npc_component.h>
-#include <stair_component.h>
-#include <equipment_component.h>
-#include <wearable_component.h>
-#include <wieldable_component.h>
-#include <droppable_component.h>
 #include <vector>
 #include <utility.h>
 #include <tile.h>
@@ -36,6 +24,8 @@ public:
     virtual EntityId createEntity ( Location& location) = 0;
     virtual void destroyEntity (EntityId id) = 0;
     virtual EntityId getPlayer () = 0;
+    virtual EntityId getMaxId() = 0;
+
 
     virtual EntityId createWallPrefab (Location& location)    = 0;
     virtual EntityId createPlayerPrefab (Location& location)  = 0;
@@ -47,6 +37,7 @@ public:
     virtual EntityId createShieldPrefab () = 0;
     virtual EntityId createHelmetPrefab () = 0;
 
+/*
     virtual ComponentManagerInterface<SpriteComponent>*         getSprites()        = 0;
     virtual ComponentManagerInterface<ColliderComponent>*       getColliders()      = 0;
     virtual ComponentManagerInterface<HealthComponent>*         getHealths()        = 0;
@@ -58,6 +49,7 @@ public:
     virtual ComponentManagerInterface<WearableComponent>*       getWearables()      = 0;
     virtual ComponentManagerInterface<WieldableComponent>*      getWieldables()     = 0;
     virtual ComponentManagerInterface<DroppableComponent>*      getDroppables()     = 0;
+*/
 
     virtual EntityHolder findEntitiesNear (unsigned int x, unsigned int y, unsigned radius) = 0;
     virtual EntityHolder findEntitiesAt (unsigned int x, unsigned int y) = 0;

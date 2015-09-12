@@ -1,4 +1,5 @@
 #include "npc_system.h"
+#include "npc_component.h"
 #include <cstdlib>
 
 void NpcSystem::handleEvent (const Event* event)
@@ -9,33 +10,30 @@ void NpcSystem::handleEvent (const Event* event)
 void NpcSystem::update ()
 {
     if (getEngine()->isPlayerTurn()) return;
-    std::map<EntityId, SpriteComponent>& l_sprites = getEngine()->getEntities()->getSprites()->getAll();
-    std::map<EntityId, SpriteComponent>::iterator iter = l_sprites.begin();
 
-    for (; iter != l_sprites.end(); iter++) {
-        EntityId l_entity = iter->first;
-        NpcComponent* l_npc = getEngine()->getEntities()->getNpcs()->get (l_entity);
+    for (EntityId l_entity = 1; l_entity < getEngine()->getEntities()->getMaxId(); l_entity++) {
+        NpcComponent* l_npc = getEngine()->getComponents()->get<NpcComponent> (l_entity);
         Location l_loc = getEngine()->getEntities()->getLocation(l_entity);
         if (l_npc == 0) continue;
         if (l_loc.z != getEngine()->getLevel()) continue;
 
         DIRECTION dir = Direction::None;
         // Check if player is attackable
-        dir = getPlayerDirectionIfAttackable (iter->first);
+        dir = getPlayerDirectionIfAttackable (l_entity);
         if (dir != Direction::None) {
             AttackEntityEvent* l_event = new AttackEntityEvent;
-            l_event->entity = iter->first;
+            l_event->entity = l_entity;
             l_event->direction = dir;
             getEngine()->raiseEvent (l_event);
         }
 
         // Check if player is nearby
-        dir = getPlayerDirectionIfNearby (iter->first);
+        dir = getPlayerDirectionIfNearby (l_entity);
         if (dir == Direction::None) {
             dir = getRandomDirection();
         }
         MoveEntityEvent* l_event = new MoveEntityEvent();
-        l_event->entity = iter->first;
+        l_event->entity = l_entity;
         l_event->direction = dir;
         getEngine()->raiseEvent (l_event);
     }

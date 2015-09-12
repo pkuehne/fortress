@@ -1,10 +1,16 @@
 #include "equipment_system.h"
+#include "equipment_component.h"
+#include "description_component.h"
+#include "wearable_component.h"
+#include "wieldable_component.h"
+#include "sprite_component.h"
+#include "droppable_component.h"
 
 void EquipmentSystem::handleEvent (const Event* event) {
     switch (event->getType()) {
         case EVENT_DROP_EQUIPMENT: {
             const DropEquipmentEvent* l_event = dynamic_cast<const DropEquipmentEvent*> (event);
-            EquipmentComponent* equipment = getEngine()->getEntities()->getEquipments()->get(l_event->entity);
+            EquipmentComponent* equipment = getEngine()->getComponents()->get<EquipmentComponent>(l_event->entity);
             if (l_event->item == equipment->rightHandWieldable) {
                 equipment->rightHandWieldable = 0;
             }
@@ -36,10 +42,10 @@ void EquipmentSystem::handleEvent (const Event* event) {
                     break;
                 }
             }
-            SpriteComponent sprite;
-            sprite.fgColor = Color (RED);
-            sprite.sprite = '*';
-            getEngine()->getEntities()->getSprites()->add (l_event->item, sprite);
+            SpriteComponent* sprite = new SpriteComponent();
+            sprite->fgColor = Color (RED);
+            sprite->sprite = '*';
+            getEngine()->getComponents()->add (l_event->item, sprite);
 
             Location location = getEngine()->getEntities()->getLocation(l_event->entity);
             getEngine()->getEntities()->setLocation(l_event->item, location);
@@ -48,8 +54,8 @@ void EquipmentSystem::handleEvent (const Event* event) {
         }
         case EVENT_PICKUP_EQUIPMENT: {
             const PickupEquipmentEvent* l_event = dynamic_cast<const PickupEquipmentEvent*> (event);
-            EquipmentComponent* equipment = getEngine()->getEntities()->getEquipments()->get(l_event->entity);
-            getEngine()->getEntities()->getSprites()->remove(l_event->item);
+            EquipmentComponent* equipment = getEngine()->getComponents()->get<EquipmentComponent>(l_event->entity);
+            getEngine()->getComponents()->remove<SpriteComponent>(l_event->item);
 
             equipment->carriedEquipment.push_back (l_event->item);
             getEngine()->addMessage (INFO, "You pick something up off the ground");
@@ -57,7 +63,7 @@ void EquipmentSystem::handleEvent (const Event* event) {
         }
         case EVENT_UNEQUIP_ITEM: {
             const UnequipItemEvent* l_event = dynamic_cast<const UnequipItemEvent*> (event);
-            EquipmentComponent* equipment = getEngine()->getEntities()->getEquipments()->get(l_event->entity);
+            EquipmentComponent* equipment = getEngine()->getComponents()->get<EquipmentComponent>(l_event->entity);
             if (l_event->item == equipment->rightHandWieldable) {
                 equipment->rightHandWieldable = 0;
             }
@@ -87,9 +93,9 @@ void EquipmentSystem::handleEvent (const Event* event) {
         }
         case EVENT_EQUIP_ITEM: {
             const EquipItemEvent* l_event = dynamic_cast<const EquipItemEvent*> (event);
-            EquipmentComponent* equipment = getEngine()->getEntities()->getEquipments()->get(l_event->entity);
-            WearableComponent* wearable = getEngine()->getEntities()->getWearables()->get(l_event->item);
-            WieldableComponent* wieldable = getEngine()->getEntities()->getWieldables()->get(l_event->item);
+            EquipmentComponent* equipment = getEngine()->getComponents()->get<EquipmentComponent>(l_event->entity);
+            WearableComponent* wearable = getEngine()->getComponents()->get<WearableComponent>(l_event->item);
+            WieldableComponent* wieldable = getEngine()->getComponents()->get<WieldableComponent>(l_event->item);
             bool equipped = false;
             if (wieldable != 0) {
                 if (wieldable->position == WieldableRightHand || wieldable->position == WieldableBothHands) {

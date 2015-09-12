@@ -28,6 +28,7 @@ public:
 
     void raiseEvent (Event* event) { m_eventManager->raiseEvent (event); }
     EntityManagerInterface* getEntities() { return m_entityManager; }
+    ComponentManager* getComponents() { return m_componentManager; }
 
     void loadMap (unsigned int width, unsigned int height);
 
@@ -78,6 +79,7 @@ private:
     EntityManagerInterface* m_entityManager;
     EventManagerInterface*  m_eventManager;
     WindowManagerInterface* m_windowManager;
+    ComponentManager*       m_componentManager;
 
     std::vector<GameSystemInterface*>   m_systems;
 

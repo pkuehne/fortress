@@ -2,7 +2,6 @@
 #define __ENTITY_MANAGER_H__
 
 #include "entity.h"
-#include "component_manager_interface.h"
 #include "entity_manager_interface.h"
 #include "utility.h"
 #include <map>
@@ -20,6 +19,7 @@ public:
     EntityId createEntity (Location& location);
     void destroyEntity (EntityId);
     EntityId getPlayer ();
+    EntityId getMaxId() { return m_maxId; }
 
     EntityId createWallPrefab (Location& location);
     EntityId createPlayerPrefab (Location& location);
@@ -31,18 +31,6 @@ public:
     EntityId createShieldPrefab ();
     EntityId createHelmetPrefab ();
 
-    ComponentManagerInterface<SpriteComponent>* getSprites() { return &m_sprites; }
-    ComponentManagerInterface<ColliderComponent>* getColliders() { return &m_colliders; }
-    ComponentManagerInterface<HealthComponent>* getHealths() { return &m_healths; }
-    ComponentManagerInterface<DescriptionComponent>* getDescriptions() { return &m_descriptions; }
-    ComponentManagerInterface<PlayerComponent>* getPlayers() { return &m_players; }
-    ComponentManagerInterface<NpcComponent>* getNpcs() { return &m_npcs; }
-    ComponentManagerInterface<StairComponent>* getStairs() { return &m_stairs; }
-    ComponentManagerInterface<EquipmentComponent>* getEquipments() { return &m_equipments; }
-    ComponentManagerInterface<WearableComponent>* getWearables() { return &m_wearables; }
-    ComponentManagerInterface<WieldableComponent>* getWieldables() { return &m_wieldables; }
-    ComponentManagerInterface<DroppableComponent>* getDroppables() { return &m_droppables; }
-
     EntityHolder findEntitiesNear (unsigned int x, unsigned int y, unsigned radius);
     EntityHolder findEntitiesAt (unsigned int x, unsigned int y);
     EntityHolder findEntitiesToThe (DIRECTION a_direction, EntityId a_entity);
@@ -52,25 +40,9 @@ public:
 
 private:
     GameEngineInterface*                m_engine;
-    unsigned long                       maxId;
+    unsigned long                       m_maxId;
     EntityId                            m_player;
-
-    //std::map<EntityId, Entity*>         m_idMap;
-
-    ComponentManager<SpriteComponent>       m_sprites;
-    ComponentManager<ColliderComponent>     m_colliders;
-    ComponentManager<HealthComponent>       m_healths;
-    ComponentManager<DescriptionComponent>  m_descriptions;
-    ComponentManager<PlayerComponent>       m_players;
-    ComponentManager<NpcComponent>          m_npcs;
-    ComponentManager<StairComponent>        m_stairs;
-    ComponentManager<EquipmentComponent>    m_equipments;
-    ComponentManager<WearableComponent>     m_wearables;
-    ComponentManager<WieldableComponent>    m_wieldables;
-    ComponentManager<DroppableComponent>    m_droppables;
-
-    LocationMap m_locations;
-
+    LocationMap                         m_locations;
 };
 
 #endif

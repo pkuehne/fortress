@@ -4,6 +4,7 @@
 #include <string>
 //#include "window_manager_interface.h"
 #include "entity_manager_interface.h"
+#include "component_manager.h"
 #include "graphics_interface.h"
 #include "tile.h"
 
@@ -37,10 +38,11 @@ public:
     virtual bool isPlayerTurn()     = 0;
     virtual void swapTurn()         = 0;
     virtual unsigned int getTurn()  = 0;
-    
+
     virtual void raiseEvent (Event* event)  = 0;
     virtual EntityManagerInterface* getEntities()    = 0;
-
+    virtual ComponentManager* getComponents() = 0;
+    
     virtual void loadMap (unsigned int width, unsigned int height) = 0;
 
     virtual unsigned long long getTick()    = 0;

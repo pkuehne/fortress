@@ -1,5 +1,6 @@
 #include "inspection_window.h"
 #include "gameengine.h"
+#include "description_component.h"
 
 void InspectionWindow::keyDown (unsigned char key) {
     Window::keyDown (key);
@@ -26,7 +27,7 @@ void InspectionWindow::gainFocus() {
     EntityId* l_entity = static_cast<EntityId*>(getArgs());
     if (!l_entity) return;
 
-    m_description = getEngine()->getEntities()->getDescriptions()->get(*l_entity);
+    m_description = getEngine()->getComponents()->get<DescriptionComponent>(*l_entity);
     if (!m_description) return;
 
     setTitle (m_description->title);

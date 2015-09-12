@@ -7,12 +7,14 @@
 void SpriteSystem::handleEvent (const Event* event) {
     switch (event->getType()) {
         case EVENT_ADD_ENTITY: {
+            /*
             const AddEntityEvent* l_event = dynamic_cast<const AddEntityEvent*> (event);
             DescriptionComponent* l_desc = m_engine->getEntities()->getDescriptions()->get (l_event->entity);
             if (!l_desc) break;
             if (l_desc->title == "Wall") {
                 handleAddWallEvent (l_event->entity);
             }
+            */
             break;
         }
         default: break;
@@ -20,6 +22,7 @@ void SpriteSystem::handleEvent (const Event* event) {
 }
 
 void SpriteSystem::handleAddWallEvent (EntityId a_entity) {
+    /*
     updateWallSprite (a_entity);
 
     Location l_loc = m_engine->getEntities()->getLocation(a_entity);
@@ -33,9 +36,11 @@ void SpriteSystem::handleAddWallEvent (EntityId a_entity) {
     if (up)     updateWallSprite (up);
     if (right)  updateWallSprite (right);
     if (down)   updateWallSprite (down);
+    */
 }
 
 void SpriteSystem::updateWallSprite (EntityId a_entity) {
+    /*
     SpriteComponent* l_sprite = m_engine->getEntities()->getSprites()->get (a_entity);
     Location l_loc = m_engine->getEntities()->getLocation(a_entity);
     if (!l_sprite) return;
@@ -69,10 +74,11 @@ void SpriteSystem::updateWallSprite (EntityId a_entity) {
         case 14: l_sprite->sprite = 202; break;
         case 15: l_sprite->sprite = 206; break;
     }
-
+    */
 }
 
 EntityId SpriteSystem::findWallEntity (unsigned int x, unsigned int y) {
+    /*
     EntityHolder& l_entities = getEngine()->getTile (x, y, getEngine()->getLevel()).entities;
     EntityIter iter = l_entities.begin();
     for (; iter != l_entities.end(); iter++) {
@@ -82,5 +88,6 @@ EntityId SpriteSystem::findWallEntity (unsigned int x, unsigned int y) {
             return *iter;
         }
     }
+    */
     return 0;
 }

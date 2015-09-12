@@ -2,6 +2,10 @@
 #include "health_component.h"
 #include <iostream>
 #include <sstream>
+#include "equipment_component.h"
+#include "wieldable_component.h"
+#include "health_component.h"
+#include "description_component.h"
 
 void CombatSystem::handleEvent (const Event* event)
 {
@@ -9,15 +13,15 @@ void CombatSystem::handleEvent (const Event* event)
         case EVENT_ATTACK_ENTITY: {
             const AttackEntityEvent* l_event = dynamic_cast<const AttackEntityEvent*> (event);
             EntityId attacker = l_event->entity;
-            EquipmentComponent* l_attackerEquipment = m_engine->getEntities()->getEquipments()->get(attacker);
+            EquipmentComponent* l_attackerEquipment = m_engine->getComponents()->get<EquipmentComponent>(attacker);
             int damage = 1;
             if (l_attackerEquipment && l_attackerEquipment->rightHandWieldable != 0) {
                 EntityId l_weapon = l_attackerEquipment->rightHandWieldable;
-                damage = m_engine->getEntities()->getWieldables()->get(l_weapon)->baseDamage;
+                damage = m_engine->getComponents()->get<WieldableComponent>(l_weapon)->baseDamage;
             }
             EntityHolder l_targets = m_engine->getEntities()->findEntitiesToThe (l_event->direction, l_event->entity);
             for (EntityId l_target : l_targets) {
-                HealthComponent* l_health = m_engine->getEntities()->getHealths()->get(l_target);
+                HealthComponent* l_health = m_engine->getComponents()->get<HealthComponent>(l_target);
                 if (l_health) {
                     l_health->health -= damage;
                     updateLog (attacker, l_target, damage);
@@ -35,8 +39,8 @@ void CombatSystem::handleEvent (const Event* event)
 void CombatSystem::updateLog (const EntityId& attacker, const EntityId& target, int damage)
 {
     std::stringstream str;
-    DescriptionComponent* l_attackerDesc = m_engine->getEntities()->getDescriptions()->get (attacker);
-    DescriptionComponent* l_targetDesc = m_engine->getEntities()->getDescriptions()->get (target);
+    DescriptionComponent* l_attackerDesc = m_engine->getComponents()->get<DescriptionComponent> (attacker);
+    DescriptionComponent* l_targetDesc = m_engine->getComponents()->get<DescriptionComponent> (target);
 
     if (attacker == m_engine->getEntities()->getPlayer()) {
         str << "You";
