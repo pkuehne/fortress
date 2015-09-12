@@ -53,6 +53,7 @@ void EquipmentSystem::handleEvent (const Event* event) {
             break;
         }
         case EVENT_PICKUP_EQUIPMENT: {
+            std::cout << "Picking up" << std::endl;
             const PickupEquipmentEvent* l_event = dynamic_cast<const PickupEquipmentEvent*> (event);
             EquipmentComponent* equipment = getEngine()->getComponents()->get<EquipmentComponent>(l_event->entity);
             getEngine()->getComponents()->remove<SpriteComponent>(l_event->item);

@@ -37,6 +37,7 @@ void MovementSystem::handleEvent (const Event* event)
                         l_event->level = level;
                         l_event->direction = l_stair->direction;
                         m_engine->raiseEvent (l_event);
+                        std::cout << "changing level" << std::endl;
                     }
 
                 }
@@ -53,15 +54,16 @@ void MovementSystem::handleEvent (const Event* event)
             if (level < 1 || level > m_engine->getMaxLevel()) break;
 
             STAIR dir = l_event->direction == STAIR_UP ? STAIR_DOWN : STAIR_UP;
-            for (EntityId entity; entity < getEngine()->getEntities()->getMaxId(); entity++) {
+            for (EntityId entity = 0; entity < getEngine()->getEntities()->getMaxId(); entity++) {
                 StairComponent* l_stair = getEngine()->getComponents()->get<StairComponent>(entity);
-                if (!l_stair) continue;
+                if (l_stair == nullptr) continue;
                 Location l_stairLoc = m_engine->getEntities()->getLocation (entity);
                 if (l_stair->direction == dir && l_stairLoc.z == level) {
                     m_engine->getEntities()->setLocation (m_engine->getEntities()->getPlayer(), l_stairLoc);
+                    m_engine->setLevel (level);
+                    break;
                 }
             }
-            m_engine->setLevel (level);
         }
         default: break;
     }

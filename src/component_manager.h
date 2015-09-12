@@ -24,11 +24,14 @@ public:
     void remove (EntityId entity) {
         for (ComponentBase* component : m_components[entity]) {
             T* found = dynamic_cast<T*> (component);
-            if (found) m_components[entity].erase (found);
+            if (found) {
+                m_components[entity].erase (found);
+                break;
+            }
         }
     }
     void removeAll (EntityId entity) {
-        m_components.clear();
+        m_components[entity].clear();
     }
 
 private:
