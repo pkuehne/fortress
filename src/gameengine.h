@@ -23,7 +23,8 @@ public:
 
     void quit() { exit (0); }
     bool isPlayerTurn() { return m_playerTurn; }
-    void swapTurn() {m_playerTurn = !m_playerTurn; }
+    void swapTurn() { m_playerTurn = !m_playerTurn; m_turn++; }
+    unsigned int getTurn() { return m_turn; }
 
     void raiseEvent (Event* event) { m_eventManager->raiseEvent (event); }
     EntityManagerInterface* getEntities() { return m_entityManager; }
@@ -72,6 +73,7 @@ public:
 private:
     unsigned long long  m_tick;
     bool                m_playerTurn;
+    unsigned int        m_turn;
 
     EntityManagerInterface* m_entityManager;
     EventManagerInterface*  m_eventManager;

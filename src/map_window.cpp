@@ -149,9 +149,9 @@ void MapWindow::drawMap() {
                     fgColor.Green() *= 0.4;
                     fgColor.Blue()  *= 0.4;
                 } else {
-                    l_tile.isRevealed = true;
+                    l_tile.lastVisited = getEngine()->getTurn();
                 }
-                if (l_tile.isRevealed) {
+                if (l_tile.lastVisited > 0 && l_tile.lastVisited + 200 > getEngine()->getTurn()) {
                     drawTile (  yy + m_mapYOffset - m_mapStartY,
                                 xx + m_mapXOffset - m_mapStartX,
                                 l_sprite->sprite,

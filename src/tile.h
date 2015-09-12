@@ -9,8 +9,7 @@ typedef EntityHolder::iterator EntityIter;
 typedef EntityHolder::const_iterator EntityConstIter;
 class Tile {
 public:
-    bool isVisible;
-    bool isRevealed;
+    unsigned int lastVisited;
     EntityHolder entities;
 };
 
