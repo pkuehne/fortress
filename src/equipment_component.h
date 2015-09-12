@@ -2,10 +2,10 @@
 #define EQUIPMENT_COMPONENT_H
 
 #include "entity.h"
-#include "base_component.h"
+#include "component_base.h"
 #include <vector>
 
-struct EquipmentComponent : public BaseComponent {
+struct EquipmentComponent : public ComponentBase {
     EntityId    headWearable;
     EntityId    faceWearable;
     EntityId    chestWearable;

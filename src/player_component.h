@@ -1,9 +1,9 @@
 #ifndef PLAYER_COMPONENT_H
 #define PLAYER_COMPONENT_H
 
-#include "base_component.h"
+#include "component_base.h"
 
-struct PlayerComponent : public BaseComponent {
+struct PlayerComponent : public ComponentBase {
 
 };
 

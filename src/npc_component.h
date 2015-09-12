@@ -1,9 +1,9 @@
 #ifndef NPC_COMPONENT_H
 #define NPC_COMPONENT_H
 
-#include "base_component.h"
+#include "component_base.h"
 
-struct NpcComponent : BaseComponent {
+struct NpcComponent : ComponentBase {
 
 };
 

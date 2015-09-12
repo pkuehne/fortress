@@ -1,7 +1,7 @@
 #ifndef WEARABLE_COMPONENT
 #define WEARABLE_COMPONENT
 
-#include "base_component.h"
+#include "component_base.h"
 
 typedef enum {
     WearableNowhere     = 0,
@@ -14,7 +14,7 @@ typedef enum {
     WearableFeet
 } WearablePosition;
 
-struct WearableComponent : public BaseComponent {
+struct WearableComponent : public ComponentBase {
     int                 baseDamageAbsorb;
     WearablePosition    position;
     int                 warmth;

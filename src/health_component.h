@@ -1,9 +1,9 @@
 #ifndef HEALTH_COMPONENT_H
 #define HEALTH_COMPONENT_H
 
-#include "base_component.h"
+#include "component_base.h"
 
-struct HealthComponent : public BaseComponent {
+struct HealthComponent : public ComponentBase {
     int health;
 };
 

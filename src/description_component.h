@@ -1,8 +1,8 @@
 #ifndef DESCRIPTION_COMPONENT_H
 #define DESCRIPTION_COMPONENT_H
 
-#include "base_component.h"
-struct DescriptionComponent : public BaseComponent {
+#include "component_base.h"
+struct DescriptionComponent : public ComponentBase {
     std::string title;
     std::string text;
 };

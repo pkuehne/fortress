@@ -2,9 +2,9 @@
 #define STAIR_COMPONENT_H
 
 #include <utility.h>
-#include "base_component.h"
+#include "component_base.h"
 
-struct StairComponent : public BaseComponent {
+struct StairComponent : public ComponentBase {
     STAIR direction;
 };
 
