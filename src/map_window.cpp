@@ -2,7 +2,7 @@
 #include "map_window.h"
 #include "inspection_window.h"
 #include "equipment_window.h"
-#include "gameengine.h"
+#include "game_engine.h"
 #include "event.h"
 #include "sprite_component.h"
 #include "health_component.h"

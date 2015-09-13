@@ -1,5 +1,5 @@
 #include "generator.h"
-#include "gameengine.h"
+#include "game_engine.h"
 #include "algorithm.h"
 #include <ctime>
 #include <cstdlib>

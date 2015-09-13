@@ -1,19 +1,19 @@
 #include "entity_manager.h"
-#include "gameengine.h"
+#include "game_engine.h"
 #include <fstream>
 #include <iostream>
 
-#include <sprite_component.h>
-#include <collider_component.h>
-#include <health_component.h>
-#include <description_component.h>
-#include <player_component.h>
-#include <npc_component.h>
-#include <stair_component.h>
-#include <equipment_component.h>
-#include <wearable_component.h>
-#include <wieldable_component.h>
-#include <droppable_component.h>
+#include "sprite_component.h"
+#include "collider_component.h"
+#include "health_component.h"
+#include "description_component.h"
+#include "player_component.h"
+#include "npc_component.h"
+#include "stair_component.h"
+#include "equipment_component.h"
+#include "wearable_component.h"
+#include "wieldable_component.h"
+#include "droppable_component.h"
 
 void EntityManager::initialise (GameEngineInterface* engine)
 {

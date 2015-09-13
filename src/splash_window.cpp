@@ -1,6 +1,6 @@
 #include "splash_window.h"
 #include "main_window.h"
-#include "gameengine.h"
+#include "game_engine.h"
 #include "graphics.h"
 
 void SplashWindow::resize() {

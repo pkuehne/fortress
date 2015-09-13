@@ -1,5 +1,5 @@
 #include "sprite_system.h"
-#include "gameengine.h"
+#include "game_engine.h"
 #include "event.h"
 #include "sprite_component.h"
 #include <iostream>

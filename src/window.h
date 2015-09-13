@@ -3,6 +3,7 @@
 
 #include <cstring>
 #include "window_interface.h"
+
 class GameEngineInterface;
 
 class Window : public WindowInterface

@@ -1,7 +1,7 @@
 #include "main_window.h"
 #include "map_window.h"
 #include "generator_window.h"
-#include "gameengine.h"
+#include "game_engine.h"
 
 void MainWindow::gainFocus () {
     setTitle (" FORTRESS ");

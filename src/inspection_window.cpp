@@ -1,5 +1,5 @@
 #include "inspection_window.h"
-#include "gameengine.h"
+#include "game_engine.h"
 #include "description_component.h"
 
 void InspectionWindow::keyDown (unsigned char key) {
