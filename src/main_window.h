@@ -1,7 +1,9 @@
 #ifndef MAIN_WINDOW
 #define MAIN_WINDOW
 
-#include "window.h"
+#include "main_window.h"
+#include "map_window.h"
+#include "gameengine.h"
 
 class MainWindow : public Window {
 public:

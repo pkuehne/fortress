@@ -1,5 +1,5 @@
 #include "splash_window.h"
-#include "map_window.h"
+#include "main_window.h"
 #include "gameengine.h"
 #include "graphics.h"
 
@@ -136,8 +136,11 @@ void SplashWindow::redraw() {
     getEngine()->getGraphics()->drawTile ( yOffset +  5,  xOffset + 38, tile, grey, grey);
     getEngine()->getGraphics()->drawTile ( yOffset +  7,  xOffset + 38, tile, grey, grey);
 
-    if (!getKey(' ')) return;
-    MapWindow* l_win = new MapWindow();
+}
+
+void SplashWindow::keyDown (unsigned char key) {
+    //if (!getKey(' ')) return;
+    MainWindow* l_win = new MainWindow();
     l_win->initialise(getEngine());
 
     getEngine()->getWindows()->replaceWindow (l_win);
