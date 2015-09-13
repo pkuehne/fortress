@@ -3,14 +3,18 @@
 #include "gameengine.h"
 #include "graphics.h"
 
+void SplashWindow::resize() {
+    setDimensions (0, 0, getEngine()->getGraphics()->getScreenWidth(), getEngine()->getGraphics()->getScreenHeight());
+}
+
 void SplashWindow::redraw() {
 
     Color grey (GREY);
 
-    int xOffset = 12;
-    int yOffset = 20;
+    int xOffset = getWidth()/2 - 19;
+    int yOffset = getHeight()/2;
 
-    getEngine()->getGraphics()->drawString (yOffset - 3, xOffset + 15, "Welcome to");
+    getEngine()->getGraphics()->drawString (yOffset - 3, xOffset + 19 - 5, "Welcome to");
 
     int tile = 178;
 
