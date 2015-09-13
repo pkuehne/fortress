@@ -37,7 +37,6 @@ void MovementSystem::handleEvent (const Event* event)
                         l_event->level = level;
                         l_event->direction = l_stair->direction;
                         m_engine->raiseEvent (l_event);
-                        std::cout << "changing level" << std::endl;
                     }
 
                 }
