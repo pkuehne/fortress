@@ -13,18 +13,20 @@ void MovementSystem::handleEvent (const Event* event)
         case EVENT_MOVE_ENTITY: {
             const MoveEntityEvent* l_event = dynamic_cast<const MoveEntityEvent*> (event);
             EntityId l_entity = l_event->entity;
-            Location l_location = m_engine->getEntities()->getLocation(l_entity);
+            Location l_oldLocation = m_engine->getEntities()->getLocation(l_entity);
+            Location l_newLocation = l_oldLocation;
+
             switch (l_event->direction) {
-                case Direction::North:  l_location.y--; break;
-                case Direction::South:  l_location.y++; break;
-                case Direction::West:   l_location.x--; break;
-                case Direction::East:   l_location.x++; break;
+                case Direction::North:  l_newLocation.y--; break;
+                case Direction::South:  l_newLocation.y++; break;
+                case Direction::West:   l_newLocation.x--; break;
+                case Direction::East:   l_newLocation.x++; break;
                 default: return;
             }
 
             //Check if we're running into a collidable or stairs, etc
             {
-                EntityHolder& l_targets = m_engine->getTile(l_location).entities;
+                EntityHolder& l_targets = m_engine->getTile(l_newLocation).entities;
                 for (EntityId l_target : l_targets) {
                     if (m_engine->getComponents()->get<ColliderComponent> (l_target)) {
                         return; // Don't update position if it's a collidable
@@ -42,7 +44,12 @@ void MovementSystem::handleEvent (const Event* event)
                 }
             }
 
-            getEngine()->getEntities()->setLocation (l_event->entity, l_location);
+            getEngine()->getEntities()->setLocation (l_event->entity, l_newLocation);
+            ChangeLocationEvent* changeEvent = new ChangeLocationEvent();
+            changeEvent->entity = l_event->entity;
+            changeEvent->oldLocation = l_oldLocation;
+            changeEvent->newLocation = l_newLocation;
+            getEngine()->raiseEvent (changeEvent);
             break;
         }
         case EVENT_CHANGE_LEVEL: {
@@ -58,8 +65,14 @@ void MovementSystem::handleEvent (const Event* event)
                 if (l_stair == nullptr) continue;
                 Location l_stairLoc = m_engine->getEntities()->getLocation (entity);
                 if (l_stair->direction == dir && l_stairLoc.z == level) {
+                    Location oldLocation = m_engine->getEntities()->getLocation (m_engine->getEntities()->getPlayer());
                     m_engine->getEntities()->setLocation (m_engine->getEntities()->getPlayer(), l_stairLoc);
                     m_engine->setLevel (level);
+                    ChangeLocationEvent* changeEvent = new ChangeLocationEvent();
+                    changeEvent->entity = m_engine->getEntities()->getPlayer();
+                    changeEvent->oldLocation = oldLocation;
+                    changeEvent->newLocation = l_stairLoc;
+                    getEngine()->raiseEvent (changeEvent);
                     break;
                 }
             }

@@ -20,6 +20,13 @@ typedef enum {
     STAIR_DOWN  = 1
 } STAIR;
 
+struct Location {
+    unsigned int x;
+    unsigned int y;
+    unsigned int z;
+    Location():x(0),y(0),z(0) {}
+};
+
 namespace Utility {
 };
 

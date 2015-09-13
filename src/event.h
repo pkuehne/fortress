@@ -8,15 +8,16 @@
 
 typedef enum {
     EVENT_INVALID           = 0,
-    EVENT_ADD_ENTITY        = 1,
-    EVENT_REMOVE_ENTITY     = 2,
-    EVENT_MOVE_ENTITY       = 3,
-    EVENT_ATTACK_ENTITY     = 4,
-    EVENT_CHANGE_LEVEL      = 5,
-    EVENT_DROP_EQUIPMENT    = 6,
-    EVENT_PICKUP_EQUIPMENT  = 7,
-    EVENT_EQUIP_ITEM        = 8,
-    EVENT_UNEQUIP_ITEM      = 9,
+    EVENT_ADD_ENTITY        ,
+    EVENT_REMOVE_ENTITY     ,
+    EVENT_MOVE_ENTITY       ,
+    EVENT_CHANGE_LOCATION   ,
+    EVENT_ATTACK_ENTITY     ,
+    EVENT_CHANGE_LEVEL      ,
+    EVENT_DROP_EQUIPMENT    ,
+    EVENT_PICKUP_EQUIPMENT  ,
+    EVENT_EQUIP_ITEM        ,
+    EVENT_UNEQUIP_ITEM      ,
     EVENT_MAX
 } EventType;
 
@@ -47,6 +48,14 @@ public:
     MoveEntityEvent () : Event (EVENT_MOVE_ENTITY) { }
     EntityId    entity;
     DIRECTION   direction;
+};
+
+class ChangeLocationEvent : public Event {
+public:
+    ChangeLocationEvent() : Event (EVENT_CHANGE_LOCATION) { }
+    EntityId    entity;
+    Location    oldLocation;
+    Location    newLocation;
 };
 
 class AttackEntityEvent : public Event {
