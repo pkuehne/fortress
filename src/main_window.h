@@ -2,8 +2,7 @@
 #define MAIN_WINDOW
 
 #include "main_window.h"
-#include "map_window.h"
-#include "gameengine.h"
+#include "window.h"
 
 class MainWindow : public Window {
 public:

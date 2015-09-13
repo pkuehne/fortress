@@ -1,7 +1,10 @@
 #include "main_window.h"
+#include "map_window.h"
+#include "generator_window.h"
+#include "gameengine.h"
 
 void MainWindow::gainFocus () {
-    setTitle ("FORTRESS");
+    setTitle (" FORTRESS ");
 
 }
 
@@ -29,8 +32,8 @@ void MainWindow::redraw() {
 
     drawString (line, (getWidth()/2) - (newGame.length()/2), newGame.c_str());
     drawTile (line, (getWidth()/2) - (newGame.length()/2), 'Q', Color (GREEN), Color (BLACK));
-    drawString (line += spacing, (getWidth()/2) - (newWorld.length()/2), newWorld.c_str(), darkGrey, Color (BLACK));
-    drawTile (line, (getWidth()/2) - (newWorld.length()/2), 'C', darkGreen, Color (BLACK));
+    drawString (line += spacing, (getWidth()/2) - (newWorld.length()/2), newWorld.c_str());
+    drawTile (line, (getWidth()/2) - (newWorld.length()/2), 'C', Color (GREEN), Color (BLACK));
     drawString (line += spacing, (getWidth()/2) - (loadGame.length()/2), loadGame.c_str(), darkGrey, Color (BLACK));
     drawTile (line, (getWidth()/2) - (loadGame.length()/2), 'L', darkGreen, Color (BLACK));
     drawString (line += spacing, (getWidth()/2) - (tutorial.length()/2), tutorial.c_str(), darkGrey, Color (BLACK));
@@ -48,5 +51,12 @@ void MainWindow::keyDown (unsigned char key) {
         l_win->initialise(getEngine());
 
         getEngine()->getWindows()->replaceWindow (l_win);
+    }
+
+    if (key == 'c' || key == 'C') {
+        GeneratorWindow* l_win = new GeneratorWindow();
+        l_win->initialise (getEngine());
+
+        getEngine()->getWindows()->pushWindow (l_win);
     }
 }
