@@ -55,6 +55,9 @@ public:
     void setMaxLevel (unsigned int maxLevel) { m_maxLevel = maxLevel; }
     unsigned int getMaxLevel () { return m_maxLevel; }
 
+    unsigned int getArea () { return m_currentArea; }
+    void setArea (unsigned int area) { m_currentArea = area; }
+    
     Tile& getTile (unsigned int x, unsigned int y, unsigned int z) { return getTile (map2index (x, y, z)); }
     Tile& getTile (const Location& location) { return getTile (location.x, location.y, location.z); }
     Tile& getTile (unsigned int index) { return m_map[index]; }
@@ -89,6 +92,7 @@ private:
     std::vector<Message>    m_messages;
     unsigned int            m_level;
     unsigned int            m_maxLevel;
+    unsigned int            m_currentArea;
 
     unsigned int            m_mapWidth;
     unsigned int            m_mapHeight;

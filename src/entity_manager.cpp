@@ -30,6 +30,8 @@ EntityId EntityManager::createEntity (Location& location) {
     m_locations[l_entity] = location;
     m_engine->getTile (location).entities.insert (l_entity);
 
+    m_entities[m_engine->getArea()].insert (l_entity);
+
     AddEntityEvent* l_event = new AddEntityEvent;
     l_event->entity = l_entity;
     m_engine->raiseEvent (l_event);
@@ -40,6 +42,8 @@ EntityId EntityManager::createEntity (Location& location) {
 void EntityManager::destroyEntity (EntityId id) {
     m_engine->getComponents()->removeAll(id);
     m_engine->getTile(m_locations[id]).entities.erase (id);
+
+    m_entities[m_engine->getArea()].erase (id);
 
     // Raise event for removal
     RemoveEntityEvent* l_event = new RemoveEntityEvent();
@@ -54,10 +58,15 @@ void EntityManager::setLocation (EntityId entity, Location& location)
     m_engine->getTile (m_locations[entity]).entities.insert (entity);
 }
 
-EntityId EntityManager::getPlayer () {
+EntityId EntityManager::getPlayer ()
+{
     return m_player;
 }
 
+EntityHolder& EntityManager::get ()
+{
+    return m_entities[m_engine->getArea()];
+}
 
 EntityId EntityManager::createWallPrefab (Location& location)
 {

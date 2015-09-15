@@ -38,11 +38,13 @@ public:
     Location getLocation (EntityId entity) { return m_locations[entity]; }
     void setLocation (EntityId entity, Location& location);
 
+    EntityHolder& get(); 
 private:
     GameEngineInterface*                m_engine;
     unsigned long                       m_maxId;
     EntityId                            m_player;
     LocationMap                         m_locations;
+    std::map<unsigned int, EntityHolder> m_entities;
 };
 
 #endif

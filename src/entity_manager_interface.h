@@ -6,6 +6,7 @@ class GameEngineInterface;
 #include <vector>
 #include "utility.h"
 #include "tile.h"
+#include "entity.h"
 
 class EntityManagerInterface {
 public:
@@ -36,6 +37,7 @@ public:
 
     virtual Location getLocation (EntityId entity) = 0;
     virtual void setLocation (EntityId entity, Location& location) = 0;
+    virtual EntityHolder& get() = 0;
 };
 
 #endif

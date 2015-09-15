@@ -42,7 +42,7 @@ public:
     virtual void raiseEvent (Event* event)  = 0;
     virtual EntityManagerInterface* getEntities()    = 0;
     virtual ComponentManager* getComponents() = 0;
-    
+
     virtual void loadMap (unsigned int width, unsigned int height) = 0;
 
     virtual unsigned long long getTick()    = 0;
@@ -61,6 +61,9 @@ public:
 
     virtual void setMaxLevel (unsigned int level) = 0;
     virtual unsigned int getMaxLevel () = 0;
+
+    virtual unsigned int getArea () = 0;
+    virtual void setArea (unsigned int area) = 0;
 
     virtual Tile& getTile (unsigned int x, unsigned int y, unsigned int z) = 0;
     virtual Tile& getTile (const Location& location) = 0;
