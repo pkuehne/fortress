@@ -135,12 +135,10 @@ void GeneratorWindow::startGenerating () {
     getEngine()->loadMap (m_levelWidth, m_levelHeight);
     getEngine()->setLevel (1);
     getEngine()->setMaxLevel (m_levelDepth);
-    std::cout << "Creating" << std::endl;
 }
 
 void GeneratorWindow::generateLevel () {
     if (m_generatingLevel <= m_levelDepth) {
-        std::cout << "generating: " << m_generatingLevel << std::endl;
         m_generator->mapHeight()    = m_levelHeight;
         m_generator->mapWidth()     = m_levelWidth;
         m_generator->numberOfRooms()= m_levelRooms;
@@ -156,5 +154,4 @@ void GeneratorWindow::startPlaying() {
     MapWindow* l_win = new MapWindow();
     l_win->initialise (getEngine());
     getEngine()->getWindows()->replaceWindow (l_win);
-    std::cout << "playing" << std::endl;
 }
