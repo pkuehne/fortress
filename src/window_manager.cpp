@@ -56,5 +56,11 @@ void WindowManager::resize ()
     for (size_t ii = 0; ii < m_windows.size(); ii++) {
         m_windows[ii]->resize();
     }
+}
 
+void WindowManager::update()
+{
+    for (size_t ii = 0; ii < m_windows.size(); ii++) {
+        m_windows[ii]->update();
+    }
 }

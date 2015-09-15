@@ -132,6 +132,7 @@ void GameEngine::tick ()
         m_systems[ii]->update();
     }
 
+    getWindows()->update();
     getWindows()->redraw();
     return;
 }

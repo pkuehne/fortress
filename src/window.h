@@ -23,7 +23,8 @@ public:
     virtual int getWidth() { return m_width; }
     virtual int getHeight() { return m_height; }
     virtual void resize() { setDimensions (m_xOffset, m_yOffset, m_width, m_height); }
-
+    virtual void update() { }
+    
     virtual unsigned int drawString (int y, int x, const char* text, Color fg = Color(WHITE), Color bg = Color(BLACK));
     virtual void drawTile (int y, int x, unsigned int tile, Color fg, Color bg);
     virtual void drawBorder (int y, int x, int height, int width);

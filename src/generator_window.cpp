@@ -26,18 +26,6 @@ void GeneratorWindow::gainFocus () {
     m_generatingLevel = 0;
     m_generating = false;
     m_generated = false;
-
-    if (getArgs()) {
-        startGenerating();
-        for (unsigned int level = 1; level <= m_levelDepth; level++) {
-            m_generator->mapHeight()    = m_levelHeight;
-            m_generator->mapWidth()     = m_levelWidth;
-            m_generator->numberOfRooms()= m_levelRooms;
-            m_generator->currentLevel() = level;
-            m_generator->generate();
-        }
-        startPlaying();
-    }
 }
 
 void GeneratorWindow::resize() {
@@ -45,6 +33,8 @@ void GeneratorWindow::resize() {
 }
 
 void GeneratorWindow::redraw() {
+
+    if (getArgs()) return;
 
     int middleX = getWidth()/2;
     int middleY = getHeight();
@@ -80,17 +70,7 @@ void GeneratorWindow::redraw() {
 
     if (m_generating) {
         //drawString (middleY - 5, middleX + 3, ":");
-        drawProgress (middleX + 2, middleY - 5, m_generatingLevel, m_levelDepth);
-        if (m_generatingLevel <= m_levelDepth) {
-            m_generator->mapHeight()    = m_levelHeight;
-            m_generator->mapWidth()     = m_levelWidth;
-            m_generator->numberOfRooms()= m_levelRooms;
-            m_generator->currentLevel() = m_generatingLevel++;
-            m_generator->generate();
-        } else {
-            m_generating = false;
-            m_generated = true;
-        }
+        drawProgress (middleX + 2, middleY - 5, m_generatingLevel - 1, m_levelDepth);
     } else if (m_generated) {
         drawString (middleY - 5, middleX + 2, "Done!");
         drawString (middleY - 4, middleX - 6, "Play");
@@ -100,6 +80,21 @@ void GeneratorWindow::redraw() {
     std::string explanation ("Use '+' and '-' to change values");
     int offset = getWidth()/2 - explanation.length()/2;
     drawString (getHeight()-2, offset, explanation.c_str());
+}
+
+void GeneratorWindow::update () {
+    if (getArgs() && !m_generated) {
+        startGenerating();
+        for (unsigned int level = 1; level <= m_levelDepth; level++) {
+            generateLevel();
+        }
+        startPlaying();
+        return;
+    }
+
+    if (m_generating) {
+        generateLevel();
+    }
 }
 
 void GeneratorWindow::keyDown (unsigned char key) {
@@ -141,6 +136,20 @@ void GeneratorWindow::startGenerating () {
     getEngine()->setLevel (1);
     getEngine()->setMaxLevel (m_levelDepth);
     std::cout << "Creating" << std::endl;
+}
+
+void GeneratorWindow::generateLevel () {
+    if (m_generatingLevel <= m_levelDepth) {
+        std::cout << "generating: " << m_generatingLevel << std::endl;
+        m_generator->mapHeight()    = m_levelHeight;
+        m_generator->mapWidth()     = m_levelWidth;
+        m_generator->numberOfRooms()= m_levelRooms;
+        m_generator->currentLevel() = m_generatingLevel++;
+        m_generator->generate();
+    } else {
+        m_generating = false;
+        m_generated = true;
+    }
 }
 
 void GeneratorWindow::startPlaying() {

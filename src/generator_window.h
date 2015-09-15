@@ -17,11 +17,13 @@ public:
     virtual void gainFocus ();
     virtual void resize();
     virtual void redraw();
+    virtual void update();
     virtual void keyDown (unsigned char key);
 
 private:
     std::string formatNumber (int number);
     void startGenerating ();
+    void generateLevel();
     void startPlaying();
 
 private:
