@@ -42,7 +42,7 @@ void Window::drawBorder (int y, int x, int height, int width) {
 void Window::clearArea (int y, int x, int height, int width) {
     getEngine()->getGraphics()->clearArea (m_yOffset+y, m_xOffset+x, height, width);
 }
-    
+
 void Window::beforeRedraw()
 {
     getEngine()->getGraphics()->clearArea (m_yOffset, m_xOffset, m_height, m_width);
@@ -90,4 +90,15 @@ bool Window::getMouseButton (int button)
         return m_buttons[button];
     }
     return false;
+}
+
+void Window::drawProgress (unsigned int x, unsigned int y, unsigned int value, unsigned int max)
+{
+    float l_value = (float) value;
+    float l_max = (float) max;
+    Color l_color ((1.0f-(l_value/l_max)), l_value/l_max, 0);
+
+    for (unsigned int xx = 0; xx < value; xx++) {
+        drawTile (y, x+xx, 178, l_color, Color(BLACK));
+    }
 }

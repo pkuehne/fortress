@@ -47,10 +47,10 @@ void MainWindow::keyDown (unsigned char key) {
     }
 
     if (key == 'q' || key == 'Q') {
-        MapWindow* l_win = new MapWindow();
-        l_win->initialise(getEngine());
+        GeneratorWindow* l_win = new GeneratorWindow();
+        l_win->initialise (getEngine(), (void*)1);
 
-        getEngine()->getWindows()->replaceWindow (l_win);
+        getEngine()->getWindows()->pushWindow (l_win);
     }
 
     if (key == 'c' || key == 'C') {

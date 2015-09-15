@@ -12,6 +12,8 @@ public:
     unsigned int& mapHeight() { return m_mapHeight; }
     unsigned int& mapWidth() { return m_mapWidth; }
     unsigned int& numberOfRooms() { return m_roomTarget; }
+    unsigned int& currentLevel() { return m_level; }
+    
     unsigned char& getByCoordinate (unsigned int x, unsigned int y) { return getByIndex (CoordToIndex(x,y)); }
     unsigned char& getByIndex (unsigned int index) { return m_map[index]; }
     bool isValidIndex (unsigned int index) { return (index > 0 && index < sizeof (m_map)); }
@@ -47,6 +49,7 @@ private:
     unsigned int            m_roomTarget;
     unsigned char*          m_map;
     unsigned int            m_startRoom;
+    unsigned int            m_level;
     std::vector<Room>       m_rooms;
 };
 

@@ -46,6 +46,8 @@ public:
     virtual void gainFocus() { };
     virtual void loseFocus() { };
 
+    virtual void drawProgress (unsigned int x, unsigned int y, unsigned int value, unsigned int max);
+
 private:
     bool                    ascii_keys[256];
     bool                    special_keys[256];

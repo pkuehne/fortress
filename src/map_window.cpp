@@ -10,7 +10,7 @@
 
 void MapWindow::gainFocus ()
 {
-    getEngine()->loadMap(50, 50);
+    //getEngine()->loadMap(50, 50);
 
     setTitle ("Map");
 

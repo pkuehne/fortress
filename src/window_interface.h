@@ -48,6 +48,7 @@ public:
     virtual void gainFocus() = 0;
     virtual void loseFocus() = 0;
 
+    virtual void drawProgress (unsigned int x, unsigned int y, unsigned int value, unsigned int max) = 0;
 };
 
 #endif

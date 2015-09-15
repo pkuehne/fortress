@@ -13,6 +13,8 @@ public:
     virtual unsigned int& mapHeight() = 0;
     virtual unsigned int& mapWidth() = 0;
     virtual unsigned int& numberOfRooms() = 0;
+    virtual unsigned int& currentLevel() = 0;
+
 };
 
 #endif

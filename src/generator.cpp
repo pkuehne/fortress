@@ -35,7 +35,7 @@ void Generator::reset () {
 }
 
 void Generator::generate () {
-    unsigned int seed = time(0) + m_engine->getLevel();
+    unsigned int seed = time(0) + m_level;
     //srand(1439294983);
     srand (seed);
 
@@ -66,7 +66,7 @@ void Generator::createEntitiesFromMap () {
             Location location;
             location.x = xx;
             location.y = yy;
-            location.z = 0;
+            location.z = m_level;
             switch (getByCoordinate(xx, yy)) {
                 case WALL:
                 case CORNER:
@@ -75,7 +75,7 @@ void Generator::createEntitiesFromMap () {
                     break;
                 case UP:
                     m_engine->getEntities()->createStairPrefab (STAIR_UP, location);
-                    if (m_engine->getLevel() == 1) m_engine->getEntities()->createPlayerPrefab (location);
+                    if (m_level == 1) m_engine->getEntities()->createPlayerPrefab (location);
                     break;
                 case DOWN:
                     m_engine->getEntities()->createStairPrefab (STAIR_DOWN, location);
@@ -208,7 +208,7 @@ void Generator::placeOrcs()
 {
     if (m_rooms.size() < 2) return; // No point
 
-    unsigned int numOrcs = rand() % (m_rooms.size()) + m_engine->getLevel();
+    unsigned int numOrcs = rand() % (m_rooms.size()) + m_level;
     for (size_t ii = 0; ii < numOrcs; ii++) {
         unsigned int room = 0;
         while (1) {
