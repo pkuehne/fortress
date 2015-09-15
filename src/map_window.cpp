@@ -7,6 +7,7 @@
 #include "sprite_component.h"
 #include "health_component.h"
 #include "droppable_component.h"
+#include "file_saver.h"
 
 void MapWindow::gainFocus ()
 {
@@ -121,6 +122,11 @@ void MapWindow::keyDown (unsigned char key) {
         EquipmentWindow* l_win = new EquipmentWindow();
         l_win->initialise(getEngine());
         getEngine()->getWindows()->pushWindow (l_win);
+    }
+    if (key == 'S') {
+        FileSaver saver;
+        saver.initialise (getEngine());
+        saver.saveState();
     }
 }
 
