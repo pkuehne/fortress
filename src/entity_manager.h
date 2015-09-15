@@ -38,7 +38,7 @@ public:
     Location getLocation (EntityId entity) { return m_locations[entity]; }
     void setLocation (EntityId entity, Location& location);
 
-    EntityHolder& get(); 
+    EntityHolder& get(unsigned int area = 0); 
 private:
     GameEngineInterface*                m_engine;
     unsigned long                       m_maxId;
