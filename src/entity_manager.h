@@ -17,6 +17,7 @@ public:
     void destroy() {}
 
     EntityId createEntity (Location& location);
+    void addEntity (EntityId id, Location& location);
     void destroyEntity (EntityId);
     EntityId getPlayer ();
     EntityId getMaxId() { return m_maxId; }
@@ -38,7 +39,7 @@ public:
     Location getLocation (EntityId entity) { return m_locations[entity]; }
     void setLocation (EntityId entity, Location& location);
 
-    EntityHolder& get(unsigned int area = 0); 
+    EntityHolder& get(unsigned int area = 0);
 private:
     GameEngineInterface*                m_engine;
     unsigned long                       m_maxId;

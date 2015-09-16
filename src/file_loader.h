@@ -9,6 +9,8 @@ class FileLoader {
 public:
     void initialise (GameEngineInterface* engine) { m_engine = engine; }
     void loadState ();
+
+    Location loadLocation (unsigned int pos);
 private:
     std::vector<std::string>    m_lines;
     GameEngineInterface*        m_engine;

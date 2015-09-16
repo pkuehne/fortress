@@ -16,6 +16,7 @@ public:
     virtual void destroy() = 0;
 
     virtual EntityId createEntity ( Location& location) = 0;
+    virtual void addEntity (EntityId id, Location& location) = 0;
     virtual void destroyEntity (EntityId id) = 0;
     virtual EntityId getPlayer () = 0;
     virtual EntityId getMaxId() = 0;

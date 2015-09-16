@@ -24,19 +24,23 @@ void EntityManager::initialise (GameEngineInterface* engine)
 
 EntityId EntityManager::createEntity (Location& location) {
     EntityId l_entity = m_maxId++;
+    addEntity (l_entity, location);
+    return l_entity;
+}
 
+void EntityManager::addEntity (EntityId id, Location& location) {
+    if (id >= m_maxId) m_maxId = id + 1;
+    
     location.z = (location.z == 0) ? m_engine->getLevel() : location.z;
 
-    m_locations[l_entity] = location;
-    m_engine->getTile (location).entities.insert (l_entity);
+    m_locations[id] = location;
+    m_engine->getTile (location).entities.insert (id);
 
-    m_entities[m_engine->getArea()].insert (l_entity);
+    m_entities[m_engine->getArea()].insert (id);
 
     AddEntityEvent* l_event = new AddEntityEvent;
-    l_event->entity = l_entity;
+    l_event->entity = id;
     m_engine->raiseEvent (l_event);
-
-    return l_entity;
 }
 
 void EntityManager::destroyEntity (EntityId id) {
