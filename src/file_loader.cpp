@@ -1,4 +1,5 @@
 #include "file_loader.h"
+#include "tag.h"
 #include <fstream>
 #include <iostream>
 
@@ -19,6 +20,10 @@ void FileLoader::loadState ()
     std::cout << "Done" << std::endl;
 
     for (std::string& l_line : m_lines) {
-        
+        Tag l_tag (l_line);
+        if (l_tag.getName() == "ENTITY") {
+            // Set up the entity
+            std::cout << "Creating: " << l_tag.getNum() << std::endl;
+        }
     }
 }
