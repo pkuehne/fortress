@@ -5,6 +5,7 @@
 
 class Tag {
 public:
+    Tag() { }
     Tag (std::string& text);
     std::string getName() { return m_name; }
     std::string getStr() { return m_string; }

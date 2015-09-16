@@ -3,21 +3,14 @@
 
 #include <map>
 #include <string>
-
-typedef struct {
-    std::string str;
-    long        num;
-    double      dec;
-} TagValue;
+#include "tag.h"
 
 class ConfigManager {
 public:
-    void setTag (const std::string& tag, const TagValue& val);
-    TagValue getTag (const std::string& tag);
+    Tag getTag (const std::string& tag);
     void readFile (const std::string& config);
-    void stringToTagValue (const std::string& input, TagValue& output);
 private:
-    std::map<std::string, TagValue> m_tags;
+    std::map<std::string, Tag> m_tags;
 };
 
 #endif
