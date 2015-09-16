@@ -40,6 +40,8 @@ bool Generator::generate () {
     //srand(1439294983);
     srand (seed);
 
+    reset();
+    
     m_map = new unsigned char[m_mapHeight*m_mapWidth];
     memset (m_map, EMPTY, m_mapHeight*m_mapWidth);
 
