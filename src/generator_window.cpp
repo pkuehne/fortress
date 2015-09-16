@@ -143,7 +143,7 @@ void GeneratorWindow::generateLevel () {
         m_generator->mapWidth()     = m_levelWidth;
         m_generator->numberOfRooms()= m_levelRooms;
         m_generator->currentLevel() = m_generatingLevel++;
-        m_generator->generate();
+        while (!m_generator->generate());
     } else {
         m_generating = false;
         m_generated = true;

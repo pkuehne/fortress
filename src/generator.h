@@ -7,13 +7,13 @@
 class Generator : public GeneratorInterface {
 public:
     void initialise (GameEngineInterface* a_engine) { m_engine = a_engine; }
-    void generate();
+    bool generate();
 
     unsigned int& mapHeight() { return m_mapHeight; }
     unsigned int& mapWidth() { return m_mapWidth; }
     unsigned int& numberOfRooms() { return m_roomTarget; }
     unsigned int& currentLevel() { return m_level; }
-    
+
     unsigned char& getByCoordinate (unsigned int x, unsigned int y) { return getByIndex (CoordToIndex(x,y)); }
     unsigned char& getByIndex (unsigned int index) { return m_map[index]; }
     bool isValidIndex (unsigned int index) { return (index > 0 && index < sizeof (m_map)); }

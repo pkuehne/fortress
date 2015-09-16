@@ -34,8 +34,9 @@ void Generator::reset () {
 
 }
 
-void Generator::generate () {
-    unsigned int seed = time(0) + m_level;
+bool Generator::generate () {
+    static unsigned int offset = 0;
+    unsigned int seed = time(0) + offset++;
     //srand(1439294983);
     srand (seed);
 
@@ -43,7 +44,15 @@ void Generator::generate () {
     memset (m_map, EMPTY, m_mapHeight*m_mapWidth);
 
     for (unsigned r = 0; r < m_roomTarget; r++) {
-        while (!generateRoom ());
+        bool success = false;
+        int x = 0;
+        do {
+            success = generateRoom ();
+        } while (!success && x++ < 100);
+        if (x >= 100) {
+            std::cout << "Overran 100 tried to create room: " << r << std::endl;
+            return false;
+        }
     }
     for (size_t ii = 0; ii < m_rooms.size()-1; ii++) {
         connectRooms (m_rooms[ii], m_rooms[ii+1]);
@@ -56,6 +65,8 @@ void Generator::generate () {
     createEntitiesFromMap();
     reset();
     std::cout << "Created with seed " << seed << std::endl;
+
+    return true;
 }
 
 void Generator::createEntitiesFromMap () {
