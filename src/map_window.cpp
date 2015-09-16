@@ -8,6 +8,7 @@
 #include "health_component.h"
 #include "droppable_component.h"
 #include "file_saver.h"
+#include "file_loader.h"
 
 void MapWindow::gainFocus ()
 {
@@ -127,6 +128,12 @@ void MapWindow::keyDown (unsigned char key) {
         FileSaver saver;
         saver.initialise (getEngine());
         saver.saveState();
+    }
+    if (key == 'L') {
+        std::cout << "loading" << std::endl;
+        FileLoader loader;
+        loader.initialise (getEngine());
+        loader.loadState();
     }
 }
 

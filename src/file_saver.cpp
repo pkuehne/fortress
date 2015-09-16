@@ -1,5 +1,6 @@
 #include "file_saver.h"
 #include "game_engine.h"
+#include <typeinfo>
 #include "collider_component.h"
 #include "description_component.h"
 #include "droppable_component.h"
@@ -42,16 +43,19 @@ void FileSaver::saveComponent (ComponentBase* component)
     ColliderComponent* l_coll = dynamic_cast<ColliderComponent*> (component);
     if (l_coll) {
         m_file << "[COMPONENT:COLLIDER]" << std::endl;
+        return;
     }
     DescriptionComponent* l_desc = dynamic_cast<DescriptionComponent*> (component);
     if (l_desc) {
         m_file << "[COMPONENT:DESCRIPTION]" << std::endl;
         m_file << "[TITLE:" << l_desc->title << "]" << std::endl;
         m_file << "[TEXT:" << l_desc->text << "]" << std::endl;
+        return;
     }
     DroppableComponent* l_drop = dynamic_cast<DroppableComponent*> (component);
     if (l_drop) {
         m_file << "[COMPONENT:DROPPABLE]" << std::endl;
+        return;
     }
     EquipmentComponent* l_equip = dynamic_cast<EquipmentComponent*> (component);
     if (l_equip) {
@@ -70,19 +74,23 @@ void FileSaver::saveComponent (ComponentBase* component)
         }
         m_file << "[MAX_CARRY_WEIGHT:" << l_equip->maxCarryWeight << "]" << std::endl;
         m_file << "[MAX_CARRY_VOLUME:" << l_equip->maxCarryVolume << "]" << std::endl;
+        return;
     }
     HealthComponent* l_health = dynamic_cast<HealthComponent*> (component);
     if (l_health) {
         m_file << "[COMPONENT:HEALTH]" << std::endl;
         m_file << "[HEALTH:" << l_health->health << "]" << std::endl;
+        return;
     }
     NpcComponent* l_npc = dynamic_cast<NpcComponent*>(component);
     if (l_npc) {
         m_file << "[COMPONENT:NPC]" << std::endl;
+        return;
     }
     PlayerComponent* l_player = dynamic_cast<PlayerComponent*>(component);
     if (l_player) {
         m_file << "[COMPONENT:PLAYER]" << std::endl;
+        return;
     }
     SpriteComponent* l_sprite = dynamic_cast<SpriteComponent*>(component);
     if (l_sprite) {
@@ -94,11 +102,13 @@ void FileSaver::saveComponent (ComponentBase* component)
         m_file << "[BG_RED:" << l_sprite->bgColor.Red() << "]" << std::endl;
         m_file << "[BG_GREEN:" << l_sprite->bgColor.Green() << "]" << std::endl;
         m_file << "[BG_BLUE:" << l_sprite->bgColor.Blue() << "]" << std::endl;
+        return;
     }
     StairComponent* l_stair = dynamic_cast<StairComponent*>(component);
     if (l_stair) {
         m_file << "[COMPONENT:STAIR]" << std::endl;
         m_file << "[DIRECTION:" << l_stair->direction << "]" << std::endl;
+        return;
     }
     WearableComponent* l_wear = dynamic_cast<WearableComponent*>(component);
     if (l_wear) {
@@ -106,6 +116,7 @@ void FileSaver::saveComponent (ComponentBase* component)
         m_file << "[BASE_DAMAGE:" << l_wear->baseDamageAbsorb << "]" << std::endl;
         m_file << "[POSITION:" << l_wear->position << "]" << std::endl;
         m_file << "[WARMTH:" << l_wear->warmth << "]" << std::endl;
+        return;
 
     }
     WieldableComponent* l_wield = dynamic_cast<WieldableComponent*>(component);
@@ -114,5 +125,7 @@ void FileSaver::saveComponent (ComponentBase* component)
         m_file << "[BASE_DAMAGE:" << l_wield->baseDamage << "]" << std::endl;
         m_file << "[WBASE_DEFENCE:" << l_wield->baseDefence << "]" << std::endl;
         m_file << "[POSITION:" << l_wield->position << "]" << std::endl;
+        return;
     }
+    std::cout << "Could not save a component: " << typeid (component).name() << std::endl;
 }
