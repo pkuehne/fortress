@@ -30,21 +30,30 @@ void FileLoader::loadState ()
     }
     std::cout << "Done" << std::endl;
 
+    unsigned int width = m_tags[0].getNum();
+    unsigned int height = m_tags[1].getNum();
+    unsigned int depth = m_tags[2].getNum();
+    m_engine->setMaxLevel (depth);
+    m_engine->loadMap (width, height);
+
     EntityId id = 0;
-    for (unsigned int ii = 0; ii < m_tags.size(); ii++) {
+    for (unsigned int ii = 3; ii < m_tags.size(); ii++) {
         if (m_tags[ii].getName() == "ENTITY") {
             // Set up the entity
             id = m_tags[ii].getNum();
             ii++;
             Location location = loadLocation (ii);
             m_engine->getEntities()->addEntity (id, location);
-            std::cout << id << ": ("<< location.x << ","<< location.y << "," << location.z << ")" << std::endl;
+            ii--;
+            continue;
         }
         if (m_tags[ii].getName() == "COMPONENT") {
             ComponentBase* component = loadComponent (ii, m_tags[ii].getStr());
             if (component) {
                 m_engine->getComponents()->add (id, component);
             }
+            ii--;
+            continue;
         }
     }
 }
@@ -66,9 +75,7 @@ Location FileLoader::loadLocation (unsigned int& pos)
 ComponentBase* FileLoader::loadComponent (unsigned int& pos, const std::string& component)
 {
     pos++;
-
     if (component == "COLLIDER") {
-        std::cout << "Creating Collider" << std::endl;
         ColliderComponent* retval = new ColliderComponent();
         return retval;
     }
@@ -119,12 +126,12 @@ ComponentBase* FileLoader::loadComponent (unsigned int& pos, const std::string& 
     if (component == "SPRITE") {
         SpriteComponent* retval = new SpriteComponent();
         retval->sprite          = m_tags[pos++].getNum();
-        retval->fgColor.Red()   = m_tags[pos++].getNum();
-        retval->fgColor.Green() = m_tags[pos++].getNum();
-        retval->fgColor.Blue()  = m_tags[pos++].getNum();
-        retval->bgColor.Red()   = m_tags[pos++].getNum();
-        retval->bgColor.Green() = m_tags[pos++].getNum();
-        retval->bgColor.Blue()  = m_tags[pos++].getNum();
+        retval->fgColor.Red()   = m_tags[pos++].getDec();
+        retval->fgColor.Green() = m_tags[pos++].getDec();
+        retval->fgColor.Blue()  = m_tags[pos++].getDec();
+        retval->bgColor.Red()   = m_tags[pos++].getDec();
+        retval->bgColor.Green() = m_tags[pos++].getDec();
+        retval->bgColor.Blue()  = m_tags[pos++].getDec();
         return retval;
     }
     if (component == "STAIR") {
@@ -148,6 +155,6 @@ ComponentBase* FileLoader::loadComponent (unsigned int& pos, const std::string& 
         return retval;
     }
 
-    std::cout << "Could not laod a component!" << std::endl;
+    std::cout << "Could not laod a component: " << component << std::endl;
     return nullptr;
 }

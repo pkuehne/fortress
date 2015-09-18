@@ -30,7 +30,7 @@ EntityId EntityManager::createEntity (Location& location) {
 
 void EntityManager::addEntity (EntityId id, Location& location) {
     if (id >= m_maxId) m_maxId = id + 1;
-    
+
     location.z = (location.z == 0) ? m_engine->getLevel() : location.z;
 
     m_locations[id] = location;
@@ -64,6 +64,13 @@ void EntityManager::setLocation (EntityId entity, Location& location)
 
 EntityId EntityManager::getPlayer ()
 {
+    if (m_player == 0) {
+        for (EntityId entity : m_entities[m_engine->getArea()]) {
+            if (m_engine->getComponents()->get<PlayerComponent>(entity)) {
+                m_player = entity;
+            }
+        }
+    }
     return m_player;
 }
 

@@ -129,12 +129,6 @@ void MapWindow::keyDown (unsigned char key) {
         saver.initialise (getEngine());
         saver.saveState();
     }
-    if (key == 'L') {
-        std::cout << "loading" << std::endl;
-        FileLoader loader;
-        loader.initialise (getEngine());
-        loader.loadState();
-    }
 }
 
 void MapWindow::drawSeparators() {
@@ -144,6 +138,7 @@ void MapWindow::drawSeparators() {
 
 void MapWindow::drawMap() {
     Location l_player = getEngine()->getEntities()->getLocation(getEngine()->getEntities()->getPlayer());
+
     m_mapStartX = l_player.x - (m_mapWidth/2);
     m_mapStartY = l_player.y - (m_mapHeight/2);
 

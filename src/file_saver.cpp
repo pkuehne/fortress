@@ -18,8 +18,13 @@ void FileSaver::saveState ()
     m_file.open ("World1.sav");
     std::cout << "Saving...";
 
-    EntityHolder& entities = m_engine->getEntities()->get();
+    //Start with the header
+    m_file << "[MAP_WIDTH:" << m_engine->getMapWidth() << "]" << std::endl;
+    m_file << "[MAP_HEIGHT:" << m_engine->getMapHeight() << "]" << std::endl;
+    m_file << "[MAP_DEPTH:" << m_engine->getMaxLevel() << "]" << std::endl;
 
+    // Save entities
+    EntityHolder& entities = m_engine->getEntities()->get();
     for (EntityId entity : entities) {
         m_file << "[ENTITY:" << entity << "]" << std::endl;
         Location location = m_engine->getEntities()->getLocation (entity);
@@ -95,7 +100,7 @@ void FileSaver::saveComponent (ComponentBase* component)
     SpriteComponent* l_sprite = dynamic_cast<SpriteComponent*>(component);
     if (l_sprite) {
         m_file << "[COMPONENT:SPRITE]" << std::endl;
-        m_file << "[SPRITE:" << l_sprite->sprite << "]" << std::endl;
+        m_file << "[SPRITE:" << (int) l_sprite->sprite << "]" << std::endl;
         m_file << "[FG_RED:" << l_sprite->fgColor.Red() << "]" << std::endl;
         m_file << "[FG_GREEN:" << l_sprite->fgColor.Green() << "]" << std::endl;
         m_file << "[FG_BLUE:" << l_sprite->fgColor.Blue() << "]" << std::endl;
@@ -112,7 +117,7 @@ void FileSaver::saveComponent (ComponentBase* component)
     }
     WearableComponent* l_wear = dynamic_cast<WearableComponent*>(component);
     if (l_wear) {
-        m_file << "[COMPONENT:WEAR]" << std::endl;
+        m_file << "[COMPONENT:WEARABLE]" << std::endl;
         m_file << "[BASE_DAMAGE:" << l_wear->baseDamageAbsorb << "]" << std::endl;
         m_file << "[POSITION:" << l_wear->position << "]" << std::endl;
         m_file << "[WARMTH:" << l_wear->warmth << "]" << std::endl;
@@ -121,7 +126,7 @@ void FileSaver::saveComponent (ComponentBase* component)
     }
     WieldableComponent* l_wield = dynamic_cast<WieldableComponent*>(component);
     if (l_wield) {
-        m_file << "[COMPONENT:WIELD]" << std::endl;
+        m_file << "[COMPONENT:WIELDABLE]" << std::endl;
         m_file << "[BASE_DAMAGE:" << l_wield->baseDamage << "]" << std::endl;
         m_file << "[WBASE_DEFENCE:" << l_wield->baseDefence << "]" << std::endl;
         m_file << "[POSITION:" << l_wield->position << "]" << std::endl;
