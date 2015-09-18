@@ -2,6 +2,17 @@
 #include "tag.h"
 #include <fstream>
 #include <iostream>
+#include "collider_component.h"
+#include "description_component.h"
+#include "droppable_component.h"
+#include "equipment_component.h"
+#include "health_component.h"
+#include "npc_component.h"
+#include "player_component.h"
+#include "sprite_component.h"
+#include "stair_component.h"
+#include "wearable_component.h"
+#include "wieldable_component.h"
 
 void FileLoader::loadState ()
 {
@@ -15,32 +26,128 @@ void FileLoader::loadState ()
     while (!l_file.eof()) {
         std::string l_line;
         std::getline (l_file, l_line);
-        m_lines.push_back (l_line);
+        m_tags.push_back (Tag (l_line));
     }
     std::cout << "Done" << std::endl;
 
-
-    for (unsigned int ii = 0; ii < m_lines.size(); ii++) {
-        Tag l_tag (m_lines[ii]);
-        if (l_tag.getName() == "ENTITY") {
+    EntityId id = 0;
+    for (unsigned int ii = 0; ii < m_tags.size(); ii++) {
+        if (m_tags[ii].getName() == "ENTITY") {
             // Set up the entity
-            EntityId id = l_tag.getNum();
-            Location location = loadLocation (ii+1);
-            ii+=3;
+            id = m_tags[ii].getNum();
+            ii++;
+            Location location = loadLocation (ii);
             m_engine->getEntities()->addEntity (id, location);
             std::cout << id << ": ("<< location.x << ","<< location.y << "," << location.z << ")" << std::endl;
+        }
+        if (m_tags[ii].getName() == "COMPONENT") {
+            ComponentBase* component = loadComponent (ii, m_tags[ii].getStr());
+            if (component) {
+                m_engine->getComponents()->add (id, component);
+            }
         }
     }
 }
 
 
-Location FileLoader::loadLocation (unsigned int pos){
+Location FileLoader::loadLocation (unsigned int& pos)
+{
     Location location;
     for (unsigned int ii = 0; ii < 3; ii++) {
-        Tag l_tag (m_lines[pos+ii]);
-        if (l_tag.getName() == "LOCATION_X") location.x = l_tag.getNum();
-        if (l_tag.getName() == "LOCATION_Y") location.y = l_tag.getNum();
-        if (l_tag.getName() == "LOCATION_Z") location.z = l_tag.getNum();
+        if (m_tags[pos].getName() == "LOCATION_X") location.x = m_tags[pos].getNum();
+        if (m_tags[pos].getName() == "LOCATION_Y") location.y = m_tags[pos].getNum();
+        if (m_tags[pos].getName() == "LOCATION_Z") location.z = m_tags[pos].getNum();
+        pos++;
     }
     return location;
+}
+
+
+ComponentBase* FileLoader::loadComponent (unsigned int& pos, const std::string& component)
+{
+    pos++;
+
+    if (component == "COLLIDER") {
+        std::cout << "Creating Collider" << std::endl;
+        ColliderComponent* retval = new ColliderComponent();
+        return retval;
+    }
+    if (component == "DESCRIPTION") {
+        DescriptionComponent* retval = new DescriptionComponent();
+        retval->title   = m_tags[pos++].getStr();
+        retval->text    = m_tags[pos++].getStr();
+        return retval;
+    }
+    if (component == "DROPPABLE") {
+        DroppableComponent* retval = new DroppableComponent();
+        return retval;
+    }
+    if (component == "EQUIPMENT") {
+        EquipmentComponent* retval = new EquipmentComponent();
+        retval->headWearable    = m_tags[pos++].getNum();
+        retval->faceWearable    = m_tags[pos++].getNum();
+        retval->chestWearable   = m_tags[pos++].getNum();
+        retval->armsWearable    = m_tags[pos++].getNum();
+        retval->handsWearable   = m_tags[pos++].getNum();
+        retval->legsWearable    = m_tags[pos++].getNum();
+        retval->feetWearable    = m_tags[pos++].getNum();
+
+        retval->rightHandWieldable  = m_tags[pos++].getNum();
+        retval->leftHandWieldable   = m_tags[pos++].getNum();
+
+        while (m_tags[pos].getName() == "CARRIED") {
+            retval->carriedEquipment.push_back (m_tags[pos++].getNum());
+        }
+        retval->maxCarryWeight  = m_tags[pos++].getNum();
+        retval->maxCarryVolume  = m_tags[pos++].getNum();
+
+        return retval;
+    }
+    if (component == "HEALTH") {
+        HealthComponent* retval = new HealthComponent();
+        retval->health = m_tags[pos++].getNum();
+        return retval;
+    }
+    if (component == "NPC") {
+        NpcComponent* retval = new NpcComponent();
+        return retval;
+    }
+    if (component == "PLAYER") {
+        PlayerComponent* retval = new PlayerComponent();
+        return retval;
+    }
+    if (component == "SPRITE") {
+        SpriteComponent* retval = new SpriteComponent();
+        retval->sprite          = m_tags[pos++].getNum();
+        retval->fgColor.Red()   = m_tags[pos++].getNum();
+        retval->fgColor.Green() = m_tags[pos++].getNum();
+        retval->fgColor.Blue()  = m_tags[pos++].getNum();
+        retval->bgColor.Red()   = m_tags[pos++].getNum();
+        retval->bgColor.Green() = m_tags[pos++].getNum();
+        retval->bgColor.Blue()  = m_tags[pos++].getNum();
+        return retval;
+    }
+    if (component == "STAIR") {
+        StairComponent* retval = new StairComponent();
+        retval->direction = static_cast<STAIR>(m_tags[pos++].getNum());
+        return retval;
+    }
+    if (component == "WEARABLE") {
+        WearableComponent* retval = new WearableComponent();
+        retval->baseDamageAbsorb    = m_tags[pos++].getNum();
+        retval->position            = static_cast<WearablePosition>(m_tags[pos++].getNum());
+        retval->warmth              = m_tags[pos++].getNum();
+
+        return retval;
+    }
+    if (component == "WIELDABLE") {
+        WieldableComponent* retval = new WieldableComponent();
+        retval->baseDamage  = m_tags[pos++].getNum();
+        retval->baseDefence = m_tags[pos++].getNum();
+        retval->position    = static_cast<WieldablePosition>(m_tags[pos++].getNum());
+        return retval;
+    }
+
+    std::cout << "Could not laod a component!" << std::endl;
+    return nullptr;
 }

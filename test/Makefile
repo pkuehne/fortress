@@ -15,7 +15,7 @@ SOURCES+= \
 ../src/equipment_window.cpp \
 ../src/event.cpp \
 ../src/event_manager.cpp \
-../src/gameengine.cpp \
+../src/game_engine.cpp \
 ../src/game_system_base.cpp \
 ../src/generator.cpp \
 ../src/graphics.cpp \
