@@ -3,6 +3,7 @@
 
 #include <cstring>
 #include "window_interface.h"
+
 class GameEngineInterface;
 
 class Window : public WindowInterface
@@ -22,9 +23,12 @@ public:
     virtual int getWidth() { return m_width; }
     virtual int getHeight() { return m_height; }
     virtual void resize() { setDimensions (m_xOffset, m_yOffset, m_width, m_height); }
+    virtual void update() { }
 
-    virtual void drawString (int y, int x, const char* text, Color fg = Color(WHITE), Color bg = Color(BLACK));
+    virtual unsigned int drawString (int y, int x, const char* text, Color fg = Color(WHITE), Color bg = Color(BLACK));
     virtual void drawTile (int y, int x, unsigned int tile, Color fg, Color bg);
+    virtual void drawBorder (int y, int x, int height, int width);
+    virtual void clearArea (int y, int x, int height, int width);
 
     virtual GameEngineInterface* getEngine() { return m_engine; }
     virtual void keyDown (unsigned char key) { ascii_keys[key] = true; }
@@ -43,6 +47,9 @@ public:
     virtual void gainFocus() { };
     virtual void loseFocus() { };
 
+    virtual void drawProgress (unsigned int x, unsigned int y, unsigned int value, unsigned int max);
+    virtual unsigned int wrapText (const std::string& text, std::vector<std::string>& lines, unsigned int maxWidth, unsigned int maxRows);
+    
 private:
     bool                    ascii_keys[256];
     bool                    special_keys[256];

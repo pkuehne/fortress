@@ -1,5 +1,5 @@
 #include "game_over_window.h"
-#include "gameengine.h"
+#include "game_engine.h"
 
 void GameOverWindow::gainFocus()
 {

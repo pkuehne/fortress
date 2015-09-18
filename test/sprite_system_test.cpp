@@ -6,6 +6,7 @@
 
 using namespace ::testing;
 
+/*
 // NW N NE // 1 2 3
 // W  M  E // 4 5 6
 // SW S SE // 7 8 9
@@ -221,3 +222,4 @@ TEST (SpriteSystem, handleUnknownEvent)
     l_system.initialise (&l_engine);
     l_system.handleEvent (&l_event);
 }
+*/

@@ -34,13 +34,3 @@ run: build
 doxy:
 	doxygen Doxyfile
 	cp -r doxygen/html/* /var/www/html/fortress/
-
-pages:
-	git checkout gh-pages --force
-	git reset --hard master
-	$(MAKE) --no-print-directory doxy
-	git add doxygen/*
-	git commit -m"Updated documentation"
-	git push origin gh-pages --force
-	git checkout master
-    

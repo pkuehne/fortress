@@ -8,11 +8,16 @@
 
 typedef enum {
     EVENT_INVALID           = 0,
-    EVENT_ADD_ENTITY        = 1,
-    EVENT_REMOVE_ENTITY     = 2,
-    EVENT_MOVE_ENTITY       = 3,
-    EVENT_ATTACK_ENTITY     = 4,
-    EVENT_CHANGE_LEVEL      = 5,
+    EVENT_ADD_ENTITY        ,
+    EVENT_REMOVE_ENTITY     ,
+    EVENT_MOVE_ENTITY       ,
+    EVENT_CHANGE_LOCATION   ,
+    EVENT_ATTACK_ENTITY     ,
+    EVENT_CHANGE_LEVEL      ,
+    EVENT_DROP_EQUIPMENT    ,
+    EVENT_PICKUP_EQUIPMENT  ,
+    EVENT_EQUIP_ITEM        ,
+    EVENT_UNEQUIP_ITEM      ,
     EVENT_MAX
 } EventType;
 
@@ -45,6 +50,14 @@ public:
     DIRECTION   direction;
 };
 
+class ChangeLocationEvent : public Event {
+public:
+    ChangeLocationEvent() : Event (EVENT_CHANGE_LOCATION) { }
+    EntityId    entity;
+    Location    oldLocation;
+    Location    newLocation;
+};
+
 class AttackEntityEvent : public Event {
 public:
     AttackEntityEvent () : Event (EVENT_ATTACK_ENTITY) { }
@@ -57,6 +70,34 @@ public:
     ChangeLevelEvent () : Event (EVENT_CHANGE_LEVEL) { }
     unsigned int    level;
     STAIR           direction;
+};
+
+class DropEquipmentEvent : public Event {
+public:
+    DropEquipmentEvent () : Event (EVENT_DROP_EQUIPMENT) { }
+    EntityId        entity;
+    EntityId        item;
+};
+
+class PickupEquipmentEvent : public Event {
+public:
+    PickupEquipmentEvent () : Event (EVENT_PICKUP_EQUIPMENT) { }
+    EntityId        entity;
+    EntityId        item;
+};
+
+class EquipItemEvent : public Event {
+public:
+    EquipItemEvent () : Event (EVENT_EQUIP_ITEM) { }
+    EntityId        entity;
+    EntityId        item;
+};
+
+class UnequipItemEvent : public Event {
+public:
+    UnequipItemEvent () : Event (EVENT_UNEQUIP_ITEM) { }
+    EntityId        entity;
+    EntityId        item;
 };
 
 #endif

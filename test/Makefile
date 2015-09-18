@@ -12,12 +12,14 @@ SOURCES+= \
 ../src/config_manager.cpp \
 ../src/entity.cpp \
 ../src/entity_manager.cpp \
+../src/equipment_window.cpp \
 ../src/event.cpp \
 ../src/event_manager.cpp \
-../src/gameengine.cpp \
+../src/game_engine.cpp \
 ../src/game_system_base.cpp \
 ../src/generator.cpp \
 ../src/graphics.cpp \
+../src/inspection_window.cpp \
 ../src/map_window.cpp \
 ../src/movement_system.cpp \
 ../src/npc_system.cpp \

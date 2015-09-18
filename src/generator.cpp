@@ -1,11 +1,12 @@
 #include "generator.h"
-#include "gameengine.h"
+#include "game_engine.h"
 #include "algorithm.h"
 #include <ctime>
 #include <cstdlib>
 #include <cstring>
 #include <iostream>
 #include <fstream>
+#include "sprite_component.h"
 
 static unsigned int getDistance (unsigned int start, unsigned int end, void* customData);
 static unsigned int getPathCost (unsigned int index, void* customData);
@@ -33,16 +34,27 @@ void Generator::reset () {
 
 }
 
-void Generator::generate () {
-    unsigned int seed = time(0) + m_engine->getLevel();
+bool Generator::generate () {
+    static unsigned int offset = 0;
+    unsigned int seed = time(0) + offset++;
     //srand(1439294983);
     srand (seed);
 
+    reset();
+    
     m_map = new unsigned char[m_mapHeight*m_mapWidth];
     memset (m_map, EMPTY, m_mapHeight*m_mapWidth);
 
     for (unsigned r = 0; r < m_roomTarget; r++) {
-        while (!generateRoom ());
+        bool success = false;
+        int x = 0;
+        do {
+            success = generateRoom ();
+        } while (!success && x++ < 100);
+        if (x >= 100) {
+            std::cout << "Overran 100 tried to create room: " << r << std::endl;
+            return false;
+        }
     }
     for (size_t ii = 0; ii < m_rooms.size()-1; ii++) {
         connectRooms (m_rooms[ii], m_rooms[ii+1]);
@@ -55,6 +67,8 @@ void Generator::generate () {
     createEntitiesFromMap();
     reset();
     std::cout << "Created with seed " << seed << std::endl;
+
+    return true;
 }
 
 void Generator::createEntitiesFromMap () {
@@ -62,31 +76,35 @@ void Generator::createEntitiesFromMap () {
 
     for (unsigned int yy = 0; yy < m_mapHeight; yy++) {
         for (unsigned int xx = 0; xx < m_mapWidth; xx++) {
+            Location location;
+            location.x = xx;
+            location.y = yy;
+            location.z = m_level;
             switch (getByCoordinate(xx, yy)) {
                 case WALL:
                 case CORNER:
-                    l_entity = m_engine->getEntities()->createWallPrefab (xx, yy);
-                    m_engine->getEntities()->getSprites()->get(l_entity)->sprite = WALL;
+                    l_entity = m_engine->getEntities()->createWallPrefab (location);
+                    m_engine->getComponents()->get<SpriteComponent>(l_entity)->sprite = WALL;
                     break;
                 case UP:
-                    m_engine->getEntities()->createStairPrefab (STAIR_UP, xx, yy);
-                    if (m_engine->getLevel() == 1) m_engine->getEntities()->createPlayerPrefab (xx, yy);
+                    m_engine->getEntities()->createStairPrefab (STAIR_UP, location);
+                    if (m_level == 1) m_engine->getEntities()->createPlayerPrefab (location);
                     break;
                 case DOWN:
-                    m_engine->getEntities()->createStairPrefab (STAIR_DOWN, xx, yy);
+                    m_engine->getEntities()->createStairPrefab (STAIR_DOWN, location);
                     break;
                 case ORC:
-                    m_engine->getEntities()->createEnemyPrefab (xx, yy);
-                    m_engine->getEntities()->createTilePrefab (xx, yy);
+                    m_engine->getEntities()->createEnemyPrefab (location);
+                    m_engine->getEntities()->createTilePrefab (location);
                     break;
                 case FLOOR:
-                    m_engine->getEntities()->createTilePrefab (xx, yy);
+                    m_engine->getEntities()->createTilePrefab (location);
                     break;
                 case RESTRICTED:
                     break;
                 default:
-                    l_entity = m_engine->getEntities()->createMarkerPrefab (xx, yy);
-                    m_engine->getEntities()->getSprites()->get(l_entity)->sprite = getByCoordinate (xx, yy);
+                    l_entity = m_engine->getEntities()->createMarkerPrefab (location);
+                    m_engine->getComponents()->get<SpriteComponent>(l_entity)->sprite = getByCoordinate (xx, yy);
                     break;
             }
         }
@@ -203,7 +221,7 @@ void Generator::placeOrcs()
 {
     if (m_rooms.size() < 2) return; // No point
 
-    unsigned int numOrcs = rand() % (m_rooms.size()) + m_engine->getLevel();
+    unsigned int numOrcs = rand() % (m_rooms.size()) + m_level;
     for (size_t ii = 0; ii < numOrcs; ii++) {
         unsigned int room = 0;
         while (1) {

@@ -1,16 +1,20 @@
 #include "splash_window.h"
-#include "map_window.h"
-#include "gameengine.h"
+#include "main_window.h"
+#include "game_engine.h"
 #include "graphics.h"
+
+void SplashWindow::resize() {
+    setDimensions (0, 0, getEngine()->getGraphics()->getScreenWidth(), getEngine()->getGraphics()->getScreenHeight());
+}
 
 void SplashWindow::redraw() {
 
     Color grey (GREY);
 
-    int xOffset = 12;
-    int yOffset = 20;
+    int xOffset = getWidth()/2 - 19;
+    int yOffset = getHeight()/2;
 
-    getEngine()->getGraphics()->drawString (yOffset - 3, xOffset + 15, "Welcome to");
+    getEngine()->getGraphics()->drawString (yOffset - 3, xOffset + 19 - 5, "Welcome to");
 
     int tile = 178;
 
@@ -136,8 +140,11 @@ void SplashWindow::redraw() {
     getEngine()->getGraphics()->drawTile ( yOffset +  5,  xOffset + 38, tile, grey, grey);
     getEngine()->getGraphics()->drawTile ( yOffset +  7,  xOffset + 38, tile, grey, grey);
 
-    if (!getKey(' ')) return;
-    MapWindow* l_win = new MapWindow();
+}
+
+void SplashWindow::keyDown (unsigned char key) {
+    //if (!getKey(' ')) return;
+    MainWindow* l_win = new MainWindow();
     l_win->initialise(getEngine());
 
     getEngine()->getWindows()->replaceWindow (l_win);

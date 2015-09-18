@@ -1,23 +1,34 @@
 .PHONY: all clean build run
 CC=g++
-CFLAGS=-c -g -rdynamic -Wall -Werror -I. -I/usr/include -std=c++11
+CFLAGS=-g -rdynamic -Wall -Werror -I. -I/usr/include -std=c++11
 LDFLAGS= -g -rdynamic
 LIBRARIES=-lpthread -lGL -lGLU -lglut -lc -lm -lSOIL
 SOURCES=$(wildcard *.cpp)
 OBJECTS=$(SOURCES:.cpp=.o)
-EXECUTABLE=fortress
+DEPENDENCIES=$(SOURCES:.cpp=.d)
+GCNO=$(SOURCES:.cpp=.gcno)
+GCDA=$(SOURCES:.cpp=.gcda)
+EXECUTABLE=../fortress
+BUILD=
 
 all: $(SOURCES) $(EXECUTABLE)
 
 run:
-	./fortress
-clean:
-	@rm -f $(OBJECTS) $(EXECUTABLE) ||:
+	./$(EXECUTABLE)
 
-build: $(EXECUTABLE)
+clean:
+	rm -f $(OBJECTS) $(EXECUTABLE) $(DEPENDENCIES) $(GCNO) $(GCDA) ||:
+
+build: $(EXECUTABLE) $(BUILD)
+
+$(BUILD):
+	mkdir $(BUILD) ||:
+
+-include $(DEPENDENCIES)
 
 $(EXECUTABLE): $(OBJECTS)
 	$(CC) $(LDFLAGS) $(OBJECTS) $(LIBRARIES) -o $@
 
-.cpp.o:
-	$(CC) $(CFLAGS) $< -o $@
+%.o: %.cpp
+	$(CC) -c $(CFLAGS) $< -o $(BUILD)$@
+	$(CC) -MM $(CFLAGS) $< -o $(BUILD)$*.d

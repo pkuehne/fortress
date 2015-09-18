@@ -14,6 +14,9 @@ public:
     void loseFocus();
 private:
     DescriptionComponent*   m_description;
+    std::vector<std::string>    m_lines;
+    unsigned int                m_height;
+    unsigned int                m_width;
 };
 
 #endif

@@ -9,18 +9,19 @@ static void empty (void) {
 
 }
 
-void Graphics::drawString (int y, int x, const char* string, Color fg, Color bg)
+unsigned int Graphics::drawString (int y, int x, const char* string, Color fg, Color bg)
 {
     int offset = 0;
     while (*string != '\0') {
         drawTile (y, x+offset++, static_cast<unsigned int>(*string++), fg, bg);
         //drawTile (y, x+offset++, static_cast<unsigned int>(*string++), Color (WHITE), Color (BLACK));
     }
+    return offset;
 }
 
 void Graphics::drawTile (int y, int x, unsigned int tile, Color fg, Color bg)
 {
-    long iconSize = m_config.getTag("IconSize").num;
+    long iconSize = m_config.getTag("IconSize").getNum();
     float tileWidth = 1.0/16;
     float tileHeight = 1.0/16;
     unsigned int tileCol = 0;
@@ -75,13 +76,13 @@ void Graphics::clearArea (int y, int x, int height, int width)
 
 int Graphics::getScreenHeight ()
 {
-    long iconSize = m_config.getTag("IconSize").num;
+    long iconSize = m_config.getTag("IconSize").getNum();
     return (glutGet (GLUT_WINDOW_HEIGHT)/iconSize);
 }
 
 int Graphics::getScreenWidth()
 {
-    long iconSize = m_config.getTag("IconSize").num;
+    long iconSize = m_config.getTag("IconSize").getNum();
     return (glutGet (GLUT_WINDOW_WIDTH)/iconSize);
 }
 
@@ -150,9 +151,13 @@ void Graphics::initialise (int argc, char** argv)
     glutInit (&argc, argv);
 
     m_config.readFile ("../config/graphics.cfg");
-std::cout << "Width: " << m_config.getTag("WindowWidth").num << std::endl;
+std::cout << "Width: " << m_config.getTag("WindowWidth").getNum() << std::endl;
     glutInitDisplayMode (GLUT_SINGLE | GLUT_RGBA);
-    glutInitWindowSize (m_config.getTag("WindowWidth").num, m_config.getTag("WindowHeight").num);
+    if (m_config.getTag("Fullscreen").getNum() == 1) {
+        glutInitWindowSize (glutGet (GLUT_SCREEN_WIDTH), glutGet (GLUT_SCREEN_HEIGHT));
+    } else {
+        glutInitWindowSize (m_config.getTag("WindowWidth").getNum(), m_config.getTag("WindowHeight").getNum());
+    }
     glutInitWindowPosition (100, 100);
     glutCreateWindow ("FORTRESS");
 
@@ -170,7 +175,7 @@ std::cout << "Width: " << m_config.getTag("WindowWidth").num << std::endl;
     setMouseFunc        (NULL);
     setDisplayFunc      (empty);
 
-    GLuint tex = SOIL_load_OGL_texture (m_config.getTag("Tileset").str.c_str(),
+    GLuint tex = SOIL_load_OGL_texture (m_config.getTag("Tileset").getStr().c_str(),
                                 		SOIL_LOAD_AUTO,
                                 		SOIL_CREATE_NEW_ID,
 		                                SOIL_FLAG_MIPMAPS |

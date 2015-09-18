@@ -1,9 +1,10 @@
-#include "gameengine.h"
+#include "game_engine.h"
 #include "graphics.h"
 #include "combat_system.h"
 #include "sprite_system.h"
 #include "movement_system.h"
 #include "objectives_system.h"
+#include "equipment_system.h"
 #include "npc_system.h"
 #include <cstdlib>
 #include <iostream>
@@ -51,6 +52,7 @@ int main (int argc, char** argv)
         l_engine->addSystem (new CombatSystem());
         l_engine->addSystem (new NpcSystem());
         l_engine->addSystem (new ObjectivesSystem());
+        l_engine->addSystem (new EquipmentSystem());
         l_engine->initialise();
         l_graphics->spin();
     } catch (char const * err) {

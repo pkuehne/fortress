@@ -1,10 +1,10 @@
-#ifndef __SPRITE_COMPONENT_H__
-#define __SPRITE_COMPONENT_H__
+#ifndef SPRITE_COMPONENT_H
+#define SPRITE_COMPONENT_H
 
 #include "color.h"
+#include "component_base.h"
 
-struct SpriteComponent
-{
+struct SpriteComponent : public ComponentBase {
     Color           fgColor;
     Color           bgColor;
     unsigned int    sprite;

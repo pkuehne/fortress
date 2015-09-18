@@ -1,5 +1,6 @@
 #include "window.h"
 #include "game_engine_interface.h"
+#include <iostream>
 
 void Window::initialise (GameEngineInterface* a_engine, void* args, void* retval)
 {
@@ -25,9 +26,9 @@ void Window::setDimensions (int x, int y, int width, int height)
     }
 }
 
-void Window::drawString (int y, int x, const char* text, Color fg, Color bg)
+unsigned int Window::drawString (int y, int x, const char* text, Color fg, Color bg)
 {
-    getEngine()->getGraphics()->drawString (m_yOffset+y, m_xOffset+x, text, fg, bg);
+    return getEngine()->getGraphics()->drawString (m_yOffset+y, m_xOffset+x, text, fg, bg);
 }
 
 void Window::drawTile (int y, int x, unsigned int tile, Color fg, Color bg)
@@ -35,9 +36,17 @@ void Window::drawTile (int y, int x, unsigned int tile, Color fg, Color bg)
     getEngine()->getGraphics()->drawTile (m_yOffset+y, m_xOffset+x, tile, fg, bg);
 }
 
+void Window::drawBorder (int y, int x, int height, int width) {
+    getEngine()->getGraphics()->drawBorder (m_yOffset+y, m_xOffset+x, height, width);
+}
+
+void Window::clearArea (int y, int x, int height, int width) {
+    getEngine()->getGraphics()->clearArea (m_yOffset+y, m_xOffset+x, height, width);
+}
+
 void Window::beforeRedraw()
 {
-    getEngine()->getGraphics()->clearArea (m_yOffset, m_xOffset, m_height-1, m_width-1);
+    getEngine()->getGraphics()->clearArea (m_yOffset, m_xOffset, m_height, m_width);
     getEngine()->getGraphics()->drawBorder (m_yOffset, m_xOffset, m_height-2, m_width-2);
 
     int x, y;
@@ -82,4 +91,47 @@ bool Window::getMouseButton (int button)
         return m_buttons[button];
     }
     return false;
+}
+
+void Window::drawProgress (unsigned int x, unsigned int y, unsigned int value, unsigned int max)
+{
+    float l_value = (float) value;
+    float l_max = (float) max;
+    Color l_color ((1.0f-(l_value/l_max)), l_value/l_max, 0);
+
+    for (unsigned int xx = 0; xx < value; xx++) {
+        drawTile (y, x+xx, 178, l_color, Color(BLACK));
+    }
+}
+
+
+
+unsigned int Window::wrapText (const std::string& text, std::vector<std::string>& lines, unsigned int maxWidth, unsigned int maxRows)
+{
+    size_t wordStart = 0;
+    size_t wordEnd = 0;
+    unsigned int lineNum = 0;
+    lines.resize (maxRows);
+
+    while (wordEnd != std::string::npos) {
+        wordEnd = text.find (' ', wordStart);
+        std::string word (text.substr (wordStart, wordEnd-wordStart));
+        if (lines[lineNum].length() + word.length() + 3 /*...*/ + 2 /*spaces*/ > maxWidth && lineNum + 1 >= maxRows) {
+            lines[lineNum].append ("...");
+            return lineNum;
+        }
+        if (lines[lineNum].length() + word.length() + 1 > maxWidth) {
+            if (lineNum + 1 >= maxRows) {
+                lines[lineNum].append ("...");
+                return lineNum;
+            }
+            // Start the next line
+            lineNum++;
+        }
+        lines[lineNum].append (word);
+        lines[lineNum].append (" ");
+        wordStart = wordEnd+1;
+    }
+
+    return lineNum;
 }

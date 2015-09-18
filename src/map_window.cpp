@@ -1,13 +1,18 @@
 #include "window.h"
 #include "map_window.h"
 #include "inspection_window.h"
-#include "gameengine.h"
+#include "equipment_window.h"
+#include "game_engine.h"
 #include "event.h"
+#include "sprite_component.h"
+#include "health_component.h"
+#include "droppable_component.h"
+#include "file_saver.h"
+#include "file_loader.h"
 
 void MapWindow::gainFocus ()
 {
-    std::string l_mapName ("");
-    getEngine()->loadMap(l_mapName);
+    //getEngine()->loadMap(50, 50);
 
     setTitle ("Map");
 
@@ -15,26 +20,36 @@ void MapWindow::gainFocus ()
     m_mapYOffset = 9;
     m_mapStartX = 0;
     m_mapStartY = 0;
-    m_mapWidth  = 20;
-    m_mapHeight = 25;
+    m_mapWidth  = 0;
+    m_mapHeight = 0;
+    m_sidebarWidth = 20;
+    m_sidebarXOffset = getWidth() - m_sidebarWidth;
+
+    m_action = 'm';
+    m_lastDraw = clock();
 }
 
 void MapWindow::redraw() {
+
+    //clock_t l_clock = clock() - m_lastDraw;
+    //double l_diff = static_cast<double> (l_clock/CLOCKS_PER_SEC);
+    //if (l_diff < 0.01f) return;
+
     drawSeparators();
     drawMap();
     drawMessages();
+    drawSidebar();
 }
 
 void MapWindow::resize() {
     setDimensions (0, 0, getEngine()->getGraphics()->getScreenWidth(), getEngine()->getGraphics()->getScreenHeight());
-    m_mapWidth  = getWidth() - m_mapXOffset - 1;
+    m_sidebarXOffset = getWidth() - m_sidebarWidth - 1;
+    m_mapWidth  = getWidth() - m_mapXOffset - m_sidebarWidth - 1;
     m_mapHeight = getHeight() - m_mapYOffset - 1;
 }
 
 void MapWindow::keyDown (unsigned char key) {
     Window::keyDown (key);
-
-    static char action = 'm';
 
     if (key == 'w' || key == 'a' || key == 's' || key == 'd') {
         DIRECTION l_dir = Direction::None;
@@ -45,88 +60,120 @@ void MapWindow::keyDown (unsigned char key) {
             case 'd': l_dir = Direction::East;  break;
         }
 
-        if (action == 'm') {
+        if (m_action == 'm') {
             MoveEntityEvent* l_event = new MoveEntityEvent;
             l_event->entity = getEngine()->getEntities()->getPlayer();
             l_event->direction = l_dir;
             getEngine()->raiseEvent (l_event);
         }
-        if (action == 'k') {
+        if (m_action == 'k') {
             AttackEntityEvent* l_event = new AttackEntityEvent;
             l_event->entity = getEngine()->getEntities()->getPlayer();
             l_event->direction = l_dir;
             getEngine()->raiseEvent (l_event);
         }
-        if (action == 'i') {
-
-            std::vector<EntityId> l_entities = getEngine()->getEntities()->findEntitiesToThe(l_dir, getEngine()->getEntities()->getPlayer());
+        if (m_action == 'i') {
+            EntityHolder l_entities = getEngine()->getEntities()->findEntitiesToThe(l_dir, getEngine()->getEntities()->getPlayer());
             if (l_entities.size() > 0) {
-                EntityId* l_target = new EntityId(l_entities[0]);
+                EntityId* l_target = new EntityId(*l_entities.begin());
 
                 InspectionWindow* l_win = new InspectionWindow();
                 l_win->initialise(getEngine(), l_target);
                 getEngine()->getWindows()->pushWindow (l_win);
             }
         }
-        if (action != 'i') getEngine()->swapTurn();
-        action = 'm';
+        if (m_action != 'i') getEngine()->swapTurn();
+        m_action = 'm';
     }
     if (key == 27) {
         getEngine()->quit();
     }
-    if (key == 'm') {
-        action = 'm';
-    }
-    if (key == 'k') {
-        action = 'k';
-    }
-    if (key == 'i') {
-        action = 'i';
+    if (key == 'm' ||
+        key == 'k' ||
+        key == 'i') {
+        m_action = key;
     }
     if (key == '.') {
         getEngine()->swapTurn();
     }
-    if (key == '1') {
-        std::cout << "Loading new level: " << 1 << std::endl;
-        getEngine()->setLevel (1);
+    if (key == 'p') {
+        Location l_playerLoc = getEngine()->getEntities()->getLocation(getEngine()->getEntities()->getPlayer());
+        EntityHolder l_entities = getEngine()->getEntities()->findEntitiesAt (l_playerLoc.x, l_playerLoc.y);
+        bool foundSomethingAlready = false;
+        for (EntityId l_entity : l_entities) {
+            DroppableComponent* droppable = getEngine()->getComponents()->get<DroppableComponent>(l_entity);
+            if (droppable) {
+                if (!foundSomethingAlready) {
+                    PickupEquipmentEvent* event = new PickupEquipmentEvent();
+                    event->entity = getEngine()->getEntities()->getPlayer();
+                    event->item = l_entity;
+                    getEngine()->raiseEvent (event);
+                    foundSomethingAlready = true;
+                } else {
+                    getEngine()->addMessage(INFO, "There's something else here...");
+                    break;
+                }
+            }
+        }
+        if (!foundSomethingAlready) {
+            getEngine()->addMessage(INFO, "There's nothing here...");
+        }
     }
-    if (key == '2') {
-        std::cout << "Loading new level: " << 2 << std::endl;
-        getEngine()->setLevel (2);
+    if (key == 'E') {
+        EquipmentWindow* l_win = new EquipmentWindow();
+        l_win->initialise(getEngine());
+        getEngine()->getWindows()->pushWindow (l_win);
+    }
+    if (key == 'S') {
+        FileSaver saver;
+        saver.initialise (getEngine());
+        saver.saveState();
     }
 }
 
 void MapWindow::drawSeparators() {
     getEngine()->getGraphics()->drawBorder (m_mapYOffset-1, m_mapXOffset-1, m_mapHeight, m_mapWidth);
+    getEngine()->getGraphics()->drawBorder (0, m_sidebarXOffset, getHeight()-2, m_sidebarWidth-1);
 }
 
 void MapWindow::drawMap() {
+    Location l_player = getEngine()->getEntities()->getLocation(getEngine()->getEntities()->getPlayer());
 
-    std::map<EntityId, SpriteComponent>& l_sprites = getEngine()->getEntities()->getSprites()->getAll();
-    std::map<EntityId, SpriteComponent>::iterator it = l_sprites.begin();
-    LocationComponent* l_player = getEngine()->getEntities()->getLocations()->get (getEngine()->getEntities()->getPlayer());
-    if (l_player) {
-        m_mapStartX = l_player->x - (m_mapWidth/2);
-        m_mapStartY = l_player->y - (m_mapHeight/2);
-    }
-    for (; it != l_sprites.end(); it++) {
-        SpriteComponent& l_sprite = it->second;
-        LocationComponent* l_location = getEngine()->getEntities()->getLocations()->get (it->first);
-        int x = l_location->x;
-        int y = l_location->y;
-        int xWidth = m_mapStartX + m_mapWidth;
-        int yWidth = m_mapStartY + m_mapHeight;
-        if (x >= m_mapStartX && x < xWidth &&
-            y >= m_mapStartY && y < yWidth &&
-            l_location->z == getEngine()->getLevel()) {
+    m_mapStartX = l_player.x - (m_mapWidth/2);
+    m_mapStartY = l_player.y - (m_mapHeight/2);
 
-            drawTile (  l_location->y + m_mapYOffset - m_mapStartY,
-                        l_location->x + m_mapXOffset - m_mapStartX,
-                        l_sprite.sprite,
-                        l_sprite.fgColor,
-                        l_sprite.bgColor);
+    int xWidth = m_mapStartX + m_mapWidth;
+    int yWidth = m_mapStartY + m_mapHeight;
+
+    for (int yy = m_mapStartY; yy < yWidth; yy++) {
+        for (int xx = m_mapStartX; xx < xWidth; xx++) {
+            if (!getEngine()->isValidTile (xx, yy, getEngine()->getLevel())) continue;
+            Tile& l_tile = getEngine()->getTile (xx, yy, getEngine()->getLevel());
+            for (EntityId entity : l_tile.entities) {
+                SpriteComponent* l_sprite= getEngine()->getComponents()->get<SpriteComponent> (entity);
+                if (!l_sprite) continue;
+                Color fgColor = l_sprite->fgColor;
+                if (    xx < (int)l_player.x - 3 || xx > (int)l_player.x + 3
+                    ||  yy < (int)l_player.y - 3 || yy > (int)l_player.y + 3) {
+                    fgColor.Red()   *= 0.4;
+                    fgColor.Green() *= 0.4;
+                    fgColor.Blue()  *= 0.4;
+                } else {
+                    l_tile.lastVisited = getEngine()->getTurn();
+                }
+                if (l_tile.lastVisited > 0 && l_tile.lastVisited + 200 > getEngine()->getTurn()) {
+                    drawTile (  yy + m_mapYOffset - m_mapStartY,
+                                xx + m_mapXOffset - m_mapStartX,
+                                l_sprite->sprite,
+                                fgColor,
+                                l_sprite->bgColor);
+                }
+
+            }
         }
     }
+
+    return;
 }
 
 void MapWindow::drawMessages()
@@ -143,6 +190,55 @@ void MapWindow::drawMessages()
             case GOOD: fg = Color (GREEN); break;
             case CRIT: fg = Color (BLUE); break;
         }
-        drawString (hh, 1, l_messages[ii-1].message.c_str(), fg);
+        std::vector<std::string> lines;
+        wrapText (l_messages[ii-1].message, lines, m_sidebarXOffset, 1);
+        drawString (hh, 1, lines[0].c_str(), fg);
+    }
+}
+
+void MapWindow::drawSidebar ()
+{
+    // Current health
+    drawString (2, m_sidebarXOffset+2, "Health:");
+    EntityId player = getEngine()->getEntities()->getPlayer();
+    HealthComponent* l_health = getEngine()->getComponents()->get<HealthComponent>(player);
+    if (l_health) {
+        drawProgressBar (m_sidebarXOffset+10, 2, l_health->health);
+
+    }
+
+    // Actions to take
+    drawString (getHeight()-10, m_sidebarXOffset+2, "Save Game");
+    drawString (getHeight()-10, m_sidebarXOffset+2, "S", Color (GREEN));
+
+    drawString (getHeight()-8, m_sidebarXOffset+2, "pickup Items");
+    drawString (getHeight()-8, m_sidebarXOffset+2, "p", Color (GREEN));
+
+    drawString (getHeight()-7, m_sidebarXOffset+2, "move (wasd)");
+    drawString (getHeight()-7, m_sidebarXOffset+2, "m", Color (GREEN));
+    if (m_action == 'm') drawString (getHeight()-7, m_sidebarXOffset+1, ">", Color (RED));
+
+    drawString (getHeight()-6, m_sidebarXOffset+2, "attack (wasd)");
+    drawString (getHeight()-6, m_sidebarXOffset+7, "k", Color (GREEN));
+    if (m_action == 'k') drawString (getHeight()-6, m_sidebarXOffset+1, ">", Color (RED));
+
+    drawString (getHeight()-5, m_sidebarXOffset+2, "inspect (wasd)");
+    drawString (getHeight()-5, m_sidebarXOffset+2, "i", Color (GREEN));
+    if (m_action == 'i') drawString (getHeight()-5, m_sidebarXOffset+1, ">", Color (RED));
+
+    drawString (getHeight()-4, m_sidebarXOffset+2, "skip turn (.)");
+    drawString (getHeight()-4, m_sidebarXOffset+13, ".", Color (GREEN));
+
+    drawString (getHeight()-2, m_sidebarXOffset+2, "View Equipment");
+    drawString (getHeight()-2, m_sidebarXOffset+7, "E", Color (GREEN));
+}
+
+void MapWindow::drawProgressBar (int x, int y, int value)
+{
+    float l_value = (float) value;
+    Color l_color ((1.0f-(l_value/10.0f)), l_value/10.0f, 0);
+
+    for (int xx = 0; xx < value; xx++) {
+        drawTile (y, x+xx, 178, l_color, Color(BLACK));
     }
 }

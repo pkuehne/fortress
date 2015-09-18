@@ -10,7 +10,7 @@ class GameSystemBase : public GameSystemInterface {
 public:
     GameSystemBase() : m_engine (0) { }
     virtual void initialise (GameEngineInterface* engine) { m_engine = engine; }
-    virtual GameEngineInterface* getEngineRef () { return m_engine; }
+    virtual GameEngineInterface* getEngine () { return m_engine; }
     virtual void handleEvent (const Event* event) { }
     virtual void update () { }
 

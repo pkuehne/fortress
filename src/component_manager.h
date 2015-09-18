@@ -1,42 +1,47 @@
 #ifndef __COMPONENT_MANAGER_H__
 #define __COMPONENT_MANAGER_H__
 
-#include "component_manager_interface.h"
 #include "entity.h"
+#include "component_base.h"
 #include <map>
 
-template <class T>
-class ComponentManager : public ComponentManagerInterface<T> {
+typedef std::unordered_set<ComponentBase*> ComponentHolder;
+
+class ComponentManager {
 public:
-    void add (EntityId entity, T component);
-    T* get (EntityId entity);
-    void remove (EntityId entity);
-    std::map<EntityId, T>& getAll() { return m_components; }
+    void add (EntityId entity, ComponentBase* component) {
+        m_components[entity].insert (component);
+    }
+
+    template <class T>
+    T* get (EntityId entity) {
+      for (ComponentBase* component : m_components[entity]) {
+            T* retval = dynamic_cast<T*> (component);
+            if (retval) return retval;
+        }
+        return nullptr;
+    }
+
+    template <class T>
+    void remove (EntityId entity) {
+        for (ComponentBase* component : m_components[entity]) {
+            T* found = dynamic_cast<T*> (component);
+            if (found) {
+                m_components[entity].erase (found);
+                break;
+            }
+        }
+    }
+    void removeAll (EntityId entity) {
+        m_components[entity].clear();
+    }
+
+    ComponentHolder& getAll (EntityId id) {
+        return m_components[id];
+    }
 
 private:
-    std::map<EntityId, T> m_components;
+    std::map<EntityId, ComponentHolder> m_components;
 };
-
-template <class T>
-void ComponentManager<T>::add (EntityId entity, T component)
-{
-    m_components[entity] = component;
-}
-
-template <class T>
-void ComponentManager<T>::remove (EntityId entity)
-{
-    m_components.erase (entity);
-}
-
-template <class T>
-T* ComponentManager<T>::get (EntityId entity)
-{
-    typename std::map<EntityId, T>::iterator it = m_components.find (entity);
-    if (it == m_components.end()) {
-        return 0;
-    }
-    return &(it->second);
-}
 
 #endif

@@ -20,11 +20,12 @@ public:
     virtual int getScreenHeight() = 0;
     virtual int getScreenWidth() = 0;
     virtual void updateScreenSize (int width, int height) = 0;
-    virtual void drawString (int y, int x, const char* s, Color fg = Color(WHITE), Color bg = Color(BLACK)) = 0;
+    virtual unsigned int drawString (int y, int x, const char* s, Color fg = Color(WHITE), Color bg = Color(BLACK)) = 0;
     virtual void drawTile (int y, int x, unsigned int tile, Color fg, Color bg) = 0;
     virtual void drawBorder (int y, int x, int height, int width) = 0;
     virtual void clearArea (int y, int x, int height, int width) = 0;
     virtual void calculateWindowOffsetsFromCentre (int height, int width, int& y, int& x) = 0;
+
     virtual void setKeyboardFunc (KeyboardFuncPtr func) = 0;
     virtual void setKeyboardUpFunc (KeyboardFuncPtr func) = 0;
     virtual void setDisplayFunc (DisplayFuncPtr func) = 0;

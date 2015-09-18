@@ -16,6 +16,7 @@ public:
     WindowInterface* getActive();
     void redraw ();
     void resize ();
+    void update ();
 
 private:
     GameEngineInterface*            m_engine;

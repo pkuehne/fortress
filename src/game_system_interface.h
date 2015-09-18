@@ -10,6 +10,7 @@ public:
     virtual void initialise (GameEngineInterface* engine) = 0;
     virtual void handleEvent (const Event* event) = 0;
     virtual void update () = 0;
+    virtual GameEngineInterface* getEngine() = 0;
     virtual ~GameSystemInterface() { }
 };
 

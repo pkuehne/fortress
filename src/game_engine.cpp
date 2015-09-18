@@ -1,4 +1,4 @@
-#include "gameengine.h"
+#include "game_engine.h"
 #include <string>
 
 #include "generator.h"
@@ -44,13 +44,19 @@ static void resize (int width, int height)
 GameEngine::GameEngine (GraphicsInterface* a_graphics)
 : m_tick (0)
 , m_playerTurn (true)
+, m_turn (1)
 , m_entityManager (0)
 , m_eventManager (0)
 , m_windowManager (0)
+, m_componentManager (0)
 , m_graphics (a_graphics)
 , m_generator (0)
 , m_level (0)
 , m_maxLevel (0)
+, m_currentArea (1)
+, m_mapWidth (50)
+, m_mapHeight (50)
+, m_map (0)
 {
     g_engine = this;
 }
@@ -67,15 +73,16 @@ void GameEngine::initialise ()
     m_maxLevel = 5;
 
     // Create if not exist
-    if (!m_windowManager) m_windowManager = new WindowManager();
-    if (!m_eventManager)  m_eventManager  = new EventManager();
-    if (!m_entityManager) m_entityManager = new EntityManager();
-    if (!m_generator)     m_generator     = new Generator();
+    if (!m_windowManager)       m_windowManager     = new WindowManager();
+    if (!m_eventManager)        m_eventManager      = new EventManager();
+    if (!m_entityManager)       m_entityManager     = new EntityManager();
+    if (!m_generator)           m_generator         = new Generator();
+    if (!m_componentManager)    m_componentManager  = new ComponentManager();
 
     // Initialise Managers
-    m_windowManager->initialise (this);
-    m_entityManager->initialise (this);
-    m_eventManager->initialise  (this);
+    m_windowManager->initialise     (this);
+    m_entityManager->initialise     (this);
+    m_eventManager->initialise      (this);
 
     // Initialise Map Generator
     m_generator->initialise (this);
@@ -96,17 +103,23 @@ void GameEngine::initialise ()
     addMessage (WARN, "The air smells of Orc!");
 }
 
-void GameEngine::loadMap (const std::string& mapName)
+void GameEngine::loadMap (unsigned int width, unsigned int height)
 {
-    m_generator->mapHeight() = 50;
-    m_generator->mapWidth() = 50;
-    m_generator->numberOfRooms() = 10;
+    m_mapWidth = width;
+    m_mapHeight = height;
 
-    for (unsigned int level = 1; level <= m_maxLevel; level++) {
-        m_level = level;
-        m_generator->generate();
-    }
-    m_level = 1;
+    if (m_map) delete[] m_map;
+    m_map = new Tile[m_mapWidth*m_mapHeight*m_maxLevel];
+
+    // m_generator->mapHeight() = m_mapHeight;
+    // m_generator->mapWidth() = m_mapWidth;
+    // m_generator->numberOfRooms() = 10;
+    //
+    // for (unsigned int level = 1; level <= m_maxLevel; level++) {
+    //     m_level = level;
+    //     m_generator->generate();
+    // }
+    // m_level = 1;
 }
 
 void GameEngine::tick ()
@@ -120,11 +133,8 @@ void GameEngine::tick ()
         m_systems[ii]->update();
     }
 
+    getWindows()->update();
     getWindows()->redraw();
-//    getWindows()->getActive()->beforeRedraw();
-//    getWindows()->getActive()->redraw();
-//    getWindows()->getActive()->afterRedraw();
-
     return;
 }
 
