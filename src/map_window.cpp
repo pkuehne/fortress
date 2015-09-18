@@ -190,7 +190,9 @@ void MapWindow::drawMessages()
             case GOOD: fg = Color (GREEN); break;
             case CRIT: fg = Color (BLUE); break;
         }
-        drawString (hh, 1, l_messages[ii-1].message.c_str(), fg);
+        std::vector<std::string> lines;
+        wrapText (l_messages[ii-1].message, lines, m_sidebarXOffset, 1);
+        drawString (hh, 1, lines[0].c_str(), fg);
     }
 }
 
