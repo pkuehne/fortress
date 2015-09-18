@@ -3,6 +3,7 @@
 
 #include <string>
 #include <color.h>
+#include <vector>
 
 class GameEngineInterface;
 
@@ -50,6 +51,7 @@ public:
     virtual void loseFocus() = 0;
 
     virtual void drawProgress (unsigned int x, unsigned int y, unsigned int value, unsigned int max) = 0;
+    virtual unsigned int wrapText (const std::string& text, std::vector<std::string>& lines, unsigned int maxWidth, unsigned int maxRows) = 0;
 };
 
 #endif

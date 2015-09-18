@@ -1,5 +1,6 @@
 #include "window.h"
 #include "game_engine_interface.h"
+#include <iostream>
 
 void Window::initialise (GameEngineInterface* a_engine, void* args, void* retval)
 {
@@ -101,4 +102,34 @@ void Window::drawProgress (unsigned int x, unsigned int y, unsigned int value, u
     for (unsigned int xx = 0; xx < value; xx++) {
         drawTile (y, x+xx, 178, l_color, Color(BLACK));
     }
+}
+
+
+
+unsigned int Window::wrapText (const std::string& text, std::vector<std::string>& lines, unsigned int maxWidth, unsigned int maxRows)
+{
+    size_t wordStart = 0;
+    size_t wordEnd = 0;
+    unsigned int lineNum = 0;
+    lines.resize (maxRows);
+
+    while (wordEnd != std::string::npos) {
+        wordEnd = text.find (' ', wordStart);
+        std::string word (text.substr (wordStart, wordEnd-wordStart));
+        std::cout << "Word: " << word << std::endl;
+        if (lines[lineNum].length() + word.length() + 1 > maxWidth) {
+            if (lineNum + 1 >= maxRows) {
+                lines[lineNum].append ("...");
+                return lineNum;
+            }
+            // Start the next line
+            lineNum++;
+        }
+        lines[lineNum].append (word);
+        lines[lineNum].append (" ");
+        wordStart = wordEnd+1;
+        std::cout << "Line: " << lines[lineNum] << std::endl;
+    }
+
+    return lineNum;
 }
