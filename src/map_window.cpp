@@ -206,6 +206,9 @@ void MapWindow::drawSidebar ()
     }
 
     // Actions to take
+    drawString (getHeight()-10, m_sidebarXOffset+2, "Save Game");
+    drawString (getHeight()-10, m_sidebarXOffset+2, "S", Color (GREEN));
+
     drawString (getHeight()-8, m_sidebarXOffset+2, "pickup Items");
     drawString (getHeight()-8, m_sidebarXOffset+2, "p", Color (GREEN));
 
