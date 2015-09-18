@@ -116,7 +116,10 @@ unsigned int Window::wrapText (const std::string& text, std::vector<std::string>
     while (wordEnd != std::string::npos) {
         wordEnd = text.find (' ', wordStart);
         std::string word (text.substr (wordStart, wordEnd-wordStart));
-        std::cout << "Word: " << word << std::endl;
+        if (lines[lineNum].length() + word.length() + 3 /*...*/ + 2 /*spaces*/ > maxWidth && lineNum + 1 >= maxRows) {
+            lines[lineNum].append ("...");
+            return lineNum;
+        }
         if (lines[lineNum].length() + word.length() + 1 > maxWidth) {
             if (lineNum + 1 >= maxRows) {
                 lines[lineNum].append ("...");
@@ -128,7 +131,6 @@ unsigned int Window::wrapText (const std::string& text, std::vector<std::string>
         lines[lineNum].append (word);
         lines[lineNum].append (" ");
         wordStart = wordEnd+1;
-        std::cout << "Line: " << lines[lineNum] << std::endl;
     }
 
     return lineNum;
