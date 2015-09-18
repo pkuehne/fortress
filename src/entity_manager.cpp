@@ -124,7 +124,7 @@ EntityId EntityManager::createPlayerPrefab (Location& location)
     // Description Component
     DescriptionComponent* l_description = new DescriptionComponent();
     l_description->title = "You";
-    l_description->text = "Time for introspection";
+    l_description->text = "This isn't the time for introspection";
     m_engine->getComponents()->add (l_entity, l_description);
 
     // Health Component
@@ -165,7 +165,7 @@ EntityId EntityManager::createEnemyPrefab (Location& location)
     // Description Component
     DescriptionComponent* l_description = new DescriptionComponent();
     l_description->title = "Orc";
-    l_description->text = "A vile, stinking creature";
+    l_description->text = "A vile, stinking creature revelling in the dark.";
     m_engine->getComponents()->add (l_entity, l_description);
 
     // Health Component
@@ -282,7 +282,7 @@ EntityId EntityManager::createShieldPrefab ()
 
     DescriptionComponent* l_description = new DescriptionComponent();
     l_description->title = "Shield";
-    l_description->text = "Return to your mother...";
+    l_description->text = "Return with your shield or upon it!";
     m_engine->getComponents()->add (l_entity, l_description);
 
     DroppableComponent* l_droppable = new DroppableComponent();

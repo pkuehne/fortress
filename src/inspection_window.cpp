@@ -10,17 +10,18 @@ void InspectionWindow::keyDown (unsigned char key) {
     }
 }
 
-void InspectionWindow::resize() {
-    int width = 30;
-    int height = 7;
-
-    setDimensions (0, 0, width, height);
+void InspectionWindow::resize()
+{
+    setDimensions (0, 0, m_width, m_height+5);
 }
 
 void InspectionWindow::redraw()
 {
     if (!m_description) return;
-    drawString (3,  2, m_description->text.c_str());
+    unsigned int yPos = 2;
+    for (std::string line : m_lines) {
+        drawString (yPos++,  2, line.c_str());
+    }
 }
 
 void InspectionWindow::gainFocus() {
@@ -31,6 +32,8 @@ void InspectionWindow::gainFocus() {
     if (!m_description) return;
 
     setTitle (m_description->title);
+    m_width = 30;
+    m_height = wrapText (m_description->text, m_lines, m_width, 10);
 }
 
 void InspectionWindow::loseFocus() {
