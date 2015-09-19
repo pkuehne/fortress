@@ -29,7 +29,7 @@ coverage:
 	gcovr -r src
 
 run: build
-	$(MAKE) -C src --no-print-directory run
+	./fortress
 
 doxy:
 	doxygen Doxyfile

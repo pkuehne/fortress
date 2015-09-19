@@ -29,7 +29,7 @@ void Graphics::drawTile (int y, int x, unsigned int tile, Color fg, Color bg)
     tileCol = tile % 16;
     tileRow = (tile - (tile % 16)) / 16;
 
-    y = (glutGet (GLUT_WINDOW_HEIGHT)/iconSize) - (y+1);
+    y = (m_height/iconSize) - (y+1);
 
     glColor3f (fg.Red(), fg.Green(), fg.Blue());
     glBegin(GL_QUADS);
@@ -77,13 +77,13 @@ void Graphics::clearArea (int y, int x, int height, int width)
 int Graphics::getScreenHeight ()
 {
     long iconSize = m_config.getTag("IconSize").getNum();
-    return (glutGet (GLUT_WINDOW_HEIGHT)/iconSize);
+    return (m_height/iconSize);
 }
 
 int Graphics::getScreenWidth()
 {
     long iconSize = m_config.getTag("IconSize").getNum();
-    return (glutGet (GLUT_WINDOW_WIDTH)/iconSize);
+    return (m_width/iconSize);
 }
 
 void Graphics::calculateWindowOffsetsFromCentre (int height, int width, int& y, int& x)
@@ -150,8 +150,8 @@ void Graphics::initialise (int argc, char** argv)
 {
     glutInit (&argc, argv);
 
-    m_config.readFile ("../config/graphics.cfg");
-std::cout << "Width: " << m_config.getTag("WindowWidth").getNum() << std::endl;
+    m_config.readFile ("config/graphics.cfg");
+
     glutInitDisplayMode (GLUT_SINGLE | GLUT_RGBA);
     if (m_config.getTag("Fullscreen").getNum() == 1) {
         glutInitWindowSize (glutGet (GLUT_SCREEN_WIDTH), glutGet (GLUT_SCREEN_HEIGHT));
@@ -160,6 +160,9 @@ std::cout << "Width: " << m_config.getTag("WindowWidth").getNum() << std::endl;
     }
     glutInitWindowPosition (100, 100);
     glutCreateWindow ("FORTRESS");
+
+    m_width = glutGet (GLUT_WINDOW_WIDTH);
+    m_height = glutGet (GLUT_WINDOW_HEIGHT);
 
     glPixelStorei (GL_UNPACK_ALIGNMENT, 1);
     glClearColor (0.0, 0.0, 0.0, 0.0);
@@ -175,7 +178,9 @@ std::cout << "Width: " << m_config.getTag("WindowWidth").getNum() << std::endl;
     setMouseFunc        (NULL);
     setDisplayFunc      (empty);
 
-    GLuint tex = SOIL_load_OGL_texture (m_config.getTag("Tileset").getStr().c_str(),
+    std::string tileset ("graphics/");
+    tileset.append (m_config.getTag("Tileset").getStr());
+    GLuint tex = SOIL_load_OGL_texture (tileset.c_str(),
                                 		SOIL_LOAD_AUTO,
                                 		SOIL_CREATE_NEW_ID,
 		                                SOIL_FLAG_MIPMAPS |

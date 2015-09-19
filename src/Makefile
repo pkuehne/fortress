@@ -13,9 +13,6 @@ BUILD=
 
 all: $(SOURCES) $(EXECUTABLE)
 
-run:
-	./$(EXECUTABLE)
-
 clean:
 	rm -f $(OBJECTS) $(EXECUTABLE) $(DEPENDENCIES) $(GCNO) $(GCDA) ||:
 
