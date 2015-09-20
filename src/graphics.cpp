@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <iostream>
+#include <chrono>
+#include <thread>
 #include <SOIL.h>
 
 static Graphics* g_graphics = 0;
@@ -165,11 +167,17 @@ void Graphics::setResizeFunc (ResizeFuncPtr func)
 
 void Graphics::spin ()
 {
+    double lastTime = glfwGetTime();
     while (!glfwWindowShouldClose (m_window))
     {
-        m_displayFunc();
-        glfwSwapBuffers (m_window);
+        double currTime = glfwGetTime();
+        if (currTime > lastTime + 0.03) {
+            m_displayFunc();
+            glfwSwapBuffers (m_window);
+            lastTime = currTime;
+        }
         glfwPollEvents();
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }
     std::cout << "Thank you for playing FORTRESS" << std::endl;
 }
