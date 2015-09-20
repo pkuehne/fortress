@@ -1,13 +1,14 @@
 #include "graphics.h"
 #include <stdlib.h>
 #include <string.h>
-#include <GL/glut.h>
+//#include <GL/glut.h>
 #include <iostream>
 #include <SOIL.h>
 
 static void empty (void) {
 
 }
+
 
 unsigned int Graphics::drawString (int y, int x, const char* string, Color fg, Color bg)
 {
@@ -107,33 +108,41 @@ void Graphics::updateScreenSize (int width, int height)
 
 void Graphics::setKeyboardFunc (KeyboardFuncPtr func)
 {
-    glutKeyboardFunc (func);
+    //glutKeyboardFunc (func);
 }
 
 void Graphics::setKeyboardUpFunc (KeyboardFuncPtr func)
 {
-    glutKeyboardUpFunc (func);
+    //glutKeyboardUpFunc (func);
 }
 
 void Graphics::setDisplayFunc (DisplayFuncPtr func)
 {
-    glutDisplayFunc (func);
-    glutIdleFunc    (func);
+    //glutDisplayFunc (func);
+    //glutIdleFunc    (func);
+    m_displayFunc = func;
 }
 
 void Graphics::setMouseFunc (MouseFuncPtr func)
 {
-    glutMouseFunc (func);
+    //glutMouseFunc (func);
 }
 
 void Graphics::setResizeFunc (ResizeFuncPtr func)
 {
-    glutReshapeFunc (func);
+    //glutReshapeFunc (func);
 }
 
 void Graphics::spin ()
 {
-    glutMainLoop();
+    while (!glfwWindowShouldClose (m_window))
+    {
+        m_displayFunc();
+        glfwSwapBuffers (m_window);
+        glfwPollEvents();
+    }
+    std::cout << "Thank you for playing FORTRESS" << std::endl;
+    //glutMainLoop();
 }
 
 void Graphics::beginScreenUpdate()
@@ -148,21 +157,31 @@ void Graphics::endScreenUpdate()
 
 void Graphics::initialise (int argc, char** argv)
 {
-    glutInit (&argc, argv);
+    //glutInit (&argc, argv);
+    if (!glfwInit()) return;
 
     m_config.readFile ("config/graphics.cfg");
 
-    glutInitDisplayMode (GLUT_SINGLE | GLUT_RGBA);
+    //glutInitDisplayMode (GLUT_SINGLE | GLUT_RGBA);
     if (m_config.getTag("Fullscreen").getNum() == 1) {
-        glutInitWindowSize (glutGet (GLUT_SCREEN_WIDTH), glutGet (GLUT_SCREEN_HEIGHT));
+        m_window = glfwCreateWindow(640, 480, "FORTRESS", NULL, NULL);
+        //glutInitWindowSize (glutGet (GLUT_SCREEN_WIDTH), glutGet (GLUT_SCREEN_HEIGHT));
     } else {
-        glutInitWindowSize (m_config.getTag("WindowWidth").getNum(), m_config.getTag("WindowHeight").getNum());
+        //glutInitWindowSize (m_config.getTag("WindowWidth").getNum(), m_config.getTag("WindowHeight").getNum());
     }
-    glutInitWindowPosition (100, 100);
-    glutCreateWindow ("FORTRESS");
 
-    m_width = glutGet (GLUT_WINDOW_WIDTH);
-    m_height = glutGet (GLUT_WINDOW_HEIGHT);
+    if (!m_window) {
+        glfwTerminate();
+        return;
+    }
+
+    glfwMakeContextCurrent(m_window);
+    glfwSwapInterval(1);
+    //glutInitWindowPosition (100, 100);
+    //glutCreateWindow ("FORTRESS");
+
+    //m_width = glutGet (GLUT_WINDOW_WIDTH);
+    //m_height = glutGet (GLUT_WINDOW_HEIGHT);
 
     glPixelStorei (GL_UNPACK_ALIGNMENT, 1);
     glClearColor (0.0, 0.0, 0.0, 0.0);
@@ -173,7 +192,7 @@ void Graphics::initialise (int argc, char** argv)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    glutReshapeFunc     (NULL);
+    ///glutReshapeFunc     (NULL);
     setKeyboardUpFunc   (NULL);
     setMouseFunc        (NULL);
     setDisplayFunc      (empty);

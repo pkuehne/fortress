@@ -2,7 +2,7 @@
 CC=g++
 CFLAGS=-g -rdynamic -Wall -Werror -I. -I/usr/include -std=c++11
 LDFLAGS= -g -rdynamic
-LIBRARIES=-lpthread -lGL -lGLU -lglut -lc -lm -lSOIL
+LIBRARIES=-lGL -lGLU -lglut -lglfw -lc -lm -lSOIL -lpthread 
 SOURCES=$(wildcard *.cpp)
 OBJECTS=$(SOURCES:.cpp=.o)
 DEPENDENCIES=$(SOURCES:.cpp=.d)

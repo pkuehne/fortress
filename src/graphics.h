@@ -4,6 +4,7 @@
 #include "color.h"
 #include "graphics_interface.h"
 #include "config_manager.h"
+#include <GLFW/glfw3.h>
 
 class Graphics : public GraphicsInterface {
 public:
@@ -35,6 +36,9 @@ private:
     ConfigManager   m_config;
     int             m_width;
     int             m_height;
+    GLFWwindow*     m_window;
+    DisplayFuncPtr  m_displayFunc;
+
 };
 
 void start_graphics ();
