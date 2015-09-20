@@ -30,14 +30,27 @@ void FileLoader::loadState ()
     }
     std::cout << "Done" << std::endl;
 
-    unsigned int width = m_tags[0].getNum();
-    unsigned int height = m_tags[1].getNum();
-    unsigned int depth = m_tags[2].getNum();
+    int line = 0;
+    // Width + Height + Depth
+    unsigned int width = m_tags[line++].getNum();
+    unsigned int height = m_tags[line++].getNum();
+    unsigned int depth = m_tags[line++].getNum();
     m_engine->setMaxLevel (depth);
     m_engine->loadMap (width, height);
 
+    // Current Turn
+    m_engine->setTurn (m_tags[line++].getNum());
+
+    for (unsigned int zz = 1; zz <= m_engine->getMaxLevel(); zz++) {
+        for (unsigned int yy = 0; yy < m_engine->getMapHeight(); yy++) {
+            for (unsigned int xx = 0; xx < m_engine->getMapWidth(); xx++) {
+                m_engine->getTile(xx, yy, zz).lastVisited = m_tags[line++].getNum();
+            }
+        }
+    }
+
     EntityId id = 0;
-    for (unsigned int ii = 3; ii < m_tags.size(); ii++) {
+    for (unsigned int ii = line; ii < m_tags.size(); ii++) {
         if (m_tags[ii].getName() == "ENTITY") {
             // Set up the entity
             id = m_tags[ii].getNum();
@@ -56,6 +69,7 @@ void FileLoader::loadState ()
             continue;
         }
     }
+    m_engine->setLevel (m_engine->getEntities()->getLocation(m_engine->getEntities()->getPlayer()).z);
 }
 
 

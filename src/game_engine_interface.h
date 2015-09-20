@@ -38,7 +38,7 @@ public:
     virtual bool isPlayerTurn()     = 0;
     virtual void swapTurn()         = 0;
     virtual unsigned int getTurn()  = 0;
-
+    virtual void setTurn (unsigned int) = 0;
     virtual void raiseEvent (Event* event)  = 0;
     virtual EntityManagerInterface* getEntities()    = 0;
     virtual ComponentManager* getComponents() = 0;

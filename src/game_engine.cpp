@@ -110,16 +110,6 @@ void GameEngine::loadMap (unsigned int width, unsigned int height)
 
     if (m_map) delete[] m_map;
     m_map = new Tile[m_mapWidth*m_mapHeight*m_maxLevel];
-
-    // m_generator->mapHeight() = m_mapHeight;
-    // m_generator->mapWidth() = m_mapWidth;
-    // m_generator->numberOfRooms() = 10;
-    //
-    // for (unsigned int level = 1; level <= m_maxLevel; level++) {
-    //     m_level = level;
-    //     m_generator->generate();
-    // }
-    // m_level = 1;
 }
 
 void GameEngine::tick ()

@@ -25,6 +25,7 @@ public:
     bool isPlayerTurn() { return m_playerTurn; }
     void swapTurn() { m_playerTurn = !m_playerTurn; m_turn++; }
     unsigned int getTurn() { return m_turn; }
+    void setTurn (unsigned int turn) { m_turn = turn; }
 
     void raiseEvent (Event* event) { m_eventManager->raiseEvent (event); }
     EntityManagerInterface* getEntities() { return m_entityManager; }
