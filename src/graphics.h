@@ -25,20 +25,24 @@ public:
 
     virtual void updateScreenSize (int width, int height);
 
-    virtual void setKeyboardFunc (KeyboardFuncPtr func);
-    virtual void setKeyboardUpFunc (KeyboardFuncPtr func);
+    virtual void setKeyDownFunc (KeyboardFuncPtr func);
+    virtual void setKeyUpFunc (KeyboardFuncPtr func);
     virtual void setDisplayFunc (DisplayFuncPtr func);
     virtual void setMouseFunc (MouseFuncPtr func);
     virtual void setResizeFunc (ResizeFuncPtr func);
 
+    virtual void callResizeFunc (int width, int height);
+    virtual void callKeyboardFunc (int key, int scancode, int action, int mods);
 
 private:
-    ConfigManager   m_config;
-    int             m_width;
-    int             m_height;
-    GLFWwindow*     m_window;
-    DisplayFuncPtr  m_displayFunc;
-
+    ConfigManager       m_config;
+    int                 m_width;
+    int                 m_height;
+    GLFWwindow*         m_window;
+    DisplayFuncPtr      m_displayFunc;
+    ResizeFuncPtr       m_resizeFunc;
+    KeyboardFuncPtr     m_keyDownFunc;
+    KeyboardFuncPtr     m_keyUpFunc;
 };
 
 void start_graphics ();

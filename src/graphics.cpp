@@ -1,12 +1,45 @@
 #include "graphics.h"
+#include "utility.h"
 #include <stdlib.h>
 #include <string.h>
-//#include <GL/glut.h>
 #include <iostream>
 #include <SOIL.h>
 
+static Graphics* g_graphics = 0;
+
 static void empty (void) {
 
+}
+
+void resizeWindowCallBack (GLFWwindow*, int width, int height)
+{
+    g_graphics->callResizeFunc (width, height);
+}
+
+void keyboardCallBack (GLFWwindow*, int key, int scancode, int action, int mods)
+{
+    g_graphics->callKeyboardFunc (key, scancode, action, mods);
+}
+
+void Graphics::callResizeFunc (int width, int height)
+{
+    m_width = width;
+    m_height = height;
+    if (m_resizeFunc) {
+        m_resizeFunc (width, height);
+    }
+}
+
+void Graphics::callKeyboardFunc (int key, int scancode, int action, int mods)
+{
+    if (key > 64 && key < 91 && !(mods & GLFW_MOD_SHIFT)) key += 32;
+    if (key == GLFW_KEY_ESCAPE) key = ESC;
+    if (key == GLFW_KEY_TAB) key = TAB;
+    if (action == GLFW_PRESS || action == GLFW_REPEAT) {
+        if (m_keyDownFunc) m_keyDownFunc ((unsigned char) key, 0, 0);
+    } else if (action == GLFW_RELEASE) {
+        if (m_keyUpFunc) m_keyUpFunc ((unsigned char) key, 0, 0);
+    }
 }
 
 
@@ -15,7 +48,6 @@ unsigned int Graphics::drawString (int y, int x, const char* string, Color fg, C
     int offset = 0;
     while (*string != '\0') {
         drawTile (y, x+offset++, static_cast<unsigned int>(*string++), fg, bg);
-        //drawTile (y, x+offset++, static_cast<unsigned int>(*string++), Color (WHITE), Color (BLACK));
     }
     return offset;
 }
@@ -59,11 +91,11 @@ void Graphics::drawBorder (int y, int x, int height, int width)
         drawTile (y+height+1, xx, 205, WHITE, WHITE);
     }
 
+    // Draw Verticals
     for (int yy = y+1; yy <= y+height; yy++) {
         drawTile (yy, x, 186, WHITE, WHITE);
         drawTile (yy, x+width+1, 186, WHITE, WHITE);
     }
-    // Draw Verticals
 }
 
 void Graphics::clearArea (int y, int x, int height, int width)
@@ -96,7 +128,6 @@ void Graphics::calculateWindowOffsetsFromCentre (int height, int width, int& y, 
     y = (screenHeight/2) - (height / 2);
 }
 
-
 void Graphics::updateScreenSize (int width, int height)
 {
     glViewport(0, 0, (GLsizei) width, (GLsizei) height);
@@ -106,31 +137,30 @@ void Graphics::updateScreenSize (int width, int height)
     glMatrixMode(GL_MODELVIEW);
 }
 
-void Graphics::setKeyboardFunc (KeyboardFuncPtr func)
+void Graphics::setKeyDownFunc (KeyboardFuncPtr func)
 {
-    //glutKeyboardFunc (func);
+    m_keyDownFunc = func;
 }
 
-void Graphics::setKeyboardUpFunc (KeyboardFuncPtr func)
+void Graphics::setKeyUpFunc (KeyboardFuncPtr func)
 {
-    //glutKeyboardUpFunc (func);
+    m_keyUpFunc = func;
 }
 
 void Graphics::setDisplayFunc (DisplayFuncPtr func)
 {
-    //glutDisplayFunc (func);
-    //glutIdleFunc    (func);
     m_displayFunc = func;
 }
 
 void Graphics::setMouseFunc (MouseFuncPtr func)
 {
-    //glutMouseFunc (func);
+
 }
+
 
 void Graphics::setResizeFunc (ResizeFuncPtr func)
 {
-    //glutReshapeFunc (func);
+    m_resizeFunc = func;
 }
 
 void Graphics::spin ()
@@ -142,7 +172,6 @@ void Graphics::spin ()
         glfwPollEvents();
     }
     std::cout << "Thank you for playing FORTRESS" << std::endl;
-    //glutMainLoop();
 }
 
 void Graphics::beginScreenUpdate()
@@ -157,17 +186,16 @@ void Graphics::endScreenUpdate()
 
 void Graphics::initialise (int argc, char** argv)
 {
-    //glutInit (&argc, argv);
     if (!glfwInit()) return;
+    g_graphics = this;
 
     m_config.readFile ("config/graphics.cfg");
+    m_width = 640;
+    m_height = 480;
 
-    //glutInitDisplayMode (GLUT_SINGLE | GLUT_RGBA);
     if (m_config.getTag("Fullscreen").getNum() == 1) {
-        m_window = glfwCreateWindow(640, 480, "FORTRESS", NULL, NULL);
-        //glutInitWindowSize (glutGet (GLUT_SCREEN_WIDTH), glutGet (GLUT_SCREEN_HEIGHT));
+        m_window = glfwCreateWindow(m_width, m_height, "FORTRESS", NULL, NULL);
     } else {
-        //glutInitWindowSize (m_config.getTag("WindowWidth").getNum(), m_config.getTag("WindowHeight").getNum());
     }
 
     if (!m_window) {
@@ -177,11 +205,10 @@ void Graphics::initialise (int argc, char** argv)
 
     glfwMakeContextCurrent(m_window);
     glfwSwapInterval(1);
-    //glutInitWindowPosition (100, 100);
-    //glutCreateWindow ("FORTRESS");
+    glfwSetWindowSizeCallback (m_window, resizeWindowCallBack);
+    glfwSetKeyCallback (m_window, keyboardCallBack);
 
-    //m_width = glutGet (GLUT_WINDOW_WIDTH);
-    //m_height = glutGet (GLUT_WINDOW_HEIGHT);
+    updateScreenSize (m_width, m_height);
 
     glPixelStorei (GL_UNPACK_ALIGNMENT, 1);
     glClearColor (0.0, 0.0, 0.0, 0.0);
@@ -192,9 +219,6 @@ void Graphics::initialise (int argc, char** argv)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    ///glutReshapeFunc     (NULL);
-    setKeyboardUpFunc   (NULL);
-    setMouseFunc        (NULL);
     setDisplayFunc      (empty);
 
     std::string tileset ("graphics/");
@@ -210,6 +234,4 @@ void Graphics::initialise (int argc, char** argv)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-
-    //delete pixels;
 }

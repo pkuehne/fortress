@@ -26,11 +26,15 @@ public:
     virtual void clearArea (int y, int x, int height, int width) = 0;
     virtual void calculateWindowOffsetsFromCentre (int height, int width, int& y, int& x) = 0;
 
-    virtual void setKeyboardFunc (KeyboardFuncPtr func) = 0;
-    virtual void setKeyboardUpFunc (KeyboardFuncPtr func) = 0;
+    virtual void setKeyDownFunc (KeyboardFuncPtr func) = 0;
+    virtual void setKeyUpFunc (KeyboardFuncPtr func) = 0;
     virtual void setDisplayFunc (DisplayFuncPtr func) = 0;
     virtual void setMouseFunc (MouseFuncPtr func) = 0;
     virtual void setResizeFunc (ResizeFuncPtr func) = 0;
+
+    virtual void callResizeFunc (int width, int height) = 0;
+    virtual void callKeyboardFunc (int key, int scancode, int action, int mods) = 0;
+
 private:
 
 };

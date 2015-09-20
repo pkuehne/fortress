@@ -15,6 +15,13 @@ namespace Direction {
 
 }
 
+enum {
+    TAB = 9,
+    ESC = 27,
+    MAX = 999
+};
+
+
 typedef enum {
     STAIR_UP    = 0,
     STAIR_DOWN  = 1

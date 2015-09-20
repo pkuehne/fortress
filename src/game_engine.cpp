@@ -93,8 +93,8 @@ void GameEngine::initialise ()
         m_eventManager->registerHandler (m_systems[ii]);
     }
 
-    m_graphics->setKeyboardFunc (keyDown);
-    m_graphics->setKeyboardUpFunc (keyUp);
+    m_graphics->setKeyDownFunc  (keyDown);
+    m_graphics->setKeyUpFunc    (keyUp);
     m_graphics->setDisplayFunc  (display);
     m_graphics->setMouseFunc    (mouseClick);
     m_graphics->setResizeFunc   (resize);

@@ -23,5 +23,5 @@ void GameOverWindow::resize()
 
 void GameOverWindow::keyDown (unsigned char key)
 {
-    if (key == 27) getEngine()->quit();
+    if (key == ESC) getEngine()->quit();
 }
