@@ -21,7 +21,7 @@ public:
     void initialise (void);
     void tick (void);
 
-    void quit() { exit (0); }
+    void quit() { m_graphics->terminate(); }
     bool isPlayerTurn() { return m_playerTurn; }
     void swapTurn() { m_playerTurn = !m_playerTurn; m_turn++; }
     unsigned int getTurn() { return m_turn; }
@@ -57,7 +57,7 @@ public:
 
     unsigned int getArea () { return m_currentArea; }
     void setArea (unsigned int area) { m_currentArea = area; }
-    
+
     Tile& getTile (unsigned int x, unsigned int y, unsigned int z) { return getTile (map2index (x, y, z)); }
     Tile& getTile (const Location& location) { return getTile (location.x, location.y, location.z); }
     Tile& getTile (unsigned int index) { return m_map[index]; }

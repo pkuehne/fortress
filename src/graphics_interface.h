@@ -16,6 +16,7 @@ public:
     virtual void spin() = 0;
     virtual void beginScreenUpdate() = 0;
     virtual void endScreenUpdate() = 0;
+    virtual void terminate() = 0;
 
     virtual int getScreenHeight() = 0;
     virtual int getScreenWidth() = 0;

@@ -202,9 +202,14 @@ void Graphics::initialise (int argc, char** argv)
     m_height = 480;
 
     if (m_config.getTag("Fullscreen").getNum() == 1) {
-        m_window = glfwCreateWindow(m_width, m_height, "FORTRESS", NULL, NULL);
+        const GLFWvidmode* mode = glfwGetVideoMode( glfwGetPrimaryMonitor());
+        m_width = mode->width;
+        m_height = mode->height;
     } else {
+        m_width = m_config.getTag("WindowWidth").getNum();
+        m_height = m_config.getTag("WindowHeight").getNum();
     }
+    m_window = glfwCreateWindow(m_width, m_height, "FORTRESS", NULL, NULL);
 
     if (!m_window) {
         glfwTerminate();
