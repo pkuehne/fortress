@@ -41,7 +41,7 @@ bool Generator::generate () {
     srand (seed);
 
     reset();
-    
+
     m_map = new unsigned char[m_mapHeight*m_mapWidth];
     memset (m_map, EMPTY, m_mapHeight*m_mapWidth);
 
@@ -84,7 +84,7 @@ void Generator::createEntitiesFromMap () {
                 case WALL:
                 case CORNER:
                     l_entity = m_engine->getEntities()->createWallPrefab (location);
-                    m_engine->getComponents()->get<SpriteComponent>(l_entity)->sprite = WALL;
+                    m_engine->getComponents()->get<SpriteComponent>(l_entity)->sprite = wallSprite (xx, yy);
                     break;
                 case UP:
                     m_engine->getEntities()->createStairPrefab (STAIR_UP, location);
@@ -250,6 +250,41 @@ void Generator::loadMap ()
         memcpy (m_map+(m_mapWidth*lineCnt), line, sizeof(line));
         lineCnt++;
     } while (file.gcount() > 0);
+}
+
+unsigned char Generator::wallSprite (unsigned int x, unsigned int y)
+{
+    unsigned char left   = isValidCoordinate (x-1, y) ? getByCoordinate (x-1, y) : 0;
+    unsigned char up     = isValidCoordinate (x, y-1) ? getByCoordinate (x, y-1) : 0;
+    unsigned char right  = isValidCoordinate (x+1, y) ? getByCoordinate (x+1, y) : 0;
+    unsigned char down   = isValidCoordinate (x, y+1) ? getByCoordinate (x, y+1) : 0;
+
+    int sprite_key = 0;
+    if (left == WALL || left == CORNER)     sprite_key |= 8;
+    if (up == WALL || up == CORNER)         sprite_key |= 4;
+    if (right == WALL || right == CORNER)   sprite_key |= 2;
+    if (down == WALL || down == CORNER)     sprite_key |= 1;
+
+    switch (sprite_key) {
+        case  0: return 206; break;
+        case  1: return 210; break;
+        case  2: return 198; break;
+        case  3: return 201; break;
+        case  4: return 208; break;
+        case  5: return 186; break;
+        case  6: return 200; break;
+        case  7: return 204; break;
+        case  8: return 181; break;
+        case  9: return 187; break;
+        case 10: return 205; break;
+        case 11: return 203; break;
+        case 12: return 188; break;
+        case 13: return 185; break;
+        case 14: return 202; break;
+        case 15: return 206; break;
+    }
+    std::cout << "Return default wall" << std::endl;
+    return 206;
 }
 
 unsigned int getPathCost (unsigned int index, void* customData)

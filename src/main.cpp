@@ -1,7 +1,6 @@
 #include "game_engine.h"
 #include "graphics.h"
 #include "combat_system.h"
-#include "sprite_system.h"
 #include "movement_system.h"
 #include "objectives_system.h"
 #include "equipment_system.h"

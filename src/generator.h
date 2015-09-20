@@ -41,6 +41,7 @@ private:
     void placeOrcs();
     void reset();
     void loadMap ();
+    unsigned char wallSprite (unsigned int x, unsigned int y);
 
 private:
     GameEngineInterface*    m_engine;

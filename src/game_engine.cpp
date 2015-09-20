@@ -5,9 +5,6 @@
 #include "event_manager.h"
 #include "entity_manager.h"
 #include "window_manager.h"
-#include "movement_system.h"
-#include "combat_system.h"
-#include "sprite_system.h"
 
 GameEngine* g_engine = 0;
 
