@@ -1,6 +1,6 @@
 #include "generator_window.h"
 #include "game_engine.h"
-#include "generator.h"
+#include "dungeon_generator.h"
 #include "map_window.h"
 #include <sstream>
 
@@ -21,7 +21,7 @@ void GeneratorWindow::gainFocus () {
     m_levelDepth = 5;
     m_worldSize = 129;
     m_selectedPosition = NONE;
-    m_generator = new Generator();
+    m_generator = new DungeonGenerator();
     m_generator->initialise (getEngine());
     m_generatingLevel = 0;
     m_generating = false;

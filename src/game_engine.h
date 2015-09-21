@@ -7,7 +7,6 @@
 #include "window_manager_interface.h"
 #include "game_system_interface.h"
 #include "event_manager_interface.h"
-#include "generator_interface.h"
 
 #include <string>
 #include <vector>
@@ -43,7 +42,6 @@ public:
     void setEventManager (EventManagerInterface* a_manager) { m_eventManager = a_manager; }
 
     void addSystem (GameSystemInterface* a_system) { m_systems.push_back(a_system); }
-    void setGenerator (GeneratorInterface* a_generator) { m_generator = a_generator; }
 
     void addMessage (const Message& message) { m_messages.push_back (message); }
     void addMessage (const MessageType&, const std::string& message);
@@ -88,7 +86,6 @@ private:
     std::vector<GameSystemInterface*>   m_systems;
 
     GraphicsInterface*      m_graphics;
-    GeneratorInterface*     m_generator;
 
     std::vector<Message>    m_messages;
     unsigned int            m_level;

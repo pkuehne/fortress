@@ -4,7 +4,7 @@
 #include "generator_interface.h"
 #include <vector>
 
-class Generator : public GeneratorInterface {
+class DungeonGenerator : public GeneratorInterface {
 public:
     void initialise (GameEngineInterface* a_engine) { m_engine = a_engine; }
     bool generate();

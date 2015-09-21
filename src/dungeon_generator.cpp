@@ -1,4 +1,4 @@
-#include "generator.h"
+#include "dungeon_generator.h"
 #include "game_engine.h"
 #include "algorithm.h"
 #include <ctime>
@@ -23,7 +23,7 @@ const char ORC      = 'O';
 const char UP       = '<';
 const char DOWN     = '>';
 
-void Generator::reset () {
+void DungeonGenerator::reset () {
     m_startRoom = 0;
     m_rooms.clear();
 
@@ -34,7 +34,7 @@ void Generator::reset () {
 
 }
 
-bool Generator::generate () {
+bool DungeonGenerator::generate () {
     static unsigned int offset = 0;
     unsigned int seed = time(0) + offset++;
     //srand(1439294983);
@@ -71,7 +71,7 @@ bool Generator::generate () {
     return true;
 }
 
-void Generator::createEntitiesFromMap () {
+void DungeonGenerator::createEntitiesFromMap () {
     EntityId l_entity = 0;
 
     for (unsigned int yy = 0; yy < m_mapHeight; yy++) {
@@ -111,7 +111,7 @@ void Generator::createEntitiesFromMap () {
     }
 }
 
-bool Generator::generateRoom () {
+bool DungeonGenerator::generateRoom () {
     unsigned int width  = rand() % 6 + 5;
     unsigned int height = rand() % 6 + 5;
     unsigned int left   = rand() % (m_mapWidth - width - 1) + 2;
@@ -164,7 +164,7 @@ bool Generator::generateRoom () {
     return true;
 }
 
-void Generator::connectRooms (Room& start, Room& end)
+void DungeonGenerator::connectRooms (Room& start, Room& end)
 {
     Algorithm algo;
     algo.setCustomData (this);
@@ -203,13 +203,13 @@ void Generator::connectRooms (Room& start, Room& end)
     }
 }
 
-void Generator::placeUpStair()
+void DungeonGenerator::placeUpStair()
 {
     m_startRoom = rand() % m_rooms.size();
     getByCoordinate (m_rooms[m_startRoom].midX, m_rooms[m_startRoom].midY) = UP;
 }
 
-void Generator::placeDownStair()
+void DungeonGenerator::placeDownStair()
 {
     if (m_rooms.size() < 2) return; // No point
     unsigned int room = m_startRoom;
@@ -217,7 +217,7 @@ void Generator::placeDownStair()
     getByCoordinate (m_rooms[room].midX, m_rooms[room].midY) = DOWN;
 }
 
-void Generator::placeOrcs()
+void DungeonGenerator::placeOrcs()
 {
     if (m_rooms.size() < 2) return; // No point
 
@@ -239,7 +239,7 @@ void Generator::placeOrcs()
     }
 }
 
-void Generator::loadMap ()
+void DungeonGenerator::loadMap ()
 {
     std::ifstream file ("../maps/test.map");
     char line[m_mapWidth];
@@ -252,7 +252,7 @@ void Generator::loadMap ()
     } while (file.gcount() > 0);
 }
 
-unsigned char Generator::wallSprite (unsigned int x, unsigned int y)
+unsigned char DungeonGenerator::wallSprite (unsigned int x, unsigned int y)
 {
     unsigned char left   = isValidCoordinate (x-1, y) ? getByCoordinate (x-1, y) : 0;
     unsigned char up     = isValidCoordinate (x, y-1) ? getByCoordinate (x, y-1) : 0;
@@ -289,7 +289,7 @@ unsigned char Generator::wallSprite (unsigned int x, unsigned int y)
 
 unsigned int getPathCost (unsigned int index, void* customData)
 {
-    Generator* l_gen = static_cast<Generator*> (customData);
+    DungeonGenerator* l_gen = static_cast<DungeonGenerator*> (customData);
     unsigned char point = l_gen->getByIndex(index);
     unsigned int cost = 0;
     switch (point) {
@@ -317,7 +317,7 @@ unsigned int getPathCost (unsigned int index, void* customData)
 
 unsigned int findNeighbours4 (unsigned int index, unsigned int* neighbours, void* customData)
 {
-    Generator* l_gen = static_cast<Generator*> (customData);
+    DungeonGenerator* l_gen = static_cast<DungeonGenerator*> (customData);
     unsigned int indexX, indexY;
     l_gen->IndexToCoord (index, indexX, indexY);
 
@@ -338,7 +338,7 @@ unsigned int findNeighbours4 (unsigned int index, unsigned int* neighbours, void
 
 unsigned int findNeighbours8 (unsigned int index, unsigned int* neighbours, void* customData)
 {
-    Generator* l_gen = static_cast<Generator*> (customData);
+    DungeonGenerator* l_gen = static_cast<DungeonGenerator*> (customData);
     unsigned int indexX, indexY;
     l_gen->IndexToCoord (index, indexX, indexY);
 
@@ -368,7 +368,7 @@ unsigned int findNeighbours8 (unsigned int index, unsigned int* neighbours, void
 
 unsigned int getDistance (unsigned int start, unsigned int end, void* customData)
 {
-    Generator* l_gen = static_cast<Generator*> (customData);
+    DungeonGenerator* l_gen = static_cast<DungeonGenerator*> (customData);
     unsigned int startX, startY;
     unsigned int endX, endY;
     unsigned int distance = 0;

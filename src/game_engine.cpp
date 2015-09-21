@@ -1,10 +1,8 @@
 #include "game_engine.h"
-#include <string>
-
-#include "generator.h"
 #include "event_manager.h"
 #include "entity_manager.h"
 #include "window_manager.h"
+#include <string>
 
 GameEngine* g_engine = 0;
 
@@ -47,7 +45,6 @@ GameEngine::GameEngine (GraphicsInterface* a_graphics)
 , m_windowManager (0)
 , m_componentManager (0)
 , m_graphics (a_graphics)
-, m_generator (0)
 , m_level (0)
 , m_maxLevel (0)
 , m_currentArea (1)
@@ -73,16 +70,12 @@ void GameEngine::initialise ()
     if (!m_windowManager)       m_windowManager     = new WindowManager();
     if (!m_eventManager)        m_eventManager      = new EventManager();
     if (!m_entityManager)       m_entityManager     = new EntityManager();
-    if (!m_generator)           m_generator         = new Generator();
     if (!m_componentManager)    m_componentManager  = new ComponentManager();
 
     // Initialise Managers
     m_windowManager->initialise     (this);
     m_entityManager->initialise     (this);
     m_eventManager->initialise      (this);
-
-    // Initialise Map Generator
-    m_generator->initialise (this);
 
     // Initialise Systems
     for (unsigned int ii = 0; ii < m_systems.size(); ii++) {
