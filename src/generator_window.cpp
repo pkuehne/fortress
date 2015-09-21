@@ -17,8 +17,8 @@ void GeneratorWindow::gainFocus () {
     setTitle (" Create New World ");
     m_levelWidth = 50;
     m_levelHeight = 50;
-    m_levelRooms = 10;
     m_levelDepth = 5;
+    m_levelRooms = 10;
     m_worldSize = 129;
     m_selectedPosition = NONE;
     m_generator = new DungeonGenerator();
@@ -132,9 +132,8 @@ void GeneratorWindow::keyDown (unsigned char key) {
 void GeneratorWindow::startGenerating () {
     m_generatingLevel = 1;
     m_generating = true;
-    getEngine()->loadMap (m_levelWidth, m_levelHeight);
+    getEngine()->getMap()->resetMap (m_levelWidth, m_levelHeight, m_levelDepth);
     getEngine()->setLevel (1);
-    getEngine()->setMaxLevel (m_levelDepth);
 }
 
 void GeneratorWindow::generateLevel () {

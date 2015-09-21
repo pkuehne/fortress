@@ -35,16 +35,16 @@ void FileLoader::loadState ()
     unsigned int width = m_tags[line++].getNum();
     unsigned int height = m_tags[line++].getNum();
     unsigned int depth = m_tags[line++].getNum();
-    m_engine->setMaxLevel (depth);
-    m_engine->loadMap (width, height);
+    //m_engine->setMapDepth (depth);
+    m_engine->getMap()->resetMap (width, height, depth);
 
     // Current Turn
     m_engine->setTurn (m_tags[line++].getNum());
 
-    for (unsigned int zz = 1; zz <= m_engine->getMaxLevel(); zz++) {
-        for (unsigned int yy = 0; yy < m_engine->getMapHeight(); yy++) {
-            for (unsigned int xx = 0; xx < m_engine->getMapWidth(); xx++) {
-                m_engine->getTile(xx, yy, zz).lastVisited = m_tags[line++].getNum();
+    for (unsigned int zz = 1; zz <= m_engine->getMap()->getMapDepth(); zz++) {
+        for (unsigned int yy = 0; yy < m_engine->getMap()->getMapHeight(); yy++) {
+            for (unsigned int xx = 0; xx < m_engine->getMap()->getMapWidth(); xx++) {
+                m_engine->getMap()->getTile(xx, yy, zz).lastVisited = m_tags[line++].getNum();
             }
         }
     }

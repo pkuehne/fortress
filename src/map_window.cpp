@@ -147,8 +147,8 @@ void MapWindow::drawMap() {
 
     for (int yy = m_mapStartY; yy < yWidth; yy++) {
         for (int xx = m_mapStartX; xx < xWidth; xx++) {
-            if (!getEngine()->isValidTile (xx, yy, getEngine()->getLevel())) continue;
-            Tile& l_tile = getEngine()->getTile (xx, yy, getEngine()->getLevel());
+            if (!getEngine()->getMap()->isValidTile (xx, yy, getEngine()->getLevel())) continue;
+            Tile& l_tile = getEngine()->getMap()->getTile (xx, yy, getEngine()->getLevel());
             for (EntityId entity : l_tile.entities) {
                 SpriteComponent* l_sprite= getEngine()->getComponents()->get<SpriteComponent> (entity);
                 if (!l_sprite) continue;

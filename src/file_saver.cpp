@@ -19,15 +19,15 @@ void FileSaver::saveState ()
     std::cout << "Saving...";
 
     //Start with the header
-    m_file << "[MAP_WIDTH:" << m_engine->getMapWidth() << "]" << std::endl;
-    m_file << "[MAP_HEIGHT:" << m_engine->getMapHeight() << "]" << std::endl;
-    m_file << "[MAP_DEPTH:" << m_engine->getMaxLevel() << "]" << std::endl;
+    m_file << "[MAP_WIDTH:" << m_engine->getMap()->getMapWidth() << "]" << std::endl;
+    m_file << "[MAP_HEIGHT:" << m_engine->getMap()->getMapHeight() << "]" << std::endl;
+    m_file << "[MAP_DEPTH:" << m_engine->getMap()->getMapDepth() << "]" << std::endl;
     m_file << "[TURN:" << m_engine->getTurn() << "]" << std::endl;
 
-    for (unsigned int zz = 1; zz <= m_engine->getMaxLevel(); zz++) {
-        for (unsigned int yy = 0; yy < m_engine->getMapHeight(); yy++) {
-            for (unsigned int xx = 0; xx < m_engine->getMapWidth(); xx++) {
-                m_file << "[TILE_VISITED:" << m_engine->getTile(xx, yy, zz).lastVisited << "]" << std::endl;
+    for (unsigned int zz = 1; zz <= m_engine->getMap()->getMapDepth(); zz++) {
+        for (unsigned int yy = 0; yy < m_engine->getMap()->getMapHeight(); yy++) {
+            for (unsigned int xx = 0; xx < m_engine->getMap()->getMapWidth(); xx++) {
+                m_file << "[TILE_VISITED:" << m_engine->getMap()->getTile(xx, yy, zz).lastVisited << "]" << std::endl;
             }
         }
     }

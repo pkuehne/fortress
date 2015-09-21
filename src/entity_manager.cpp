@@ -34,9 +34,9 @@ void EntityManager::addEntity (EntityId id, Location& location) {
     location.z = (location.z == 0) ? m_engine->getLevel() : location.z;
 
     m_locations[id] = location;
-    m_engine->getTile (location).entities.insert (id);
+    m_engine->getMap()->getTile (location).entities.insert (id);
 
-    m_entities[m_engine->getArea()].insert (id);
+    m_entities[m_engine->getMap()->getArea()].insert (id);
 
     AddEntityEvent* l_event = new AddEntityEvent;
     l_event->entity = id;
@@ -45,9 +45,9 @@ void EntityManager::addEntity (EntityId id, Location& location) {
 
 void EntityManager::destroyEntity (EntityId id) {
     m_engine->getComponents()->removeAll(id);
-    m_engine->getTile(m_locations[id]).entities.erase (id);
+    m_engine->getMap()->getTile(m_locations[id]).entities.erase (id);
 
-    m_entities[m_engine->getArea()].erase (id);
+    m_entities[m_engine->getMap()->getArea()].erase (id);
 
     // Raise event for removal
     RemoveEntityEvent* l_event = new RemoveEntityEvent();
@@ -57,15 +57,15 @@ void EntityManager::destroyEntity (EntityId id) {
 
 void EntityManager::setLocation (EntityId entity, Location& location)
 {
-    m_engine->getTile (m_locations[entity]).entities.erase (entity);
+    m_engine->getMap()->getTile (m_locations[entity]).entities.erase (entity);
     m_locations[entity] = location;
-    m_engine->getTile (m_locations[entity]).entities.insert (entity);
+    m_engine->getMap()->getTile (m_locations[entity]).entities.insert (entity);
 }
 
 EntityId EntityManager::getPlayer ()
 {
     if (m_player == 0) {
-        for (EntityId entity : m_entities[m_engine->getArea()]) {
+        for (EntityId entity : m_entities[m_engine->getMap()->getArea()]) {
             if (m_engine->getComponents()->get<PlayerComponent>(entity)) {
                 m_player = entity;
             }
@@ -78,7 +78,7 @@ EntityHolder& EntityManager::get (unsigned int area)
 {
     unsigned int l_area = area;
     if (!l_area) {
-        l_area = m_engine->getArea();
+        l_area = m_engine->getMap()->getArea();
     }
     return m_entities[l_area];
 }
@@ -327,7 +327,7 @@ EntityHolder EntityManager::findEntitiesNear (unsigned int x, unsigned int y, un
 
     for (int yy = starty; yy <= endy; yy++) {
         for (int xx = startx; xx <= endx; xx++) {
-            for (EntityId id : m_engine->getTile (xx, yy, m_engine->getLevel()).entities) {
+            for (EntityId id : m_engine->getMap()->getTile (xx, yy, m_engine->getLevel()).entities) {
                 l_entities.insert (id);
             }
         }

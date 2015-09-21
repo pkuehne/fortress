@@ -2,6 +2,7 @@
 #include "event_manager.h"
 #include "entity_manager.h"
 #include "window_manager.h"
+#include "map_manager.h"
 #include <string>
 
 GameEngine* g_engine = 0;
@@ -44,13 +45,9 @@ GameEngine::GameEngine (GraphicsInterface* a_graphics)
 , m_eventManager (0)
 , m_windowManager (0)
 , m_componentManager (0)
+, m_mapManager (0)
 , m_graphics (a_graphics)
 , m_level (0)
-, m_maxLevel (0)
-, m_currentArea (1)
-, m_mapWidth (50)
-, m_mapHeight (50)
-, m_map (0)
 {
     g_engine = this;
 }
@@ -64,13 +61,13 @@ void GameEngine::initialise ()
 {
     // Start us off on level 1
     m_level = 1;
-    m_maxLevel = 5;
 
     // Create if not exist
     if (!m_windowManager)       m_windowManager     = new WindowManager();
     if (!m_eventManager)        m_eventManager      = new EventManager();
     if (!m_entityManager)       m_entityManager     = new EntityManager();
     if (!m_componentManager)    m_componentManager  = new ComponentManager();
+    if (!m_mapManager)          m_mapManager        = new MapManager();
 
     // Initialise Managers
     m_windowManager->initialise     (this);
@@ -91,15 +88,6 @@ void GameEngine::initialise ()
 
     addMessage (INFO, "You awake in a strange room.");
     addMessage (WARN, "The air smells of Orc!");
-}
-
-void GameEngine::loadMap (unsigned int width, unsigned int height)
-{
-    m_mapWidth = width;
-    m_mapHeight = height;
-
-    if (m_map) delete[] m_map;
-    m_map = new Tile[m_mapWidth*m_mapHeight*m_maxLevel];
 }
 
 void GameEngine::tick ()

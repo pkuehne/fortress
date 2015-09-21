@@ -19,7 +19,7 @@ void ObjectivesSystem::handleEvent (const Event* event)
             const ChangeLevelEvent* l_event = dynamic_cast<const ChangeLevelEvent*> (event);
             unsigned int level = l_event->level;
 
-            if (level > m_engine->getMaxLevel()) {
+            if (level > m_engine->getMap()->getMapDepth()) {
                 GameOverWindow* l_win = new GameOverWindow();
                 l_win->initialise (m_engine, m_engine);
                 m_engine->getWindows()->pushWindow (l_win);

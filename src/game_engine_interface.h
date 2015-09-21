@@ -6,7 +6,7 @@
 #include "entity_manager_interface.h"
 #include "component_manager.h"
 #include "graphics_interface.h"
-#include "tile.h"
+#include "map_manager_interface.h"
 
 //class WindowManager;
 class Event;
@@ -42,8 +42,7 @@ public:
     virtual void raiseEvent (Event* event)  = 0;
     virtual EntityManagerInterface* getEntities()    = 0;
     virtual ComponentManager* getComponents() = 0;
-
-    virtual void loadMap (unsigned int width, unsigned int height) = 0;
+    virtual MapManagerInterface* getMap() = 0;
 
     virtual unsigned long long getTick()    = 0;
     virtual WindowManagerInterface* getWindows()     = 0;
@@ -58,25 +57,6 @@ public:
 
     virtual void setLevel (unsigned int level) = 0;
     virtual unsigned int getLevel () = 0;
-
-    virtual void setMaxLevel (unsigned int level) = 0;
-    virtual unsigned int getMaxLevel () = 0;
-
-    virtual unsigned int getArea () = 0;
-    virtual void setArea (unsigned int area) = 0;
-
-    virtual Tile& getTile (unsigned int x, unsigned int y, unsigned int z) = 0;
-    virtual Tile& getTile (const Location& location) = 0;
-    virtual Tile& getTile (unsigned int index) = 0;
-
-    virtual int map2index (unsigned int x, unsigned int y, unsigned int z) = 0;
-    virtual void index2map (unsigned int index, unsigned int& x, unsigned int& y, unsigned int& z) = 0;
-    virtual bool isValidTile (unsigned int x, unsigned int y, unsigned int z) = 0;
-    virtual bool isValidTile (unsigned int index) = 0;
-
-    virtual unsigned int getMapHeight() = 0;
-    virtual unsigned int getMapWidth() = 0;
-
 };
 
 #endif

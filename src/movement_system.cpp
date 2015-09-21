@@ -26,7 +26,7 @@ void MovementSystem::handleEvent (const Event* event)
 
             //Check if we're running into a collidable or stairs, etc
             {
-                EntityHolder& l_targets = m_engine->getTile(l_newLocation).entities;
+                EntityHolder& l_targets = m_engine->getMap()->getTile(l_newLocation).entities;
                 for (EntityId l_target : l_targets) {
                     if (m_engine->getComponents()->get<ColliderComponent> (l_target)) {
                         return; // Don't update position if it's a collidable
@@ -57,7 +57,7 @@ void MovementSystem::handleEvent (const Event* event)
             unsigned int level = l_event->level;
             if (level == m_engine->getLevel()) break; //Weird, but OK
 
-            if (level < 1 || level > m_engine->getMaxLevel()) break;
+            if (level < 1 || level > m_engine->getMap()->getMapDepth()) break;
 
             STAIR dir = l_event->direction == STAIR_UP ? STAIR_DOWN : STAIR_UP;
             for (EntityId entity = 0; entity < getEngine()->getEntities()->getMaxId(); entity++) {

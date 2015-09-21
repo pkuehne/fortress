@@ -1,0 +1,31 @@
+#ifndef MAP_MANAGER_INTERFACE_H
+#define MAP_MANAGER_INTERFACE_H
+
+#include "tile.h"
+#include "utility.h"
+
+class MapManagerInterface {
+public:
+    virtual ~MapManagerInterface() { }
+
+    virtual Tile& getTile (unsigned int x, unsigned int y, unsigned int z) = 0;
+    virtual Tile& getTile (const Location& location) = 0;
+    virtual Tile& getTile (unsigned int index) = 0;
+
+    virtual int map2index (unsigned int x, unsigned int y, unsigned int z) = 0;
+    virtual void index2map (unsigned int index, unsigned int& x, unsigned int& y, unsigned int& z) = 0;
+    virtual bool isValidTile (unsigned int x, unsigned int y, unsigned int z) = 0;
+    virtual bool isValidTile (unsigned int index) = 0;
+
+    virtual unsigned int getMapHeight() = 0;
+    virtual unsigned int getMapWidth() = 0;
+    virtual unsigned int getMapDepth() = 0;
+
+    virtual void resetMap (unsigned int width, unsigned int height, unsigned int depth) = 0;
+
+    virtual unsigned int getArea () = 0;
+    virtual void setArea (unsigned int area) = 0;
+
+};
+
+#endif
