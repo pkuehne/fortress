@@ -9,6 +9,7 @@
 #include "droppable_component.h"
 #include "file_saver.h"
 #include "file_loader.h"
+#include "fov_algorithm.h"
 
 void MapWindow::gainFocus ()
 {
@@ -152,15 +153,18 @@ void MapWindow::drawMap() {
             for (EntityId entity : l_tile.entities) {
                 SpriteComponent* l_sprite= getEngine()->getComponents()->get<SpriteComponent> (entity);
                 if (!l_sprite) continue;
+
+                FovAlgorithm l_algo;
+                l_algo.initialise (getEngine());
+                l_algo.calculateFov();
+
                 Color fgColor = l_sprite->fgColor;
-                if (    xx < (int)l_player.x - 3 || xx > (int)l_player.x + 3
-                    ||  yy < (int)l_player.y - 3 || yy > (int)l_player.y + 3) {
+                if (l_tile.lastVisited < getEngine()->getTurn()) {
                     fgColor.Red()   *= 0.4;
                     fgColor.Green() *= 0.4;
                     fgColor.Blue()  *= 0.4;
-                } else {
-                    l_tile.lastVisited = getEngine()->getTurn();
                 }
+
                 if (l_tile.lastVisited > 0 && l_tile.lastVisited + 200 > getEngine()->getTurn()) {
                     drawTile (  yy + m_mapYOffset - m_mapStartY,
                                 xx + m_mapXOffset - m_mapStartX,
