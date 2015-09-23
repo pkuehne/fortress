@@ -61,8 +61,9 @@ public:
 class AttackEntityEvent : public Event {
 public:
     AttackEntityEvent () : Event (EVENT_ATTACK_ENTITY) { }
-    EntityId        entity;
-    DIRECTION       direction;
+    EntityId    attacker;
+    EntityId    defender;
+    EntityId    weapon;
 };
 
 class ChangeLevelEvent : public Event {

@@ -9,9 +9,8 @@ public:
     virtual void handleEvent (const Event* event);
     virtual void update ();
 private:
-    DIRECTION getRandomDirection ();
-    DIRECTION getPlayerDirectionIfNearby (EntityId entity);
-    DIRECTION getPlayerDirectionIfAttackable (EntityId entity);
+    Location getRandomDirection (const Location& oldLocation);
+    Location getPlayerDirectionIfNearby (const Location& oldLocation);
 
     bool canAttackPlayer(const Location& location);
 };

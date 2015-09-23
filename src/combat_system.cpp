@@ -12,23 +12,22 @@ void CombatSystem::handleEvent (const Event* event)
     switch (event->getType()) {
         case EVENT_ATTACK_ENTITY: {
             const AttackEntityEvent* l_event = dynamic_cast<const AttackEntityEvent*> (event);
-            EntityId attacker = l_event->entity;
+            EntityId attacker = l_event->attacker;
+            EntityId defender = l_event->defender;
+
             EquipmentComponent* l_attackerEquipment = m_engine->getComponents()->get<EquipmentComponent>(attacker);
             int damage = 1;
             if (l_attackerEquipment && l_attackerEquipment->rightHandWieldable != 0) {
                 EntityId l_weapon = l_attackerEquipment->rightHandWieldable;
                 damage = m_engine->getComponents()->get<WieldableComponent>(l_weapon)->baseDamage;
             }
-            EntityHolder l_targets = m_engine->getEntities()->findEntitiesToThe (l_event->direction, l_event->entity);
-            for (EntityId l_target : l_targets) {
-                HealthComponent* l_health = m_engine->getComponents()->get<HealthComponent>(l_target);
-                if (l_health) {
-                    l_health->health -= damage;
-                    updateLog (attacker, l_target, damage);
-                    if (l_health->health < 1) {
-                        m_engine->getEntities()->destroyEntity (l_target);
-                    }
-                    break;
+
+            HealthComponent* l_health = m_engine->getComponents()->get<HealthComponent>(defender);
+            if (l_health) {
+                l_health->health -= damage;
+                updateLog (attacker, defender, damage);
+                if (l_health->health < 1) {
+                    m_engine->getEntities()->destroyEntity (defender);
                 }
             }
         } break;

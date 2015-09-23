@@ -17,38 +17,44 @@ void NpcSystem::update ()
         if (l_npc == 0) continue;
         if (l_loc.z != getEngine()->getLevel()) continue;
 
-        DIRECTION dir = Direction::None;
         // Check if player is attackable
-        dir = getPlayerDirectionIfAttackable (l_entity);
-        if (dir != Direction::None) {
+        if (canAttackPlayer (l_loc)) {
             AttackEntityEvent* l_event = new AttackEntityEvent;
-            l_event->entity = l_entity;
-            l_event->direction = dir;
+            l_event->attacker = l_entity;
+            l_event->defender = getEngine()->getEntities()->getPlayer();;
             getEngine()->raiseEvent (l_event);
         }
 
         // Check if player is nearby
-        dir = getPlayerDirectionIfNearby (l_entity);
-        if (dir == Direction::None) {
-            dir = getRandomDirection();
+        Location newLoc = getPlayerDirectionIfNearby (l_loc);
+        if (newLoc == l_loc) {
+            newLoc = getRandomDirection(l_loc);
         }
         MoveEntityEvent* l_event = new MoveEntityEvent();
         l_event->entity = l_entity;
-        l_event->newLocation = l_loc;
+        l_event->newLocation = newLoc;
         getEngine()->raiseEvent (l_event);
     }
     getEngine()->swapTurn();
 }
 
-DIRECTION NpcSystem::getRandomDirection () {
-    return rand () % Direction::NorthEast;
+Location NpcSystem::getRandomDirection (const Location& oldLocation) {
+    DIRECTION dir = rand () % Direction::NorthEast;
+    Location newLocation = oldLocation;
+    switch (dir) {
+        case Direction::North: newLocation.y--; break;
+        case Direction::West: newLocation.x--;  break;
+        case Direction::South: newLocation.y++; break;
+        case Direction::East: newLocation.x++;  break;
+    }
+    return newLocation;
 }
 
-DIRECTION NpcSystem::getPlayerDirectionIfNearby (EntityId enemy)
+Location NpcSystem::getPlayerDirectionIfNearby (const Location& enemyLoc)
 {
     EntityId player = getEngine()->getEntities()->getPlayer();
     Location playerLoc = getEngine()->getEntities()->getLocation(player);
-    Location enemyLoc = getEngine()->getEntities()->getLocation(enemy);
+    Location newLoc = enemyLoc;
 
     int xDiff = playerLoc.x - enemyLoc.x;
     int yDiff = playerLoc.y - enemyLoc.y;
@@ -57,44 +63,23 @@ DIRECTION NpcSystem::getPlayerDirectionIfNearby (EntityId enemy)
         (enemyLoc.z == getEngine()->getLevel())) {
         if (abs(xDiff) > abs(yDiff)) {
             // Move horizontally first
-            if (xDiff > 0) return Direction::East;
-            return Direction::West;
+            if (xDiff > 0) {
+                newLoc.x++;
+            } else {
+                newLoc.x--;
+            }
         } else {
             // Move vertically first
-            if (yDiff > 0) return Direction::South;
-            return Direction::North;
+            if (yDiff > 0) {
+                newLoc.y++;
+            } else {
+                newLoc.y--;
+            }
         }
+        return newLoc;
     }
 
-    return Direction::None;
-}
-
-DIRECTION NpcSystem::getPlayerDirectionIfAttackable (EntityId entity) {
-
-    EntityHolder l_entities;
-    EntityId player = getEngine()->getEntities()->getPlayer();
-
-    l_entities = getEngine()->getEntities()->findEntitiesToThe (Direction::North, entity);
-    for (EntityId entity : l_entities) {
-        if (entity == player) return Direction::North;
-    }
-
-    l_entities = getEngine()->getEntities()->findEntitiesToThe (Direction::East, entity);
-    for (EntityId entity : l_entities) {
-            if (entity == player) return Direction::East;
-    }
-
-    l_entities = getEngine()->getEntities()->findEntitiesToThe (Direction::South, entity);
-    for (EntityId entity : l_entities) {
-            if (entity == player) return Direction::South;
-    }
-
-    l_entities = getEngine()->getEntities()->findEntitiesToThe (Direction::West, entity);
-    for (EntityId entity : l_entities) {
-            if (entity == player) return Direction::West;
-    }
-
-    return Direction::None;
+    return enemyLoc;
 }
 
 bool NpcSystem::canAttackPlayer (const Location& location)
@@ -104,7 +89,11 @@ bool NpcSystem::canAttackPlayer (const Location& location)
 
     l_entities = getEngine()->getMap()->findEntitiesNear (location, 1);
     for (EntityId entity : l_entities) {
-        if (entity == player) return true;
+        if (entity == player) {
+            Location oLoc = getEngine()->getEntities()->getLocation (entity);
+            if (location.x != oLoc.x && location.y != oLoc.y) continue;
+            return true;
+        }
     }
     return false;
 }

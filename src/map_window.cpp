@@ -7,6 +7,7 @@
 #include "sprite_component.h"
 #include "health_component.h"
 #include "droppable_component.h"
+#include "npc_component.h"
 #include "file_saver.h"
 #include "file_loader.h"
 #include "fov_algorithm.h"
@@ -71,11 +72,15 @@ void MapWindow::keyDown (unsigned char key)
             getEngine()->raiseEvent (l_event);
         }
         if (m_action == 'k') {
-            DIRECTION dir = Direction::None;
-            AttackEntityEvent* l_event = new AttackEntityEvent;
-            l_event->entity = playerId;
-            l_event->direction = dir;
-            getEngine()->raiseEvent (l_event);
+            EntityHolder l_entities = getEngine()->getMap()->findEntitiesAt(newLocation);
+            for (EntityId entity : l_entities) {
+                if (getEngine()->getComponents()->get<NpcComponent>(entity)) {
+                    AttackEntityEvent* l_event = new AttackEntityEvent;
+                    l_event->attacker = playerId;
+                    l_event->defender = entity;
+                    getEngine()->raiseEvent (l_event);
+                }
+            }
         }
         if (m_action == 'i') {
             EntityHolder l_entities = getEngine()->getMap()->findEntitiesAt(newLocation);

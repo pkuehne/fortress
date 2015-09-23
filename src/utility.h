@@ -32,6 +32,7 @@ struct Location {
     unsigned int y;
     unsigned int z;
     Location():x(0),y(0),z(0) {}
+    bool operator== (const Location& rhs) { return (rhs.x == x && rhs.y == y && rhs.z == z); }
 };
 
 namespace Utility {
