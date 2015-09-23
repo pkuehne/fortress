@@ -7,7 +7,7 @@ class Shadow {
 public:
     Shadow (double s, double e) : start(s), end(e) { }
     bool contains (const Shadow& other) const;
-private:
+public:
     double start;
     double end;
 };
@@ -15,7 +15,8 @@ private:
 class ShadowLine {
 public:
     bool isInShadow (const Shadow& projection);
-    void addShadow (Shadow shadow) { m_shadows.push_back (shadow); }
+    bool isInFullShadow ();
+    void addShadow (Shadow shadow);
 private:
     std::vector<Shadow> m_shadows;
 };

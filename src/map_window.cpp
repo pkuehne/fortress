@@ -28,6 +28,10 @@ void MapWindow::gainFocus ()
 
     m_action = 'm';
     m_lastDraw = clock();
+
+    FovAlgorithm l_algo;
+    l_algo.initialise (getEngine());
+    l_algo.calculateFov();
 }
 
 void MapWindow::redraw() {
@@ -153,10 +157,6 @@ void MapWindow::drawMap() {
             for (EntityId entity : l_tile.entities) {
                 SpriteComponent* l_sprite= getEngine()->getComponents()->get<SpriteComponent> (entity);
                 if (!l_sprite) continue;
-
-                FovAlgorithm l_algo;
-                l_algo.initialise (getEngine());
-                l_algo.calculateFov();
 
                 Color fgColor = l_sprite->fgColor;
                 if (l_tile.lastVisited < getEngine()->getTurn()) {

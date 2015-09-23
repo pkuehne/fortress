@@ -23,7 +23,7 @@ public:
 
     void quit() { m_graphics->terminate(); }
     bool isPlayerTurn() { return m_playerTurn; }
-    void swapTurn() { m_playerTurn = !m_playerTurn; m_turn++; }
+    void swapTurn();
     unsigned int getTurn() { return m_turn; }
     void setTurn (unsigned int turn) { m_turn = turn; }
 

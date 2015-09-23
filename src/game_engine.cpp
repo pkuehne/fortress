@@ -3,6 +3,7 @@
 #include "entity_manager.h"
 #include "window_manager.h"
 #include "map_manager.h"
+#include "fov_algorithm.h"
 #include <string>
 
 GameEngine* g_engine = 0;
@@ -88,6 +89,8 @@ void GameEngine::initialise ()
 
     addMessage (INFO, "You awake in a strange room.");
     addMessage (WARN, "The air smells of Orc!");
+
+    swapTurn();
 }
 
 void GameEngine::tick ()
@@ -112,4 +115,17 @@ void GameEngine::addMessage (const MessageType& severity, const std::string& mes
     msg.severity = severity;
     msg.message = message;
     addMessage (msg);
+}
+
+
+
+void GameEngine::swapTurn()
+{
+    m_playerTurn = !m_playerTurn;
+    m_turn++;
+
+    FovAlgorithm l_algo;
+    l_algo.initialise (this);
+    l_algo.calculateFov();
+
 }

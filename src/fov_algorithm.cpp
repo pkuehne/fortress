@@ -1,9 +1,15 @@
 #include "fov_algorithm.h"
+#include "entity.h"
+#include "collider_component.h"
+#include "description_component.h"
+#include <iostream>
 
 void FovAlgorithm::calculateFov ()
 {
     EntityId player = m_engine->getEntities()->getPlayer();
     Location playerLoc = m_engine->getEntities()->getLocation (player);
+
+    if (player == 0) return;
 
     m_engine->getMap()->getTile (playerLoc).lastVisited = m_engine->getTurn();
 
@@ -12,14 +18,27 @@ void FovAlgorithm::calculateFov ()
     unsigned int sightMax = 10;
     for (unsigned int oct = 0; oct < 8; oct++) {
         ShadowLine line;
+        bool fullShadow = false;
         for (unsigned int row = 1; row < sightMax; row++) {
             for (unsigned int col = 0; col <= row; col++) {
-                Shadow projection = projectTile (row, col);
+                bool visible = false;
+                Shadow projection (0,0);
+                if (!fullShadow) {
+                    projection = projectTile (row, col);
+                    visible = !line.isInShadow (projection);
+                }
                 transformOctant (row, col, oct, y, x);
                 y += playerLoc.y;
                 x += playerLoc.x;
-                if (m_engine->getMap()->isValidTile (x, y, m_engine->getLevel()) && !line.isInShadow (projection)) {
+                if (m_engine->getMap()->isValidTile (x, y, m_engine->getLevel()) && visible) {
                     m_engine->getMap()->getTile (x, y, m_engine->getLevel()).lastVisited = m_engine->getTurn();
+                    for (EntityId entity : m_engine->getMap()->getTile (x, y, m_engine->getLevel()).entities) {
+                        if (m_engine->getComponents()->get<ColliderComponent>(entity)) {
+                            line.addShadow (projection);
+                            fullShadow = line.isInFullShadow();
+                            break;
+                        }
+                    }
                 }
             }
         }
@@ -74,7 +93,7 @@ Shadow FovAlgorithm::projectTile (double row, double col) {
 
 bool Shadow::contains (const Shadow& other) const
 {
-    return start <= other.start && end >= other.end;
+    return start - 0.00 <= other.start && end + 0.00 >= other.end;
 }
 
 bool ShadowLine::isInShadow (const Shadow& projection)
@@ -83,4 +102,50 @@ bool ShadowLine::isInShadow (const Shadow& projection)
         if (shadow.contains (projection)) return true;
     }
     return false;
+}
+
+bool ShadowLine::isInFullShadow ()
+{
+    if (    m_shadows.size() == 1
+        &&  m_shadows[1].start == 0.0
+        &&  m_shadows[1].end == 1.0) {
+            return true;
+        }
+    return false;
+}
+
+void ShadowLine::addShadow (Shadow shadow)
+{
+    unsigned int index = 0;
+    auto iter = m_shadows.begin();
+    for (; index < m_shadows.size(); index++, iter++) {
+        if (m_shadows[index].start >= shadow.start) {
+            break;
+        }
+    }
+
+    Shadow* prev = nullptr;
+    if (index > 0 && m_shadows[index - 1].end > shadow.start) {
+      prev = &(m_shadows[index - 1]);
+    }
+
+    Shadow* next = nullptr;
+    if (index < m_shadows.size() && m_shadows[index].start < shadow.end) {
+        next = &(m_shadows[index]);
+    }
+
+    if (next != nullptr) {
+        if (prev != nullptr) {
+            prev->end = next->end;
+            m_shadows.erase (iter);
+        } else {
+            next->start = shadow.start;
+        }
+    } else {
+        if (prev != nullptr) {
+            prev->end = shadow.end;
+        } else {
+            m_shadows.insert (iter, shadow);
+        }
+    }
 }
