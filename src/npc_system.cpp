@@ -34,7 +34,7 @@ void NpcSystem::update ()
         }
         MoveEntityEvent* l_event = new MoveEntityEvent();
         l_event->entity = l_entity;
-        l_event->direction = dir;
+        l_event->newLocation = l_loc;
         getEngine()->raiseEvent (l_event);
     }
     getEngine()->swapTurn();
@@ -61,7 +61,7 @@ DIRECTION NpcSystem::getPlayerDirectionIfNearby (EntityId enemy)
             return Direction::West;
         } else {
             // Move vertically first
-            if (xDiff > 0) return Direction::South;
+            if (yDiff > 0) return Direction::South;
             return Direction::North;
         }
     }
@@ -95,4 +95,16 @@ DIRECTION NpcSystem::getPlayerDirectionIfAttackable (EntityId entity) {
     }
 
     return Direction::None;
+}
+
+bool NpcSystem::canAttackPlayer (const Location& location)
+{
+    EntityId player = getEngine()->getEntities()->getPlayer();
+    EntityHolder l_entities;
+
+    l_entities = getEngine()->getMap()->findEntitiesNear (location, 1);
+    for (EntityId entity : l_entities) {
+        if (entity == player) return true;
+    }
+    return false;
 }

@@ -13,6 +13,7 @@ private:
     DIRECTION getPlayerDirectionIfNearby (EntityId entity);
     DIRECTION getPlayerDirectionIfAttackable (EntityId entity);
 
+    bool canAttackPlayer(const Location& location);
 };
 
 

@@ -72,8 +72,10 @@ void GameEngine::initialise ()
 
     // Initialise Managers
     m_windowManager->initialise     (this);
-    m_entityManager->initialise     (this);
     m_eventManager->initialise      (this);
+    m_entityManager->initialise     (this);
+    //m_componentManager->initalise   (this);
+    m_mapManager->initialise        (this);
 
     // Initialise Systems
     for (unsigned int ii = 0; ii < m_systems.size(); ii++) {

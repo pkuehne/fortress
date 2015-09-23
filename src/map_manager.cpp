@@ -40,3 +40,27 @@ void MapManager::index2map (unsigned int index, unsigned int& x, unsigned int& y
     y = (index-x)/m_mapHeight;
     z = (index-(y*m_mapWidth)+x) / (m_mapHeight*m_mapWidth) + 1;
 }
+
+EntityHolder MapManager::findEntitiesAt (const Location& location)
+{
+    return findEntitiesNear (location, 0);
+}
+
+EntityHolder MapManager::findEntitiesNear (const Location& location, unsigned radius)
+{
+    EntityHolder l_entities;
+
+    int startx = location.x - radius;
+    int starty = location.y - radius;
+    int endx = location.x + radius;
+    int endy = location.y + radius;
+
+    for (int yy = starty; yy <= endy; yy++) {
+        for (int xx = startx; xx <= endx; xx++) {
+            for (EntityId id : m_engine->getMap()->getTile (xx, yy, m_engine->getLevel()).entities) {
+                l_entities.insert (id);
+            }
+        }
+    }
+    return l_entities;
+}

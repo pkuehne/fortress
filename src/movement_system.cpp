@@ -14,15 +14,7 @@ void MovementSystem::handleEvent (const Event* event)
             const MoveEntityEvent* l_event = dynamic_cast<const MoveEntityEvent*> (event);
             EntityId l_entity = l_event->entity;
             Location l_oldLocation = m_engine->getEntities()->getLocation(l_entity);
-            Location l_newLocation = l_oldLocation;
-
-            switch (l_event->direction) {
-                case Direction::North:  l_newLocation.y--; break;
-                case Direction::South:  l_newLocation.y++; break;
-                case Direction::West:   l_newLocation.x--; break;
-                case Direction::East:   l_newLocation.x++; break;
-                default: return;
-            }
+            Location l_newLocation = l_event->newLocation;
 
             //Check if we're running into a collidable or stairs, etc
             {

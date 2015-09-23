@@ -4,10 +4,13 @@
 #include "tile.h"
 #include "utility.h"
 
+class GameEngineInterface;
+
 class MapManagerInterface {
 public:
     virtual ~MapManagerInterface() { }
 
+    virtual void initialise (GameEngineInterface*) = 0;
     virtual Tile& getTile (unsigned int x, unsigned int y, unsigned int z) = 0;
     virtual Tile& getTile (const Location& location) = 0;
     virtual Tile& getTile (unsigned int index) = 0;
@@ -26,6 +29,8 @@ public:
     virtual unsigned int getArea () = 0;
     virtual void setArea (unsigned int area) = 0;
 
+    virtual EntityHolder findEntitiesAt (const Location& location) = 0;
+    virtual EntityHolder findEntitiesNear (const Location& location, unsigned int radius) = 0;
 };
 
 #endif

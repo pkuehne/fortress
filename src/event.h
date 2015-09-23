@@ -47,7 +47,7 @@ class MoveEntityEvent : public Event {
 public:
     MoveEntityEvent () : Event (EVENT_MOVE_ENTITY) { }
     EntityId    entity;
-    DIRECTION   direction;
+    Location    newLocation;
 };
 
 class ChangeLocationEvent : public Event {

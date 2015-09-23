@@ -34,51 +34,51 @@ void MapWindow::gainFocus ()
     l_algo.calculateFov();
 }
 
-void MapWindow::redraw() {
-
-    //clock_t l_clock = clock() - m_lastDraw;
-    //double l_diff = static_cast<double> (l_clock/CLOCKS_PER_SEC);
-    //if (l_diff < 0.01f) return;
-
+void MapWindow::redraw()
+{
     drawSeparators();
     drawMap();
     drawMessages();
     drawSidebar();
 }
 
-void MapWindow::resize() {
+void MapWindow::resize()
+{
     setDimensions (0, 0, getEngine()->getGraphics()->getScreenWidth(), getEngine()->getGraphics()->getScreenHeight());
     m_sidebarXOffset = getWidth() - m_sidebarWidth - 1;
     m_mapWidth  = getWidth() - m_mapXOffset - m_sidebarWidth - 1;
     m_mapHeight = getHeight() - m_mapYOffset - 1;
 }
 
-void MapWindow::keyDown (unsigned char key) {
+void MapWindow::keyDown (unsigned char key)
+{
     Window::keyDown (key);
-
+    EntityId playerId = getEngine()->getEntities()->getPlayer();
     if (key == 'w' || key == 'a' || key == 's' || key == 'd') {
-        DIRECTION l_dir = Direction::None;
+        Location oldLocation = getEngine()->getEntities()->getLocation(playerId);
+        Location newLocation = oldLocation;
         switch (key) {
-            case 'w': l_dir = Direction::North; break;
-            case 'a': l_dir = Direction::West;  break;
-            case 's': l_dir = Direction::South; break;
-            case 'd': l_dir = Direction::East;  break;
+            case 'w': newLocation.y--; break;
+            case 'a': newLocation.x--;  break;
+            case 's': newLocation.y++; break;
+            case 'd': newLocation.x++;  break;
         }
 
         if (m_action == 'm') {
             MoveEntityEvent* l_event = new MoveEntityEvent;
-            l_event->entity = getEngine()->getEntities()->getPlayer();
-            l_event->direction = l_dir;
+            l_event->entity = playerId;
+            l_event->newLocation = newLocation;
             getEngine()->raiseEvent (l_event);
         }
         if (m_action == 'k') {
+            DIRECTION dir = Direction::None;
             AttackEntityEvent* l_event = new AttackEntityEvent;
-            l_event->entity = getEngine()->getEntities()->getPlayer();
-            l_event->direction = l_dir;
+            l_event->entity = playerId;
+            l_event->direction = dir;
             getEngine()->raiseEvent (l_event);
         }
         if (m_action == 'i') {
-            EntityHolder l_entities = getEngine()->getEntities()->findEntitiesToThe(l_dir, getEngine()->getEntities()->getPlayer());
+            EntityHolder l_entities = getEngine()->getMap()->findEntitiesAt(newLocation);
             if (l_entities.size() > 0) {
                 EntityId* l_target = new EntityId(*l_entities.begin());
 
@@ -102,7 +102,7 @@ void MapWindow::keyDown (unsigned char key) {
         getEngine()->swapTurn();
     }
     if (key == 'p') {
-        Location l_playerLoc = getEngine()->getEntities()->getLocation(getEngine()->getEntities()->getPlayer());
+        Location l_playerLoc = getEngine()->getEntities()->getLocation(playerId);
         EntityHolder l_entities = getEngine()->getEntities()->findEntitiesAt (l_playerLoc.x, l_playerLoc.y);
         bool foundSomethingAlready = false;
         for (EntityId l_entity : l_entities) {
@@ -110,7 +110,7 @@ void MapWindow::keyDown (unsigned char key) {
             if (droppable) {
                 if (!foundSomethingAlready) {
                     PickupEquipmentEvent* event = new PickupEquipmentEvent();
-                    event->entity = getEngine()->getEntities()->getPlayer();
+                    event->entity = playerId;
                     event->item = l_entity;
                     getEngine()->raiseEvent (event);
                     foundSomethingAlready = true;
@@ -136,12 +136,14 @@ void MapWindow::keyDown (unsigned char key) {
     }
 }
 
-void MapWindow::drawSeparators() {
+void MapWindow::drawSeparators()
+{
     getEngine()->getGraphics()->drawBorder (m_mapYOffset-1, m_mapXOffset-1, m_mapHeight, m_mapWidth);
     getEngine()->getGraphics()->drawBorder (0, m_sidebarXOffset, getHeight()-2, m_sidebarWidth-1);
 }
 
-void MapWindow::drawMap() {
+void MapWindow::drawMap()
+{
     Location l_player = getEngine()->getEntities()->getLocation(getEngine()->getEntities()->getPlayer());
 
     m_mapStartX = l_player.x - (m_mapWidth/2);
