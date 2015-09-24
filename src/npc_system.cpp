@@ -60,9 +60,12 @@ Location NpcSystem::getPlayerDirectionIfNearby (const Location& enemyLoc)
     LosAlgorithm los;
     los.initialise (getEngine());
 
+    int xDiff = playerLoc.x - enemyLoc.x;
+    int yDiff = playerLoc.y - enemyLoc.y;
+    if (abs(xDiff) > 5 || abs(yDiff)> 5) return enemyLoc;
+    std::cout << "Orc: " << enemyLoc.x << ", " << enemyLoc.y << " Player: " << playerLoc.x << ", " << playerLoc.y << std::endl;
     if (los.hasLos(enemyLoc, playerLoc)) {
-        int xDiff = playerLoc.x - enemyLoc.x;
-        int yDiff = playerLoc.y - enemyLoc.y;
+        std::cout << "Orc can see player" << std::endl;
         if (abs(xDiff) > abs(yDiff)) {
             // Move horizontally first
             if (xDiff > 0) {
@@ -73,9 +76,9 @@ Location NpcSystem::getPlayerDirectionIfNearby (const Location& enemyLoc)
         } else {
             // Move vertically first
             if (yDiff > 0) {
-                newLoc.y--;
-            } else {
                 newLoc.y++;
+            } else {
+                newLoc.y--;
             }
         }
         return newLoc;

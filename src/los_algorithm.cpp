@@ -1,10 +1,11 @@
 #include "los_algorithm.h"
 #include "collider_component.h"
+#include <iostream>
 
 bool LosAlgorithm::hasLos (const Location& start, const Location& end)
 {
     if (start.z != end.z) return false;
-    
+
     int delta_x(end.x - start.x);
     // if x1 == x2, then it does not matter what we set here
     signed char const ix((delta_x > 0) - (delta_x < 0));
@@ -35,7 +36,7 @@ bool LosAlgorithm::hasLos (const Location& start, const Location& end)
             error += delta_y;
             step.x += ix;
 
-            if (viewBlocked (step)) return false;
+            if (viewBlocked (step) && step.x != end.x) return false;
         }
     }
     else
@@ -55,7 +56,7 @@ bool LosAlgorithm::hasLos (const Location& start, const Location& end)
             error += delta_x;
             step.y += iy;
 
-            if (viewBlocked (step)) return false;
+            if (viewBlocked (step) && step.y != end.y) return false;
         }
     }
     return true;
@@ -63,6 +64,7 @@ bool LosAlgorithm::hasLos (const Location& start, const Location& end)
 
 bool LosAlgorithm::viewBlocked (const Location& loc)
 {
+    std::cout << "Checking view blocked at " << loc.x << ", " << loc.y << std::endl;
     EntityHolder entities = m_engine->getMap()->findEntitiesAt (loc);
     for (EntityId entity : entities) {
         if (m_engine->getComponents()->get<ColliderComponent>(entity)) {
