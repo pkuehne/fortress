@@ -1,6 +1,7 @@
 #include "npc_system.h"
 #include "npc_component.h"
-#include <cstdlib>
+#include "los_algorithm.h"
+//#include <cstdlib>
 
 void NpcSystem::handleEvent (const Event* event)
 {
@@ -56,11 +57,12 @@ Location NpcSystem::getPlayerDirectionIfNearby (const Location& enemyLoc)
     Location playerLoc = getEngine()->getEntities()->getLocation(player);
     Location newLoc = enemyLoc;
 
-    int xDiff = playerLoc.x - enemyLoc.x;
-    int yDiff = playerLoc.y - enemyLoc.y;
-    if ((xDiff > -5 && xDiff < 5) &&
-        (yDiff > -5 && yDiff < 5) &&
-        (enemyLoc.z == getEngine()->getLevel())) {
+    LosAlgorithm los;
+    los.initialise (getEngine());
+
+    if (los.hasLos(enemyLoc, playerLoc)) {
+        int xDiff = playerLoc.x - enemyLoc.x;
+        int yDiff = playerLoc.y - enemyLoc.y;
         if (abs(xDiff) > abs(yDiff)) {
             // Move horizontally first
             if (xDiff > 0) {
@@ -71,14 +73,13 @@ Location NpcSystem::getPlayerDirectionIfNearby (const Location& enemyLoc)
         } else {
             // Move vertically first
             if (yDiff > 0) {
-                newLoc.y++;
-            } else {
                 newLoc.y--;
+            } else {
+                newLoc.y++;
             }
         }
         return newLoc;
     }
-
     return enemyLoc;
 }
 

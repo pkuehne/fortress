@@ -10,6 +10,9 @@ public:
     bool hasLos (const Location& start, const Location& end);
 
 private:
+    bool viewBlocked (const Location&);
+    
+private:
     GameEngineInterface*    m_engine;
 };
 
