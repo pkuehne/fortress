@@ -13,7 +13,9 @@ public:
     Tile& getTile (unsigned int index) { return m_map[index]; }
 
     int map2index (unsigned int x, unsigned int y, unsigned int z);
+    int map2index (const Location& location) { return map2index (location.x, location.y, location.z); }
     void index2map (unsigned int index, unsigned int& x, unsigned int& y, unsigned int& z);
+    void index2map (unsigned int index, Location& location);
 
     bool isValidTile (Location& location);
     bool isValidTile (unsigned int x, unsigned int y, unsigned int z);

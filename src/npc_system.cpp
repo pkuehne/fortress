@@ -1,7 +1,13 @@
 #include "npc_system.h"
 #include "npc_component.h"
 #include "los_algorithm.h"
-//#include <cstdlib>
+#include "algorithm.h"
+#include "collider_component.h"
+#include <iostream>
+
+unsigned int getPathCost (unsigned int index, void* customData);
+unsigned int findNeighbours4 (unsigned int index, unsigned int* neighbours, void* customData);
+unsigned int getDistance (unsigned int start, unsigned int end, void* customData);
 
 void NpcSystem::handleEvent (const Event* event)
 {
@@ -62,25 +68,31 @@ Location NpcSystem::getPlayerDirectionIfNearby (const Location& enemyLoc)
 
     int xDiff = playerLoc.x - enemyLoc.x;
     int yDiff = playerLoc.y - enemyLoc.y;
-    if (abs(xDiff) > 5 || abs(yDiff)> 5) return enemyLoc;
-    std::cout << "Orc: " << enemyLoc.x << ", " << enemyLoc.y << " Player: " << playerLoc.x << ", " << playerLoc.y << std::endl;
+    if (abs(xDiff) > 10 || abs(yDiff) > 10) return enemyLoc;
     if (los.hasLos(enemyLoc, playerLoc)) {
-        std::cout << "Orc can see player" << std::endl;
-        if (abs(xDiff) > abs(yDiff)) {
-            // Move horizontally first
-            if (xDiff > 0) {
-                newLoc.x++;
-            } else {
-                newLoc.x--;
+        //std::cout << "Orc can see player!" << std::endl;
+
+        Algorithm algo;
+        algo.setCustomData (getEngine());
+        algo.setCostFunction (getPathCost);
+        algo.setDistanceFunction (getDistance);
+        algo.setNeighbourFunction (findNeighbours4);
+        algo.setNumNeighbours (4);
+
+        unsigned int startIndex = getEngine()->getMap()->map2index (enemyLoc);
+        unsigned int endIndex = getEngine()->getMap()->map2index (playerLoc);
+
+        PathVector l_path;
+        //std::cout << "Path from " << startIndex << " to " << endIndex << std::endl;
+        algo.findPath (startIndex, endIndex, l_path);
+
+        if (l_path.size()) {
+            for (unsigned int ii = 0; ii < l_path.size(); ii++) {
+                //std::cout << "Step " << ii << ": " << l_path[ii] << std::endl;
             }
-        } else {
-            // Move vertically first
-            if (yDiff > 0) {
-                newLoc.y++;
-            } else {
-                newLoc.y--;
-            }
+            m_engine->getMap()->index2map(l_path[0], newLoc);
         }
+        //std::cout << "Moving from " << enemyLoc << " to " << newLoc << std::endl;
         return newLoc;
     }
     return enemyLoc;
@@ -100,4 +112,62 @@ bool NpcSystem::canAttackPlayer (const Location& location)
         }
     }
     return false;
+}
+
+unsigned int getPathCost (unsigned int index, void* customData)
+{
+    GameEngineInterface* l_engine = static_cast<GameEngineInterface*> (customData);
+    Tile& tile = l_engine->getMap()->getTile(index);
+
+    for (EntityId entity : tile.entities) {
+        if (entity == l_engine->getEntities()->getPlayer()) continue;
+        if (l_engine->getComponents()->get<ColliderComponent>(entity)) return -999;
+    }
+    return 1;
+}
+
+unsigned int findNeighbours4 (unsigned int index, unsigned int* neighbours, void* customData)
+{
+    GameEngineInterface* l_engine = static_cast<GameEngineInterface*> (customData);
+
+    unsigned int count = 0;
+    unsigned int step = 0;
+    Location loc;
+    l_engine->getMap()->index2map (index, loc);
+    if (l_engine->getMap()->isValidTile (loc.x-1, loc.y, loc.z)) {
+        step = l_engine->getMap()->map2index (loc.x-1, loc.y, loc.z);
+        if (getPathCost (step, l_engine) == 1)
+            neighbours[count++] = step;
+    }
+    if (l_engine->getMap()->isValidTile (loc.x+1, loc.y, loc.z)) {
+        step = l_engine->getMap()->map2index (loc.x+1, loc.y, loc.z);
+        if (getPathCost (step, l_engine) == 1)
+            neighbours[count++] = step;
+    }
+    if (l_engine->getMap()->isValidTile (loc.x, loc.y-1, loc.z)) {
+        step = l_engine->getMap()->map2index (loc.x, loc.y-1, loc.z);
+        if (getPathCost (step, l_engine) == 1)
+            neighbours[count++] = step;
+    }
+    if (l_engine->getMap()->isValidTile (loc.x, loc.y+1, loc.z)) {
+        step = l_engine->getMap()->map2index (loc.x, loc.y+1, loc.z);
+        if (getPathCost (step, l_engine) == 1)
+            neighbours[count++] = step;
+    }
+    //std::cout << "Returning " << count << " neighbours "<< std::endl;
+    return count;
+}
+
+unsigned int getDistance (unsigned int start, unsigned int end, void* customData)
+{
+    GameEngineInterface* l_engine = static_cast<GameEngineInterface*> (customData);
+
+    unsigned int distance = 0;
+    Location startLoc;
+    Location endLoc;
+    l_engine->getMap()->index2map (start, startLoc);
+    l_engine->getMap()->index2map (end, endLoc);
+    distance = (abs (startLoc.x - endLoc.x) + abs(startLoc.y - endLoc.y));
+
+    return distance;
 }

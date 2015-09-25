@@ -40,6 +40,10 @@ void MapManager::index2map (unsigned int index, unsigned int& x, unsigned int& y
     y = (index-x)/m_mapHeight;
     z = (index-(y*m_mapWidth)+x) / (m_mapHeight*m_mapWidth) + 1;
 }
+void MapManager::index2map (unsigned int index, Location& location)
+{
+    return index2map (index, location.x, location.y, location.z);
+}
 
 EntityHolder MapManager::findEntitiesAt (const Location& location)
 {

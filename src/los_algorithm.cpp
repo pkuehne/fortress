@@ -1,6 +1,5 @@
 #include "los_algorithm.h"
 #include "collider_component.h"
-#include <iostream>
 
 bool LosAlgorithm::hasLos (const Location& start, const Location& end)
 {
@@ -64,7 +63,6 @@ bool LosAlgorithm::hasLos (const Location& start, const Location& end)
 
 bool LosAlgorithm::viewBlocked (const Location& loc)
 {
-    std::cout << "Checking view blocked at " << loc.x << ", " << loc.y << std::endl;
     EntityHolder entities = m_engine->getMap()->findEntitiesAt (loc);
     for (EntityId entity : entities) {
         if (m_engine->getComponents()->get<ColliderComponent>(entity)) {

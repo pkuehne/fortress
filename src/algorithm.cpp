@@ -64,7 +64,8 @@ void Algorithm::findPath (unsigned int start, unsigned int end, PathVector& outp
         if (l_current.index == end) {
             unsigned int index = l_current.index;
             while (index != start) {
-                output.push_back (index);
+                //output.push_back (index);
+                output.insert (output.begin(), index);
                 NodeMapIter open_iter = l_closed.find (index);
                 index = open_iter->second.origin;
                 if (index == 0) break;
@@ -75,7 +76,6 @@ void Algorithm::findPath (unsigned int start, unsigned int end, PathVector& outp
         // Process neighbours
         unsigned int neighbours[m_numNeighbours] = {0};
         unsigned int validNeighbours = m_neighbourFunction (l_current.index, neighbours, m_customData);
-
         for (size_t ii = 0; ii < validNeighbours; ii++) {
             if (neighbours[ii] < 0) continue; // Not a valid neighbour
             unsigned int cost = m_costFunction (neighbours[ii], m_customData);
