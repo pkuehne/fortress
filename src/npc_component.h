@@ -4,7 +4,7 @@
 #include "component_base.h"
 
 struct NpcComponent : ComponentBase {
-
+    std::vector<Location>   path;
 };
 
 #endif

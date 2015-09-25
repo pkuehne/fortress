@@ -183,6 +183,22 @@ void MapWindow::drawMap()
             }
         }
     }
+    for (EntityId entity : getEngine()->getEntities()->get()) {
+        Location loc = getEngine()->getEntities()->getLocation (entity);
+        int x = loc.x;
+        int y = loc.y;
+        if (x < m_mapStartX || x > xWidth || y < m_mapStartY || y > yWidth) continue;
+        NpcComponent* npc = getEngine()->getComponents()->get<NpcComponent> (entity);
+        if (npc) {
+            for (Location stepLoc : npc->path) {
+                drawTile (  stepLoc.y + m_mapYOffset - m_mapStartY,
+                            stepLoc.x + m_mapXOffset - m_mapStartX,
+                            '+',
+                            Color (RED),
+                            Color (BLACK));
+            }
+        }
+    }
 
     return;
 }

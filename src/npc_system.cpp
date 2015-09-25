@@ -33,8 +33,11 @@ void NpcSystem::update ()
         }
 
         // Check if player is nearby
-        Location newLoc = getPlayerDirectionIfNearby (l_loc);
-        if (newLoc == l_loc) {
+        Location newLoc = getPlayerDirectionIfNearby (l_entity);
+        if (l_npc->path.size()) {
+            newLoc = l_npc->path[0]; l_npc->path.erase(l_npc->path.begin());
+            //std::cout << "Have path, going to " << newLoc << std::endl;
+        } else {
             newLoc = getRandomDirection(l_loc);
         }
         MoveEntityEvent* l_event = new MoveEntityEvent();
@@ -57,10 +60,13 @@ Location NpcSystem::getRandomDirection (const Location& oldLocation) {
     return newLocation;
 }
 
-Location NpcSystem::getPlayerDirectionIfNearby (const Location& enemyLoc)
+Location NpcSystem::getPlayerDirectionIfNearby (EntityId npc)
 {
     EntityId player = getEngine()->getEntities()->getPlayer();
     Location playerLoc = getEngine()->getEntities()->getLocation(player);
+
+    Location enemyLoc = getEngine()->getEntities()->getLocation (npc);
+    NpcComponent* enemyNpc = getEngine()->getComponents()->get<NpcComponent> (npc);
     Location newLoc = enemyLoc;
 
     LosAlgorithm los;
@@ -87,8 +93,13 @@ Location NpcSystem::getPlayerDirectionIfNearby (const Location& enemyLoc)
         algo.findPath (startIndex, endIndex, l_path);
 
         if (l_path.size()) {
+            enemyNpc->path.clear();
             for (unsigned int ii = 0; ii < l_path.size(); ii++) {
-                //std::cout << "Step " << ii << ": " << l_path[ii] << std::endl;
+                Location tempLoc;
+                m_engine->getMap()->index2map(l_path[ii], tempLoc);
+                enemyNpc->path.push_back (tempLoc);
+                //std::cout << "Step " << ii << ": " << tempLoc << std::endl;
+
             }
             m_engine->getMap()->index2map(l_path[0], newLoc);
         }

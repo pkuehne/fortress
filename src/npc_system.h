@@ -10,7 +10,7 @@ public:
     virtual void update ();
 private:
     Location getRandomDirection (const Location& oldLocation);
-    Location getPlayerDirectionIfNearby (const Location& oldLocation);
+    Location getPlayerDirectionIfNearby (EntityId npc);
 
     bool canAttackPlayer(const Location& location);
 };

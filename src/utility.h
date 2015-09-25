@@ -36,8 +36,8 @@ struct Location {
     Location():x(0),y(0),z(0) {}
     bool operator== (const Location& rhs) { return (rhs.x == x && rhs.y == y && rhs.z == z); }
 };
-//std::ostream& operator<< (std::ostream& out, const Location& loc) { out << "(" << loc.x << "," << loc.y << "," << loc.z << ")"; return out; }
-
+    std::ostream& operator<< (std::ostream& out, const Location& loc);
+    
 namespace Utility {
 };
 
