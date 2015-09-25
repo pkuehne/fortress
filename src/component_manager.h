@@ -27,12 +27,16 @@ public:
         for (ComponentBase* component : m_components[entity]) {
             T* found = dynamic_cast<T*> (component);
             if (found) {
+                delete component;
                 m_components[entity].erase (found);
                 break;
             }
         }
     }
     void removeAll (EntityId entity) {
+        for (ComponentBase* component : m_components[entity]) {
+            delete component;
+        }
         m_components[entity].clear();
     }
 

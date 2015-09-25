@@ -49,7 +49,7 @@ void EquipmentSystem::handleEvent (const Event* event) {
 
             Location location = getEngine()->getEntities()->getLocation(l_event->entity);
             getEngine()->getEntities()->setLocation(l_event->item, location);
-            getEngine()->addMessage (INFO, "You drop the item on the ground!");
+            //getEngine()->addMessage (INFO, "You drop the item on the ground!");
             break;
         }
         case EVENT_PICKUP_EQUIPMENT: {
@@ -59,7 +59,7 @@ void EquipmentSystem::handleEvent (const Event* event) {
             getEngine()->getComponents()->remove<SpriteComponent>(l_event->item);
 
             equipment->carriedEquipment.push_back (l_event->item);
-            getEngine()->addMessage (INFO, "You pick something up off the ground");
+            //getEngine()->addMessage (INFO, "You pick something up off the ground");
             break;
         }
         case EVENT_UNEQUIP_ITEM: {
