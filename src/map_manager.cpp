@@ -36,9 +36,9 @@ int MapManager::map2index (unsigned int x, unsigned int y, unsigned int z)
 
 void MapManager::index2map (unsigned int index, unsigned int& x, unsigned int& y, unsigned int& z)
 {
-    x = index%m_mapWidth;
-    y = (index-x)/m_mapHeight;
-    z = (index-(y*m_mapWidth)+x) / (m_mapHeight*m_mapWidth) + 1;
+    x = index % m_mapWidth;
+    y = (index - x) / m_mapWidth % m_mapHeight;
+    z = (index - (y * m_mapWidth) + x) / (m_mapHeight * m_mapWidth) + 1;
 }
 void MapManager::index2map (unsigned int index, Location& location)
 {

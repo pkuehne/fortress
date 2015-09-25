@@ -32,6 +32,8 @@ private:
 
     char    m_action;
     clock_t m_lastDraw;
+
+    bool m_debugMode;
 };
 
 #endif

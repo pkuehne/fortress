@@ -29,6 +29,7 @@ void MapWindow::gainFocus ()
 
     m_action = 'm';
     m_lastDraw = clock();
+    m_debugMode = false;
 
     FovAlgorithm l_algo;
     l_algo.initialise (getEngine());
@@ -139,6 +140,10 @@ void MapWindow::keyDown (unsigned char key)
         saver.initialise (getEngine());
         saver.saveState();
     }
+    if (key == '\\') {
+        m_debugMode = !m_debugMode;
+    }
+    //std::cout << "Key: " << key << std::endl;
 }
 
 void MapWindow::drawSeparators()
@@ -183,19 +188,22 @@ void MapWindow::drawMap()
             }
         }
     }
-    for (EntityId entity : getEngine()->getEntities()->get()) {
-        Location loc = getEngine()->getEntities()->getLocation (entity);
-        int x = loc.x;
-        int y = loc.y;
-        if (x < m_mapStartX || x > xWidth || y < m_mapStartY || y > yWidth) continue;
-        NpcComponent* npc = getEngine()->getComponents()->get<NpcComponent> (entity);
-        if (npc) {
-            for (Location stepLoc : npc->path) {
-                drawTile (  stepLoc.y + m_mapYOffset - m_mapStartY,
-                            stepLoc.x + m_mapXOffset - m_mapStartX,
-                            '+',
-                            Color (RED),
-                            Color (BLACK));
+    if (m_debugMode) {
+        // Show NPC paths
+        for (EntityId entity : getEngine()->getEntities()->get()) {
+            Location loc = getEngine()->getEntities()->getLocation (entity);
+            int x = loc.x;
+            int y = loc.y;
+            if (x < m_mapStartX || x > xWidth || y < m_mapStartY || y > yWidth) continue;
+            NpcComponent* npc = getEngine()->getComponents()->get<NpcComponent> (entity);
+            if (npc) {
+                for (Location stepLoc : npc->path) {
+                    drawTile (  stepLoc.y + m_mapYOffset - m_mapStartY,
+                                stepLoc.x + m_mapXOffset - m_mapStartX,
+                                '+',
+                                Color (RED),
+                                Color (BLACK));
+                }
             }
         }
     }

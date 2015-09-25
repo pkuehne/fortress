@@ -89,7 +89,7 @@ Location NpcSystem::getPlayerDirectionIfNearby (EntityId npc)
         unsigned int endIndex = getEngine()->getMap()->map2index (playerLoc);
 
         PathVector l_path;
-        //std::cout << "Path from " << startIndex << " to " << endIndex << std::endl;
+        //std::cout << "Path from " << enemyLoc << " to " << playerLoc << std::endl;
         algo.findPath (startIndex, endIndex, l_path);
 
         if (l_path.size()) {
@@ -145,6 +145,8 @@ unsigned int findNeighbours4 (unsigned int index, unsigned int* neighbours, void
     unsigned int step = 0;
     Location loc;
     l_engine->getMap()->index2map (index, loc);
+    //std::cout << "Finding neighbours of " << loc << std::endl;
+
     if (l_engine->getMap()->isValidTile (loc.x-1, loc.y, loc.z)) {
         step = l_engine->getMap()->map2index (loc.x-1, loc.y, loc.z);
         if (getPathCost (step, l_engine) == 1)
