@@ -40,6 +40,7 @@ struct Location {
 
 namespace Utility {
     unsigned int randBetween (unsigned int start, unsigned int end);
+    bool randChance (unsigned int percentage);
 };
 
 #endif

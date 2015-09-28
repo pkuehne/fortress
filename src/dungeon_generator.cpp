@@ -3,7 +3,6 @@
 #include "algorithm.h"
 #include <ctime>
 #include <cstdlib>
-#include <cstring>
 #include <iostream>
 #include <fstream>
 #include "sprite_component.h"
@@ -24,14 +23,10 @@ const char UP       = '<';
 const char DOWN     = '>';
 
 void DungeonGenerator::reset () {
+    GeneratorInterface::reset();
+
     m_startRoom = 0;
     m_rooms.clear();
-
-    if (m_map) {
-        delete[] m_map;
-        m_map = 0;
-    }
-
 }
 
 bool DungeonGenerator::generate () {
@@ -41,9 +36,7 @@ bool DungeonGenerator::generate () {
     srand (seed);
 
     reset();
-
-    m_map = new unsigned char[m_mapHeight*m_mapWidth];
-    memset (m_map, EMPTY, m_mapHeight*m_mapWidth);
+    initMap (EMPTY);
 
     for (unsigned r = 0; r < m_roomTarget; r++) {
         bool success = false;
@@ -88,7 +81,7 @@ void DungeonGenerator::createEntitiesFromMap () {
                     break;
                 case UP:
                     m_engine->getEntities()->createStairPrefab (STAIR_UP, location);
-                    if (m_level == 1) m_engine->getEntities()->createPlayerPrefab (location);
+                    ///if (m_level == 1) m_engine->getEntities()->createPlayerPrefab (location);
                     break;
                 case DOWN:
                     m_engine->getEntities()->createStairPrefab (STAIR_DOWN, location);
@@ -234,6 +227,7 @@ void DungeonGenerator::placeOrcs()
 
 void DungeonGenerator::loadMap ()
 {
+    /*
     std::ifstream file ("../maps/test.map");
     char line[m_mapWidth];
     int lineCnt = 0;
@@ -243,6 +237,7 @@ void DungeonGenerator::loadMap ()
         memcpy (m_map+(m_mapWidth*lineCnt), line, sizeof(line));
         lineCnt++;
     } while (file.gcount() > 0);
+    */
 }
 
 unsigned char DungeonGenerator::wallSprite (unsigned int x, unsigned int y)

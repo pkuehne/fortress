@@ -25,10 +25,6 @@ void GeneratorWindow::gainFocus () {
     m_generatingLevel = 0;
     m_generating = false;
     m_generated = false;
-
-    RuralGenerator rural;
-    rural.initialise (getEngine());
-    rural.generate();
 }
 
 void GeneratorWindow::resize() {
@@ -137,6 +133,11 @@ void GeneratorWindow::startGenerating () {
     m_generating = true;
     getEngine()->getMap()->resetMap (m_levelWidth, m_levelHeight, m_levelDepth);
     getEngine()->setLevel (1);
+        RuralGenerator rural;
+        rural.initialise (getEngine());
+        rural.mapHeight()    = m_levelHeight;
+        rural.mapWidth()     = m_levelWidth;
+        rural.generate();
 }
 
 void GeneratorWindow::generateLevel () {
@@ -147,11 +148,13 @@ void GeneratorWindow::generateLevel () {
         l_generator.mapWidth()     = m_levelWidth;
         l_generator.numberOfRooms()= m_levelRooms;
         l_generator.currentLevel() = m_generatingLevel++;
-        while (!l_generator.generate());
+        while (0); //!l_generator.generate());
     } else {
         m_generating = false;
         m_generated = true;
     }
+
+
 }
 
 void GeneratorWindow::startPlaying() {

@@ -1,6 +1,8 @@
 #ifndef GENERATOR_INTERFACE_H
 #define GENERATOR_INTERFACE_H
 
+#include <cstring>
+
 class GameEngineInterface;
 
 class GeneratorInterface {
@@ -17,6 +19,7 @@ public:
             m_map = 0;
         }
     }
+    virtual void initMap (unsigned char tile) { m_map = new unsigned char[m_mapHeight*m_mapWidth]; memset (m_map, tile, m_mapHeight*m_mapWidth); }
 
     unsigned char& getByCoordinate (unsigned int x, unsigned int y) { return getByIndex (CoordToIndex(x,y)); }
     unsigned char& getByIndex (unsigned int index) { return m_map[index]; }
@@ -31,9 +34,9 @@ public:
 
 private:
     unsigned char*          m_map;
+protected:
     unsigned int            m_mapWidth;
     unsigned int            m_mapHeight;
-protected:
     GameEngineInterface*    m_engine;
 };
 
