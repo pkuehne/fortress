@@ -37,8 +37,9 @@ struct Location {
     bool operator== (const Location& rhs) { return (rhs.x == x && rhs.y == y && rhs.z == z); }
 };
     std::ostream& operator<< (std::ostream& out, const Location& loc);
-    
+
 namespace Utility {
+    unsigned int randBetween (unsigned int start, unsigned int end);
 };
 
 #endif

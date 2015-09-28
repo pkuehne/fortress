@@ -34,7 +34,6 @@ private:
     unsigned int m_worldSize;
     unsigned int m_levelDepth;
 
-    GeneratorInterface* m_generator;
     bool                m_generating;
     bool                m_generated;
     unsigned int        m_generatingLevel;

@@ -154,13 +154,6 @@ bool DungeonGenerator::generateRoom () {
     l_room.index = CoordToIndex (l_room.midX, l_room.midY);
     m_rooms.push_back (l_room);
 
-/*
-    if (!m_playerPlaced) {
-        getByCoordinate(l_room.midX, l_room.midY) = 'P';
-        //m_map[(top+height/2)*m_mapWidth+(left+width/2)] = 'P';
-        m_playerPlaced = true;
-    }
-*/
     return true;
 }
 

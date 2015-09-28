@@ -1,6 +1,7 @@
 #include "generator_window.h"
 #include "game_engine.h"
 #include "dungeon_generator.h"
+#include "rural_generator.h"
 #include "map_window.h"
 #include <sstream>
 
@@ -21,11 +22,13 @@ void GeneratorWindow::gainFocus () {
     m_levelRooms = 10;
     m_worldSize = 129;
     m_selectedPosition = NONE;
-    m_generator = new DungeonGenerator();
-    m_generator->initialise (getEngine());
     m_generatingLevel = 0;
     m_generating = false;
     m_generated = false;
+
+    RuralGenerator rural;
+    rural.initialise (getEngine());
+    rural.generate();
 }
 
 void GeneratorWindow::resize() {
@@ -138,11 +141,13 @@ void GeneratorWindow::startGenerating () {
 
 void GeneratorWindow::generateLevel () {
     if (m_generatingLevel <= m_levelDepth) {
-        m_generator->mapHeight()    = m_levelHeight;
-        m_generator->mapWidth()     = m_levelWidth;
-        m_generator->numberOfRooms()= m_levelRooms;
-        m_generator->currentLevel() = m_generatingLevel++;
-        while (!m_generator->generate());
+        DungeonGenerator l_generator;
+        l_generator.initialise (getEngine());
+        l_generator.mapHeight()    = m_levelHeight;
+        l_generator.mapWidth()     = m_levelWidth;
+        l_generator.numberOfRooms()= m_levelRooms;
+        l_generator.currentLevel() = m_generatingLevel++;
+        while (!l_generator.generate());
     } else {
         m_generating = false;
         m_generated = true;
