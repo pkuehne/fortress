@@ -9,6 +9,7 @@
 
 const unsigned char EMPTY = '.';
 const unsigned char TREE = 'T';
+const unsigned char LINK = '>';
 
 bool RuralGenerator::generate()
 {
@@ -18,6 +19,7 @@ bool RuralGenerator::generate()
     std::cout << "Generating rural area" << std::endl;
     placeWoods();
     placePlayer();
+    placeDungeonStairs();
     createEntitiesFromMap();
     std::cout << "Done generating" << std::endl;
     return true;
@@ -39,8 +41,13 @@ void RuralGenerator::createEntitiesFromMap()
                     m_engine->getComponents()->get<SpriteComponent>(l_entity)->fgColor = Color (DARK_GREEN);
                     break;
                 case TREE:
-                default:
                     l_entity = m_engine->getEntities()->createTreePrefab (location);
+                    break;
+                case LINK:
+                    l_entity = m_engine->getEntities()->createStairPrefab (STAIR_DOWN, location);
+                    m_areaLinks.push_back(l_entity);
+                    break;
+                default:
                     break;
             }
         }
@@ -59,8 +66,6 @@ void RuralGenerator::reset ()
 
 void RuralGenerator::placeWoods()
 {
-    //unsigned int xOffset = Utility::randBetween (0, m_mapWidth);
-    //unsigned int yOffset = Utility::randBetween (0, m_mapHeight);
     for (unsigned int yy = 0; yy < m_mapHeight; yy++) {
         for (unsigned int xx = 0; xx < m_mapWidth; xx++) {
             if (isValidCoordinate (xx, yy)) {
@@ -79,5 +84,20 @@ void RuralGenerator::placeWoods()
 
 void RuralGenerator::placePlayer()
 {
+
+}
+
+void RuralGenerator::placeDungeonStairs()
+{
+    unsigned int numStairs = Utility::randBetween (1, 5);
+
+    for (unsigned int ii = 0; ii < numStairs; ii++) {
+        unsigned int x = Utility::randBetween (0, m_mapWidth);
+        unsigned int y = Utility::randBetween (0, m_mapHeight);
+        if (isValidCoordinate (x, y)) {
+            getByCoordinate(x, y) = LINK;
+        }
+    }
+
 
 }
