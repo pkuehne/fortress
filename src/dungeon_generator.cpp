@@ -30,11 +30,6 @@ void DungeonGenerator::reset () {
 }
 
 bool DungeonGenerator::generate () {
-    static unsigned int offset = 0;
-    unsigned int seed = time(0) + offset++;
-    //srand(1439294983);
-    srand (seed);
-
     reset();
     initMap (EMPTY);
 
@@ -59,7 +54,6 @@ bool DungeonGenerator::generate () {
     ///loadMap ();
     createEntitiesFromMap();
     reset();
-    std::cout << "Created with seed " << seed << std::endl;
 
     return true;
 }
@@ -105,10 +99,10 @@ void DungeonGenerator::createEntitiesFromMap () {
 }
 
 bool DungeonGenerator::generateRoom () {
-    unsigned int width  = rand() % 6 + 5;
-    unsigned int height = rand() % 6 + 5;
-    unsigned int left   = rand() % (m_mapWidth - width - 1) + 2;
-    unsigned int top    = rand() % (m_mapHeight - height - 1) + 2;
+    unsigned int width  = Utility::randBetween (5, 13);
+    unsigned int height = Utility::randBetween (5, 13);
+    unsigned int left   = Utility::randBetween (2, (m_mapWidth - width - 2));
+    unsigned int top    = Utility::randBetween (2, (m_mapHeight - height - 2));
 
     if (left+width >= m_mapWidth || left < 1 ||
         top+height >= m_mapHeight || top < 1) {
@@ -191,7 +185,7 @@ void DungeonGenerator::connectRooms (Room& start, Room& end)
 
 void DungeonGenerator::placeUpStair()
 {
-    m_startRoom = rand() % m_rooms.size();
+    m_startRoom = Utility::randBetween (0, m_rooms.size()-1);
     getByCoordinate (m_rooms[m_startRoom].midX, m_rooms[m_startRoom].midY) = UP;
 }
 
@@ -199,7 +193,7 @@ void DungeonGenerator::placeDownStair()
 {
     if (m_rooms.size() < 2) return; // No point
     unsigned int room = m_startRoom;
-    while (room == m_startRoom) room = rand() % m_rooms.size();
+    while (room == m_startRoom) room = Utility::randBetween (0,m_rooms.size()-1);
     getByCoordinate (m_rooms[room].midX, m_rooms[room].midY) = DOWN;
 }
 
@@ -207,15 +201,15 @@ void DungeonGenerator::placeOrcs()
 {
     if (m_rooms.size() < 2) return; // No point
 
-    unsigned int numOrcs = rand() % (m_rooms.size()) + m_level;
+    unsigned int numOrcs = Utility::randBetween (1, m_rooms.size() + m_level);
     for (size_t ii = 0; ii < numOrcs; ii++) {
         unsigned int room = 0;
         while (1) {
-            room = rand() % m_rooms.size();
+            room = Utility::randBetween (0, m_rooms.size()-1);
             if (m_startRoom == room) continue;
             unsigned int x, y;
-            x = m_rooms[room].x + (rand() % m_rooms[room].width-2) + 1;
-            y = m_rooms[room].y + (rand() % m_rooms[room].height-2) + 1;
+            x = m_rooms[room].x + (Utility::randBetween (0, m_rooms[room].width-2)) + 1;
+            y = m_rooms[room].y + (Utility::randBetween (0, m_rooms[room].height-2)) + 1;
             unsigned char& tile = getByCoordinate (x, y);
             if (tile == FLOOR) {
                 tile = ORC;

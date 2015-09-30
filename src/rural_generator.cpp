@@ -12,18 +12,11 @@ const unsigned char TREE = 'T';
 
 bool RuralGenerator::generate()
 {
-    static unsigned int offset = 0;
-    unsigned int seed = time(0) + offset++;
-    //srand(1439294983);
-    srand (seed);
-
     reset();
     initMap (EMPTY);
 
     std::cout << "Generating rural area" << std::endl;
-    for (unsigned int ii = 0; ii < 5; ii++) {
-        placeWoods();
-    }
+    placeWoods();
     placePlayer();
     createEntitiesFromMap();
     std::cout << "Done generating" << std::endl;
@@ -43,12 +36,11 @@ void RuralGenerator::createEntitiesFromMap()
             switch (getByCoordinate(xx, yy)) {
                 case EMPTY:
                     l_entity = m_engine->getEntities()->createTilePrefab (location);
-                    m_engine->getComponents()->get<SpriteComponent>(l_entity)->fgColor = Color (GREEN);
+                    m_engine->getComponents()->get<SpriteComponent>(l_entity)->fgColor = Color (DARK_GREEN);
                     break;
                 case TREE:
                 default:
-                    l_entity = m_engine->getEntities()->createWallPrefab (location);
-                    m_engine->getComponents()->get<SpriteComponent>(l_entity)->sprite = getByCoordinate (xx, yy);
+                    l_entity = m_engine->getEntities()->createTreePrefab (location);
                     break;
             }
         }
@@ -67,10 +59,10 @@ void RuralGenerator::reset ()
 
 void RuralGenerator::placeWoods()
 {
-    unsigned int xOffset = Utility::randBetween (10, m_mapWidth-10);
-    unsigned int yOffset = Utility::randBetween (10, m_mapHeight-10);
-    for (unsigned int yy = yOffset-10; yy < yOffset+10; yy++) {
-        for (unsigned int xx = xOffset-10; xx < xOffset+10; xx++) {
+    //unsigned int xOffset = Utility::randBetween (0, m_mapWidth);
+    //unsigned int yOffset = Utility::randBetween (0, m_mapHeight);
+    for (unsigned int yy = 0; yy < m_mapHeight; yy++) {
+        for (unsigned int xx = 0; xx < m_mapWidth; xx++) {
             if (isValidCoordinate (xx, yy)) {
                 unsigned char& tile = getByCoordinate(xx,yy);
                 if (tile == TREE) continue;

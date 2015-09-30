@@ -311,6 +311,29 @@ EntityId EntityManager::createHelmetPrefab ()
     return l_entity;
 }
 
+EntityId EntityManager::createTreePrefab(Location& location)
+{
+    EntityId l_entity = createEntity (location);
+
+    SpriteComponent* l_sprite = new SpriteComponent();
+    l_sprite->fgColor    = Color (DARK_GREEN);
+    l_sprite->bgColor    = Color (BLACK);
+    l_sprite->sprite     = 'T';
+    m_engine->getComponents()->add (l_entity, l_sprite);
+
+    // Description Component
+    DescriptionComponent* l_description = new DescriptionComponent();
+    l_description->title = "Tree";
+    l_description->text = "Or maybe an Ent...?";
+    m_engine->getComponents()->add (l_entity, l_description);
+
+    ColliderComponent* l_collider = new ColliderComponent();
+    m_engine->getComponents()->add (l_entity, l_collider);
+    
+    return l_entity;
+}
+
+
 EntityHolder EntityManager::findEntitiesAt (unsigned int x, unsigned int y)
 {
     return findEntitiesNear (x, y, 0);

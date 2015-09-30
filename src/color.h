@@ -9,7 +9,8 @@ typedef enum {
     WHITE,
     BLACK,
     GREY,
-    YELLOW
+    YELLOW,
+    DARK_GREEN
 } COLOR;
 
 class Color {

@@ -31,6 +31,7 @@ public:
     EntityId createWeaponPrefab ();
     EntityId createShieldPrefab ();
     EntityId createHelmetPrefab ();
+    EntityId createTreePrefab(Location& location);
 
     EntityHolder findEntitiesNear (unsigned int x, unsigned int y, unsigned radius);
     EntityHolder findEntitiesAt (unsigned int x, unsigned int y);

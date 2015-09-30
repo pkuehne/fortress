@@ -49,7 +49,7 @@ void NpcSystem::update ()
 }
 
 Location NpcSystem::getRandomDirection (const Location& oldLocation) {
-    DIRECTION dir = rand () % Direction::NorthEast;
+    DIRECTION dir = Utility::randBetween (Direction::None, Direction::West);
     Location newLocation = oldLocation;
     switch (dir) {
         case Direction::North: newLocation.y--; break;
