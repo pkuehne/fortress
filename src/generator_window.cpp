@@ -131,13 +131,33 @@ void GeneratorWindow::keyDown (unsigned char key) {
 void GeneratorWindow::startGenerating () {
     m_generatingLevel = 1;
     m_generating = true;
-    getEngine()->getMap()->resetMap (m_levelWidth, m_levelHeight, m_levelDepth);
-    getEngine()->setLevel (1);
+
+    {
+        getEngine()->setArea (0);
+        getEngine()->setLevel (1);
+        getEngine()->getMap()->resetMap (m_levelWidth, m_levelHeight, 1);
+
         RuralGenerator rural;
         rural.initialise (getEngine());
         rural.mapHeight()    = m_levelHeight;
         rural.mapWidth()     = m_levelWidth;
         rural.generate();
+    }
+
+    if (1){
+        getEngine()->setArea (1);
+        getEngine()->setLevel (1);
+        getEngine()->getMap()->resetMap (m_levelWidth, m_levelHeight, 1);
+
+        DungeonGenerator l_generator;
+        l_generator.initialise (getEngine());
+        l_generator.mapHeight()    = m_levelHeight;
+        l_generator.mapWidth()     = m_levelWidth;
+        l_generator.numberOfRooms()= 1;
+        l_generator.currentLevel() = 1;
+    }
+    getEngine()->setArea (0);
+
 }
 
 void GeneratorWindow::generateLevel () {

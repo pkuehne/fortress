@@ -5,7 +5,8 @@
 #include "component_base.h"
 
 struct StairComponent : public ComponentBase {
-    STAIR direction;
+    STAIR           direction;
+    unsigned int    area;
 };
 
 #endif

@@ -48,7 +48,6 @@ GameEngine::GameEngine (GraphicsInterface* a_graphics)
 , m_componentManager (0)
 , m_mapManager (0)
 , m_graphics (a_graphics)
-, m_level (0)
 {
     g_engine = this;
 }
@@ -61,7 +60,7 @@ GameEngine::~GameEngine ()
 void GameEngine::initialise ()
 {
     // Start us off on level 1
-    m_level = 1;
+    m_depth = 1;
 
     // Create if not exist
     if (!m_windowManager)       m_windowManager     = new WindowManager();

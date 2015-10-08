@@ -57,6 +57,10 @@ public:
 
     virtual void setLevel (unsigned int level) = 0;
     virtual unsigned int getLevel () = 0;
+
+    virtual void setArea (unsigned int area) = 0;
+    virtual unsigned int getArea() = 0;
+
 };
 
 #endif

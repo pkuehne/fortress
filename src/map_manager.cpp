@@ -2,13 +2,26 @@
 
 void MapManager::resetMap (unsigned int width, unsigned int height, unsigned int depth)
 {
-    m_mapWidth = width;
-    m_mapHeight = height;
-    m_mapDepth = depth;
+    std::cout << "Resetting Area " << m_currentArea << std::endl;
 
-    if (m_map) delete[] m_map;
-    m_map = new Tile[m_mapWidth*m_mapHeight*m_mapDepth];
+    auto existing = m_areas.begin ();
+    for (; existing != m_areas.end(); existing++) {
+        if (existing->areaId == m_currentArea) {
+            if (existing->mapData) delete[] existing->mapData;
+            m_areas.erase(existing);
+            break;
+        }
+    }
 
+    MapInfo info;
+    info.areaId = m_currentArea;
+    info.mapData = new Tile[width*height*depth];
+    info.height = height;
+    info.width  = width;
+    info.depth  = depth;
+
+    m_areas.push_back (info);
+    setArea (m_currentArea);
 }
 
 bool MapManager::isValidTile (unsigned int x, unsigned int y, unsigned int z)
@@ -67,4 +80,26 @@ EntityHolder MapManager::findEntitiesNear (const Location& location, unsigned ra
         }
     }
     return l_entities;
+}
+
+void MapManager::setArea (unsigned int area)
+{
+    std::cout << "Setting area " << area << std::endl;
+
+    m_currentArea   = area;
+    m_map           = nullptr;
+    m_mapHeight     = 0;
+    m_mapWidth      = 0;
+    m_mapDepth      = 0;
+
+    for (MapInfo info : m_areas) {
+        if (info.areaId == area) {
+            std::cout << "Found area!" << std::endl;
+            m_map       = info.mapData;
+            m_mapHeight = info.height;
+            m_mapWidth  = info.width;
+            m_mapDepth  = info.depth;
+        }
+    }
+    std::cout << "Setting area done" << std::endl;
 }

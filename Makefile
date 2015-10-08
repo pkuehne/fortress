@@ -30,6 +30,7 @@ coverage:
 
 run: build
 	./fortress
+install: build
 
 doxy:
 	doxygen Doxyfile

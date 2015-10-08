@@ -48,8 +48,11 @@ public:
     void addMessage (const MessageType&, const std::string& message);
     std::vector<Message>& getMessages() { return m_messages; }
 
-    void setLevel (unsigned int level) { m_level = level; }
-    unsigned int getLevel () { return m_level; }
+    void setLevel (unsigned int depth) { m_depth = depth; }
+    unsigned int getLevel () { return m_depth; }
+
+    void setArea (unsigned int area) { m_mapManager->setArea (area); }
+    unsigned int getArea() { return m_mapManager->getArea(); }
 
 private:
     unsigned long long  m_tick;
@@ -67,7 +70,8 @@ private:
     GraphicsInterface*      m_graphics;
 
     std::vector<Message>    m_messages;
-    unsigned int            m_level;
+    unsigned int            m_depth = 0;
+    unsigned int            m_area = 0;
 };
 
 #endif

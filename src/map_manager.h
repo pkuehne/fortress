@@ -3,6 +3,17 @@
 
 #include "map_manager_interface.h"
 #include "game_engine_interface.h"
+#include <vector>
+
+struct MapInfo {
+    unsigned int    areaId;
+    Tile*           mapData;
+    unsigned int    height;
+    unsigned int    width;
+    unsigned int    depth;
+    friend bool operator< (const MapInfo& lhs, const MapInfo& rhs) { return lhs.areaId < rhs.areaId; }
+};
+
 
 class MapManager : public MapManagerInterface {
 public:
@@ -28,7 +39,7 @@ public:
     virtual void resetMap (unsigned int width, unsigned int height, unsigned int depth);
 
     unsigned int getArea () { return m_currentArea; }
-    void setArea (unsigned int area) { m_currentArea = area; }
+    void setArea (unsigned int area);
 
     EntityHolder findEntitiesAt (const Location& location);
     EntityHolder findEntitiesNear (const Location& location, unsigned int radius);
@@ -40,8 +51,7 @@ private:
     unsigned int            m_mapDepth;
     Tile*                   m_map;
     unsigned int            m_currentArea;
-
-
+    std::vector<MapInfo> m_areas;
 };
 
 #endif
