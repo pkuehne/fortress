@@ -30,6 +30,6 @@ bool randChance (unsigned int percentage)
 
 std::ostream& operator<< (std::ostream& out, const Location& loc)
 {
-    out << "(" << loc.x << "," << loc.y << "," << loc.z << ")";
+    out << "(" << loc.area << ":" << loc.x << "," << loc.y << "," << loc.z << ")";
     return out;
 }

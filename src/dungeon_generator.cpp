@@ -6,6 +6,7 @@
 #include <iostream>
 #include <fstream>
 #include "sprite_component.h"
+#include "stair_component.h"
 
 static unsigned int getDistance (unsigned int start, unsigned int end, void* customData);
 static unsigned int getPathCost (unsigned int index, void* customData);
@@ -74,11 +75,15 @@ void DungeonGenerator::createEntitiesFromMap () {
                     m_engine->getComponents()->get<SpriteComponent>(l_entity)->sprite = wallSprite (xx, yy);
                     break;
                 case UP:
-                    m_engine->getEntities()->createStairPrefab (STAIR_UP, location);
-                    ///if (m_level == 1) m_engine->getEntities()->createPlayerPrefab (location);
+                    l_entity = m_engine->getEntities()->createStairPrefab (STAIR_UP, location);
+                    if (m_level == 1) {
+                        m_engine->getComponents()->get<StairComponent>(l_entity)->target = m_upStairTarget;
+                        m_upStairLink = l_entity;
+                    }
                     break;
                 case DOWN:
-                    m_engine->getEntities()->createStairPrefab (STAIR_DOWN, location);
+                    l_entity = m_engine->getEntities()->createStairPrefab (STAIR_DOWN, location);
+                    if (m_level == 1) m_engine->getComponents()->get<StairComponent>(l_entity)->target = m_downStairTarget;
                     break;
                 case ORC:
                     m_engine->getEntities()->createEnemyPrefab (location);

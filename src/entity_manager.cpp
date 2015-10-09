@@ -32,11 +32,12 @@ void EntityManager::addEntity (EntityId id, Location& location) {
     if (id >= m_maxId) m_maxId = id + 1;
 
     location.z = (location.z == 0) ? m_engine->getLevel() : location.z;
+    location.area = (location.area == 0) ? m_engine->getArea() : location.area;
 
     m_locations[id] = location;
     m_engine->getMap()->getTile (location).entities.insert (id);
 
-    m_entities[m_engine->getMap()->getArea()].insert (id);
+    m_entities[location.area].insert (id);
 
     AddEntityEvent* l_event = new AddEntityEvent;
     l_event->entity = id;
@@ -57,8 +58,10 @@ void EntityManager::destroyEntity (EntityId id) {
 
 void EntityManager::setLocation (EntityId entity, Location& location)
 {
+
     m_engine->getMap()->getTile (m_locations[entity]).entities.erase (entity);
     m_locations[entity] = location;
+    m_engine->getMap()->setArea (location.area);
     m_engine->getMap()->getTile (m_locations[entity]).entities.insert (entity);
 }
 
@@ -241,6 +244,7 @@ EntityId EntityManager::createStairPrefab (STAIR dir, Location& location)
     // StairComponent
     StairComponent* l_stair = new StairComponent();
     l_stair->direction = dir;
+    l_stair->target = 0;
     m_engine->getComponents()->add (l_entity, l_stair);
 
     return l_entity;
@@ -329,7 +333,7 @@ EntityId EntityManager::createTreePrefab(Location& location)
 
     ColliderComponent* l_collider = new ColliderComponent();
     m_engine->getComponents()->add (l_entity, l_collider);
-    
+
     return l_entity;
 }
 

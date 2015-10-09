@@ -66,6 +66,7 @@ public:
     EntityId    weapon;
 };
 
+// Deprecated
 class ChangeLevelEvent : public Event {
 public:
     ChangeLevelEvent () : Event (EVENT_CHANGE_LEVEL) { }

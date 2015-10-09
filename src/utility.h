@@ -30,11 +30,11 @@ typedef enum {
 } STAIR;
 
 struct Location {
-    unsigned int x;
-    unsigned int y;
-    unsigned int z;
-    Location():x(0),y(0),z(0) {}
-    bool operator== (const Location& rhs) { return (rhs.x == x && rhs.y == y && rhs.z == z); }
+    unsigned int x      = 0;
+    unsigned int y      = 0;
+    unsigned int z      = 0;
+    unsigned int area   = 0;
+    bool operator== (const Location& rhs) { return (rhs.area == area && rhs.x == x && rhs.y == y && rhs.z == z); }
 };
     std::ostream& operator<< (std::ostream& out, const Location& loc);
 

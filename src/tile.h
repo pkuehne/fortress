@@ -5,7 +5,7 @@
 
 class Tile {
 public:
-    unsigned int lastVisited;
+    unsigned int lastVisited = 0;
     EntityHolder entities;
 };
 

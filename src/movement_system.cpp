@@ -24,15 +24,16 @@ void MovementSystem::handleEvent (const Event* event)
                         return; // Don't update position if it's a collidable
                     }
                     StairComponent* l_stair = m_engine->getComponents()->get<StairComponent> (l_target);
-                    if (l_stair && l_entity == m_engine->getEntities()->getPlayer()) {
-                        unsigned int level = m_engine->getLevel();
+                    if (l_stair && l_stair->target && l_entity == m_engine->getEntities()->getPlayer()) {
+                        /*unsigned int level = m_engine->getLevel();
                         level += l_stair->direction == STAIR_UP ? -1 : 1;
                         ChangeLevelEvent* l_event = new ChangeLevelEvent;
                         l_event->level = level;
                         l_event->direction = l_stair->direction;
                         m_engine->raiseEvent (l_event);
+                        */
+                        l_newLocation = m_engine->getEntities()->getLocation(l_stair->target);
                     }
-
                 }
             }
 

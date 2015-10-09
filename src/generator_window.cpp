@@ -3,6 +3,7 @@
 #include "dungeon_generator.h"
 #include "rural_generator.h"
 #include "map_window.h"
+#include "stair_component.h"
 #include <sstream>
 
 std::string GeneratorWindow::formatNumber (int number) {
@@ -132,30 +133,48 @@ void GeneratorWindow::startGenerating () {
     m_generatingLevel = 1;
     m_generating = true;
 
+    getEngine()->setArea (0);
+    getEngine()->setLevel (1);
+    getEngine()->getMap()->resetMap (m_levelWidth, m_levelHeight, 1);
+
+    RuralGenerator rural;
+    rural.initialise (getEngine());
+    rural.mapHeight()    = m_levelHeight;
+    rural.mapWidth()     = m_levelWidth;
+    rural.generate();
+
+    unsigned int area = 1;
+    for (EntityId stair : rural.getAreaLinks())
     {
-        getEngine()->setArea (0);
-        getEngine()->setLevel (1);
-        getEngine()->getMap()->resetMap (m_levelWidth, m_levelHeight, 1);
-
-        RuralGenerator rural;
-        rural.initialise (getEngine());
-        rural.mapHeight()    = m_levelHeight;
-        rural.mapWidth()     = m_levelWidth;
-        rural.generate();
-    }
-
-    if (1){
-        getEngine()->setArea (1);
+        getEngine()->setArea (area++);
         getEngine()->setLevel (1);
         getEngine()->getMap()->resetMap (m_levelWidth, m_levelHeight, 1);
 
         DungeonGenerator l_generator;
         l_generator.initialise (getEngine());
-        l_generator.mapHeight()    = m_levelHeight;
-        l_generator.mapWidth()     = m_levelWidth;
-        l_generator.numberOfRooms()= 1;
-        l_generator.currentLevel() = 1;
+        l_generator.mapHeight()     = m_levelHeight;
+        l_generator.mapWidth()      = m_levelWidth;
+        l_generator.numberOfRooms() = 1;
+        l_generator.currentLevel()  = 1;
+        l_generator.downStairTarget() = 0;
+        l_generator.upStairTarget() = stair;
+        l_generator.generate();
+        getEngine()->getComponents()->get<StairComponent>(stair)->target = l_generator.upStairLink();
     }
+
+    /*
+    EntityHolder& l_entities = getEngine()->getEntities()->get (0);
+    for (EntityId entity : l_entities) {
+        StairComponent* l_stair = getEngine()->getComponents()->get<StairComponent>(entity);
+        if (l_stair == nullptr) continue;
+        Location l_stairLoc = getEngine()->getEntities()->getLocation (entity);
+        if (l_stair->direction == STAIR_DOWN && l_stairLoc.z == 1) {
+            l_stair->target = 0;
+        }
+    }
+    */
+
+
     getEngine()->setArea (0);
 
 }

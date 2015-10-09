@@ -2,8 +2,6 @@
 
 void MapManager::resetMap (unsigned int width, unsigned int height, unsigned int depth)
 {
-    std::cout << "Resetting Area " << m_currentArea << std::endl;
-
     auto existing = m_areas.begin ();
     for (; existing != m_areas.end(); existing++) {
         if (existing->areaId == m_currentArea) {
@@ -84,8 +82,6 @@ EntityHolder MapManager::findEntitiesNear (const Location& location, unsigned ra
 
 void MapManager::setArea (unsigned int area)
 {
-    std::cout << "Setting area " << area << std::endl;
-
     m_currentArea   = area;
     m_map           = nullptr;
     m_mapHeight     = 0;
@@ -94,12 +90,10 @@ void MapManager::setArea (unsigned int area)
 
     for (MapInfo info : m_areas) {
         if (info.areaId == area) {
-            std::cout << "Found area!" << std::endl;
             m_map       = info.mapData;
             m_mapHeight = info.height;
             m_mapWidth  = info.width;
             m_mapDepth  = info.depth;
         }
     }
-    std::cout << "Setting area done" << std::endl;
 }
