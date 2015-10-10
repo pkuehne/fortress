@@ -82,6 +82,7 @@ EntityHolder MapManager::findEntitiesNear (const Location& location, unsigned ra
 
 void MapManager::setArea (unsigned int area)
 {
+    std::cout << "Setting area to " << area << std::endl;
     m_currentArea   = area;
     m_map           = nullptr;
     m_mapHeight     = 0;

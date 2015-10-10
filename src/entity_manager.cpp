@@ -58,7 +58,6 @@ void EntityManager::destroyEntity (EntityId id) {
 
 void EntityManager::setLocation (EntityId entity, Location& location)
 {
-
     m_engine->getMap()->getTile (m_locations[entity]).entities.erase (entity);
     m_locations[entity] = location;
     m_engine->getMap()->setArea (location.area);

@@ -18,7 +18,7 @@ void NpcSystem::update ()
 {
     if (getEngine()->isPlayerTurn()) return;
 
-    for (EntityId l_entity = 1; l_entity < getEngine()->getEntities()->getMaxId(); l_entity++) {
+    for (EntityId l_entity : getEngine()->getEntities()->get()) {
         NpcComponent* l_npc = getEngine()->getComponents()->get<NpcComponent> (l_entity);
         Location l_loc = getEngine()->getEntities()->getLocation(l_entity);
         if (l_npc == 0) continue;

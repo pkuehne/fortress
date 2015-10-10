@@ -154,7 +154,7 @@ void GeneratorWindow::startGenerating () {
         l_generator.initialise (getEngine());
         l_generator.mapHeight()     = m_levelHeight;
         l_generator.mapWidth()      = m_levelWidth;
-        l_generator.numberOfRooms() = 1;
+        l_generator.numberOfRooms() = 2;
         l_generator.currentLevel()  = 1;
         l_generator.downStairTarget() = 0;
         l_generator.upStairTarget() = stair;

@@ -143,11 +143,6 @@ void MapWindow::keyDown (unsigned char key)
     if (key == '\\') {
         m_debugMode = !m_debugMode;
     }
-    if (key == 'o') {
-        static unsigned int area = 0;
-        area = (area == 0) ? 1 : 0;
-        getEngine()->setArea (area);
-    }
     //std::cout << "Key: " << key << std::endl;
 }
 
