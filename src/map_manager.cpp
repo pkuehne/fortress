@@ -53,6 +53,7 @@ void MapManager::index2map (unsigned int index, unsigned int& x, unsigned int& y
 }
 void MapManager::index2map (unsigned int index, Location& location)
 {
+    location.area = getArea();
     return index2map (index, location.x, location.y, location.z);
 }
 
@@ -82,7 +83,7 @@ EntityHolder MapManager::findEntitiesNear (const Location& location, unsigned ra
 
 void MapManager::setArea (unsigned int area)
 {
-    std::cout << "Setting area to " << area << std::endl;
+    //std::cout << "Setting area to " << area << std::endl;
     m_currentArea   = area;
     m_map           = nullptr;
     m_mapHeight     = 0;

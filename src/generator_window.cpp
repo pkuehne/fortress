@@ -146,6 +146,7 @@ void GeneratorWindow::startGenerating () {
     unsigned int area = 1;
     for (EntityId stair : rural.getAreaLinks())
     {
+        std::cout << "Generating area: " << area << std::endl;
         getEngine()->setArea (area++);
         getEngine()->setLevel (1);
         getEngine()->getMap()->resetMap (m_levelWidth, m_levelHeight, 1);
