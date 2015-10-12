@@ -69,7 +69,6 @@ void FileLoader::loadState ()
             continue;
         }
     }
-    m_engine->setLevel (m_engine->getEntities()->getLocation(m_engine->getEntities()->getPlayer()).z);
 }
 
 

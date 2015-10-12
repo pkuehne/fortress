@@ -48,9 +48,6 @@ public:
     void addMessage (const MessageType&, const std::string& message);
     std::vector<Message>& getMessages() { return m_messages; }
 
-    void setLevel (unsigned int depth) { m_depth = depth; }
-    unsigned int getLevel () { return m_depth; }
-
     void setArea (unsigned int area) { m_mapManager->setArea (area); }
     unsigned int getArea() { return m_mapManager->getArea(); }
 

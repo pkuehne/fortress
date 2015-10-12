@@ -134,7 +134,6 @@ void GeneratorWindow::startGenerating () {
     m_generating = true;
 
     getEngine()->setArea (0);
-    getEngine()->setLevel (1);
     getEngine()->getMap()->resetMap (m_levelWidth, m_levelHeight, 1);
 
     RuralGenerator rural;
@@ -148,7 +147,6 @@ void GeneratorWindow::startGenerating () {
     {
         std::cout << "Generating area: " << area << std::endl;
         getEngine()->setArea (area++);
-        getEngine()->setLevel (1);
         getEngine()->getMap()->resetMap (m_levelWidth, m_levelHeight, m_levelDepth);
 
         DungeonGenerator l_generator;

@@ -31,13 +31,14 @@ EntityId EntityManager::createEntity (Location& location) {
 void EntityManager::addEntity (EntityId id, Location& location) {
     if (id >= m_maxId) m_maxId = id + 1;
 
-    location.z = (location.z == 0) ? m_engine->getLevel() : location.z;
     location.area = (location.area == 0) ? m_engine->getArea() : location.area;
+    if (location.z == 0) location.z = 1;
 
     m_locations[id] = location;
     m_engine->getMap()->getTile (location).entities.insert (id);
-
+    
     m_entities[location.area].insert (id);
+
 
     AddEntityEvent* l_event = new AddEntityEvent;
     l_event->entity = id;

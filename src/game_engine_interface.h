@@ -55,9 +55,6 @@ public:
     virtual void addMessage (const MessageType&, const std::string& message) = 0 ;
     virtual std::vector<Message>& getMessages() = 0;
 
-    virtual void setLevel (unsigned int level) = 0;
-    virtual unsigned int getLevel () = 0;
-
     virtual void setArea (unsigned int area) = 0;
     virtual unsigned int getArea() = 0;
 
