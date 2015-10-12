@@ -31,9 +31,17 @@ void DungeonGenerator::reset () {
 }
 
 bool DungeonGenerator::generate () {
-    reset();
-    initMap (EMPTY);
 
+    for (m_level = 1; m_level <= m_maxDepth; m_level++) {
+        reset();
+        initMap (EMPTY);
+        std::cout << "Creating level " << m_level << std::endl;
+        if (!generateLevel()) return false;
+    }
+    return true;
+}
+
+bool DungeonGenerator::generateLevel() {
     for (unsigned r = 0; r < m_roomTarget; r++) {
         bool success = false;
         int x = 0;
@@ -41,7 +49,7 @@ bool DungeonGenerator::generate () {
             success = generateRoom ();
         } while (!success && x++ < 100);
         if (x >= 100) {
-            std::cout << "Overran 100 tried to create room: " << r << std::endl;
+            std::cout << "Overran 100 tries to create room: " << r << std::endl;
             return false;
         }
     }
@@ -52,9 +60,7 @@ bool DungeonGenerator::generate () {
     placeUpStair();
     placeDownStair();
     placeOrcs();
-    ///loadMap ();
     createEntitiesFromMap();
-    reset();
 
     return true;
 }
@@ -75,15 +81,10 @@ void DungeonGenerator::createEntitiesFromMap () {
                     m_engine->getComponents()->get<SpriteComponent>(l_entity)->sprite = wallSprite (xx, yy);
                     break;
                 case UP:
-                    l_entity = m_engine->getEntities()->createStairPrefab (STAIR_UP, location);
-                    if (m_level == 1) {
-                        m_engine->getComponents()->get<StairComponent>(l_entity)->target = m_upStairTarget;
-                        m_upStairLink = l_entity;
-                    }
+                    m_upStair = m_engine->getEntities()->createStairPrefab (STAIR_UP, location);
                     break;
                 case DOWN:
-                    l_entity = m_engine->getEntities()->createStairPrefab (STAIR_DOWN, location);
-                    if (m_level == 1) m_engine->getComponents()->get<StairComponent>(l_entity)->target = m_downStairTarget;
+                    m_downStair = m_engine->getEntities()->createStairPrefab (STAIR_DOWN, location);
                     break;
                 case ORC:
                     m_engine->getEntities()->createEnemyPrefab (location);
@@ -101,6 +102,26 @@ void DungeonGenerator::createEntitiesFromMap () {
             }
         }
     }
+    if (m_level == 1) {
+        m_engine->getComponents()->get<StairComponent>(m_upStair)->target = m_upStairTarget;
+        m_upStairLink = m_upStair;
+        std::cout << "Connecting up stair " << m_upStair << " to target " << m_upStairTarget << std::endl;
+    } else {
+        m_engine->getComponents()->get<StairComponent>(m_upStair)->target = m_prevDownStair;
+        std::cout << "Connecting up stair " << m_upStair << " to previous down " << m_prevDownStair<< std::endl;
+    }
+    if (m_level == m_maxDepth) {
+        m_engine->getComponents()->get<StairComponent>(m_downStair)->target = m_downStairTarget;
+        m_downStairLink = m_downStair;
+        std::cout << "Connecting down stair " << m_downStair << " to target " << m_downStairTarget << std::endl;
+    }
+    if (m_level > 1) {
+        m_engine->getComponents()->get<StairComponent>(m_prevDownStair)->target = m_upStair;
+        std::cout << "Connecting previous down stair " << m_prevDownStair << " to up " << m_upStair << std::endl;
+    }
+    m_prevDownStair = m_downStair;
+    std::cout << "Setting prev down stair to " << m_prevDownStair << std::endl;
+
 }
 
 bool DungeonGenerator::generateRoom () {

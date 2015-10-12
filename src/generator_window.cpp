@@ -19,8 +19,8 @@ void GeneratorWindow::gainFocus () {
     setTitle (" Create New World ");
     m_levelWidth = 50;
     m_levelHeight = 50;
-    m_levelDepth = 5;
-    m_levelRooms = 10;
+    m_levelDepth = 2;
+    m_levelRooms = 2;
     m_worldSize = 129;
     m_selectedPosition = NONE;
     m_generatingLevel = 0;
@@ -149,20 +149,20 @@ void GeneratorWindow::startGenerating () {
         std::cout << "Generating area: " << area << std::endl;
         getEngine()->setArea (area++);
         getEngine()->setLevel (1);
-        getEngine()->getMap()->resetMap (m_levelWidth, m_levelHeight, 1);
+        getEngine()->getMap()->resetMap (m_levelWidth, m_levelHeight, m_levelDepth);
 
         DungeonGenerator l_generator;
         l_generator.initialise (getEngine());
+        l_generator.maxDepth()      = m_levelDepth;
         l_generator.mapHeight()     = m_levelHeight;
         l_generator.mapWidth()      = m_levelWidth;
-        l_generator.numberOfRooms() = 2;
-        l_generator.currentLevel()  = 1;
+        l_generator.numberOfRooms() = m_levelRooms;
         l_generator.downStairTarget() = 0;
         l_generator.upStairTarget() = stair;
-        l_generator.generate();
+        l_generator.generate(); //TODO Check return value and try again
         getEngine()->getComponents()->get<StairComponent>(stair)->target = l_generator.upStairLink();
     }
-
+    std::cout << "Placed " << getEngine()->getEntities()->getMaxId() << " entities" << std::endl;
     /*
     EntityHolder& l_entities = getEngine()->getEntities()->get (0);
     for (EntityId entity : l_entities) {
@@ -181,6 +181,7 @@ void GeneratorWindow::startGenerating () {
 }
 
 void GeneratorWindow::generateLevel () {
+    /*
     if (m_generatingLevel <= m_levelDepth) {
         DungeonGenerator l_generator;
         l_generator.initialise (getEngine());
@@ -193,7 +194,7 @@ void GeneratorWindow::generateLevel () {
         m_generating = false;
         m_generated = true;
     }
-
+    */
 
 }
 
