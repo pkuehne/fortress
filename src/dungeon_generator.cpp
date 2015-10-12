@@ -105,22 +105,17 @@ void DungeonGenerator::createEntitiesFromMap () {
     if (m_level == 1) {
         m_engine->getComponents()->get<StairComponent>(m_upStair)->target = m_upStairTarget;
         m_upStairLink = m_upStair;
-        std::cout << "Connecting up stair " << m_upStair << " to target " << m_upStairTarget << std::endl;
     } else {
         m_engine->getComponents()->get<StairComponent>(m_upStair)->target = m_prevDownStair;
-        std::cout << "Connecting up stair " << m_upStair << " to previous down " << m_prevDownStair<< std::endl;
     }
     if (m_level == m_maxDepth) {
         m_engine->getComponents()->get<StairComponent>(m_downStair)->target = m_downStairTarget;
         m_downStairLink = m_downStair;
-        std::cout << "Connecting down stair " << m_downStair << " to target " << m_downStairTarget << std::endl;
     }
     if (m_level > 1) {
         m_engine->getComponents()->get<StairComponent>(m_prevDownStair)->target = m_upStair;
-        std::cout << "Connecting previous down stair " << m_prevDownStair << " to up " << m_upStair << std::endl;
     }
     m_prevDownStair = m_downStair;
-    std::cout << "Setting prev down stair to " << m_prevDownStair << std::endl;
 
 }
 

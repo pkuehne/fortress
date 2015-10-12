@@ -109,7 +109,7 @@ void MapWindow::keyDown (unsigned char key)
     }
     if (key == 'p') {
         Location l_playerLoc = getEngine()->getEntities()->getLocation(playerId);
-        EntityHolder l_entities = getEngine()->getEntities()->findEntitiesAt (l_playerLoc.x, l_playerLoc.y);
+        EntityHolder l_entities = getEngine()->getMap()->findEntitiesAt (l_playerLoc);
         bool foundSomethingAlready = false;
         for (EntityId l_entity : l_entities) {
             DroppableComponent* droppable = getEngine()->getComponents()->get<DroppableComponent>(l_entity);
@@ -164,8 +164,8 @@ void MapWindow::drawMap()
 
     for (int yy = m_mapStartY; yy < yWidth; yy++) {
         for (int xx = m_mapStartX; xx < xWidth; xx++) {
-            if (!getEngine()->getMap()->isValidTile (xx, yy, getEngine()->getLevel())) continue;
-            Tile& l_tile = getEngine()->getMap()->getTile (xx, yy, getEngine()->getLevel());
+            if (!getEngine()->getMap()->isValidTile (xx, yy, l_player.z)) continue;
+            Tile& l_tile = getEngine()->getMap()->getTile (xx, yy, l_player.z);
             for (EntityId entity : l_tile.entities) {
                 SpriteComponent* l_sprite= getEngine()->getComponents()->get<SpriteComponent> (entity);
                 if (!l_sprite) continue;

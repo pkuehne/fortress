@@ -21,8 +21,12 @@ void NpcSystem::update ()
     for (EntityId l_entity : getEngine()->getEntities()->get()) {
         NpcComponent* l_npc = getEngine()->getComponents()->get<NpcComponent> (l_entity);
         Location l_loc = getEngine()->getEntities()->getLocation(l_entity);
+
+        EntityId player = getEngine()->getEntities()->getPlayer();
+        Location playerLoc = getEngine()->getEntities()->getLocation(player);
+
         if (l_npc == 0) continue;
-        if (l_loc.z != getEngine()->getLevel()) continue;
+        if (l_loc.z != playerLoc.z) continue;
 
         // Check if player is attackable
         if (canAttackPlayer (l_loc)) {

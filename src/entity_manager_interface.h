@@ -33,10 +33,6 @@ public:
     virtual EntityId createHelmetPrefab () = 0;
     virtual EntityId createTreePrefab(Location& location) = 0;
 
-    virtual EntityHolder findEntitiesNear (unsigned int x, unsigned int y, unsigned radius) = 0;
-    virtual EntityHolder findEntitiesAt (unsigned int x, unsigned int y) = 0;
-    virtual EntityHolder findEntitiesToThe (DIRECTION a_direction, EntityId a_entity) = 0;
-
     virtual Location getLocation (EntityId entity) = 0;
     virtual void setLocation (EntityId entity, Location& location) = 0;
     virtual EntityHolder& get(unsigned int area = 0) = 0;

@@ -30,8 +30,8 @@ void FovAlgorithm::calculateFov ()
                 transformOctant (row, col, oct, y, x);
                 y += playerLoc.y;
                 x += playerLoc.x;
-                if (m_engine->getMap()->isValidTile (x, y, m_engine->getLevel()) && visible) {
-                    m_engine->getMap()->getTile (x, y, m_engine->getLevel()).lastVisited = m_engine->getTurn();
+                if (m_engine->getMap()->isValidTile (x, y, playerLoc.z) && visible) {
+                    m_engine->getMap()->getTile (x, y, playerLoc.z).lastVisited = m_engine->getTurn();
                     for (EntityId entity : m_engine->getMap()->getTile (x, y, m_engine->getLevel()).entities) {
                         if (m_engine->getComponents()->get<ColliderComponent>(entity)) {
                             line.addShadow (projection);

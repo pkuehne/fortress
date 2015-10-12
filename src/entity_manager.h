@@ -33,10 +33,6 @@ public:
     EntityId createHelmetPrefab ();
     EntityId createTreePrefab(Location& location);
 
-    EntityHolder findEntitiesNear (unsigned int x, unsigned int y, unsigned radius);
-    EntityHolder findEntitiesAt (unsigned int x, unsigned int y);
-    EntityHolder findEntitiesToThe (DIRECTION a_direction, EntityId a_entity);
-
     Location getLocation (EntityId entity) { return m_locations[entity]; }
     void setLocation (EntityId entity, Location& location);
 
