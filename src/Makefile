@@ -27,5 +27,5 @@ $(EXECUTABLE): $(OBJECTS)
 	$(CC) $(LDFLAGS) $(OBJECTS) $(LIBRARIES) -o $@
 
 %.o: %.cpp
-	$(CC) -c $(CFLAGS) $< -o $(BUILD)$@
+	$(CC) -c  $(CFLAGS) $< -o $(BUILD)$@
 	$(CC) -MM $(CFLAGS) $< -o $(BUILD)$*.d

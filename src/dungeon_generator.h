@@ -14,6 +14,7 @@ public:
     unsigned int& downStairTarget() { return m_downStairTarget; }
     unsigned int& upStairLink() { return m_upStairLink; }
     unsigned int& downStairLink() { return m_downStairLink; }
+    bool& createBoss() { return m_createBoss; }
 
 private:
     struct Room {
@@ -50,6 +51,7 @@ private:
     unsigned int            m_downStair         = 0;
     unsigned int            m_upStair           = 0;
     std::vector<Room>       m_rooms;
+    bool                    m_createBoss        = false;
 };
 
 #endif

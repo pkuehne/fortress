@@ -87,7 +87,12 @@ void DungeonGenerator::createEntitiesFromMap () {
                     m_downStair = m_engine->getEntities()->createStairPrefab (STAIR_DOWN, location);
                     break;
                 case ORC:
-                    m_engine->getEntities()->createEnemyPrefab (location);
+                    if (m_createBoss && m_level == m_maxDepth) {
+                        m_engine->getEntities()->createTrollPrefab (location);
+                        m_createBoss = false;
+                    } else {
+                        m_engine->getEntities()->createEnemyPrefab (location);
+                    }
                     m_engine->getEntities()->createTilePrefab (location);
                     break;
                 case FLOOR:

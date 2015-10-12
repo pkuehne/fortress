@@ -157,6 +157,7 @@ void GeneratorWindow::startGenerating () {
         l_generator.numberOfRooms() = m_levelRooms;
         l_generator.downStairTarget() = 0;
         l_generator.upStairTarget() = stair;
+        if (area == 2) l_generator.createBoss() = true;
         l_generator.generate(); //TODO Check return value and try again
         getEngine()->getComponents()->get<StairComponent>(stair)->target = l_generator.upStairLink();
     }

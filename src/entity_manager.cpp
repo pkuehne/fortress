@@ -36,7 +36,7 @@ void EntityManager::addEntity (EntityId id, Location& location) {
 
     m_locations[id] = location;
     m_engine->getMap()->getTile (location).entities.insert (id);
-    
+
     m_entities[location.area].insert (id);
 
 
@@ -189,6 +189,47 @@ EntityId EntityManager::createEnemyPrefab (Location& location)
 
     return l_entity;
 }
+
+EntityId EntityManager::createTrollPrefab (Location& location)
+{
+    EntityId l_entity = createEntity(location);
+
+    // Sprite Component
+    SpriteComponent* l_sprite = new SpriteComponent();
+    l_sprite->fgColor    = Color (RED);
+    l_sprite->bgColor    = Color (BLACK);
+    l_sprite->sprite     = 'T';
+    m_engine->getComponents()->add (l_entity, l_sprite);
+
+    // Collider Component
+    ColliderComponent* l_collider = new ColliderComponent();
+    m_engine->getComponents()->add (l_entity, l_collider);
+
+    // Description Component
+    DescriptionComponent* l_description = new DescriptionComponent();
+    l_description->title = "Troll";
+    l_description->text = "It is huge, with fierce red eyes, crackling with magic.";
+    m_engine->getComponents()->add (l_entity, l_description);
+
+    // Health Component
+    HealthComponent* l_health = new HealthComponent();
+    l_health->health = 8;
+    m_engine->getComponents()->add (l_entity, l_health);
+
+    // NPC Component
+    NpcComponent* l_npc = new NpcComponent();
+    m_engine->getComponents()->add (l_entity, l_npc);
+
+    // Euipment Component
+    EquipmentComponent* l_equipment = new EquipmentComponent();
+    l_equipment->rightHandWieldable = createWeaponPrefab();
+    l_equipment->leftHandWieldable = createShieldPrefab();
+    l_equipment->headWearable = createHelmetPrefab();
+    m_engine->getComponents()->add (l_entity, l_equipment);
+
+    return l_entity;
+}
+
 
 EntityId EntityManager::createTilePrefab (Location& location)
 {
