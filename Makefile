@@ -1,5 +1,7 @@
 .PHONY: all clean build test tags coverage run shuffle
 
+LOG_DIR=artifacts/logs/
+
 all: clean build test
 
 clean:
@@ -29,8 +31,12 @@ coverage:
 	$(MAKE) -C test --no-print-directory test -j 8 COVERAGE=Y
 	gcovr -r src
 
-run: build
-	./fortress
+run: build $(LOG_DIR)
+	@echo "Starting FORTRESS"
+	@./fortress
+
+$(LOG_DIR):
+	@mkdir -p artifacts/logs
 
 install: build
 

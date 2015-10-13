@@ -36,7 +36,7 @@ int main (int argc, char** argv)
 {
     // Install Segmentation Fault handler
     signal(SIGSEGV, handler);
-    FLAGS_log_dir="./logs/";
+    FLAGS_log_dir="artifacts/logs/";
     google::InitGoogleLogging(argv[0]);
 
     try {

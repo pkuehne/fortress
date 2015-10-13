@@ -42,3 +42,5 @@ tags
 *.png
 *.sav
 
+# Folders
+artifacts
