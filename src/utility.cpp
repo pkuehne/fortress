@@ -1,5 +1,6 @@
 #include "utility.h"
 #include <cstdlib>
+#include <glog/logging.h>
 
 namespace Utility {
 
@@ -10,7 +11,7 @@ unsigned int randBetween (unsigned int start, unsigned int end)
     if (seed == 0) {
         seed = time(nullptr);
         srand (seed);
-        std::cout << "Created with seed " << seed << std::endl;
+        LOG(INFO) << "Created with seed " << seed << std::endl;
     }
 
     return ((rand() % (end-start+1)) + start);
@@ -19,7 +20,7 @@ unsigned int randBetween (unsigned int start, unsigned int end)
 bool randChance (unsigned int percentage)
 {
     if (percentage>100) {
-        std::cout << "randChance percentage must be <100!";
+        LOG(ERROR) << "randChance percentage must be <100!";
         return true;
     }
 

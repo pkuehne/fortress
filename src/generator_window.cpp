@@ -5,6 +5,7 @@
 #include "map_window.h"
 #include "stair_component.h"
 #include <sstream>
+#include <glog/logging.h>
 
 std::string GeneratorWindow::formatNumber (int number) {
     std::stringstream str;
@@ -145,7 +146,7 @@ void GeneratorWindow::startGenerating () {
     unsigned int area = 1;
     for (EntityId stair : rural.getAreaLinks())
     {
-        std::cout << "Generating area: " << area << std::endl;
+        LOG(INFO) << "Generating area: " << area << std::endl;
         getEngine()->setArea (area++);
         getEngine()->getMap()->resetMap (m_levelWidth, m_levelHeight, m_levelDepth);
 
@@ -161,7 +162,7 @@ void GeneratorWindow::startGenerating () {
         l_generator.generate(); //TODO Check return value and try again
         getEngine()->getComponents()->get<StairComponent>(stair)->target = l_generator.upStairLink();
     }
-    std::cout << "Placed " << getEngine()->getEntities()->getMaxId() << " entities" << std::endl;
+    LOG(INFO) << "Placed " << getEngine()->getEntities()->getMaxId() << " entities" << std::endl;
     /*
     EntityHolder& l_entities = getEngine()->getEntities()->get (0);
     for (EntityId entity : l_entities) {

@@ -9,6 +9,7 @@
 #include <iostream>
 #include <execinfo.h>
 #include <signal.h>
+#include <glog/logging.h>
 
 void handler (int signal) {
     const unsigned int  numFrames   = 100;
@@ -35,6 +36,8 @@ int main (int argc, char** argv)
 {
     // Install Segmentation Fault handler
     signal(SIGSEGV, handler);
+    FLAGS_log_dir="./logs/";
+    google::InitGoogleLogging(argv[0]);
 
     try {
         std::string l_map("testmap.txt");

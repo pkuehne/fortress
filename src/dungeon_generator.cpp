@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <fstream>
+#include <glog/logging.h>
 #include "sprite_component.h"
 #include "stair_component.h"
 
@@ -35,7 +36,7 @@ bool DungeonGenerator::generate () {
     for (m_level = 1; m_level <= m_maxDepth; m_level++) {
         reset();
         initMap (EMPTY);
-        std::cout << "Creating level " << m_level << std::endl;
+        LOG(INFO) << "Creating level " << m_level << std::endl;
         if (!generateLevel()) return false;
     }
     return true;
@@ -49,7 +50,7 @@ bool DungeonGenerator::generateLevel() {
             success = generateRoom ();
         } while (!success && x++ < 100);
         if (x >= 100) {
-            std::cout << "Overran 100 tries to create room: " << r << std::endl;
+            LOG(WARNING) << "Overran 100 tries to create room: " << r << std::endl;
             return false;
         }
     }
@@ -84,7 +85,11 @@ void DungeonGenerator::createEntitiesFromMap () {
                     m_upStair = m_engine->getEntities()->createStairPrefab (STAIR_UP, location);
                     break;
                 case DOWN:
-                    m_downStair = m_engine->getEntities()->createStairPrefab (STAIR_DOWN, location);
+                    if (m_level != m_maxDepth || m_downStairTarget) {
+                        m_downStair = m_engine->getEntities()->createStairPrefab (STAIR_DOWN, location);
+                    } else {
+                        m_engine->getEntities()->createTilePrefab (location);
+                    }
                     break;
                 case ORC:
                     if (m_createBoss && m_level == m_maxDepth) {
@@ -113,7 +118,7 @@ void DungeonGenerator::createEntitiesFromMap () {
     } else {
         m_engine->getComponents()->get<StairComponent>(m_upStair)->target = m_prevDownStair;
     }
-    if (m_level == m_maxDepth) {
+    if (m_level == m_maxDepth && m_downStairTarget) {
         m_engine->getComponents()->get<StairComponent>(m_downStair)->target = m_downStairTarget;
         m_downStairLink = m_downStair;
     }
@@ -291,7 +296,7 @@ unsigned char DungeonGenerator::wallSprite (unsigned int x, unsigned int y)
         case 14: return 202; break;
         case 15: return 206; break;
     }
-    std::cout << "Return default wall" << std::endl;
+    LOG(ERROR) << "Return default wall" << std::endl;
     return 206;
 }
 

@@ -6,6 +6,7 @@
 #include <cstring>
 #include <map>
 #include <iostream>
+#include <glog/logging.h>
 
 const unsigned char EMPTY = '.';
 const unsigned char TREE = 'T';
@@ -16,12 +17,12 @@ bool RuralGenerator::generate()
     reset();
     initMap (EMPTY);
 
-    std::cout << "Generating rural area" << std::endl;
+    LOG(INFO) << "Generating rural area" << std::endl;
     placeWoods();
     placePlayer();
     placeDungeonStairs();
     createEntitiesFromMap();
-    std::cout << "Done generating" << std::endl;
+    LOG(INFO) << "Done generating area" << std::endl;
     return true;
 }
 
