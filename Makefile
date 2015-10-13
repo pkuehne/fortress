@@ -3,21 +3,22 @@
 all: clean build test
 
 clean:
-	$(MAKE) -C src --no-print-directory clean
-	$(MAKE) -C test --no-print-directory clean
+	@$(MAKE) -C src --no-print-directory clean
+	@$(MAKE) -C test --no-print-directory clean
 
 build: tags
 	clear
-	$(MAKE) -C src --no-print-directory build -j 8
+	@$(MAKE) -C src --no-print-directory build -j 8
 
 test:
 	clear
-	$(MAKE) -C test --no-print-directory test -j 8
+	@$(MAKE) -C test --no-print-directory test -j 8
 
 shuffle:
-	$(MAKE) -C test --no-print-directory shuffle
+	@$(MAKE) -C test --no-print-directory shuffle
+
 tags:
-	ctags --recurse=yes
+	@ctags --recurse=yes
 
 coverage:
 	rm -f src/*.gcda
@@ -30,6 +31,7 @@ coverage:
 
 run: build
 	./fortress
+
 install: build
 
 doxy:
