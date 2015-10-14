@@ -61,7 +61,7 @@ bool DungeonGenerator::generateLevel() {
 
     placeUpStair();
     placeDownStair();
-    //placeOrcs();
+    placeOrcs();
     placeItems();
     createEntitiesFromMap();
 

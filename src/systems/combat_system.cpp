@@ -17,7 +17,7 @@ void CombatSystem::handleEvent (const Event* event)
             EntityId defender = l_event->defender;
 
             EquipmentComponent* l_attackerEquipment = m_engine->getComponents()->get<EquipmentComponent>(attacker);
-            int damage = 1;
+            unsigned int damage = 1;
             if (l_attackerEquipment && l_attackerEquipment->rightHandWieldable != 0) {
                 EntityId l_weapon = l_attackerEquipment->rightHandWieldable;
                 damage = m_engine->getComponents()->get<WieldableComponent>(l_weapon)->baseDamage;
@@ -25,15 +25,16 @@ void CombatSystem::handleEvent (const Event* event)
 
             HealthComponent* l_health = m_engine->getComponents()->get<HealthComponent>(defender);
             if (l_health) {
-                l_health->health -= damage;
                 updateLog (attacker, defender, damage);
-                if (l_health->health < 1) {
+                if (damage < l_health->health) {
+                    l_health->health -= damage;
+                } else {
                     if (defender == getEngine()->getEntities()->getPlayer()) {
                         m_engine->getEntities()->destroyEntity (defender);
                     } else {
                         DescriptionComponent* l_targetDesc = m_engine->getComponents()->get<DescriptionComponent> (defender);
                         SpriteComponent*      l_targetSprite = m_engine->getComponents()->get<SpriteComponent> (defender);
-                        
+
                         std::string name = l_targetDesc->title;
                         unsigned char sprite = l_targetSprite->sprite;
 
@@ -49,8 +50,6 @@ void CombatSystem::handleEvent (const Event* event)
                         l_corpseSprite->fgColor = Color (GREY);
                         l_corpseSprite->bgColor = Color (BLACK);
                         m_engine->getComponents()->add(defender, l_corpseSprite);
-
-
                     }
                 }
             }
