@@ -35,6 +35,7 @@ private:
     void placeUpStair();
     void placeDownStair();
     void placeOrcs();
+    void placeItems();
     void loadMap ();
     unsigned char wallSprite (unsigned int x, unsigned int y);
 

@@ -274,7 +274,7 @@ EntityId EntityManager::createStairPrefab (STAIR dir, Location& location)
     SpriteComponent* l_sprite = new SpriteComponent();
     l_sprite->fgColor    = Color (WHITE);
     l_sprite->bgColor    = Color (BLACK);
-    l_sprite->sprite     = (dir == STAIR_DOWN) ? 24 : 23; //'>' : '<';
+    l_sprite->sprite     = (dir == STAIR_DOWN) ? 31 : 30; //'>' : '<';
     m_engine->getComponents()->add (l_entity, l_sprite);
 
     // Description Component

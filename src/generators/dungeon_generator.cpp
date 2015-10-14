@@ -23,6 +23,7 @@ const char RESTRICTED = 'X';
 const char ORC      = 'O';
 const char UP       = '<';
 const char DOWN     = '>';
+const char ITEM     = 'I';
 
 void DungeonGenerator::reset () {
     GeneratorInterface::reset();
@@ -60,7 +61,8 @@ bool DungeonGenerator::generateLevel() {
 
     placeUpStair();
     placeDownStair();
-    placeOrcs();
+    //placeOrcs();
+    placeItems();
     createEntitiesFromMap();
 
     return true;
@@ -246,6 +248,43 @@ void DungeonGenerator::placeOrcs()
                 tile = ORC;
                 break;
             }
+        }
+    }
+}
+
+void DungeonGenerator::placeItems()
+{
+    unsigned int maxItems = 1;
+    maxItems += (m_rooms.size() > 3) ? m_rooms.size() - 3 : 0;
+    maxItems += (m_level > 4) ? m_level - 4 : 0;
+
+    unsigned int numItems = Utility::randBetween (1, maxItems);
+
+    Location location;
+    unsigned int room = 0;
+    for (size_t ii = 0; ii < numItems; ii++) {
+        room = Utility::randBetween (0, m_rooms.size()-1);
+        unsigned int x, y;
+        do {
+            x = m_rooms[room].x + (Utility::randBetween (0, m_rooms[room].width-2)) + 1;
+            y = m_rooms[room].y + (Utility::randBetween (0, m_rooms[room].height-2)) + 1;
+        } while (getByCoordinate (x, y) != FLOOR);
+
+        location.x = x;
+        location.y = y;
+        location.z = m_level;
+
+        unsigned int type = Utility::randBetween (0, 3);
+        switch (type) {
+            case 0: // Potion
+                m_engine->getEntities()->createPotionPrefab (location);
+                break;
+            case 1: // Weapon
+                break;
+            case 2: // Shield
+                break;
+            case 3: // Armour
+                break;
         }
     }
 }
