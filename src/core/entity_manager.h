@@ -32,6 +32,7 @@ public:
     EntityId createWeaponPrefab ();
     EntityId createShieldPrefab ();
     EntityId createHelmetPrefab ();
+    EntityId createPotionPrefab (Location& location);
     EntityId createTreePrefab(Location& location);
 
     Location getLocation (EntityId entity) { return m_locations[entity]; }

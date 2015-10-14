@@ -4,7 +4,9 @@
 #include "component_base.h"
 
 struct HealthComponent : public ComponentBase {
-    int health;
+    unsigned int health;
+    unsigned int thirst;
+    unsigned int hunger;
 };
 
 #endif

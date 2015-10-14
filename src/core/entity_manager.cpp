@@ -14,6 +14,7 @@
 #include "wearable_component.h"
 #include "wieldable_component.h"
 #include "droppable_component.h"
+#include "consumable_component.h"
 
 void EntityManager::initialise (GameEngineInterface* engine)
 {
@@ -273,7 +274,7 @@ EntityId EntityManager::createStairPrefab (STAIR dir, Location& location)
     SpriteComponent* l_sprite = new SpriteComponent();
     l_sprite->fgColor    = Color (WHITE);
     l_sprite->bgColor    = Color (BLACK);
-    l_sprite->sprite     = (dir == STAIR_DOWN) ? '>' : '<';
+    l_sprite->sprite     = (dir == STAIR_DOWN) ? 24 : 23; //'>' : '<';
     m_engine->getComponents()->add (l_entity, l_sprite);
 
     // Description Component
@@ -352,6 +353,30 @@ EntityId EntityManager::createHelmetPrefab ()
 
     DroppableComponent* l_droppable = new DroppableComponent();
     m_engine->getComponents()->add (l_entity, l_droppable);
+
+    return l_entity;
+}
+
+EntityId EntityManager::createPotionPrefab (Location& location)
+{
+    EntityId l_entity = createEntity (location);
+
+    SpriteComponent* l_sprite = new SpriteComponent();
+    l_sprite->fgColor    = Color (YELLOW);
+    l_sprite->bgColor    = Color (BLACK);
+    l_sprite->sprite     = 189; //'$';
+    m_engine->getComponents()->add (l_entity, l_sprite);
+
+    DescriptionComponent* l_description = new DescriptionComponent();
+    l_description->title = "Potion";
+    l_description->text = "The label proclaims: Zero Calories!";
+    m_engine->getComponents()->add (l_entity, l_description);
+
+    DroppableComponent* l_droppable = new DroppableComponent();
+    m_engine->getComponents()->add (l_entity, l_droppable);
+
+    ConsumableComponent* l_consumable = new ConsumableComponent();
+    m_engine->getComponents()->add (l_entity, l_consumable);
 
     return l_entity;
 }

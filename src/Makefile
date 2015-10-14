@@ -32,14 +32,15 @@ build: $(PROGRAM)
 
 $(PROGRAM): $(ALL_DIR) $(OBJECTS)
 	@$(CC) $(LDFLAGS) $(OBJECTS) $(LIBRARIES) -o $@
-	@echo "Building $@"
+	@echo "Building $(notdir $@)"
 
 -include $(DEPENDS)
 
 $(OBJ_DIR)/%.o: %.cpp
 	@$(CC) -c  $(CFLAGS) $< -o $@
 	@$(CC) -MM $(CFLAGS) $< > $(DEP_DIR)/$*.d
-	@echo "Building $<"
+	@echo "Building $(notdir $<)"
 
 $(ART_DIR) $(OBJ_DIR) $(DEP_DIR) $(COV_DIR):
 	@mkdir -p $@
+	@echo "Creating directory $@"
