@@ -2,6 +2,7 @@
 #define UTILITY_H
 
 #include <iostream>
+#include <climits>
 
 typedef unsigned short DIRECTION;
 namespace Direction {
@@ -30,9 +31,9 @@ typedef enum {
 } STAIR;
 
 struct Location {
-    unsigned int x      = 0;
-    unsigned int y      = 0;
-    unsigned int z      = 0;
+    unsigned int x      = UINT_MAX;
+    unsigned int y      = UINT_MAX;
+    unsigned int z      = UINT_MAX;
     unsigned int area   = 0;
     bool operator== (const Location& rhs) { return (rhs.area == area && rhs.x == x && rhs.y == y && rhs.z == z); }
 };

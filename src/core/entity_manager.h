@@ -38,6 +38,8 @@ public:
     Location getLocation (EntityId entity) { return m_locations[entity]; }
     void setLocation (EntityId entity, Location& location);
 
+    bool validLocation (Location& location);
+    
     EntityHolder& get(unsigned int area = 0);
 private:
     GameEngineInterface*                m_engine;

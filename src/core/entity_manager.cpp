@@ -2,6 +2,7 @@
 #include "game_engine.h"
 #include <fstream>
 #include <iostream>
+#include <climits>
 
 #include "sprite_component.h"
 #include "collider_component.h"
@@ -36,9 +37,10 @@ void EntityManager::addEntity (EntityId id, Location& location) {
     if (location.z == 0) location.z = 1;
 
     m_locations[id] = location;
-    m_engine->getMap()->getTile (location).entities.insert (id);
-
     m_entities[location.area].insert (id);
+    if (validLocation (location)) {
+        m_engine->getMap()->getTile (location).entities.insert (id);
+    }
 
 
     AddEntityEvent* l_event = new AddEntityEvent;
@@ -60,10 +62,15 @@ void EntityManager::destroyEntity (EntityId id) {
 
 void EntityManager::setLocation (EntityId entity, Location& location)
 {
-    m_engine->getMap()->getTile (m_locations[entity]).entities.erase (entity);
+    if (validLocation (m_locations[entity])) m_engine->getMap()->getTile (m_locations[entity]).entities.erase (entity);
     m_locations[entity] = location;
     m_engine->getMap()->setArea (location.area);
-    m_engine->getMap()->getTile (m_locations[entity]).entities.insert (entity);
+    if (validLocation (m_locations[entity])) m_engine->getMap()->getTile (m_locations[entity]).entities.insert (entity);
+}
+
+bool EntityManager::validLocation (Location& location)
+{
+    return (location.x != UINT_MAX && location.y != UINT_MAX && location.z != UINT_MAX);
 }
 
 EntityId EntityManager::getPlayer ()
