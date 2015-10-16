@@ -149,9 +149,10 @@ EntityId EntityManager::createPlayerPrefab (Location& location)
 
     // Euipment Component
     EquipmentComponent* l_equipment = new EquipmentComponent();
-    l_equipment->rightHandWieldable = createWeaponPrefab();
-    l_equipment->leftHandWieldable = createShieldPrefab();
-    l_equipment->headWearable = createHelmetPrefab();
+    Location nowhere;
+    l_equipment->rightHandWieldable = createWeaponPrefab(nowhere);
+    l_equipment->leftHandWieldable = createShieldPrefab(nowhere);
+    l_equipment->headWearable = createHelmetPrefab(nowhere);
     m_engine->getComponents()->add (l_entity, l_equipment);
 
     m_player = l_entity;
@@ -190,9 +191,10 @@ EntityId EntityManager::createEnemyPrefab (Location& location)
 
     // Euipment Component
     EquipmentComponent* l_equipment = new EquipmentComponent();
-    l_equipment->rightHandWieldable = createWeaponPrefab();
-    l_equipment->leftHandWieldable = createShieldPrefab();
-    l_equipment->headWearable = createHelmetPrefab();
+    Location nowhere;
+    l_equipment->rightHandWieldable = createWeaponPrefab(nowhere);
+    l_equipment->leftHandWieldable = createShieldPrefab(nowhere);
+    l_equipment->headWearable = createHelmetPrefab(nowhere);
     m_engine->getComponents()->add (l_entity, l_equipment);
 
     return l_entity;
@@ -230,9 +232,10 @@ EntityId EntityManager::createTrollPrefab (Location& location)
 
     // Euipment Component
     EquipmentComponent* l_equipment = new EquipmentComponent();
-    l_equipment->rightHandWieldable = createWeaponPrefab();
-    l_equipment->leftHandWieldable = createShieldPrefab();
-    l_equipment->headWearable = createHelmetPrefab();
+    Location nowhere;
+    l_equipment->rightHandWieldable = createWeaponPrefab(nowhere);
+    l_equipment->leftHandWieldable = createShieldPrefab(nowhere);
+    l_equipment->headWearable = createHelmetPrefab(nowhere);
     m_engine->getComponents()->add (l_entity, l_equipment);
 
     return l_entity;
@@ -300,10 +303,15 @@ EntityId EntityManager::createStairPrefab (STAIR dir, Location& location)
 
 }
 
-EntityId EntityManager::createWeaponPrefab ()
+EntityId EntityManager::createWeaponPrefab (Location& location)
 {
-    Location location;
     EntityId l_entity = createEntity(location);
+
+    SpriteComponent* l_sprite = new SpriteComponent();
+    l_sprite->fgColor    = Color (YELLOW);
+    l_sprite->bgColor    = Color (BLACK);
+    l_sprite->sprite     = 189; //'$';
+    m_engine->getComponents()->add (l_entity, l_sprite);
 
     WieldableComponent* l_wieldable = new WieldableComponent();
     l_wieldable->position = WieldableRightHand;
@@ -322,10 +330,15 @@ EntityId EntityManager::createWeaponPrefab ()
     return l_entity;
 }
 
-EntityId EntityManager::createShieldPrefab ()
+EntityId EntityManager::createShieldPrefab (Location& location)
 {
-    Location location;
     EntityId l_entity = createEntity(location);
+
+    SpriteComponent* l_sprite = new SpriteComponent();
+    l_sprite->fgColor    = Color (YELLOW);
+    l_sprite->bgColor    = Color (BLACK);
+    l_sprite->sprite     = 189; //'$';
+    m_engine->getComponents()->add (l_entity, l_sprite);
 
     WieldableComponent* l_wieldable = new WieldableComponent();
     l_wieldable->position = WieldableLeftHand;
@@ -344,10 +357,15 @@ EntityId EntityManager::createShieldPrefab ()
     return l_entity;
 }
 
-EntityId EntityManager::createHelmetPrefab ()
+EntityId EntityManager::createHelmetPrefab (Location& location)
 {
-    Location location;
     EntityId l_entity = createEntity(location);
+
+    SpriteComponent* l_sprite = new SpriteComponent();
+    l_sprite->fgColor    = Color (YELLOW);
+    l_sprite->bgColor    = Color (BLACK);
+    l_sprite->sprite     = 189; //'$';
+    m_engine->getComponents()->add (l_entity, l_sprite);
 
     WearableComponent* l_wearable = new WearableComponent();
     l_wearable->position = WearableHead;

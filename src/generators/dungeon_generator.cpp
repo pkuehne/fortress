@@ -258,9 +258,8 @@ void DungeonGenerator::placeItems()
     maxItems += (m_rooms.size() > 3) ? m_rooms.size() - 3 : 0;
     maxItems += (m_level > 4) ? m_level - 4 : 0;
 
-    unsigned int numItems = Utility::randBetween (1, maxItems);
+    unsigned int numItems = Utility::randBetween (0, maxItems);
 
-    Location location;
     unsigned int room = 0;
     for (size_t ii = 0; ii < numItems; ii++) {
         room = Utility::randBetween (0, m_rooms.size()-1);
@@ -270,21 +269,20 @@ void DungeonGenerator::placeItems()
             y = m_rooms[room].y + (Utility::randBetween (0, m_rooms[room].height-2)) + 1;
         } while (getByCoordinate (x, y) != FLOOR);
 
+        Location location;
         location.x = x;
         location.y = y;
         location.z = m_level;
 
-        unsigned int type = Utility::randBetween (0, 3);
-        switch (type) {
-            case 0: // Potion
-                m_engine->getEntities()->createPotionPrefab (location);
-                break;
-            case 1: // Weapon
-                break;
-            case 2: // Shield
-                break;
-            case 3: // Armour
-                break;
+        unsigned int type = Utility::randBetween (0, 100);
+        if  (type < 70) { // Potion
+            m_engine->getEntities()->createPotionPrefab (location);
+        } else if (type < 80) {
+             m_engine->getEntities()->createWeaponPrefab (location);
+        } else if (type < 90) {
+            m_engine->getEntities()->createShieldPrefab (location);
+        } else if (type < 100) {
+            m_engine->getEntities()->createHelmetPrefab (location);
         }
     }
 }

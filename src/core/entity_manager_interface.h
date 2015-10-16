@@ -29,9 +29,9 @@ public:
     virtual EntityId createTilePrefab (Location& location)    = 0;
     virtual EntityId createMarkerPrefab (Location& location)  = 0;
     virtual EntityId createStairPrefab (STAIR dir, Location& location)   = 0;
-    virtual EntityId createWeaponPrefab () = 0;
-    virtual EntityId createShieldPrefab () = 0;
-    virtual EntityId createHelmetPrefab () = 0;
+    virtual EntityId createWeaponPrefab (Location& location) = 0;
+    virtual EntityId createShieldPrefab (Location& location) = 0;
+    virtual EntityId createHelmetPrefab (Location& location) = 0;
     virtual EntityId createPotionPrefab (Location& location) = 0;
     virtual EntityId createTreePrefab(Location& location) = 0;
 

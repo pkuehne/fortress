@@ -29,9 +29,9 @@ public:
     EntityId createTilePrefab (Location& location);
     EntityId createMarkerPrefab (Location& location);
     EntityId createStairPrefab (STAIR dir, Location& location);
-    EntityId createWeaponPrefab ();
-    EntityId createShieldPrefab ();
-    EntityId createHelmetPrefab ();
+    EntityId createWeaponPrefab (Location& location);
+    EntityId createShieldPrefab (Location& location);
+    EntityId createHelmetPrefab (Location& location);
     EntityId createPotionPrefab (Location& location);
     EntityId createTreePrefab(Location& location);
 
@@ -39,7 +39,7 @@ public:
     void setLocation (EntityId entity, Location& location);
 
     bool validLocation (Location& location);
-    
+
     EntityHolder& get(unsigned int area = 0);
 private:
     GameEngineInterface*                m_engine;
