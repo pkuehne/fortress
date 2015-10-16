@@ -117,6 +117,9 @@ void EquipmentWindow::redraw() {
 
         drawString (getHeight()-4, getWidth()-16, "i", Color (GREEN));
         drawString (getHeight()-4, getWidth()-15, "nspect");
+
+        drawString (getHeight()-5, getWidth()-16, "c", Color (GREEN));
+        drawString (getHeight()-5, getWidth()-15, "onsume");
     }
 
 
@@ -157,6 +160,13 @@ void EquipmentWindow::keyDown (unsigned char key) {
     }
     if (m_selectedItem && key == 'd') {
         DropEquipmentEvent* event = new DropEquipmentEvent();
+        event->entity = getEngine()->getEntities()->getPlayer();
+        event->item = m_selectedItem;
+        m_selectedItem = 0;
+        getEngine()->raiseEvent (event);
+    }
+    if (m_selectedItem && key == 'c') {
+        ConsumeItemEvent* event = new ConsumeItemEvent();
         event->entity = getEngine()->getEntities()->getPlayer();
         event->item = m_selectedItem;
         m_selectedItem = 0;

@@ -5,6 +5,7 @@
 #include "objectives_system.h"
 #include "equipment_system.h"
 #include "npc_system.h"
+#include "consumable_system.h"
 #include <cstdlib>
 #include <iostream>
 #include <execinfo.h>
@@ -55,6 +56,7 @@ int main (int argc, char** argv)
         l_engine->addSystem (new NpcSystem());
         l_engine->addSystem (new ObjectivesSystem());
         l_engine->addSystem (new EquipmentSystem());
+        l_engine->addSystem (new ConsumableSystem());
         l_engine->initialise();
         l_graphics->spin();
     } catch (char const * err) {
