@@ -93,8 +93,8 @@ void EquipmentSystem::handleEvent (const Event* event) {
         }
         case EVENT_EQUIP_ITEM: {
             const EquipItemEvent* l_event = dynamic_cast<const EquipItemEvent*> (event);
-            EquipmentComponent* equipment = getEngine()->getComponents()->get<EquipmentComponent>(l_event->entity);
-            WearableComponent* wearable = getEngine()->getComponents()->get<WearableComponent>(l_event->item);
+    EquipmentComponent* equipment = getEngine()->getComponents()->get<EquipmentComponent>(l_event->entity);
+        WearableComponent* wearable = getEngine()->getComponents()->get<WearableComponent>(l_event->item);
             WieldableComponent* wieldable = getEngine()->getComponents()->get<WieldableComponent>(l_event->item);
             bool equipped = false;
             if (wieldable != 0) {
@@ -134,6 +134,19 @@ void EquipmentSystem::handleEvent (const Event* event) {
                     }
                 }
             }
+            break;
+        }
+        case EVENT_CONSUME_ITEM: {
+            const ConsumeItemEvent* l_event = dynamic_cast<const ConsumeItemEvent*> (event);
+            EquipmentComponent* equipment = getEngine()->getComponents()->get<EquipmentComponent>(l_event->entity);
+            std::vector<EntityId>::iterator it = equipment->carriedEquipment.begin();
+            for (;it != equipment->carriedEquipment.end(); it++) {
+                if (*it == l_event->item) {
+                    equipment->carriedEquipment.erase(it);
+                    break;
+                }
+            }
+
             break;
         }
         default: break;
