@@ -3,8 +3,8 @@
 
 #include "component_base.h"
 typedef enum {
-    Hunger = 0,
-    Thirst = 1,
+    HUNGER = 0,
+    THIRST = 1,
 } HUNGER_THIRST;
 
 typedef enum {

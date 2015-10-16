@@ -401,6 +401,10 @@ EntityId EntityManager::createPotionPrefab (Location& location)
     m_engine->getComponents()->add (l_entity, l_droppable);
 
     ConsumableComponent* l_consumable = new ConsumableComponent();
+    l_consumable->quenches       = THIRST;
+    l_consumable->quenchStrength = 3;
+    l_consumable->effect         = HEALTH_EFFECT;
+    l_consumable->effectStrength = 2;
     m_engine->getComponents()->add (l_entity, l_consumable);
 
     return l_entity;
