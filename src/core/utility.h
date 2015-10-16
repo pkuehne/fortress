@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <climits>
+#include <glog/logging.h>
 
 typedef unsigned short DIRECTION;
 namespace Direction {

@@ -18,6 +18,7 @@ typedef enum {
     EVENT_PICKUP_EQUIPMENT  ,
     EVENT_EQUIP_ITEM        ,
     EVENT_UNEQUIP_ITEM      ,
+    EVENT_CONSUME_ITEM      ,
     EVENT_MAX
 } EventType;
 
@@ -100,6 +101,13 @@ public:
     UnequipItemEvent () : Event (EVENT_UNEQUIP_ITEM) { }
     EntityId        entity;
     EntityId        item;
+};
+
+class ConsumeItemEvent : public Event {
+public:
+    ConsumeItemEvent () : Event (EVENT_CONSUME_ITEM) { }
+    EntityId    entity;
+    EntityId    item;
 };
 
 #endif
