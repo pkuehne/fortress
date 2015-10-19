@@ -17,9 +17,11 @@ void ConsumableSystem::handleEvent (const Event* event)
             HealthComponent* health = getEngine()->getComponents()->get<HealthComponent> (l_event->entity);
             if (health) {
                 if (consumable->quenches == THIRST) {
-                    health->thirst += consumable->quenchStrength;
+                    int result = health->thirst - consumable->quenchStrength;
+                    health->thirst = (result < 0) ? 0 : result;
                 } else if (consumable->quenches == HUNGER) {
-                    health->hunger += consumable->quenchStrength;
+                    int result = health->hunger - consumable->quenchStrength;
+                    health->hunger = (result < 0) ? 0 : result;
                 }
 
                 if (consumable->effect == HEALTH_EFFECT) {

@@ -235,11 +235,14 @@ void MapWindow::drawSidebar ()
 {
     // Current health
     drawString (2, m_sidebarXOffset+2, "Health:");
+    drawString (3, m_sidebarXOffset+2, "Hunger:");
+    drawString (4, m_sidebarXOffset+2, "Thirst:");
     EntityId player = getEngine()->getEntities()->getPlayer();
     HealthComponent* l_health = getEngine()->getComponents()->get<HealthComponent>(player);
     if (l_health) {
         drawProgressBar (m_sidebarXOffset+10, 2, l_health->health);
-
+        drawProgressBar (m_sidebarXOffset+10, 3, l_health->hunger);
+        drawProgressBar (m_sidebarXOffset+10, 4, l_health->thirst);
     }
 
     // Actions to take
