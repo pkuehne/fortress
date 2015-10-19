@@ -164,6 +164,7 @@ void EquipmentWindow::keyDown (unsigned char key) {
         event->item = m_selectedItem;
         m_selectedItem = 0;
         getEngine()->raiseEvent (event);
+        getEngine()->swapTurn();
     }
     if (m_selectedItem && key == 'c') {
         ConsumeItemEvent* event = new ConsumeItemEvent();
@@ -171,6 +172,7 @@ void EquipmentWindow::keyDown (unsigned char key) {
         event->item = m_selectedItem;
         m_selectedItem = 0;
         getEngine()->raiseEvent (event);
+        getEngine()->swapTurn();
     }
     if (m_selectedItem && m_selectedPage == 0 && key == 'u') {
         UnequipItemEvent* event = new UnequipItemEvent();
@@ -178,6 +180,7 @@ void EquipmentWindow::keyDown (unsigned char key) {
         event->item = m_selectedItem;
         m_selectedItem = 0;
         getEngine()->raiseEvent (event);
+        getEngine()->swapTurn();
     }
     if (m_selectedItem && m_selectedPage == 1 && key == 'e') {
         EquipItemEvent* event = new EquipItemEvent();
@@ -185,6 +188,7 @@ void EquipmentWindow::keyDown (unsigned char key) {
         event->item = m_selectedItem;
         m_selectedItem = 0;
         getEngine()->raiseEvent (event);
+        getEngine()->swapTurn();
     }
 
     if (key == TAB) {
