@@ -421,7 +421,7 @@ EntityId EntityManager::createTreePrefab(Location& location)
     EntityId l_entity = createEntity (location);
 
     SpriteComponent* l_sprite = new SpriteComponent();
-    l_sprite->fgColor    = Color (DARK_GREEN);
+    l_sprite->fgColor    = Color (BROWN);
     l_sprite->bgColor    = Color (BLACK);
     l_sprite->sprite     = 'T';
     m_engine->getComponents()->add (l_entity, l_sprite);
