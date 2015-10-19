@@ -35,7 +35,7 @@ void RuralGenerator::createEntitiesFromMap()
         for (unsigned int xx = 0; xx < m_mapWidth; xx++) {
             location.x = xx;
             location.y = yy;
-            location.z = 1;
+            location.z = 0;
             switch (getByCoordinate(xx, yy)) {
                 case EMPTY:
                     l_entity = m_engine->getEntities()->createTilePrefab (location);
@@ -55,7 +55,7 @@ void RuralGenerator::createEntitiesFromMap()
     }
     location.x = m_mapWidth/2;
     location.y = m_mapHeight/2;
-    location.z = 1;
+    location.z = 0;
     m_engine->getEntities()->createPlayerPrefab (location);
 
 }

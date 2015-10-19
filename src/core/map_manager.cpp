@@ -26,7 +26,7 @@ bool MapManager::isValidTile (unsigned int x, unsigned int y, unsigned int z)
 {
     bool xValid = (x>=0 && x<m_mapWidth);
     bool yValid = (y>=0 && y<m_mapHeight);
-    bool zValid = (z>0 && z<=m_mapDepth);
+    bool zValid = (z>=0 && z<m_mapDepth);
     return ( xValid && yValid && zValid );
 }
 
@@ -42,14 +42,14 @@ bool MapManager::isValidTile (Location& location)
 
 int MapManager::map2index (unsigned int x, unsigned int y, unsigned int z)
 {
-    return ((z - 1) * m_mapHeight * m_mapWidth) + (y * m_mapHeight) + x;
+    return (z * m_mapHeight * m_mapWidth) + (y * m_mapHeight) + x;
 }
 
 void MapManager::index2map (unsigned int index, unsigned int& x, unsigned int& y, unsigned int& z)
 {
     x = index % m_mapWidth;
     y = (index - x) / m_mapWidth % m_mapHeight;
-    z = (index - (y * m_mapWidth) + x) / (m_mapHeight * m_mapWidth) + 1;
+    z = (index - (y * m_mapWidth) + x) / (m_mapHeight * m_mapWidth);
 }
 void MapManager::index2map (unsigned int index, Location& location)
 {

@@ -34,7 +34,7 @@ void DungeonGenerator::reset () {
 
 bool DungeonGenerator::generate () {
 
-    for (m_level = 1; m_level <= m_maxDepth; m_level++) {
+    for (m_level = 0; m_level < m_maxDepth; m_level++) {
         reset();
         initMap (EMPTY);
         LOG(INFO) << "Creating level " << m_level << std::endl;
@@ -87,14 +87,14 @@ void DungeonGenerator::createEntitiesFromMap () {
                     m_upStair = m_engine->getEntities()->createStairPrefab (STAIR_UP, location);
                     break;
                 case DOWN:
-                    if (m_level != m_maxDepth || m_downStairTarget) {
+                    if (m_level < m_maxDepth-1 || m_downStairTarget) {
                         m_downStair = m_engine->getEntities()->createStairPrefab (STAIR_DOWN, location);
                     } else {
                         m_engine->getEntities()->createTilePrefab (location);
                     }
                     break;
                 case ORC:
-                    if (m_createBoss && m_level == m_maxDepth) {
+                    if (m_createBoss && m_level == m_maxDepth-1) {
                         m_engine->getEntities()->createTrollPrefab (location);
                         m_createBoss = false;
                     } else {
@@ -114,17 +114,17 @@ void DungeonGenerator::createEntitiesFromMap () {
             }
         }
     }
-    if (m_level == 1) {
+    if (m_level == 0) {
         m_engine->getComponents()->get<StairComponent>(m_upStair)->target = m_upStairTarget;
         m_upStairLink = m_upStair;
     } else {
         m_engine->getComponents()->get<StairComponent>(m_upStair)->target = m_prevDownStair;
     }
-    if (m_level == m_maxDepth && m_downStairTarget) {
+    if (m_level == m_maxDepth-1 && m_downStairTarget) {
         m_engine->getComponents()->get<StairComponent>(m_downStair)->target = m_downStairTarget;
         m_downStairLink = m_downStair;
     }
-    if (m_level > 1) {
+    if (m_level > 0) {
         m_engine->getComponents()->get<StairComponent>(m_prevDownStair)->target = m_upStair;
     }
     m_prevDownStair = m_downStair;

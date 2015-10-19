@@ -34,7 +34,6 @@ void EntityManager::addEntity (EntityId id, Location& location) {
     if (id >= m_maxId) m_maxId = id + 1;
 
     location.area = (location.area == 0) ? m_engine->getArea() : location.area;
-    if (location.z == 0) location.z = 1;
 
     m_locations[id] = location;
     m_entities[location.area].insert (id);
