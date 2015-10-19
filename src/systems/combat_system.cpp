@@ -32,24 +32,26 @@ void CombatSystem::handleEvent (const Event* event)
                     if (defender == getEngine()->getEntities()->getPlayer()) {
                         m_engine->getEntities()->destroyEntity (defender);
                     } else {
-                        DescriptionComponent* l_targetDesc = m_engine->getComponents()->get<DescriptionComponent> (defender);
-                        SpriteComponent*      l_targetSprite = m_engine->getComponents()->get<SpriteComponent> (defender);
-
+                        DescriptionComponent*   l_targetDesc = m_engine->getComponents()->get<DescriptionComponent> (defender);
+                        SpriteComponent*        l_targetSprite = m_engine->getComponents()->get<SpriteComponent> (defender);
+                        Location                l_targetLoc = m_engine->getEntities()->getLocation (defender);
                         std::string name = l_targetDesc->title;
                         unsigned char sprite = l_targetSprite->sprite;
 
-                        m_engine->getComponents()->removeAll(defender);
+                        //m_engine->getComponents()->removeAll(defender);
+                        getEngine()->getEntities()->destroyEntity (defender);
+                        EntityId corpse = getEngine()->getEntities()->createEntity(l_targetLoc);
 
                         DescriptionComponent* l_corpseDesc = new DescriptionComponent();
                         l_corpseDesc->title = "Corpse";
                         l_corpseDesc->text = "A dead "; l_corpseDesc->text.append(name); l_corpseDesc->text.append (" lying on the floor.");
-                        m_engine->getComponents()->add(defender, l_corpseDesc);
+                        m_engine->getComponents()->add(corpse, l_corpseDesc);
 
                         SpriteComponent* l_corpseSprite = new SpriteComponent();;
                         l_corpseSprite->sprite = sprite;
                         l_corpseSprite->fgColor = Color (GREY);
                         l_corpseSprite->bgColor = Color (BLACK);
-                        m_engine->getComponents()->add(defender, l_corpseSprite);
+                        m_engine->getComponents()->add(corpse, l_corpseSprite);
                     }
                 }
             }

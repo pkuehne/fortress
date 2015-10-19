@@ -7,6 +7,8 @@ class ObjectivesSystem : public GameSystemBase {
 public:
     virtual void handleEvent (const Event* event);
 
+private:
+    EntityId m_boss = 0;
 };
 
 #endif

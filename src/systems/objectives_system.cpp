@@ -9,19 +9,25 @@ void ObjectivesSystem::handleEvent (const Event* event)
         case EVENT_REMOVE_ENTITY: {
             const RemoveEntityEvent* l_event = dynamic_cast<const RemoveEntityEvent*> (event);
             if (l_event->entity == getEngine()->getEntities()->getPlayer()) {
-
                 GameOverWindow* l_win = new GameOverWindow();
                 l_win->initialise(getEngine());
                 getEngine()->getWindows()->pushWindow (l_win);
                 return;
             }
-            DescriptionComponent* l_desc = getEngine()->getComponents()->get<DescriptionComponent>(l_event->entity);
-            if (l_desc) std::cout << "Name of killed entity: " << l_desc->title << std::endl;
-            if (l_desc && l_desc->title == "Troll") {
+            if (l_event->entity == m_boss) {
                 GameOverWindow* l_win = new GameOverWindow();
                 l_win->initialise(getEngine(),(void*)(1));
                 getEngine()->getWindows()->pushWindow (l_win);
                 return;
+            }
+            break;
+        }
+        case EVENT_ADD_ENTITY: {
+            const AddEntityEvent* l_event = dynamic_cast<const AddEntityEvent*> (event);
+            DescriptionComponent* l_desc = getEngine()->getComponents()->get<DescriptionComponent>(l_event->entity);
+            if (l_desc && l_desc->title == "Troll") {
+                m_boss = l_event->entity;
+                LOG(INFO) << "Set Entity " << l_event->entity << " as Boss objective!" << std::endl;
             }
             break;
         }
