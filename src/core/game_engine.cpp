@@ -88,8 +88,9 @@ void GameEngine::initialise ()
     m_graphics->setMouseFunc    (mouseClick);
     m_graphics->setResizeFunc   (resize);
 
-    addMessage (INFO, "You awake in a strange room.");
-    addMessage (WARN, "The air smells of Orc!");
+    addMessage (INFO, "You find yourself in a forest.");
+    addMessage (INFO, "Stairs will lead you into the dungeons.");
+    addMessage (WARN, "Beware the Troll living in the depths!");
 
     swapTurn();
 }
