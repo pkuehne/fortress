@@ -139,6 +139,7 @@ void MapWindow::keyDown (unsigned char key)
         FileSaver saver;
         saver.initialise (getEngine());
         saver.saveState();
+        getEngine()->addMessage (INFO, "Game saved!");
     }
     if (key == '\\') {
         m_debugMode = !m_debugMode;
