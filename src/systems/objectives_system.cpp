@@ -1,6 +1,7 @@
 #include "objectives_system.h"
 #include "game_over_window.h"
 #include "window_manager_interface.h"
+#include "description_component.h"
 
 void ObjectivesSystem::handleEvent (const Event* event)
 {
@@ -12,17 +13,15 @@ void ObjectivesSystem::handleEvent (const Event* event)
                 GameOverWindow* l_win = new GameOverWindow();
                 l_win->initialise(getEngine());
                 getEngine()->getWindows()->pushWindow (l_win);
+                return;
             }
-            break;
-        }
-        case EVENT_CHANGE_LEVEL: {
-            const ChangeLevelEvent* l_event = dynamic_cast<const ChangeLevelEvent*> (event);
-            unsigned int level = l_event->level;
-
-            if (level > m_engine->getMap()->getMapDepth()) {
+            DescriptionComponent* l_desc = getEngine()->getComponents()->get<DescriptionComponent>(l_event->entity);
+            if (l_desc) std::cout << "Name of killed entity: " << l_desc->title << std::endl;
+            if (l_desc && l_desc->title == "Troll") {
                 GameOverWindow* l_win = new GameOverWindow();
-                l_win->initialise (m_engine, m_engine);
-                m_engine->getWindows()->pushWindow (l_win);
+                l_win->initialise(getEngine(),(void*)(1));
+                getEngine()->getWindows()->pushWindow (l_win);
+                return;
             }
             break;
         }
