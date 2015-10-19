@@ -2,6 +2,7 @@
 #include "game_engine.h"
 #include <typeinfo>
 #include "collider_component.h"
+#include "consumable_component.h"
 #include "description_component.h"
 #include "droppable_component.h"
 #include "equipment_component.h"
@@ -12,11 +13,12 @@
 #include "stair_component.h"
 #include "wearable_component.h"
 #include "wieldable_component.h"
+#include <glog/logging.h>
 
 void FileSaver::saveState ()
 {
     m_file.open ("World1.sav");
-    std::cout << "Saving...";
+    LOG(INFO) << "Saving state" << std::endl;
 
     //Start with the header
     m_file << "[MAP_WIDTH:" << m_engine->getMap()->getMapWidth() << "]" << std::endl;
@@ -24,7 +26,7 @@ void FileSaver::saveState ()
     m_file << "[MAP_DEPTH:" << m_engine->getMap()->getMapDepth() << "]" << std::endl;
     m_file << "[TURN:" << m_engine->getTurn() << "]" << std::endl;
 
-    for (unsigned int zz = 1; zz <= m_engine->getMap()->getMapDepth(); zz++) {
+    for (unsigned int zz = 0; zz < m_engine->getMap()->getMapDepth(); zz++) {
         for (unsigned int yy = 0; yy < m_engine->getMap()->getMapHeight(); yy++) {
             for (unsigned int xx = 0; xx < m_engine->getMap()->getMapWidth(); xx++) {
                 m_file << "[TILE_VISITED:" << m_engine->getMap()->getTile(xx, yy, zz).lastVisited << "]" << std::endl;
@@ -48,8 +50,7 @@ void FileSaver::saveState ()
     }
 
     m_file.close();
-    std::cout << "Done" << std::endl;
-
+    LOG(INFO) << "Save complete" << std::endl;
 }
 
 void FileSaver::saveComponent (ComponentBase* component)
@@ -57,6 +58,15 @@ void FileSaver::saveComponent (ComponentBase* component)
     ColliderComponent* l_coll = dynamic_cast<ColliderComponent*> (component);
     if (l_coll) {
         m_file << "[COMPONENT:COLLIDER]" << std::endl;
+        return;
+    }
+    ConsumableComponent* l_cons = dynamic_cast<ConsumableComponent*> (component);
+    if (l_cons) {
+        m_file << "[COMPONENT:CONSUMABLE]" << std::endl;
+        m_file << "[QUENCHES:"          << l_cons->quenches << "]" << std::endl;
+        m_file << "[QUENCH_STRENGTH:"   << l_cons->quenchStrength << "]" << std::endl;
+        m_file << "[EFFECT:"            << l_cons->effect << "]" << std::endl;
+        m_file << "[EFFECT_STRENGTH:"   << l_cons->effectStrength << "]" << std::endl;
         return;
     }
     DescriptionComponent* l_desc = dynamic_cast<DescriptionComponent*> (component);
@@ -94,6 +104,8 @@ void FileSaver::saveComponent (ComponentBase* component)
     if (l_health) {
         m_file << "[COMPONENT:HEALTH]" << std::endl;
         m_file << "[HEALTH:" << l_health->health << "]" << std::endl;
+        m_file << "[HUNGER:" << l_health->hunger << "]" << std::endl;
+        m_file << "[THIRST:" << l_health->thirst << "]" << std::endl;
         return;
     }
     NpcComponent* l_npc = dynamic_cast<NpcComponent*>(component);
@@ -141,5 +153,5 @@ void FileSaver::saveComponent (ComponentBase* component)
         m_file << "[POSITION:" << l_wield->position << "]" << std::endl;
         return;
     }
-    std::cout << "Could not save a component: " << typeid (component).name() << std::endl;
+    LOG(ERROR) << "Could not save a component: " << typeid (component).name() << std::endl;
 }

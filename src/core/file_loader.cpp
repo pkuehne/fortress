@@ -3,6 +3,7 @@
 #include <fstream>
 #include <iostream>
 #include "collider_component.h"
+#include "consumable_component.h"
 #include "description_component.h"
 #include "droppable_component.h"
 #include "equipment_component.h"
@@ -13,13 +14,14 @@
 #include "stair_component.h"
 #include "wearable_component.h"
 #include "wieldable_component.h"
+#include <glog/logging.h>
 
 void FileLoader::loadState ()
 {
-    std::cout << "Loading...";
+    LOG(INFO) << "Loading save" << std::endl;
     std::ifstream l_file ("World1.sav");
     if (!l_file.is_open()) {
-        std::cout << "Failed!" << std::endl;
+        LOG(ERROR) << "Could not open save file!" << std::endl;
         return;
     }
 
@@ -28,7 +30,7 @@ void FileLoader::loadState ()
         std::getline (l_file, l_line);
         m_tags.push_back (Tag (l_line));
     }
-    std::cout << "Done" << std::endl;
+    LOG(INFO) << "Completed reading file. Parsing..." << std::endl;
 
     int line = 0;
     // Width + Height + Depth
@@ -69,6 +71,8 @@ void FileLoader::loadState ()
             continue;
         }
     }
+    LOG(INFO) << "Completed loading save game" << std::endl;
+
 }
 
 
@@ -90,6 +94,14 @@ ComponentBase* FileLoader::loadComponent (unsigned int& pos, const std::string& 
     pos++;
     if (component == "COLLIDER") {
         ColliderComponent* retval = new ColliderComponent();
+        return retval;
+    }
+    if (component == "CONSUMABLE") {
+        ConsumableComponent* retval = new ConsumableComponent();
+        retval->quenches        = static_cast<HUNGER_THIRST>(m_tags[pos++].getNum());
+        retval->quenchStrength  = m_tags[pos++].getNum();
+        retval->effect          = static_cast<EFFECT>(m_tags[pos++].getNum());
+        retval->effectStrength  = m_tags[pos++].getNum();
         return retval;
     }
     if (component == "DESCRIPTION") {
@@ -126,6 +138,8 @@ ComponentBase* FileLoader::loadComponent (unsigned int& pos, const std::string& 
     if (component == "HEALTH") {
         HealthComponent* retval = new HealthComponent();
         retval->health = m_tags[pos++].getNum();
+        retval->hunger = m_tags[pos++].getNum();
+        retval->thirst = m_tags[pos++].getNum();
         return retval;
     }
     if (component == "NPC") {
