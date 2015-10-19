@@ -83,6 +83,8 @@ Location FileLoader::loadLocation (unsigned int& pos)
         if (m_tags[pos].getName() == "LOCATION_X") location.x = m_tags[pos].getNum();
         if (m_tags[pos].getName() == "LOCATION_Y") location.y = m_tags[pos].getNum();
         if (m_tags[pos].getName() == "LOCATION_Z") location.z = m_tags[pos].getNum();
+        if (m_tags[pos].getName() == "AREA") location.area = m_tags[pos].getNum();
+
         pos++;
     }
     return location;
