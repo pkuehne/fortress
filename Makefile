@@ -1,4 +1,4 @@
-.PHONY: all clean build test tags coverage run shuffle
+.PHONY: all clean build test coverage run shuffle
 
 LOG_DIR=artifacts/logs/
 
@@ -8,7 +8,7 @@ clean:
 	@$(MAKE) -C src --no-print-directory clean
 	@$(MAKE) -C test --no-print-directory clean
 
-build: tags
+build: 
 	clear
 	@$(MAKE) -C src --no-print-directory build -j 8
 
@@ -18,9 +18,6 @@ test:
 
 shuffle:
 	@$(MAKE) -C test --no-print-directory shuffle
-
-tags:
-	@ctags --recurse=yes
 
 coverage:
 	rm -f src/*.gcda
