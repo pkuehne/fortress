@@ -2,6 +2,10 @@
 
 void MapManager::resetMap (unsigned int width, unsigned int height, unsigned int depth)
 {
+	if (width == 0 || height == 0 || depth == 0) {
+		std::cout << "Cannot reset map with 0 values" << std::endl;
+		exit (1);
+	}
     auto existing = m_areas.begin ();
     for (; existing != m_areas.end(); existing++) {
         if (existing->areaId == m_currentArea) {
