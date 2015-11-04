@@ -33,23 +33,29 @@ void FileLoader::loadState ()
     LOG(INFO) << "Completed reading file. Parsing..." << std::endl;
 
     int line = 0;
-    // Width + Height + Depth
-    unsigned int width = m_tags[line++].getNum();
-    unsigned int height = m_tags[line++].getNum();
-    unsigned int depth = m_tags[line++].getNum();
-    //m_engine->setMapDepth (depth);
-    m_engine->getMap()->resetMap (width, height, depth);
 
     // Current Turn
     m_engine->setTurn (m_tags[line++].getNum());
 
-    for (unsigned int zz = 0; zz < m_engine->getMap()->getMapDepth(); zz++) {
-        for (unsigned int yy = 0; yy < m_engine->getMap()->getMapHeight(); yy++) {
-            for (unsigned int xx = 0; xx < m_engine->getMap()->getMapWidth(); xx++) {
-                m_engine->getMap()->getTile(xx, yy, zz).lastVisited = m_tags[line++].getNum();
-            }
-        }
+    unsigned int currArea = m_tags[line++].getNum();
+    unsigned int areas = m_tags[line++].getNum();
+    for (unsigned int area = 0; area < areas; area++) {
+		// Width + Height + Depth
+		unsigned int width = m_tags[line++].getNum();
+		unsigned int height = m_tags[line++].getNum();
+		unsigned int depth = m_tags[line++].getNum();
+    	m_engine->getMap()->setArea (area);
+	    m_engine->getMap()->resetMap (width, height, depth);
+
+		for (unsigned int zz = 0; zz < m_engine->getMap()->getMapDepth(); zz++) {
+			for (unsigned int yy = 0; yy < m_engine->getMap()->getMapHeight(); yy++) {
+				for (unsigned int xx = 0; xx < m_engine->getMap()->getMapWidth(); xx++) {
+					m_engine->getMap()->getTile(xx, yy, zz).lastVisited = m_tags[line++].getNum();
+				}
+			}
+		}
     }
+    m_engine->getMap()->setArea (currArea);
 
     EntityId id = 0;
     for (unsigned int ii = line; ii < m_tags.size(); ii++) {
@@ -166,6 +172,7 @@ ComponentBase* FileLoader::loadComponent (unsigned int& pos, const std::string& 
     if (component == "STAIR") {
         StairComponent* retval = new StairComponent();
         retval->direction = static_cast<STAIR>(m_tags[pos++].getNum());
+        retval->target = m_tags[pos++].getNum();
         return retval;
     }
     if (component == "WEARABLE") {

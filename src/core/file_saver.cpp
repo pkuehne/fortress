@@ -20,19 +20,27 @@ void FileSaver::saveState ()
     m_file.open ("World1.sav");
     LOG(INFO) << "Saving state" << std::endl;
 
+    unsigned int currArea = m_engine->getMap()->getArea();
     //Start with the header
-    m_file << "[MAP_WIDTH:" << m_engine->getMap()->getMapWidth() << "]" << std::endl;
-    m_file << "[MAP_HEIGHT:" << m_engine->getMap()->getMapHeight() << "]" << std::endl;
-    m_file << "[MAP_DEPTH:" << m_engine->getMap()->getMapDepth() << "]" << std::endl;
     m_file << "[TURN:" << m_engine->getTurn() << "]" << std::endl;
+    m_file << "[AREA:" << currArea << "]" << std::endl;
+    m_file << "[AREAS:" << m_engine->getMap()->getAreas() << "]" << std::endl;
 
-    for (unsigned int zz = 0; zz < m_engine->getMap()->getMapDepth(); zz++) {
-        for (unsigned int yy = 0; yy < m_engine->getMap()->getMapHeight(); yy++) {
-            for (unsigned int xx = 0; xx < m_engine->getMap()->getMapWidth(); xx++) {
-                m_file << "[TILE_VISITED:" << m_engine->getMap()->getTile(xx, yy, zz).lastVisited << "]" << std::endl;
-            }
-        }
+    for (unsigned int area = 0; area < m_engine->getMap()->getAreas(); area++) {
+    	m_engine->getMap()->setArea (area);
+		m_file << "[MAP_WIDTH:" << m_engine->getMap()->getMapWidth() << "]" << std::endl;
+		m_file << "[MAP_HEIGHT:" << m_engine->getMap()->getMapHeight() << "]" << std::endl;
+		m_file << "[MAP_DEPTH:" << m_engine->getMap()->getMapDepth() << "]" << std::endl;
+
+		for (unsigned int zz = 0; zz < m_engine->getMap()->getMapDepth(); zz++) {
+			for (unsigned int yy = 0; yy < m_engine->getMap()->getMapHeight(); yy++) {
+				for (unsigned int xx = 0; xx < m_engine->getMap()->getMapWidth(); xx++) {
+					m_file << "[TILE_VISITED:" << m_engine->getMap()->getTile(xx, yy, zz).lastVisited << "]" << std::endl;
+				}
+			}
+		}
     }
+    m_engine->getMap()->setArea (currArea);
 
     // Save entities
     EntityHolder& entities = m_engine->getEntities()->get();
@@ -135,6 +143,7 @@ void FileSaver::saveComponent (ComponentBase* component)
     if (l_stair) {
         m_file << "[COMPONENT:STAIR]" << std::endl;
         m_file << "[DIRECTION:" << l_stair->direction << "]" << std::endl;
+        m_file << "[TARGET:" << l_stair->target << "]" << std::endl;
         return;
     }
     WearableComponent* l_wear = dynamic_cast<WearableComponent*>(component);

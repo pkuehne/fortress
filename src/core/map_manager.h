@@ -40,6 +40,7 @@ public:
 
     unsigned int getArea () { return m_currentArea; }
     void setArea (unsigned int area);
+    unsigned int getAreas() { return m_areas.size(); }
 
     EntityHolder findEntitiesAt (const Location& location);
     EntityHolder findEntitiesNear (const Location& location, unsigned int radius);
@@ -51,7 +52,7 @@ private:
     unsigned int            m_mapDepth;
     Tile*                   m_map;
     unsigned int            m_currentArea;
-    std::vector<MapInfo> m_areas;
+    std::vector<MapInfo> 	m_areas;
 };
 
 #endif

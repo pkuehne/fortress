@@ -9,11 +9,9 @@ clean:
 	@$(MAKE) -C test --no-print-directory clean
 
 build: 
-	clear
 	@$(MAKE) -C src --no-print-directory build -j 8
 
 test:
-	clear
 	@$(MAKE) -C test --no-print-directory test -j 8
 
 shuffle:
