@@ -2,7 +2,7 @@
 
 LOG_DIR=artifacts/logs/
 
-all: clean build test
+all: clean build test coverity doxy run install
 
 clean:
 	@$(MAKE) -C src --no-print-directory clean
@@ -17,6 +17,10 @@ test:
 shuffle:
 	@$(MAKE) -C test --no-print-directory shuffle
 
+coverity:
+	cov-build --dir cov-int $(MAKE) build
+	tar czvf fortress.tgz cov-int
+	
 coverage:
 	rm -f src/*.gcda
 	rm -f test/*.gcda
