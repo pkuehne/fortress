@@ -100,6 +100,9 @@ void MapManager::setArea (unsigned int area)
             m_mapHeight = info.height;
             m_mapWidth  = info.width;
             m_mapDepth  = info.depth;
+            return;
         }
     }
+    LOG (ERROR) << "Could not set area, because it doesn't exist!" << std::endl;
+    //exit (1);
 }

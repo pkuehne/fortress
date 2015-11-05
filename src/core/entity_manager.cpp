@@ -26,14 +26,15 @@ void EntityManager::initialise (GameEngineInterface* engine)
 
 EntityId EntityManager::createEntity (Location& location) {
     EntityId l_entity = m_maxId++;
+
+    location.area = (location.area == 0) ? m_engine->getArea() : location.area;
+
     addEntity (l_entity, location);
     return l_entity;
 }
 
 void EntityManager::addEntity (EntityId id, Location& location) {
     if (id >= m_maxId) m_maxId = id + 1;
-
-    location.area = (location.area == 0) ? m_engine->getArea() : location.area;
 
     m_locations[id] = location;
     m_entities[location.area].insert (id);

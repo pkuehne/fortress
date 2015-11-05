@@ -13,6 +13,7 @@ public:
 
     Location loadLocation (unsigned int& pos);
     ComponentBase* loadComponent (unsigned int& pos, const std::string& component);
+    void loadMap (unsigned int& pos);
 
 private:
     std::vector<Tag>        m_tags;

@@ -39,44 +39,42 @@ void FileLoader::loadState ()
 
     unsigned int currArea = m_tags[line++].getNum();
     unsigned int areas = m_tags[line++].getNum();
-    for (unsigned int area = 0; area < areas; area++) {
-		// Width + Height + Depth
-		unsigned int width = m_tags[line++].getNum();
-		unsigned int height = m_tags[line++].getNum();
-		unsigned int depth = m_tags[line++].getNum();
-    	m_engine->getMap()->setArea (area);
-	    m_engine->getMap()->resetMap (width, height, depth);
+	EntityId id = 0;
 
-		for (unsigned int zz = 0; zz < m_engine->getMap()->getMapDepth(); zz++) {
-			for (unsigned int yy = 0; yy < m_engine->getMap()->getMapHeight(); yy++) {
-				for (unsigned int xx = 0; xx < m_engine->getMap()->getMapWidth(); xx++) {
-					m_engine->getMap()->getTile(xx, yy, zz).lastVisited = m_tags[line++].getNum();
+    while (areas) {
+    	unsigned int area = 0;
+    	for (unsigned int ii = line; ii < m_tags.size(); ii++) {
+			if (m_tags[ii].getName() == "AREA") {
+				m_engine->setArea (m_tags[ii++].getNum());
+				loadMap (ii);
+				ii--;
+				continue;
+			}
+			if (m_tags[ii].getName() == "ENTITY") {
+				// Set up the entity
+				id = m_tags[ii].getNum();
+				ii++;
+				Location location = loadLocation (ii);
+				if (location.area != area) {
+					area = location.area;
+					areas--;
 				}
+				m_engine->getEntities()->addEntity (id, location);
+				ii--;
+				continue;
+			}
+			if (m_tags[ii].getName() == "COMPONENT") {
+				ComponentBase* component = loadComponent (ii, m_tags[ii].getStr());
+				if (component) {
+					m_engine->getComponents()->add (id, component);
+				}
+				ii--;
+				continue;
 			}
 		}
     }
-    m_engine->getMap()->setArea (currArea);
+     m_engine->getMap()->setArea (currArea);
 
-    EntityId id = 0;
-    for (unsigned int ii = line; ii < m_tags.size(); ii++) {
-        if (m_tags[ii].getName() == "ENTITY") {
-            // Set up the entity
-            id = m_tags[ii].getNum();
-            ii++;
-            Location location = loadLocation (ii);
-            m_engine->getEntities()->addEntity (id, location);
-            ii--;
-            continue;
-        }
-        if (m_tags[ii].getName() == "COMPONENT") {
-            ComponentBase* component = loadComponent (ii, m_tags[ii].getStr());
-            if (component) {
-                m_engine->getComponents()->add (id, component);
-            }
-            ii--;
-            continue;
-        }
-    }
     LOG(INFO) << "Completed loading save game" << std::endl;
 
 }
@@ -85,17 +83,31 @@ void FileLoader::loadState ()
 Location FileLoader::loadLocation (unsigned int& pos)
 {
     Location location;
-    for (unsigned int ii = 0; ii < 3; ii++) {
+    for (unsigned int ii = 0; ii < 4; ii++) {
         if (m_tags[pos].getName() == "LOCATION_X") location.x = m_tags[pos].getNum();
         if (m_tags[pos].getName() == "LOCATION_Y") location.y = m_tags[pos].getNum();
         if (m_tags[pos].getName() == "LOCATION_Z") location.z = m_tags[pos].getNum();
-        if (m_tags[pos].getName() == "AREA") location.area = m_tags[pos].getNum();
+        if (m_tags[pos].getName() == "LOCATION_A") location.area = m_tags[pos].getNum();
 
         pos++;
     }
     return location;
 }
 
+void FileLoader::loadMap (unsigned int& pos) {
+	unsigned int width = m_tags[pos++].getNum();
+	unsigned int height = m_tags[pos++].getNum();
+	unsigned int depth = m_tags[pos++].getNum();
+    m_engine->getMap()->resetMap (width, height, depth);
+
+	for (unsigned int zz = 0; zz < m_engine->getMap()->getMapDepth(); zz++) {
+		for (unsigned int yy = 0; yy < m_engine->getMap()->getMapHeight(); yy++) {
+			for (unsigned int xx = 0; xx < m_engine->getMap()->getMapWidth(); xx++) {
+				m_engine->getMap()->getTile(xx, yy, zz).lastVisited = m_tags[pos++].getNum();
+			}
+		}
+	}
+}
 
 ComponentBase* FileLoader::loadComponent (unsigned int& pos, const std::string& component)
 {
@@ -191,6 +203,6 @@ ComponentBase* FileLoader::loadComponent (unsigned int& pos, const std::string& 
         return retval;
     }
 
-    std::cout << "Could not laod a component: " << component << std::endl;
+    std::cout << "Could not load a component: " << component << std::endl;
     return nullptr;
 }

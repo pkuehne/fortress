@@ -28,7 +28,8 @@ void FileSaver::saveState ()
 
     for (unsigned int area = 0; area < m_engine->getMap()->getAreas(); area++) {
     	m_engine->getMap()->setArea (area);
-		m_file << "[MAP_WIDTH:" << m_engine->getMap()->getMapWidth() << "]" << std::endl;
+        m_file << "[AREA:" << area << "]" << std::endl;
+    	m_file << "[MAP_WIDTH:" << m_engine->getMap()->getMapWidth() << "]" << std::endl;
 		m_file << "[MAP_HEIGHT:" << m_engine->getMap()->getMapHeight() << "]" << std::endl;
 		m_file << "[MAP_DEPTH:" << m_engine->getMap()->getMapDepth() << "]" << std::endl;
 
@@ -39,24 +40,25 @@ void FileSaver::saveState ()
 				}
 			}
 		}
+
+		// Save entities
+		EntityHolder& entities = m_engine->getEntities()->get();
+		for (EntityId entity : entities) {
+			m_file << "[ENTITY:" << entity << "]" << std::endl;
+			Location location = m_engine->getEntities()->getLocation (entity);
+			m_file << "[LOCATION_X:" << location.x << "]" << std::endl;
+			m_file << "[LOCATION_Y:" << location.y << "]" << std::endl;
+			m_file << "[LOCATION_Z:" << location.z << "]" << std::endl;
+			m_file << "[LOCATION_A:" << location.area << "]" << std::endl;
+
+			ComponentHolder& components = m_engine->getComponents()->getAll(entity);
+			for (ComponentBase* component : components) {
+				saveComponent (component);
+			}
+		}
+
     }
     m_engine->getMap()->setArea (currArea);
-
-    // Save entities
-    EntityHolder& entities = m_engine->getEntities()->get();
-    for (EntityId entity : entities) {
-        m_file << "[ENTITY:" << entity << "]" << std::endl;
-        Location location = m_engine->getEntities()->getLocation (entity);
-        m_file << "[LOCATION_X:" << location.x << "]" << std::endl;
-        m_file << "[LOCATION_Y:" << location.y << "]" << std::endl;
-        m_file << "[LOCATION_Z:" << location.z << "]" << std::endl;
-        m_file << "[AREA:" << location.area << "]" << std::endl;
-        
-        ComponentHolder& components = m_engine->getComponents()->getAll(entity);
-        for (ComponentBase* component : components) {
-            saveComponent (component);
-        }
-    }
 
     m_file.close();
     LOG(INFO) << "Save complete" << std::endl;
