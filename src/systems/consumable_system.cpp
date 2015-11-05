@@ -6,7 +6,7 @@ void ConsumableSystem::handleEvent (const Event* event)
 {
     switch (event->getType()) {
         case EVENT_CONSUME_ITEM: {
-            const ConsumeItemEvent* l_event = dynamic_cast<const ConsumeItemEvent*> (event);
+            const ConsumeItemEvent* l_event = static_cast<const ConsumeItemEvent*> (event);
             LOG(INFO) << "Handling Consume Event for " << l_event->entity << " with " << l_event->item << std::endl;
             ConsumableComponent* consumable = getEngine()->getComponents()->get<ConsumableComponent> (l_event->item);
             if (!consumable) {

@@ -11,7 +11,7 @@ void MovementSystem::handleEvent (const Event* event)
 {
     switch (event->getType()) {
         case EVENT_MOVE_ENTITY: {
-            const MoveEntityEvent* l_event = dynamic_cast<const MoveEntityEvent*> (event);
+            const MoveEntityEvent* l_event = static_cast<const MoveEntityEvent*> (event);
             EntityId l_entity = l_event->entity;
             Location l_oldLocation = m_engine->getEntities()->getLocation(l_entity);
             Location l_newLocation = l_event->newLocation;

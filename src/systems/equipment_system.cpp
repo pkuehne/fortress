@@ -9,7 +9,7 @@
 void EquipmentSystem::handleEvent (const Event* event) {
     switch (event->getType()) {
         case EVENT_DROP_EQUIPMENT: {
-            const DropEquipmentEvent* l_event = dynamic_cast<const DropEquipmentEvent*> (event);
+            const DropEquipmentEvent* l_event = static_cast<const DropEquipmentEvent*> (event);
             EquipmentComponent* equipment = getEngine()->getComponents()->get<EquipmentComponent>(l_event->entity);
             if (l_event->item == equipment->rightHandWieldable) {
                 equipment->rightHandWieldable = 0;
@@ -53,7 +53,7 @@ void EquipmentSystem::handleEvent (const Event* event) {
             break;
         }
         case EVENT_PICKUP_EQUIPMENT: {
-            const PickupEquipmentEvent* l_event = dynamic_cast<const PickupEquipmentEvent*> (event);
+            const PickupEquipmentEvent* l_event = static_cast<const PickupEquipmentEvent*> (event);
             EquipmentComponent* equipment = getEngine()->getComponents()->get<EquipmentComponent>(l_event->entity);
             getEngine()->getComponents()->remove<SpriteComponent>(l_event->item);
 
@@ -62,7 +62,7 @@ void EquipmentSystem::handleEvent (const Event* event) {
             break;
         }
         case EVENT_UNEQUIP_ITEM: {
-            const UnequipItemEvent* l_event = dynamic_cast<const UnequipItemEvent*> (event);
+            const UnequipItemEvent* l_event = static_cast<const UnequipItemEvent*> (event);
             EquipmentComponent* equipment = getEngine()->getComponents()->get<EquipmentComponent>(l_event->entity);
             if (l_event->item == equipment->rightHandWieldable) {
                 equipment->rightHandWieldable = 0;
@@ -92,7 +92,7 @@ void EquipmentSystem::handleEvent (const Event* event) {
             break;
         }
         case EVENT_EQUIP_ITEM: {
-            const EquipItemEvent* l_event = dynamic_cast<const EquipItemEvent*> (event);
+            const EquipItemEvent* l_event = static_cast<const EquipItemEvent*> (event);
     EquipmentComponent* equipment = getEngine()->getComponents()->get<EquipmentComponent>(l_event->entity);
         WearableComponent* wearable = getEngine()->getComponents()->get<WearableComponent>(l_event->item);
             WieldableComponent* wieldable = getEngine()->getComponents()->get<WieldableComponent>(l_event->item);
@@ -137,7 +137,7 @@ void EquipmentSystem::handleEvent (const Event* event) {
             break;
         }
         case EVENT_CONSUME_ITEM: {
-            const ConsumeItemEvent* l_event = dynamic_cast<const ConsumeItemEvent*> (event);
+            const ConsumeItemEvent* l_event = static_cast<const ConsumeItemEvent*> (event);
             EquipmentComponent* equipment = getEngine()->getComponents()->get<EquipmentComponent>(l_event->entity);
             std::vector<EntityId>::iterator it = equipment->carriedEquipment.begin();
             for (;it != equipment->carriedEquipment.end(); it++) {

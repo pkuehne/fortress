@@ -12,7 +12,7 @@ void CombatSystem::handleEvent (const Event* event)
 {
     switch (event->getType()) {
         case EVENT_ATTACK_ENTITY: {
-            const AttackEntityEvent* l_event = dynamic_cast<const AttackEntityEvent*> (event);
+            const AttackEntityEvent* l_event = static_cast<const AttackEntityEvent*> (event);
             EntityId attacker = l_event->attacker;
             EntityId defender = l_event->defender;
 
