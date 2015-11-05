@@ -40,5 +40,19 @@ tags
 
 # Others
 *.png
+*.sav
 
+# Folders
+artifacts
+cov-int/
+
+# Project files
+.cproject
+.project
+.settings/
+Fortress.cbp
+Fortress.layout
+
+# Coverity files
+fortress.tgz
 

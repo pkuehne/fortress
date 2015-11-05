@@ -1,24 +1,26 @@
-.PHONY: all clean build test tags coverage run shuffle
+.PHONY: all clean build test coverage run shuffle
 
-all: clean build test
+LOG_DIR=artifacts/logs/
+
+all: clean build test coverity doxy run install
 
 clean:
-	$(MAKE) -C src --no-print-directory clean
-	$(MAKE) -C test --no-print-directory clean
+	@$(MAKE) -C src --no-print-directory clean
+	@$(MAKE) -C test --no-print-directory clean
 
-build: tags
-	clear
-	$(MAKE) -C src --no-print-directory build -j 8
+build: 
+	@$(MAKE) -C src --no-print-directory build -j 8
 
 test:
-	clear
-	$(MAKE) -C test --no-print-directory test -j 8
+	@$(MAKE) -C test --no-print-directory test -j 8
 
 shuffle:
-	$(MAKE) -C test --no-print-directory shuffle
-tags:
-	ctags --recurse=yes
+	@$(MAKE) -C test --no-print-directory shuffle
 
+coverity:
+	cov-build --dir cov-int $(MAKE) build
+	tar czvf fortress.tgz cov-int
+	
 coverage:
 	rm -f src/*.gcda
 	rm -f test/*.gcda
@@ -28,8 +30,14 @@ coverage:
 	$(MAKE) -C test --no-print-directory test -j 8 COVERAGE=Y
 	gcovr -r src
 
-run: build
-	$(MAKE) -C src --no-print-directory run
+run: build $(LOG_DIR)
+	@echo "Starting FORTRESS"
+	@./fortress
+
+$(LOG_DIR):
+	@mkdir -p artifacts/logs
+
+install: build
 
 doxy:
 	doxygen Doxyfile
