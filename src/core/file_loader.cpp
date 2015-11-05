@@ -41,39 +41,37 @@ void FileLoader::loadState ()
     unsigned int areas = m_tags[line++].getNum();
 	EntityId id = 0;
 
-    //while (areas) {
-    	unsigned int area = 0;
-    	for (unsigned int ii = line; ii < m_tags.size(); ii++) {
-			if (m_tags[ii].getName() == "AREA") {
-				loadMap (ii);
-				ii--;
-				//areas--;
-				continue;
-			}
-			if (m_tags[ii].getName() == "ENTITY") {
-				// Set up the entity
-				id = m_tags[ii].getNum();
-				ii++;
-				Location location = loadLocation (ii);
-				if (location.area != area) {
-					area = location.area;
-					areas--;
-				}
-				m_engine->getEntities()->addEntity (id, location);
-				ii--;
-				continue;
-			}
-			if (m_tags[ii].getName() == "COMPONENT") {
-				ComponentBase* component = loadComponent (ii, m_tags[ii].getStr());
-				if (component) {
-					m_engine->getComponents()->add (id, component);
-				}
-				ii--;
-				continue;
-			}
+	unsigned int area = 0;
+	for (unsigned int ii = line; ii < m_tags.size(); ii++) {
+		if (m_tags[ii].getName() == "AREA") {
+			loadMap (ii);
+			ii--;
+			//areas--;
+			continue;
 		}
-    //}
-     m_engine->getMap()->setArea (currArea);
+		if (m_tags[ii].getName() == "ENTITY") {
+			// Set up the entity
+			id = m_tags[ii].getNum();
+			ii++;
+			Location location = loadLocation (ii);
+			if (location.area != area) {
+				area = location.area;
+				areas--;
+			}
+			m_engine->getEntities()->addEntity (id, location);
+			ii--;
+			continue;
+		}
+		if (m_tags[ii].getName() == "COMPONENT") {
+			ComponentBase* component = loadComponent (ii, m_tags[ii].getStr());
+			if (component) {
+				m_engine->getComponents()->add (id, component);
+			}
+			ii--;
+			continue;
+		}
+	}
+	m_engine->getMap()->setArea (currArea);
 
     LOG(INFO) << "Completed loading save game" << std::endl;
 
