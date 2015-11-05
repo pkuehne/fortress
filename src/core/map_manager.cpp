@@ -1,29 +1,24 @@
 #include "map_manager.h"
 
-void MapManager::resetMap (unsigned int width, unsigned int height, unsigned int depth)
+void MapManager::resetMap (unsigned int area, unsigned int width, unsigned int height, unsigned int depth)
 {
 	if (width == 0 || height == 0 || depth == 0) {
-		std::cout << "Cannot reset map with 0 values" << std::endl;
+		LOG(ERROR) << "Cannot reset map with 0 values" << std::endl;
 		exit (1);
 	}
-    auto existing = m_areas.begin ();
-    for (; existing != m_areas.end(); existing++) {
-        if (existing->areaId == m_currentArea) {
-            if (existing->mapData) delete[] existing->mapData;
-            m_areas.erase(existing);
-            break;
-        }
-    }
+    auto existing = m_areas.find (area);
+    if (existing != m_areas.end()) m_areas.erase (existing);
 
     MapInfo info;
-    info.areaId = m_currentArea;
+    info.areaId = area;
     info.mapData = new Tile[width*height*depth];
     info.height = height;
     info.width  = width;
     info.depth  = depth;
 
-    m_areas.push_back (info);
-    setArea (m_currentArea);
+    m_areas[info.areaId] = info;
+    setArea (area);
+    LOG(INFO) << "Created area " << info.areaId << std::endl;
 }
 
 bool MapManager::isValidTile (unsigned int x, unsigned int y, unsigned int z)
@@ -94,15 +89,16 @@ void MapManager::setArea (unsigned int area)
     m_mapWidth      = 0;
     m_mapDepth      = 0;
 
-    for (MapInfo info : m_areas) {
-        if (info.areaId == area) {
-            m_map       = info.mapData;
-            m_mapHeight = info.height;
-            m_mapWidth  = info.width;
-            m_mapDepth  = info.depth;
+    auto info = m_areas.find (area);
+    if (info != m_areas.end()) {
+            m_map       = info->second.mapData;
+            m_mapHeight = info->second.height;
+            m_mapWidth  = info->second.width;
+            m_mapDepth  = info->second.depth;
             return;
-        }
     }
-    LOG (ERROR) << "Could not set area, because it doesn't exist!" << std::endl;
+
+    LOG (ERROR) << "Could not set area " << area << " because it doesn't exist!" << std::endl;
+    throw int(1);
     //exit (1);
 }

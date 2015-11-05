@@ -134,8 +134,7 @@ void GeneratorWindow::startGenerating () {
     m_generatingLevel = 1;
     m_generating = true;
 
-    getEngine()->setArea (0);
-    getEngine()->getMap()->resetMap (m_levelWidth, m_levelHeight, 1);
+    getEngine()->getMap()->resetMap (0, m_levelWidth, m_levelHeight, 1);
 
     RuralGenerator rural;
     rural.initialise (getEngine());
@@ -147,8 +146,8 @@ void GeneratorWindow::startGenerating () {
     for (EntityId stair : rural.getAreaLinks())
     {
         LOG(INFO) << "Generating area: " << area << std::endl;
-        getEngine()->setArea (area++);
-        getEngine()->getMap()->resetMap (m_levelWidth, m_levelHeight, m_levelDepth);
+        getEngine()->getMap()->resetMap (area++, m_levelWidth, m_levelHeight, m_levelDepth);
+        ///getEngine()->setArea (area); area++;
 
         DungeonGenerator l_generator;
         l_generator.initialise (getEngine());

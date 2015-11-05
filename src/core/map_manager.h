@@ -3,7 +3,7 @@
 
 #include "map_manager_interface.h"
 #include "game_engine_interface.h"
-#include <vector>
+#include <map>
 
 struct MapInfo {
     unsigned int    areaId;
@@ -36,7 +36,7 @@ public:
     unsigned int getMapWidth() { return m_mapWidth; }
     unsigned int getMapDepth () { return m_mapDepth; }
 
-    virtual void resetMap (unsigned int width, unsigned int height, unsigned int depth);
+    virtual void resetMap (unsigned int area, unsigned int width, unsigned int height, unsigned int depth);
 
     unsigned int getArea () { return m_currentArea; }
     void setArea (unsigned int area);
@@ -52,7 +52,7 @@ private:
     unsigned int            m_mapDepth;
     Tile*                   m_map;
     unsigned int            m_currentArea;
-    std::vector<MapInfo> 	m_areas;
+    std::map<unsigned int, MapInfo> m_areas;
 };
 
 #endif

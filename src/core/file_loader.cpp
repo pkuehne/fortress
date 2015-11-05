@@ -41,13 +41,13 @@ void FileLoader::loadState ()
     unsigned int areas = m_tags[line++].getNum();
 	EntityId id = 0;
 
-    while (areas) {
+    //while (areas) {
     	unsigned int area = 0;
     	for (unsigned int ii = line; ii < m_tags.size(); ii++) {
 			if (m_tags[ii].getName() == "AREA") {
-				m_engine->setArea (m_tags[ii++].getNum());
 				loadMap (ii);
 				ii--;
+				//areas--;
 				continue;
 			}
 			if (m_tags[ii].getName() == "ENTITY") {
@@ -72,7 +72,7 @@ void FileLoader::loadState ()
 				continue;
 			}
 		}
-    }
+    //}
      m_engine->getMap()->setArea (currArea);
 
     LOG(INFO) << "Completed loading save game" << std::endl;
@@ -95,10 +95,11 @@ Location FileLoader::loadLocation (unsigned int& pos)
 }
 
 void FileLoader::loadMap (unsigned int& pos) {
+	unsigned int area = m_tags[pos++].getNum();
 	unsigned int width = m_tags[pos++].getNum();
 	unsigned int height = m_tags[pos++].getNum();
 	unsigned int depth = m_tags[pos++].getNum();
-    m_engine->getMap()->resetMap (width, height, depth);
+    m_engine->getMap()->resetMap (area, width, height, depth);
 
 	for (unsigned int zz = 0; zz < m_engine->getMap()->getMapDepth(); zz++) {
 		for (unsigned int yy = 0; yy < m_engine->getMap()->getMapHeight(); yy++) {

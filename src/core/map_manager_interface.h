@@ -27,7 +27,7 @@ public:
     virtual unsigned int getMapWidth() = 0;
     virtual unsigned int getMapDepth() = 0;
 
-    virtual void resetMap (unsigned int width, unsigned int height, unsigned int depth) = 0;
+    virtual void resetMap (unsigned int area, unsigned int width, unsigned int height, unsigned int depth) = 0;
 
     virtual unsigned int getArea () = 0;
     virtual void setArea (unsigned int area) = 0;

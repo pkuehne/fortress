@@ -37,7 +37,7 @@ bool DungeonGenerator::generate () {
     for (m_level = 0; m_level < m_maxDepth; m_level++) {
         reset();
         initMap (EMPTY);
-        LOG(INFO) << "Creating level " << m_level << std::endl;
+        LOG(INFO) << "Creating level " << m_level << " of area " << m_engine->getArea() <<  std::endl;
         if (!generateLevel()) return false;
     }
     return true;
@@ -77,6 +77,7 @@ void DungeonGenerator::createEntitiesFromMap () {
             location.x = xx;
             location.y = yy;
             location.z = m_level;
+            location.area = m_engine->getArea();
             switch (getByCoordinate(xx, yy)) {
                 case WALL:
                 case CORNER:
@@ -273,6 +274,7 @@ void DungeonGenerator::placeItems()
         location.x = x;
         location.y = y;
         location.z = m_level;
+        location.area = m_engine->getArea();
 
         unsigned int type = Utility::randBetween (0, 100);
         if  (type < 70) { // Potion
