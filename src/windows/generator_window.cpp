@@ -86,15 +86,8 @@ void GeneratorWindow::redraw() {
 void GeneratorWindow::update () {
     if (getArgs() && !m_generated) {
         startGenerating();
-        for (unsigned int level = 1; level <= m_levelDepth; level++) {
-            generateLevel();
-        }
         startPlaying();
         return;
-    }
-
-    if (m_generating) {
-        generateLevel();
     }
 }
 
@@ -132,7 +125,7 @@ void GeneratorWindow::keyDown (unsigned char key) {
 
 void GeneratorWindow::startGenerating () {
     m_generatingLevel = 1;
-    m_generating = true;
+    //m_generating = true;
 
     getEngine()->getMap()->resetMap (0, m_levelWidth, m_levelHeight, 1);
 
@@ -147,7 +140,6 @@ void GeneratorWindow::startGenerating () {
     {
         LOG(INFO) << "Generating area: " << area << std::endl;
         getEngine()->getMap()->resetMap (area++, m_levelWidth, m_levelHeight, m_levelDepth);
-        ///getEngine()->setArea (area); area++;
 
         DungeonGenerator l_generator;
         l_generator.initialise (getEngine());
@@ -162,38 +154,12 @@ void GeneratorWindow::startGenerating () {
         getEngine()->getComponents()->get<StairComponent>(stair)->target = l_generator.upStairLink();
     }
     LOG(INFO) << "Placed " << getEngine()->getEntities()->getMaxId() << " entities" << std::endl;
-    /*
-    EntityHolder& l_entities = getEngine()->getEntities()->get (0);
-    for (EntityId entity : l_entities) {
-        StairComponent* l_stair = getEngine()->getComponents()->get<StairComponent>(entity);
-        if (l_stair == nullptr) continue;
-        Location l_stairLoc = getEngine()->getEntities()->getLocation (entity);
-        if (l_stair->direction == STAIR_DOWN && l_stairLoc.z == 1) {
-            l_stair->target = 0;
-        }
-    }
-    */
-
 
     getEngine()->setArea (0);
-
+    m_generated = true;
 }
 
 void GeneratorWindow::generateLevel () {
-    /*
-    if (m_generatingLevel <= m_levelDepth) {
-        DungeonGenerator l_generator;
-        l_generator.initialise (getEngine());
-        l_generator.mapHeight()    = m_levelHeight;
-        l_generator.mapWidth()     = m_levelWidth;
-        l_generator.numberOfRooms()= m_levelRooms;
-        l_generator.currentLevel() = m_generatingLevel++;
-        while (0); //!l_generator.generate());
-    } else {
-        m_generating = false;
-        m_generated = true;
-    }
-    */
 
 }
 
