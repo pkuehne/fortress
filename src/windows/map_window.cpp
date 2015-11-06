@@ -2,6 +2,7 @@
 #include "map_window.h"
 #include "inspection_window.h"
 #include "equipment_window.h"
+#include "selection_window.h"
 #include "game_engine.h"
 #include "event.h"
 #include "sprite_component.h"
@@ -86,11 +87,13 @@ void MapWindow::keyDown (unsigned char key)
         if (m_action == 'i') {
             EntityHolder l_entities = getEngine()->getMap()->findEntitiesAt(newLocation);
             if (l_entities.size() > 0) {
-                EntityId* l_target = new EntityId(*l_entities.begin());
+				SelectionWindow* selWin = new SelectionWindow();
+				selWin->initialise (getEngine(), &l_entities);
+				getEngine()->getWindows()->pushWindow (selWin);
 
-                InspectionWindow* l_win = new InspectionWindow();
-                l_win->initialise(getEngine(), l_target);
-                getEngine()->getWindows()->pushWindow (l_win);
+//                InspectionWindow* l_win = new InspectionWindow();
+//                l_win->initialise(getEngine(), l_target);
+//                getEngine()->getWindows()->pushWindow (l_win);
             }
         }
         if (m_action != 'i') getEngine()->swapTurn();
