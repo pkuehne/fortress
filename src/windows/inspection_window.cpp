@@ -5,7 +5,7 @@
 void InspectionWindow::keyDown (unsigned char key) {
     Window::keyDown (key);
 
-    if (key == KEY_ESC) {
+    if (key == KEY_ESC  || key == KEY_ENTER) {
         getEngine()->getWindows()->popWindow();
     }
 }
@@ -18,9 +18,9 @@ void InspectionWindow::resize()
 void InspectionWindow::redraw()
 {
     if (!m_description) return;
-    unsigned int yPos = 2;
+    unsigned int yOffset = 2;
     for (std::string line : m_lines) {
-        drawString (yPos++,  2, line.c_str());
+        drawString (yOffset++,  2, line.c_str());
     }
 }
 

@@ -147,5 +147,5 @@ void SplashWindow::keyDown (unsigned char key) {
     MainWindow* l_win = new MainWindow();
     l_win->initialise(getEngine());
 
-    getEngine()->getWindows()->replaceWindow (l_win);
+    getEngine()->getWindows()->replaceAllWindows (l_win);
 }

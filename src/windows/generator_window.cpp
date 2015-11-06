@@ -166,5 +166,5 @@ void GeneratorWindow::generateLevel () {
 void GeneratorWindow::startPlaying() {
     MapWindow* l_win = new MapWindow();
     l_win->initialise (getEngine());
-    getEngine()->getWindows()->replaceWindow (l_win);
+    getEngine()->getWindows()->replaceAllWindows (l_win);
 }

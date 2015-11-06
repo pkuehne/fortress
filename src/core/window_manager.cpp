@@ -24,15 +24,16 @@ void WindowManager::popWindow () {
 }
 
 void WindowManager::replaceWindow (WindowInterface* win) {
+	popWindow();
+    pushWindow (win);
+}
+
+void WindowManager::replaceAllWindows (WindowInterface* win) {
     int size = m_windows.size();
     for (int ii = 0; ii < size; ii++) {
         popWindow();
     }
     pushWindow (win);
-}
-
-void WindowManager::replaceAllWindows (WindowInterface* win) {
-
 }
 
 WindowInterface* WindowManager::getActive()
