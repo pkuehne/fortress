@@ -92,7 +92,7 @@ void GeneratorWindow::update () {
 }
 
 void GeneratorWindow::keyDown (unsigned char key) {
-    if (key == ESC) {
+    if (key == KEY_ESC) {
         getEngine()->getWindows()->popWindow();
     }
 

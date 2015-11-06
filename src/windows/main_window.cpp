@@ -43,7 +43,7 @@ void MainWindow::redraw() {
 }
 
 void MainWindow::keyDown (unsigned char key) {
-    if (key == ESC) {
+    if (key == KEY_ESC) {
         getEngine()->quit();
     }
 

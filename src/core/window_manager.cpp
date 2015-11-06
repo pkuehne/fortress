@@ -31,6 +31,10 @@ void WindowManager::replaceWindow (WindowInterface* win) {
     pushWindow (win);
 }
 
+void WindowManager::replaceAllWindows (WindowInterface* win) {
+
+}
+
 WindowInterface* WindowManager::getActive()
 {
     if (m_windows.size() == 0) return NULL;

@@ -130,7 +130,7 @@ void EquipmentWindow::keyDown (unsigned char key) {
     EntityId player = getEngine()->getEntities()->getPlayer();
     EquipmentComponent* equipment = getEngine()->getComponents()->get<EquipmentComponent>(player);
 
-    if (key == ESC) {
+    if (key == KEY_ESC) {
         getEngine()->getWindows()->popWindow();
     }
 
@@ -191,7 +191,7 @@ void EquipmentWindow::keyDown (unsigned char key) {
         getEngine()->swapTurn();
     }
 
-    if (key == TAB) {
+    if (key == KEY_TAB) {
         if (m_selectedPage == 1) {
             m_selectedPage = 0;
         } else {

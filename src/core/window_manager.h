@@ -12,7 +12,8 @@ public:
     void initialise (GameEngineInterface* engine);
     void pushWindow (WindowInterface* win);
     void popWindow ();
-    void replaceWindow (WindowInterface* win) ;
+    void replaceWindow (WindowInterface* win);
+    void replaceAllWindows (WindowInterface* win);
     WindowInterface* getActive();
     void redraw ();
     void resize ();

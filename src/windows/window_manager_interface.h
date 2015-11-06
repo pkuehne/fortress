@@ -11,6 +11,7 @@ public:
     virtual void pushWindow (WindowInterface* win) = 0;
     virtual void popWindow () = 0;
     virtual void replaceWindow (WindowInterface* win) = 0;
+    virtual void replaceAllWindows (WindowInterface* win) = 0;
     virtual WindowInterface* getActive() = 0;
     virtual void redraw() = 0;
     virtual void resize () = 0;

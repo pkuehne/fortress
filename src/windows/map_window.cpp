@@ -99,7 +99,7 @@ void MapWindow::keyDown (unsigned char key)
         if (m_action != 'i') getEngine()->swapTurn();
         m_action = 'm';
     }
-    if (key == ESC) {
+    if (key == KEY_ESC) {
         getEngine()->quit();
     }
     if (key == 'm' ||

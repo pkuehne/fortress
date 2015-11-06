@@ -20,9 +20,14 @@ namespace Direction {
 }
 
 enum {
-    TAB = 9,
-    ESC = 27,
-    MAX = 999
+    KEY_TAB 	= 1,
+    KEY_ESC 	= 2,
+    KEY_ENTER	= 3,
+    KEY_UP		= 4,
+    KEY_DOWN	= 5,
+    KEY_RIGHT	= 6,
+    KEY_LEFT	= 7,
+    KEY_MAX = 63
 };
 
 

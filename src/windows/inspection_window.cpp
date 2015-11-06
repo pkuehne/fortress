@@ -5,7 +5,7 @@
 void InspectionWindow::keyDown (unsigned char key) {
     Window::keyDown (key);
 
-    if (key == ESC) {
+    if (key == KEY_ESC) {
         getEngine()->getWindows()->popWindow();
     }
 }

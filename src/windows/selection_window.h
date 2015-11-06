@@ -14,6 +14,7 @@ public:
 private:
     std::vector<std::string> 	m_lines;
     std::vector<EntityId>		m_entities;
+    unsigned int				m_selection = 0;
 };
 
 #endif

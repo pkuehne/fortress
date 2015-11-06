@@ -35,8 +35,14 @@ void Graphics::callResizeFunc (int width, int height)
 void Graphics::callKeyboardFunc (int key, int scancode, int action, int mods)
 {
     if (key > 64 && key < 91 && !(mods & GLFW_MOD_SHIFT)) key += 32;
-    if (key == GLFW_KEY_ESCAPE) key = ESC;
-    if (key == GLFW_KEY_TAB) key = TAB;
+    if (key == GLFW_KEY_ESCAPE) key = KEY_ESC;
+    if (key == GLFW_KEY_TAB) key = KEY_TAB;
+    if (key == GLFW_KEY_ENTER) key = KEY_ENTER;
+    if (key == GLFW_KEY_UP) key = KEY_UP;
+    if (key == GLFW_KEY_DOWN) key = KEY_DOWN;
+    if (key == GLFW_KEY_LEFT) key = KEY_LEFT;
+    if (key == GLFW_KEY_RIGHT) key = KEY_RIGHT;
+
     if (action == GLFW_PRESS || action == GLFW_REPEAT) {
         if (m_keyDownFunc) m_keyDownFunc ((unsigned char) key, 0, 0);
     } else if (action == GLFW_RELEASE) {

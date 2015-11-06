@@ -23,5 +23,5 @@ void GameOverWindow::resize()
 
 void GameOverWindow::keyDown (unsigned char key)
 {
-    if (key == ESC) getEngine()->quit();
+    if (key == KEY_ESC) getEngine()->quit();
 }
