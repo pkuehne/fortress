@@ -147,6 +147,19 @@ void MapWindow::keyDown (unsigned char key)
     if (key == '\\') {
         m_debugMode = !m_debugMode;
     }
+    if (key == '[') {
+    	unsigned int height = getEngine()->getGraphics()->getTileHeight();
+    	unsigned int width = getEngine()->getGraphics()->getTileWidth();
+    	getEngine()->getGraphics()->updateTileSize(width-1, height-1);
+    	getEngine()->getWindows()->resize();
+    }
+    if (key == ']') {
+    	unsigned int height = getEngine()->getGraphics()->getTileHeight();
+    	unsigned int width = getEngine()->getGraphics()->getTileWidth();
+    	getEngine()->getGraphics()->updateTileSize(width+1, height+1);
+    	getEngine()->getWindows()->resize();
+    }
+
     //std::cout << "Key: " << key << std::endl;
 }
 

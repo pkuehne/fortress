@@ -114,14 +114,12 @@ void Graphics::clearArea (int y, int x, int height, int width)
 
 int Graphics::getScreenHeight ()
 {
-    long iconSize = m_config.getTag("IconSize").getNum();
-    return (m_height/iconSize);
+    return (m_height/m_tileHeight);
 }
 
 int Graphics::getScreenWidth()
 {
-    long iconSize = m_config.getTag("IconSize").getNum();
-    return (m_width/iconSize);
+    return (m_width/m_tileWidth);
 }
 
 void Graphics::calculateWindowOffsetsFromCentre (int height, int width, int& y, int& x)
@@ -140,6 +138,12 @@ void Graphics::updateScreenSize (int width, int height)
     glLoadIdentity();
     glOrtho (0, width, 0, height, -1.0, 1.0);
     glMatrixMode(GL_MODELVIEW);
+}
+
+void Graphics::updateTileSize (unsigned int width, unsigned int height)
+{
+	if (width) m_tileWidth = width;
+	if (height) m_tileHeight = height;
 }
 
 void Graphics::setKeyDownFunc (KeyboardFuncPtr func)

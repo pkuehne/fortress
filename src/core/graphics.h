@@ -8,6 +8,7 @@
 
 class Graphics : public GraphicsInterface {
 public:
+	virtual ~Graphics() { }
     virtual void initialise(int argc, char** argv);
     virtual void spin();
 
@@ -27,6 +28,9 @@ public:
     virtual int getScreenWidth();
 
     virtual void updateScreenSize (int width, int height);
+    virtual void updateTileSize (unsigned int width, unsigned int height);
+    virtual unsigned int getTileWidth() { return m_tileWidth; }
+    virtual unsigned int getTileHeight() { return m_tileHeight; }
 
     virtual void setKeyDownFunc (KeyboardFuncPtr func);
     virtual void setKeyUpFunc (KeyboardFuncPtr func);
