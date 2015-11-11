@@ -6,13 +6,24 @@
 #include "config_manager.h"
 #include <GLFW/glfw3.h>
 
+struct Texture {
+	GLuint id					= 0;
+	int textureWidth	= 0;
+	int textureHeight	= 0;
+	unsigned int numRows		= 16;
+	unsigned int numCols		= 16;
+	float tileWidth				= 0;
+	float tileHeight			= 0;
+
+};
+
 class Graphics : public GraphicsInterface {
 public:
 	virtual ~Graphics() { }
     virtual void initialise(int argc, char** argv);
     virtual void spin();
 
-    virtual void loadTextures ();
+    virtual Texture loadTexture (std::string, unsigned int cols, unsigned int rows);
 
     virtual unsigned int drawString (int y, int x, const char* s, Color fg = Color(WHITE), Color bg = Color(BLACK));
     virtual void drawTile (int y, int x, unsigned int tile, Color fg, Color bg);
@@ -50,8 +61,9 @@ private:
     ResizeFuncPtr       m_resizeFunc;
     KeyboardFuncPtr     m_keyDownFunc;
     KeyboardFuncPtr     m_keyUpFunc;
-    GLuint				m_tileTexture	= 0;
-    GLuint				m_fontTexture	= 0;
+    Texture				m_tileTexture;
+    //GLuint				m_tileTexture	= 0;
+    //GLuint				m_fontTexture	= 0;
     unsigned int		m_tilesPerRow	= 16; // Assume 16*16 icon tilesets
     unsigned int		m_tilesPerCol	= 16;
     float       		m_tilePixelW	= 0; // The texture's tile size in pixels

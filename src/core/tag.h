@@ -15,8 +15,8 @@ public:
 private:
     std::string m_name;
     std::string m_string;
-    long        m_number;
-    double      m_decimal;
+    long        m_number 	= 0;
+    double      m_decimal	= 0.0;
 };
 
 #endif
