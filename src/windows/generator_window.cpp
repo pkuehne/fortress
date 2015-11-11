@@ -24,9 +24,7 @@ void GeneratorWindow::gainFocus () {
     m_levelRooms = 2;
     m_worldSize = 129;
     m_selectedPosition = NONE;
-    m_generatingLevel = 0;
-    m_generating = false;
-    m_generated = false;
+    m_status = WAITING;
 }
 
 void GeneratorWindow::resize() {
@@ -43,36 +41,36 @@ void GeneratorWindow::redraw() {
 
     drawString (middleY - 11, middleX - 10, "Level Parameters:");
     drawString (middleY - 10, middleX - 6, "Width: ");
-    if (!m_generating && !m_generated) drawTile (middleY - 10, middleX - 6, 'W', Color (GREEN), Color (BLACK));
+    if (m_status == WAITING) drawTile (middleY - 10, middleX - 6, 'W', Color (GREEN), Color (BLACK));
         drawString (middleY - 10, middleX + 2, formatNumber(m_levelWidth).c_str());
         if (m_selectedPosition == WIDTH) selY = middleY - 10;
     drawString (middleY - 9, middleX - 6, "Height: ");
-    if (!m_generating && !m_generated) drawTile (middleY - 9, middleX - 6, 'H', Color (GREEN), Color (BLACK));
+    if (m_status == WAITING) drawTile (middleY - 9, middleX - 6, 'H', Color (GREEN), Color (BLACK));
         drawString (middleY - 9, middleX + 2, formatNumber(m_levelHeight).c_str());
         if (m_selectedPosition == HEIGHT) selY = middleY - 9;
 
     drawString (middleY - 8, middleX - 6, "Rooms: ");
-    if (!m_generating && !m_generated) drawTile (middleY - 8, middleX - 6, 'R', Color (GREEN), Color (BLACK));
+    if (m_status == WAITING) drawTile (middleY - 8, middleX - 6, 'R', Color (GREEN), Color (BLACK));
         drawString (middleY - 8, middleX + 2, formatNumber(m_levelRooms).c_str());
         if (m_selectedPosition == ROOMS) selY = middleY - 8;
 
     drawString (middleY - 7, middleX - 6, "Depth: ");
-    if (!m_generating && !m_generated) drawTile (middleY - 7, middleX - 6, 'D', Color (GREEN), Color (BLACK));
+    if (m_status == WAITING) drawTile (middleY - 7, middleX - 6, 'D', Color (GREEN), Color (BLACK));
         drawString (middleY - 7, middleX + 2, formatNumber(m_levelDepth).c_str());
         if (m_selectedPosition == DEPTH) selY = middleY - 7;
 
-    if (!m_generating &&m_selectedPosition != NONE) {
+    if (m_status != PROGRESS && m_selectedPosition != NONE) {
         drawTile (selY, middleX + 1, '<', Color(RED), Color(BLACK));
         drawTile (selY, middleX + 5, '>', Color(RED), Color(BLACK));
     }
 
     drawString (middleY - 5, middleX - 6, "Create: ");
-    if (!m_generating && !m_generated) drawTile (middleY - 5, middleX - 6, 'C', Color (GREEN), Color (BLACK));
+    if (m_status == WAITING) drawTile (middleY - 5, middleX - 6, 'C', Color (GREEN), Color (BLACK));
 
-    if (m_generating) {
+    if (m_status == PROGRESS) {
         //drawString (middleY - 5, middleX + 3, ":");
-        drawProgress (middleX + 2, middleY - 5, m_generatingLevel - 1, m_levelDepth);
-    } else if (m_generated) {
+        drawProgress (middleX + 2, middleY - 5, m_progress, m_levelDepth);
+    } else if (m_status == COMPLETED) {
         drawString (middleY - 5, middleX + 2, "Done!");
         drawString (middleY - 4, middleX - 6, "Play");
         drawTile (middleY - 4, middleX - 6, 'P', Color(GREEN), Color(BLACK));
@@ -84,7 +82,7 @@ void GeneratorWindow::redraw() {
 }
 
 void GeneratorWindow::update () {
-    if (getArgs() && !m_generated) {
+    if (getArgs() && m_status == WAITING) {
         startGenerating();
         startPlaying();
         return;
@@ -96,9 +94,9 @@ void GeneratorWindow::keyDown (unsigned char key) {
         getEngine()->getWindows()->popWindow();
     }
 
-    if (m_generating) return; // Don't allow updates during generating
+    if (m_status == PROGRESS) return; // Don't allow updates during generating
 
-    if (m_generated && (key == 'p' || key == 'P')) {
+    if (m_status == COMPLETED && (key == 'p' || key == 'P')) {
         startPlaying();
         return; // Don't allow other actions
     }
@@ -112,8 +110,8 @@ void GeneratorWindow::keyDown (unsigned char key) {
     }
 
     int adjustment = 0;
-    if (key == '+') adjustment = 1;
-    if (key == '-') adjustment = -1;
+    if (key == KEY_RIGHT) adjustment = 1;
+    if (key == KEY_LEFT) adjustment = -1;
     switch (m_selectedPosition) {
         case WIDTH: m_levelWidth    += adjustment; break;
         case HEIGHT: m_levelHeight  += adjustment; break;
@@ -124,8 +122,8 @@ void GeneratorWindow::keyDown (unsigned char key) {
 }
 
 void GeneratorWindow::startGenerating () {
-    m_generatingLevel = 1;
-    //m_generating = true;
+    m_progress = 1;
+    m_status = PROGRESS;
 
     getEngine()->getMap()->resetMap (0, m_levelWidth, m_levelHeight, 1);
 
@@ -156,7 +154,7 @@ void GeneratorWindow::startGenerating () {
     LOG(INFO) << "Placed " << getEngine()->getEntities()->getMaxId() << " entities" << std::endl;
 
     getEngine()->setArea (0);
-    m_generated = true;
+    m_status = COMPLETED;
 }
 
 void GeneratorWindow::generateLevel () {

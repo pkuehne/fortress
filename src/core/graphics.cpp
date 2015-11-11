@@ -62,26 +62,23 @@ unsigned int Graphics::drawString (int y, int x, const char* string, Color fg, C
 
 void Graphics::drawTile (int y, int x, unsigned int tile, Color fg, Color bg)
 {
-    long iconSize = m_config.getTag("IconSize").getNum();
-    float tileWidth = 1.0/16;
-    float tileHeight = 1.0/16;
     unsigned int tileCol = 0;
     unsigned int tileRow = 0;
-    tileCol = tile % 16;
-    tileRow = (tile - (tile % 16)) / 16;
+    tileCol = tile % m_tilesPerRow;
+    tileRow = (tile - (tileCol)) / m_tilesPerCol;
 
-    y = (m_height/iconSize) - (y+1);
+    y = (m_height/m_tileHeight) - (y+1);
 
     glColor3f (fg.Red(), fg.Green(), fg.Blue());
     glBegin(GL_QUADS);
-       glTexCoord2f(tileWidth*(tileCol+1), tileHeight*(tileRow+1));
-       glVertex2f(iconSize*(x+1), iconSize*(y+0));
-       glTexCoord2f(tileWidth*(tileCol+1), tileHeight*(tileRow+0));
-       glVertex2f(iconSize*(x+1), iconSize*(y+1));
-       glTexCoord2f(tileWidth*(tileCol+0), tileHeight*(tileRow+0));
-       glVertex2f(iconSize*(x+0), iconSize*(y+1));
-       glTexCoord2f(tileWidth*(tileCol+0), tileHeight*(tileRow+1));
-       glVertex2f(iconSize*(x+0), iconSize*(y+0));
+       glTexCoord2f(m_tilePixelW*(tileCol+1), m_tilePixelH*(tileRow+1));
+       glVertex2f(m_tileWidth*(x+1), m_tileHeight*(y+0));
+       glTexCoord2f(m_tilePixelW*(tileCol+1), m_tilePixelH*(tileRow+0));
+       glVertex2f(m_tileWidth*(x+1), m_tileHeight*(y+1));
+       glTexCoord2f(m_tilePixelW*(tileCol+0), m_tilePixelH*(tileRow+0));
+       glVertex2f(m_tileWidth*(x+0), m_tileHeight*(y+1));
+       glTexCoord2f(m_tilePixelW*(tileCol+0), m_tilePixelH*(tileRow+1));
+       glVertex2f(m_tileWidth*(x+0), m_tileHeight*(y+0));
     glEnd();
 }
 
@@ -240,17 +237,37 @@ void Graphics::initialise (int argc, char** argv)
 
     setDisplayFunc      (empty);
 
+    loadTextures();
+}
+
+void Graphics::loadTextures() {
     std::string tileset ("graphics/");
     tileset.append (m_config.getTag("Tileset").getStr());
-    GLuint tex = SOIL_load_OGL_texture (tileset.c_str(),
+    m_tileTexture = SOIL_load_OGL_texture (tileset.c_str(),
                                 		SOIL_LOAD_AUTO,
                                 		SOIL_CREATE_NEW_ID,
 		                                SOIL_FLAG_MIPMAPS |
                                         SOIL_FLAG_NTSC_SAFE_RGB |
                                         SOIL_FLAG_COMPRESS_TO_DXT);
-    glBindTexture(GL_TEXTURE_2D, tex);
+    glBindTexture(GL_TEXTURE_2D, m_tileTexture);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+    int width = 0;
+    int height= 0;
+
+    glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_WIDTH, &width);
+    glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_HEIGHT, &height);
+
+    m_tilePixelW = 1.0/(width/m_tilesPerCol);
+    m_tilePixelH = 1.0/(height/m_tilesPerRow);
+
+    LOG(INFO) << "Tileset texture width: " << width << " height: " << height << std::endl;
+    LOG(INFO) << "Texture is " << m_tilesPerCol << " tiles across @ " << m_tilePixelW
+    		<< " and " << m_tilesPerRow << " tiles high @ " << m_tilePixelH << std::endl;
+    LOG(INFO) << "Tiles are " << m_tileWidth << "*" << m_tileHeight << " pixels on screen" << std::endl;
+
+
 }

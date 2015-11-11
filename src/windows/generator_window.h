@@ -12,6 +12,14 @@ enum PositionSelect {
     DEPTH
 };
 
+enum GenerationStatus {
+	WAITING = 0,
+	PROGRESS,
+	COMPLETED,
+	ABORTED,
+	MAX
+};
+
 class GeneratorWindow : public Window {
 public:
     virtual void gainFocus ();
@@ -34,9 +42,8 @@ private:
     unsigned int m_worldSize;
     unsigned int m_levelDepth;
 
-    bool                m_generating;
-    bool                m_generated;
-    unsigned int        m_generatingLevel;
+    GenerationStatus	m_status;
+    unsigned int m_progress = 0;
 };
 
 #endif
