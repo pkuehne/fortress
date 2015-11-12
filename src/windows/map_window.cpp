@@ -8,6 +8,7 @@
 #include "sprite_component.h"
 #include "health_component.h"
 #include "droppable_component.h"
+#include "graphics_effect_component.h"
 #include "npc_component.h"
 #include "file_saver.h"
 #include "file_loader.h"
@@ -144,8 +145,9 @@ void MapWindow::keyDown (unsigned char key)
         saver.saveState();
         getEngine()->addMessage (INFO, "Game saved!");
     }
-    if (key == '\\') {
+    if (key == '=') {
         m_debugMode = !m_debugMode;
+        std::cout << "Switching debug mode" << std::endl;
     }
     if (key == '[') {
     	unsigned int height = getEngine()->getGraphics()->getTileHeight();
@@ -223,6 +225,12 @@ void MapWindow::drawMap()
                 }
             }
         }
+        GraphicsEffectComponent* effect = new GraphicsEffectComponent();
+        EntityId player = getEngine()->getEntities()->getPlayer();
+        getEngine()->getComponents()->add(player, effect);
+    } else {
+        EntityId player = getEngine()->getEntities()->getPlayer();
+    	getEngine()->getComponents()->remove<GraphicsEffectComponent>(player);
     }
 
     return;
