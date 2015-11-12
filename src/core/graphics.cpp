@@ -70,7 +70,7 @@ void Graphics::drawRect (Texture& texture, int x, int y, unsigned int tile, Colo
     unsigned int tileCol = 0;
     unsigned int tileRow = 0;
     tileCol = tile % texture.numCols;
-    tileRow = (tile - (tileCol)) / texture.numRows;
+    tileRow = (tile - (tileCol)) / texture.numCols;
 
     y = (m_height/m_tileHeight) - (y+1);
 
@@ -287,8 +287,8 @@ Texture Graphics::loadTexture (std::string name, unsigned int cols, unsigned int
     glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_WIDTH, &texture.textureWidth);
     glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_HEIGHT, &texture.textureHeight);
 
-    texture.tileWidth = (double)texture.numCols / texture.textureWidth;
-    texture.tileHeight = (double)texture.numRows / texture.textureHeight;
+    texture.tileWidth = 1.0 / texture.numCols;
+    texture.tileHeight = 1.0 / texture.numRows;
 
     LOG(INFO) << "Created texture " << texture.id << " (" << name << ")"
     			<< " width: " << texture.textureWidth << " height: " << texture.textureHeight << std::endl;
