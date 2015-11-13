@@ -11,6 +11,7 @@ public:
 	virtual ~GraphicsEffectSystem() { }
 	virtual void handleEvent (const Event* event) { }
     virtual void update ();
+
 private:
     void blinkEffect (GraphicsEffectComponent* effect, SpriteComponent* sprite);
 };

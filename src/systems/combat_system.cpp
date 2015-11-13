@@ -7,6 +7,7 @@
 #include "health_component.h"
 #include "sprite_component.h"
 #include "description_component.h"
+#include "graphics_effect_component.h"
 
 void CombatSystem::handleEvent (const Event* event)
 {
@@ -26,6 +27,13 @@ void CombatSystem::handleEvent (const Event* event)
             HealthComponent* l_health = m_engine->getComponents()->get<HealthComponent>(defender);
             if (l_health) {
                 updateLog (attacker, defender, damage);
+
+                GraphicsEffectComponent* effect = new GraphicsEffectComponent();
+                effect->type = EFFECT_BLINK_FAST;
+                effect->duration = 50;
+                getEngine()->getComponents()->add(defender, effect);
+                std::cout << "Added blinker to " << defender << std::endl;
+
                 if (damage < l_health->health) {
                     l_health->health -= damage;
                 } else {

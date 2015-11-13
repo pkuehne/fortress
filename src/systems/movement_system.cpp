@@ -6,6 +6,7 @@
 #include <iostream>
 #include "stair_component.h"
 #include "collider_component.h"
+#include "graphics_effect_component.h"
 
 void MovementSystem::handleEvent (const Event* event)
 {
@@ -21,6 +22,12 @@ void MovementSystem::handleEvent (const Event* event)
                 EntityHolder& l_targets = m_engine->getMap()->getTile(l_newLocation).entities;
                 for (EntityId l_target : l_targets) {
                     if (m_engine->getComponents()->get<ColliderComponent> (l_target)) {
+                        GraphicsEffectComponent* effect = new GraphicsEffectComponent();
+                        effect->type = EFFECT_BLINK_FAST;
+                        effect->duration = 40;
+                        getEngine()->getComponents()->add(l_entity, effect);
+                        std::cout << "Added blinker to " << l_entity << std::endl;
+
                         return; // Don't update position if it's a collidable
                     }
                     StairComponent* l_stair = m_engine->getComponents()->get<StairComponent> (l_target);
