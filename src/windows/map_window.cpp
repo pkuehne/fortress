@@ -148,6 +148,12 @@ void MapWindow::keyDown (unsigned char key)
     if (key == '=') {
         m_debugMode = !m_debugMode;
         std::cout << "Switching debug mode" << std::endl;
+        GraphicsEffectComponent* effect = new GraphicsEffectComponent();
+        effect->type = EFFECT_BLINK;
+        effect->duration = 50;
+        EntityId player = getEngine()->getEntities()->getPlayer();
+        getEngine()->getComponents()->add(player, effect);
+
     }
     if (key == '[') {
     	unsigned int height = getEngine()->getGraphics()->getTileHeight();
@@ -225,12 +231,8 @@ void MapWindow::drawMap()
                 }
             }
         }
-        GraphicsEffectComponent* effect = new GraphicsEffectComponent();
-        EntityId player = getEngine()->getEntities()->getPlayer();
-        getEngine()->getComponents()->add(player, effect);
     } else {
-        EntityId player = getEngine()->getEntities()->getPlayer();
-    	getEngine()->getComponents()->remove<GraphicsEffectComponent>(player);
+    	//
     }
 
     return;

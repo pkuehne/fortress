@@ -1,6 +1,4 @@
 #include <graphics_effect_system.h>
-#include <graphics_effect_component.h>
-#include <sprite_component.h>
 #include <glog/logging.h>
 
 void GraphicsEffectSystem::update ()
@@ -14,9 +12,38 @@ void GraphicsEffectSystem::update ()
     		LOG(WARNING) << "GraphicsEffect without a sprite is pointless: " << l_entity << std::endl;
     		continue;
     	}
-    	Color tempColor = sprite->fgColor;
-    	tempColor.Red() += 5.0/256.0;
-    	if (tempColor.Red() > 1.0) tempColor.Red() = 0.0;
-    	sprite->fgColor = Color (tempColor.Red(), tempColor.Green(), tempColor.Blue());
+
+    	if (effect->ticks == 0) {
+    		effect->org_color = sprite->fgColor;
+    		effect->org_tile = sprite->sprite;
+    		std::cout << getEngine()->getTick() << ": Setting org values" << std::endl;
+    	}
+    	if (effect->duration && effect->ticks > effect->duration) {
+    		sprite->fgColor = effect->org_color;
+    		sprite->sprite = effect->org_tile;
+    		getEngine()->getComponents()->remove<GraphicsEffectComponent>(l_entity);
+    		return;
+    	}
+
+    	switch (effect->type) {
+    	case EFFECT_BLINK:
+    			blinkEffect (effect, sprite);
+    		break;
+    	default:
+    		break;
+    	}
+
+    	effect->ticks += 1;
     }
+}
+
+void GraphicsEffectSystem::blinkEffect (GraphicsEffectComponent* effect, SpriteComponent* sprite)
+{
+	if (effect->ticks % 10 == 0) {
+		if (sprite->sprite != ' ') {
+			sprite->sprite = ' ';
+		} else {
+			sprite->sprite = effect->org_tile;
+		}
+	}
 }
