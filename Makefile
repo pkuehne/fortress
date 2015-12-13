@@ -38,6 +38,12 @@ $(LOG_DIR):
 	@mkdir -p artifacts/logs
 
 install: build
+	sudo mkdir -p /usr/games/fortress
+	sudo mkdir -p /usr/games/fortress/artifacts
+	sudo mkdir -p /usr/games/fortress/artifacts/logs
+	sudo cp ./fortress /usr/games/fortress
+	sudo cp -r ./graphics/ /usr/games/fortress
+	sudo cp -r ./config/ /usr/games/fortress
 
 doxy:
 	doxygen Doxyfile

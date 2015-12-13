@@ -3,7 +3,6 @@
 
 void GraphicsEffectSystem::update ()
 {
-	//std::cout << "Checking " << getEngine()->getEntities()->get().size() << " entities in " << getEngine()->getArea() << std::endl;
 	for (EntityId l_entity : getEngine()->getEntities()->get()) {
     	GraphicsEffectComponent* effect = getEngine()->getComponents()->get<GraphicsEffectComponent>(l_entity);
     	if (!effect) continue;
@@ -13,19 +12,16 @@ void GraphicsEffectSystem::update ()
     		LOG(WARNING) << "GraphicsEffect without a sprite is pointless: " << l_entity << std::endl;
     		continue;
     	}
-    	std::cout << "Processing effect for " << l_entity << std::endl;
 
     	if (effect->ticks == 0) {
     		effect->org_color = sprite->fgColor;
     		effect->org_tile = sprite->sprite;
-    		std::cout << getEngine()->getTick() << ": Setting org values for " << l_entity << std::endl;
     	}
     	if (effect->duration && effect->ticks > effect->duration) {
     		sprite->fgColor = effect->org_color;
     		sprite->sprite = effect->org_tile;
     		getEngine()->getComponents()->remove<GraphicsEffectComponent>(l_entity);
     		if (effect->removeEntity) {
-    			std::cout << "Removing entity" << std::endl;
     			getEngine()->getEntities()->destroyEntity(l_entity);
     		}
     		continue;
@@ -40,8 +36,6 @@ void GraphicsEffectSystem::update ()
     		LOG(ERROR) << "Invalid effect type: " << effect->type << std::endl;
     		break;
     	}
-
-    	std::cout << "Processed effect " << std::endl;
     	effect->ticks += 1;
     }
 }
