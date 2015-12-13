@@ -24,7 +24,7 @@ void MovementSystem::handleEvent (const Event* event)
                     if (m_engine->getComponents()->get<ColliderComponent> (l_target)) {
 						GraphicsEffectComponent* effect = new GraphicsEffectComponent();
 						effect->type = EFFECT_BLINK_FAST;
-						effect->duration = 40;
+						effect->duration = 10;
 						getEngine()->getComponents()->add(l_entity, effect);
 						return; // Don't update position if it's a collidable
                     }

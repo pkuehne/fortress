@@ -29,10 +29,10 @@ void CombatSystem::handleEvent (const Event* event)
                 updateLog (attacker, defender, damage);
 
                 GraphicsEffectComponent* effect = new GraphicsEffectComponent();
-                effect->type = EFFECT_BLINK_FAST;
-                effect->duration = 50;
+                effect->type = EFFECT_CHANGE_COLOR;
+                effect->duration = 15;
+                effect->new_color = Color (RED);
                 getEngine()->getComponents()->add(defender, effect);
-                std::cout << "Added blinker to " << defender << std::endl;
 
                 if (damage < l_health->health) {
                     l_health->health -= damage;

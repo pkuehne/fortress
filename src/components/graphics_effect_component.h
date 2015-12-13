@@ -8,6 +8,7 @@ typedef enum {
 	EFFECT_NONE = 0,
 	EFFECT_BLINK_SLOW,
 	EFFECT_BLINK_FAST,
+	EFFECT_CHANGE_COLOR,
 	EFFECT_MAX
 } EFFECT;
 
@@ -19,6 +20,7 @@ struct GraphicsEffectComponent : public ComponentBase
 	Color org_color;
 	EFFECT type				= EFFECT_NONE;
 	bool removeEntity		= false;
+	Color new_color;
 };
 
 

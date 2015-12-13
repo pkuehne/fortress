@@ -32,6 +32,9 @@ void GraphicsEffectSystem::update ()
     	case EFFECT_BLINK_FAST:
     			blinkEffect (effect, sprite);
     		break;
+    	case EFFECT_CHANGE_COLOR:
+    			changeColor (effect, sprite);
+    			break;
     	default:
     		LOG(ERROR) << "Invalid effect type: " << effect->type << std::endl;
     		break;
@@ -53,4 +56,9 @@ void GraphicsEffectSystem::blinkEffect (GraphicsEffectComponent* effect, SpriteC
 			sprite->sprite = effect->org_tile;
 		}
 	}
+}
+
+void GraphicsEffectSystem::changeColor (GraphicsEffectComponent* effect, SpriteComponent* sprite)
+{
+	sprite->fgColor = effect->new_color;
 }

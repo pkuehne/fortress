@@ -14,6 +14,7 @@ public:
 
 private:
     void blinkEffect (GraphicsEffectComponent* effect, SpriteComponent* sprite);
+    void changeColor (GraphicsEffectComponent* effect, SpriteComponent* sprite);
 };
 
 #endif

@@ -265,8 +265,9 @@ Texture Graphics::loadTexture (std::string name, unsigned int cols, unsigned int
     texture.numRows = rows ? rows : 16;
     texture.numCols = cols ? cols : 16;
 
-    std::cout << "Load: " << name << " " << cols << "x" << rows << std::endl;
-	std::string tileset ("graphics/");
+    LOG(INFO) << "Loading texture: " << name << " " << cols << "x" << rows << std::endl;
+
+    std::string tileset ("graphics/");
     tileset.append (name);
     texture.id = SOIL_load_OGL_texture (tileset.c_str(),
                                 		SOIL_LOAD_AUTO,
