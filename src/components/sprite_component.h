@@ -8,6 +8,7 @@ struct SpriteComponent : public ComponentBase {
     Color           fgColor;
     Color           bgColor;
     unsigned int    sprite;
+    unsigned int	renderLayer = 0;
 };
 
 #endif

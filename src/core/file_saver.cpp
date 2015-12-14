@@ -139,6 +139,7 @@ void FileSaver::saveComponent (ComponentBase* component)
         m_file << "[BG_RED:" << l_sprite->bgColor.Red() << "]" << std::endl;
         m_file << "[BG_GREEN:" << l_sprite->bgColor.Green() << "]" << std::endl;
         m_file << "[BG_BLUE:" << l_sprite->bgColor.Blue() << "]" << std::endl;
+        m_file << "[RENDER_LAYER:" << l_sprite->renderLayer << "]" << std::endl;
         return;
     }
     StairComponent* l_stair = dynamic_cast<StairComponent*>(component);

@@ -4,13 +4,14 @@
 #include "entity.h"
 #include "component_base.h"
 #include <map>
+#include <unordered_set>
 
 typedef std::unordered_set<ComponentBase*> ComponentHolder;
 
 class ComponentManager {
 public:
     void add (EntityId entity, ComponentBase* component) {
-        m_components[entity].insert (component);
+        m_components[entity].insert (component); //Todo: Check that we don't already have this type
     }
 
     template <class T>

@@ -178,6 +178,7 @@ ComponentBase* FileLoader::loadComponent (unsigned int& pos, const std::string& 
         retval->bgColor.Red()   = m_tags[pos++].getDec();
         retval->bgColor.Green() = m_tags[pos++].getDec();
         retval->bgColor.Blue()  = m_tags[pos++].getDec();
+        retval->renderLayer		= m_tags[pos++].getDec();
         return retval;
     }
     if (component == "STAIR") {

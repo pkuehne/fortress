@@ -132,6 +132,7 @@ EntityId EntityManager::createPlayerPrefab (Location& location)
     l_sprite->fgColor    = Color (WHITE);
     l_sprite->bgColor    = Color (BLACK);
     l_sprite->sprite     = '@';
+    l_sprite->renderLayer= 1;
     m_engine->getComponents()->add (l_entity, l_sprite);
 
     // Collider Component
@@ -176,6 +177,7 @@ EntityId EntityManager::createEnemyPrefab (Location& location)
     l_sprite->fgColor    = Color (RED);
     l_sprite->bgColor    = Color (BLACK);
     l_sprite->sprite     = 'O';
+    l_sprite->renderLayer= 1;
     m_engine->getComponents()->add (l_entity, l_sprite);
 
     // Collider Component
