@@ -191,7 +191,7 @@ void MapWindow::drawMap()
         for (int xx = m_mapStartX; xx < xWidth; xx++) {
             if (!getEngine()->getMap()->isValidTile (xx, yy, l_player.z)) continue;
             Tile& l_tile = getEngine()->getMap()->getTile (xx, yy, l_player.z);
-            for (EntityId entity : l_tile.entities) {
+            for (EntityId entity : l_tile.entities()) {
                 SpriteComponent* l_sprite= getEngine()->getComponents()->get<SpriteComponent> (entity);
                 if (!l_sprite) continue;
 

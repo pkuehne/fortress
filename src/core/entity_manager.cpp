@@ -39,7 +39,7 @@ void EntityManager::addEntity (EntityId id, Location& location) {
     m_locations[id] = location;
     m_entities[location.area].insert (id);
     if (validLocation (location)) {
-        m_engine->getMap()->getTile (location).entities.insert (id);
+        m_engine->getMap()->getTile (location).addEntity (id);
     }
 
 
@@ -50,7 +50,7 @@ void EntityManager::addEntity (EntityId id, Location& location) {
 
 void EntityManager::destroyEntity (EntityId id) {
     m_engine->getComponents()->removeAll(id);
-    m_engine->getMap()->getTile(m_locations[id]).entities.erase (id);
+    m_engine->getMap()->getTile(m_locations[id]).removeEntity (id);
 
     m_entities[m_engine->getMap()->getArea()].erase (id);
 
@@ -63,13 +63,13 @@ void EntityManager::destroyEntity (EntityId id) {
 void EntityManager::setLocation (EntityId entity, Location& location)
 {
     if (validLocation (m_locations[entity])) {
-    	m_engine->getMap()->getTile (m_locations[entity]).entities.erase (entity);
+    	m_engine->getMap()->getTile (m_locations[entity]).removeEntity (entity);
     	m_entities[location.area].erase (entity);
     }
     m_locations[entity] = location;
     m_engine->getMap()->setArea (location.area);
     if (validLocation (m_locations[entity])) {
-    	m_engine->getMap()->getTile (m_locations[entity]).entities.insert (entity);
+    	m_engine->getMap()->getTile (m_locations[entity]).addEntity (entity);
     	m_entities[location.area].insert (entity);
     }
 }

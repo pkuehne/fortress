@@ -134,7 +134,7 @@ unsigned int getPathCost (unsigned int index, void* customData)
     GameEngineInterface* l_engine = static_cast<GameEngineInterface*> (customData);
     Tile& tile = l_engine->getMap()->getTile(index);
 
-    for (EntityId entity : tile.entities) {
+    for (EntityId entity : tile.entities()) {
         if (entity == l_engine->getEntities()->getPlayer()) continue;
         if (l_engine->getComponents()->get<ColliderComponent>(entity)) return -999;
     }

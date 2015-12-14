@@ -267,16 +267,17 @@ Texture Graphics::loadTexture (std::string name, unsigned int cols, unsigned int
 
     LOG(INFO) << "Loading texture: " << name << " " << cols << "x" << rows << std::endl;
 
-    std::string tileset ("graphics/");
-    tileset.append (name);
-    texture.id = SOIL_load_OGL_texture (tileset.c_str(),
+    texture.name = std::string("graphics/");
+    //std::string tileset ("graphics/");
+    texture.name.append (name);
+    texture.id = SOIL_load_OGL_texture (texture.name.c_str(),
                                 		SOIL_LOAD_AUTO,
                                 		SOIL_CREATE_NEW_ID,
 		                                SOIL_FLAG_MIPMAPS |
                                         SOIL_FLAG_NTSC_SAFE_RGB |
                                         SOIL_FLAG_COMPRESS_TO_DXT);
     if (texture.id == 0) {
-    	LOG(ERROR) << "Failed to load texture: " << tileset << std::endl;
+    	LOG(ERROR) << "Failed to load texture: " << texture.name << std::endl;
     	glfwTerminate();
     }
     glBindTexture(GL_TEXTURE_2D, texture.id);
@@ -291,7 +292,7 @@ Texture Graphics::loadTexture (std::string name, unsigned int cols, unsigned int
     texture.tileWidth = 1.0 / texture.numCols;
     texture.tileHeight = 1.0 / texture.numRows;
 
-    LOG(INFO) << "Created texture " << texture.id << " (" << name << ")"
+    LOG(INFO) << "Created texture " << texture.id << " (" << texture.name << ")"
     			<< " width: " << texture.textureWidth << " height: " << texture.textureHeight << std::endl;
     LOG(INFO) << "Texture is " << texture.numCols << " tiles across @ " << texture.tileWidth
     		<< " and " << texture.numRows << " tiles high @ " << texture.tileHeight << std::endl;

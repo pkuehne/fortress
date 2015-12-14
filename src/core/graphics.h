@@ -8,8 +8,9 @@
 
 struct Texture {
 	GLuint id					= 0;
-	int textureWidth	= 0;
-	int textureHeight	= 0;
+	std::string name			;
+	int textureWidth			= 0;
+	int textureHeight			= 0;
 	unsigned int numRows		= 16;
 	unsigned int numCols		= 16;
 	float tileWidth				= 0;

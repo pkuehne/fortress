@@ -19,7 +19,7 @@ void MovementSystem::handleEvent (const Event* event)
 
             //Check if we're running into a collidable or stairs, etc
             {
-                EntityHolder& l_targets = m_engine->getMap()->getTile(l_newLocation).entities;
+                const EntityHolder& l_targets = m_engine->getMap()->getTile(l_newLocation).entities();
                 for (EntityId l_target : l_targets) {
                     if (m_engine->getComponents()->get<ColliderComponent> (l_target)) {
 						GraphicsEffectComponent* effect = new GraphicsEffectComponent();

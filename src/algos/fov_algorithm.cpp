@@ -32,7 +32,7 @@ void FovAlgorithm::calculateFov ()
                 x += playerLoc.x;
                 if (m_engine->getMap()->isValidTile (x, y, playerLoc.z) && visible) {
                     m_engine->getMap()->getTile (x, y, playerLoc.z).lastVisited = m_engine->getTurn();
-                    for (EntityId entity : m_engine->getMap()->getTile (x, y, playerLoc.z).entities) {
+                    for (const EntityId entity : m_engine->getMap()->getTile (x, y, playerLoc.z).entities()) {
                         if (m_engine->getComponents()->get<ColliderComponent>(entity)) {
                             line.addShadow (projection);
                             fullShadow = line.isInFullShadow();
