@@ -75,7 +75,7 @@ void Graphics::drawRect (Texture& texture, int x, int y, unsigned int tile, Colo
     y = (m_height/m_tileHeight) - (y+1);
 
     glBindTexture(GL_TEXTURE_2D, texture.id);
-    glColor3f (fg.Red(), fg.Green(), fg.Blue());
+    glColor3f (fg.Red()/256.0, fg.Green()/256.0, fg.Blue()/256.0);
     glBegin(GL_QUADS);
        glTexCoord2f(texture.tileWidth*(tileCol+1), texture.tileHeight*(tileRow+1));
        glVertex2f(m_tileWidth*(x+1), m_tileHeight*(y+0));

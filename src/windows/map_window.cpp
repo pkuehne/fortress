@@ -300,10 +300,7 @@ void MapWindow::drawSidebar ()
 
 void MapWindow::drawProgressBar (int x, int y, int value)
 {
-    float l_value = (float) value;
-    Color l_color ((1.0f-(l_value/10.0f)), l_value/10.0f, 0);
-
     for (int xx = 0; xx < value; xx++) {
-        drawTile (y, x+xx, 178, l_color, Color(BLACK));
+        drawTile (y, x+xx, 178, Color (GREEN), Color(BLACK));
     }
 }
