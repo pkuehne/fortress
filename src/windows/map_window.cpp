@@ -191,25 +191,31 @@ void MapWindow::drawMap()
         for (int xx = m_mapStartX; xx < xWidth; xx++) {
             if (!getEngine()->getMap()->isValidTile (xx, yy, l_player.z)) continue;
             Tile& l_tile = getEngine()->getMap()->getTile (xx, yy, l_player.z);
+
+            std::map<unsigned int, std::vector<SpriteComponent*> > l_sprites;
             for (EntityId entity : l_tile.entities()) {
-                SpriteComponent* l_sprite= getEngine()->getComponents()->get<SpriteComponent> (entity);
+                SpriteComponent* l_sprite = getEngine()->getComponents()->get<SpriteComponent> (entity);
                 if (!l_sprite) continue;
+                l_sprites[l_sprite->renderLayer].push_back (l_sprite);
+            }
 
-                Color fgColor = l_sprite->fgColor;
-                if (l_tile.lastVisited < getEngine()->getTurn()) {
-                    fgColor.Red()   *= 0.4;
-                    fgColor.Green() *= 0.4;
-                    fgColor.Blue()  *= 0.4;
-                }
+            for (auto layer : l_sprites) {
+            	for (SpriteComponent* l_sprite : layer.second) {
+					Color fgColor = l_sprite->fgColor;
+					if (l_tile.lastVisited < getEngine()->getTurn()) {
+						fgColor.Red()   *= 0.4;
+						fgColor.Green() *= 0.4;
+						fgColor.Blue()  *= 0.4;
+					}
 
-                if (l_tile.lastVisited > 0 && l_tile.lastVisited + 200 > getEngine()->getTurn()) {
-                    drawTile (  yy + m_mapYOffset - m_mapStartY,
-                                xx + m_mapXOffset - m_mapStartX,
-                                l_sprite->sprite,
-                                fgColor,
-                                l_sprite->bgColor);
-                }
-
+					if (l_tile.lastVisited > 0 && l_tile.lastVisited + 200 > getEngine()->getTurn()) {
+						drawTile (  yy + m_mapYOffset - m_mapStartY,
+									xx + m_mapXOffset - m_mapStartX,
+									l_sprite->sprite,
+									fgColor,
+									l_sprite->bgColor);
+					}
+				}
             }
         }
     }
