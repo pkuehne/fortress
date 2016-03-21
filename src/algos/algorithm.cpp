@@ -74,7 +74,7 @@ void Algorithm::findPath (unsigned int start, unsigned int end, PathVector& outp
         }
 
         // Process neighbours
-        unsigned int neighbours[m_numNeighbours] = {0};
+        unsigned int neighbours[m_numNeighbours];
         unsigned int validNeighbours = m_neighbourFunction (l_current.index, neighbours, m_customData);
         for (size_t ii = 0; ii < validNeighbours; ii++) {
             if (neighbours[ii] < 0) continue; // Not a valid neighbour

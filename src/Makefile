@@ -13,7 +13,8 @@ ALL_DIR = $(ART_DIR) $(OBJ_DIR) $(DEP_DIR) $(COV_DIR)
 INC_DIRS += -I. -I/usr/include/ $(addprefix -I, $(MODULES))
 CFLAGS=-g -rdynamic -Wall -Werror -std=c++11 $(INC_DIRS)
 LDFLAGS= -g -rdynamic
-LIBRARIES=-lglfw -lGL -lc -lm -lSOIL -lpthread -lglog
+GLFW_LIBS=$(shell pkg-config glfw3 --libs --static)
+LIBRARIES=$(GLFW_LIBS) -lGL -lc -lm -lSOIL -lpthread -lglog 
 
 SOURCES = $(foreach sdir, $(MODULES), $(wildcard $(sdir)/*.cpp))
 OBJECTS = $(addprefix $(OBJ_DIR)/, $(notdir $($(notdir SOURCES):.cpp=.o)))
