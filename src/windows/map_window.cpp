@@ -179,7 +179,8 @@ void MapWindow::drawSeparators()
 
 void MapWindow::drawMap()
 {
-    Location l_player = getEngine()->getEntities()->getLocation(getEngine()->getEntities()->getPlayer());
+    Location l_player = getEngine()->getEntities()->getLocation(
+            getEngine()->getEntities()->getPlayer());
 
     m_mapStartX = l_player.x - (m_mapWidth/2);
     m_mapStartY = l_player.y - (m_mapHeight/2);
@@ -198,24 +199,25 @@ void MapWindow::drawMap()
                 if (!l_sprite) continue;
                 l_sprites[l_sprite->renderLayer].push_back (l_sprite);
             }
+            l_sprites[0].push_back (&(l_tile.getFloor().getSprite()));
 
-            for (auto layer : l_sprites) {
-            	for (SpriteComponent* l_sprite : layer.second) {
-					Color fgColor = l_sprite->fgColor;
-					if (l_tile.lastVisited < getEngine()->getTurn()) {
-						fgColor.Red()   *= 0.4;
-						fgColor.Green() *= 0.4;
-						fgColor.Blue()  *= 0.4;
-					}
+            for (auto& layer : l_sprites) {
+                for (SpriteComponent* l_sprite : layer.second) {
+                    Color fgColor = l_sprite->fgColor;
+                    if (l_tile.lastVisited < getEngine()->getTurn()) {
+                        fgColor.Red()   *= 0.4;
+                        fgColor.Green() *= 0.4;
+                        fgColor.Blue()  *= 0.4;
+                    }
 
-					if (l_tile.lastVisited > 0 && l_tile.lastVisited + 200 > getEngine()->getTurn()) {
-						drawTile (  yy + m_mapYOffset - m_mapStartY,
-									xx + m_mapXOffset - m_mapStartX,
-									l_sprite->sprite,
-									fgColor,
-									l_sprite->bgColor);
-					}
-				}
+                    if (l_tile.lastVisited > 0 && l_tile.lastVisited + 200 > getEngine()->getTurn()) {
+                        drawTile (  yy + m_mapYOffset - m_mapStartY,
+                                xx + m_mapXOffset - m_mapStartX,
+                                l_sprite->sprite,
+                                fgColor,
+                                l_sprite->bgColor);
+                    }
+                }
             }
         }
     }
@@ -230,15 +232,15 @@ void MapWindow::drawMap()
             if (npc) {
                 for (Location stepLoc : npc->path) {
                     drawTile (  stepLoc.y + m_mapYOffset - m_mapStartY,
-                                stepLoc.x + m_mapXOffset - m_mapStartX,
-                                '+',
-                                Color (RED),
-                                Color (BLACK));
+                            stepLoc.x + m_mapXOffset - m_mapStartX,
+                            '+',
+                            Color (RED),
+                            Color (BLACK));
                 }
             }
         }
     } else {
-    	//
+        //
     }
 
     return;

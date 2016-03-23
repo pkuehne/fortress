@@ -23,7 +23,7 @@ void GeneratorWindow::gainFocus () {
     m_levelDepth = 2;
     m_levelRooms = 2;
     m_worldSize = 129;
-    m_selectedPosition = NONE;
+    m_selectedPosition = WIDTH;
     m_status = WAITING;
 }
 
@@ -112,12 +112,26 @@ void GeneratorWindow::keyDown (unsigned char key) {
     int adjustment = 0;
     if (key == KEY_RIGHT) adjustment = 1;
     if (key == KEY_LEFT) adjustment = -1;
-    switch (m_selectedPosition) {
-        case WIDTH: m_levelWidth    += adjustment; break;
-        case HEIGHT: m_levelHeight  += adjustment; break;
-        case ROOMS: m_levelRooms    += adjustment; break;
-        case DEPTH: m_levelDepth    += adjustment; break;
-        default:break;
+    if (adjustment) {
+        switch (m_selectedPosition) {
+            case WIDTH: m_levelWidth    += adjustment; break;
+            case HEIGHT: m_levelHeight  += adjustment; break;
+            case ROOMS: m_levelRooms    += adjustment; break;
+            case DEPTH: m_levelDepth    += adjustment; break;
+            default:break;
+        }
+    }
+    if (key == KEY_DOWN) {
+        if (m_selectedPosition == WIDTH) m_selectedPosition = HEIGHT;
+        else if (m_selectedPosition == HEIGHT) m_selectedPosition = ROOMS;
+        else if (m_selectedPosition == ROOMS) m_selectedPosition = DEPTH;
+        else if (m_selectedPosition == DEPTH) m_selectedPosition = WIDTH;
+    }
+    if (key == KEY_UP) {
+        if (m_selectedPosition == WIDTH) m_selectedPosition = DEPTH;
+        else if (m_selectedPosition == HEIGHT) m_selectedPosition = WIDTH;
+        else if (m_selectedPosition == ROOMS) m_selectedPosition = HEIGHT;
+        else if (m_selectedPosition == DEPTH) m_selectedPosition = ROOMS;
     }
 }
 

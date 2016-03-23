@@ -36,10 +36,9 @@ void RuralGenerator::createEntitiesFromMap()
             location.x = xx;
             location.y = yy;
             location.z = 0;
+            l_entity = m_engine->getEntities()->createTilePrefab (location);
             switch (getByCoordinate(xx, yy)) {
                 case EMPTY:
-                    l_entity = m_engine->getEntities()->createTilePrefab (location);
-                    m_engine->getComponents()->get<SpriteComponent>(l_entity)->fgColor = Color (DARK_GREEN);
                     break;
                 case TREE:
                     l_entity = m_engine->getEntities()->createTreePrefab (location);

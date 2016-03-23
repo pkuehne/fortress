@@ -16,6 +16,7 @@
 #include "wieldable_component.h"
 #include "droppable_component.h"
 #include "consumable_component.h"
+#include "floor.h"
 
 void EntityManager::initialise (GameEngineInterface* engine)
 {
@@ -132,7 +133,7 @@ EntityId EntityManager::createPlayerPrefab (Location& location)
     l_sprite->fgColor    = Color (WHITE);
     l_sprite->bgColor    = Color (BLACK);
     l_sprite->sprite     = '@';
-    l_sprite->renderLayer= 1;
+    l_sprite->renderLayer= 2;
     m_engine->getComponents()->add (l_entity, l_sprite);
 
     // Collider Component
@@ -177,7 +178,7 @@ EntityId EntityManager::createEnemyPrefab (Location& location)
     l_sprite->fgColor    = Color (RED);
     l_sprite->bgColor    = Color (BLACK);
     l_sprite->sprite     = 'O';
-    l_sprite->renderLayer= 1;
+    l_sprite->renderLayer= 2;
     m_engine->getComponents()->add (l_entity, l_sprite);
 
     // Collider Component
@@ -258,22 +259,9 @@ EntityId EntityManager::createTrollPrefab (Location& location)
 
 EntityId EntityManager::createTilePrefab (Location& location)
 {
-    EntityId l_entity = createEntity(location);
-
-    //Sprite Component
-    SpriteComponent* l_sprite = new SpriteComponent();
-    l_sprite->fgColor    = Color (GREY);
-    l_sprite->bgColor    = Color (BLACK);
-    l_sprite->sprite     = '.';
-    m_engine->getComponents()->add (l_entity, l_sprite);
-
-    // Description Component
-    DescriptionComponent* l_description = new DescriptionComponent();
-    l_description->title = "Floor tile";
-    l_description->text = "It's a bit scuffed";
-    m_engine->getComponents()->add (l_entity, l_description);
-
-    return l_entity;
+    location.area = (location.area == 0) ? m_engine->getArea() : location.area;
+    m_engine->getMap()->getTile (location).getFloor().setMaterial(Grass);
+    return 0;
 }
 
 EntityId EntityManager::createMarkerPrefab (Location& location)
