@@ -26,7 +26,6 @@ public:
     virtual EntityId createPlayerPrefab (Location& location)  = 0;
     virtual EntityId createEnemyPrefab (Location& location)   = 0;
     virtual EntityId createTrollPrefab (Location& location)   = 0;
-    virtual EntityId createTilePrefab (Location& location)    = 0;
     virtual EntityId createMarkerPrefab (Location& location)  = 0;
     virtual EntityId createStairPrefab (STAIR dir, Location& location)   = 0;
     virtual EntityId createWeaponPrefab (Location& location) = 0;

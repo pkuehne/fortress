@@ -2,7 +2,6 @@
 #include "utility.h"
 #include "game_engine.h"
 #include "sprite_component.h"
-#include <ctime>
 #include <cstring>
 #include <map>
 #include <iostream>
@@ -36,7 +35,7 @@ void RuralGenerator::createEntitiesFromMap()
             location.x = xx;
             location.y = yy;
             location.z = 0;
-            l_entity = m_engine->getEntities()->createTilePrefab (location);
+            m_engine->getMap()->getTile (location).getFloor().setMaterial(Material::Grass);
             switch (getByCoordinate(xx, yy)) {
                 case EMPTY:
                     break;
@@ -56,7 +55,6 @@ void RuralGenerator::createEntitiesFromMap()
     location.y = m_mapHeight/2;
     location.z = 0;
     m_engine->getEntities()->createPlayerPrefab (location);
-
 }
 
 void RuralGenerator::reset ()
@@ -98,6 +96,4 @@ void RuralGenerator::placeDungeonStairs()
             getByCoordinate(x, y) = LINK;
         }
     }
-
-
 }

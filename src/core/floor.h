@@ -4,11 +4,11 @@
 #include "color.h"
 #include "sprite_component.h"
 
-typedef enum {
+enum class Material {
     None        = 0,
     Grass       = 1,
     Rock        = 2,
-} Material;
+};
 
 class Floor {
 public:

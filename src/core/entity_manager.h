@@ -26,7 +26,6 @@ public:
     EntityId createPlayerPrefab (Location& location);
     EntityId createEnemyPrefab (Location& location);
     EntityId createTrollPrefab (Location& location);
-    EntityId createTilePrefab (Location& location);
     EntityId createMarkerPrefab (Location& location);
     EntityId createStairPrefab (STAIR dir, Location& location);
     EntityId createWeaponPrefab (Location& location);

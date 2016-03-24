@@ -256,14 +256,6 @@ EntityId EntityManager::createTrollPrefab (Location& location)
     return l_entity;
 }
 
-
-EntityId EntityManager::createTilePrefab (Location& location)
-{
-    location.area = (location.area == 0) ? m_engine->getArea() : location.area;
-    m_engine->getMap()->getTile (location).getFloor().setMaterial(Grass);
-    return 0;
-}
-
 EntityId EntityManager::createMarkerPrefab (Location& location)
 {
     EntityId l_entity = createEntity(location);
@@ -302,7 +294,6 @@ EntityId EntityManager::createStairPrefab (STAIR dir, Location& location)
     m_engine->getComponents()->add (l_entity, l_stair);
 
     return l_entity;
-
 }
 
 EntityId EntityManager::createWeaponPrefab (Location& location)

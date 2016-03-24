@@ -6,7 +6,7 @@
 
 class Tile {
 public:
-    Tile(): m_floor(Grass), m_entities(), m_lit(false) {} 
+    Tile(): m_floor(Material::Grass), m_entities(), m_lit(false) {} 
     unsigned int lastVisited = 0;
     bool& lit() { return m_lit; }
     const EntityHolder& entities() { return m_entities; }

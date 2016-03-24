@@ -33,7 +33,6 @@ void DungeonGenerator::reset () {
 }
 
 bool DungeonGenerator::generate () {
-
     for (m_level = 0; m_level < m_maxDepth; m_level++) {
         reset();
         initMap (EMPTY);
@@ -78,6 +77,7 @@ void DungeonGenerator::createEntitiesFromMap () {
             location.y = yy;
             location.z = m_level;
             location.area = m_engine->getArea();
+            m_engine->getMap()->getTile (location).getFloor().setMaterial(Material::Rock);
             switch (getByCoordinate(xx, yy)) {
                 case WALL:
                 case CORNER:
@@ -90,8 +90,6 @@ void DungeonGenerator::createEntitiesFromMap () {
                 case DOWN:
                     if (m_level < m_maxDepth-1 || m_downStairTarget) {
                         m_downStair = m_engine->getEntities()->createStairPrefab (STAIR_DOWN, location);
-                    } else {
-                        m_engine->getEntities()->createTilePrefab (location);
                     }
                     break;
                 case ORC:
@@ -101,10 +99,6 @@ void DungeonGenerator::createEntitiesFromMap () {
                     } else {
                         m_engine->getEntities()->createEnemyPrefab (location);
                     }
-                    m_engine->getEntities()->createTilePrefab (location);
-                    break;
-                case FLOOR:
-                    m_engine->getEntities()->createTilePrefab (location);
                     break;
                 case RESTRICTED:
                     break;
@@ -129,7 +123,6 @@ void DungeonGenerator::createEntitiesFromMap () {
         m_engine->getComponents()->get<StairComponent>(m_prevDownStair)->target = m_upStair;
     }
     m_prevDownStair = m_downStair;
-
 }
 
 bool DungeonGenerator::generateRoom () {

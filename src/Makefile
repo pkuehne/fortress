@@ -11,7 +11,7 @@ COV_DIR = $(ART_DIR)/coverage
 ALL_DIR = $(ART_DIR) $(OBJ_DIR) $(DEP_DIR) $(COV_DIR)
 
 INC_DIRS += -I. -I/usr/include/ $(addprefix -I, $(MODULES))
-CFLAGS=-g -rdynamic -Wall -Werror -std=c++11 $(INC_DIRS)
+CFLAGS=-g -rdynamic -Wall -Werror -std=c++14 $(INC_DIRS)
 LDFLAGS= -g -rdynamic
 GLFW_LIBS=$(shell pkg-config glfw3 --libs --static)
 LIBRARIES=$(GLFW_LIBS) -lGL -lc -lm -lSOIL -lpthread -lglog 
