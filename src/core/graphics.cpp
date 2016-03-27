@@ -62,7 +62,7 @@ unsigned int Graphics::drawString (int y, int x, const char* string, Color fg, C
 
 void Graphics::drawTile (int y, int x, unsigned int tile, Color fg, Color bg)
 {
-	drawRect (m_tileTexture, x, y, tile, fg, bg);
+    drawRect (m_tileTexture, x, y, tile, fg, bg);
 }
 
 void Graphics::drawRect (Texture& texture, int x, int y, unsigned int tile, Color fg, Color bg)
@@ -77,14 +77,14 @@ void Graphics::drawRect (Texture& texture, int x, int y, unsigned int tile, Colo
     glBindTexture(GL_TEXTURE_2D, texture.id);
     glColor3f (fg.Red()/256.0, fg.Green()/256.0, fg.Blue()/256.0);
     glBegin(GL_QUADS);
-       glTexCoord2f(texture.tileWidth*(tileCol+1), texture.tileHeight*(tileRow+1));
-       glVertex2f(m_tileWidth*(x+1), m_tileHeight*(y+0));
-       glTexCoord2f(texture.tileWidth*(tileCol+1), texture.tileHeight*(tileRow+0));
-       glVertex2f(m_tileWidth*(x+1), m_tileHeight*(y+1));
-       glTexCoord2f(texture.tileWidth*(tileCol+0), texture.tileHeight*(tileRow+0));
-       glVertex2f(m_tileWidth*(x+0), m_tileHeight*(y+1));
-       glTexCoord2f(texture.tileWidth*(tileCol+0), texture.tileHeight*(tileRow+1));
-       glVertex2f(m_tileWidth*(x+0), m_tileHeight*(y+0));
+    glTexCoord2f(texture.tileWidth*(tileCol+1), texture.tileHeight*(tileRow+1));
+    glVertex2f(m_tileWidth*(x+1), m_tileHeight*(y+0));
+    glTexCoord2f(texture.tileWidth*(tileCol+1), texture.tileHeight*(tileRow+0));
+    glVertex2f(m_tileWidth*(x+1), m_tileHeight*(y+1));
+    glTexCoord2f(texture.tileWidth*(tileCol+0), texture.tileHeight*(tileRow+0));
+    glVertex2f(m_tileWidth*(x+0), m_tileHeight*(y+1));
+    glTexCoord2f(texture.tileWidth*(tileCol+0), texture.tileHeight*(tileRow+1));
+    glVertex2f(m_tileWidth*(x+0), m_tileHeight*(y+0));
     glEnd();
 }
 
@@ -148,8 +148,8 @@ void Graphics::updateScreenSize (int width, int height)
 
 void Graphics::updateTileSize (unsigned int width, unsigned int height)
 {
-	if (width) m_tileWidth = width;
-	if (height) m_tileHeight = height;
+    if (width) m_tileWidth = width;
+    if (height) m_tileHeight = height;
 }
 
 void Graphics::setKeyDownFunc (KeyboardFuncPtr func)
@@ -248,14 +248,14 @@ void Graphics::initialise (int argc, char** argv)
     setDisplayFunc      (empty);
 
     m_tileTexture = loadTexture(
-    					m_config.getTag("Tileset").getStr(),
-    					m_config.getTag("Tileset_Rows").getNum(),
-    					m_config.getTag("Tileset_Cols").getNum());
+            m_config.getTag("Tileset").getStr(),
+            m_config.getTag("Tileset_Rows").getNum(),
+            m_config.getTag("Tileset_Cols").getNum());
 
     m_fontTexture = loadTexture(
-						m_config.getTag("Fontset").getStr(),
-						m_config.getTag("Fontset_Rows").getNum(),
-						m_config.getTag("Fontset_Cols").getNum());
+            m_config.getTag("Fontset").getStr(),
+            m_config.getTag("Fontset_Rows").getNum(),
+            m_config.getTag("Fontset_Cols").getNum());
 
 }
 
@@ -271,14 +271,14 @@ Texture Graphics::loadTexture (std::string name, unsigned int cols, unsigned int
     //std::string tileset ("graphics/");
     texture.name.append (name);
     texture.id = SOIL_load_OGL_texture (texture.name.c_str(),
-                                		SOIL_LOAD_AUTO,
-                                		SOIL_CREATE_NEW_ID,
-		                                SOIL_FLAG_MIPMAPS |
-                                        SOIL_FLAG_NTSC_SAFE_RGB |
-                                        SOIL_FLAG_COMPRESS_TO_DXT);
+            SOIL_LOAD_AUTO,
+            SOIL_CREATE_NEW_ID,
+            SOIL_FLAG_MIPMAPS |
+            SOIL_FLAG_NTSC_SAFE_RGB |
+            SOIL_FLAG_COMPRESS_TO_DXT);
     if (texture.id == 0) {
-    	LOG(ERROR) << "Failed to load texture: " << texture.name << std::endl;
-    	glfwTerminate();
+        LOG(ERROR) << "Failed to load texture: " << texture.name << std::endl;
+        glfwTerminate();
     }
     glBindTexture(GL_TEXTURE_2D, texture.id);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -293,9 +293,9 @@ Texture Graphics::loadTexture (std::string name, unsigned int cols, unsigned int
     texture.tileHeight = 1.0 / texture.numRows;
 
     LOG(INFO) << "Created texture " << texture.id << " (" << texture.name << ")"
-    			<< " width: " << texture.textureWidth << " height: " << texture.textureHeight << std::endl;
+        << " width: " << texture.textureWidth << " height: " << texture.textureHeight << std::endl;
     LOG(INFO) << "Texture is " << texture.numCols << " tiles across @ " << texture.tileWidth
-    		<< " and " << texture.numRows << " tiles high @ " << texture.tileHeight << std::endl;
+        << " and " << texture.numRows << " tiles high @ " << texture.tileHeight << std::endl;
 
     return texture;
 }

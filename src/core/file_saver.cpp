@@ -52,8 +52,8 @@ void FileSaver::saveState ()
 			m_file << "[LOCATION_A:" << location.area << "]" << std::endl;
 
 			ComponentHolder& components = m_engine->getComponents()->getAll(entity);
-			for (ComponentBase* component : components) {
-				saveComponent (component);
+			for (auto& component : components) {
+				saveComponent (component.second);
 			}
 		}
 
