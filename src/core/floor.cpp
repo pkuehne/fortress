@@ -19,7 +19,6 @@ void Floor::setMaterial (Material material)
             m_sprite.bgColor = DARK_GREEN;
             break;
         case Material::Rock:
-            std::cerr << "Rock material" << std::endl;
             m_sprite.sprite  = 
                 floor_sprites[Utility::randBetween(0, 
                                             sizeof(floor_sprites)-2)];
@@ -29,7 +28,6 @@ void Floor::setMaterial (Material material)
 
         case Material::None: // Default
         default:
-            std::cerr << "Default material" << std::endl;
             m_sprite.sprite = 0;
             m_sprite.fgColor = BLACK;
             m_sprite.bgColor = BLACK;

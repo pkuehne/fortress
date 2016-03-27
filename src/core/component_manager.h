@@ -8,13 +8,15 @@
 #include <typeinfo>
 #include <iostream>
 
-//typedef std::unordered_set<ComponentBase*> ComponentHolder;
 typedef std::map<std::string, ComponentBase*> ComponentHolder;
 
 class ComponentManager {
 public:
     void add (EntityId entity, ComponentBase* component) {
-        //m_components[entity].insert (component); //Todo: Check that we don't already have this type
+        if (component == nullptr) {
+            std::cout << "Can't add a nullptr" << std::endl;
+            return;
+        }
         ComponentHolder& holder = m_components[entity];
         auto iter = holder.find (typeid(*component).name());
         if (iter == holder.end()) {
@@ -22,7 +24,6 @@ public:
         } else {
             std::cout << "Tried to add existing component" << std::endl;
         }
-
     }
 
     template <class T>
@@ -39,7 +40,7 @@ public:
         for (auto& iter : m_components[entity]) {
             T* found = dynamic_cast<T*> (iter.second);
             if (found) {
-                //m_components[entity].erase (iter);
+                m_components[entity].erase (iter.first);
                 delete found;
                 break;
             }
