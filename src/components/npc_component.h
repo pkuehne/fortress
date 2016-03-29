@@ -8,6 +8,7 @@ enum class NpcState {
     Idle        = 1,
     Searching   = 2,
     Hunting     = 3,
+    Attacking   = 4,
 };
 
 struct NpcComponent : ComponentBase {

@@ -200,6 +200,7 @@ EntityId EntityManager::createEnemyPrefab (Location& location)
 
     // NPC Component
     NpcComponent* l_npc = new NpcComponent();
+    l_npc->state = NpcState::None;
     m_engine->getComponents()->add (l_entity, l_npc);
 
     // Euipment Component
@@ -243,6 +244,7 @@ EntityId EntityManager::createTrollPrefab (Location& location)
 
     // NPC Component
     NpcComponent* l_npc = new NpcComponent();
+    l_npc->state = NpcState::None;
     m_engine->getComponents()->add (l_entity, l_npc);
 
     // Euipment Component

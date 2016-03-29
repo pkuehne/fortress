@@ -14,24 +14,43 @@ void NpcSystem::changeState (EntityId entity, NpcComponent* npc)
     switch (npc->state) {
         case NpcState::Searching:
             if (canSeeTarget (entity, npc->target)) {
+                LOG(INFO) << entity << " is now hunting "
+                    << npc->target << std::endl;
                 npc->state = NpcState::Hunting;
                 break;
             }
             break;
         case NpcState::Hunting:
-            if (canSeeTarget (entity, npc->target)) {
+            if (canAttackTarget (entity, npc->target)) {
+                LOG(INFO) << entity << " is now attacking "
+                    << npc->target << std::endl;
+                npc->state = NpcState::Attacking;
+                break;
+            } else if (canSeeTarget (entity, npc->target)) {
                 // Move towards
                 setPathToTarget (entity, npc->target, npc);
                 if (npc->path.empty()) {
+                    LOG(INFO) << entity << " is now Searching again for "
+                        << npc->target << std::endl;
                     npc->state = NpcState::Searching;
                     break;
                 } else {
+                    moveTowards (entity, npc->path[0]);
+                    npc->path.erase(npc->path.begin());
                 }
             } else {
                 npc->state = NpcState::Searching;
             }
             break;
-        case NpcState::Idle: 
+        case NpcState::Attacking:
+            {
+                AttackEntityEvent* l_event = new AttackEntityEvent;
+                l_event->attacker = entity;
+                l_event->defender = npc->target;
+                getEngine()->raiseEvent (l_event);
+                break;
+            }
+        case NpcState::Idle:
             npc->state = NpcState::Searching;
             npc->target = getEngine()->getEntities()->getPlayer();
             // Evaluate needs
@@ -51,6 +70,21 @@ bool NpcSystem::canSeeTarget (EntityId entity, EntityId target)
     return (los.hasLos(
         getEngine()->getEntities()->getLocation (target),
         getEngine()->getEntities()->getLocation (entity)));
+}
+
+bool NpcSystem::canAttackTarget (EntityId entity, EntityId target)
+{
+    EntityHolder l_entities;
+    Location location = getEngine()->getEntities()->getLocation (entity);
+    l_entities = getEngine()->getMap()->findEntitiesNear (location, 1);
+    for (EntityId iter : l_entities) {
+        if (iter == target) {
+            Location oLoc = getEngine()->getEntities()->getLocation (iter);
+            if (location.x != oLoc.x && location.y != oLoc.y) continue;
+            return true;
+        }
+    }
+    return false;
 }
 
 void NpcSystem::setPathToTarget (EntityId entity, EntityId target, NpcComponent* npc)
@@ -101,6 +135,17 @@ void NpcSystem::handleEvent (const Event* event)
 void NpcSystem::update ()
 {
     if (getEngine()->isPlayerTurn()) return;
+    for (EntityId l_entity : getEngine()->getEntities()->get()) {
+        NpcComponent* l_npc = getEngine()->getComponents()->get<NpcComponent> (l_entity);
+        if (l_npc == 0) continue;
+        changeState (l_entity, l_npc);
+    }
+    getEngine()->swapTurn();
+}
+/*
+void NpcSystem::update ()
+{
+    if (getEngine()->isPlayerTurn()) return;
 
     for (EntityId l_entity : getEngine()->getEntities()->get()) {
         NpcComponent* l_npc = getEngine()->getComponents()->get<NpcComponent> (l_entity);
@@ -134,7 +179,7 @@ void NpcSystem::update ()
         getEngine()->raiseEvent (l_event);
     }
     getEngine()->swapTurn();
-}
+}*/
 
 Location NpcSystem::getRandomDirection (const Location& oldLocation) {
     DIRECTION dir = Utility::randBetween (Direction::None, Direction::West);

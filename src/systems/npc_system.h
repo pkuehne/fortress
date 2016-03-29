@@ -17,6 +17,7 @@ private:
 
     void changeState (EntityId entity, NpcComponent* npc);
     bool canSeeTarget (EntityId entity, EntityId target);
+    bool canAttackTarget (EntityId entity, EntityId target);
     void setPathToTarget (EntityId entity, EntityId target, NpcComponent* npc);
     void moveTowards (EntityId entity, const Location& location);
 };
