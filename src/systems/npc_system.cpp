@@ -9,6 +9,90 @@ unsigned int getPathCost (unsigned int index, void* customData);
 unsigned int findNeighbours4 (unsigned int index, unsigned int* neighbours, void* customData);
 unsigned int getDistance (unsigned int start, unsigned int end, void* customData);
 
+void NpcSystem::changeState (EntityId entity, NpcComponent* npc)
+{
+    switch (npc->state) {
+        case NpcState::Searching:
+            if (canSeeTarget (entity, npc->target)) {
+                npc->state = NpcState::Hunting;
+                break;
+            }
+            break;
+        case NpcState::Hunting:
+            if (canSeeTarget (entity, npc->target)) {
+                // Move towards
+                setPathToTarget (entity, npc->target, npc);
+                if (npc->path.empty()) {
+                    npc->state = NpcState::Searching;
+                    break;
+                } else {
+                }
+            } else {
+                npc->state = NpcState::Searching;
+            }
+            break;
+        case NpcState::Idle: 
+            npc->state = NpcState::Searching;
+            npc->target = getEngine()->getEntities()->getPlayer();
+            // Evaluate needs
+            break;
+        case NpcState::None:
+        default:
+            npc->state = NpcState::Idle;
+            break;
+    };
+}
+
+bool NpcSystem::canSeeTarget (EntityId entity, EntityId target)
+{
+    LosAlgorithm los;
+    los.initialise (getEngine());
+
+    return (los.hasLos(
+        getEngine()->getEntities()->getLocation (target),
+        getEngine()->getEntities()->getLocation (entity)));
+}
+
+void NpcSystem::setPathToTarget (EntityId entity, EntityId target, NpcComponent* npc)
+{
+    Algorithm algo;
+    algo.setCustomData (getEngine());
+    algo.setCostFunction (getPathCost);
+    algo.setDistanceFunction (getDistance);
+    algo.setNeighbourFunction (findNeighbours4);
+    algo.setNumNeighbours (4);
+
+    unsigned int startIndex = getEngine()->getMap()->map2index (
+            getEngine()->getEntities()->getLocation (entity));
+    unsigned int endIndex = getEngine()->getMap()->map2index (
+            getEngine()->getEntities()->getLocation (target));
+
+    PathVector l_path;
+    //std::cout << "Path from " << enemyLoc << " to " << playerLoc << std::endl;
+    algo.findPath (startIndex, endIndex, l_path);
+
+    if (l_path.empty()) {
+        return;
+    }
+
+    // Reset path
+    npc->path.clear();
+    for (unsigned int ii = 0; ii < l_path.size(); ii++) {
+        Location tempLoc;
+        m_engine->getMap()->index2map(l_path[ii], tempLoc);
+        npc->path.push_back (tempLoc);
+        //std::cout << "Step " << ii << ": " << tempLoc << std::endl;
+    }
+}
+
+void NpcSystem::moveTowards (EntityId entity, const Location& location)
+{
+    MoveEntityEvent* l_event = new MoveEntityEvent();
+    l_event->entity = entity;
+    l_event->newLocation = location;
+    getEngine()->raiseEvent (l_event);
+}
+
 void NpcSystem::handleEvent (const Event* event)
 {
 

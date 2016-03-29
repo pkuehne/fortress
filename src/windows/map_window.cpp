@@ -202,9 +202,7 @@ void MapWindow::drawMap()
                 for (SpriteComponent* l_sprite : layer.second) {
                     Color fgColor = l_sprite->fgColor;
                     if (l_tile.lastVisited < getEngine()->getTurn()) {
-                        fgColor.Red()   *= 0.4;
-                        fgColor.Green() *= 0.4;
-                        fgColor.Blue()  *= 0.4;
+                        fgColor *= 0.4;
                     }
 
                     if (l_tile.lastVisited > 0 && l_tile.lastVisited + 200 > getEngine()->getTurn()) {

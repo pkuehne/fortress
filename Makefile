@@ -2,13 +2,15 @@
 
 LOG_DIR=artifacts/logs/
 
-all: clean build test run
+all: clear clean build test run
 
+clear:
+	clear
 clean:
 	@$(MAKE) -C src --no-print-directory clean
 	@$(MAKE) -C test --no-print-directory clean
 
-build: 
+build: clear
 	@$(MAKE) -C src --no-print-directory build -j 8
 
 test:

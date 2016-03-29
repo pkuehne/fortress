@@ -3,6 +3,7 @@
 
 #include "game_system_base.h"
 #include "utility.h"
+#include "npc_component.h"
 
 class NpcSystem : public GameSystemBase {
 public:
@@ -13,6 +14,11 @@ private:
     Location getPlayerDirectionIfNearby (EntityId npc);
 
     bool canAttackPlayer(const Location& location);
+
+    void changeState (EntityId entity, NpcComponent* npc);
+    bool canSeeTarget (EntityId entity, EntityId target);
+    void setPathToTarget (EntityId entity, EntityId target, NpcComponent* npc);
+    void moveTowards (EntityId entity, const Location& location);
 };
 
 
