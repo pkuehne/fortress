@@ -27,35 +27,35 @@ void FileSaver::saveState ()
     m_file << "[AREAS:" << m_engine->getMap()->getAreas() << "]" << std::endl;
 
     for (unsigned int area = 0; area < m_engine->getMap()->getAreas(); area++) {
-    	m_engine->getMap()->setArea (area);
+        m_engine->getMap()->setArea (area);
         m_file << "[AREA:" << area << "]" << std::endl;
-    	m_file << "[MAP_WIDTH:" << m_engine->getMap()->getMapWidth() << "]" << std::endl;
-		m_file << "[MAP_HEIGHT:" << m_engine->getMap()->getMapHeight() << "]" << std::endl;
-		m_file << "[MAP_DEPTH:" << m_engine->getMap()->getMapDepth() << "]" << std::endl;
+        m_file << "[MAP_WIDTH:" << m_engine->getMap()->getMapWidth() << "]" << std::endl;
+        m_file << "[MAP_HEIGHT:" << m_engine->getMap()->getMapHeight() << "]" << std::endl;
+        m_file << "[MAP_DEPTH:" << m_engine->getMap()->getMapDepth() << "]" << std::endl;
 
-		for (unsigned int zz = 0; zz < m_engine->getMap()->getMapDepth(); zz++) {
-			for (unsigned int yy = 0; yy < m_engine->getMap()->getMapHeight(); yy++) {
-				for (unsigned int xx = 0; xx < m_engine->getMap()->getMapWidth(); xx++) {
-					m_file << "[TILE_VISITED:" << m_engine->getMap()->getTile(xx, yy, zz).lastVisited << "]" << std::endl;
-				}
-			}
-		}
+        for (unsigned int zz = 0; zz < m_engine->getMap()->getMapDepth(); zz++) {
+            for (unsigned int yy = 0; yy < m_engine->getMap()->getMapHeight(); yy++) {
+                for (unsigned int xx = 0; xx < m_engine->getMap()->getMapWidth(); xx++) {
+                    m_file << "[TILE_VISITED:" << m_engine->getMap()->getTile(xx, yy, zz).lastVisited << "]" << std::endl;
+                }
+            }
+        }
 
-		// Save entities
-		EntityHolder& entities = m_engine->getEntities()->get();
-		for (EntityId entity : entities) {
-			m_file << "[ENTITY:" << entity << "]" << std::endl;
-			Location location = m_engine->getEntities()->getLocation (entity);
-			m_file << "[LOCATION_X:" << location.x << "]" << std::endl;
-			m_file << "[LOCATION_Y:" << location.y << "]" << std::endl;
-			m_file << "[LOCATION_Z:" << location.z << "]" << std::endl;
-			m_file << "[LOCATION_A:" << location.area << "]" << std::endl;
+        // Save entities
+        EntityHolder& entities = m_engine->getEntities()->get();
+        for (EntityId entity : entities) {
+            m_file << "[ENTITY:" << entity << "]" << std::endl;
+            Location location = m_engine->getEntities()->getLocation (entity);
+            m_file << "[LOCATION_X:" << location.x << "]" << std::endl;
+            m_file << "[LOCATION_Y:" << location.y << "]" << std::endl;
+            m_file << "[LOCATION_Z:" << location.z << "]" << std::endl;
+            m_file << "[LOCATION_A:" << location.area << "]" << std::endl;
 
-			ComponentHolder& components = m_engine->getComponents()->getAll(entity);
-			for (auto& component : components) {
-				saveComponent (component.second);
-			}
-		}
+            ComponentHolder& components = m_engine->getComponents()->getAll(entity);
+            for (auto& component : components) {
+                saveComponent (component.second);
+            }
+        }
 
     }
     m_engine->getMap()->setArea (currArea);

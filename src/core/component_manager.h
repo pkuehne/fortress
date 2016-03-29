@@ -4,9 +4,8 @@
 #include "entity.h"
 #include "component_base.h"
 #include <map>
-#include <unordered_set>
 #include <typeinfo>
-#include <iostream>
+#include <glog/logging.h>
 
 typedef std::map<std::string, ComponentBase*> ComponentHolder;
 
@@ -14,7 +13,7 @@ class ComponentManager {
 public:
     void add (EntityId entity, ComponentBase* component) {
         if (component == nullptr) {
-            std::cout << "Can't add a nullptr" << std::endl;
+            LOG(WARNING) << "Can't add a nullptr" << std::endl;
             return;
         }
         ComponentHolder& holder = m_components[entity];
@@ -22,7 +21,11 @@ public:
         if (iter == holder.end()) {
             holder[typeid(*component).name()] = component;
         } else {
-            std::cout << "Tried to add existing component" << std::endl;
+            LOG(WARNING) << "Tried to add existing component " 
+                << typeid(*component).name() 
+                << " to Entity " << entity
+                << std::endl;
+            return;
         }
     }
 

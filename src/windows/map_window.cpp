@@ -16,8 +16,6 @@
 
 void MapWindow::gainFocus ()
 {
-    //getEngine()->loadMap(50, 50);
-
     setTitle ("Map");
 
     m_mapXOffset = 1;
@@ -88,13 +86,9 @@ void MapWindow::keyDown (unsigned char key)
         if (m_action == 'i') {
             EntityHolder l_entities = getEngine()->getMap()->findEntitiesAt(newLocation);
             if (l_entities.size() > 0) {
-				SelectionWindow* selWin = new SelectionWindow();
-				selWin->initialise (getEngine(), &l_entities);
-				getEngine()->getWindows()->pushWindow (selWin);
-
-//                InspectionWindow* l_win = new InspectionWindow();
-//                l_win->initialise(getEngine(), l_target);
-//                getEngine()->getWindows()->pushWindow (l_win);
+                SelectionWindow* selWin = new SelectionWindow();
+                selWin->initialise (getEngine(), &l_entities);
+                getEngine()->getWindows()->pushWindow (selWin);
             }
         }
         if (m_action != 'i') getEngine()->swapTurn();
@@ -104,8 +98,8 @@ void MapWindow::keyDown (unsigned char key)
         getEngine()->quit();
     }
     if (key == 'm' ||
-        key == 'k' ||
-        key == 'i') {
+            key == 'k' ||
+            key == 'i') {
         m_action = key;
     }
     if (key == '.') {
@@ -156,16 +150,16 @@ void MapWindow::keyDown (unsigned char key)
 
     }
     if (key == '[') {
-    	unsigned int height = getEngine()->getGraphics()->getTileHeight();
-    	unsigned int width = getEngine()->getGraphics()->getTileWidth();
-    	getEngine()->getGraphics()->updateTileSize(width-1, height-1);
-    	getEngine()->getWindows()->resize();
+        unsigned int height = getEngine()->getGraphics()->getTileHeight();
+        unsigned int width = getEngine()->getGraphics()->getTileWidth();
+        getEngine()->getGraphics()->updateTileSize(width-1, height-1);
+        getEngine()->getWindows()->resize();
     }
     if (key == ']') {
-    	unsigned int height = getEngine()->getGraphics()->getTileHeight();
-    	unsigned int width = getEngine()->getGraphics()->getTileWidth();
-    	getEngine()->getGraphics()->updateTileSize(width+1, height+1);
-    	getEngine()->getWindows()->resize();
+        unsigned int height = getEngine()->getGraphics()->getTileHeight();
+        unsigned int width = getEngine()->getGraphics()->getTileWidth();
+        getEngine()->getGraphics()->updateTileSize(width+1, height+1);
+        getEngine()->getWindows()->resize();
     }
 
     //std::cout << "Key: " << key << std::endl;
