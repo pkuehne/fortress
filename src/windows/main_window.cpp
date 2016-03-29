@@ -14,31 +14,13 @@ void MainWindow::resize() {
 }
 
 void MainWindow::redraw() {
-
-    std::string newGame ("Quickstart!");
-    std::string newWorld ("Create New World");
-    std::string loadGame ("Load Existing World");
-    std::string tutorial ("Start The Tutorial");
-
-    int yPos = getHeight() - 15;
+    int yPos = getHeight() - 18;
     int spacing = 3;
-    Color darkGrey (GREY);
-    darkGrey.Red()   *= 0.3;
-    darkGrey.Green() *= 0.3;
-    darkGrey.Blue()  *= 0.3;
-    Color darkGreen (GREEN);
-    darkGreen.Red()   *= 0.3;
-    darkGreen.Green() *= 0.3;
-    darkGreen.Blue()  *= 0.3;
 
-    drawString (yPos, (getWidth()/2) - (newGame.length()/2), newGame.c_str());
-    drawTile (yPos, (getWidth()/2) - (newGame.length()/2), 'Q', Color (GREEN), Color (BLACK));
-    drawString (yPos += spacing, (getWidth()/2) - (newWorld.length()/2), newWorld.c_str());
-    drawTile (yPos, (getWidth()/2) - (newWorld.length()/2), 'C', Color (GREEN), Color (BLACK));
-    drawString (yPos += spacing, (getWidth()/2) - (loadGame.length()/2), loadGame.c_str());
-    drawTile (yPos, (getWidth()/2) - (loadGame.length()/2), 'L', Color(GREEN), Color (BLACK));
-    drawString (yPos += spacing, (getWidth()/2) - (tutorial.length()/2), tutorial.c_str(), darkGrey, Color (BLACK));
-    drawTile (yPos, (getWidth()/2) - (tutorial.length()/2), 'S', darkGreen, Color (BLACK));
+    drawCommandString (yPos += spacing, -1, "Quickstart!", 0);
+    drawCommandString (yPos += spacing, -1, "Create New World", 0);
+    drawCommandString (yPos += spacing, -1, "Load Existing World", 0);
+    drawCommandString (yPos += spacing, -1, "Start The Turorial", 0, false);
 
 }
 

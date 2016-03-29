@@ -28,7 +28,30 @@ void Window::setDimensions (int x, int y, int width, int height)
 
 unsigned int Window::drawString (int y, int x, const char* text, Color fg, Color bg)
 {
+    if (x < 0) x = (m_width/2) - (strlen(text)/2);
     return getEngine()->getGraphics()->drawString (m_yOffset+y, m_xOffset+x, text, fg, bg);
+}
+
+unsigned int Window::drawCommandString (int y, int x, const char* text, int pos, bool active)
+{
+    if (x < 0)
+        x = (m_width/2) - (strlen(text)/2);
+    Color fg = Color(WHITE);
+    Color bg = Color(BLACK);
+    Color cc = Color(GREEN);
+    if (!active) {
+        float factor = 0.5;
+        fg.Red()   *= factor;
+        fg.Green() *= factor;
+        fg.Blue()  *= factor;
+        cc.Red()   *= factor;
+        cc.Green() *= factor;
+        cc.Blue()  *= factor;
+    }
+
+    unsigned int retval = drawString (y, x, text, fg, bg);
+    drawTile (y, x, text[pos], cc, bg);
+    return retval;
 }
 
 void Window::drawTile (int y, int x, unsigned int tile, Color fg, Color bg)

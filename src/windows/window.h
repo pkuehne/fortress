@@ -26,6 +26,7 @@ public:
     virtual void update() { }
 
     virtual unsigned int drawString (int y, int x, const char* text, Color fg = Color(WHITE), Color bg = Color(BLACK));
+    unsigned int drawCommandString (int y, int x, const char* text, int pos, bool active = true);
     virtual void drawTile (int y, int x, unsigned int tile, Color fg, Color bg);
     virtual void drawBorder (int y, int x, int height, int width);
     virtual void clearArea (int y, int x, int height, int width);

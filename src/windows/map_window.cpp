@@ -3,6 +3,7 @@
 #include "inspection_window.h"
 #include "equipment_window.h"
 #include "selection_window.h"
+#include "escape_window.h"
 #include "game_engine.h"
 #include "event.h"
 #include "sprite_component.h"
@@ -95,7 +96,9 @@ void MapWindow::keyDown (unsigned char key)
         m_action = 'm';
     }
     if (key == KEY_ESC) {
-        getEngine()->quit();
+        EscapeWindow* menu = new EscapeWindow();
+        menu->initialise (getEngine());
+        getEngine()->getWindows()->pushWindow (menu);
     }
     if (key == 'm' ||
             key == 'k' ||
