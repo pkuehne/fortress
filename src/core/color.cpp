@@ -33,3 +33,10 @@ Color::Color (COLOR color)
             break;
     }
 }
+
+void Color::operator*= (float lhs)
+{
+    m_red   *= lhs;
+    m_green *= lhs;
+    m_blue  *= lhs;
+}

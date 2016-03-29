@@ -41,12 +41,8 @@ unsigned int Window::drawCommandString (int y, int x, const char* text, int pos,
     Color cc = Color(GREEN);
     if (!active) {
         float factor = 0.5;
-        fg.Red()   *= factor;
-        fg.Green() *= factor;
-        fg.Blue()  *= factor;
-        cc.Red()   *= factor;
-        cc.Green() *= factor;
-        cc.Blue()  *= factor;
+        fg *= factor;
+        cc *= factor;
     }
 
     unsigned int retval = drawString (y, x, text, fg, bg);

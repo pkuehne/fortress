@@ -22,6 +22,7 @@ public:
     float& Green() { return m_green; }
     float& Blue () { return m_blue; }
 
+    void operator*= (float lhs);
 private:
     float m_red;
     float m_green;
