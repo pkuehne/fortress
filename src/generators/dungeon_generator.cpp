@@ -49,8 +49,8 @@ bool DungeonGenerator::generateLevel() {
         do {
             success = generateRoom ();
         } while (!success && x++ < 100);
-        if (x >= 100) {
-            LOG(WARNING) << "Overran 100 tries to create room: " << r << std::endl;
+        if (x >= 200) {
+            LOG(WARNING) << "Tried " << x << " times to create room: " << r << std::endl;
             return false;
         }
     }
@@ -126,8 +126,8 @@ void DungeonGenerator::createEntitiesFromMap () {
 }
 
 bool DungeonGenerator::generateRoom () {
-    unsigned int width  = Utility::randBetween (5, 13);
-    unsigned int height = Utility::randBetween (5, 13);
+    unsigned int width  = Utility::randBetween (3, 10);
+    unsigned int height = Utility::randBetween (3, 10);
     unsigned int left   = Utility::randBetween (2, (m_mapWidth - width - 2));
     unsigned int top    = Utility::randBetween (2, (m_mapHeight - height - 2));
 

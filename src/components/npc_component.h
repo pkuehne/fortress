@@ -13,8 +13,9 @@ enum class NpcState {
 
 struct NpcComponent : ComponentBase {
     std::vector<Location>   path;
-    NpcState                state;
-    EntityId                target;
+    NpcState                state           = NpcState::None;
+    EntityId                target          = 0;
+    unsigned int            stateMachine    = 0;
 };
 
 #endif

@@ -9,37 +9,64 @@ unsigned int getPathCost (unsigned int index, void* customData);
 unsigned int findNeighbours4 (unsigned int index, unsigned int* neighbours, void* customData);
 unsigned int getDistance (unsigned int start, unsigned int end, void* customData);
 
+bool canSeeTarget (GameEngineInterface* engine, EntityId entity, NpcComponent* npc);
+bool canAttackTarget (GameEngineInterface* engine, EntityId entity, NpcComponent* npc);
+
+NpcSystem::NpcSystem()
+{
+    TransitionMap orcs;
+
+    Transition NoneToIdle;
+    NoneToIdle.condition = [](GameEngineInterface* g, EntityId e, NpcComponent* n){ return true; };
+    NoneToIdle.endState = NpcState::Idle;
+    orcs[NpcState::None].push_back(NoneToIdle);
+
+    Transition IdleToSearching;
+    IdleToSearching.condition = [](GameEngineInterface* g, EntityId e, NpcComponent* n){ return true; };
+    IdleToSearching.endState = NpcState::Searching;
+    orcs[NpcState::Idle].push_back(IdleToSearching);
+
+    Transition SearchingToHunting;
+    SearchingToHunting.condition = canSeeTarget;
+    SearchingToHunting.endState = NpcState::Hunting;
+    orcs[NpcState::Searching].push_back(SearchingToHunting);
+    
+    Transition HuntingToAttacking;
+    HuntingToAttacking.condition = canAttackTarget;
+    HuntingToAttacking.endState = NpcState::Attacking;
+    orcs[NpcState::Hunting].push_back(HuntingToAttacking);
+
+    Transition HuntingToSearching;
+    HuntingToSearching.condition = [](GameEngineInterface* g, EntityId e, NpcComponent* n){ 
+        return !canSeeTarget (g,e,n); 
+    };
+    HuntingToSearching.endState = NpcState::Searching;
+    orcs[NpcState::Hunting].push_back(HuntingToSearching);
+
+    Transition HuntingNoPath;
+    HuntingNoPath.condition = [](GameEngineInterface* g, EntityId e, NpcComponent* n){return n->path.empty();};
+    HuntingNoPath.endState = NpcState::Searching;
+    orcs[NpcState::Hunting].push_back(HuntingNoPath);
+
+    Transition AttackingNotPossible;
+    AttackingNotPossible.condition = [](GameEngineInterface* g, EntityId e, NpcComponent* n){
+        return !canAttackTarget(g,e,n);
+    };
+    AttackingNotPossible.endState = NpcState::Hunting;
+    orcs[NpcState::Attacking].push_back(AttackingNotPossible);
+
+    m_stateMachine[0] = orcs;
+}
+
 void NpcSystem::changeState (EntityId entity, NpcComponent* npc)
 {
     switch (npc->state) {
-        case NpcState::Searching:
-            if (canSeeTarget (entity, npc->target)) {
-                LOG(INFO) << entity << " is now hunting "
-                    << npc->target << std::endl;
-                npc->state = NpcState::Hunting;
-                break;
-            }
-            break;
         case NpcState::Hunting:
-            if (canAttackTarget (entity, npc->target)) {
-                LOG(INFO) << entity << " is now attacking "
-                    << npc->target << std::endl;
-                npc->state = NpcState::Attacking;
-                break;
-            } else if (canSeeTarget (entity, npc->target)) {
-                // Move towards
-                setPathToTarget (entity, npc->target, npc);
-                if (npc->path.empty()) {
-                    LOG(INFO) << entity << " is now Searching again for "
-                        << npc->target << std::endl;
-                    npc->state = NpcState::Searching;
-                    break;
-                } else {
-                    moveTowards (entity, npc->path[0]);
-                    npc->path.erase(npc->path.begin());
-                }
-            } else {
-                npc->state = NpcState::Searching;
+            // Move towards
+            setPathToTarget (entity, npc->target, npc);
+            if (!npc->path.empty()) {
+                moveTowards (entity, npc->path[0]);
+                npc->path.erase(npc->path.begin());
             }
             break;
         case NpcState::Attacking:
@@ -50,36 +77,40 @@ void NpcSystem::changeState (EntityId entity, NpcComponent* npc)
                 getEngine()->raiseEvent (l_event);
                 break;
             }
-        case NpcState::Idle:
-            npc->state = NpcState::Searching;
+        case NpcState::Searching:
             npc->target = getEngine()->getEntities()->getPlayer();
-            // Evaluate needs
+            // Walk around
+            break;
+        case NpcState::Idle:
+            // Nothing to do
             break;
         case NpcState::None:
+            // Entry state
+            break;
         default:
-            npc->state = NpcState::Idle;
+            LOG(ERROR) << "Invalid state detected: " << (int)npc->state << std::endl;
             break;
     };
 }
 
-bool NpcSystem::canSeeTarget (EntityId entity, EntityId target)
+bool canSeeTarget (GameEngineInterface* engine, EntityId entity, NpcComponent* npc)
 {
     LosAlgorithm los;
-    los.initialise (getEngine());
+    los.initialise (engine);
 
     return (los.hasLos(
-        getEngine()->getEntities()->getLocation (target),
-        getEngine()->getEntities()->getLocation (entity)));
+        engine->getEntities()->getLocation (npc->target),
+        engine->getEntities()->getLocation (entity)));
 }
 
-bool NpcSystem::canAttackTarget (EntityId entity, EntityId target)
+bool canAttackTarget (GameEngineInterface* engine, EntityId entity, NpcComponent* npc)
 {
     EntityHolder l_entities;
-    Location location = getEngine()->getEntities()->getLocation (entity);
-    l_entities = getEngine()->getMap()->findEntitiesNear (location, 1);
+    Location location = engine->getEntities()->getLocation (entity);
+    l_entities = engine->getMap()->findEntitiesNear (location, 1);
     for (EntityId iter : l_entities) {
-        if (iter == target) {
-            Location oLoc = getEngine()->getEntities()->getLocation (iter);
+        if (iter == npc->target) {
+            Location oLoc = engine->getEntities()->getLocation (iter);
             if (location.x != oLoc.x && location.y != oLoc.y) continue;
             return true;
         }
@@ -135,10 +166,23 @@ void NpcSystem::handleEvent (const Event* event)
 void NpcSystem::update ()
 {
     if (getEngine()->isPlayerTurn()) return;
-    for (EntityId l_entity : getEngine()->getEntities()->get()) {
-        NpcComponent* l_npc = getEngine()->getComponents()->get<NpcComponent> (l_entity);
-        if (l_npc == 0) continue;
-        changeState (l_entity, l_npc);
+    for (EntityId entity : getEngine()->getEntities()->get()) {
+        NpcComponent* npc = getEngine()->getComponents()->get<NpcComponent> (entity);
+        if (npc == 0) continue;
+        
+        TransitionMap& transitions = m_stateMachine[npc->stateMachine];
+        for (Transition& transition : transitions[npc->state]) {
+            if (transition.condition (getEngine(), entity, npc)) {
+                LOG(INFO) << "Changing state from " << (int) npc->state 
+                    << " to " << (int) transition.endState 
+                    << " for " << entity
+                    << std::endl;
+                npc->state = transition.endState;
+                break;
+            }
+        }
+        // handleCurrentState (entity, npc);
+        changeState (entity, npc);
     }
     getEngine()->swapTurn();
 }
@@ -181,6 +225,7 @@ void NpcSystem::update ()
     getEngine()->swapTurn();
 }*/
 
+/*
 Location NpcSystem::getRandomDirection (const Location& oldLocation) {
     DIRECTION dir = Utility::randBetween (Direction::None, Direction::West);
     Location newLocation = oldLocation;
@@ -192,7 +237,9 @@ Location NpcSystem::getRandomDirection (const Location& oldLocation) {
     }
     return newLocation;
 }
+*/
 
+/*
 Location NpcSystem::getPlayerDirectionIfNearby (EntityId npc)
 {
     EntityId player = getEngine()->getEntities()->getPlayer();
@@ -241,7 +288,9 @@ Location NpcSystem::getPlayerDirectionIfNearby (EntityId npc)
     }
     return enemyLoc;
 }
+*/
 
+/*
 bool NpcSystem::canAttackPlayer (const Location& location)
 {
     EntityId player = getEngine()->getEntities()->getPlayer();
@@ -257,6 +306,7 @@ bool NpcSystem::canAttackPlayer (const Location& location)
     }
     return false;
 }
+*/
 
 unsigned int getPathCost (unsigned int index, void* customData)
 {
