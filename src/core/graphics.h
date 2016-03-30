@@ -32,7 +32,7 @@ public:
     virtual void drawBorder (int y, int x, int height, int width);
     virtual void clearArea (int y, int x, int height, int width);
     virtual void calculateWindowOffsetsFromCentre (int height, int width, int& y, int& x);
-    virtual void terminate() { exit(0); /*glfwDestroyWindow(m_window);*/ }
+    virtual void terminate() { glfwSetWindowShouldClose(m_window, 1); }
 
     virtual void beginScreenUpdate();
     virtual void endScreenUpdate();
