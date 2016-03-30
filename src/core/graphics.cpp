@@ -210,17 +210,16 @@ void Graphics::initialise (int argc, char** argv)
     if (!glfwInit()) return;
     g_graphics = this;
 
-    m_config.readFile ("config/graphics.cfg");
     m_width = 640;
     m_height = 480;
 
-    if (m_config.getTag("Fullscreen").getNum() == 1) {
+    if (m_config.fullscreen) {
         const GLFWvidmode* mode = glfwGetVideoMode( glfwGetPrimaryMonitor());
         m_width = mode->width;
         m_height = mode->height;
     } else {
-        m_width = m_config.getTag("WindowWidth").getNum();
-        m_height = m_config.getTag("WindowHeight").getNum();
+        m_width = m_config.windowWidth;
+        m_height = m_config.windowHeight;
     }
     m_window = glfwCreateWindow(m_width, m_height, "FORTRESS", NULL, NULL);
 
@@ -248,14 +247,14 @@ void Graphics::initialise (int argc, char** argv)
     setDisplayFunc      (empty);
 
     m_tileTexture = loadTexture(
-            m_config.getTag("Tileset").getStr(),
-            m_config.getTag("Tileset_Rows").getNum(),
-            m_config.getTag("Tileset_Cols").getNum());
+            m_config.tileset,
+            m_config.tileset_rows,
+            m_config.tileset_cols);
 
     m_fontTexture = loadTexture(
-            m_config.getTag("Fontset").getStr(),
-            m_config.getTag("Fontset_Rows").getNum(),
-            m_config.getTag("Fontset_Cols").getNum());
+            m_config.fontset,
+            m_config.fontset_rows,
+            m_config.fontset_cols);
 
 }
 

@@ -1,16 +1,21 @@
 #ifndef CONFIG_MANAGER_H
 #define CONFIG_MANAGER_H
 
-#include <map>
 #include <string>
-#include "tag.h"
 
 class ConfigManager {
 public:
-    Tag getTag (const std::string& tag);
-    void readFile (const std::string& config);
-private:
-    std::map<std::string, Tag> m_tags;
+    ConfigManager (const std::string& filename);
+
+    bool fullscreen;
+    int windowWidth;
+    int windowHeight;
+    std::string tileset;
+    int tileset_rows;
+    int tileset_cols;
+    std::string fontset;
+    int fontset_rows;
+    int fontset_cols;
 };
 
 #endif
