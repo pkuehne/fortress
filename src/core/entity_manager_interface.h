@@ -33,6 +33,7 @@ public:
     virtual EntityId createHelmetPrefab (Location& location) = 0;
     virtual EntityId createPotionPrefab (Location& location) = 0;
     virtual EntityId createTreePrefab(Location& location) = 0;
+    virtual EntityId createCorpsePrefab(Location& location, char sprite) = 0;
 
     virtual Location getLocation (EntityId entity) = 0;
     virtual void setLocation (EntityId entity, Location& location) = 0;

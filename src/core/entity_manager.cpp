@@ -426,3 +426,23 @@ EntityId EntityManager::createTreePrefab(Location& location)
 
     return l_entity;
 }
+
+EntityId EntityManager::createCorpsePrefab(Location& location, char sprite)
+{
+    LOG(INFO) << "Creating corpse at " << location << std::endl;
+    EntityId l_entity = createEntity (location);
+
+    SpriteComponent* l_sprite = new SpriteComponent();
+    l_sprite->fgColor    = Color (GREY);
+    l_sprite->bgColor    = Color (BLACK);
+    l_sprite->sprite     = sprite; 
+    m_engine->getComponents()->add (l_entity, l_sprite);
+
+    // Description Component
+    DescriptionComponent* l_description = new DescriptionComponent();
+    l_description->title = "Corpse";
+    l_description->text = "A mangled body, splayed, leaking blood.";
+    m_engine->getComponents()->add (l_entity, l_description);
+
+    return l_entity;
+}
