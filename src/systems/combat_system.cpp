@@ -12,47 +12,52 @@
 void CombatSystem::handleEvent (const Event* event)
 {
     switch (event->getType()) {
-        case EVENT_ATTACK_ENTITY: {
-            const AttackEntityEvent* l_event = static_cast<const AttackEntityEvent*> (event);
-            EntityId attacker = l_event->attacker;
-            EntityId defender = l_event->defender;
-
-            EquipmentComponent* l_attackerEquipment = m_engine->getComponents()->get<EquipmentComponent>(attacker);
-            unsigned int damage = 1;
-            if (l_attackerEquipment && l_attackerEquipment->rightHandWieldable != 0) {
-                EntityId l_weapon = l_attackerEquipment->rightHandWieldable;
-                damage = m_engine->getComponents()->get<WieldableComponent>(l_weapon)->baseDamage;
+        case EVENT_ATTACK_ENTITY: 
+            {
+                const AttackEntityEvent* l_event = static_cast<const AttackEntityEvent*> (event);
+                handleAttack (l_event->attacker, l_event->defender);
             }
-
-            HealthComponent* l_health = m_engine->getComponents()->get<HealthComponent>(defender);
-            if (l_health) {
-                updateLog (attacker, defender, damage);
-
-                GraphicsEffectComponent* effect = new GraphicsEffectComponent();
-                effect->type = EFFECT_CHANGE_COLOR;
-                effect->duration = 15;
-                effect->new_color = Color (RED);
-                getEngine()->getComponents()->add(defender, effect);
-
-                if (damage < l_health->health) {
-                    l_health->health -= damage;
-                } else {
-                    if (defender == getEngine()->getEntities()->getPlayer()) {
-                        m_engine->getEntities()->destroyEntity (defender);
-                    } else {
-                        Location l_targetLoc = m_engine->getEntities()->getLocation (defender);
-                        SpriteComponent* l_sprite = m_engine->getComponents()->get<SpriteComponent> (defender);
-                        getEngine()->getEntities()->createCorpsePrefab(l_targetLoc, l_sprite->sprite);
-                        getEngine()->getEntities()->destroyEntity (defender);
-                    }
-                }
-            }
-        } break;
-        default:break;
+            break;
+        default:
+            break;
     }
 }
 
-//void CombatSystem::handleAttack (EntityId attacker, EntityId defender) {}
+void CombatSystem::handleAttack (EntityId attacker, EntityId defender) 
+{
+    EquipmentComponent* l_attackerEquipment = m_engine->getComponents()->get<EquipmentComponent>(attacker);
+    unsigned int damage = 1;
+    if (l_attackerEquipment && l_attackerEquipment->rightHandWieldable != 0) {
+        EntityId l_weapon = l_attackerEquipment->rightHandWieldable;
+        damage = m_engine->getComponents()->get<WieldableComponent>(l_weapon)->baseDamage;
+    }
+
+    HealthComponent* l_health = m_engine->getComponents()->get<HealthComponent>(defender);
+    if (!l_health) {
+        // Invincible?
+        return;
+    }
+    updateLog (attacker, defender, damage);
+
+    GraphicsEffectComponent* effect = new GraphicsEffectComponent();
+    effect->type = EFFECT_CHANGE_COLOR;
+    effect->duration = 15;
+    effect->new_color = Color (RED);
+    getEngine()->getComponents()->add(defender, effect);
+
+    if (damage < l_health->health) {
+        l_health->health -= damage;
+    } else {
+        if (defender == getEngine()->getEntities()->getPlayer()) {
+            m_engine->getEntities()->destroyEntity (defender);
+        } else {
+            Location l_targetLoc = m_engine->getEntities()->getLocation (defender);
+            SpriteComponent* l_sprite = m_engine->getComponents()->get<SpriteComponent> (defender);
+            getEngine()->getEntities()->createCorpsePrefab(l_targetLoc, l_sprite->sprite);
+            getEngine()->getEntities()->destroyEntity (defender);
+        }
+    }
+}
 
 void CombatSystem::updateLog (const EntityId& attacker, const EntityId& target, int damage)
 {
