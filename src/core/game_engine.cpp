@@ -108,6 +108,8 @@ void GameEngine::tick ()
 
     getWindows()->update();
     getWindows()->redraw();
+
+    if (!m_playerTurn) swapTurn();
     return;
 }
 

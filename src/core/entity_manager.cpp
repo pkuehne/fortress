@@ -149,8 +149,6 @@ EntityId EntityManager::createPlayerPrefab (Location& location)
     // Health Component
     HealthComponent* l_health = new HealthComponent();
     l_health->health = 10;
-    l_health->hunger = 0;
-    l_health->thirst = 0;
     m_engine->getComponents()->add (l_entity, l_health);
 
     // Player Component
@@ -194,8 +192,6 @@ EntityId EntityManager::createEnemyPrefab (Location& location)
     // Health Component
     HealthComponent* l_health = new HealthComponent();
     l_health->health = 1;
-    l_health->hunger = 0;
-    l_health->thirst = 0;
     m_engine->getComponents()->add (l_entity, l_health);
 
     // NPC Component
@@ -238,8 +234,6 @@ EntityId EntityManager::createTrollPrefab (Location& location)
     // Health Component
     HealthComponent* l_health = new HealthComponent();
     l_health->health = 8;
-    l_health->hunger = 0;
-    l_health->thirst = 0;
     m_engine->getComponents()->add (l_entity, l_health);
 
     // NPC Component
