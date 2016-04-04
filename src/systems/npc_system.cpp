@@ -56,6 +56,12 @@ NpcSystem::NpcSystem()
     orcs[NpcState::Attacking].push_back(AttackingNotPossible);
 
     m_stateMachine[0] = orcs;
+
+    // Humans
+    TransitionMap humans;
+    humans[NpcState::None].push_back(NoneToIdle);
+
+    m_stateMachine[0] = humans;
 }
 
 void NpcSystem::changeState (EntityId entity, NpcComponent* npc)

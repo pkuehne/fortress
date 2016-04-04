@@ -10,6 +10,7 @@
 const unsigned char EMPTY = '.';
 const unsigned char TREE = 'T';
 const unsigned char LINK = '>';
+const unsigned char HUMAN = 'H';
 
 bool RuralGenerator::generate()
 {
@@ -20,6 +21,7 @@ bool RuralGenerator::generate()
     placeWoods();
     placePlayer();
     placeDungeonStairs();
+    placeForester();
     createEntitiesFromMap();
     LOG(INFO) << "Done generating area" << std::endl;
     return true;
@@ -46,6 +48,9 @@ void RuralGenerator::createEntitiesFromMap()
                     l_entity = m_engine->getEntities()->createStairPrefab (STAIR_DOWN, location);
                     m_areaLinks.push_back(l_entity);
                     break;
+                case HUMAN:
+                    l_entity = m_engine->getEntities()->createForesterPrefab (location);
+                    break;
                 default:
                     break;
             }
@@ -69,11 +74,11 @@ void RuralGenerator::placeWoods()
             if (isValidCoordinate (xx, yy)) {
                 unsigned char& tile = getByCoordinate(xx,yy);
                 if (tile == TREE) continue;
-                unsigned int percentage = 60;
-                if (isValidCoordinate (xx-1, yy) && getByCoordinate (xx-1, yy)) percentage -= 10;
-                if (isValidCoordinate (xx+1, yy) && getByCoordinate (xx+1, yy)) percentage -= 10;
-                if (isValidCoordinate (xx, yy-1) && getByCoordinate (xx, yy-1)) percentage -= 10;
-                if (isValidCoordinate (xx, yy+1) && getByCoordinate (xx, yy+1)) percentage -= 10;
+                unsigned int percentage = 30;
+                if (isValidCoordinate (xx-1, yy) && getByCoordinate (xx-1, yy) == TREE) percentage -= 10;
+                if (isValidCoordinate (xx+1, yy) && getByCoordinate (xx+1, yy) == TREE) percentage -= 10;
+                if (isValidCoordinate (xx, yy-1) && getByCoordinate (xx, yy-1) == TREE) percentage -= 10;
+                if (isValidCoordinate (xx, yy+1) && getByCoordinate (xx, yy+1) == TREE) percentage -= 10;
                 if (Utility::randChance(percentage)) tile = TREE;
             }
         }
@@ -96,4 +101,20 @@ void RuralGenerator::placeDungeonStairs()
             getByCoordinate(x, y) = LINK;
         }
     }
+}
+
+void RuralGenerator::placeForester()
+{
+    unsigned int numTries = 50;
+    for (unsigned int ii = 0; ii < numTries; ii++) {
+        unsigned int x = Utility::randBetween (0, m_mapWidth);
+        unsigned int y = Utility::randBetween (0, m_mapHeight);
+        if (isValidCoordinate (x, y)) {
+            if (getByCoordinate(x,y) == EMPTY) {
+                getByCoordinate(x, y) = HUMAN;
+                break;
+            }
+        }
+    }
+
 }

@@ -14,6 +14,7 @@ public:
 private:
     void placeWoods();
     void placeDungeonStairs();
+    void placeForester();
     void placePlayer();
 
 private:
