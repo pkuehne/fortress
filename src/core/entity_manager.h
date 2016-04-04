@@ -33,7 +33,8 @@ public:
     EntityId createHelmetPrefab (Location& location);
     EntityId createPotionPrefab (Location& location);
     EntityId createTreePrefab(Location& location);
-    EntityId createCorpsePrefab(Location& location, char sprite);
+    EntityId createCorpsePrefab (Location& location, char sprite);
+    EntityId createForesterPrefab (Location& location);
 
     Location getLocation (EntityId entity) { return m_locations[entity]; }
     void setLocation (EntityId entity, Location& location);

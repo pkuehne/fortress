@@ -423,7 +423,6 @@ EntityId EntityManager::createTreePrefab(Location& location)
 
 EntityId EntityManager::createCorpsePrefab(Location& location, char sprite)
 {
-    LOG(INFO) << "Creating corpse at " << location << std::endl;
     EntityId l_entity = createEntity (location);
 
     SpriteComponent* l_sprite = new SpriteComponent();
@@ -437,6 +436,48 @@ EntityId EntityManager::createCorpsePrefab(Location& location, char sprite)
     l_description->title = "Corpse";
     l_description->text = "A mangled body, splayed, leaking blood.";
     m_engine->getComponents()->add (l_entity, l_description);
+
+    return l_entity;
+}
+
+EntityId EntityManager::createForesterPrefab (Location& location)
+{    
+    EntityId l_entity = createEntity (location);
+
+    SpriteComponent* l_sprite = new SpriteComponent();
+    l_sprite->fgColor    = Color (GREEN);
+    l_sprite->bgColor    = Color (BLACK);
+    l_sprite->sprite     = 'H'; 
+    m_engine->getComponents()->add (l_entity, l_sprite);
+
+    // Collider Component
+    ColliderComponent* l_collider = new ColliderComponent();
+    m_engine->getComponents()->add (l_entity, l_collider);
+
+    // Description Component
+    DescriptionComponent* l_description = new DescriptionComponent();
+    l_description->title = "Forester";
+    l_description->text = "Chopping trees, hunting foxes, all in a day's work.";
+    m_engine->getComponents()->add (l_entity, l_description);
+
+    // Health Component
+    HealthComponent* l_health = new HealthComponent();
+    l_health->health = 4;
+    m_engine->getComponents()->add (l_entity, l_health);
+
+    // NPC Component
+    NpcComponent* l_npc = new NpcComponent();
+    l_npc->state = NpcState::None;
+    l_npc->stateMachine = 1;
+    m_engine->getComponents()->add (l_entity, l_npc);
+
+    // Euipment Component
+    EquipmentComponent* l_equipment = new EquipmentComponent();
+    Location nowhere;
+    l_equipment->rightHandWieldable = createWeaponPrefab(nowhere);
+    l_equipment->leftHandWieldable = createShieldPrefab(nowhere);
+    l_equipment->headWearable = createHelmetPrefab(nowhere);
+    m_engine->getComponents()->add (l_entity, l_equipment);
 
     return l_entity;
 }
