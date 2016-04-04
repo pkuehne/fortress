@@ -61,7 +61,12 @@ NpcSystem::NpcSystem()
     TransitionMap humans;
     humans[NpcState::None].push_back(NoneToIdle);
 
-    m_stateMachine[0] = humans;
+    Transition IdleToWandering;
+    IdleToWandering.condition = [](GameEngineInterface* g, EntityId e, NpcComponent* n){return true;};
+    IdleToWandering.endState = NpcState::Wandering;
+    humans[NpcState::Idle].push_back(IdleToWandering);
+
+    m_stateMachine[1] = humans;
 }
 
 void NpcSystem::changeState (EntityId entity, NpcComponent* npc)
@@ -86,6 +91,22 @@ void NpcSystem::changeState (EntityId entity, NpcComponent* npc)
         case NpcState::Searching:
             npc->target = getEngine()->getEntities()->getPlayer();
             // Walk around
+            break;
+        case NpcState::Wandering:
+            {
+                LOG(INFO) << "Wandering around" << std::endl;
+                Location oldLoc = getEngine()->getEntities()->getLocation (entity);
+                Location newLoc = oldLoc;
+                unsigned int c = 0;
+                while (c++ < 30 && (newLoc == oldLoc || npc->lastDirection == Direction::None)) {
+                    npc->lastDirection = static_cast<Direction>(Utility::randBetween (1, 4));
+                    newLoc = getEngine()->getMap()->location(
+                            getEngine()->getEntities()->getLocation (entity),
+                            npc->lastDirection);
+                }
+
+                moveTowards (entity, newLoc);
+            }
             break;
         case NpcState::Idle:
             // Nothing to do

@@ -2,6 +2,7 @@
 #define NPC_COMPONENT_H
 
 #include "component_base.h"
+#include "utility.h"
 
 enum class NpcState {
     None        = 0,
@@ -9,6 +10,7 @@ enum class NpcState {
     Searching   = 2,
     Hunting     = 3,
     Attacking   = 4,
+    Wandering   = 5,
 };
 
 struct NpcComponent : ComponentBase {
@@ -16,6 +18,7 @@ struct NpcComponent : ComponentBase {
     NpcState                state           = NpcState::None;
     EntityId                target          = 0;
     unsigned int            stateMachine    = 0;
+    Direction               lastDirection   = Direction::None;
 };
 
 #endif

@@ -102,3 +102,29 @@ void MapManager::setArea (unsigned int area)
     throw int(1);
     //exit (1);
 }
+
+Location MapManager::location (const Location& loc, Direction dir)
+{
+    Location retval (loc);
+    switch (dir) {
+        case Direction::North:
+            retval.y--;
+            break;
+        case Direction::South:
+            retval.y++;
+            break;
+        case Direction::East:
+            retval.x++;
+            break;
+        case Direction::West:
+            retval.x--;
+            break;
+        default:
+            break;
+    };
+
+    if (!isValidTile (retval)) {
+        return loc; // Don't return a bad location
+    }
+    return retval;
+}

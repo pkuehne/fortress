@@ -33,6 +33,7 @@ public:
     virtual void setArea (unsigned int area) = 0;
     virtual unsigned int  getAreas() = 0;
 
+    virtual Location location (const Location&, Direction direction) = 0;
     virtual EntityHolder findEntitiesAt (const Location& location) = 0;
     virtual EntityHolder findEntitiesNear (const Location& location, unsigned int radius) = 0;
 };

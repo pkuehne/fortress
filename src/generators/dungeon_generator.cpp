@@ -119,7 +119,7 @@ void DungeonGenerator::createEntitiesFromMap () {
         m_engine->getComponents()->get<StairComponent>(m_downStair)->target = m_downStairTarget;
         m_downStairLink = m_downStair;
     }
-    if (m_level > 0) {
+    if (m_level > 0 && m_prevDownStair > 0) {
         m_engine->getComponents()->get<StairComponent>(m_prevDownStair)->target = m_upStair;
     }
     m_prevDownStair = m_downStair;

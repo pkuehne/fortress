@@ -42,6 +42,7 @@ public:
     void setArea (unsigned int area);
     unsigned int getAreas() { return m_areas.size(); }
 
+    Location location (const Location&, Direction direction);
     EntityHolder findEntitiesAt (const Location& location);
     EntityHolder findEntitiesNear (const Location& location, unsigned int radius);
 
