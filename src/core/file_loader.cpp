@@ -18,6 +18,7 @@
 
 void FileLoader::loadState ()
 {
+    /*
     LOG(INFO) << "Loading save" << std::endl;
     std::ifstream l_file ("World1.sav");
     if (!l_file.is_open()) {
@@ -74,7 +75,7 @@ void FileLoader::loadState ()
 	m_engine->getMap()->setArea (currArea);
 
     LOG(INFO) << "Completed loading save game" << std::endl;
-
+    */
 }
 
 

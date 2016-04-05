@@ -39,11 +39,11 @@ void CombatSystem::handleAttack (EntityId attacker, EntityId defender)
     }
     updateLog (attacker, defender, damage);
 
-    GraphicsEffectComponent* effect = new GraphicsEffectComponent();
+    GraphicsEffectComponent* effect = 
+        getEngine()->getComponents()->make<GraphicsEffectComponent>(defender);
     effect->type = EFFECT_CHANGE_COLOR;
     effect->duration = 15;
     effect->new_color = Color (RED);
-    getEngine()->getComponents()->add(defender, effect);
 
     if (damage < l_health->health) {
         l_health->health -= damage;

@@ -143,13 +143,13 @@ void MapWindow::keyDown (unsigned char key)
         getEngine()->addMessage (INFO, "Game saved!");
     }
     if (key == '=') {
-        m_debugMode = !m_debugMode;
         std::cout << "Switching debug mode" << std::endl;
-        GraphicsEffectComponent* effect = new GraphicsEffectComponent();
+        m_debugMode = !m_debugMode;
+        EntityId player = getEngine()->getEntities()->getPlayer();
+        GraphicsEffectComponent* effect = 
+            getEngine()->getComponents()->make<GraphicsEffectComponent>(player);
         effect->type = EFFECT_BLINK_FAST;
         effect->duration = 20;
-        EntityId player = getEngine()->getEntities()->getPlayer();
-        getEngine()->getComponents()->add(player, effect);
 
     }
     if (key == '[') {

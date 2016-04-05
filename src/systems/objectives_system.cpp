@@ -1,6 +1,5 @@
 #include "objectives_system.h"
 #include "game_over_window.h"
-#include "window_manager_interface.h"
 #include "description_component.h"
 
 void ObjectivesSystem::handleEvent (const Event* event)

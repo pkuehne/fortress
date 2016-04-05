@@ -3,13 +3,6 @@
 
 #include <string>
 #include <vector>
-//#include "window_manager_interface.h"
-//#include "entity_manager_interface.h"
-//#include "component_manager.h"
-//#include "graphics_interface.h"
-//#include "map_manager_interface.h"
-
-//class WindowManager;
 class Event;
 class WindowManagerInterface;
 class GameSystemInterface;

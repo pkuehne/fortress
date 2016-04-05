@@ -22,10 +22,10 @@ void MovementSystem::handleEvent (const Event* event)
                 const EntityHolder& l_targets = m_engine->getMap()->getTile(l_newLocation).entities();
                 for (EntityId l_target : l_targets) {
                     if (m_engine->getComponents()->get<ColliderComponent> (l_target)) {
-						GraphicsEffectComponent* effect = new GraphicsEffectComponent();
+						GraphicsEffectComponent* effect = 
+                                                    getEngine()->getComponents()->make<GraphicsEffectComponent>(l_entity);
 						effect->type = EFFECT_BLINK_FAST;
 						effect->duration = 10;
-						getEngine()->getComponents()->add(l_entity, effect);
 						return; // Don't update position if it's a collidable
                     }
                     StairComponent* l_stair = m_engine->getComponents()->get<StairComponent> (l_target);
