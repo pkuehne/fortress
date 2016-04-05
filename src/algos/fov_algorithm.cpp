@@ -1,3 +1,4 @@
+#include "game_engine.h"
 #include "fov_algorithm.h"
 #include "entity.h"
 #include "collider_component.h"

@@ -1,3 +1,4 @@
+#include "game_engine.h"
 #include "window_manager.h"
 #include "splash_window.h"
 

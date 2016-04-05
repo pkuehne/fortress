@@ -1,7 +1,7 @@
 #ifndef FILE_LOADER
 #define FILE_LOADER
 
-#include "game_engine_interface.h"
+#include "game_engine.h"
 #include "tag.h"
 #include <vector>
 #include <string>

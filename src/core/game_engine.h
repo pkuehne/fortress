@@ -8,6 +8,8 @@
 #include "game_system_interface.h"
 #include "event_manager_interface.h"
 #include "map_manager_interface.h"
+#include "component_manager.h"
+#include "entity_manager_interface.h"
 
 #include <string>
 #include <vector>

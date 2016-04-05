@@ -2,16 +2,21 @@
 #define __GAME_ENGINE_INTERFACE_H__
 
 #include <string>
+#include <vector>
 //#include "window_manager_interface.h"
-#include "entity_manager_interface.h"
-#include "component_manager.h"
-#include "graphics_interface.h"
-#include "map_manager_interface.h"
+//#include "entity_manager_interface.h"
+//#include "component_manager.h"
+//#include "graphics_interface.h"
+//#include "map_manager_interface.h"
 
 //class WindowManager;
 class Event;
 class WindowManagerInterface;
 class GameSystemInterface;
+class ComponentManager;
+class EntityManagerInterface;
+class GraphicsInterface;
+class MapManagerInterface;
 
 typedef enum {
     INFO    = 0,

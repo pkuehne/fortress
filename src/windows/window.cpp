@@ -1,5 +1,5 @@
 #include "window.h"
-#include "game_engine_interface.h"
+#include "game_engine.h"
 #include <iostream>
 
 void Window::initialise (GameEngineInterface* a_engine, void* args, void* retval)

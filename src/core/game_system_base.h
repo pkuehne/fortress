@@ -3,7 +3,7 @@
 
 #include "event.h"
 #include "game_system_interface.h"
-#include "game_engine_interface.h"
+#include "game_engine.h"
 #include <vector>
 
 class GameSystemBase : public GameSystemInterface {
