@@ -1,6 +1,8 @@
 #ifndef __GAME_ENGINE_INTERFACE_H__
 #define __GAME_ENGINE_INTERFACE_H__
 
+#include "entity.h"
+#include "utility.h"
 #include <string>
 #include <vector>
 class Event;
@@ -55,6 +57,15 @@ public:
 
     virtual void setArea (unsigned int area) = 0;
     virtual unsigned int getArea() = 0;
+
+    // New style interfaces
+    virtual EntityId player() = 0;
+
+    //virtual const Location& location (EntityId) = 0;
+    virtual Location location (EntityId) = 0;
+
+    virtual const EntityHolder& entities (unsigned int area) = 0;
+    //virtual const EntityHolder& entities (const Location& loc) = 0;
 
 };
 

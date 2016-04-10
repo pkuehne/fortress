@@ -371,7 +371,7 @@ EntityId EntityManager::createPotionPrefab (Location& location)
         m_engine->getComponents()->make<SpriteComponent>(l_entity);
     l_sprite->fgColor    = Color (YELLOW);
     l_sprite->bgColor    = Color (BLACK);
-    l_sprite->sprite     = 189; //'$';
+    l_sprite->sprite     = 'Z' + 1; //'$';
 
     DescriptionComponent* l_description = 
         m_engine->getComponents()->make<DescriptionComponent>(l_entity);

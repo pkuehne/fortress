@@ -53,6 +53,14 @@ public:
     void setArea (unsigned int area) { m_mapManager->setArea (area); }
     unsigned int getArea() { return m_mapManager->getArea(); }
 
+    // New style interfaces
+    EntityId player() { return m_entityManager->getPlayer(); }
+
+    //const Location& location (EntityId entity) { return m_entityManager->getLocation(entity); }
+    Location location (EntityId entity) { return m_entityManager->getLocation(entity); }
+    const EntityHolder& entities (unsigned int area = 0) { return m_entityManager->get(area); }
+    //const EntityHolder& entities (const Location& loc);
+
 private:
     unsigned long long  m_tick;
     bool                m_playerTurn;

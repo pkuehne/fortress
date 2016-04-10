@@ -1,4 +1,4 @@
-.PHONY: all clean build run
+.PHONY: all clean build run clear
 CC=g++
 
 MODULES = $(wildcard */)
@@ -30,18 +30,21 @@ clean:
 	@rm -fr $(PROGRAM)
 	@echo "Cleanup completed"
 
-build: $(PROGRAM)
+clear:
+	clear
 
-$(PROGRAM): $(ALL_DIR) $(OBJECTS)
-	@$(CC) $(LDFLAGS) $(OBJECTS) $(LIBRARIES) -o $@
-	@echo "Building $(notdir $@)"
+build: clear $(PROGRAM)
 
 -include $(DEPENDS)
 
-$(OBJ_DIR)/%.o: %.cpp
-	@$(CC) -c  $(CFLAGS) $< -o $@
-	@$(CC) -MM $(CFLAGS) $< > $(DEP_DIR)/$*.d
+$(PROGRAM): $(ALL_DIR) $(OBJECTS)
+	@echo "Linking $(notdir $@)"
+	@$(CC) $(LDFLAGS) $(OBJECTS) $(LIBRARIES) -o $@
+
+$(OBJ_DIR)/%.o: %.cpp 
 	@echo "Building $(notdir $<)"
+	@$(CC) -c  $(CFLAGS) $< -o $@
+	@$(CC) -MM $(CFLAGS) $< -MT $@ -MF $(DEP_DIR)/$*.d
 
 $(ART_DIR) $(OBJ_DIR) $(DEP_DIR) $(COV_DIR):
 	@mkdir -p $@
