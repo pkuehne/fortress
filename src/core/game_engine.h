@@ -59,7 +59,7 @@ public:
     //const Location& location (EntityId entity) { return m_entityManager->getLocation(entity); }
     Location location (EntityId entity) { return m_entityManager->getLocation(entity); }
     const EntityHolder& entities (unsigned int area = 0) { return m_entityManager->get(area); }
-    //const EntityHolder& entities (const Location& loc);
+    EntityHolder entities (const Location& loc) { return m_mapManager->findEntitiesAt(loc); }
 
 private:
     unsigned long long  m_tick;

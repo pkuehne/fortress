@@ -65,7 +65,7 @@ public:
     virtual Location location (EntityId) = 0;
 
     virtual const EntityHolder& entities (unsigned int area) = 0;
-    //virtual const EntityHolder& entities (const Location& loc) = 0;
+    virtual EntityHolder entities (const Location& loc) = 0;
 
 };
 
