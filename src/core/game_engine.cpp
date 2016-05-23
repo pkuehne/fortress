@@ -121,8 +121,6 @@ void GameEngine::addMessage (const MessageType& severity, const std::string& mes
     addMessage (msg);
 }
 
-
-
 void GameEngine::swapTurn()
 {
     m_playerTurn = !m_playerTurn;
@@ -132,3 +130,4 @@ void GameEngine::swapTurn()
     l_algo.initialise (this);
     l_algo.calculateFov();
 }
+

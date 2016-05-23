@@ -3,6 +3,8 @@
 
 #include "entity.h"
 #include "utility.h"
+#include "tile.h"
+
 #include <string>
 #include <vector>
 class Event;
@@ -67,6 +69,7 @@ public:
     virtual const EntityHolder& entities (unsigned int area) = 0;
     virtual EntityHolder entities (const Location& loc) = 0;
 
+    virtual Tile& tile (const Location& loc) = 0;
 };
 
 #endif

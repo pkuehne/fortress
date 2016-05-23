@@ -61,6 +61,8 @@ public:
     const EntityHolder& entities (unsigned int area = 0) { return m_entityManager->get(area); }
     EntityHolder entities (const Location& loc) { return m_mapManager->findEntitiesAt(loc); }
 
+    Tile& tile (const Location& loc) { return m_mapManager->getTile (loc); }
+
 private:
     unsigned long long  m_tick;
     bool                m_playerTurn;
