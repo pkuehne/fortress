@@ -27,6 +27,7 @@
 *.out
 *.app
 fortress
+unit_tests
 
 #gcov files
 *.gcda
@@ -56,3 +57,5 @@ Fortress.layout
 # Coverity files
 fortress.tgz
 
+#vim swap file
+*.swp

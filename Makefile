@@ -15,6 +15,8 @@ build: clear
 
 test: clear
 	@$(MAKE) -C test build -j 8
+	@echo "Starting FORTRESS"
+	@./unit_tests
 
 shuffle:
 	@$(MAKE) -C test shuffle

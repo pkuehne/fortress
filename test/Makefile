@@ -18,7 +18,7 @@ LIBRARIES=$(GLFW_LIBS) $(YAML_LIBS) -lGL -lc -lm -lSOIL -lpthread -lglog
 LIBRARIES+=-lgtest -lgmock -gcov
 
 SOURCES = $(foreach sdir, $(MODULES), $(wildcard $(sdir)/*.cpp))
-SOURCES+=test_main.cpp
+SOURCES+= $(wildcard *.cpp)
 OBJECTS = $(addprefix $(OBJ_DIR)/, $(notdir $($(notdir SOURCES):.cpp=.o)))
 DEPENDS = $(addprefix $(DEP_DIR)/, $(notdir $($(notdir SOURCES):.cpp=.d)))
 
