@@ -1,4 +1,4 @@
-.PHONY: all clean build test coverage run shuffle
+.PHONY: all clean build test coverage run shuffle test
 
 LOG_DIR=artifacts/logs/
 
@@ -7,17 +7,17 @@ all: clear clean build test run
 clear:
 	clear
 clean:
-	@$(MAKE) -C src --no-print-directory clean
-	@$(MAKE) -C test --no-print-directory clean
+	@$(MAKE) -C src clean
+	@$(MAKE) -C test clean
 
 build: clear
-	@$(MAKE) -C src --no-print-directory build -j 8
+	@$(MAKE) -C src build -j 8
 
-test:
-#	@$(MAKE) -C test --no-print-directory test -j 8
+test: clear
+	@$(MAKE) -C test build -j 8
 
 shuffle:
-	@$(MAKE) -C test --no-print-directory shuffle
+	@$(MAKE) -C test shuffle
 
 coverity:
 	cov-build --dir cov-int $(MAKE) build
@@ -28,8 +28,8 @@ coverage:
 	rm -f test/*.gcda
 	rm -f src/*.gcno
 	rm -f test/*.gcno
-	$(MAKE) -C test --no-print-directory clean
-	$(MAKE) -C test --no-print-directory test -j 8 COVERAGE=Y
+	$(MAKE) -C test clean
+	$(MAKE) -C test test -j 8 COVERAGE=Y
 	gcovr -r src
 
 run: build $(LOG_DIR)

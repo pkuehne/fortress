@@ -1,7 +1,6 @@
 .PHONY: all clean build run clear
 CC=g++
-
-MODULES = $(wildcard */)
+MODULES = $(sort $(dir $(wildcard ../src/*/)))
 OUT_DIR = ..
 PROGRAM = $(OUT_DIR)/fortress
 ART_DIR = $(OUT_DIR)/artifacts
@@ -18,6 +17,7 @@ YAML_LIBS=$(shell pkg-config yaml-cpp --libs --static)
 LIBRARIES=$(GLFW_LIBS) $(YAML_LIBS) -lGL -lc -lm -lSOIL -lpthread -lglog 
 
 SOURCES = $(foreach sdir, $(MODULES), $(wildcard $(sdir)/*.cpp))
+#SOURCES+=main.cpp
 OBJECTS = $(addprefix $(OBJ_DIR)/, $(notdir $($(notdir SOURCES):.cpp=.o)))
 DEPENDS = $(addprefix $(DEP_DIR)/, $(notdir $($(notdir SOURCES):.cpp=.d)))
 
@@ -28,7 +28,7 @@ all: $(SOURCES) $(PROGRAM)
 clean:
 	@rm -fr $(ART_DIR)
 	@rm -fr $(PROGRAM)
-	@echo "Cleanup completed"
+	@echo "Build Cleanup completed"
 
 clear:
 	clear
@@ -40,6 +40,10 @@ build: clear $(PROGRAM)
 $(PROGRAM): $(ALL_DIR) $(OBJECTS)
 	@echo "Linking $(notdir $@)"
 	@$(CC) $(LDFLAGS) $(OBJECTS) $(LIBRARIES) -o $@
+
+$(OBJ_DIR)/main.o: main.cpp
+	@echo "Overriding main"
+	@$(CC) -c  $(CFLAGS) main.cpp -o $@
 
 $(OBJ_DIR)/%.o: %.cpp 
 	@echo "Building $(notdir $<)"

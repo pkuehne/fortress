@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
+#include <game_engine.h>
 
 int main (int argc, char** argv)
 {
