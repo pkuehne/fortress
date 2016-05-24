@@ -1,4 +1,4 @@
-.PHONY: all clean build run clear 
+.PHONY: all clean build run 
 CC=g++
 MODULES = $(filter-out ../src/, $(sort $(dir $(wildcard ../src/*/))))
 OUT_DIR = ..
@@ -31,10 +31,8 @@ clean:
 	@rm -fr $(PROGRAM)
 	@echo "Test Cleanup completed"
 
-clear:
-	clear
 
-build: clear $(PROGRAM)
+build: $(PROGRAM)
 
 -include $(DEPENDS)
 

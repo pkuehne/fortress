@@ -2,7 +2,6 @@
 #define MAP_MANAGER_H
 
 #include "map_manager_interface.h"
-#include "game_engine_interface.h"
 #include <map>
 
 struct MapInfo {
@@ -18,7 +17,6 @@ struct MapInfo {
 class MapManager : public MapManagerInterface {
 public:
 
-    void initialise (GameEngineInterface* engine) { m_engine = engine; }
     Tile& getTile (unsigned int x, unsigned int y, unsigned int z) { return getTile (map2index (x, y, z)); }
     Tile& getTile (const Location& location) { return getTile (location.x, location.y, location.z); }
     Tile& getTile (unsigned int index) { return m_map[index]; }
@@ -47,7 +45,6 @@ public:
     EntityHolder findEntitiesNear (const Location& location, unsigned int radius);
 
 private:
-    GameEngineInterface*    m_engine;
     unsigned int            m_mapWidth;
     unsigned int            m_mapHeight;
     unsigned int            m_mapDepth;

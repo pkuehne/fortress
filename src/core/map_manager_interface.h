@@ -10,7 +10,6 @@ class MapManagerInterface {
 public:
     virtual ~MapManagerInterface() { }
 
-    virtual void initialise (GameEngineInterface*) = 0;
     virtual Tile& getTile (unsigned int x, unsigned int y, unsigned int z) = 0;
     virtual Tile& getTile (const Location& location) = 0;
     virtual Tile& getTile (unsigned int index) = 0;

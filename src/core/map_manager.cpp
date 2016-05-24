@@ -72,7 +72,7 @@ EntityHolder MapManager::findEntitiesNear (const Location& location, unsigned ra
 
     for (int yy = starty; yy <= endy; yy++) {
         for (int xx = startx; xx <= endx; xx++) {
-            for (EntityId id : m_engine->getMap()->getTile (xx, yy, location.z).entities()) {
+            for (EntityId id : getTile (xx, yy, location.z).entities()) {
                 l_entities.insert (id);
             }
         }
