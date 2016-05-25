@@ -49,6 +49,7 @@ bool DungeonGenerator::generate () {
 }
 
 bool DungeonGenerator::generateLevel() {
+    std::cout << "Generating new level" << std::endl;
     for (unsigned r = 0; r < m_roomTarget; r++) {
         bool success = false;
         int x = 0;
@@ -187,12 +188,15 @@ void DungeonGenerator::connectRooms (Room& start, Room& end)
     algo.setNumNeighbours (4);
 
     PathVector l_path;
-    Location startLoc (start.x, start.y, 0);
-    Location endLoc (end.x, end.y, 0);
+    Location startLoc (start.midX, start.midY, 0);
+    Location endLoc (end.midX, end.midY, 0);
     algo.findPath (startLoc, endLoc, l_path);
-    std::cout << "Found a " << l_path.size() << " tile corridor" << std::endl;
+    //std::cout << "Found a " << l_path.size() << " tile corridor from "
+    //    << startLoc << " to " << endLoc
+    //    << std::endl;
 
     for (size_t ii = 0; ii < l_path.size(); ii++) {
+        //std::cout << "Step: " << l_path[ii] << std::endl;
         unsigned char& tile = getByCoordinate(l_path[ii].x, l_path[ii].y);
 
         // Create tiles and doors
@@ -205,10 +209,12 @@ void DungeonGenerator::connectRooms (Room& start, Room& end)
 
     for (size_t ii = 0; ii < l_path.size(); ii++) {
         // Wall of neighbours if necessary
+        //std::cout << "Checking neighbours of " << l_path[ii] << std::endl;
         Location neighbours[8];
         size_t count = findNeighbours8 (l_path[ii], neighbours, this);
-        for (size_t ii = 0; ii < count; ii++) {
-            unsigned char& adj = getByCoordinate (neighbours[ii].x, neighbours[ii].y);
+        for (size_t hh = 0; hh < count; hh++) {
+            //std::cout << "Setting up neighbour " << neighbours[hh] << std::endl;
+            unsigned char& adj = getByCoordinate (neighbours[hh].x, neighbours[hh].y);
             if (adj == EMPTY || adj == RESTRICTED) {
                 adj = WALL;
             }
