@@ -21,6 +21,7 @@ void MapManager::resetMap (unsigned int area, unsigned int width, unsigned int h
     LOG(INFO) << "Created area " << info.areaId << std::endl;
 }
 
+/*
 bool MapManager::isValidTile (unsigned int x, unsigned int y, unsigned int z)
 {
     bool xValid = (x>=0 && x<m_mapWidth);
@@ -33,17 +34,21 @@ bool MapManager::isValidTile (unsigned int index)
 {
     return (index > 0 && index < sizeof (m_map));
 }
-
-bool MapManager::isValidTile (const Location& location)
+*/
+bool MapManager::isValidTile (const Location& loc)
 {
-    return isValidTile (location.x, location.y, location.z);
+    bool xValid = (loc.x>=0 && loc.x<m_mapWidth);
+    bool yValid = (loc.y>=0 && loc.y<m_mapHeight);
+    bool zValid = (loc.z>=0 && loc.z<m_mapDepth);
+    return ( xValid && yValid && zValid );
 }
 
-int MapManager::map2index (unsigned int x, unsigned int y, unsigned int z)
+unsigned int MapManager::loc2index (const Location& loc)
 {
-    return (z * m_mapHeight * m_mapWidth) + (y * m_mapHeight) + x;
+    return (loc.z * m_mapHeight * m_mapWidth) + (loc.y * m_mapHeight) + loc.x;
 }
 
+/*
 void MapManager::index2map (unsigned int index, unsigned int& x, unsigned int& y, unsigned int& z)
 {
     x = index % m_mapWidth;
@@ -56,6 +61,7 @@ void MapManager::index2map (unsigned int index, Location& location)
     return index2map (index, location.x, location.y, location.z);
 }
 
+*/
 EntityHolder MapManager::findEntitiesAt (const Location& location)
 {
     return findEntitiesNear (location, 0);
@@ -72,7 +78,7 @@ EntityHolder MapManager::findEntitiesNear (const Location& location, unsigned ra
 
     for (int yy = starty; yy <= endy; yy++) {
         for (int xx = startx; xx <= endx; xx++) {
-            for (EntityId id : getTile (xx, yy, location.z).entities()) {
+            for (EntityId id : getTile (Location(xx, yy, location.z)).entities()) {
                 l_entities.insert (id);
             }
         }

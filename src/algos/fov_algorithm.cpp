@@ -31,9 +31,10 @@ void FovAlgorithm::calculateFov ()
                 transformOctant (row, col, oct, y, x);
                 y += playerLoc.y;
                 x += playerLoc.x;
-                if (m_engine->getMap()->isValidTile (x, y, playerLoc.z) && visible) {
-                    m_engine->getMap()->getTile (x, y, playerLoc.z).lastVisited = m_engine->getTurn();
-                    for (const EntityId entity : m_engine->getMap()->getTile (x, y, playerLoc.z).entities()) {
+                Location loc (x, y, playerLoc.z);
+                if (m_engine->getMap()->isValidTile (loc) && visible) {
+                    m_engine->getMap()->getTile (loc).lastVisited = m_engine->getTurn();
+                    for (const EntityId entity : m_engine->getMap()->getTile (loc).entities()) {
                         if (m_engine->getComponents()->get<ColliderComponent>(entity)) {
                             line.addShadow (projection);
                             fullShadow = line.isInFullShadow();
@@ -44,9 +45,6 @@ void FovAlgorithm::calculateFov ()
             }
         }
     }
-
-
-
 }
 
 void FovAlgorithm::transformOctant (unsigned int row, unsigned int col, unsigned int octant, int& outY, int& outX)
@@ -83,7 +81,6 @@ void FovAlgorithm::transformOctant (unsigned int row, unsigned int col, unsigned
         outX = -col;
         outY = -row;
     }
-
 }
 
 Shadow FovAlgorithm::projectTile (double row, double col) {

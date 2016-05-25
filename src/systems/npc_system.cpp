@@ -5,12 +5,6 @@
 #include "collider_component.h"
 #include <iostream>
 
-/*
-unsigned int getPathCost (unsigned int index, void* customData);
-unsigned int findNeighbours4 (unsigned int index, unsigned int* neighbours, void* customData);
-unsigned int getDistance (unsigned int start, unsigned int end, void* customData);
-*/
-
 unsigned int getPathCost (const Location& location, void* customData);
 unsigned int findNeighbours4 (  const Location& location,
                                 Location* neighbours,
@@ -216,19 +210,6 @@ void NpcSystem::update ()
     }
 }
 
-// TODO: obsolete
-unsigned int getPathCost (unsigned int index, void* customData)
-{
-    GameEngineInterface* l_engine = static_cast<GameEngineInterface*> (customData);
-    Tile& tile = l_engine->getMap()->getTile(index);
-
-    for (EntityId entity : tile.entities()) {
-        if (entity == l_engine->getEntities()->getPlayer()) continue;
-        if (l_engine->getComponents()->get<ColliderComponent>(entity)) return -999;
-    }
-    return 1;
-}
-
 unsigned int getPathCost (const Location& location, void* customData)
 {
     GameEngineInterface* l_engine = static_cast<GameEngineInterface*> (customData);
@@ -240,41 +221,6 @@ unsigned int getPathCost (const Location& location, void* customData)
     }
     return 1;
 
-}
-
-//TODO: obsolete
-unsigned int findNeighbours4 (unsigned int index, unsigned int* neighbours, void* customData)
-{
-    GameEngineInterface* l_engine = static_cast<GameEngineInterface*> (customData);
-
-    unsigned int count = 0;
-    unsigned int step = 0;
-    Location loc;
-    l_engine->getMap()->index2map (index, loc);
-    //std::cout << "Finding neighbours of " << loc << std::endl;
-
-    if (l_engine->getMap()->isValidTile (loc.x-1, loc.y, loc.z)) {
-        step = l_engine->getMap()->map2index (loc.x-1, loc.y, loc.z);
-        if (getPathCost (step, l_engine) == 1)
-            neighbours[count++] = step;
-    }
-    if (l_engine->getMap()->isValidTile (loc.x+1, loc.y, loc.z)) {
-        step = l_engine->getMap()->map2index (loc.x+1, loc.y, loc.z);
-        if (getPathCost (step, l_engine) == 1)
-            neighbours[count++] = step;
-    }
-    if (l_engine->getMap()->isValidTile (loc.x, loc.y-1, loc.z)) {
-        step = l_engine->getMap()->map2index (loc.x, loc.y-1, loc.z);
-        if (getPathCost (step, l_engine) == 1)
-            neighbours[count++] = step;
-    }
-    if (l_engine->getMap()->isValidTile (loc.x, loc.y+1, loc.z)) {
-        step = l_engine->getMap()->map2index (loc.x, loc.y+1, loc.z);
-        if (getPathCost (step, l_engine) == 1)
-            neighbours[count++] = step;
-    }
-    //std::cout << "Returning " << count << " neighbours "<< std::endl;
-    return count;
 }
 
 unsigned int findNeighbours4 (  const Location& location,
@@ -300,22 +246,6 @@ unsigned int findNeighbours4 (  const Location& location,
 
     //std::cout << "Returning " << count << " neighbours "<< std::endl;
     return count;
-}
-
-
-// TODO: Obsolete
-unsigned int getDistance (unsigned int start, unsigned int end, void* customData)
-{
-    GameEngineInterface* l_engine = static_cast<GameEngineInterface*> (customData);
-
-    unsigned int distance = 0;
-    Location startLoc;
-    Location endLoc;
-    l_engine->getMap()->index2map (start, startLoc);
-    l_engine->getMap()->index2map (end, endLoc);
-    distance = (abs (startLoc.x - endLoc.x) + abs(startLoc.y - endLoc.y));
-
-    return distance;
 }
 
 unsigned int getDistance (const Location& start, const Location& end, void* customData)

@@ -187,8 +187,9 @@ void MapWindow::drawMap()
 
     for (int yy = m_mapStartY; yy < yWidth; yy++) {
         for (int xx = m_mapStartX; xx < xWidth; xx++) {
-            if (!getEngine()->getMap()->isValidTile (xx, yy, l_player.z)) continue;
-            Tile& l_tile = getEngine()->getMap()->getTile (xx, yy, l_player.z);
+            Location loc (xx, yy, l_player.z);
+            if (!getEngine()->getMap()->isValidTile (loc)) continue;
+            Tile& l_tile = getEngine()->getMap()->getTile (loc);
 
             std::map<unsigned int, std::vector<SpriteComponent*> > l_sprites;
             for (EntityId entity : l_tile.entities()) {

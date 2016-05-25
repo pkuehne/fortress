@@ -36,7 +36,7 @@ void FileSaver::saveState ()
         for (unsigned int zz = 0; zz < m_engine->getMap()->getMapDepth(); zz++) {
             for (unsigned int yy = 0; yy < m_engine->getMap()->getMapHeight(); yy++) {
                 for (unsigned int xx = 0; xx < m_engine->getMap()->getMapWidth(); xx++) {
-                    m_file << "[TILE_VISITED:" << m_engine->getMap()->getTile(xx, yy, zz).lastVisited << "]" << std::endl;
+                    m_file << "[TILE_VISITED:" << m_engine->getMap()->getTile(Location(xx, yy, zz)).lastVisited << "]" << std::endl;
                 }
             }
         }
