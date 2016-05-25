@@ -1,9 +1,10 @@
 #ifndef __GAME_STATE_H__
 #define __GAME_STATE_H__
 
+#include "location.h"
+
 class MapManager;
 class Tile;
-class Location;
 
 typedef unsigned long long tick_t;
 class GameState {
