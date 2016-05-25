@@ -9,10 +9,16 @@
 #include "sprite_component.h"
 #include "stair_component.h"
 
+/*
 static unsigned int getDistance (unsigned int start, unsigned int end, void* customData);
 static unsigned int getPathCost (unsigned int index, void* customData);
 static unsigned int findNeighbours4 (unsigned int index, unsigned int* neighbours, void* customData);
 static unsigned int findNeighbours8 (unsigned int index, unsigned int* neighbours, void* customData);
+*/
+static unsigned int getDistance (const Location& start, const Location& end, void* customData);
+static unsigned int getPathCost (const Location& location, void* customData);
+static unsigned int findNeighbours4 (const Location& location, Location* neighbours, void* customData);
+static unsigned int findNeighbours8 (const Location& location, Location* neighbours, void* customData);
 
 const char WALL     = '#';
 const char CORNER   = 'C';
@@ -181,13 +187,13 @@ void DungeonGenerator::connectRooms (Room& start, Room& end)
     algo.setNumNeighbours (4);
 
     PathVector l_path;
-    algo.findPath (start.index, end.index, l_path);
-    //std::cout << "Found a " << l_path.size() << " tile corridor" << std::endl;
+    Location startLoc (start.x, start.y, 0);
+    Location endLoc (end.x, end.y, 0);
+    algo.findPath (startLoc, endLoc, l_path);
+    std::cout << "Found a " << l_path.size() << " tile corridor" << std::endl;
 
     for (size_t ii = 0; ii < l_path.size(); ii++) {
-        unsigned char& tile = getByIndex(l_path[ii]);
-        unsigned int x, y;
-        IndexToCoord (l_path[ii], x, y);
+        unsigned char& tile = getByCoordinate(l_path[ii].x, l_path[ii].y);
 
         // Create tiles and doors
         if (tile == WALL || tile == DOOR) {
@@ -199,10 +205,10 @@ void DungeonGenerator::connectRooms (Room& start, Room& end)
 
     for (size_t ii = 0; ii < l_path.size(); ii++) {
         // Wall of neighbours if necessary
-        unsigned int neighbours[8] = {0};
+        Location neighbours[8];
         size_t count = findNeighbours8 (l_path[ii], neighbours, this);
         for (size_t ii = 0; ii < count; ii++) {
-            unsigned char& adj = getByIndex (neighbours[ii]);
+            unsigned char& adj = getByCoordinate (neighbours[ii].x, neighbours[ii].y);
             if (adj == EMPTY || adj == RESTRICTED) {
                 adj = WALL;
             }
@@ -332,6 +338,36 @@ unsigned char DungeonGenerator::wallSprite (unsigned int x, unsigned int y)
     return 206;
 }
 
+static unsigned int getPathCost (const Location& location, void* customData)
+{
+    DungeonGenerator* l_gen = static_cast<DungeonGenerator*> (customData);
+    unsigned char point = l_gen->getByCoordinate (location.x, location.y);
+    unsigned int cost = 0;
+    switch (point) {
+        case EMPTY:
+            cost = 3;
+            break;
+        case WALL:
+        case RESTRICTED:
+        case DOOR:
+            cost = 5;
+            break;
+        case FLOOR:
+            cost = 0;
+            break;
+        case CORNER:
+            cost = 999;
+            break;
+        default:
+            cost = 999;
+            break;
+    }
+    //std::cout << "Returning cost: " << cost << std::endl;
+    return cost;
+}
+
+// TODO: obsolete
+/*
 unsigned int getPathCost (unsigned int index, void* customData)
 {
     DungeonGenerator* l_gen = static_cast<DungeonGenerator*> (customData);
@@ -359,7 +395,30 @@ unsigned int getPathCost (unsigned int index, void* customData)
     //std::cout << "Returning cost: " << cost << std::endl;
     return cost;
 }
+*/
 
+static unsigned int findNeighbours4 (const Location& location, Location* neighbours, void* customData)
+{
+    DungeonGenerator* l_gen = static_cast<DungeonGenerator*> (customData);
+
+    unsigned int count = 0;
+
+    if (l_gen->isValidCoordinate (location.x-1, location.y))
+        neighbours[count++] = Location (location.x-1, location.y, 0);
+    if (l_gen->isValidCoordinate (location.x+1, location.y))
+        neighbours[count++] = Location (location.x+1, location.y, 0);
+    if (l_gen->isValidCoordinate (location.x, location.y-1))
+        neighbours[count++] = Location (location.x, location.y-1, 0);
+    if (l_gen->isValidCoordinate (location.x, location.y+1))
+        neighbours[count++] = Location (location.x, location.y+1, 0);
+    //std::cout << "Return " << count << " neightbours" << std::endl;
+
+    return count;
+}
+
+
+//TODO: obsolete
+/*
 unsigned int findNeighbours4 (unsigned int index, unsigned int* neighbours, void* customData)
 {
     DungeonGenerator* l_gen = static_cast<DungeonGenerator*> (customData);
@@ -380,37 +439,43 @@ unsigned int findNeighbours4 (unsigned int index, unsigned int* neighbours, void
 
     return count;
 }
+*/
 
-unsigned int findNeighbours8 (unsigned int index, unsigned int* neighbours, void* customData)
+static unsigned int findNeighbours8 (const Location& location, Location* neighbours, void* customData)
 {
     DungeonGenerator* l_gen = static_cast<DungeonGenerator*> (customData);
-    unsigned int indexX, indexY;
-    l_gen->IndexToCoord (index, indexX, indexY);
-
     unsigned int count = 0;
 
-    if (l_gen->isValidCoordinate (indexX-1, indexY))
-        neighbours[count++] = l_gen->CoordToIndex (indexX-1, indexY);
-    if (l_gen->isValidCoordinate (indexX+1, indexY))
-        neighbours[count++] = l_gen->CoordToIndex (indexX+1, indexY);
-    if (l_gen->isValidCoordinate (indexX, indexY-1))
-        neighbours[count++] = l_gen->CoordToIndex (indexX, indexY-1);
-    if (l_gen->isValidCoordinate (indexX, indexY+1))
-        neighbours[count++] = l_gen->CoordToIndex (indexX, indexY+1);
-    if (l_gen->isValidCoordinate (indexX-1, indexY-1))
-        neighbours[count++] = l_gen->CoordToIndex (indexX-1, indexY-1);
-    if (l_gen->isValidCoordinate (indexX+1, indexY-1))
-        neighbours[count++] = l_gen->CoordToIndex (indexX+1, indexY-1);
-    if (l_gen->isValidCoordinate (indexX-1, indexY+1))
-        neighbours[count++] = l_gen->CoordToIndex (indexX-1, indexY+1);
-    if (l_gen->isValidCoordinate (indexX+1, indexY+1))
-        neighbours[count++] = l_gen->CoordToIndex (indexX+1, indexY+1);
+    if (l_gen->isValidCoordinate (location.x-1, location.y))
+        neighbours[count++] = Location (location.x-1, location.y, 0);
+    if (l_gen->isValidCoordinate (location.x+1, location.y))
+        neighbours[count++] = Location (location.x+1, location.y, 0);
+    if (l_gen->isValidCoordinate (location.x, location.y-1))
+        neighbours[count++] = Location (location.x, location.y-1, 0);
+    if (l_gen->isValidCoordinate (location.x, location.y+1))
+        neighbours[count++] = Location (location.x, location.y+1, 0);
+    if (l_gen->isValidCoordinate (location.x-1, location.y-1))
+        neighbours[count++] = Location (location.x-1, location.y-1, 0);
+    if (l_gen->isValidCoordinate (location.x+1, location.y-1))
+        neighbours[count++] = Location (location.x+1, location.y-1, 0);
+    if (l_gen->isValidCoordinate (location.x-1, location.y+1))
+        neighbours[count++] = Location (location.x-1, location.y+1, 0);
+    if (l_gen->isValidCoordinate (location.x+1, location.y+1))
+        neighbours[count++] = Location (location.x+1, location.y+1, 0);
 
     //std::cout << "Return " << count << " neightbours" << std::endl;
 
     return count;
 }
 
+static unsigned int getDistance (const Location& start, const Location& end, void* customData)
+{
+    //std::cout << "Returning distance: " << distance << std::endl;
+    return (abs (start.x-end.x)+abs(start.y-end.y));
+}
+
+//TODO: obsolete
+/*
 unsigned int getDistance (unsigned int start, unsigned int end, void* customData)
 {
     DungeonGenerator* l_gen = static_cast<DungeonGenerator*> (customData);
@@ -423,3 +488,4 @@ unsigned int getDistance (unsigned int start, unsigned int end, void* customData
     //std::cout << "Returning distance: " << distance << std::endl;
     return distance;
 }
+*/

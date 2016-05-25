@@ -13,19 +13,19 @@ bool operator< (const Node& lhs, const Node& rhs)
     return lhs.priority > rhs.priority;
 }
 
-unsigned int defaultCostFunction (unsigned int point, void* customData)
+unsigned int defaultCostFunction (const Location& location, void* customData)
 {
     std::cout << "WARN: Using defaultCostFunction!" << std::endl;
     return 1;
 }
 
-unsigned int defaultNeighbourFunction (unsigned int index, unsigned int* neighbours, void* customData)
+unsigned int defaultNeighbourFunction (const Location& location, Location* neighbours, void* customData)
 {
     std::cout << "WARN: Using defaultNeighbourFunction!" << std::endl;
     return 0;
 }
 
-unsigned int defaultDistanceFunction (unsigned int start, unsigned int end, void* customData)
+unsigned int defaultDistanceFunction (const Location& start, const Location& end, void* customData)
 {
     std::cout << "WARN: Using defaultDistanceFunction!" << std::endl;
     return 0;
@@ -40,14 +40,15 @@ Algorithm::Algorithm()
 
 }
 
-void Algorithm::findPath (unsigned int start, unsigned int end, PathVector& output)
+void Algorithm::findPath (const Location& start, const Location& end, PathVector& output)
 {
     NodeMap l_open;
     NodeMap l_closed;
     std::priority_queue<Node> l_priority;
 
     // Create Start Node
-    Node startNode (start, 0, 0, 0);
+    Location origin;
+    Node startNode (start, 0, 0, origin);
 
     // Add start to priority queue and open set
     l_priority.push (startNode);
@@ -57,33 +58,33 @@ void Algorithm::findPath (unsigned int start, unsigned int end, PathVector& outp
         Node l_current = l_priority.top();
         l_priority.pop();
 
-        l_open.erase (l_current.index);
-        l_closed[l_current.index] = l_current;
+        l_open.erase (l_current.location);
+        l_closed[l_current.location] = l_current;
 
         // Check whether this is the target node
-        if (l_current.index == end) {
-            unsigned int index = l_current.index;
-            while (index != start) {
+        if (l_current.location == end) {
+            Location current = l_current.location;
+            while (current != start) {
                 //output.push_back (index);
-                output.insert (output.begin(), index);
-                NodeMapIter open_iter = l_closed.find (index);
-                index = open_iter->second.origin;
-                if (index == 0) break;
+                output.insert (output.begin(), current);
+                NodeMapIter open_iter = l_closed.find (current);
+                current = open_iter->second.origin;
+                if (current.x == UINT_MAX) break;
             }
             return;
         }
 
         // Process neighbours
-        unsigned int neighbours[m_numNeighbours];
-        unsigned int validNeighbours = m_neighbourFunction (l_current.index, neighbours, m_customData);
+        Location neighbours[m_numNeighbours];
+        unsigned int validNeighbours = m_neighbourFunction (l_current.location, neighbours, m_customData);
         for (size_t ii = 0; ii < validNeighbours; ii++) {
-            if (neighbours[ii] < 0) continue; // Not a valid neighbour
+            //TODO: not needed? if (neighbours[ii] < 0) continue; // Not a valid neighbour
             unsigned int cost = m_costFunction (neighbours[ii], m_customData);
             // If cost is -ve, we will close the node
 
             unsigned int path = l_current.distance + cost;
             unsigned int priority = path + m_distanceFunction (neighbours[ii], end, m_customData) + 1;
-            Node neighbour (neighbours[ii], path, priority, l_current.index);
+            Node neighbour (neighbours[ii], path, priority, l_current.location);
 
             // Is it closed?
             NodeMapIter closed_iter = l_closed.find (neighbours[ii]);

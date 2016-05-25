@@ -21,6 +21,7 @@ public:
 
     virtual bool isValidTile (unsigned int x, unsigned int y, unsigned int z) = 0;
     virtual bool isValidTile (unsigned int index) = 0;
+    virtual bool isValidTile (const Location& location) = 0;
 
     virtual unsigned int getMapHeight() = 0;
     virtual unsigned int getMapWidth() = 0;

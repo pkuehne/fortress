@@ -34,7 +34,7 @@ bool MapManager::isValidTile (unsigned int index)
     return (index > 0 && index < sizeof (m_map));
 }
 
-bool MapManager::isValidTile (Location& location)
+bool MapManager::isValidTile (const Location& location)
 {
     return isValidTile (location.x, location.y, location.z);
 }

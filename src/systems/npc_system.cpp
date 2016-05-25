@@ -5,9 +5,17 @@
 #include "collider_component.h"
 #include <iostream>
 
+/*
 unsigned int getPathCost (unsigned int index, void* customData);
 unsigned int findNeighbours4 (unsigned int index, unsigned int* neighbours, void* customData);
 unsigned int getDistance (unsigned int start, unsigned int end, void* customData);
+*/
+
+unsigned int getPathCost (const Location& location, void* customData);
+unsigned int findNeighbours4 (  const Location& location,
+                                Location* neighbours,
+                                void* customData);
+unsigned int getDistance (const Location& start, const Location& end, void* customData);
 
 bool canSeeTarget (GameEngineInterface* engine, EntityId entity, NpcComponent* npc);
 bool canAttackTarget (GameEngineInterface* engine, EntityId entity, NpcComponent* npc);
@@ -30,15 +38,15 @@ NpcSystem::NpcSystem()
     SearchingToHunting.condition = canSeeTarget;
     SearchingToHunting.endState = NpcState::Hunting;
     orcs[NpcState::Searching].push_back(SearchingToHunting);
-    
+
     Transition HuntingToAttacking;
     HuntingToAttacking.condition = canAttackTarget;
     HuntingToAttacking.endState = NpcState::Attacking;
     orcs[NpcState::Hunting].push_back(HuntingToAttacking);
 
     Transition HuntingToSearching;
-    HuntingToSearching.condition = [](GameEngineInterface* g, EntityId e, NpcComponent* n){ 
-        return !canSeeTarget (g,e,n); 
+    HuntingToSearching.condition = [](GameEngineInterface* g, EntityId e, NpcComponent* n){
+        return !canSeeTarget (g,e,n);
     };
     HuntingToSearching.endState = NpcState::Searching;
     orcs[NpcState::Hunting].push_back(HuntingToSearching);
@@ -154,14 +162,11 @@ void NpcSystem::setPathToTarget (EntityId entity, EntityId target, NpcComponent*
     algo.setNeighbourFunction (findNeighbours4);
     algo.setNumNeighbours (4);
 
-    unsigned int startIndex = getEngine()->getMap()->map2index (
-            getEngine()->getEntities()->getLocation (entity));
-    unsigned int endIndex = getEngine()->getMap()->map2index (
-            getEngine()->getEntities()->getLocation (target));
-
     PathVector l_path;
     //std::cout << "Path from " << enemyLoc << " to " << playerLoc << std::endl;
-    algo.findPath (startIndex, endIndex, l_path);
+    algo.findPath ( getEngine()->getEntities()->getLocation (entity),
+                    getEngine()->getEntities()->getLocation (target),
+                    l_path);
 
     if (l_path.empty()) {
         return;
@@ -170,9 +175,7 @@ void NpcSystem::setPathToTarget (EntityId entity, EntityId target, NpcComponent*
     // Reset path
     npc->path.clear();
     for (unsigned int ii = 0; ii < l_path.size(); ii++) {
-        Location tempLoc;
-        m_engine->getMap()->index2map(l_path[ii], tempLoc);
-        npc->path.push_back (tempLoc);
+        npc->path.push_back (l_path[ii]);
         //std::cout << "Step " << ii << ": " << tempLoc << std::endl;
     }
 }
@@ -196,12 +199,12 @@ void NpcSystem::update ()
     for (EntityId entity : getEngine()->getEntities()->get()) {
         NpcComponent* npc = getEngine()->getComponents()->get<NpcComponent> (entity);
         if (npc == 0) continue;
-        
+
         TransitionMap& transitions = m_stateMachine[npc->stateMachine];
         for (Transition& transition : transitions[npc->state]) {
             if (transition.condition (getEngine(), entity, npc)) {
-                LOG(INFO) << "Changing state from " << (int) npc->state 
-                    << " to " << (int) transition.endState 
+                LOG(INFO) << "Changing state from " << (int) npc->state
+                    << " to " << (int) transition.endState
                     << " for " << entity
                     << std::endl;
                 npc->state = transition.endState;
@@ -213,6 +216,7 @@ void NpcSystem::update ()
     }
 }
 
+// TODO: obsolete
 unsigned int getPathCost (unsigned int index, void* customData)
 {
     GameEngineInterface* l_engine = static_cast<GameEngineInterface*> (customData);
@@ -225,6 +229,20 @@ unsigned int getPathCost (unsigned int index, void* customData)
     return 1;
 }
 
+unsigned int getPathCost (const Location& location, void* customData)
+{
+    GameEngineInterface* l_engine = static_cast<GameEngineInterface*> (customData);
+    Tile& tile = l_engine->tile(location);
+
+    for (EntityId entity : tile.entities()) {
+        if (entity == l_engine->getEntities()->getPlayer()) continue;
+        if (l_engine->getComponents()->get<ColliderComponent>(entity)) return -999;
+    }
+    return 1;
+
+}
+
+//TODO: obsolete
 unsigned int findNeighbours4 (unsigned int index, unsigned int* neighbours, void* customData)
 {
     GameEngineInterface* l_engine = static_cast<GameEngineInterface*> (customData);
@@ -259,6 +277,33 @@ unsigned int findNeighbours4 (unsigned int index, unsigned int* neighbours, void
     return count;
 }
 
+unsigned int findNeighbours4 (  const Location& location,
+                                Location* neighbours,
+                                void* customData)
+{
+    GameEngineInterface* l_engine = static_cast<GameEngineInterface*> (customData);
+
+    unsigned int count = 0;
+    Location neighbour = location;
+    int xAdj[] = {-1, 1, 0, 0};
+    int yAdj[] = {0, 0, -1, 1};
+
+    for (unsigned int ii = 0; ii < 4; ii++) {
+        neighbour = location;
+        neighbour.x += xAdj[ii];
+        neighbour.y += yAdj[ii];
+        if (l_engine->getMap()->isValidTile (neighbour)) {
+            if (getPathCost (neighbour, l_engine) > 0)
+                neighbours[count++] = neighbour;
+        }
+    }
+
+    //std::cout << "Returning " << count << " neighbours "<< std::endl;
+    return count;
+}
+
+
+// TODO: Obsolete
 unsigned int getDistance (unsigned int start, unsigned int end, void* customData)
 {
     GameEngineInterface* l_engine = static_cast<GameEngineInterface*> (customData);
@@ -271,4 +316,9 @@ unsigned int getDistance (unsigned int start, unsigned int end, void* customData
     distance = (abs (startLoc.x - endLoc.x) + abs(startLoc.y - endLoc.y));
 
     return distance;
+}
+
+unsigned int getDistance (const Location& start, const Location& end, void* customData)
+{
+    return (abs (start.x - end.x) + abs(start.y - end.y));
 }
