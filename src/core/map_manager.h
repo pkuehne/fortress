@@ -4,6 +4,8 @@
 #include "map_manager_interface.h"
 #include <map>
 
+class Location;
+
 struct MapInfo {
     unsigned int    areaId;
     Tile*           mapData;

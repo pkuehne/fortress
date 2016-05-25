@@ -5,6 +5,7 @@
 #include "utility.h"
 
 class GameEngineInterface;
+class Location;
 
 class MapManagerInterface {
 public:

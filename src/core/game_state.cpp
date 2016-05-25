@@ -17,3 +17,8 @@ Tile& GameState::tile (const Location& location)
 {
     return m_map->getTile (location);
 }
+
+MapManager* GameState::map()
+{
+    return m_map;
+}

@@ -10,10 +10,12 @@
 #include "map_manager_interface.h"
 #include "component_manager.h"
 #include "entity_manager_interface.h"
+#include "location.h"
 
 #include <string>
 #include <vector>
 #include <cstdlib>
+
 
 class GameEngine : public GameEngineInterface {
 public:

@@ -4,6 +4,7 @@
 #include <vector>
 #include <map>
 #include <utility.h>
+#include "location.h"
 
 class Node
 {

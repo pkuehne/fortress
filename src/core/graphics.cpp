@@ -6,6 +6,7 @@
 #include <chrono>
 #include <thread>
 #include <SOIL.h>
+#include <glog/logging.h>
 
 static Graphics* g_graphics = 0;
 

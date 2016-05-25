@@ -14,6 +14,7 @@ class ComponentManager;
 class EntityManagerInterface;
 class GraphicsInterface;
 class MapManagerInterface;
+class Location;
 
 typedef enum {
     INFO    = 0,

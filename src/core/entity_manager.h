@@ -4,6 +4,7 @@
 #include "entity.h"
 #include "entity_manager_interface.h"
 #include "utility.h"
+#include "location.h"
 #include <map>
 #include <vector>
 

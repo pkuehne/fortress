@@ -1,5 +1,6 @@
 #include "algorithm.h"
 #include "game_engine.h"
+#include "location.h"
 #include <cstdio>
 #include <cstdlib>
 #include <queue>

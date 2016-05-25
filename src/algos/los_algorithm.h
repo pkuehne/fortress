@@ -2,7 +2,8 @@
 #define LOS_ALGORITHM
 
 #include "game_engine_interface.h"
-#include "utility.h"
+
+class Location;
 
 class LosAlgorithm {
 public:

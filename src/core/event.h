@@ -5,6 +5,8 @@
 #include <iostream>
 #include "entity.h"
 #include "utility.h"
+#include "location.h"
+
 
 typedef enum {
     EVENT_INVALID           = 0,

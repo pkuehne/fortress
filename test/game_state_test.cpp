@@ -44,6 +44,11 @@ TEST_F (GameStateTest, creatingGameStateWithNullptrThrows)
     EXPECT_ANY_THROW (GameState (nullptr));
 }
 
+TEST_F (GameStateTest, mapReturnsParameter)
+{
+    EXPECT_EQ (&map, state.map());
+}
+
 TEST_F (GameStateTest, gettingTilecallsMapManagerGetTile)
 {
     // TODO: this is a pointless test and needs to be removed

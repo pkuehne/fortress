@@ -15,6 +15,7 @@ class GameState {
         tick_t getTurn() { return m_turn; }
 
         Tile& tile (const Location&);
+        MapManager* map();
 
     private:
         bool        m_playerTurn = true;

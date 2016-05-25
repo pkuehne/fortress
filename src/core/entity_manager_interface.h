@@ -4,9 +4,11 @@
 class GameEngineInterface;
 
 #include <vector>
-#include "utility.h"
 #include "tile.h"
 #include "entity.h"
+#include "utility.h"
+
+class Location;
 
 class EntityManagerInterface {
 public:

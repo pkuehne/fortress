@@ -29,8 +29,3 @@ bool randChance (unsigned int percentage)
 
 }; // Close namespace
 
-std::ostream& operator<< (std::ostream& out, const Location& loc)
-{
-    out << "(" << loc.area << ":" << loc.x << "," << loc.y << "," << loc.z << ")";
-    return out;
-}
