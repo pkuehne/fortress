@@ -61,5 +61,18 @@ TEST_F (LocationTest, LessThanComparesOnAllFields)
     EXPECT_TRUE (small < big);
 }
 
+TEST_F (LocationTest, AssignmentCopiesAllFields)
+{
+    Location rhs (1, 2, 3, 4);
+    Location lhs (9, 9, 9, 9);
+    
+    lhs = rhs;
+    EXPECT_EQ (lhs.x, rhs.x);
+    EXPECT_EQ (lhs.y, rhs.y);
+    EXPECT_EQ (lhs.z, rhs.z);
+    EXPECT_EQ (lhs.area, rhs.area);
+}
+
+
 
 

@@ -93,13 +93,9 @@ EntityId EntityManager::getPlayer ()
     return m_player;
 }
 
-EntityHolder& EntityManager::get (unsigned int area)
+EntityHolder& EntityManager::get ()
 {
-    unsigned int l_area = area;
-    if (!l_area) {
-        l_area = m_engine->getMap()->getArea();
-    }
-    return m_entities[l_area];
+    return m_entities[m_engine->getMap()->getArea()];
 }
 
 EntityId EntityManager::createWallPrefab (Location& location)

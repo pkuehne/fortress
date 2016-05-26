@@ -40,7 +40,7 @@ public:
 
     virtual Location getLocation (EntityId entity) = 0;
     virtual void setLocation (EntityId entity, Location& location) = 0;
-    virtual EntityHolder& get(unsigned int area = 0) = 0;
+    virtual EntityHolder& get() = 0;
 };
 
 #endif
