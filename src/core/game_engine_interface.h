@@ -10,11 +10,10 @@
 class Event;
 class WindowManagerInterface;
 class GameSystemInterface;
-class ComponentManager;
 class EntityManagerInterface;
 class GraphicsInterface;
-class MapManagerInterface;
 class Location;
+class GameState;
 
 typedef enum {
     INFO    = 0,
@@ -43,9 +42,7 @@ public:
     virtual unsigned int getTurn()  = 0;
     virtual void setTurn (unsigned int) = 0;
     virtual void raiseEvent (Event* event)  = 0;
-    virtual EntityManagerInterface* getEntities()    = 0;
-    virtual ComponentManager* getComponents() = 0;
-    virtual MapManagerInterface* getMap() = 0;
+    virtual GameState* state() = 0;
 
     virtual unsigned long long getTick()    = 0;
     virtual WindowManagerInterface* getWindows()     = 0;
@@ -57,20 +54,6 @@ public:
     virtual void addMessage (const Message& message) = 0;
     virtual void addMessage (const MessageType&, const std::string& message) = 0 ;
     virtual std::vector<Message>& getMessages() = 0;
-
-    virtual void setArea (unsigned int area) = 0;
-    virtual unsigned int getArea() = 0;
-
-    // New style interfaces
-    virtual EntityId player() = 0;
-
-    //virtual const Location& location (EntityId) = 0;
-    virtual Location location (EntityId) = 0;
-
-    virtual const EntityHolder& entities () = 0;
-    virtual EntityHolder entities (const Location& loc) = 0;
-
-    virtual Tile& tile (const Location& loc) = 0;
 };
 
 #endif

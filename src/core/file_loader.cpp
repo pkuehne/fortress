@@ -59,20 +59,20 @@ void FileLoader::loadState ()
 				area = location.area;
 				areas--;
 			}
-			m_engine->getEntities()->addEntity (id, location);
+			m_engine->state()->entityManager()->addEntity (id, location);
 			ii--;
 			continue;
 		}
 		if (m_tags[ii].getName() == "COMPONENT") {
 			ComponentBase* component = loadComponent (ii, m_tags[ii].getStr());
 			if (component) {
-				m_engine->getComponents()->add (id, component);
+				m_engine->state()->components()->add (id, component);
 			}
 			ii--;
 			continue;
 		}
 	}
-	m_engine->getMap()->setArea (currArea);
+	m_engine->state()->map()->setArea (currArea);
 
     LOG(INFO) << "Completed loading save game" << std::endl;
     */
@@ -98,12 +98,12 @@ void FileLoader::loadMap (unsigned int& pos) {
 	unsigned int width = m_tags[pos++].getNum();
 	unsigned int height = m_tags[pos++].getNum();
 	unsigned int depth = m_tags[pos++].getNum();
-    m_engine->getMap()->resetMap (area, width, height, depth);
+    m_engine->state()->map()->resetMap (area, width, height, depth);
 
-	for (unsigned int zz = 0; zz < m_engine->getMap()->getMapDepth(); zz++) {
-		for (unsigned int yy = 0; yy < m_engine->getMap()->getMapHeight(); yy++) {
-			for (unsigned int xx = 0; xx < m_engine->getMap()->getMapWidth(); xx++) {
-				m_engine->getMap()->getTile(Location(xx, yy, zz)).lastVisited = m_tags[pos++].getNum();
+	for (unsigned int zz = 0; zz < m_engine->state()->map()->getMapDepth(); zz++) {
+		for (unsigned int yy = 0; yy < m_engine->state()->map()->getMapHeight(); yy++) {
+			for (unsigned int xx = 0; xx < m_engine->state()->map()->getMapWidth(); xx++) {
+				m_engine->state()->map()->getTile(Location(xx, yy, zz)).lastVisited = m_tags[pos++].getNum();
 			}
 		}
 	}

@@ -139,7 +139,7 @@ void GeneratorWindow::startGenerating () {
     m_progress = 1;
     m_status = PROGRESS;
 
-    getEngine()->getMap()->resetMap (0, m_levelWidth, m_levelHeight, 1);
+    getEngine()->state()->map()->resetMap (0, m_levelWidth, m_levelHeight, 1);
 
     RuralGenerator rural;
     rural.initialise (getEngine());
@@ -151,7 +151,7 @@ void GeneratorWindow::startGenerating () {
     for (EntityId stair : rural.getAreaLinks())
     {
         LOG(INFO) << "Generating area: " << area << std::endl;
-        getEngine()->getMap()->resetMap (area++, m_levelWidth, m_levelHeight, m_levelDepth);
+        getEngine()->state()->map()->resetMap (area++, m_levelWidth, m_levelHeight, m_levelDepth);
 
         DungeonGenerator l_generator;
         l_generator.initialise (getEngine());
@@ -163,11 +163,11 @@ void GeneratorWindow::startGenerating () {
         l_generator.upStairTarget() = stair;
         if (area == 2) l_generator.createBoss() = true;
         l_generator.generate(); //TODO Check return value and try again
-        getEngine()->getComponents()->get<StairComponent>(stair)->target = l_generator.upStairLink();
+        getEngine()->state()->components()->get<StairComponent>(stair)->target = l_generator.upStairLink();
     }
-    LOG(INFO) << "Placed " << getEngine()->getEntities()->getMaxId() << " entities" << std::endl;
+    LOG(INFO) << "Placed " << getEngine()->state()->entityManager()->getMaxId() << " entities" << std::endl;
 
-    getEngine()->setArea (0);
+    getEngine()->state()->map()->setArea (0);
     m_status = COMPLETED;
 }
 

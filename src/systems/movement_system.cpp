@@ -14,28 +14,28 @@ void MovementSystem::handleEvent (const Event* event)
         case EVENT_MOVE_ENTITY: {
             const MoveEntityEvent* l_event = static_cast<const MoveEntityEvent*> (event);
             EntityId l_entity = l_event->entity;
-            Location l_oldLocation = m_engine->getEntities()->getLocation(l_entity);
+            Location l_oldLocation = m_engine->state()->location(l_entity);
             Location l_newLocation = l_event->newLocation;
 
             //Check if we're running into a collidable or stairs, etc
             {
-                const EntityHolder& l_targets = m_engine->getMap()->getTile(l_newLocation).entities();
+                const EntityHolder& l_targets = m_engine->state()->tile(l_newLocation).entities();
                 for (EntityId l_target : l_targets) {
-                    if (m_engine->getComponents()->get<ColliderComponent> (l_target)) {
+                    if (m_engine->state()->components()->get<ColliderComponent> (l_target)) {
 						GraphicsEffectComponent* effect = 
-                                                    getEngine()->getComponents()->make<GraphicsEffectComponent>(l_entity);
+                                                    getEngine()->state()->components()->make<GraphicsEffectComponent>(l_entity);
 						effect->type = EFFECT_BLINK_FAST;
 						effect->duration = 10;
 						return; // Don't update position if it's a collidable
                     }
-                    StairComponent* l_stair = m_engine->getComponents()->get<StairComponent> (l_target);
-                    if (l_stair && l_stair->target && l_entity == m_engine->getEntities()->getPlayer()) {
-                        l_newLocation = m_engine->getEntities()->getLocation(l_stair->target);
+                    StairComponent* l_stair = m_engine->state()->components()->get<StairComponent> (l_target);
+                    if (l_stair && l_stair->target && l_entity == m_engine->state()->player()) {
+                        l_newLocation = m_engine->state()->location(l_stair->target);
                     }
                 }
             }
 
-            getEngine()->getEntities()->setLocation (l_event->entity, l_newLocation);
+            getEngine()->state()->entityManager()->setLocation (l_event->entity, l_newLocation);
             ChangeLocationEvent* changeEvent = new ChangeLocationEvent();
             changeEvent->entity = l_event->entity;
             changeEvent->oldLocation = l_oldLocation;

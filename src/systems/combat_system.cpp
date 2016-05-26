@@ -25,14 +25,14 @@ void CombatSystem::handleEvent (const Event* event)
 
 void CombatSystem::handleAttack (EntityId attacker, EntityId defender) 
 {
-    EquipmentComponent* l_attackerEquipment = m_engine->getComponents()->get<EquipmentComponent>(attacker);
+    EquipmentComponent* l_attackerEquipment = m_engine->state()->components()->get<EquipmentComponent>(attacker);
     unsigned int damage = 1;
     if (l_attackerEquipment && l_attackerEquipment->rightHandWieldable != 0) {
         EntityId l_weapon = l_attackerEquipment->rightHandWieldable;
-        damage = m_engine->getComponents()->get<WieldableComponent>(l_weapon)->baseDamage;
+        damage = m_engine->state()->components()->get<WieldableComponent>(l_weapon)->baseDamage;
     }
 
-    HealthComponent* l_health = m_engine->getComponents()->get<HealthComponent>(defender);
+    HealthComponent* l_health = m_engine->state()->components()->get<HealthComponent>(defender);
     if (!l_health) {
         // Invincible?
         return;
@@ -40,7 +40,7 @@ void CombatSystem::handleAttack (EntityId attacker, EntityId defender)
     updateLog (attacker, defender, damage);
 
     GraphicsEffectComponent* effect = 
-        getEngine()->getComponents()->make<GraphicsEffectComponent>(defender);
+        getEngine()->state()->components()->make<GraphicsEffectComponent>(defender);
     effect->type = EFFECT_CHANGE_COLOR;
     effect->duration = 15;
     effect->new_color = Color (RED);
@@ -48,13 +48,13 @@ void CombatSystem::handleAttack (EntityId attacker, EntityId defender)
     if (damage < l_health->health) {
         l_health->health -= damage;
     } else {
-        if (defender == getEngine()->getEntities()->getPlayer()) {
-            m_engine->getEntities()->destroyEntity (defender);
+        if (defender == getEngine()->state()->player()) {
+            m_engine->state()->entityManager()->destroyEntity (defender);
         } else {
-            Location l_targetLoc = m_engine->getEntities()->getLocation (defender);
-            SpriteComponent* l_sprite = m_engine->getComponents()->get<SpriteComponent> (defender);
-            getEngine()->getEntities()->createCorpsePrefab(l_targetLoc, l_sprite->sprite);
-            getEngine()->getEntities()->destroyEntity (defender);
+            Location l_targetLoc = m_engine->state()->location (defender);
+            SpriteComponent* l_sprite = m_engine->state()->components()->get<SpriteComponent> (defender);
+            getEngine()->state()->entityManager()->createCorpsePrefab(l_targetLoc, l_sprite->sprite);
+            getEngine()->state()->entityManager()->destroyEntity (defender);
         }
     }
 }
@@ -62,10 +62,10 @@ void CombatSystem::handleAttack (EntityId attacker, EntityId defender)
 void CombatSystem::updateLog (const EntityId& attacker, const EntityId& target, int damage)
 {
     std::stringstream str;
-    DescriptionComponent* l_attackerDesc = m_engine->getComponents()->get<DescriptionComponent> (attacker);
-    DescriptionComponent* l_targetDesc = m_engine->getComponents()->get<DescriptionComponent> (target);
+    DescriptionComponent* l_attackerDesc = m_engine->state()->components()->get<DescriptionComponent> (attacker);
+    DescriptionComponent* l_targetDesc = m_engine->state()->components()->get<DescriptionComponent> (target);
 
-    if (attacker == m_engine->getEntities()->getPlayer()) {
+    if (attacker == m_engine->state()->player()) {
         str << "You";
     } else if (l_attackerDesc != 0) {
         str << "The " << l_attackerDesc->title;
@@ -73,13 +73,13 @@ void CombatSystem::updateLog (const EntityId& attacker, const EntityId& target, 
         str << "Something";
     }
 
-    if (attacker == m_engine->getEntities()->getPlayer()) {
+    if (attacker == m_engine->state()->player()) {
         str << " attack";
     } else {
         str << " attacks";
     }
 
-    if (target == m_engine->getEntities()->getPlayer()) {
+    if (target == m_engine->state()->player()) {
         str << " you";
     } else if (l_targetDesc != 0) {
         str << " the " << l_targetDesc->title;
@@ -87,7 +87,7 @@ void CombatSystem::updateLog (const EntityId& attacker, const EntityId& target, 
         str << " something";
     }
 
-    if (attacker == m_engine->getEntities()->getPlayer()) {
+    if (attacker == m_engine->state()->player()) {
         str << " and cause";
     } else {
         str << " and causes";
@@ -95,7 +95,7 @@ void CombatSystem::updateLog (const EntityId& attacker, const EntityId& target, 
 
     str << " " << damage << " damage!";
 
-    if (attacker == m_engine->getEntities()->getPlayer()) {
+    if (attacker == m_engine->state()->player()) {
         m_engine->addMessage (INFO, str.str());
     } else {
         m_engine->addMessage (WARN, str.str());

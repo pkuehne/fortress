@@ -42,7 +42,7 @@ bool DungeonGenerator::generate () {
     for (m_level = 0; m_level < m_maxDepth; m_level++) {
         reset();
         initMap (EMPTY);
-        LOG(INFO) << "Creating level " << m_level << " of area " << m_engine->getArea() <<  std::endl;
+        LOG(INFO) << "Creating level " << m_level << " of area " << m_engine->state()->map()->getArea() <<  std::endl;
         if (!generateLevel()) return false;
     }
     return true;
@@ -83,51 +83,51 @@ void DungeonGenerator::createEntitiesFromMap () {
             location.x = xx;
             location.y = yy;
             location.z = m_level;
-            location.area = m_engine->getArea();
-            m_engine->getMap()->getTile (location).getFloor().setMaterial(Material::Rock);
+            location.area = m_engine->state()->map()->getArea();
+            m_engine->state()->tile(location).getFloor().setMaterial(Material::Rock);
             switch (getByCoordinate(xx, yy)) {
                 case WALL:
                 case CORNER:
-                    l_entity = m_engine->getEntities()->createWallPrefab (location);
-                    m_engine->getComponents()->get<SpriteComponent>(l_entity)->sprite = wallSprite (xx, yy);
+                    l_entity = m_engine->state()->entityManager()->createWallPrefab (location);
+                    m_engine->state()->components()->get<SpriteComponent>(l_entity)->sprite = wallSprite (xx, yy);
                     break;
                 case UP:
-                    m_upStair = m_engine->getEntities()->createStairPrefab (STAIR_UP, location);
+                    m_upStair = m_engine->state()->entityManager()->createStairPrefab (STAIR_UP, location);
                     break;
                 case DOWN:
                     if (m_level < m_maxDepth-1 || m_downStairTarget) {
-                        m_downStair = m_engine->getEntities()->createStairPrefab (STAIR_DOWN, location);
+                        m_downStair = m_engine->state()->entityManager()->createStairPrefab (STAIR_DOWN, location);
                     }
                     break;
                 case ORC:
                     if (m_createBoss && m_level == m_maxDepth-1) {
-                        m_engine->getEntities()->createTrollPrefab (location);
+                        m_engine->state()->entityManager()->createTrollPrefab (location);
                         m_createBoss = false;
                     } else {
-                        m_engine->getEntities()->createEnemyPrefab (location);
+                        m_engine->state()->entityManager()->createEnemyPrefab (location);
                     }
                     break;
                 case RESTRICTED:
                     break;
                 default:
-                    l_entity = m_engine->getEntities()->createMarkerPrefab (location);
-                    m_engine->getComponents()->get<SpriteComponent>(l_entity)->sprite = getByCoordinate (xx, yy);
+                    l_entity = m_engine->state()->entityManager()->createMarkerPrefab (location);
+                    m_engine->state()->components()->get<SpriteComponent>(l_entity)->sprite = getByCoordinate (xx, yy);
                     break;
             }
         }
     }
     if (m_level == 0) {
-        m_engine->getComponents()->get<StairComponent>(m_upStair)->target = m_upStairTarget;
+        m_engine->state()->components()->get<StairComponent>(m_upStair)->target = m_upStairTarget;
         m_upStairLink = m_upStair;
     } else {
-        m_engine->getComponents()->get<StairComponent>(m_upStair)->target = m_prevDownStair;
+        m_engine->state()->components()->get<StairComponent>(m_upStair)->target = m_prevDownStair;
     }
     if (m_level == m_maxDepth-1 && m_downStairTarget) {
-        m_engine->getComponents()->get<StairComponent>(m_downStair)->target = m_downStairTarget;
+        m_engine->state()->components()->get<StairComponent>(m_downStair)->target = m_downStairTarget;
         m_downStairLink = m_downStair;
     }
     if (m_level > 0 && m_prevDownStair > 0) {
-        m_engine->getComponents()->get<StairComponent>(m_prevDownStair)->target = m_upStair;
+        m_engine->state()->components()->get<StairComponent>(m_prevDownStair)->target = m_upStair;
     }
     m_prevDownStair = m_downStair;
 }
@@ -279,17 +279,17 @@ void DungeonGenerator::placeItems()
         location.x = x;
         location.y = y;
         location.z = m_level;
-        location.area = m_engine->getArea();
+        location.area = m_engine->state()->map()->getArea();
 
         unsigned int type = Utility::randBetween (0, 100);
         if  (type < 70) { // Potion
-            m_engine->getEntities()->createPotionPrefab (location);
+            m_engine->state()->entityManager()->createPotionPrefab (location);
         } else if (type < 80) {
-             m_engine->getEntities()->createWeaponPrefab (location);
+             m_engine->state()->entityManager()->createWeaponPrefab (location);
         } else if (type < 90) {
-            m_engine->getEntities()->createShieldPrefab (location);
+            m_engine->state()->entityManager()->createShieldPrefab (location);
         } else if (type < 100) {
-            m_engine->getEntities()->createHelmetPrefab (location);
+            m_engine->state()->entityManager()->createHelmetPrefab (location);
         }
     }
 }

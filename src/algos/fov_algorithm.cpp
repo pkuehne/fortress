@@ -7,12 +7,12 @@
 
 void FovAlgorithm::calculateFov ()
 {
-    EntityId player = m_engine->getEntities()->getPlayer();
-    Location playerLoc = m_engine->getEntities()->getLocation (player);
+    EntityId player = m_engine->state()->player();
+    Location playerLoc = m_engine->state()->location (player);
 
     if (player == 0) return;
 
-    m_engine->getMap()->getTile (playerLoc).lastVisited = m_engine->getTurn();
+    m_engine->state()->tile(playerLoc).lastVisited = m_engine->getTurn();
 
     int x = 0;
     int y = 0;
@@ -32,10 +32,10 @@ void FovAlgorithm::calculateFov ()
                 y += playerLoc.y;
                 x += playerLoc.x;
                 Location loc (x, y, playerLoc.z);
-                if (m_engine->getMap()->isValidTile (loc) && visible) {
-                    m_engine->getMap()->getTile (loc).lastVisited = m_engine->getTurn();
-                    for (const EntityId entity : m_engine->getMap()->getTile (loc).entities()) {
-                        if (m_engine->getComponents()->get<ColliderComponent>(entity)) {
+                if (m_engine->state()->isValidTile (loc) && visible) {
+                    m_engine->state()->tile(loc).lastVisited = m_engine->getTurn();
+                    for (const EntityId entity : m_engine->state()->tile(loc).entities()) {
+                        if (m_engine->state()->components()->get<ColliderComponent>(entity)) {
                             line.addShadow (projection);
                             fullShadow = line.isInFullShadow();
                             break;

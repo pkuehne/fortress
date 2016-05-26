@@ -8,7 +8,7 @@
 
 namespace {
     const char* nameOrNothing (EntityId item, GameEngineInterface* engine) {
-        DescriptionComponent* description = engine->getComponents()->get<DescriptionComponent>(item);
+        DescriptionComponent* description = engine->state()->components()->get<DescriptionComponent>(item);
         if (item == 0) return "<Nothing>";
         if (description == 0) return "?Something?";
         return description->title.c_str();
@@ -30,8 +30,8 @@ void EquipmentWindow::resize() {
 }
 
 void EquipmentWindow::redraw() {
-    EntityId player = getEngine()->getEntities()->getPlayer();
-    EquipmentComponent* equipment = getEngine()->getComponents()->get<EquipmentComponent>(player);
+    EntityId player = getEngine()->state()->player();
+    EquipmentComponent* equipment = getEngine()->state()->components()->get<EquipmentComponent>(player);
 
     if (m_selectedPage == 0) drawTile (2, 3, '>', Color (RED), Color (GREY));
     drawString (2, 4, "Equipment", Color (GREY));
@@ -127,8 +127,8 @@ void EquipmentWindow::redraw() {
 
 void EquipmentWindow::keyDown (unsigned char key) {
     Window::keyDown (key);
-    EntityId player = getEngine()->getEntities()->getPlayer();
-    EquipmentComponent* equipment = getEngine()->getComponents()->get<EquipmentComponent>(player);
+    EntityId player = getEngine()->state()->player();
+    EquipmentComponent* equipment = getEngine()->state()->components()->get<EquipmentComponent>(player);
 
     if (key == KEY_ESC) {
         getEngine()->getWindows()->popWindow();
@@ -160,7 +160,7 @@ void EquipmentWindow::keyDown (unsigned char key) {
     }
     if (m_selectedItem && key == 'd') {
         DropEquipmentEvent* event = new DropEquipmentEvent();
-        event->entity = getEngine()->getEntities()->getPlayer();
+        event->entity = getEngine()->state()->player();
         event->item = m_selectedItem;
         m_selectedItem = 0;
         getEngine()->raiseEvent (event);
@@ -168,7 +168,7 @@ void EquipmentWindow::keyDown (unsigned char key) {
     }
     if (m_selectedItem && key == 'c') {
         ConsumeItemEvent* event = new ConsumeItemEvent();
-        event->entity = getEngine()->getEntities()->getPlayer();
+        event->entity = getEngine()->state()->player();
         event->item = m_selectedItem;
         m_selectedItem = 0;
         getEngine()->raiseEvent (event);
@@ -176,7 +176,7 @@ void EquipmentWindow::keyDown (unsigned char key) {
     }
     if (m_selectedItem && m_selectedPage == 0 && key == 'u') {
         UnequipItemEvent* event = new UnequipItemEvent();
-        event->entity = getEngine()->getEntities()->getPlayer();
+        event->entity = getEngine()->state()->player();
         event->item = m_selectedItem;
         m_selectedItem = 0;
         getEngine()->raiseEvent (event);
@@ -184,7 +184,7 @@ void EquipmentWindow::keyDown (unsigned char key) {
     }
     if (m_selectedItem && m_selectedPage == 1 && key == 'e') {
         EquipItemEvent* event = new EquipItemEvent();
-        event->entity = getEngine()->getEntities()->getPlayer();
+        event->entity = getEngine()->state()->player();
         event->item = m_selectedItem;
         m_selectedItem = 0;
         getEngine()->raiseEvent (event);

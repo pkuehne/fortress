@@ -14,7 +14,7 @@ void SelectionWindow::gainFocus()
     if (!l_entities) return;
 
     for (EntityId entity: *l_entities) {
-        DescriptionComponent* desc = getEngine()->getComponents()->get<DescriptionComponent>(entity);
+        DescriptionComponent* desc = getEngine()->state()->components()->get<DescriptionComponent>(entity);
         if (desc == nullptr) continue;
 
         m_entities.push_back(entity);

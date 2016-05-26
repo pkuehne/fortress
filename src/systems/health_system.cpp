@@ -18,8 +18,8 @@ void HealthSystem::handleEvent (const Event* event)
 void HealthSystem::update()
 {
     if (getEngine()->isPlayerTurn()) return;
-    for (EntityId entity : getEngine()->getEntities()->get()) {
-        HealthComponent* health = getEngine()->getComponents()->get<HealthComponent> (entity);
+    for (EntityId entity : getEngine()->state()->entities()) {
+        HealthComponent* health = getEngine()->state()->components()->get<HealthComponent> (entity);
         if (health == nullptr) continue;
         
         if (++health->thirstStep >= health->thirstRate) {

@@ -3,11 +3,11 @@
 
 void GraphicsEffectSystem::update ()
 {
-    for (EntityId l_entity : getEngine()->getEntities()->get()) {
-        GraphicsEffectComponent* effect = getEngine()->getComponents()->get<GraphicsEffectComponent>(l_entity);
+    for (EntityId l_entity : getEngine()->state()->entities()) {
+        GraphicsEffectComponent* effect = getEngine()->state()->components()->get<GraphicsEffectComponent>(l_entity);
         if (!effect) continue;
 
-        SpriteComponent* sprite = getEngine()->getComponents()->get<SpriteComponent>(l_entity);
+        SpriteComponent* sprite = getEngine()->state()->components()->get<SpriteComponent>(l_entity);
         if (!sprite) {
             LOG(WARNING) << "GraphicsEffect without a sprite is pointless: " << l_entity << std::endl;
             continue;
@@ -20,9 +20,9 @@ void GraphicsEffectSystem::update ()
         if (effect->duration && effect->ticks > effect->duration) {
             sprite->fgColor = effect->org_color;
             sprite->sprite = effect->org_tile;
-            getEngine()->getComponents()->remove<GraphicsEffectComponent>(l_entity);
+            getEngine()->state()->components()->remove<GraphicsEffectComponent>(l_entity);
             if (effect->removeEntity) {
-                getEngine()->getEntities()->destroyEntity(l_entity);
+                getEngine()->state()->entityManager()->destroyEntity(l_entity);
             }
             continue;
         }

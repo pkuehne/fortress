@@ -42,11 +42,8 @@ GameEngine::GameEngine (GraphicsInterface* a_graphics)
 : m_tick (0)
 , m_playerTurn (true)
 , m_turn (1)
-, m_entityManager (0)
 , m_eventManager (0)
 , m_windowManager (0)
-, m_componentManager (0)
-, m_mapManager (0)
 , m_graphics (a_graphics)
 {
     g_engine = this;
@@ -65,14 +62,17 @@ void GameEngine::initialise ()
     // Create if not exist
     if (!m_windowManager)       m_windowManager     = new WindowManager();
     if (!m_eventManager)        m_eventManager      = new EventManager();
-    if (!m_entityManager)       m_entityManager     = new EntityManager();
-    if (!m_componentManager)    m_componentManager  = new ComponentManager();
-    if (!m_mapManager)          m_mapManager        = new MapManager();
+    if (!m_state)               m_state             = new GameState();
 
     // Initialise Managers
     m_windowManager->initialise     (this);
     m_eventManager->initialise      (this);
-    m_entityManager->initialise     (this);
+    
+    //TODO: this needs to be removed
+    // and EntityManager no longer 
+    // dependent on GameEngine or
+    // GameState
+    m_state->entityManager()->initialise (this);
 
     // Initialise Systems
     for (unsigned int ii = 0; ii < m_systems.size(); ii++) {

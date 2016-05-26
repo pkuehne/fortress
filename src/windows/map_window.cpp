@@ -56,9 +56,9 @@ void MapWindow::resize()
 void MapWindow::keyDown (unsigned char key)
 {
     Window::keyDown (key);
-    EntityId playerId = getEngine()->getEntities()->getPlayer();
+    EntityId playerId = getEngine()->state()->player();
     if (key == 'w' || key == 'a' || key == 's' || key == 'd') {
-        Location oldLocation = getEngine()->getEntities()->getLocation(playerId);
+        Location oldLocation = getEngine()->state()->location(playerId);
         Location newLocation = oldLocation;
         switch (key) {
             case 'w': newLocation.y--; break;
@@ -74,9 +74,9 @@ void MapWindow::keyDown (unsigned char key)
             getEngine()->raiseEvent (l_event);
         }
         if (m_action == 'k') {
-            EntityHolder l_entities = getEngine()->getMap()->findEntitiesAt(newLocation);
+            EntityHolder l_entities = getEngine()->state()->map()->findEntitiesAt(newLocation);
             for (EntityId entity : l_entities) {
-                if (getEngine()->getComponents()->get<NpcComponent>(entity)) {
+                if (getEngine()->state()->components()->get<NpcComponent>(entity)) {
                     AttackEntityEvent* l_event = new AttackEntityEvent;
                     l_event->attacker = playerId;
                     l_event->defender = entity;
@@ -85,7 +85,7 @@ void MapWindow::keyDown (unsigned char key)
             }
         }
         if (m_action == 'i') {
-            EntityHolder l_entities = getEngine()->getMap()->findEntitiesAt(newLocation);
+            EntityHolder l_entities = getEngine()->state()->map()->findEntitiesAt(newLocation);
             if (l_entities.size() > 0) {
                 SelectionWindow* selWin = new SelectionWindow();
                 selWin->initialise (getEngine(), &l_entities);
@@ -109,11 +109,11 @@ void MapWindow::keyDown (unsigned char key)
         getEngine()->swapTurn();
     }
     if (key == 'p') {
-        Location l_playerLoc = getEngine()->getEntities()->getLocation(playerId);
-        EntityHolder l_entities = getEngine()->getMap()->findEntitiesAt (l_playerLoc);
+        Location l_playerLoc = getEngine()->state()->location(playerId);
+        EntityHolder l_entities = getEngine()->state()->map()->findEntitiesAt (l_playerLoc);
         bool foundSomethingAlready = false;
         for (EntityId l_entity : l_entities) {
-            DroppableComponent* droppable = getEngine()->getComponents()->get<DroppableComponent>(l_entity);
+            DroppableComponent* droppable = getEngine()->state()->components()->get<DroppableComponent>(l_entity);
             if (droppable) {
                 if (!foundSomethingAlready) {
                     PickupEquipmentEvent* event = new PickupEquipmentEvent();
@@ -145,9 +145,9 @@ void MapWindow::keyDown (unsigned char key)
     if (key == '=') {
         std::cout << "Switching debug mode" << std::endl;
         m_debugMode = !m_debugMode;
-        EntityId player = getEngine()->getEntities()->getPlayer();
+        EntityId player = getEngine()->state()->player();
         GraphicsEffectComponent* effect = 
-            getEngine()->getComponents()->make<GraphicsEffectComponent>(player);
+            getEngine()->state()->components()->make<GraphicsEffectComponent>(player);
         effect->type = EFFECT_BLINK_FAST;
         effect->duration = 20;
 
@@ -176,8 +176,8 @@ void MapWindow::drawSeparators()
 
 void MapWindow::drawMap()
 {
-    Location l_player = getEngine()->getEntities()->getLocation(
-            getEngine()->getEntities()->getPlayer());
+    Location l_player = getEngine()->state()->location (
+            getEngine()->state()->player());
 
     m_mapStartX = l_player.x - (m_mapWidth/2);
     m_mapStartY = l_player.y - (m_mapHeight/2);
@@ -188,12 +188,12 @@ void MapWindow::drawMap()
     for (int yy = m_mapStartY; yy < yWidth; yy++) {
         for (int xx = m_mapStartX; xx < xWidth; xx++) {
             Location loc (xx, yy, l_player.z);
-            if (!getEngine()->getMap()->isValidTile (loc)) continue;
-            Tile& l_tile = getEngine()->getMap()->getTile (loc);
+            if (!getEngine()->state()->isValidTile (loc)) continue;
+            Tile& l_tile = getEngine()->state()->tile(loc);
 
             std::map<unsigned int, std::vector<SpriteComponent*> > l_sprites;
             for (EntityId entity : l_tile.entities()) {
-                SpriteComponent* l_sprite = getEngine()->getComponents()->get<SpriteComponent> (entity);
+                SpriteComponent* l_sprite = getEngine()->state()->components()->get<SpriteComponent> (entity);
                 if (!l_sprite) continue;
                 l_sprites[l_sprite->renderLayer].push_back (l_sprite);
             }
@@ -219,12 +219,12 @@ void MapWindow::drawMap()
     }
     if (m_debugMode) {
         // Show NPC paths
-        for (EntityId entity : getEngine()->getEntities()->get()) {
-            Location loc = getEngine()->getEntities()->getLocation (entity);
+        for (EntityId entity : getEngine()->state()->entities()) {
+            Location loc = getEngine()->state()->location(entity);
             int x = loc.x;
             int y = loc.y;
             if (x < m_mapStartX || x > xWidth || y < m_mapStartY || y > yWidth) continue;
-            NpcComponent* npc = getEngine()->getComponents()->get<NpcComponent> (entity);
+            NpcComponent* npc = getEngine()->state()->components()->get<NpcComponent> (entity);
             if (npc) {
                 for (Location stepLoc : npc->path) {
                     drawTile (  stepLoc.y + m_mapYOffset - m_mapStartY,
@@ -268,8 +268,8 @@ void MapWindow::drawSidebar ()
     drawString (2, m_sidebarXOffset+2, "Health:");
     drawString (3, m_sidebarXOffset+2, "Hunger:");
     drawString (4, m_sidebarXOffset+2, "Thirst:");
-    EntityId player = getEngine()->getEntities()->getPlayer();
-    HealthComponent* l_health = getEngine()->getComponents()->get<HealthComponent>(player);
+    EntityId player = getEngine()->state()->player();
+    HealthComponent* l_health = getEngine()->state()->components()->get<HealthComponent>(player);
     if (l_health) {
         drawProgressBar (m_sidebarXOffset+10, 2, l_health->health);
         drawProgressBar (m_sidebarXOffset+10, 3, l_health->hunger);

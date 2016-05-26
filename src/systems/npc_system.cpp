@@ -91,19 +91,19 @@ void NpcSystem::changeState (EntityId entity, NpcComponent* npc)
                 break;
             }
         case NpcState::Searching:
-            npc->target = getEngine()->getEntities()->getPlayer();
+            npc->target = getEngine()->state()->player();
             // Walk around
             break;
         case NpcState::Wandering:
             {
                 LOG(INFO) << "Wandering around" << std::endl;
-                Location oldLoc = getEngine()->getEntities()->getLocation (entity);
+                Location oldLoc = getEngine()->state()->location(entity);
                 Location newLoc = oldLoc;
                 unsigned int c = 0;
                 while (c++ < 30 && (newLoc == oldLoc || npc->lastDirection == Direction::None)) {
                     npc->lastDirection = static_cast<Direction>(Utility::randBetween (1, 4));
-                    newLoc = getEngine()->getMap()->location(
-                            getEngine()->getEntities()->getLocation (entity),
+                    newLoc = getEngine()->state()->location(
+                            getEngine()->state()->location(entity),
                             npc->lastDirection);
                 }
 
@@ -128,18 +128,18 @@ bool canSeeTarget (GameEngineInterface* engine, EntityId entity, NpcComponent* n
     los.initialise (engine);
 
     return (los.hasLos(
-        engine->getEntities()->getLocation (npc->target),
-        engine->getEntities()->getLocation (entity)));
+        engine->state()->location(npc->target),
+        engine->state()->location(entity)));
 }
 
 bool canAttackTarget (GameEngineInterface* engine, EntityId entity, NpcComponent* npc)
 {
     EntityHolder l_entities;
-    Location location = engine->getEntities()->getLocation (entity);
-    l_entities = engine->getMap()->findEntitiesNear (location, 1);
+    Location location = engine->state()->location(entity);
+    l_entities = engine->state()->map()->findEntitiesNear (location, 1);
     for (EntityId iter : l_entities) {
         if (iter == npc->target) {
-            Location oLoc = engine->getEntities()->getLocation (iter);
+            Location oLoc = engine->state()->location(iter);
             if (location.x != oLoc.x && location.y != oLoc.y) continue;
             return true;
         }
@@ -158,8 +158,8 @@ void NpcSystem::setPathToTarget (EntityId entity, EntityId target, NpcComponent*
 
     PathVector l_path;
     //std::cout << "Path from " << enemyLoc << " to " << playerLoc << std::endl;
-    algo.findPath ( getEngine()->getEntities()->getLocation (entity),
-                    getEngine()->getEntities()->getLocation (target),
+    algo.findPath ( getEngine()->state()->location(entity),
+                    getEngine()->state()->location(target),
                     l_path);
 
     if (l_path.empty()) {
@@ -190,8 +190,8 @@ void NpcSystem::handleEvent (const Event* event)
 void NpcSystem::update ()
 {
     if (getEngine()->isPlayerTurn()) return;
-    for (EntityId entity : getEngine()->getEntities()->get()) {
-        NpcComponent* npc = getEngine()->getComponents()->get<NpcComponent> (entity);
+    for (EntityId entity : getEngine()->state()->entities()) {
+        NpcComponent* npc = getEngine()->state()->components()->get<NpcComponent> (entity);
         if (npc == 0) continue;
 
         TransitionMap& transitions = m_stateMachine[npc->stateMachine];
@@ -213,11 +213,11 @@ void NpcSystem::update ()
 unsigned int getPathCost (const Location& location, void* customData)
 {
     GameEngineInterface* l_engine = static_cast<GameEngineInterface*> (customData);
-    Tile& tile = l_engine->tile(location);
+    Tile& tile = l_engine->state()->tile(location);
 
     for (EntityId entity : tile.entities()) {
-        if (entity == l_engine->getEntities()->getPlayer()) continue;
-        if (l_engine->getComponents()->get<ColliderComponent>(entity)) return -999;
+        if (entity == l_engine->state()->player()) continue;
+        if (l_engine->state()->components()->get<ColliderComponent>(entity)) return -999;
     }
     return 1;
 
@@ -238,7 +238,7 @@ unsigned int findNeighbours4 (  const Location& location,
         neighbour = location;
         neighbour.x += xAdj[ii];
         neighbour.y += yAdj[ii];
-        if (l_engine->getMap()->isValidTile (neighbour)) {
+        if (l_engine->state()->map()->isValidTile (neighbour)) {
             if (getPathCost (neighbour, l_engine) > 0)
                 neighbours[count++] = neighbour;
         }

@@ -17,51 +17,53 @@
 
 void FileSaver::saveState ()
 {
+    /*
     m_file.open ("World1.sav");
     LOG(INFO) << "Saving state" << std::endl;
 
-    unsigned int currArea = m_engine->getMap()->getArea();
+    unsigned int currArea = m_engine->state()->map()->getArea();
     //Start with the header
     m_file << "[TURN:" << m_engine->getTurn() << "]" << std::endl;
     m_file << "[AREA:" << currArea << "]" << std::endl;
-    m_file << "[AREAS:" << m_engine->getMap()->getAreas() << "]" << std::endl;
+    m_file << "[AREAS:" << m_engine->state()->map()->getAreas() << "]" << std::endl;
 
-    for (unsigned int area = 0; area < m_engine->getMap()->getAreas(); area++) {
-        m_engine->getMap()->setArea (area);
+    for (unsigned int area = 0; area < m_engine->state()->map()->getAreas(); area++) {
+        m_engine->state()->map()->setArea (area);
         m_file << "[AREA:" << area << "]" << std::endl;
-        m_file << "[MAP_WIDTH:" << m_engine->getMap()->getMapWidth() << "]" << std::endl;
-        m_file << "[MAP_HEIGHT:" << m_engine->getMap()->getMapHeight() << "]" << std::endl;
-        m_file << "[MAP_DEPTH:" << m_engine->getMap()->getMapDepth() << "]" << std::endl;
+        m_file << "[MAP_WIDTH:" << m_engine->state()->map()->getMapWidth() << "]" << std::endl;
+        m_file << "[MAP_HEIGHT:" << m_engine->state()->map()->getMapHeight() << "]" << std::endl;
+        m_file << "[MAP_DEPTH:" << m_engine->state()->map()->getMapDepth() << "]" << std::endl;
 
-        for (unsigned int zz = 0; zz < m_engine->getMap()->getMapDepth(); zz++) {
-            for (unsigned int yy = 0; yy < m_engine->getMap()->getMapHeight(); yy++) {
-                for (unsigned int xx = 0; xx < m_engine->getMap()->getMapWidth(); xx++) {
-                    m_file << "[TILE_VISITED:" << m_engine->getMap()->getTile(Location(xx, yy, zz)).lastVisited << "]" << std::endl;
+        for (unsigned int zz = 0; zz < m_engine->state()->map()->getMapDepth(); zz++) {
+            for (unsigned int yy = 0; yy < m_engine->state()->map()->getMapHeight(); yy++) {
+                for (unsigned int xx = 0; xx < m_engine->state()->map()->getMapWidth(); xx++) {
+                    m_file << "[TILE_VISITED:" << m_engine->state()->map()->getTile(Location(xx, yy, zz)).lastVisited << "]" << std::endl;
                 }
             }
         }
 
         // Save entities
-        EntityHolder& entities = m_engine->getEntities()->get();
+        EntityHolder& entities = m_engine->state()->entities();
         for (EntityId entity : entities) {
             m_file << "[ENTITY:" << entity << "]" << std::endl;
-            Location location = m_engine->getEntities()->getLocation (entity);
+            Location location = m_engine->state()->location (entity);
             m_file << "[LOCATION_X:" << location.x << "]" << std::endl;
             m_file << "[LOCATION_Y:" << location.y << "]" << std::endl;
             m_file << "[LOCATION_Z:" << location.z << "]" << std::endl;
             m_file << "[LOCATION_A:" << location.area << "]" << std::endl;
 
-            ComponentHolder& components = m_engine->getComponents()->getAll(entity);
+            ComponentHolder& components = m_engine->state()->components()->getAll(entity);
             for (auto& component : components) {
                 saveComponent (component.second);
             }
         }
 
     }
-    m_engine->getMap()->setArea (currArea);
+    m_engine->state()->map()->setArea (currArea);
 
     m_file.close();
     LOG(INFO) << "Save complete" << std::endl;
+    */
 }
 
 void FileSaver::saveComponent (ComponentBase* component)
