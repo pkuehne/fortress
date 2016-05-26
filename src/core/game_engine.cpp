@@ -44,6 +44,7 @@ GameEngine::GameEngine (GraphicsInterface* a_graphics)
 , m_turn (1)
 , m_eventManager (0)
 , m_windowManager (0)
+, m_state (0)
 , m_graphics (a_graphics)
 {
     g_engine = this;
@@ -67,9 +68,9 @@ void GameEngine::initialise ()
     // Initialise Managers
     m_windowManager->initialise     (this);
     m_eventManager->initialise      (this);
-    
+
     //TODO: this needs to be removed
-    // and EntityManager no longer 
+    // and EntityManager no longer
     // dependent on GameEngine or
     // GameState
     m_state->entityManager()->initialise (this);
