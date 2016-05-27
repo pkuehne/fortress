@@ -4,6 +4,7 @@
 #include "equipment_window.h"
 #include "selection_window.h"
 #include "escape_window.h"
+#include "debug_window.h"
 #include "game_engine.h"
 #include "event.h"
 #include "sprite_component.h"
@@ -163,6 +164,11 @@ void MapWindow::keyDown (unsigned char key)
         unsigned int width = getEngine()->getGraphics()->getTileWidth();
         getEngine()->getGraphics()->updateTileSize(width+1, height+1);
         getEngine()->getWindows()->resize();
+    }
+    if (key == '`') {
+        DebugWindow* l_win = new DebugWindow();
+        l_win->initialise(getEngine());
+        getEngine()->getWindows()->pushWindow (l_win);
     }
 
     //std::cout << "Key: " << key << std::endl;

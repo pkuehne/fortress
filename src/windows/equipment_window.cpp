@@ -39,7 +39,6 @@ void EquipmentWindow::redraw() {
     drawString (2, 16, "Rucksack", Color (GREY));
 
     if (m_selectedPage == 0) {
-
         drawString (4, 2, "Wielding");
 
         if (m_selectedItem && m_selectedItem == equipment->rightHandWieldable) drawTile (5, 3, '>', Color (RED), Color (GREY));
@@ -121,8 +120,6 @@ void EquipmentWindow::redraw() {
         drawString (getHeight()-5, getWidth()-16, "c", Color (GREEN));
         drawString (getHeight()-5, getWidth()-15, "onsume");
     }
-
-
 }
 
 void EquipmentWindow::keyDown (unsigned char key) {
