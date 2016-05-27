@@ -10,10 +10,10 @@ clean:
 	@$(MAKE) -C src clean
 	@$(MAKE) -C test clean
 
-build: clear
+build: 
 	@$(MAKE) -C src build -j 8
 
-test: clear
+test: 
 	@$(MAKE) -C test build -j 8
 	@echo "Starting tests"
 	@./unit_tests

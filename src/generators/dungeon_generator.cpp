@@ -8,13 +8,8 @@
 #include <glog/logging.h>
 #include "sprite_component.h"
 #include "stair_component.h"
+#include "prefab_builder.h"
 
-/*
-static unsigned int getDistance (unsigned int start, unsigned int end, void* customData);
-static unsigned int getPathCost (unsigned int index, void* customData);
-static unsigned int findNeighbours4 (unsigned int index, unsigned int* neighbours, void* customData);
-static unsigned int findNeighbours8 (unsigned int index, unsigned int* neighbours, void* customData);
-*/
 static unsigned int getDistance (const Location& start, const Location& end, void* customData);
 static unsigned int getPathCost (const Location& location, void* customData);
 static unsigned int findNeighbours4 (const Location& location, Location* neighbours, void* customData);
@@ -76,7 +71,8 @@ bool DungeonGenerator::generateLevel() {
 
 void DungeonGenerator::createEntitiesFromMap () {
     EntityId l_entity = 0;
-
+    
+    PrefabBuilder prefabs (m_engine->state());
     for (unsigned int yy = 0; yy < m_mapHeight; yy++) {
         for (unsigned int xx = 0; xx < m_mapWidth; xx++) {
             Location location;
@@ -88,29 +84,29 @@ void DungeonGenerator::createEntitiesFromMap () {
             switch (getByCoordinate(xx, yy)) {
                 case WALL:
                 case CORNER:
-                    l_entity = m_engine->state()->entityManager()->createWallPrefab (location);
+                    l_entity = prefabs.createWallPrefab (location);
                     m_engine->state()->components()->get<SpriteComponent>(l_entity)->sprite = wallSprite (xx, yy);
                     break;
                 case UP:
-                    m_upStair = m_engine->state()->entityManager()->createStairPrefab (STAIR_UP, location);
+                    m_upStair = prefabs.createStairPrefab (STAIR_UP, location);
                     break;
                 case DOWN:
                     if (m_level < m_maxDepth-1 || m_downStairTarget) {
-                        m_downStair = m_engine->state()->entityManager()->createStairPrefab (STAIR_DOWN, location);
+                        m_downStair = prefabs.createStairPrefab (STAIR_DOWN, location);
                     }
                     break;
                 case ORC:
                     if (m_createBoss && m_level == m_maxDepth-1) {
-                        m_engine->state()->entityManager()->createTrollPrefab (location);
+                        prefabs.createTrollPrefab (location);
                         m_createBoss = false;
                     } else {
-                        m_engine->state()->entityManager()->createEnemyPrefab (location);
+                        prefabs.createEnemyPrefab (location);
                     }
                     break;
                 case RESTRICTED:
                     break;
                 default:
-                    l_entity = m_engine->state()->entityManager()->createMarkerPrefab (location);
+                    l_entity = prefabs.createMarkerPrefab (location);
                     m_engine->state()->components()->get<SpriteComponent>(l_entity)->sprite = getByCoordinate (xx, yy);
                     break;
             }
@@ -266,6 +262,7 @@ void DungeonGenerator::placeItems()
 
     unsigned int numItems = Utility::randBetween (0, maxItems);
 
+    PrefabBuilder prefabs (m_engine->state());
     unsigned int room = 0;
     for (size_t ii = 0; ii < numItems; ii++) {
         room = Utility::randBetween (0, m_rooms.size()-1);
@@ -283,13 +280,13 @@ void DungeonGenerator::placeItems()
 
         unsigned int type = Utility::randBetween (0, 100);
         if  (type < 70) { // Potion
-            m_engine->state()->entityManager()->createPotionPrefab (location);
+            prefabs.createPotionPrefab (location);
         } else if (type < 80) {
-             m_engine->state()->entityManager()->createWeaponPrefab (location);
+             prefabs.createWeaponPrefab (location);
         } else if (type < 90) {
-            m_engine->state()->entityManager()->createShieldPrefab (location);
+            prefabs.createShieldPrefab (location);
         } else if (type < 100) {
-            m_engine->state()->entityManager()->createHelmetPrefab (location);
+            prefabs.createHelmetPrefab (location);
         }
     }
 }
@@ -372,37 +369,6 @@ static unsigned int getPathCost (const Location& location, void* customData)
     return cost;
 }
 
-// TODO: obsolete
-/*
-unsigned int getPathCost (unsigned int index, void* customData)
-{
-    DungeonGenerator* l_gen = static_cast<DungeonGenerator*> (customData);
-    unsigned char point = l_gen->getByIndex(index);
-    unsigned int cost = 0;
-    switch (point) {
-        case EMPTY:
-            cost = 3;
-            break;
-        case WALL:
-        case RESTRICTED:
-        case DOOR:
-            cost = 5;
-            break;
-        case FLOOR:
-            cost = 0;
-            break;
-        case CORNER:
-            cost = 999;
-            break;
-        default:
-            cost = 999;
-            break;
-    }
-    //std::cout << "Returning cost: " << cost << std::endl;
-    return cost;
-}
-*/
-
 static unsigned int findNeighbours4 (const Location& location, Location* neighbours, void* customData)
 {
     DungeonGenerator* l_gen = static_cast<DungeonGenerator*> (customData);
@@ -421,31 +387,6 @@ static unsigned int findNeighbours4 (const Location& location, Location* neighbo
 
     return count;
 }
-
-
-//TODO: obsolete
-/*
-unsigned int findNeighbours4 (unsigned int index, unsigned int* neighbours, void* customData)
-{
-    DungeonGenerator* l_gen = static_cast<DungeonGenerator*> (customData);
-    unsigned int indexX, indexY;
-    l_gen->IndexToCoord (index, indexX, indexY);
-
-    unsigned int count = 0;
-
-    if (l_gen->isValidCoordinate (indexX-1, indexY))
-        neighbours[count++] = l_gen->CoordToIndex (indexX-1, indexY);
-    if (l_gen->isValidCoordinate (indexX+1, indexY))
-        neighbours[count++] = l_gen->CoordToIndex (indexX+1, indexY);
-    if (l_gen->isValidCoordinate (indexX, indexY-1))
-        neighbours[count++] = l_gen->CoordToIndex (indexX, indexY-1);
-    if (l_gen->isValidCoordinate (indexX, indexY+1))
-        neighbours[count++] = l_gen->CoordToIndex (indexX, indexY+1);
-    //std::cout << "Return " << count << " neightbours" << std::endl;
-
-    return count;
-}
-*/
 
 static unsigned int findNeighbours8 (const Location& location, Location* neighbours, void* customData)
 {
@@ -480,18 +421,3 @@ static unsigned int getDistance (const Location& start, const Location& end, voi
     return (abs (start.x-end.x)+abs(start.y-end.y));
 }
 
-//TODO: obsolete
-/*
-unsigned int getDistance (unsigned int start, unsigned int end, void* customData)
-{
-    DungeonGenerator* l_gen = static_cast<DungeonGenerator*> (customData);
-    unsigned int startX, startY;
-    unsigned int endX, endY;
-    unsigned int distance = 0;
-    l_gen->IndexToCoord (start, startX, startY);
-    l_gen->IndexToCoord (end, endX, endY);
-    distance = (abs (startX-endX)+abs(startY-endY));
-    //std::cout << "Returning distance: " << distance << std::endl;
-    return distance;
-}
-*/

@@ -122,13 +122,13 @@ void MapWindow::keyDown (unsigned char key)
                     getEngine()->raiseEvent (event);
                     foundSomethingAlready = true;
                 } else {
-                    getEngine()->addMessage(INFO, "There's something else here...");
+                    getEngine()->state()->addMessage(INFO, "There's something else here...");
                     break;
                 }
             }
         }
         if (!foundSomethingAlready) {
-            getEngine()->addMessage(INFO, "There's nothing here...");
+            getEngine()->state()->addMessage(INFO, "There's nothing here...");
         }
     }
     if (key == 'E') {
@@ -140,7 +140,7 @@ void MapWindow::keyDown (unsigned char key)
         FileSaver saver;
         saver.initialise (getEngine());
         saver.saveState();
-        getEngine()->addMessage (INFO, "Game saved!");
+        getEngine()->state()->addMessage (INFO, "Game saved!");
     }
     if (key == '=') {
         std::cout << "Switching debug mode" << std::endl;
@@ -244,7 +244,7 @@ void MapWindow::drawMap()
 
 void MapWindow::drawMessages()
 {
-    std::vector<Message>& l_messages = getEngine()->getMessages();
+    std::vector<Message>& l_messages = getEngine()->state()->getMessages();
     size_t ii = l_messages.size();
     size_t hh = m_mapYOffset-2;
 

@@ -65,6 +65,11 @@ EntityId GameState::player()
     return m_entities->getPlayer();
 }
 
+EntityId GameState::createEntity (Location& location)
+{
+    return m_entities->createEntity (location);
+}
+
 Location GameState::location (EntityId entity)
 {
     return m_entities->getLocation(entity);
@@ -88,4 +93,22 @@ void save (const std::string& filename)
 void load (const std::string& filename)
 {
     //TODO: YAML savefile
+}
+
+void GameState::addMessage (const Message& message)
+{
+    m_messages.push_back (message);
+}
+
+void GameState::addMessage (const MessageType& severity, const std::string& message)
+{
+    Message msg;
+    msg.severity = severity;
+    msg.message = message;
+    addMessage (msg);
+}
+
+std::vector<Message>& GameState::getMessages()
+{
+    return m_messages;
 }

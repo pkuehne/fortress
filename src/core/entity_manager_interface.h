@@ -23,21 +23,6 @@ public:
     virtual EntityId getPlayer () = 0;
     virtual EntityId getMaxId() = 0;
 
-
-    virtual EntityId createWallPrefab (Location& location)    = 0;
-    virtual EntityId createPlayerPrefab (Location& location)  = 0;
-    virtual EntityId createEnemyPrefab (Location& location)   = 0;
-    virtual EntityId createTrollPrefab (Location& location)   = 0;
-    virtual EntityId createMarkerPrefab (Location& location)  = 0;
-    virtual EntityId createStairPrefab (STAIR dir, Location& location)   = 0;
-    virtual EntityId createWeaponPrefab (Location& location) = 0;
-    virtual EntityId createShieldPrefab (Location& location) = 0;
-    virtual EntityId createHelmetPrefab (Location& location) = 0;
-    virtual EntityId createPotionPrefab (Location& location) = 0;
-    virtual EntityId createTreePrefab(Location& location) = 0;
-    virtual EntityId createCorpsePrefab(Location& location, char sprite) = 0;
-    virtual EntityId createForesterPrefab (Location& location) = 0;
-
     virtual Location getLocation (EntityId entity) = 0;
     virtual void setLocation (EntityId entity, Location& location) = 0;
     virtual EntityHolder& get() = 0;

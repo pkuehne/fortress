@@ -2,6 +2,7 @@
 #include "utility.h"
 #include "game_engine.h"
 #include "sprite_component.h"
+#include "prefab_builder.h"
 #include <cstring>
 #include <map>
 #include <iostream>
@@ -32,6 +33,7 @@ void RuralGenerator::createEntitiesFromMap()
     EntityId l_entity = 0;
     Location location;
 
+    PrefabBuilder prefabs (m_engine->state());
     for (unsigned int yy = 0; yy < m_mapHeight; yy++) {
         for (unsigned int xx = 0; xx < m_mapWidth; xx++) {
             location.x = xx;
@@ -42,14 +44,14 @@ void RuralGenerator::createEntitiesFromMap()
                 case EMPTY:
                     break;
                 case TREE:
-                    l_entity = m_engine->state()->entityManager()->createTreePrefab (location);
+                    l_entity = prefabs.createTreePrefab (location);
                     break;
                 case LINK:
-                    l_entity = m_engine->state()->entityManager()->createStairPrefab (STAIR_DOWN, location);
+                    l_entity = prefabs.createStairPrefab (STAIR_DOWN, location);
                     m_areaLinks.push_back(l_entity);
                     break;
                 case HUMAN:
-                    l_entity = m_engine->state()->entityManager()->createForesterPrefab (location);
+                    l_entity = prefabs.createForesterPrefab (location);
                     break;
                 default:
                     break;
@@ -59,7 +61,7 @@ void RuralGenerator::createEntitiesFromMap()
     location.x = m_mapWidth/2;
     location.y = m_mapHeight/2;
     location.z = 0;
-    m_engine->state()->entityManager()->createPlayerPrefab (location);
+    prefabs.createPlayerPrefab (location);
 }
 
 void RuralGenerator::reset ()

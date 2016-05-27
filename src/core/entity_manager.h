@@ -23,20 +23,6 @@ public:
     EntityId getPlayer ();
     EntityId getMaxId() { return m_maxId; }
 
-    EntityId createWallPrefab (Location& location);
-    EntityId createPlayerPrefab (Location& location);
-    EntityId createEnemyPrefab (Location& location);
-    EntityId createTrollPrefab (Location& location);
-    EntityId createMarkerPrefab (Location& location);
-    EntityId createStairPrefab (STAIR dir, Location& location);
-    EntityId createWeaponPrefab (Location& location);
-    EntityId createShieldPrefab (Location& location);
-    EntityId createHelmetPrefab (Location& location);
-    EntityId createPotionPrefab (Location& location);
-    EntityId createTreePrefab(Location& location);
-    EntityId createCorpsePrefab (Location& location, char sprite);
-    EntityId createForesterPrefab (Location& location);
-
     Location getLocation (EntityId entity) { return m_locations[entity]; }
     void setLocation (EntityId entity, Location& location);
 

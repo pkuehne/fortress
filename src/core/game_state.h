@@ -8,7 +8,20 @@
 
 class Tile;
 
+typedef enum {
+    INFO    = 0,
+    GOOD    = 1,
+    WARN    = 2,
+    CRIT    = 3
+} MessageType;
+
+typedef struct {
+    MessageType severity;
+    std::string message;
+} Message;
+
 typedef unsigned long long tick_t;
+
 class GameState {
     public:
         GameState ( MapManager* map = new MapManager(),
@@ -33,6 +46,7 @@ class GameState {
         Location location (const Location&, Direction direction);
 
         EntityId player();
+        EntityId createEntity(Location&);
 
         void setArea (unsigned int area);
         unsigned int getArea();
@@ -40,12 +54,17 @@ class GameState {
         void save (const std::string& filename);
         void load (const std::string& filename);
 
+        void addMessage (const Message& message);
+        void addMessage (const MessageType&, const std::string& message);
+        std::vector<Message>& getMessages();
+
     private:
         bool                m_playerTurn = true;
         tick_t              m_turn = 0;
         MapManager*         m_map = 0;
         EntityManager*      m_entities = 0;
         ComponentManager*   m_components = 0;
+        std::vector<Message>    m_messages;
 };
 
 #endif

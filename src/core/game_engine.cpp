@@ -87,9 +87,9 @@ void GameEngine::initialise ()
     m_graphics->setMouseFunc    (mouseClick);
     m_graphics->setResizeFunc   (resize);
 
-    addMessage (INFO, "You find yourself in a forest.");
-    addMessage (INFO, "Stairs will lead you into the dungeons.");
-    addMessage (WARN, "Beware the Troll living in the depths!");
+    m_state->addMessage (INFO, "You find yourself in a forest.");
+    m_state->addMessage (INFO, "Stairs will lead you into the dungeons.");
+    m_state->addMessage (WARN, "Beware the Troll living in the depths!");
 
     swapTurn();
 }
@@ -110,14 +110,6 @@ void GameEngine::tick ()
 
     if (!m_playerTurn) swapTurn();
     return;
-}
-
-void GameEngine::addMessage (const MessageType& severity, const std::string& message)
-{
-    Message msg;
-    msg.severity = severity;
-    msg.message = message;
-    addMessage (msg);
 }
 
 void GameEngine::swapTurn()

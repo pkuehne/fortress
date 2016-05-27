@@ -40,10 +40,6 @@ public:
 
     void addSystem (GameSystemInterface* a_system) { m_systems.push_back(a_system); }
 
-    void addMessage (const Message& message) { m_messages.push_back (message); }
-    void addMessage (const MessageType&, const std::string& message);
-    std::vector<Message>& getMessages() { return m_messages; }
-
     GameState* state() { return m_state; }
 
 private:

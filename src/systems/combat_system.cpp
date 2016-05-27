@@ -1,13 +1,14 @@
 #include "combat_system.h"
+#include "prefab_builder.h"
 #include "health_component.h"
-#include <iostream>
-#include <sstream>
 #include "equipment_component.h"
 #include "wieldable_component.h"
 #include "health_component.h"
 #include "sprite_component.h"
 #include "description_component.h"
 #include "graphics_effect_component.h"
+#include <iostream>
+#include <sstream>
 
 void CombatSystem::handleEvent (const Event* event)
 {
@@ -51,9 +52,10 @@ void CombatSystem::handleAttack (EntityId attacker, EntityId defender)
         if (defender == getEngine()->state()->player()) {
             m_engine->state()->entityManager()->destroyEntity (defender);
         } else {
+            PrefabBuilder prefabs (m_engine->state());
             Location l_targetLoc = m_engine->state()->location (defender);
             SpriteComponent* l_sprite = m_engine->state()->components()->get<SpriteComponent> (defender);
-            getEngine()->state()->entityManager()->createCorpsePrefab(l_targetLoc, l_sprite->sprite);
+            prefabs.createCorpsePrefab(l_targetLoc, l_sprite->sprite);
             getEngine()->state()->entityManager()->destroyEntity (defender);
         }
     }
@@ -96,10 +98,8 @@ void CombatSystem::updateLog (const EntityId& attacker, const EntityId& target, 
     str << " " << damage << " damage!";
 
     if (attacker == m_engine->state()->player()) {
-        m_engine->addMessage (INFO, str.str());
+        m_engine->state()->addMessage (INFO, str.str());
     } else {
-        m_engine->addMessage (WARN, str.str());
+        m_engine->state()->addMessage (WARN, str.str());
     }
-
-
 }
