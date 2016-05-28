@@ -1,11 +1,48 @@
 #include "debug_window.h"
 #include "game_engine.h"
+#include <dirent.h>
+
+const char CONSOLE_DIR[] = "./scripts/console";
 
 void DebugWindow::gainFocus()
 {
     setTitle (" Debug Console ");
     command[0] = '\0';
     m_lua.setGameState(getEngine()->state());
+    try {
+        loadLuaScripts();
+    } catch (const std::runtime_error& error) {
+        Output line (error.what(), ERROR_COLOR);
+        history.push_back (line);
+    }
+}
+
+void DebugWindow::loadLuaScripts()
+{
+    DIR* directory = opendir (CONSOLE_DIR);
+    if (directory == nullptr) {
+        LOG(ERROR) << "Failed to open '" 
+            << CONSOLE_DIR << "'" 
+            << std::endl;
+        throw std::runtime_error ("Failed to open console directory");
+    }
+    struct dirent* file = nullptr;
+    while ((file = readdir (directory)) != nullptr) {
+        std::string filename (CONSOLE_DIR);
+        filename.append ("/").append(file->d_name);
+        if (filename.find (".lua") != std::string::npos) {
+            LOG(INFO) << "Loading lua script: " << filename << std::endl;
+            try {
+                m_lua.loadFile (filename);
+                Output line (std::string("Loaded: ").append (filename), OUTPUT_COLOR);
+                history.push_back (line);
+            } catch (const std::runtime_error& error) {
+                Output line (error.what(), ERROR_COLOR);
+                history.push_back (line);
+            } 
+        }
+    }
+    closedir (directory);
 }
 
 void DebugWindow::redraw()

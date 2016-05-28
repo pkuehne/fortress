@@ -6,6 +6,9 @@
 #include "lua_wrapper.h"
 
 struct Output {
+    Output (const std::string& t, const Color& c)
+        : text(t), color (c) {}
+    Output () {}
     std::string text;
     Color color;
 };
@@ -21,6 +24,10 @@ public:
     void resize();
     void redraw();
     void keyDown (unsigned char key);
+
+private:
+    void loadLuaScripts();
+
 private:
     char command[COMMAND_MAX_LEN] = {0};
     int length;

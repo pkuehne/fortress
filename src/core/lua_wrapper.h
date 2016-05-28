@@ -10,7 +10,7 @@ class LuaWrapper {
 public:
     LuaWrapper ();
     void setGameState (GameState*);
-    bool loadFile (const std::string& filename);
+    void loadFile (const std::string& filename);
     std::string executeCommand (const std::string& command);
 private:
     GameState* m_state;

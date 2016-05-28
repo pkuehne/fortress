@@ -21,9 +21,14 @@ void LuaWrapper::setGameState (GameState* state)
     m_state = state;
 }
 
-bool LuaWrapper::loadFile (const std::string& filename)
+void LuaWrapper::loadFile (const std::string& filename)
 {
-    return false;
+    int result = luaL_dofile (m_runtime, filename.c_str());
+    if (result != 0) {
+        LOG(ERROR) << "Failed to parse Lua file: " << filename << std::endl;
+        throw std::runtime_error (std::string ("Parse error: ")
+                                    .append (lua_tostring(m_runtime, -1)));
+    }
 }
 
 std::string LuaWrapper::executeCommand (const std::string& command)
