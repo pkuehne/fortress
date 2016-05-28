@@ -70,6 +70,17 @@ std::string LuaWrapper::executeCommand (const std::string& command)
     return "Command success";
 }
 
+GameState* getState (lua_State* runtime)
+{
+    lua_getglobal (runtime, "game_state");
+    if (lua_isnil (runtime, -1)) {
+        lua_pushstring (runtime, "GameState not defined!");
+        lua_error (runtime);
+    }
+    GameState* state = (GameState*) lua_touserdata (runtime, -1);
+    return state;
+}
+
 int createOrc (lua_State* runtime)
 {
     unsigned int x = 0;
@@ -90,12 +101,7 @@ int createOrc (lua_State* runtime)
     }
     y = lua_tonumber (runtime, 2);
 
-    lua_getglobal (runtime, "game_state");
-    if (lua_isnil (runtime, -1)) {
-        lua_pushstring (runtime, "GameState not defined!");
-        lua_error (runtime);
-    }
-    GameState* state = (GameState*) lua_touserdata (runtime, -1);
+    GameState* state = getState (runtime);
 
     Location location = state->location(state->player());
     location.x += x;
@@ -108,12 +114,7 @@ int createOrc (lua_State* runtime)
 
 int playerLocation (lua_State* runtime)
 {
-    lua_getglobal (runtime, "game_state");
-    if (lua_isnil (runtime, -1)) {
-        lua_pushstring (runtime, "GameState not defined!");
-        lua_error (runtime);
-    }
-    GameState* state = (GameState*) lua_touserdata (runtime, -1);
+    GameState* state = getState (runtime);
     Location location = state->location(state->player());
 
     std::stringstream output;
@@ -125,12 +126,7 @@ int playerLocation (lua_State* runtime)
 
 int revealMap (lua_State* runtime)
 {
-    lua_getglobal (runtime, "game_state");
-    if (lua_isnil (runtime, -1)) {
-        lua_pushstring (runtime, "GameState not defined!");
-        lua_error (runtime);
-    }
-    GameState* state = (GameState*) lua_touserdata (runtime, -1);
+    GameState* state = getState (runtime);
 
     for (unsigned x = 0; x < state->map()->getMapWidth(); x++) {
         for (unsigned y = 0; y < state->map()->getMapHeight(); y++) {
