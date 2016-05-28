@@ -5,6 +5,7 @@ void DebugWindow::gainFocus()
 {
     setTitle (" Debug Console ");
     command[0] = '\0';
+    m_lua.setGameState(getEngine()->state());
 }
 
 void DebugWindow::redraw()
@@ -39,17 +40,28 @@ void DebugWindow::keyDown (unsigned char key)
         line.text = std::string(command);
         line.color = COMMAND_COLOR;
         history.push_back (line);
+        command[length=0] = '\0';
 
         // Execute command
-
-        command[length=0] = '\0';
+        try {
+            line.text = std::string(">>>").append (
+                    m_lua.executeCommand (line.text));
+            line.color = OUTPUT_COLOR;
+        } catch (std::runtime_error& error) {
+            line.text = std::string(">>>").append (
+                    error.what());
+            line.color = ERROR_COLOR;
+        }
+        history.push_back (line);
+        std::cout << "Command output: " << line.text << std::endl;
         return;
     }
     if (key == KEY_BACKSPACE) {
-        command[--length] = '\0';
+        if (length > 0) {
+            command[--length] = '\0';
+        }
         return;
     }
     command[length] = key;
     command[++length] = '\0';
-    std::cout << "Key: " << key << " Command: " << command << std::endl;
 }

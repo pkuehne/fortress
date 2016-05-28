@@ -3,6 +3,7 @@
 
 #include "window.h"
 #include "utility.h"
+#include "lua_wrapper.h"
 
 struct Output {
     std::string text;
@@ -24,6 +25,7 @@ private:
     char command[COMMAND_MAX_LEN] = {0};
     int length;
     std::vector<Output> history;
+    LuaWrapper  m_lua;
 };
 
 #endif

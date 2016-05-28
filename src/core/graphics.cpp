@@ -35,8 +35,8 @@ void Graphics::callResizeFunc (int width, int height)
 
 void Graphics::callKeyboardFunc (int key, int scancode, int action, int mods)
 {
-    std::cout << "Key: " << key << " scancode: " << scancode << " action: " << action << " mods " << mods << std::endl;
-    if (key == 340) return; // Don't pass on shift key
+    //std::cout << "Key: " << key << " scancode: " << scancode << " action: " << action << " mods " << mods << std::endl;
+    if (key == 340) return; // Don't pass on shift key presses
     if (key == 49 && (mods & GLFW_MOD_SHIFT)) key = '!'; // Shift 1
     if (key == 50 && (mods & GLFW_MOD_SHIFT)) key = '"'; // Shift 2
     if (key == 51 && (mods & GLFW_MOD_SHIFT)) key = '@'; // Shift 3
@@ -46,7 +46,11 @@ void Graphics::callKeyboardFunc (int key, int scancode, int action, int mods)
     if (key == 55 && (mods & GLFW_MOD_SHIFT)) key = '&'; // Shift 7
     if (key == 56 && (mods & GLFW_MOD_SHIFT)) key = '*'; // Shift 8
     if (key == 57 && (mods & GLFW_MOD_SHIFT)) key = '('; // Shift 9
-    if (key == 58 && (mods & GLFW_MOD_SHIFT)) key = ')'; // Shift 0
+    if (key == 48 && (mods & GLFW_MOD_SHIFT)) key = ')'; // Shift 0
+    if (key == 45 && (mods & GLFW_MOD_SHIFT)) key = '_'; // Shift -
+    if (key == 61 && (mods & GLFW_MOD_SHIFT)) key = '+'; // Shift =
+    if (key == 91 && (mods & GLFW_MOD_SHIFT)) key = '{'; // Shift [
+    if (key == 93 && (mods & GLFW_MOD_SHIFT)) key = '}'; // Shift ]
     if (key > 64 && key < 91 && !(mods & GLFW_MOD_SHIFT)) key += 32;
     if (key == GLFW_KEY_ESCAPE) key = KEY_ESC;
     if (key == GLFW_KEY_TAB) key = KEY_TAB;
