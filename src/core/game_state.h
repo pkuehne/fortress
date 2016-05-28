@@ -30,7 +30,7 @@ class GameState {
 
         bool isPlayerTurn() { return m_playerTurn; }
         void nextTurn() { m_turn++; m_playerTurn = !m_playerTurn; }
-        tick_t getTurn() { return m_turn; }
+        tick_t turn() { return m_turn; }
 
         MapManager* map();
         EntityManager* entityManager();

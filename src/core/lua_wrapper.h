@@ -9,9 +9,13 @@
 class LuaWrapper {
 public:
     LuaWrapper ();
+    ~LuaWrapper();
     void setGameState (GameState*);
     void loadFile (const std::string& filename);
     std::string executeCommand (const std::string& command);
+
+private:
+    void registerBindings();
 private:
     GameState* m_state;
     lua_State* m_runtime;

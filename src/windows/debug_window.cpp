@@ -21,8 +21,8 @@ void DebugWindow::loadLuaScripts()
 {
     DIR* directory = opendir (CONSOLE_DIR);
     if (directory == nullptr) {
-        LOG(ERROR) << "Failed to open '" 
-            << CONSOLE_DIR << "'" 
+        LOG(ERROR) << "Failed to open '"
+            << CONSOLE_DIR << "'"
             << std::endl;
         throw std::runtime_error ("Failed to open console directory");
     }
@@ -39,7 +39,7 @@ void DebugWindow::loadLuaScripts()
             } catch (const std::runtime_error& error) {
                 Output line (error.what(), ERROR_COLOR);
                 history.push_back (line);
-            } 
+            }
         }
     }
     closedir (directory);
@@ -61,8 +61,8 @@ void DebugWindow::redraw()
 
 void DebugWindow::resize()
 {
-    setDimensions (0, 0, 
-            getEngine()->getGraphics()->getScreenWidth() - 6, 
+    setDimensions (0, 0,
+            getEngine()->getGraphics()->getScreenWidth() - 6,
             getEngine()->getGraphics()->getScreenHeight() - 6);
 }
 
@@ -90,7 +90,7 @@ void DebugWindow::keyDown (unsigned char key)
             line.color = ERROR_COLOR;
         }
         history.push_back (line);
-        std::cout << "Command output: " << line.text << std::endl;
+        //std::cout << "Command output: " << line.text << std::endl;
         return;
     }
     if (key == KEY_BACKSPACE) {

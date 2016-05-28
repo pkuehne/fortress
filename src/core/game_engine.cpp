@@ -117,6 +117,8 @@ void GameEngine::swapTurn()
     m_playerTurn = !m_playerTurn;
     m_turn++;
 
+    m_state->nextTurn();
+
     FovAlgorithm l_algo;
     l_algo.initialise (this);
     l_algo.calculateFov();
