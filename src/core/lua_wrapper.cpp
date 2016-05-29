@@ -59,7 +59,7 @@ std::string LuaWrapper::executeCommand (const std::string& command)
             } else {
                 output <<  "(unknown)";
             }
-            output << "\t";
+            output << "    ";
         }
         lua_pop (m_runtime, num_retvals);
         return output.str();

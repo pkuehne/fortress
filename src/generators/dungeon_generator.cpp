@@ -44,14 +44,13 @@ bool DungeonGenerator::generate () {
 }
 
 bool DungeonGenerator::generateLevel() {
-    std::cout << "Generating new level" << std::endl;
     for (unsigned r = 0; r < m_roomTarget; r++) {
         bool success = false;
         int x = 0;
         do {
             success = generateRoom ();
         } while (!success && x++ < 100);
-        if (x >= 200) {
+        if (!success) {
             LOG(WARNING) << "Tried " << x << " times to create room: " << r << std::endl;
             return false;
         }

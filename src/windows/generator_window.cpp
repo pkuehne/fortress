@@ -150,6 +150,8 @@ void GeneratorWindow::startGenerating () {
     unsigned int area = 1;
     for (EntityId stair : rural.getAreaLinks())
     {
+        int retries = 0;
+        bool success = false;
         LOG(INFO) << "Generating area: " << area << std::endl;
         getEngine()->state()->map()->resetMap (area++, m_levelWidth, m_levelHeight, m_levelDepth);
 
@@ -162,7 +164,12 @@ void GeneratorWindow::startGenerating () {
         l_generator.downStairTarget() = 0;
         l_generator.upStairTarget() = stair;
         if (area == 2) l_generator.createBoss() = true;
-        l_generator.generate(); //TODO Check return value and try again
+        do {
+            success = l_generator.generate();
+        } while (!success && retries++ < 20);
+        if (!success) {
+            LOG(ERROR) << "Failed to generate a valid map" << std::endl;
+        }
         getEngine()->state()->components()->get<StairComponent>(stair)->target = l_generator.upStairLink();
     }
     LOG(INFO) << "Placed " << getEngine()->state()->entityManager()->getMaxId() << " entities" << std::endl;
@@ -180,3 +187,4 @@ void GeneratorWindow::startPlaying() {
     l_win->initialise (getEngine());
     getEngine()->getWindows()->replaceAllWindows (l_win);
 }
+
