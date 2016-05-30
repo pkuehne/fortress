@@ -1,0 +1,50 @@
+[_] 4% Game
+	[_] 0% Bugs
+		[_] 0% getFocus() and loseFocs() should be called correctly
+		: At the moment they are only called once, when the window is created
+		: Instead they should be called each time the window is shown or
+		: hidden
+	[_] 14% Enhancements
+		[_] 0% Make Event Manager part of GameState
+		[_] 0% Make Windows only dependent on GameState
+		[_] 0% Windows should be created templatized
+			[_] 0% WindowManager has create<T>(args, retval) function
+			[_] 0% create<T>() function calls initialise
+			[_] 0% Add onCreate() and onDestroy() functions
+		[X] 100% NPCs
+			[X] 100% Make the Forester a little smarter
+		[_] 0% Remove GameEngine dependency from EntityManager
+		[_] 0% Camera
+			[_] 0% Window Width + Height
+			[_] 0% Map Offset x, y
+		[_] 0% Loading/Saving
+			[_] 0% Window
+				[_] 0% Save As Window
+					[_] 0% Typing and backspace
+					[_] 0% Calls save on GameState
+					[_] 0% Hook into escape window
+				[_] 0% Load Window
+					[_] 0% List all save games
+					[_] 0% Selecting one calls load on GameState
+					[_] 0% Hook into main window
+				[_] 0% Loading
+					[_] 0% Load all areas
+					[_] 0% Load all entities
+					[_] 0% Load all components
+				[_] 0% Saving
+					[_] 0% Save all areas
+					[_] 0% Save all entities
+					[_] 0% Save all components
+		
+	[_] 0% Game Features
+		[_] 0% Animals
+			[_] 0% Food
+				[_] 0% Food grows on grass tiles
+				[_] 0% Food regrows after a while
+			[_] 0% Behaviour
+				[_] 0% Food Seeking
+					[_] 0% Animals seek out food
+					[_] 0% Eat food when they find it
+				[_] 0% Predators
+					[_] 0% See predators
+					[_] 0% Run away from them

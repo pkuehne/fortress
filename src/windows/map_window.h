@@ -4,6 +4,8 @@
 #include "window.h"
 #include <ctime>
 
+class Camera;
+
 class MapWindow : public Window {
 public:
     virtual void gainFocus ();
@@ -34,6 +36,7 @@ private:
     clock_t m_lastDraw;
 
     bool m_debugMode;
+    Camera* m_camera;
 };
 
 #endif

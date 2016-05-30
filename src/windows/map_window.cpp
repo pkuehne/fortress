@@ -36,6 +36,8 @@ void MapWindow::gainFocus ()
     FovAlgorithm l_algo;
     l_algo.initialise (getEngine());
     l_algo.calculateFov();
+
+    std::cout << "Map gain focus" << std::endl;
 }
 
 void MapWindow::redraw()
