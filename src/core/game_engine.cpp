@@ -66,8 +66,7 @@ void GameEngine::initialise ()
     if (!m_state)               m_state             = new GameState();
 
     // Initialise Managers
-    m_windowManager->initialise     (this);
-    m_eventManager->initialise      (this);
+    m_windowManager->initialise (this);
 
     //TODO: this needs to be removed
     // and EntityManager no longer

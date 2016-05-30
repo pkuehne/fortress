@@ -6,7 +6,6 @@ class GameSystemInterface;
 class EventManagerInterface {
 public:
     virtual ~EventManagerInterface() { }
-    virtual void initialise (GameEngineInterface* engine) = 0;
     virtual void registerHandler (GameSystemInterface* system) = 0;
     virtual void raiseEvent (Event* event) = 0;
     virtual void processEvents() = 0;

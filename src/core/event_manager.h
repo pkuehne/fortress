@@ -15,8 +15,6 @@ typedef Handlers::iterator HandlersIter;
 class EventManager : public EventManagerInterface {
 public:
 
-    void initialise (GameEngineInterface* engine) { m_engine = engine; }
-
     void registerHandler (GameSystemInterface* system) { m_handlers.push_back (system); }
 
     void raiseEvent (Event* event) { m_events.push (event); }
@@ -24,7 +22,6 @@ public:
     void processEvents ();
 
 private:
-    GameEngineInterface*    m_engine;
     EventQueue              m_events;
     Handlers                m_handlers;
 };

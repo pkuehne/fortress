@@ -13,6 +13,7 @@ unsigned int getDistance (const Location& start, const Location& end, void* cust
 
 bool canSeeTarget (GameEngineInterface* engine, EntityId entity, NpcComponent* npc);
 bool canAttackTarget (GameEngineInterface* engine, EntityId entity, NpcComponent* npc);
+bool canMoveTo (GameEngineInterface* engine, Location& location);
 
 NpcSystem::NpcSystem()
 {
@@ -98,13 +99,11 @@ void NpcSystem::changeState (EntityId entity, NpcComponent* npc)
             {
                 LOG(INFO) << "Wandering around" << std::endl;
                 Location oldLoc = getEngine()->state()->location(entity);
-                Location newLoc = oldLoc;
+                Location newLoc = getEngine()->state()->location(oldLoc, npc->lastDirection);
                 unsigned int c = 0;
-                while (c++ < 30 && (newLoc == oldLoc || npc->lastDirection == Direction::None)) {
+                while (c++ < 30 && (newLoc == oldLoc || !canMoveTo(getEngine(), newLoc))) {
                     npc->lastDirection = static_cast<Direction>(Utility::randBetween (1, 4));
-                    newLoc = getEngine()->state()->location(
-                            getEngine()->state()->location(entity),
-                            npc->lastDirection);
+                    newLoc = getEngine()->state()->location(oldLoc, npc->lastDirection);
                 }
 
                 moveTowards (entity, newLoc);
@@ -250,4 +249,15 @@ unsigned int findNeighbours4 (  const Location& location,
 unsigned int getDistance (const Location& start, const Location& end, void* customData)
 {
     return (abs (start.x - end.x) + abs(start.y - end.y));
+}
+
+bool canMoveTo (GameEngineInterface* engine, Location& location)
+{
+    const EntityHolder& l_targets = engine->state()->tile(location).entities();
+    for (EntityId l_target : l_targets) {
+        if (engine->state()->components()->get<ColliderComponent> (l_target)) {
+            return false;
+        }
+    }
+    return true;
 }
