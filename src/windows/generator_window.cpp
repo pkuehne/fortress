@@ -18,8 +18,8 @@ std::string GeneratorWindow::formatNumber (int number) {
 
 void GeneratorWindow::gainFocus () {
     setTitle (" Create New World ");
-    m_levelWidth = 20;
-    m_levelHeight = 20;
+    m_levelWidth = 30;
+    m_levelHeight = 30;
     m_levelDepth = 2;
     m_levelRooms = 2;
     m_worldSize = 129;
@@ -28,7 +28,8 @@ void GeneratorWindow::gainFocus () {
 }
 
 void GeneratorWindow::resize() {
-    setDimensions (0, 0, getEngine()->getGraphics()->getScreenWidth(), getEngine()->getGraphics()->getScreenHeight());
+    setDimensions (0, 0, getEngine()->getGraphics()->getScreenWidth(),
+                            getEngine()->getGraphics()->getScreenHeight());
 }
 
 void GeneratorWindow::redraw() {

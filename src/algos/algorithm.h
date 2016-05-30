@@ -31,7 +31,7 @@ typedef std::map<Location, Node>             NodeMap;
 typedef std::map<Location, Node>::iterator   NodeMapIter;
 typedef std::vector<Location>       PathVector;
 
-typedef unsigned int (* costFunc ) (const Location& location, void* customData);
+typedef int (* costFunc ) (const Location& location, void* customData);
 typedef unsigned int (* neighbourFunc) (const Location& location, 
                                         Location* neighbours, 
                                         void* customData);

@@ -11,7 +11,7 @@
 #include "prefab_builder.h"
 
 static unsigned int getDistance (const Location& start, const Location& end, void* customData);
-static unsigned int getPathCost (const Location& location, void* customData);
+static int getPathCost (const Location& location, void* customData);
 static unsigned int findNeighbours4 (const Location& location, Location* neighbours, void* customData);
 static unsigned int findNeighbours8 (const Location& location, Location* neighbours, void* customData);
 
@@ -128,8 +128,8 @@ void DungeonGenerator::createEntitiesFromMap () {
 }
 
 bool DungeonGenerator::generateRoom () {
-    unsigned int width  = Utility::randBetween (3, 10);
-    unsigned int height = Utility::randBetween (3, 10);
+    unsigned int width  = Utility::randBetween (5, 10);
+    unsigned int height = Utility::randBetween (5, 10);
     unsigned int left   = Utility::randBetween (2, (m_mapWidth - width - 2));
     unsigned int top    = Utility::randBetween (2, (m_mapHeight - height - 2));
 
@@ -340,7 +340,7 @@ unsigned char DungeonGenerator::wallSprite (unsigned int x, unsigned int y)
     return 206;
 }
 
-static unsigned int getPathCost (const Location& location, void* customData)
+static int getPathCost (const Location& location, void* customData)
 {
     DungeonGenerator* l_gen = static_cast<DungeonGenerator*> (customData);
     unsigned char point = l_gen->getByCoordinate (location.x, location.y);

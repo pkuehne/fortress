@@ -14,7 +14,7 @@ bool operator< (const Node& lhs, const Node& rhs)
     return lhs.priority > rhs.priority;
 }
 
-unsigned int defaultCostFunction (const Location& location, void* customData)
+int defaultCostFunction (const Location& location, void* customData)
 {
     std::cout << "WARN: Using defaultCostFunction!" << std::endl;
     return 1;
@@ -80,7 +80,7 @@ void Algorithm::findPath (const Location& start, const Location& end, PathVector
         unsigned int validNeighbours = m_neighbourFunction (l_current.location, neighbours, m_customData);
         for (size_t ii = 0; ii < validNeighbours; ii++) {
             //TODO: not needed? if (neighbours[ii] < 0) continue; // Not a valid neighbour
-            unsigned int cost = m_costFunction (neighbours[ii], m_customData);
+            int cost = m_costFunction (neighbours[ii], m_customData);
             // If cost is -ve, we will close the node
 
             unsigned int path = l_current.distance + cost;

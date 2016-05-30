@@ -5,7 +5,7 @@
 #include "collider_component.h"
 #include <iostream>
 
-unsigned int getPathCost (const Location& location, void* customData);
+int getPathCost (const Location& location, void* customData);
 unsigned int findNeighbours4 (  const Location& location,
                                 Location* neighbours,
                                 void* customData);
@@ -210,7 +210,7 @@ void NpcSystem::update ()
     }
 }
 
-unsigned int getPathCost (const Location& location, void* customData)
+int getPathCost (const Location& location, void* customData)
 {
     GameEngineInterface* l_engine = static_cast<GameEngineInterface*> (customData);
     Tile& tile = l_engine->state()->tile(location);
@@ -220,7 +220,6 @@ unsigned int getPathCost (const Location& location, void* customData)
         if (l_engine->state()->components()->get<ColliderComponent>(entity)) return -999;
     }
     return 1;
-
 }
 
 unsigned int findNeighbours4 (  const Location& location,
