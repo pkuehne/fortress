@@ -1,9 +1,10 @@
-[_] 6% Game
-	[_] 0% Bugs
+[_] 17% Game
+	[_] 50% Bugs
 		[_] 0% getFocus() and loseFocs() should be called correctly
 		: At the moment they are only called once, when the window is created
 		: Instead they should be called each time the window is shown or
 		: hidden
+		[X] 100% NPCs don't follow their path when they lose LOS
 	[_] 18% Enhancements
 		[_] 0% Make Event Manager part of GameState
 		[_] 0% Make Windows only dependent on GameState
@@ -44,7 +45,7 @@
 					[_] 0% Save all areas
 					[_] 0% Save all entities
 					[_] 0% Save all components
-	[_] % Allow NPCs to traverse levels	
+	[_] 0% Allow NPCs to traverse levels	
 	[_] 0% Game Features
 		[_] 0% Animals
 			[_] 0% Food

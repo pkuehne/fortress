@@ -41,7 +41,7 @@ NpcSystem::NpcSystem()
 
     Transition HuntingToSearching;
     HuntingToSearching.condition = [](GameEngineInterface* g, EntityId e, NpcComponent* n){
-        return !canSeeTarget (g,e,n);
+        return n->path.empty() && !canSeeTarget (g,e,n);
     };
     HuntingToSearching.endState = NpcState::Searching;
     orcs[NpcState::Hunting].push_back(HuntingToSearching);
