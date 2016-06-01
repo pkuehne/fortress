@@ -18,6 +18,7 @@ public:
     Camera (GraphicsInterface* graphics, GameState* state);
     void setMapOffset (int x, int y, int z);
     void render(); 
+    void renderNpcPaths();
     bool& enabled() { return m_enabled; }
     Viewport& viewport () { return m_viewport; }
 private:

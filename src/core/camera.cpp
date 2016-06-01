@@ -2,7 +2,8 @@
 #include "location.h"
 #include "game_state.h"
 #include "graphics.h"
-#include <iostream>
+#include "sprite_component.h"
+#include "npc_component.h"
 
 Camera::Camera (GraphicsInterface* graphics, GameState* state)
 : m_graphics (graphics)
@@ -52,6 +53,29 @@ void Camera::render()
                                                 l_sprite->bgColor);
                     }
                 }
+            }
+        }
+    }
+    //renderNpcPaths();
+}
+void Camera::renderNpcPaths()
+{
+    for (EntityId entity : m_state->entities()) {
+        Location loc = m_state->location(entity);
+        int x = loc.x;
+        int y = loc.y;
+        if (    x < m_mapOffsetX || x + m_mapOffsetX > (int) m_viewport.width || 
+                y < m_mapOffsetY || y + m_mapOffsetY > (int) m_viewport.height) {
+            continue;
+        }
+        NpcComponent* npc = m_state->components()->get<NpcComponent> (entity);
+        if (npc) {
+            for (Location stepLoc : npc->path) {
+                m_graphics->drawTile (  stepLoc.y - m_mapOffsetY + m_viewport.y,
+                                        stepLoc.x - m_mapOffsetX + m_viewport.x,
+                                        'X',
+                                        Color (RED),
+                                        Color (BLACK));
             }
         }
     }

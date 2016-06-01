@@ -8,7 +8,6 @@
 #include "debug_window.h"
 #include "game_engine.h"
 #include "event.h"
-#include "sprite_component.h"
 #include "health_component.h"
 #include "droppable_component.h"
 #include "graphics_effect_component.h"
@@ -199,65 +198,6 @@ void MapWindow::drawMap()
 
     m_camera->setMapOffset (m_mapStartX, m_mapStartY, l_player.z);
     m_camera->render();
-
-    /*
-    int xWidth = m_mapStartX + m_mapWidth;
-    int yWidth = m_mapStartY + m_mapHeight;
-
-    for (int yy = m_mapStartY; yy < yWidth; yy++) {
-        for (int xx = m_mapStartX; xx < xWidth; xx++) {
-            Location loc (xx, yy, l_player.z);
-            if (!getEngine()->state()->isValidTile (loc)) continue;
-            Tile& l_tile = getEngine()->state()->tile(loc);
-
-            std::map<unsigned int, std::vector<SpriteComponent*> > l_sprites;
-            for (EntityId entity : l_tile.entities()) {
-                SpriteComponent* l_sprite = getEngine()->state()->components()->get<SpriteComponent> (entity);
-                if (!l_sprite) continue;
-                l_sprites[l_sprite->renderLayer].push_back (l_sprite);
-            }
-            l_sprites[0].push_back (&(l_tile.getFloor().getSprite()));
-
-            for (auto& layer : l_sprites) {
-                for (SpriteComponent* l_sprite : layer.second) {
-                    Color fgColor = l_sprite->fgColor;
-                    if (l_tile.lastVisited < getEngine()->getTurn()) {
-                        fgColor *= 0.4;
-                    }
-
-                    if (l_tile.lastVisited > 0 && l_tile.lastVisited + 200 > getEngine()->getTurn()) {
-                        drawTile (  yy + m_mapYOffset - m_mapStartY,
-                                xx + m_mapXOffset - m_mapStartX,
-                                l_sprite->sprite,
-                                fgColor,
-                                l_sprite->bgColor);
-                    }
-                }
-            }
-        }
-    }
-    if (m_debugMode) {
-        // Show NPC paths
-        for (EntityId entity : getEngine()->state()->entities()) {
-            Location loc = getEngine()->state()->location(entity);
-            int x = loc.x;
-            int y = loc.y;
-            if (x < m_mapStartX || x > xWidth || y < m_mapStartY || y > yWidth) continue;
-            NpcComponent* npc = getEngine()->state()->components()->get<NpcComponent> (entity);
-            if (npc) {
-                for (Location stepLoc : npc->path) {
-                    drawTile (  stepLoc.y + m_mapYOffset - m_mapStartY,
-                            stepLoc.x + m_mapXOffset - m_mapStartX,
-                            '+',
-                            Color (RED),
-                            Color (BLACK));
-                }
-            }
-        }
-    } else {
-        //
-    }
-    */
 
     return;
 }
