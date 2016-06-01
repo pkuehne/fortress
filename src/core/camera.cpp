@@ -2,28 +2,29 @@
 #include "location.h"
 #include "game_state.h"
 #include "graphics.h"
+#include <iostream>
 
-Camera::Camera (Graphics* graphics, GameState* state)
+Camera::Camera (GraphicsInterface* graphics, GameState* state)
 : m_graphics (graphics)
 , m_state (state)
 {
 
 }
 
-void Camera::setMapOffset (unsigned int x, unsigned y, unsigned z)
+void Camera::setMapOffset (int x, int y, int z)
 {
     m_mapOffsetX = x;
     m_mapOffsetY = y;
     m_mapOffsetZ = z;
 }
 
-void Camera::render() 
+void Camera::render()
 {
     unsigned int tileZ = m_mapOffsetZ;
     for (unsigned int yy = 0; yy < m_viewport.height; yy++) {
         unsigned int tileY = yy + m_mapOffsetY;
         for (unsigned int xx = 0; xx < m_viewport.width; xx++) {
-            unsigned int tileX = xx + m_mapOffsetY;
+            unsigned int tileX = xx + m_mapOffsetX;
             Location loc (tileX, tileY, tileZ);
             if (!m_state->isValidTile (loc)) continue;
 

@@ -2,9 +2,10 @@
 #define __CAMERA_H__
 
 class GameState;
-class Graphics;
+class GraphicsInterface;
 
 struct Viewport {
+public:
     unsigned int    x;
     unsigned int    y;
     unsigned int    width;
@@ -14,19 +15,19 @@ struct Viewport {
 class Camera 
 {
 public:
-    Camera (Graphics* graphics, GameState* state);
-    void setMapOffset (unsigned int x, unsigned y, unsigned z);
+    Camera (GraphicsInterface* graphics, GameState* state);
+    void setMapOffset (int x, int y, int z);
     void render(); 
     bool& enabled() { return m_enabled; }
     Viewport& viewport () { return m_viewport; }
 private:
-    Graphics*       m_graphics;
-    GameState*      m_state;
-    Viewport        m_viewport = {0};
-    unsigned int    m_mapOffsetX = 0;
-    unsigned int    m_mapOffsetY = 0;
-    unsigned int    m_mapOffsetZ = 0;
-    bool            m_enabled;
+    GraphicsInterface* m_graphics;
+    GameState*  m_state;
+    Viewport    m_viewport = {0};
+    int         m_mapOffsetX = 0;
+    int         m_mapOffsetY = 0;
+    int         m_mapOffsetZ = 0;
+    bool        m_enabled = true;
 };
 
 #endif

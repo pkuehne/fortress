@@ -17,16 +17,24 @@ void MovementSystem::handleEvent (const Event* event)
             Location l_oldLocation = m_engine->state()->location(l_entity);
             Location l_newLocation = l_event->newLocation;
 
+            if (!m_engine->state()->isValidTile (l_newLocation)) {
+                GraphicsEffectComponent* effect =
+                    getEngine()->state()->components()->make<GraphicsEffectComponent>(l_entity);
+                effect->type = EFFECT_BLINK_FAST;
+                effect->duration = 10;
+                return; // Don't update position if it's not valid
+            }
+
             //Check if we're running into a collidable or stairs, etc
             {
                 const EntityHolder& l_targets = m_engine->state()->tile(l_newLocation).entities();
                 for (EntityId l_target : l_targets) {
                     if (m_engine->state()->components()->get<ColliderComponent> (l_target)) {
-						GraphicsEffectComponent* effect = 
-                                                    getEngine()->state()->components()->make<GraphicsEffectComponent>(l_entity);
-						effect->type = EFFECT_BLINK_FAST;
-						effect->duration = 10;
-						return; // Don't update position if it's a collidable
+                        GraphicsEffectComponent* effect =
+                            getEngine()->state()->components()->make<GraphicsEffectComponent>(l_entity);
+                        effect->type = EFFECT_BLINK_FAST;
+                        effect->duration = 10;
+                        return; // Don't update position if it's a collidable
                     }
                     StairComponent* l_stair = m_engine->state()->components()->get<StairComponent> (l_target);
                     if (l_stair && l_stair->target && l_entity == m_engine->state()->player()) {

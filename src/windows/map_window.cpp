@@ -1,4 +1,5 @@
 #include "window.h"
+#include "camera.h"
 #include "map_window.h"
 #include "inspection_window.h"
 #include "equipment_window.h"
@@ -37,6 +38,7 @@ void MapWindow::gainFocus ()
     l_algo.initialise (getEngine());
     l_algo.calculateFov();
 
+    m_camera = new Camera (getEngine()->getGraphics(), getEngine()->state());
     std::cout << "Map gain focus" << std::endl;
 }
 
@@ -54,6 +56,11 @@ void MapWindow::resize()
     m_sidebarXOffset = getWidth() - m_sidebarWidth - 1;
     m_mapWidth  = getWidth() - m_mapXOffset - m_sidebarWidth - 1;
     m_mapHeight = getHeight() - m_mapYOffset - 1;
+
+    m_camera->viewport().width = m_mapWidth;
+    m_camera->viewport().height = m_mapHeight;
+    m_camera->viewport().x = m_mapXOffset;
+    m_camera->viewport().y = m_mapYOffset;
 }
 
 void MapWindow::keyDown (unsigned char key)
@@ -190,6 +197,10 @@ void MapWindow::drawMap()
     m_mapStartX = l_player.x - (m_mapWidth/2);
     m_mapStartY = l_player.y - (m_mapHeight/2);
 
+    m_camera->setMapOffset (m_mapStartX, m_mapStartY, l_player.z);
+    m_camera->render();
+
+    /*
     int xWidth = m_mapStartX + m_mapWidth;
     int yWidth = m_mapStartY + m_mapHeight;
 
@@ -246,6 +257,7 @@ void MapWindow::drawMap()
     } else {
         //
     }
+    */
 
     return;
 }
