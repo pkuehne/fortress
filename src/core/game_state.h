@@ -20,6 +20,10 @@ typedef struct {
     std::string message;
 } Message;
 
+struct Debug {
+    bool showNpcPaths = false;
+};
+
 typedef unsigned long long tick_t;
 
 class GameState {
@@ -35,6 +39,8 @@ class GameState {
         MapManager* map();
         EntityManager* entityManager();
         ComponentManager* components();
+
+        Debug& debug() { return m_debug; }
 
         Tile& tile (const Location&);
         bool isValidTile (const Location&);
@@ -65,6 +71,7 @@ class GameState {
         EntityManager*      m_entities = 0;
         ComponentManager*   m_components = 0;
         std::vector<Message>    m_messages;
+        Debug               m_debug;
 };
 
 #endif

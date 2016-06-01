@@ -21,6 +21,14 @@ void Camera::setMapOffset (int x, int y, int z)
 
 void Camera::render()
 {
+    renderSprites();
+    if (m_state->debug().showNpcPaths) {
+        renderNpcPaths();
+    }
+}
+
+void Camera::renderSprites()
+{
     unsigned int tileZ = m_mapOffsetZ;
     for (unsigned int yy = 0; yy < m_viewport.height; yy++) {
         unsigned int tileY = yy + m_mapOffsetY;
@@ -47,10 +55,10 @@ void Camera::render()
 
                     if (l_tile.lastVisited > 0 && l_tile.lastVisited + 200 > m_state->turn()) {
                         m_graphics->drawTile (  m_viewport.y + yy,
-                                                m_viewport.x + xx,
-                                                l_sprite->sprite,
-                                                fgColor,
-                                                l_sprite->bgColor);
+                                m_viewport.x + xx,
+                                l_sprite->sprite,
+                                fgColor,
+                                l_sprite->bgColor);
                     }
                 }
             }
@@ -58,6 +66,7 @@ void Camera::render()
     }
     //renderNpcPaths();
 }
+
 void Camera::renderNpcPaths()
 {
     for (EntityId entity : m_state->entities()) {

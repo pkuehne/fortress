@@ -142,6 +142,15 @@ int revealMap (lua_State* runtime)
     return 0;
 }
 
+int togglePaths (lua_State* runtime)
+{
+    GameState* state = getState (runtime);
+    
+    state->debug().showNpcPaths = !state->debug().showNpcPaths;
+    return 0;
+}
+
+
 void LuaWrapper::registerBindings()
 {
     lua_pushcfunction (m_runtime, createOrc);
@@ -153,5 +162,8 @@ void LuaWrapper::registerBindings()
 
     lua_pushcfunction (m_runtime, revealMap);
     lua_setglobal (m_runtime, "revealMap");
+
+    lua_pushcfunction (m_runtime, togglePaths);
+    lua_setglobal (m_runtime, "togglePaths");
 }
 
