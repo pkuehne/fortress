@@ -23,11 +23,11 @@ class GameStateTest : public ::testing::Test {
 
 TEST_F (GameStateTest, nextTurnAdvancesTurnNumber)
 {
-    EXPECT_EQ (0, state.getTurn());
+    EXPECT_EQ (0, state.turn());
     state.nextTurn();
-    EXPECT_EQ (1, state.getTurn());
+    EXPECT_EQ (1, state.turn());
     state.nextTurn();
-    EXPECT_EQ (2, state.getTurn());
+    EXPECT_EQ (2, state.turn());
 }
 
 TEST_F (GameStateTest, nextTurnSwapsPlayerTurn)

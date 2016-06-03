@@ -15,7 +15,7 @@ LDFLAGS= -g -rdynamic
 GLFW_LIBS=$(shell pkg-config glfw3 --libs --static)
 YAML_LIBS=$(shell pkg-config yaml-cpp --libs --static)
 LUA_LIBS=-L/usr/local/lib -llua
-LIBRARIES=$(GLFW_LIBS) $(YAML_LIBS) -lGL -lc -lm -lSOIL -lpthread -lglog 
+LIBRARIES=$(GLFW_LIBS) $(YAML_LIBS) $(LUA_LIBS) -lGL -lc -lm -lSOIL -lpthread -lglog 
 LIBRARIES+=-lgtest -lgmock -gcov
 
 SOURCES = $(foreach sdir, $(MODULES), $(wildcard $(sdir)/*.cpp))

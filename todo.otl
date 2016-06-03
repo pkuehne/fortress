@@ -1,11 +1,11 @@
-[_] 16% Game
+[_] 20% Game
 	[_] 50% Bugs
 		[_] 0% getFocus() and loseFocs() should be called correctly
 		: At the moment they are only called once, when the window is created
 		: Instead they should be called each time the window is shown or
 		: hidden
 		[X] 100% NPCs don't follow their path when they lose LOS
-	[_] 16% Enhancements
+	[_] 30% Enhancements
 		[_] 0% Make Event Manager part of GameState
 		[_] 0% Make Windows only dependent on GameState
 		[_] 0% Windows should be created templatized
@@ -15,18 +15,18 @@
 		[X] 100% NPCs
 			[X] 100% Make the Forester a little smarter
 		[_] 0% Remove GameEngine dependency from EntityManager
-		[_] 50% Camera
+		[X] 100% Camera
 			[X] 100% Window Width + Height
 			[X] 100% Map Offset x, y
-			[_] 0% Add debug path flag to GameState
-			[_] 0% Debug shows path of NPCs
-		[_] 0% Debug Class in GameState
+			[X] 100% Add debug path flag to GameState
+			[X] 100% Debug shows path of NPCs
+		[_] 75% Debug Class in GameState
 			: This shoudl not be saveable, but needs to be set from the Lua
 			: console
-			[_] 0% DebugFlag class
-			[_] 0% Show NPC paths
+			[X] 100% Debug class
+			[X] 100% Show NPC paths
 			[_] 0% Turn of FoW
-			[_] 0% Add Lua bindings
+			[X] 100% Add Lua bindings
 		[_] 0% Loading/Saving
 			[_] 0% Window
 				[_] 0% Save As Window

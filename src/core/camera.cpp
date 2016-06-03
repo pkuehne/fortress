@@ -4,6 +4,7 @@
 #include "graphics.h"
 #include "sprite_component.h"
 #include "npc_component.h"
+#include <glog/logging.h>
 
 Camera::Camera (GraphicsInterface* graphics, GameState* state)
 : m_graphics (graphics)
@@ -21,6 +22,8 @@ void Camera::setMapOffset (int x, int y, int z)
 
 void Camera::render()
 {
+    if (!m_enabled) return;
+
     renderSprites();
     if (m_state->debug().showNpcPaths) {
         renderNpcPaths();

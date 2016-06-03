@@ -1,14 +1,14 @@
 #include "location.h"
 
-bool Location::operator== (const Location& rhs) { 
-    return (rhs.area == area && rhs.x == x && rhs.y == y && rhs.z == z); 
+bool Location::operator== (const Location& rhs) const {
+    return (rhs.area == area && rhs.x == x && rhs.y == y && rhs.z == z);
 }
 
-bool Location::operator!= (const Location& rhs) { 
-    return !(*this == rhs); 
+bool Location::operator!= (const Location& rhs) const {
+    return !(*this == rhs);
 }
 
-bool Location::operator< (const Location& rhs) const { 
+bool Location::operator< (const Location& rhs) const {
     if (area > rhs.area) {
         return false;
     } else if (area < rhs.area) {

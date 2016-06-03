@@ -31,6 +31,7 @@ class GameState {
         GameState ( MapManager* map = new MapManager(),
                     EntityManager* entities = new EntityManager(),
                     ComponentManager* components = new ComponentManager());
+        virtual ~GameState() { }
 
         bool isPlayerTurn() { return m_playerTurn; }
         void nextTurn() { m_turn++; m_playerTurn = !m_playerTurn; }
@@ -43,7 +44,7 @@ class GameState {
         Debug& debug() { return m_debug; }
 
         Tile& tile (const Location&);
-        bool isValidTile (const Location&);
+        virtual bool isValidTile (const Location&);
 
         const EntityHolder& entities ();
         EntityHolder entities (const Location& loc);
