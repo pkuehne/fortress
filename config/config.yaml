@@ -5,6 +5,7 @@ WindowHeight: 600           # Only used if FULLSCREEN is set to 0
 Tileset: Phoebus_16x16.png  # Used for tiles on the map
 Tileset_Rows: 16
 Tileset_Cols: 16
-Fontset: curses_16x16.png  # Used for text not on the map
+#Fontset: curses_16x16.png  # Used for text not on the map
+Fontset: Phoebus_16x16.png  # Used for tiles on the map
 Fontset_Rows: 16
 Fontset_Cols: 16

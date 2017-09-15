@@ -25,7 +25,7 @@ void WindowManager::popWindow () {
 }
 
 void WindowManager::replaceWindow (WindowInterface* win) {
-	popWindow();
+    popWindow();
     pushWindow (win);
 }
 

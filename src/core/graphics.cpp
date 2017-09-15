@@ -5,7 +5,7 @@
 #include <iostream>
 #include <chrono>
 #include <thread>
-#include <SOIL.h>
+#include <SOIL/SOIL.h>
 #include <glog/logging.h>
 
 static Graphics* g_graphics = 0;
