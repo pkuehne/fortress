@@ -3,122 +3,171 @@
 #include "los_algorithm.h"
 #include "algorithm.h"
 #include "collider_component.h"
+#include "description_component.h"
 #include <iostream>
+#include <cmath>
 
 int getPathCost (const Location& location, void* customData);
 unsigned int findNeighbours4 (  const Location& location,
-                                Location* neighbours,
-                                void* customData);
+        Location* neighbours,
+        void* customData);
 unsigned int getDistance (const Location& start, const Location& end, void* customData);
 
 bool canSeeTarget (GameEngineInterface* engine, EntityId entity, NpcComponent* npc);
 bool canAttackTarget (GameEngineInterface* engine, EntityId entity, NpcComponent* npc);
 bool canMoveTo (GameEngineInterface* engine, Location& location);
 
+EntityId findNearestVisibleMatching(GameState* state,
+        const Location& location,
+        unsigned int radius,
+        std::string name);
+
 NpcSystem::NpcSystem()
 {
-    TransitionMap orcs;
+    StateMachine monster;
 
+    State NoneState;
     Transition NoneToIdle;
     NoneToIdle.condition = [](GameEngineInterface* g, EntityId e, NpcComponent* n){ return true; };
-    NoneToIdle.endState = NpcState::Idle;
-    orcs[NpcState::None].push_back(NoneToIdle);
+    NoneToIdle.endState = "Idle";
 
+    NoneState.transitions.push_back(NoneToIdle);
+    monster[""] = NoneState;
+
+    State IdleState;
     Transition IdleToSearching;
     IdleToSearching.condition = [](GameEngineInterface* g, EntityId e, NpcComponent* n){ return true; };
-    IdleToSearching.endState = NpcState::Searching;
-    orcs[NpcState::Idle].push_back(IdleToSearching);
+    IdleToSearching.endState = "Searching";
+    IdleState.transitions.push_back(IdleToSearching);
+    monster["Idle"] = IdleState;
 
+    State SearchingState;
     Transition SearchingToHunting;
     SearchingToHunting.condition = canSeeTarget;
-    SearchingToHunting.endState = NpcState::Hunting;
-    orcs[NpcState::Searching].push_back(SearchingToHunting);
+    SearchingToHunting.endState = "Hunting";
+    SearchingState.transitions.push_back(SearchingToHunting);
+    monster["Searching"] = SearchingState;
 
+    State HuntingState;
     Transition HuntingToAttacking;
     HuntingToAttacking.condition = canAttackTarget;
-    HuntingToAttacking.endState = NpcState::Attacking;
-    orcs[NpcState::Hunting].push_back(HuntingToAttacking);
+    HuntingToAttacking.endState = "Attacking";
+    HuntingState.transitions.push_back(HuntingToAttacking);
 
     Transition HuntingToSearching;
     HuntingToSearching.condition = [](GameEngineInterface* g, EntityId e, NpcComponent* n){
         return n->path.empty() && !canSeeTarget (g,e,n);
     };
-    HuntingToSearching.endState = NpcState::Searching;
-    orcs[NpcState::Hunting].push_back(HuntingToSearching);
+    HuntingToSearching.endState = "Searching";
+    HuntingState.transitions.push_back(HuntingToSearching);
 
     Transition HuntingNoPath;
     HuntingNoPath.condition = [](GameEngineInterface* g, EntityId e, NpcComponent* n){return n->path.empty();};
-    HuntingNoPath.endState = NpcState::Searching;
-    orcs[NpcState::Hunting].push_back(HuntingNoPath);
+    HuntingNoPath.endState = "Searching";
+    HuntingState.transitions.push_back(HuntingNoPath);
+    monster["Hunting"] = HuntingState;
 
+    State AttackingState;
     Transition AttackingNotPossible;
     AttackingNotPossible.condition = [](GameEngineInterface* g, EntityId e, NpcComponent* n){
         return !canAttackTarget(g,e,n);
     };
-    AttackingNotPossible.endState = NpcState::Hunting;
-    orcs[NpcState::Attacking].push_back(AttackingNotPossible);
+    AttackingNotPossible.endState = "Hunting";
+    AttackingState.transitions.push_back(AttackingNotPossible);
+    monster["Attacking"] = AttackingState;
 
-    m_stateMachine[0] = orcs;
+    m_stateMachines["monster"] = monster;
 
     // Humans
-    TransitionMap humans;
-    humans[NpcState::None].push_back(NoneToIdle);
+    StateMachine human;
+    human[""] = NoneState;
 
-    Transition IdleToWandering;
-    IdleToWandering.condition = [](GameEngineInterface* g, EntityId e, NpcComponent* n){return true;};
-    IdleToWandering.endState = NpcState::Wandering;
-    humans[NpcState::Idle].push_back(IdleToWandering);
+    Transition IdleToSeeking;
+    IdleToSeeking.condition = [](GameEngineInterface* g, EntityId e, NpcComponent* n){return true;};
+    IdleToSeeking.endState = "Seeking";
+    IdleState.transitions.clear();
+    IdleState.transitions.push_back(IdleToSeeking);
+    human["Idle"] = IdleState;
 
-    m_stateMachine[1] = humans;
+    State SeekingState;
+    Transition SeekingToMoving;
+    SeekingToMoving.condition = [](GameEngineInterface* g, EntityId e, NpcComponent* n){return n->target != 0;};
+    SeekingToMoving.endState = "Moving";
+    SeekingState.transitions.push_back(SeekingToMoving);
+    human["Seeking"] = SeekingState;
+
+    State MovingState;
+    Transition MovingToAttacking;
+    MovingToAttacking.condition = canAttackTarget;
+    MovingToAttacking.endState = "Attacking";
+    MovingState.transitions.push_back(MovingToAttacking);
+    human["Moving"] = MovingState;
+
+    human["Attacking"] = AttackingState;
+    m_stateMachines["human"] = human;
 }
 
 void NpcSystem::changeState (EntityId entity, NpcComponent* npc)
 {
-    switch (npc->state) {
-        case NpcState::Hunting:
-            // Move towards
-            setPathToTarget (entity, npc->target, npc);
-            if (!npc->path.empty()) {
-                moveTowards (entity, npc->path[0]);
-                npc->path.erase(npc->path.begin());
-            }
-            break;
-        case NpcState::Attacking:
-            {
-                AttackEntityEvent* l_event = new AttackEntityEvent;
-                l_event->attacker = entity;
-                l_event->defender = npc->target;
-                getEngine()->raiseEvent (l_event);
-                break;
-            }
-        case NpcState::Searching:
-            npc->target = getEngine()->state()->player();
-            // Walk around
-            break;
-        case NpcState::Wandering:
-            {
-                LOG(INFO) << "Wandering around" << std::endl;
-                Location oldLoc = getEngine()->state()->location(entity);
-                Location newLoc = getEngine()->state()->location(oldLoc, npc->lastDirection);
-                unsigned int c = 0;
-                while (c++ < 30 && (newLoc == oldLoc || !canMoveTo(getEngine(), newLoc))) {
-                    npc->lastDirection = static_cast<Direction>(Utility::randBetween (1, 4));
-                    newLoc = getEngine()->state()->location(oldLoc, npc->lastDirection);
-                }
+    if (npc->state == "") {
+        // Entry state
+    }
+    if (npc->state == "Hunting")
+    {
+        // Move towards
+        setPathToTarget (entity, npc->target, npc);
+        if (!npc->path.empty()) {
+            moveTowards (entity, npc->path[0]);
+            npc->path.erase(npc->path.begin());
+        }
+    }
+    if (npc->state == "Attacking")
+    {
+        AttackEntityEvent* l_event = new AttackEntityEvent;
+        l_event->attacker = entity;
+        l_event->defender = npc->target;
+        getEngine()->raiseEvent (l_event);
+    }
+    if (npc->state == "Searching")
+    {
+        npc->target = getEngine()->state()->player();
+        // Walk around
+    }
+    if (npc->state == "Wandering")
+    {
+        //Todo: Remove, kept for reference purpose
+        LOG(INFO) << "Wandering around" << std::endl;
+        Location oldLoc = getEngine()->state()->location(entity);
+        Location newLoc = getEngine()->state()->location(oldLoc,
+                npc->lastDirection);
+        unsigned int c = 0;
+        while (c++ < 30 && (newLoc == oldLoc ||
+                    !canMoveTo(getEngine(), newLoc))) {
+            npc->lastDirection = static_cast<Direction>(
+                    Utility::randBetween (1, 4));
+            newLoc = getEngine()->state()->location(oldLoc,
+                    npc->lastDirection);
+        }
 
-                moveTowards (entity, newLoc);
-            }
-            break;
-        case NpcState::Idle:
-            // Nothing to do
-            break;
-        case NpcState::None:
-            // Entry state
-            break;
-        default:
-            LOG(ERROR) << "Invalid state detected: " << (int)npc->state << std::endl;
-            break;
-    };
+        moveTowards (entity, newLoc);
+    }
+    if (npc->state == "Seeking")
+    {
+        npc->target = findNearestVisibleMatching(
+                getEngine()->state(),
+                getEngine()->state()->location(entity),
+                npc->losDistance,
+                npc->attribs["seek_target"]);
+    }
+    if (npc->state == "Moving")
+    {
+        // Move towards
+        setPathToTarget (entity, npc->target, npc);
+        if (!npc->path.empty()) {
+            moveTowards (entity, npc->path[0]);
+            npc->path.erase(npc->path.begin());
+        }
+    }
 }
 
 bool canSeeTarget (GameEngineInterface* engine, EntityId entity, NpcComponent* npc)
@@ -127,10 +176,11 @@ bool canSeeTarget (GameEngineInterface* engine, EntityId entity, NpcComponent* n
     los.initialise (engine);
 
     return (los.hasLos(
-        engine->state()->location(npc->target),
-        engine->state()->location(entity)));
+                engine->state()->location(npc->target),
+                engine->state()->location(entity)));
 }
 
+// Todo: Rename to "Completed move" or similar
 bool canAttackTarget (GameEngineInterface* engine, EntityId entity, NpcComponent* npc)
 {
     EntityHolder l_entities;
@@ -158,8 +208,8 @@ void NpcSystem::setPathToTarget (EntityId entity, EntityId target, NpcComponent*
     PathVector l_path;
     //std::cout << "Path from " << enemyLoc << " to " << playerLoc << std::endl;
     algo.findPath ( getEngine()->state()->location(entity),
-                    getEngine()->state()->location(target),
-                    l_path);
+            getEngine()->state()->location(target),
+            l_path);
 
     if (l_path.empty()) {
         return;
@@ -189,22 +239,34 @@ void NpcSystem::handleEvent (const Event* event)
 void NpcSystem::update ()
 {
     if (getEngine()->isPlayerTurn()) return;
-    for (EntityId entity : getEngine()->state()->entities()) {
-        NpcComponent* npc = getEngine()->state()->components()->get<NpcComponent> (entity);
+    const EntityHolder& entities = getEngine()->state()->entities();
+    for (EntityId entity : entities) {
+        NpcComponent* npc =
+            getEngine()->state()->components()->get<NpcComponent> (entity);
         if (npc == 0) continue;
 
-        TransitionMap& transitions = m_stateMachine[npc->stateMachine];
-        for (Transition& transition : transitions[npc->state]) {
+        State currentState = m_stateMachines[npc->stateMachine][npc->state];
+        TransitionList& transitions = currentState.transitions;
+        for (Transition& transition : transitions) {
             if (transition.condition (getEngine(), entity, npc)) {
-                LOG(INFO) << "Changing state from " << (int) npc->state
-                    << " to " << (int) transition.endState
-                    << " for " << entity
+                LOG(INFO) << "Changing state from <" << npc->state
+                    << "> to <" << transition.endState
+                    << "> for " << entity
                     << std::endl;
+                if (currentState.onLeave) {
+                    currentState.onLeave(getEngine(), entity, npc);
+                }
                 npc->state = transition.endState;
+                currentState = m_stateMachines[npc->stateMachine][npc->state];
+                if (currentState.onEntry) {
+                    currentState.onEntry(getEngine(), entity, npc);
+                }
                 break;
             }
         }
-        // handleCurrentState (entity, npc);
+        if (currentState.onUpdate) {
+            currentState.onUpdate(getEngine(), entity, npc);
+        }
         changeState (entity, npc);
     }
 }
@@ -222,8 +284,8 @@ int getPathCost (const Location& location, void* customData)
 }
 
 unsigned int findNeighbours4 (  const Location& location,
-                                Location* neighbours,
-                                void* customData)
+        Location* neighbours,
+        void* customData)
 {
     GameEngineInterface* l_engine = static_cast<GameEngineInterface*> (customData);
 
@@ -261,3 +323,25 @@ bool canMoveTo (GameEngineInterface* engine, Location& location)
     }
     return true;
 }
+
+EntityId findNearestVisibleMatching(GameState* state,
+        const Location& location,
+        unsigned int radius,
+        std::string name)
+{
+    EntityId retval = 0;
+    unsigned int minDist = 1000.0;
+    EntityHolder entities = state->map()->findEntitiesNear(location, radius);
+    for (EntityId entity : entities) {
+        Location loc = state->location(entity);
+        unsigned int dist = abs(loc.x-location.x)+abs(loc.y-location.y);
+        auto* desc =
+            state->components()->get<DescriptionComponent> (entity);
+        if (desc == 0) continue;
+        if (desc->title == name && dist < minDist) {
+            retval = entity;
+        }
+    }
+    return retval;
+}
+

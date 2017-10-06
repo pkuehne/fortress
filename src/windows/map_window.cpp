@@ -155,7 +155,7 @@ void MapWindow::keyDown (unsigned char key)
         std::cout << "Switching debug mode" << std::endl;
         m_debugMode = !m_debugMode;
         EntityId player = getEngine()->state()->player();
-        GraphicsEffectComponent* effect = 
+        GraphicsEffectComponent* effect =
             getEngine()->state()->components()->make<GraphicsEffectComponent>(player);
         effect->type = EFFECT_BLINK_FAST;
         effect->duration = 20;
@@ -237,29 +237,28 @@ void MapWindow::drawSidebar ()
     }
 
     // Actions to take
-    drawString (getHeight()-10, m_sidebarXOffset+2, "Save Game");
-    drawString (getHeight()-10, m_sidebarXOffset+2, "S", Color (GREEN));
+    drawCommandString(getHeight()-10, m_sidebarXOffset+2, "Save Game", 0);
 
-    drawString (getHeight()-8, m_sidebarXOffset+2, "pickup Items");
-    drawString (getHeight()-8, m_sidebarXOffset+2, "p", Color (GREEN));
+    drawCommandString(getHeight()-8, m_sidebarXOffset+2, "pickup Items", 0);
 
-    drawString (getHeight()-7, m_sidebarXOffset+2, "move (wasd)");
-    drawString (getHeight()-7, m_sidebarXOffset+2, "m", Color (GREEN));
-    if (m_action == 'm') drawString (getHeight()-7, m_sidebarXOffset+1, ">", Color (RED));
+    drawCommandString(getHeight()-7, m_sidebarXOffset+2, "move (wasd)", 0);
+    if (m_action == 'm') {
+        drawString (getHeight()-7, m_sidebarXOffset+1, ">", Color (RED));
+    }
 
-    drawString (getHeight()-6, m_sidebarXOffset+2, "attack (wasd)");
-    drawString (getHeight()-6, m_sidebarXOffset+7, "k", Color (GREEN));
-    if (m_action == 'k') drawString (getHeight()-6, m_sidebarXOffset+1, ">", Color (RED));
+    drawCommandString(getHeight()-6, m_sidebarXOffset+2, "attack (wasd)", 5);
+    if (m_action == 'k') {
+        drawString (getHeight()-6, m_sidebarXOffset+1, ">", Color (RED));
+    }
 
-    drawString (getHeight()-5, m_sidebarXOffset+2, "inspect (wasd)");
-    drawString (getHeight()-5, m_sidebarXOffset+2, "i", Color (GREEN));
-    if (m_action == 'i') drawString (getHeight()-5, m_sidebarXOffset+1, ">", Color (RED));
+    drawCommandString(getHeight()-5, m_sidebarXOffset+2, "inspect (wasd)", 0);
+    if (m_action == 'i') {
+        drawString (getHeight()-5, m_sidebarXOffset+1, ">", Color (RED));
+    }
 
-    drawString (getHeight()-4, m_sidebarXOffset+2, "skip turn (.)");
-    drawString (getHeight()-4, m_sidebarXOffset+13, ".", Color (GREEN));
+    drawCommandString(getHeight()-4, m_sidebarXOffset+2, "skip turn (.)", 11);
 
-    drawString (getHeight()-2, m_sidebarXOffset+2, "View Equipment");
-    drawString (getHeight()-2, m_sidebarXOffset+7, "E", Color (GREEN));
+    drawCommandString(getHeight()-2, m_sidebarXOffset+2, "View Vquipment", 5);
 }
 
 void MapWindow::drawProgressBar (int x, int y, int value)

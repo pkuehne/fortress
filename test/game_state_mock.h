@@ -5,8 +5,9 @@
 #include <gmock/gmock.h>
 
 class GameStateMock : public GameState {
-public: 
-    MOCK_METHOD1 (isValidTile, bool (const Location&));
+    public:
+        MOCK_METHOD1 (isValidTile, bool (const Location&));
+        MOCK_METHOD0 (entities, const EntityHolder& ());
 };
 
 #endif

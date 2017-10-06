@@ -49,13 +49,3 @@ TEST_F (GameStateTest, mapReturnsParameter)
     EXPECT_EQ (&map, state.map());
 }
 
-TEST_F (GameStateTest, gettingTilecallsMapManagerGetTile)
-{
-    // TODO: this is a pointless test and needs to be removed
-    Location location;
-    Tile tile;
-
-    EXPECT_CALL (map, getTile (_)).WillOnce (
-            ReturnRef (tile));
-    state.tile(location);
-}

@@ -1,21 +1,23 @@
-[_] % Alpha 4
-	[_] % WindowManager upgrade	
+[_] 28% Alpha 4
+	[_] 20% WindowManager upgrade
 		[_] 0% Windows should be created templatized
 			[_] 0% WindowManager has create<T>(args, retval) function
 			[_] 0% create<T>() function calls initialise
 			[_] 0% Add onCreate() and onDestroy() functions
-		[_] % Correct Focus support
+		[_] 0% Correct Focus support
 			[_] 0% getFocus() and loseFocs() should be called correctly
 			: At the moment they are only called once, when the window is created
 			: Instead they should be called each time the window is shown or
 			: hidden
 		[_] 0% Make Windows only dependent on GameState
-		[_] % Differentiate drawChar() from drawTile()
+		[X] 100% Differentiate drawChar() from drawTile()
 		: The first uses the Fontset, the second the GraphicsSet
-	[X] 100% Make NPCs smarter
+		[_] 0% Move graphicsBegin/End out of WindowManager engine
+			[_] 0% Add unit tests
+	[_] 50% Make NPCs smarter
 		[X] 100% Make the Forester a little smarter
-		[_] 0% Allow NPCs to traverse levels	
-	[_] % Better rendering code
+		[_] 0% Allow NPCs to traverse levels
+	[X] 100% Better rendering code
 		[X] 100% Camera
 			[X] 100% Window Width + Height
 			[X] 100% Map Offset x, y
@@ -31,7 +33,7 @@
 				[_] 0% List all save games
 				[_] 0% Selecting one calls load on GameState
 				[_] 0% Hook into main window
-		[_] % Process
+		[_] 0% Process
 			[_] 0% Loading
 				[_] 0% Load all areas
 				[_] 0% Load all entities
@@ -40,10 +42,17 @@
 				[_] 0% Save all areas
 				[_] 0% Save all entities
 				[_] 0% Save all components
-[_] 20% Game
-	[_] 50% Bugs
-		[X] 100% NPCs don't follow their path when they lose LOS
-	[_] 30% Enhancements
+	[_] % Organization
+		[_] % Entities not in current area should be moved
+			[_] % Add EntityHolder to MapInfo definition
+			[_] % Could be held in GameState instead
+			[_] % MapManager could then be loaded with MapInfo
+	[_] 0% Address Todos in the code
+		[_] game_engine.cpp:71
+	[_] 0% GameState
+		[_] Move turn and tick info into GameState
+[_] 39% Game
+	[_] 18% Enhancements
 		[_] 0% Make Event Manager part of GameState
 		[_] 0% Remove GameEngine dependency from EntityManager
 		[_] 75% Debug Class in GameState

@@ -34,6 +34,7 @@ unsigned int Window::drawString (int y, int x, const char* text, Color fg, Color
 
 unsigned int Window::drawCommandString (int y, int x, const char* text, int pos, bool active)
 {
+    char command[2] = {0};
     if (x < 0)
         x = (m_width/2) - (strlen(text)/2);
     Color fg = Color(WHITE);
@@ -46,7 +47,8 @@ unsigned int Window::drawCommandString (int y, int x, const char* text, int pos,
     }
 
     unsigned int retval = drawString (y, x, text, fg, bg);
-    drawTile (y, x, text[pos], cc, bg);
+    command[0] = text[pos];
+    retval += drawString (y, x+pos, command, cc, bg);
     return retval;
 }
 

@@ -1,8 +1,10 @@
 #ifndef MAP_MANAGER_H
 #define MAP_MANAGER_H
 
-#include "map_manager_interface.h"
 #include <map>
+#include <utility.h>
+#include <entity.h>
+#include <tile.h>
 
 class Location;
 
@@ -16,7 +18,8 @@ struct MapInfo {
 };
 
 
-class MapManager : public MapManagerInterface {
+class MapManager
+{
 private:
     unsigned int loc2index (const Location& loc);
 public:

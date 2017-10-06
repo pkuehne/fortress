@@ -8,30 +8,35 @@
 #include <vector>
 
 typedef bool (*ConditionFunc) (GameEngineInterface*, EntityId, NpcComponent*);
+typedef void (*ActionFunc) (GameEngineInterface*, EntityId, NpcComponent*);
+
 struct Transition {
     ConditionFunc   condition;
-    NpcState        endState;
+    std::string     endState;
+};
+typedef std::vector<Transition> TransitionList;
+
+struct State {
+    ActionFunc      onEntry     = nullptr;
+    ActionFunc      onUpdate    = nullptr;
+    ActionFunc      onLeave     = nullptr;
+    TransitionList  transitions;
 };
 
-typedef std::map<NpcState, std::vector<Transition>> TransitionMap;
-typedef std::map<unsigned int, TransitionMap> StateMachine;
+typedef std::map<std::string, State> StateMachine;
 
 class NpcSystem : public GameSystemBase {
 public:
     NpcSystem();
     virtual void handleEvent (const Event* event);
     virtual void update ();
+
 private:
-    //Location getRandomDirection (const Location& oldLocation);
-    //Location getPlayerDirectionIfNearby (EntityId npc);
-
-    //bool canAttackPlayer(const Location& location);
-
     void changeState (EntityId entity, NpcComponent* npc);
     void setPathToTarget (EntityId entity, EntityId target, NpcComponent* npc);
     void moveTowards (EntityId entity, const Location& location);
 
-    StateMachine m_stateMachine;
+    std::map<std::string, StateMachine> m_stateMachines;
 };
 
 

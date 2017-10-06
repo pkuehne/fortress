@@ -3,22 +3,16 @@
 
 #include "component_base.h"
 #include "utility.h"
-
-enum class NpcState {
-    None        = 0,
-    Idle        = 1,
-    Searching   = 2,
-    Hunting     = 3,
-    Attacking   = 4,
-    Wandering   = 5,
-};
+#include <map>
 
 struct NpcComponent : ComponentBase {
     std::vector<Location>   path;
-    NpcState                state           = NpcState::None;
+    std::string             state           = "";
     EntityId                target          = 0;
-    unsigned int            stateMachine    = 0;
     Direction               lastDirection   = Direction::None;
+    std::map<std::string, std::string>  attribs;
+    std::string             stateMachine    = "";
+    unsigned int            losDistance     = 15;
 };
 
 #endif

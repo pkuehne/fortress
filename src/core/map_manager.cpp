@@ -52,7 +52,9 @@ EntityHolder MapManager::findEntitiesNear (const Location& location, unsigned ra
 
     for (int yy = starty; yy <= endy; yy++) {
         for (int xx = startx; xx <= endx; xx++) {
-            for (EntityId id : getTile (Location(xx, yy, location.z)).entities()) {
+            Location loc(xx, yy, location.z);
+            if (!isValidTile(loc)) continue;
+            for (EntityId id : getTile (loc).entities()) {
                 l_entities.insert (id);
             }
         }

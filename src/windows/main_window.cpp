@@ -20,7 +20,7 @@ void MainWindow::redraw() {
     drawCommandString (yPos += spacing, -1, "Quickstart!", 0);
     drawCommandString (yPos += spacing, -1, "Create New World", 0);
     drawCommandString (yPos += spacing, -1, "Load Existing World", 0);
-    drawCommandString (yPos += spacing, -1, "Start The Turorial", 0, false);
+    drawCommandString (yPos += spacing, -1, "Start The Tutorial", 0, false);
 
 }
 
