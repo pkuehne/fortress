@@ -329,6 +329,11 @@ EntityId PrefabBuilder::createTreePrefab(Location& location)
     l_description->title = "Tree";
     l_description->text = "Or maybe an Ent...?";
 
+    // Health Component
+    HealthComponent* l_health =
+        m_state->components()->make<HealthComponent>(l_entity);
+    l_health->health = 2;
+
     m_state->components()->make<ColliderComponent>(l_entity);
 
     return l_entity;
@@ -382,7 +387,7 @@ EntityId PrefabBuilder::createForesterPrefab (Location& location)
         m_state->components()->make<NpcComponent>(l_entity);
     l_npc->state = "";
     l_npc->stateMachine = "human";
-    l_npc->attribs["seek_target"] = "Player";
+    l_npc->attribs["seek_target"] = "Tree";
 
     // Euipment Component
     EquipmentComponent* l_equipment =

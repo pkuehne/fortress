@@ -32,7 +32,6 @@ TEST_F (NpcSystemTest, onPlayerTurnDoNothing)
 
 TEST_F (NpcSystemTest, updateLoopsThroughAllNpc)
 {
-    /*
     EXPECT_CALL(engine, isPlayerTurn()).WillOnce(Return(false));
 
     EntityId entity = 12345;
@@ -41,5 +40,4 @@ TEST_F (NpcSystemTest, updateLoopsThroughAllNpc)
     EXPECT_CALL(state, entities()).WillOnce(ReturnRef(entities));
 
     system.update();
-    */
 }

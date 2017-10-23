@@ -53,14 +53,14 @@ void EntityManager::destroyEntity (EntityId id) {
 void EntityManager::setLocation (EntityId entity, Location& location)
 {
     if (validLocation (m_locations[entity])) {
-    	m_engine->state()->tile(m_locations[entity]).removeEntity (entity);
-    	m_entities[location.area].erase (entity);
+        m_engine->state()->tile(m_locations[entity]).removeEntity (entity);
+        m_entities[location.area].erase (entity);
     }
     m_locations[entity] = location;
     m_engine->state()->map()->setArea (location.area);
     if (validLocation (m_locations[entity])) {
-    	m_engine->state()->tile(m_locations[entity]).addEntity (entity);
-    	m_entities[location.area].insert (entity);
+        m_engine->state()->tile(m_locations[entity]).addEntity (entity);
+        m_entities[location.area].insert (entity);
     }
 }
 

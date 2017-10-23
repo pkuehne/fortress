@@ -13,7 +13,7 @@
 void CombatSystem::handleEvent (const Event* event)
 {
     switch (event->getType()) {
-        case EVENT_ATTACK_ENTITY: 
+        case EVENT_ATTACK_ENTITY:
             {
                 const AttackEntityEvent* l_event = static_cast<const AttackEntityEvent*> (event);
                 handleAttack (l_event->attacker, l_event->defender);
@@ -24,7 +24,7 @@ void CombatSystem::handleEvent (const Event* event)
     }
 }
 
-void CombatSystem::handleAttack (EntityId attacker, EntityId defender) 
+void CombatSystem::handleAttack (EntityId attacker, EntityId defender)
 {
     EquipmentComponent* l_attackerEquipment = m_engine->state()->components()->get<EquipmentComponent>(attacker);
     unsigned int damage = 1;
@@ -40,7 +40,7 @@ void CombatSystem::handleAttack (EntityId attacker, EntityId defender)
     }
     updateLog (attacker, defender, damage);
 
-    GraphicsEffectComponent* effect = 
+    GraphicsEffectComponent* effect =
         getEngine()->state()->components()->make<GraphicsEffectComponent>(defender);
     effect->type = EFFECT_CHANGE_COLOR;
     effect->duration = 15;

@@ -6,6 +6,7 @@
 
 class GameStateMock : public GameState {
     public:
+        // GameStateMock() : GameState(nullptr, nullptr, nullptr) {}
         MOCK_METHOD1 (isValidTile, bool (const Location&));
         MOCK_METHOD0 (entities, const EntityHolder& ());
 };

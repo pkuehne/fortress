@@ -46,8 +46,8 @@ class GameState {
         Tile& tile (const Location&);
         virtual bool isValidTile (const Location&);
 
-        const EntityHolder& entities ();
-        EntityHolder entities (const Location& loc);
+        virtual const EntityHolder& entities ();
+        virtual EntityHolder entities (const Location& loc);
 
         Location location (EntityId entity);
         Location location (const Location&, Direction direction);

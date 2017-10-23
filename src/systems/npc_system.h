@@ -26,17 +26,15 @@ struct State {
 typedef std::map<std::string, State> StateMachine;
 
 class NpcSystem : public GameSystemBase {
-public:
-    NpcSystem();
-    virtual void handleEvent (const Event* event);
-    virtual void update ();
+    public:
+        NpcSystem();
+        virtual void handleEvent (const Event* event);
+        virtual void update ();
 
-private:
-    void changeState (EntityId entity, NpcComponent* npc);
-    void setPathToTarget (EntityId entity, EntityId target, NpcComponent* npc);
-    void moveTowards (EntityId entity, const Location& location);
+    private:
+        void createHumanStateMachine();
 
-    std::map<std::string, StateMachine> m_stateMachines;
+        std::map<std::string, StateMachine> m_stateMachines;
 };
 
 
