@@ -258,7 +258,7 @@ void MapWindow::drawSidebar ()
 
     drawCommandString(getHeight()-4, m_sidebarXOffset+2, "skip turn (.)", 11);
 
-    drawCommandString(getHeight()-2, m_sidebarXOffset+2, "View Vquipment", 5);
+    drawCommandString(getHeight()-2, m_sidebarXOffset+2, "View Equipment", 5);
 }
 
 void MapWindow::drawProgressBar (int x, int y, int value)

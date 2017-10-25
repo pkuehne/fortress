@@ -33,64 +33,60 @@ void EquipmentWindow::redraw() {
     EntityId player = getEngine()->state()->player();
     EquipmentComponent* equipment = getEngine()->state()->components()->get<EquipmentComponent>(player);
 
-    if (m_selectedPage == 0) drawTile (2, 3, '>', Color (RED), Color (GREY));
+    if (m_selectedPage == 0) drawString (2, 3, ">", Color (RED), Color (GREY));
     drawString (2, 4, "Equipment", Color (GREY));
-    if (m_selectedPage == 1) drawTile (2, 15, '>', Color (RED), Color (GREY));
+    if (m_selectedPage == 1) drawString (2, 15, ">", Color (RED), Color (GREY));
     drawString (2, 16, "Rucksack", Color (GREY));
 
     if (m_selectedPage == 0) {
+        unsigned int pointer_loc = 0;
         drawString (4, 2, "Wielding");
 
-        if (m_selectedItem && m_selectedItem == equipment->rightHandWieldable) drawTile (5, 3, '>', Color (RED), Color (GREY));
-        drawString (5, 4, "r", Color (GREEN));
-        drawString (5, 5, "ight:");
+        if (m_selectedItem && m_selectedItem == equipment->rightHandWieldable) pointer_loc = 5;
+        drawCommandString (5, 4, "right:", 0);
         drawString (5, 11, nameOrNothing (equipment->rightHandWieldable, getEngine()));
 
-        if (m_selectedItem && m_selectedItem == equipment->leftHandWieldable) drawTile (6, 3, '>', Color (RED), Color (GREY));
-        drawString (6, 4, "l", Color (GREEN));
-        drawString (6, 5, "eft :");
+        if (m_selectedItem && m_selectedItem == equipment->leftHandWieldable) pointer_loc = 6;
+        drawCommandString (6, 4, "left :", 0);
         drawString (6, 11, nameOrNothing (equipment->leftHandWieldable, getEngine()));
 
         drawString (8, 2, "Wearing");
 
-        if (m_selectedItem && m_selectedItem == equipment->headWearable) drawTile (9, 3, '>', Color (RED), Color (GREY));
-        drawString (9, 4, "h", Color (GREEN));
-        drawString (9, 5, "ead :");
+        if (m_selectedItem && m_selectedItem == equipment->headWearable) pointer_loc = 9;
+        drawCommandString (9, 4, "head :", 0);
         drawString (9, 11, nameOrNothing (equipment->headWearable, getEngine()));
 
-        if (m_selectedItem && m_selectedItem == equipment->faceWearable) drawTile (10, 3, '>', Color (RED), Color (GREY));
-        drawString (10, 4, "f", Color (GREEN));
-        drawString (10, 5, "ace :");
+        if (m_selectedItem && m_selectedItem == equipment->faceWearable) pointer_loc = 10;
+        drawCommandString (10, 4, "face :", 0);
         drawString (10, 11, nameOrNothing (equipment->faceWearable, getEngine()));
 
-        if (m_selectedItem && m_selectedItem == equipment->chestWearable) drawTile (11, 3, '>', Color (RED), Color (GREY));
-        drawString (11, 4, "c", Color (GREEN));
-        drawString (11, 5, "hest:");
+        if (m_selectedItem && m_selectedItem == equipment->chestWearable) pointer_loc = 11;
+        drawCommandString (11, 4, "chest:", 0);
         drawString (11, 11, nameOrNothing (equipment->chestWearable, getEngine()));
 
-        if (m_selectedItem && m_selectedItem == equipment->armsWearable) drawTile (12, 3, '>', Color (RED), Color (GREY));
-        drawString (12, 4, "a", Color (GREEN));
-        drawString (12, 5, "rms :");
+        if (m_selectedItem && m_selectedItem == equipment->armsWearable) pointer_loc = 12;
+        drawCommandString (12, 4, "arms :", 0);
         drawString (12, 11, nameOrNothing (equipment->armsWearable, getEngine()));
 
-        if (m_selectedItem && m_selectedItem == equipment->handsWearable) drawTile (13, 3, '>', Color (RED), Color (GREY));
-        drawString (13, 4, "hands:");
-        drawString (13, 7, "d", Color (GREEN));
+        if (m_selectedItem && m_selectedItem == equipment->handsWearable) pointer_loc = 13;
+        drawCommandString (13, 4, "hands:", 3);
         drawString (13, 11, nameOrNothing (equipment->handsWearable, getEngine()));
 
-        if (m_selectedItem && m_selectedItem == equipment->legsWearable) drawTile (14, 3, '>', Color (RED), Color (GREY));
-        drawString (14, 4, "legs :");
-        drawString (14, 5, "e", Color (GREEN));
+        if (m_selectedItem && m_selectedItem == equipment->legsWearable) pointer_loc = 14;
+        drawCommandString (14, 4, "legs :", 1);
         drawString (14, 11, nameOrNothing (equipment->legsWearable, getEngine()));
 
-        if (m_selectedItem && m_selectedItem == equipment->feetWearable) drawTile (15, 3, '>', Color (RED), Color (GREY));
-        drawString (15, 4, "feet :");
-        drawString (15, 7, "t", Color (GREEN));
+        if (m_selectedItem && m_selectedItem == equipment->feetWearable) pointer_loc = 15;
+        drawCommandString (15, 4, "feet :", 3);
         drawString (15, 11, nameOrNothing (equipment->feetWearable, getEngine()));
+
+        if (pointer_loc) {
+            drawString(pointer_loc, 3, ">", Color(RED), Color(GREY));
+        }
 
     } else {
         for (size_t ii = 0; ii < equipment->carriedEquipment.size(); ii++) {
-            if (equipment->carriedEquipment[ii] == m_selectedItem) drawTile (ii+4, 4, '>', Color (RED), Color (GREY));
+            if (equipment->carriedEquipment[ii] == m_selectedItem) drawString (ii+4, 4, ">", Color (RED), Color (GREY));
             drawTile (ii+4, 5, ii+65, Color (GREEN), Color (GREY));
             drawString (ii+4, 7, nameOrNothing (equipment->carriedEquipment[ii], getEngine()));
         }
@@ -103,22 +99,16 @@ void EquipmentWindow::redraw() {
     } else {
         drawString (2, getWidth()-16, nameOrNothing (m_selectedItem, getEngine()));
 
-        drawString (getHeight()-2, getWidth()-16, "d", Color (GREEN));
-        drawString (getHeight()-2, getWidth()-15, "rop item");
+        drawCommandString(getHeight()-2, getWidth()-16, "drop item", 0);
 
         if (m_selectedPage == 0) {
-            drawString (getHeight()-3, getWidth()-16, "u", Color (GREEN));
-            drawString (getHeight()-3, getWidth()-15, "nequip");
+            drawCommandString(getHeight()-3, getWidth()-16, "unequip", 0);
         } else {
-            drawString (getHeight()-3, getWidth()-16, "e", Color (GREEN));
-            drawString (getHeight()-3, getWidth()-15, "quip");
+            drawCommandString(getHeight()-3, getWidth()-16, "equip", 0);
         }
 
-        drawString (getHeight()-4, getWidth()-16, "i", Color (GREEN));
-        drawString (getHeight()-4, getWidth()-15, "nspect");
-
-        drawString (getHeight()-5, getWidth()-16, "c", Color (GREEN));
-        drawString (getHeight()-5, getWidth()-15, "onsume");
+        drawCommandString(getHeight()-4, getWidth()-16, "inspect", 0);
+        drawCommandString(getHeight()-5, getWidth()-16, "consume", 0);
     }
 }
 
