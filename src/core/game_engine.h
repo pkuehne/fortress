@@ -3,11 +3,11 @@
 
 #include "game_engine_interface.h"
 #include "graphics_interface.h"
-#include "window_manager_interface.h"
+#include "../windows/window_manager_interface.h"
 #include "game_system_interface.h"
 #include "event_manager_interface.h"
 #include "location.h"
-#include "game_state.h"
+#include "../core/game_state.h"
 
 #include <string>
 #include <vector>

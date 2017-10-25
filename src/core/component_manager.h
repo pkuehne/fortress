@@ -1,8 +1,8 @@
 #ifndef __COMPONENT_MANAGER_H__
 #define __COMPONENT_MANAGER_H__
 
-#include "entity.h"
-#include "component_base.h"
+#include "../core/entity.h"
+#include "../components/component_base.h"
 #include <map>
 #include <typeinfo>
 #include <glog/logging.h>

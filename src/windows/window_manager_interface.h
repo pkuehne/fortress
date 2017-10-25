@@ -1,8 +1,8 @@
 #ifndef WINDOW_MANAGER_INTERFACE_H
 #define WINDOW_MANAGER_INTERFACE_H
 
-#include "window_interface.h"
-#include "game_engine_interface.h"
+#include "../windows/window_interface.h"
+#include "../core/game_engine_interface.h"
 
 class WindowManagerInterface {
 public:

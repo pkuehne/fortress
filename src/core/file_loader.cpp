@@ -98,7 +98,7 @@ void FileLoader::loadMap (unsigned int& pos) {
 	unsigned int width = m_tags[pos++].getNum();
 	unsigned int height = m_tags[pos++].getNum();
 	unsigned int depth = m_tags[pos++].getNum();
-    m_engine->state()->map()->resetMap (area, width, height, depth);
+    m_engine->state()->map()->createArea (width, height, depth, area);
 
 	for (unsigned int zz = 0; zz < m_engine->state()->map()->getMapDepth(); zz++) {
 		for (unsigned int yy = 0; yy < m_engine->state()->map()->getMapHeight(); yy++) {

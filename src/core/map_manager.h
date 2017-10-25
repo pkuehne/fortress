@@ -2,9 +2,9 @@
 #define MAP_MANAGER_H
 
 #include <map>
-#include <utility.h>
-#include <entity.h>
-#include <tile.h>
+#include "utility.h"
+#include "entity.h"
+#include "tile.h"
 
 class Location;
 
@@ -31,7 +31,16 @@ public:
     unsigned int getMapWidth() { return m_mapWidth; }
     unsigned int getMapDepth () { return m_mapDepth; }
 
-    virtual void resetMap (unsigned int area, unsigned int width, unsigned int height, unsigned int depth);
+    /// @brief Creates a new Area with the given dimensions
+    // @param[in]   width   The map width
+    // @param[in]   height  The map height
+    // @param[in]   depth   The map depth
+    // @param[in]   area    (optional) The AreaId to create
+    // @return The ID for this area
+    virtual unsigned int createArea (   unsigned int width,
+                                        unsigned int height,
+                                        unsigned int depth,
+                                        unsigned int area = 0);
 
     unsigned int getArea () { return m_currentArea; }
     void setArea (unsigned int area);
@@ -47,6 +56,7 @@ private:
     unsigned int            m_mapDepth;
     Tile*                   m_map;
     unsigned int            m_currentArea;
+    unsigned int            m_maxAreaId     = 0;
     std::map<unsigned int, MapInfo> m_areas;
 };
 

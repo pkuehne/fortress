@@ -1,8 +1,8 @@
 #include "rural_generator.h"
-#include "utility.h"
-#include "game_engine.h"
-#include "sprite_component.h"
-#include "prefab_builder.h"
+#include "../core/utility.h"
+#include "../core/game_engine.h"
+#include "../components/sprite_component.h"
+#include "../core/prefab_builder.h"
 #include <cstring>
 #include <map>
 #include <iostream>
@@ -39,6 +39,7 @@ void RuralGenerator::createEntitiesFromMap()
             location.x = xx;
             location.y = yy;
             location.z = 0;
+            location.area = m_area;
             m_engine->state()->tile(location).getFloor().setMaterial(Material::Grass);
             switch (getByCoordinate(xx, yy)) {
                 case EMPTY:
@@ -61,6 +62,7 @@ void RuralGenerator::createEntitiesFromMap()
     location.x = m_mapWidth/2;
     location.y = m_mapHeight/2;
     location.z = 0;
+    location.area = m_area;
     prefabs.createPlayerPrefab (location);
 }
 
@@ -118,5 +120,4 @@ void RuralGenerator::placeForester()
             }
         }
     }
-
 }

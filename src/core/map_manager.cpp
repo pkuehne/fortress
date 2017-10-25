@@ -2,12 +2,19 @@
 #include "location.h"
 #include <glog/logging.h>
 
-void MapManager::resetMap (unsigned int area, unsigned int width, unsigned int height, unsigned int depth)
+unsigned int MapManager::createArea (   unsigned int width,
+                                        unsigned int height,
+                                        unsigned int depth,
+                                        unsigned int area)
 {
     if (width == 0 || height == 0 || depth == 0) {
         LOG(ERROR) << "Cannot reset map with 0 values" << std::endl;
         exit (1);
     }
+
+    if (area == 0) area = ++m_maxAreaId;
+    if (area > m_maxAreaId) m_maxAreaId = area;
+
     auto existing = m_areas.find (area);
     if (existing != m_areas.end()) m_areas.erase (existing);
 
@@ -21,13 +28,15 @@ void MapManager::resetMap (unsigned int area, unsigned int width, unsigned int h
     m_areas[info.areaId] = info;
     setArea (area);
     LOG(INFO) << "Created area " << info.areaId << std::endl;
+
+    return area;
 }
 
 bool MapManager::isValidTile (const Location& loc)
 {
-    bool xValid = (loc.x>=0 && loc.x<m_mapWidth);
-    bool yValid = (loc.y>=0 && loc.y<m_mapHeight);
-    bool zValid = (loc.z>=0 && loc.z<m_mapDepth);
+    bool xValid = (loc.x<m_mapWidth);
+    bool yValid = (loc.y<m_mapHeight);
+    bool zValid = (loc.z<m_mapDepth);
     return ( xValid && yValid && zValid );
 }
 

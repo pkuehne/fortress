@@ -1,5 +1,5 @@
-[_] 28% Alpha 4
-	[_] 20% WindowManager upgrade
+[_] 15% Alpha 4
+	[_] 16% WindowManager upgrade
 		[_] 0% Windows should be created templatized
 			[_] 0% WindowManager has create<T>(args, retval) function
 			[_] 0% create<T>() function calls initialise
@@ -14,9 +14,12 @@
 		: The first uses the Fontset, the second the GraphicsSet
 		[_] 0% Move graphicsBegin/End out of WindowManager engine
 			[_] 0% Add unit tests
-	[_] 50% Make NPCs smarter
-		[X] 100% Make the Forester a little smarter
+		[_] Add full-screen setting 
+		: Removes the need for getEngine() to retrieve the size of the screen
+	[_] 33% Make NPCs smarter
+		[X] 100% Better FSM for NPCs
 		[_] 0% Allow NPCs to traverse levels
+		[_] 0% GOAP for NPCs
 	[X] 100% Better rendering code
 		[X] 100% Camera
 			[X] 100% Window Width + Height
@@ -42,16 +45,19 @@
 				[_] 0% Save all areas
 				[_] 0% Save all entities
 				[_] 0% Save all components
-	[_] % Organization
-		[_] % Entities not in current area should be moved
-			[_] % Add EntityHolder to MapInfo definition
-			[_] % Could be held in GameState instead
-			[_] % MapManager could then be loaded with MapInfo
 	[_] 0% Address Todos in the code
 		[_] game_engine.cpp:71
 	[_] 0% GameState
 		[_] Move turn and tick info into GameState
-[_] 39% Game
+		[_] 0% Entities not in current area should be moved
+			[_] 0% Could be held in GameState instead
+			[_] 0% MapManager could then be loaded with MapInfo
+	[_] 0% Map/Generator Improvement
+		[_] Create Areas from map with size
+		[_] Pass Area ID into generator 
+		[_] Use Area ID when creating Entity
+	[_] 0% Bugs
+		[_] Can consume non-consumable items in Equipment Window
 	[_] 18% Enhancements
 		[_] 0% Make Event Manager part of GameState
 		[_] 0% Remove GameEngine dependency from EntityManager

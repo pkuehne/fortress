@@ -1,5 +1,5 @@
 #include "dungeon_generator.h"
-#include "game_engine.h"
+#include "../core/game_engine.h"
 #include "algorithm.h"
 #include <ctime>
 #include <cstdlib>
@@ -37,7 +37,9 @@ bool DungeonGenerator::generate () {
     for (m_level = 0; m_level < m_maxDepth; m_level++) {
         reset();
         initMap (EMPTY);
-        LOG(INFO) << "Creating level " << m_level << " of area " << m_engine->state()->map()->getArea() <<  std::endl;
+        LOG(INFO) << "Creating level " << m_level
+            << " of area " << m_area
+            <<  std::endl;
         if (!generateLevel()) return false;
     }
     return true;
@@ -70,7 +72,7 @@ bool DungeonGenerator::generateLevel() {
 
 void DungeonGenerator::createEntitiesFromMap () {
     EntityId l_entity = 0;
-    
+
     PrefabBuilder prefabs (m_engine->state());
     for (unsigned int yy = 0; yy < m_mapHeight; yy++) {
         for (unsigned int xx = 0; xx < m_mapWidth; xx++) {
@@ -78,7 +80,7 @@ void DungeonGenerator::createEntitiesFromMap () {
             location.x = xx;
             location.y = yy;
             location.z = m_level;
-            location.area = m_engine->state()->map()->getArea();
+            location.area = m_area;
             m_engine->state()->tile(location).getFloor().setMaterial(Material::Rock);
             switch (getByCoordinate(xx, yy)) {
                 case WALL:
@@ -134,8 +136,8 @@ bool DungeonGenerator::generateRoom () {
     unsigned int top    = Utility::randBetween (2, (m_mapHeight - height - 2));
 
     if (left+width >= m_mapWidth || left < 1 ||
-        top+height >= m_mapHeight || top < 1) {
-            return false;
+            top+height >= m_mapHeight || top < 1) {
+        return false;
     }
 
     for (unsigned int yy = top-2; yy <= top+height+1; yy++) {
@@ -275,13 +277,13 @@ void DungeonGenerator::placeItems()
         location.x = x;
         location.y = y;
         location.z = m_level;
-        location.area = m_engine->state()->map()->getArea();
+        location.area = m_area;
 
         unsigned int type = Utility::randBetween (0, 100);
         if  (type < 70) { // Potion
             prefabs.createPotionPrefab (location);
         } else if (type < 80) {
-             prefabs.createWeaponPrefab (location);
+            prefabs.createWeaponPrefab (location);
         } else if (type < 90) {
             prefabs.createShieldPrefab (location);
         } else if (type < 100) {
@@ -293,16 +295,16 @@ void DungeonGenerator::placeItems()
 void DungeonGenerator::loadMap ()
 {
     /*
-    std::ifstream file ("../maps/test.map");
-    char line[m_mapWidth];
-    int lineCnt = 0;
-    do {
-        memset (line, EMPTY, sizeof (line));
-        file.getline (line, sizeof (line));
-        memcpy (m_map+(m_mapWidth*lineCnt), line, sizeof(line));
-        lineCnt++;
-    } while (file.gcount() > 0);
-    */
+       std::ifstream file ("../maps/test.map");
+       char line[m_mapWidth];
+       int lineCnt = 0;
+       do {
+       memset (line, EMPTY, sizeof (line));
+       file.getline (line, sizeof (line));
+       memcpy (m_map+(m_mapWidth*lineCnt), line, sizeof(line));
+       lineCnt++;
+       } while (file.gcount() > 0);
+       */
 }
 
 unsigned char DungeonGenerator::wallSprite (unsigned int x, unsigned int y)

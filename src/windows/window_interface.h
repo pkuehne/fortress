@@ -2,7 +2,7 @@
 #define WINDOW_INTERFACE_H
 
 #include <string>
-#include <color.h>
+#include "../core/color.h"
 #include <vector>
 
 class GameEngineInterface;

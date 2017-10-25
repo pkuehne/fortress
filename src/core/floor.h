@@ -2,7 +2,7 @@
 #define __FLOOR_H__
 
 #include "color.h"
-#include "sprite_component.h"
+#include "../components/sprite_component.h"
 
 enum class Material {
     None        = 0,

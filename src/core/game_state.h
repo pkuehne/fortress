@@ -5,6 +5,7 @@
 #include "entity_manager.h"
 #include "map_manager.h"
 #include "component_manager.h"
+#include "quest.h"
 
 class Tile;
 
@@ -65,6 +66,7 @@ class GameState {
         void addMessage (const MessageType&, const std::string& message);
         std::vector<Message>& getMessages();
 
+        std::vector<Quest*>& getQuests() { return m_quests; }
     private:
         bool                m_playerTurn = true;
         tick_t              m_turn = 0;
@@ -73,6 +75,7 @@ class GameState {
         ComponentManager*   m_components = 0;
         std::vector<Message>    m_messages;
         Debug               m_debug;
+        std::vector<Quest*>     m_quests;
 };
 
 #endif

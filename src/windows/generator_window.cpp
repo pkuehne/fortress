@@ -1,9 +1,9 @@
 #include "generator_window.h"
-#include "game_engine.h"
-#include "dungeon_generator.h"
-#include "rural_generator.h"
+#include "../core/game_engine.h"
+#include "../generators/dungeon_generator.h"
+#include "../generators/rural_generator.h"
 #include "map_window.h"
-#include "stair_component.h"
+#include "../components/stair_component.h"
 #include <sstream>
 #include <glog/logging.h>
 
@@ -29,7 +29,7 @@ void GeneratorWindow::gainFocus () {
 
 void GeneratorWindow::resize() {
     setDimensions (0, 0, getEngine()->getGraphics()->getScreenWidth(),
-                            getEngine()->getGraphics()->getScreenHeight());
+            getEngine()->getGraphics()->getScreenHeight());
 }
 
 void GeneratorWindow::redraw() {
@@ -43,22 +43,22 @@ void GeneratorWindow::redraw() {
     drawString (middleY - 11, middleX - 10, "Level Parameters:");
     drawString (middleY - 10, middleX - 6, "Width: ");
     if (m_status == WAITING) drawTile (middleY - 10, middleX - 6, 'W', Color (GREEN), Color (BLACK));
-        drawString (middleY - 10, middleX + 2, formatNumber(m_levelWidth).c_str());
-        if (m_selectedPosition == WIDTH) selY = middleY - 10;
+    drawString (middleY - 10, middleX + 2, formatNumber(m_levelWidth).c_str());
+    if (m_selectedPosition == WIDTH) selY = middleY - 10;
     drawString (middleY - 9, middleX - 6, "Height: ");
     if (m_status == WAITING) drawTile (middleY - 9, middleX - 6, 'H', Color (GREEN), Color (BLACK));
-        drawString (middleY - 9, middleX + 2, formatNumber(m_levelHeight).c_str());
-        if (m_selectedPosition == HEIGHT) selY = middleY - 9;
+    drawString (middleY - 9, middleX + 2, formatNumber(m_levelHeight).c_str());
+    if (m_selectedPosition == HEIGHT) selY = middleY - 9;
 
     drawString (middleY - 8, middleX - 6, "Rooms: ");
     if (m_status == WAITING) drawTile (middleY - 8, middleX - 6, 'R', Color (GREEN), Color (BLACK));
-        drawString (middleY - 8, middleX + 2, formatNumber(m_levelRooms).c_str());
-        if (m_selectedPosition == ROOMS) selY = middleY - 8;
+    drawString (middleY - 8, middleX + 2, formatNumber(m_levelRooms).c_str());
+    if (m_selectedPosition == ROOMS) selY = middleY - 8;
 
     drawString (middleY - 7, middleX - 6, "Depth: ");
     if (m_status == WAITING) drawTile (middleY - 7, middleX - 6, 'D', Color (GREEN), Color (BLACK));
-        drawString (middleY - 7, middleX + 2, formatNumber(m_levelDepth).c_str());
-        if (m_selectedPosition == DEPTH) selY = middleY - 7;
+    drawString (middleY - 7, middleX + 2, formatNumber(m_levelDepth).c_str());
+    if (m_selectedPosition == DEPTH) selY = middleY - 7;
 
     if (m_status != PROGRESS && m_selectedPosition != NONE) {
         drawTile (selY, middleX + 1, '<', Color(RED), Color(BLACK));
@@ -140,7 +140,10 @@ void GeneratorWindow::startGenerating () {
     m_progress = 1;
     m_status = PROGRESS;
 
-    getEngine()->state()->map()->resetMap (0, m_levelWidth, m_levelHeight, 1);
+    unsigned int startArea = getEngine()->state()->map()->createArea (
+            m_levelWidth,
+            m_levelHeight,
+            1);
 
     RuralGenerator rural;
     rural.initialise (getEngine());
@@ -148,13 +151,15 @@ void GeneratorWindow::startGenerating () {
     rural.mapWidth()     = m_levelWidth;
     rural.generate();
 
-    unsigned int area = 1;
     for (EntityId stair : rural.getAreaLinks())
     {
         int retries = 0;
         bool success = false;
+        unsigned int area =
+            getEngine()->state()->map()->createArea (   m_levelWidth,
+                    m_levelHeight,
+                    m_levelDepth);
         LOG(INFO) << "Generating area: " << area << std::endl;
-        getEngine()->state()->map()->resetMap (area++, m_levelWidth, m_levelHeight, m_levelDepth);
 
         DungeonGenerator l_generator;
         l_generator.initialise (getEngine());
@@ -171,11 +176,15 @@ void GeneratorWindow::startGenerating () {
         if (!success) {
             LOG(ERROR) << "Failed to generate a valid map" << std::endl;
         }
-        getEngine()->state()->components()->get<StairComponent>(stair)->target = l_generator.upStairLink();
+        getEngine()->state()->components()->get<StairComponent>(stair)->target =
+            l_generator.upStairLink();
     }
-    LOG(INFO) << "Placed " << getEngine()->state()->entityManager()->getMaxId() << " entities" << std::endl;
+    LOG(INFO) << "Placed "
+        << getEngine()->state()->entityManager()->getMaxId()
+        << " entities!"
+        << std::endl;
 
-    getEngine()->state()->map()->setArea (0);
+    getEngine()->state()->map()->setArea (startArea);
     m_status = COMPLETED;
 }
 
