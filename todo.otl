@@ -1,4 +1,4 @@
-[_] 15% Alpha 4
+[_] 26% Alpha 4
 	[_] 16% WindowManager upgrade
 		[_] 0% Windows should be created templatized
 			[_] 0% WindowManager has create<T>(args, retval) function
@@ -14,12 +14,16 @@
 		: The first uses the Fontset, the second the GraphicsSet
 		[_] 0% Move graphicsBegin/End out of WindowManager engine
 			[_] 0% Add unit tests
-		[_] Add full-screen setting 
+		[_] Add full-screen setting
 		: Removes the need for getEngine() to retrieve the size of the screen
 	[_] 33% Make NPCs smarter
 		[X] 100% Better FSM for NPCs
 		[_] 0% Allow NPCs to traverse levels
 		[_] 0% GOAP for NPCs
+	[_] 66% Quests
+		[X] Add basic quest
+		[X] Add kill quest
+		[_] Make quest complete/fail
 	[X] 100% Better rendering code
 		[X] 100% Camera
 			[X] 100% Window Width + Height
@@ -52,12 +56,15 @@
 		[_] 0% Entities not in current area should be moved
 			[_] 0% Could be held in GameState instead
 			[_] 0% MapManager could then be loaded with MapInfo
-	[_] 0% Map/Generator Improvement
-		[_] Create Areas from map with size
-		[_] Pass Area ID into generator 
-		[_] Use Area ID when creating Entity
+	[_] 60% Map/Generator Improvement
+		[X] Create Areas from map with size
+		[X] Pass Area ID into generator
+		[X] Use Area ID when creating Entity
+		[_] Remove the use of getArea
+		[_] Set Player from Generator
 	[_] 0% Bugs
 		[_] Can consume non-consumable items in Equipment Window
+		[_] Picking up equipment doesn't remove it from map
 	[_] 18% Enhancements
 		[_] 0% Make Event Manager part of GameState
 		[_] 0% Remove GameEngine dependency from EntityManager

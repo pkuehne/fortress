@@ -81,6 +81,7 @@ void DungeonGenerator::createEntitiesFromMap () {
             location.y = yy;
             location.z = m_level;
             location.area = m_area;
+
             m_engine->state()->tile(location).getFloor().setMaterial(Material::Rock);
             switch (getByCoordinate(xx, yy)) {
                 case WALL:

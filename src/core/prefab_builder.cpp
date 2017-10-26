@@ -76,10 +76,9 @@ EntityId PrefabBuilder::createPlayerPrefab (Location& location)
     // Euipment Component
     EquipmentComponent* l_equipment =
         m_state->components()->make<EquipmentComponent>(l_entity);
-    Location nowhere;
-    l_equipment->rightHandWieldable = createWeaponPrefab(nowhere);
-    l_equipment->leftHandWieldable = createShieldPrefab(nowhere);
-    l_equipment->headWearable = createHelmetPrefab(nowhere);
+    l_equipment->rightHandWieldable = createWeaponPrefab(location);
+    l_equipment->leftHandWieldable = createShieldPrefab(location);
+    l_equipment->headWearable = createHelmetPrefab(location);
 
     return l_entity;
 }
@@ -120,10 +119,9 @@ EntityId PrefabBuilder::createEnemyPrefab (Location& location)
     // Euipment Component
     EquipmentComponent* l_equipment =
         m_state->components()->make<EquipmentComponent>(l_entity);
-    Location nowhere;
-    l_equipment->rightHandWieldable = createWeaponPrefab(nowhere);
-    l_equipment->leftHandWieldable = createShieldPrefab(nowhere);
-    l_equipment->headWearable = createHelmetPrefab(nowhere);
+    l_equipment->rightHandWieldable = createWeaponPrefab(location);
+    l_equipment->leftHandWieldable = createShieldPrefab(location);
+    l_equipment->headWearable = createHelmetPrefab(location);
 
     return l_entity;
 }
@@ -162,10 +160,9 @@ EntityId PrefabBuilder::createTrollPrefab (Location& location)
     // Euipment Component
     EquipmentComponent* l_equipment =
         m_state->components()->make<EquipmentComponent>(l_entity);
-    Location nowhere;
-    l_equipment->rightHandWieldable = createWeaponPrefab(nowhere);
-    l_equipment->leftHandWieldable = createShieldPrefab(nowhere);
-    l_equipment->headWearable = createHelmetPrefab(nowhere);
+    l_equipment->rightHandWieldable = createWeaponPrefab(location);
+    l_equipment->leftHandWieldable = createShieldPrefab(location);
+    l_equipment->headWearable = createHelmetPrefab(location);
 
     return l_entity;
 }
@@ -392,10 +389,9 @@ EntityId PrefabBuilder::createForesterPrefab (Location& location)
     // Euipment Component
     EquipmentComponent* l_equipment =
         m_state->components()->make<EquipmentComponent>(l_entity);
-    Location nowhere;
-    l_equipment->rightHandWieldable = createWeaponPrefab(nowhere);
-    l_equipment->leftHandWieldable = createShieldPrefab(nowhere);
-    l_equipment->headWearable = createHelmetPrefab(nowhere);
+    l_equipment->rightHandWieldable = createWeaponPrefab(location);
+    l_equipment->leftHandWieldable = createShieldPrefab(location);
+    l_equipment->headWearable = createHelmetPrefab(location);
 
 
     LOG(INFO) << "Created Forester: " << l_entity << std::endl;

@@ -5,7 +5,7 @@
 #include <iostream>
 #include <climits>
 
-#include "player_component.h"
+#include "../components/player_component.h"
 
 void EntityManager::initialise (GameEngineInterface* engine)
 {
@@ -17,7 +17,11 @@ void EntityManager::initialise (GameEngineInterface* engine)
 EntityId EntityManager::createEntity (Location& location) {
     EntityId l_entity = m_maxId++;
 
-    location.area = (location.area == 0) ? m_engine->state()->map()->getArea() : location.area;
+    if (!location.area) {
+        std::cout << "Zero area in createEntity: "
+            << l_entity
+            << std::endl;
+    }
 
     addEntity (l_entity, location);
     return l_entity;
@@ -42,7 +46,8 @@ void EntityManager::destroyEntity (EntityId id) {
     m_engine->state()->components()->removeAll(id);
     m_engine->state()->tile(m_locations[id]).removeEntity (id);
 
-    m_entities[m_engine->state()->map()->getArea()].erase (id);
+    m_entities[m_locations[id].area].erase (id);
+    m_locations.erase(id);
 
     // Raise event for removal
     RemoveEntityEvent* l_event = new RemoveEntityEvent();
@@ -72,18 +77,22 @@ bool EntityManager::validLocation (Location& location)
 EntityId EntityManager::getPlayer ()
 {
     if (m_player == 0) {
-        for (EntityId entity : m_entities[m_engine->state()->map()->getArea()]) {
-            if (m_engine->state()->components()->get<PlayerComponent>(entity)) {
-                m_player = entity;
+        for (auto map : m_engine->state()->map()->getAreas()) {
+            for (EntityId entity : get(map.first)) {
+                if (m_engine->state()->components()->get<PlayerComponent>(entity)) {
+                    m_player = entity;
+                }
             }
         }
     }
     return m_player;
 }
 
-EntityHolder& EntityManager::get ()
+EntityHolder& EntityManager::get (unsigned int area)
 {
-    return m_entities[m_engine->state()->map()->getArea()];
+    if (area == 0) {
+        area = m_engine->state()->map()->getArea();
+    }
+    return m_entities[area];
 }
-
 

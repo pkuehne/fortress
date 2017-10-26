@@ -28,7 +28,8 @@ public:
 
     bool validLocation (Location& location);
 
-    EntityHolder& get();
+    EntityHolder& get(unsigned int area = 0);
+
 private:
     GameEngineInterface*                m_engine;
     unsigned long                       m_maxId;

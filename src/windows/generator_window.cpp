@@ -147,8 +147,9 @@ void GeneratorWindow::startGenerating () {
 
     RuralGenerator rural;
     rural.initialise (getEngine());
-    rural.mapHeight()    = m_levelHeight;
-    rural.mapWidth()     = m_levelWidth;
+    rural.mapHeight()   = m_levelHeight;
+    rural.mapWidth()    = m_levelWidth;
+    rural.area()        = startArea;
     rural.generate();
 
     for (EntityId stair : rural.getAreaLinks())
@@ -159,17 +160,20 @@ void GeneratorWindow::startGenerating () {
             getEngine()->state()->map()->createArea (   m_levelWidth,
                     m_levelHeight,
                     m_levelDepth);
-        LOG(INFO) << "Generating area: " << area << std::endl;
 
+        LOG(INFO) << "Generating area: " << area << std::endl;
         DungeonGenerator l_generator;
         l_generator.initialise (getEngine());
         l_generator.maxDepth()      = m_levelDepth;
         l_generator.mapHeight()     = m_levelHeight;
         l_generator.mapWidth()      = m_levelWidth;
+        l_generator.area()          = area;
         l_generator.numberOfRooms() = m_levelRooms;
         l_generator.downStairTarget() = 0;
         l_generator.upStairTarget() = stair;
-        if (area == 2) l_generator.createBoss() = true;
+        if (area == 2) {
+            l_generator.createBoss() = true;
+        }
         do {
             success = l_generator.generate();
         } while (!success && retries++ < 20);

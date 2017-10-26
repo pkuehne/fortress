@@ -34,6 +34,9 @@ unsigned int MapManager::createArea (   unsigned int width,
 
 bool MapManager::isValidTile (const Location& loc)
 {
+    if (!loc.area) {
+        LOG(ERROR) << "Called isValidTile with zero area" << std::endl;
+    }
     bool xValid = (loc.x<m_mapWidth);
     bool yValid = (loc.y<m_mapHeight);
     bool zValid = (loc.z<m_mapDepth);
@@ -61,7 +64,7 @@ EntityHolder MapManager::findEntitiesNear (const Location& location, unsigned ra
 
     for (int yy = starty; yy <= endy; yy++) {
         for (int xx = startx; xx <= endx; xx++) {
-            Location loc(xx, yy, location.z);
+            Location loc(xx, yy, location.z, location.area);
             if (!isValidTile(loc)) continue;
             for (EntityId id : getTile (loc).entities()) {
                 l_entities.insert (id);

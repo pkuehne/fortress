@@ -1,9 +1,9 @@
 #include "camera.h"
 #include "location.h"
-#include "game_state.h"
+#include "../core/game_state.h"
 #include "graphics.h"
-#include "sprite_component.h"
-#include "npc_component.h"
+#include "../components/sprite_component.h"
+#include "../components/npc_component.h"
 #include <glog/logging.h>
 
 Camera::Camera (GraphicsInterface* graphics, GameState* state)
@@ -32,12 +32,13 @@ void Camera::render()
 
 void Camera::renderSprites()
 {
+    unsigned int currentArea = m_state->getArea();
     unsigned int tileZ = m_mapOffsetZ;
     for (unsigned int yy = 0; yy < m_viewport.height; yy++) {
         unsigned int tileY = yy + m_mapOffsetY;
         for (unsigned int xx = 0; xx < m_viewport.width; xx++) {
             unsigned int tileX = xx + m_mapOffsetX;
-            Location loc (tileX, tileY, tileZ);
+            Location loc (tileX, tileY, tileZ, currentArea);
             if (!m_state->isValidTile (loc)) continue;
 
             Tile& l_tile = m_state->tile(loc);

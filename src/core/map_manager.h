@@ -17,6 +17,7 @@ struct MapInfo {
     friend bool operator< (const MapInfo& lhs, const MapInfo& rhs) { return lhs.areaId < rhs.areaId; }
 };
 
+typedef std::map<unsigned int, MapInfo> AreaMap;
 
 class MapManager
 {
@@ -44,20 +45,20 @@ public:
 
     unsigned int getArea () { return m_currentArea; }
     void setArea (unsigned int area);
-    unsigned int getAreas() { return m_areas.size(); }
+    AreaMap& getAreas() { return m_areas; }
 
     Location location (const Location&, Direction direction);
     EntityHolder findEntitiesAt (const Location& location);
     EntityHolder findEntitiesNear (const Location& location, unsigned int radius);
 
 private:
-    unsigned int            m_mapWidth;
-    unsigned int            m_mapHeight;
-    unsigned int            m_mapDepth;
-    Tile*                   m_map;
-    unsigned int            m_currentArea;
-    unsigned int            m_maxAreaId     = 0;
-    std::map<unsigned int, MapInfo> m_areas;
+    unsigned int    m_mapWidth      = 0;
+    unsigned int    m_mapHeight     = 0;
+    unsigned int    m_mapDepth      = 0;
+    Tile*           m_map           = nullptr;
+    unsigned int    m_currentArea   = 0;
+    unsigned int    m_maxAreaId     = 0;
+    AreaMap         m_areas;
 };
 
 #endif

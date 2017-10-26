@@ -17,11 +17,13 @@ void ObjectivesSystem::handleEvent (const Event* event)
                 }
                 if (l_event->entity == m_boss) {
                     std::cout << "Killed the boss!" << std::endl;
-                    // GameOverWindow* l_win = new GameOverWindow();
-                    // l_win->initialise(getEngine(),(void*)(1));
-                    // getEngine()->getWindows()->pushWindow (l_win);
-                    return;
                 }
+                if (updateQuests()) {
+                    GameOverWindow* l_win = new GameOverWindow();
+                    l_win->initialise(getEngine(),(void*)(1));
+                    getEngine()->getWindows()->pushWindow (l_win);
+                }
+
                 break;
             }
         case EVENT_ADD_ENTITY:
@@ -30,8 +32,10 @@ void ObjectivesSystem::handleEvent (const Event* event)
                 DescriptionComponent* l_desc = getEngine()->state()->components()->get<DescriptionComponent>(l_event->entity);
                 if (l_desc && l_desc->title == "Troll") {
                     m_boss = l_event->entity;
-                    LOG(INFO) << "Set Entity " << l_event->entity << " as Boss objective!" << std::endl;
-                    KillQuest* quest = new KillQuest(getEngine()->state()->player(), m_boss);
+                    KillQuest* quest = new KillQuest(
+                            getEngine()->state()->player(),
+                            l_event->entity);
+                    quest->title() = "Kill the Troll";
                     getEngine()->state()->getQuests().push_back(quest);
                 }
                 break;
@@ -42,8 +46,15 @@ void ObjectivesSystem::handleEvent (const Event* event)
 
 void ObjectivesSystem::update()
 {
+}
+
+bool ObjectivesSystem::updateQuests()
+{
+    bool allComplete = true;
+    std::cout << "Updating Quests" << std::endl;
     for (Quest* quest : getEngine()->state()->getQuests()) {
         if (!quest->isCompleted() && !quest->isFailed()) {
+            allComplete = false;
             std::cout << "Updating " << quest->title() << std::endl;
             quest->update(*(getEngine()->state()));
             if (quest->isCompleted()) {
@@ -55,5 +66,5 @@ void ObjectivesSystem::update()
             }
         }
     }
-
+    return allComplete;
 }

@@ -1,8 +1,8 @@
-#include "game_engine.h"
+#include "../core/game_engine.h"
 #include "fov_algorithm.h"
-#include "entity.h"
-#include "collider_component.h"
-#include "description_component.h"
+#include "../core/entity.h"
+#include "../components/collider_component.h"
+#include "../components/description_component.h"
 #include <iostream>
 
 void FovAlgorithm::calculateFov ()
@@ -31,7 +31,7 @@ void FovAlgorithm::calculateFov ()
                 transformOctant (row, col, oct, y, x);
                 y += playerLoc.y;
                 x += playerLoc.x;
-                Location loc (x, y, playerLoc.z);
+                Location loc (x, y, playerLoc.z, playerLoc.area);
                 if (m_engine->state()->isValidTile (loc) && visible) {
                     m_engine->state()->tile(loc).lastVisited = m_engine->getTurn();
                     for (const EntityId entity : m_engine->state()->tile(loc).entities()) {
