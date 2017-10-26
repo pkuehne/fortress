@@ -1,5 +1,5 @@
 #include "window.h"
-#include "game_engine.h"
+#include "../core/game_engine.h"
 #include <iostream>
 
 void Window::initialise (GameEngineInterface* a_engine, void* args, void* retval)
@@ -75,6 +75,13 @@ void Window::beforeRedraw()
     getEngine()->getGraphics()->clearArea (m_yOffset, x, 1, m_title.size());
     drawString (0, x-m_xOffset, m_title.c_str());
 
+}
+
+void Window::renderWidgets()
+{
+    for (Widget* w : m_widgets) {
+        w->render();
+    }
 }
 
 void Window::afterRedraw()

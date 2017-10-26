@@ -6,7 +6,6 @@
 
 void MainWindow::gainFocus () {
     setTitle (" FORTRESS ");
-
 }
 
 void MainWindow::resize() {

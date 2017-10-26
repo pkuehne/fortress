@@ -50,11 +50,11 @@ void WindowManager::redraw()
     for (size_t ii = 0; ii < m_windows.size(); ii++) {
         m_windows[ii]->beforeRedraw();
         m_windows[ii]->redraw();
+        m_windows[ii]->renderWidgets();
         m_windows[ii]->afterRedraw();
     }
 
     m_engine->getGraphics()->endScreenUpdate();
-
 }
 
 void WindowManager::resize ()

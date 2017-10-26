@@ -24,6 +24,7 @@
 		[X] Add basic quest
 		[X] Add kill quest
 		[_] Make quest complete/fail
+		[_] QuestWindow
 	[X] 100% Better rendering code
 		[X] 100% Camera
 			[X] 100% Window Width + Height

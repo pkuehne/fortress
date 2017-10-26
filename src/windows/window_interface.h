@@ -33,6 +33,7 @@ public:
     virtual void mouseUp (int x, int y, int button) = 0;
     virtual void beforeRedraw() = 0;
     virtual void redraw () = 0;
+    virtual void renderWidgets () = 0;
     virtual void afterRedraw() = 0;
     virtual void resize (int width, int height) = 0;
     virtual void resize() = 0;
