@@ -37,6 +37,7 @@ public:
     virtual void afterRedraw() = 0;
     virtual void resize (int width, int height) = 0;
     virtual void resize() = 0;
+    virtual void registerWidgets() = 0;
     virtual void update() = 0;
 
     virtual void* getArgs() = 0;

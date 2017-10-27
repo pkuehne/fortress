@@ -6,9 +6,8 @@
 
 class MainWindow : public Window {
 public:
-    virtual void gainFocus ();
+    virtual void registerWidgets();
     virtual void resize();
-    virtual void redraw();
     virtual void keyDown (unsigned char key);
 
 private:

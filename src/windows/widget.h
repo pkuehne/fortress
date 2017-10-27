@@ -8,32 +8,48 @@ class Widget {
         Widget() {}
         virtual ~Widget() {}
 
+        // Methods to set basic info on creation
         void setWindowOffsets(unsigned int x, unsigned int y) {
             m_xOffset = x; m_yOffset = y;
         }
         void setGraphics(GraphicsInterface* graphics) { m_graphics = graphics; }
 
+        void realignWidget(unsigned int screenWidth, unsigned int screenHeight);
+
+        // Utility methods for widgets
+        void drawCommandString (unsigned int x,
+                unsigned int y,
+                const char* text,
+                unsigned int pos,
+                bool active);
+        void drawString (   unsigned int x,
+                unsigned int y,
+                const char* text,
+                Color fg = Color(WHITE),
+                Color bg = Color(BLACK));
+
+        // Overridable methods
         virtual void render() {}
 
-        void drawCommandString (unsigned int x,
-                                unsigned int y,
-                                const char* text,
-                                unsigned int pos,
-                                bool active);
-        void drawString (   unsigned int x,
-                            unsigned int y,
-                            const char* text,
-                            Color fg = Color(WHITE),
-                            Color bg = Color(BLACK));
     public:
-        unsigned int x = 0;
-        unsigned int y = 0;
+        enum class HorizontalAlign { Left, Centre, Right, };
+        enum class VerticalAlign { Top, Centre, Bottom, };
+    public:
+        unsigned int x = 1;
+        unsigned int y = 1;
+        unsigned int width = 1;
+        unsigned int height = 1;
+        HorizontalAlign hAlign = HorizontalAlign::Left;
+        VerticalAlign vAlign = VerticalAlign::Top;
+
         Color fg = Color(WHITE);
         Color bg = Color(BLACK);
-        
+
     private:
-        unsigned int m_xOffset = 0;
-        unsigned int m_yOffset = 0;
+        unsigned int m_xOffset  = 0;
+        unsigned int m_yOffset  = 0;
+        unsigned int m_xPos     = 0;
+        unsigned int m_yPos     = 0;
         GraphicsInterface*  m_graphics = nullptr;
 };
 

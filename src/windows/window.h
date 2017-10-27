@@ -27,6 +27,7 @@ class Window : public WindowInterface
         virtual int getHeight() { return m_height; }
         virtual void resize() { setDimensions (m_xOffset, m_yOffset, m_width, m_height); }
         virtual void update() { }
+        virtual void registerWidgets() { }
 
         virtual unsigned int drawString (int y, int x, const char* text, Color fg = Color(WHITE), Color bg = Color(BLACK));
         unsigned int drawCommandString (int y, int x, const char* text, int pos, bool active = true);

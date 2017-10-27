@@ -80,6 +80,7 @@ void Window::beforeRedraw()
 void Window::renderWidgets()
 {
     for (Widget* w : m_widgets) {
+        w->realignWidget(m_width-2, m_height-2);
         w->render();
     }
 }

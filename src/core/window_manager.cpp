@@ -14,6 +14,7 @@ void WindowManager::pushWindow (WindowInterface* win) {
     m_windows.push_back (win);
     win->gainFocus();
     win->resize();
+    win->registerWidgets();
 }
 
 void WindowManager::popWindow () {

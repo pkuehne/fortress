@@ -4,23 +4,39 @@
 #include "game_engine.h"
 #include "file_loader.h"
 
-void MainWindow::gainFocus () {
+void MainWindow::registerWidgets()
+{
     setTitle (" FORTRESS ");
+
+    Label* l = nullptr;
+    l = this->createWidget<Label>(1, 15);
+    l->text("Quickstart");
+    l->commandChar = 1;
+    l->vAlign = Widget::VerticalAlign::Bottom;
+    l->hAlign = Widget::HorizontalAlign::Centre;
+
+    l = this->createWidget<Label>(1, 12);
+    l->text("Create New World");
+    l->commandChar = 1;
+    l->vAlign = Widget::VerticalAlign::Bottom;
+    l->hAlign = Widget::HorizontalAlign::Centre;
+
+    l = this->createWidget<Label>(1, 9);
+    l->text("Load Existing World");
+    l->commandChar = 1;
+    l->vAlign = Widget::VerticalAlign::Bottom;
+    l->hAlign = Widget::HorizontalAlign::Centre;
+
+    l = this->createWidget<Label>(1, 6);
+    l->text("Start The Tutorial");
+    l->commandChar = 1;
+    l->sensitive = false;
+    l->vAlign = Widget::VerticalAlign::Bottom;
+    l->hAlign = Widget::HorizontalAlign::Centre;
 }
 
 void MainWindow::resize() {
     setDimensions (0, 0, getEngine()->getGraphics()->getScreenWidth(), getEngine()->getGraphics()->getScreenHeight());
-}
-
-void MainWindow::redraw() {
-    int yPos = getHeight() - 18;
-    int spacing = 3;
-
-    drawCommandString (yPos += spacing, -1, "Quickstart!", 0);
-    drawCommandString (yPos += spacing, -1, "Create New World", 0);
-    drawCommandString (yPos += spacing, -1, "Load Existing World", 0);
-    drawCommandString (yPos += spacing, -1, "Start The Tutorial", 0, false);
-
 }
 
 void MainWindow::keyDown (unsigned char key) {
