@@ -1,12 +1,10 @@
 #ifndef __WINDOW_H__
 #define __WINDOW_H__
 
-#include <cstring>
 #include "window_interface.h"
 #include "widget.h"
 #include "label.h"
 
-//class GameEngineInterface;
 #include "../core/game_engine_interface.h"
 
 class Window : public WindowInterface
@@ -14,7 +12,7 @@ class Window : public WindowInterface
     public:
         static const int MAX_BUTTONS = 5;
 
-        Window(): m_engine(0) { memset (ascii_keys, false, sizeof(ascii_keys)); }
+        Window() {}
         virtual ~Window() { }
         virtual void initialise (GameEngineInterface* a_engine, void* Args = 0, void* Retval = 0);
         virtual void destroy (void);
@@ -36,7 +34,7 @@ class Window : public WindowInterface
         virtual void clearArea (int y, int x, int height, int width);
 
         virtual GameEngineInterface* getEngine() { return m_engine; }
-        virtual void keyDown (unsigned char key) { ascii_keys[key] = true; }
+        virtual void keyDown (unsigned char key);
         virtual void keyUp (unsigned char key) { ascii_keys[key] = false; }
         virtual bool getKey (unsigned char key) { return ascii_keys[key]; }
         virtual void mouseDown (int x, int y, int button);
@@ -62,14 +60,18 @@ class Window : public WindowInterface
             w->setGraphics(getEngine()->getGraphics());
             w->x = x;
             w->y = y;
+            w->window = this;
             m_widgets.push_back(w);
 
             return w;
         };
 
+        // Overrideable methods
+        virtual void keyPress (unsigned char key) { /*Overrideable */}
+
     private:
-        bool                    ascii_keys[256];
-        bool                    special_keys[256];
+        bool                    ascii_keys[256]     = {0};
+        bool                    special_keys[256]   = {0};
         int                     m_buttons[MAX_BUTTONS] = {0};
         GameEngineInterface*    m_engine    = nullptr;
         void*                   m_args      = nullptr;

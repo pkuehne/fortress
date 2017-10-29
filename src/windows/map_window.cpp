@@ -6,6 +6,7 @@
 #include "selection_window.h"
 #include "escape_window.h"
 #include "debug_window.h"
+#include "quest_window.h"
 #include "game_engine.h"
 #include "event.h"
 #include "health_component.h"
@@ -160,6 +161,11 @@ void MapWindow::keyDown (unsigned char key)
         effect->type = EFFECT_BLINK_FAST;
         effect->duration = 20;
 
+    }
+    if (key == 'q') {
+        QuestWindow* l_win = new QuestWindow();
+        l_win->initialise(getEngine());
+        getEngine()->getWindows()->pushWindow(l_win);
     }
     if (key == '[') {
         unsigned int height = getEngine()->getGraphics()->getTileHeight();

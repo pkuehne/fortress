@@ -80,6 +80,7 @@ void Window::beforeRedraw()
 void Window::renderWidgets()
 {
     for (Widget* w : m_widgets) {
+        if(!w) continue;
         w->realignWidget(m_width-2, m_height-2);
         w->render();
     }
@@ -92,7 +93,6 @@ void Window::afterRedraw()
 
 void Window::destroy (void)
 {
-
 }
 
 void Window::resize (int width, int height)
@@ -133,8 +133,6 @@ void Window::drawProgress (unsigned int x, unsigned int y, unsigned int value, u
     }
 }
 
-
-
 unsigned int Window::wrapText (const std::string& text, std::vector<std::string>& lines, unsigned int maxWidth, unsigned int maxRows)
 {
     size_t wordStart = 0;
@@ -163,4 +161,14 @@ unsigned int Window::wrapText (const std::string& text, std::vector<std::string>
     }
 
     return lineNum;
+}
+
+void Window::keyDown (unsigned char key)
+{
+    ascii_keys[key] = true;
+
+    for (Widget* w : m_widgets) {
+        w->keyDown(key);
+    }
+    this->keyPress(key);
 }

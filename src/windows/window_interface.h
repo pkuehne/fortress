@@ -1,9 +1,9 @@
 #ifndef WINDOW_INTERFACE_H
 #define WINDOW_INTERFACE_H
 
-#include <string>
 #include "../core/color.h"
 #include <vector>
+#include <string>
 
 class GameEngineInterface;
 

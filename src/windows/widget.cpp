@@ -19,10 +19,17 @@ void Widget::realignWidget(unsigned int windowWidth, unsigned int windowHeight)
         case HorizontalAlign::Right:
             { this->m_xPos = windowWidth - this->x - this->width + m_yOffset; break; }
     }
-    std::cout << "width: " << windowWidth << " height: " << windowHeight << std::endl;
-    std::cout << "offX: " << m_xOffset << " offY: " << m_yOffset << std::endl;
-    std::cout << "XPos: " << m_xPos << " YPos: " << m_yPos << std::endl;
-    std::cout << "X: " << x << " Y: " << y << std::endl;
+    // std::cout << "width: " << windowWidth << " height: " << windowHeight << std::endl;
+    // std::cout << "offX: " << m_xOffset << " offY: " << m_yOffset << std::endl;
+    // std::cout << "XPos: " << m_xPos << " YPos: " << m_yPos << std::endl;
+    // std::cout << "X: " << x << " Y: " << y << std::endl;
+}
+
+void Widget::keyPress(unsigned char key)
+{
+    if (onKeyPress != nullptr) {
+        onKeyPress(key);
+    }
 }
 
 void Widget::drawString (unsigned int x, unsigned int y,
@@ -47,6 +54,6 @@ void Widget::drawCommandString( unsigned int x, unsigned int y,
         cc *= factor;
     }
 
-    drawString (y, x, text, fg, bg);
-    drawString (y, x+pos, command, cc, bg);
+    drawString (x, y, text, fg, bg);
+    drawString (x+pos, y, command, cc, bg);
 }

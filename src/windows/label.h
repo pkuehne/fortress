@@ -12,7 +12,10 @@ class Label : public Widget {
         bool sensitive = true;
         unsigned int commandChar = 0;
 
+        virtual void keyPress(unsigned char key);
         virtual void render();
+
+        void(*onCommandChar)(Label*) = nullptr;
 
     private:
         std::string m_text = "";

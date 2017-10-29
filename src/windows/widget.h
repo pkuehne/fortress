@@ -3,6 +3,10 @@
 
 #include "../core/graphics.h"
 
+typedef void(*KeyFunc)(unsigned char);
+
+class Window;
+
 class Widget {
     public:
         Widget() {}
@@ -15,6 +19,9 @@ class Widget {
         void setGraphics(GraphicsInterface* graphics) { m_graphics = graphics; }
 
         void realignWidget(unsigned int screenWidth, unsigned int screenHeight);
+
+        void keyDown(unsigned char key) { keyPress(key); } // Not overridable
+        virtual void keyPress (unsigned char key);  // Overridable
 
         // Utility methods for widgets
         void drawCommandString (unsigned int x,
@@ -30,6 +37,7 @@ class Widget {
 
         // Overridable methods
         virtual void render() {}
+        KeyFunc onKeyPress = nullptr;
 
     public:
         enum class HorizontalAlign { Left, Centre, Right, };
@@ -44,6 +52,8 @@ class Widget {
 
         Color fg = Color(WHITE);
         Color bg = Color(BLACK);
+        
+        Window* window = nullptr;
 
     private:
         unsigned int m_xOffset  = 0;

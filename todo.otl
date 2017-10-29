@@ -1,5 +1,5 @@
-[_] 26% Alpha 4
-	[_] 16% WindowManager upgrade
+[_] 27% Alpha 4
+	[_] 17% WindowManager upgrade
 		[_] 0% Windows should be created templatized
 			[_] 0% WindowManager has create<T>(args, retval) function
 			[_] 0% create<T>() function calls initialise
@@ -16,14 +16,21 @@
 			[_] 0% Add unit tests
 		[_] Add full-screen setting
 		: Removes the need for getEngine() to retrieve the size of the screen
+		[_] 25% Widgets
+			[_] Move wrapText into Widget
+			[_] Move drawProgress into a new widget
+			[_] Make keyDown/keyUp non-virtual in window.h
+			: replace with keyPress
+			[X] Give Widget pointer to Window
+			[_] Widgets get de-alloc'ed on window pop
 	[_] 33% Make NPCs smarter
 		[X] 100% Better FSM for NPCs
 		[_] 0% Allow NPCs to traverse levels
 		[_] 0% GOAP for NPCs
-	[_] 66% Quests
+	[_] 75% Quests
 		[X] Add basic quest
 		[X] Add kill quest
-		[_] Make quest complete/fail
+		[X] Make quest complete/fail
 		[_] QuestWindow
 	[X] 100% Better rendering code
 		[X] 100% Camera
