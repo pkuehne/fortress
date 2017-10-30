@@ -19,10 +19,14 @@
 		[_] 25% Widgets
 			[_] Move wrapText into Widget
 			[_] Move drawProgress into a new widget
-			[_] Make keyDown/keyUp non-virtual in window.h
 			: replace with keyPress
 			[X] Give Widget pointer to Window
 			[_] Widgets get de-alloc'ed on window pop
+		[_] % Migrate Windows to Widget basis
+			[_] Window Action Queue?
+			[_] Add destroy flag and do self->close()
+			[_] Add destroy_on_esc flag
+			[_] Make keyDown/keyUp non-virtual in window.h
 	[_] 33% Make NPCs smarter
 		[X] 100% Better FSM for NPCs
 		[_] 0% Allow NPCs to traverse levels
