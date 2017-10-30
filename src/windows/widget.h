@@ -17,7 +17,8 @@ class Widget {
             m_xOffset = x; m_yOffset = y;
         }
         void setGraphics(GraphicsInterface* graphics) { m_graphics = graphics; }
-
+        
+        void setName(std::string& name) { m_name = name; }
         void realignWidget(unsigned int screenWidth, unsigned int screenHeight);
 
         void keyDown(unsigned char key) { keyPress(key); } // Not overridable
@@ -38,6 +39,8 @@ class Widget {
         // Overridable methods
         virtual void render() {}
         KeyFunc onKeyPress = nullptr;
+
+        const std::string& name() { return m_name; }
 
     public:
         enum class HorizontalAlign { Left, Centre, Right, };
@@ -61,6 +64,7 @@ class Widget {
         unsigned int m_xPos     = 0;
         unsigned int m_yPos     = 0;
         GraphicsInterface*  m_graphics = nullptr;
+        std::string  m_name     = "";
 };
 
 #endif

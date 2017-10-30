@@ -13,6 +13,8 @@ class ListBox : public Widget {
         std::vector<std::string> items;
         unsigned int selectedItem = 0;
 
+        void(*onItemSelected)(ListBox*);
+
     private:
         unsigned int m_topOffset = 0;
         unsigned int m_selectionPos = 0;

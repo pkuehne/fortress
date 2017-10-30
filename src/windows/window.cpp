@@ -79,7 +79,8 @@ void Window::beforeRedraw()
 
 void Window::renderWidgets()
 {
-    for (Widget* w : m_widgets) {
+    for (auto iter : m_widgets) {
+        Widget* w = iter.second;
         if(!w) continue;
         w->realignWidget(m_width-2, m_height-2);
         w->render();
@@ -167,8 +168,8 @@ void Window::keyDown (unsigned char key)
 {
     ascii_keys[key] = true;
 
-    for (Widget* w : m_widgets) {
-        w->keyDown(key);
+    for (auto iter : m_widgets) {
+        iter.second->keyDown(key);
     }
     this->keyPress(key);
 }

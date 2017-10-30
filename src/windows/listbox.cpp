@@ -1,5 +1,6 @@
 #include "listbox.h"
 #include "../core/color.h"
+#include "../core/utility.h"
 #include <iostream>
 
 void ListBox::render()
@@ -29,5 +30,8 @@ void ListBox::keyPress(unsigned char key)
         if (selectedItem < m_topOffset) {
             m_topOffset = 0;
         }
+    }
+    if (key == KEY_ENTER && onItemSelected) {
+        onItemSelected(this);
     }
 }

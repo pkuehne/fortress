@@ -4,8 +4,9 @@
 #include "window_interface.h"
 #include "widget.h"
 #include "label.h"
-
 #include "../core/game_engine_interface.h"
+
+#include <map>
 
 class Window : public WindowInterface
 {
@@ -54,17 +55,26 @@ class Window : public WindowInterface
         virtual void drawProgress (unsigned int x, unsigned int y, unsigned int value, unsigned int max);
         virtual unsigned int wrapText (const std::string& text, std::vector<std::string>& lines, unsigned int maxWidth, unsigned int maxRows);
 
-        template<class T> T* createWidget(unsigned int x, unsigned int y) {
+        template<class T> T* createWidget(
+                std::string name,
+                unsigned int x,
+                unsigned int y)
+        {
             T* w = new T();
             w->setWindowOffsets(m_xOffset, m_yOffset);
             w->setGraphics(getEngine()->getGraphics());
+            w->setName(name);
             w->x = x;
             w->y = y;
             w->window = this;
-            m_widgets.push_back(w);
+            m_widgets[name] = w;
 
             return w;
         };
+
+        // Non-overridable 
+        template<class T>
+            T* getWidget(std::string name) { return dynamic_cast<T*>(m_widgets[name]); }
 
         // Overrideable methods
         virtual void keyPress (unsigned char key) { /*Overrideable */}
@@ -81,7 +91,8 @@ class Window : public WindowInterface
         int                     m_width     = 0;
         int                     m_height    = 0;
         std::string             m_title;
-        std::vector<Widget*>    m_widgets;
+        // std::vector<Widget*>    m_widgets;
+        std::map<std::string, Widget*>  m_widgets;
 };
 
 #endif

@@ -9,25 +9,25 @@ void MainWindow::registerWidgets()
     setTitle (" FORTRESS ");
 
     Label* l = nullptr;
-    l = this->createWidget<Label>(1, 15);
+    l = this->createWidget<Label>("lblQuickstart", 1, 15);
     l->text("Quickstart");
     l->commandChar = 1;
     l->vAlign = Widget::VerticalAlign::Bottom;
     l->hAlign = Widget::HorizontalAlign::Centre;
 
-    l = this->createWidget<Label>(1, 12);
+    l = this->createWidget<Label>("lblCreate", 1, 12);
     l->text("Create New World");
     l->commandChar = 1;
     l->vAlign = Widget::VerticalAlign::Bottom;
     l->hAlign = Widget::HorizontalAlign::Centre;
 
-    l = this->createWidget<Label>(1, 9);
+    l = this->createWidget<Label>("lblLoad", 1, 9);
     l->text("Load Existing World");
     l->commandChar = 1;
     l->vAlign = Widget::VerticalAlign::Bottom;
     l->hAlign = Widget::HorizontalAlign::Centre;
 
-    l = this->createWidget<Label>(1, 6);
+    l = this->createWidget<Label>("lblTutorial", 1, 6);
     l->text("Start The Tutorial");
     l->commandChar = 1;
     l->sensitive = false;
