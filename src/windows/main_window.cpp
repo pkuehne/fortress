@@ -45,26 +45,22 @@ void MainWindow::keyDown (unsigned char key) {
     }
 
     if (key == 'q' || key == 'Q') {
-        GeneratorWindow* l_win = new GeneratorWindow();
-        l_win->initialise (getEngine(), (void*)1);
-
-        getEngine()->getWindows()->pushWindow (l_win);
+        getEngine()->getWindows()->pushWindow (
+                getEngine()->getWindows()->createWindow<GeneratorWindow>((void*)1));
     }
 
     if (key == 'c' || key == 'C') {
-        GeneratorWindow* l_win = new GeneratorWindow();
-        l_win->initialise (getEngine());
-
-        getEngine()->getWindows()->pushWindow (l_win);
+        getEngine()->getWindows()->pushWindow (
+            getEngine()->getWindows()->createWindow<GeneratorWindow>());
     }
 
     if (key == 'l' || key == 'L') {
-        MapWindow* l_win = new MapWindow();
-        l_win->initialise (getEngine());
-
-        FileLoader loader;
+        // Load a file - then show the map
+        //FileLoader loader;
         //loader.initialise (getEngine());
-        loader.loadState();
-        getEngine()->getWindows()->pushWindow (l_win);
+        //loader.loadState();
+
+        getEngine()->getWindows()->pushWindow (
+                getEngine()->getWindows()->createWindow<MapWindow>());
     }
 }

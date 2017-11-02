@@ -14,7 +14,6 @@ class Window
 
         Window() {}
         virtual ~Window() { }
-        virtual void initialise (GameEngine* a_engine, void* Args = 0, void* Retval = 0);
         virtual void destroy (void);
         virtual void setDimensions (int x, int y, int width, int height);
         virtual void setTitle (const std::string& title) { m_title = title; }
@@ -75,6 +74,7 @@ class Window
         // Non-overridable 
         template<class T>
             T* getWidget(std::string name) { return dynamic_cast<T*>(m_widgets[name]); }
+        void initialise (GameEngine* a_engine, void* Args = 0, void* Retval = 0);
 
         // Overrideable methods
         virtual void keyPress (unsigned char key) { /*Overrideable */}

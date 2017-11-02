@@ -5,7 +5,6 @@
 #include <vector>
 #include "game_system_interface.h"
 #include "event.h"
-#include "game_engine_interface.h"
 #include "event_manager_interface.h"
 
 typedef std::queue<Event*> EventQueue;

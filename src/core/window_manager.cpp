@@ -5,9 +5,10 @@
 void WindowManager::initialise (GameEngine* engine) {
     m_engine = engine;
 
-    Window* l_window = new SplashWindow();
-    l_window->initialise(m_engine);
-    pushWindow (l_window);
+    // Window* l_window = new SplashWindow();
+    // l_window->initialise(m_engine);
+    // pushWindow (l_window);
+    pushWindow(createWindow<SplashWindow>());
 }
 
 void WindowManager::pushWindow (Window* win) {

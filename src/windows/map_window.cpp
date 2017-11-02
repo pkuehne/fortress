@@ -87,28 +87,27 @@ void MapWindow::keyDown (unsigned char key)
             EntityHolder l_entities = getEngine()->state()->map()->findEntitiesAt(newLocation);
             for (EntityId entity : l_entities) {
                 //if (getEngine()->state()->components()->get<NpcComponent>(entity)) {
-                    AttackEntityEvent* l_event = new AttackEntityEvent;
-                    l_event->attacker = playerId;
-                    l_event->defender = entity;
-                    getEngine()->raiseEvent (l_event);
+                AttackEntityEvent* l_event = new AttackEntityEvent;
+                l_event->attacker = playerId;
+                l_event->defender = entity;
+                getEngine()->raiseEvent (l_event);
                 //}
             }
         }
         if (m_action == 'i') {
             EntityHolder l_entities = getEngine()->state()->map()->findEntitiesAt(newLocation);
             if (l_entities.size() > 0) {
-                SelectionWindow* selWin = new SelectionWindow();
-                selWin->initialise (getEngine(), &l_entities);
-                getEngine()->getWindows()->pushWindow (selWin);
+                getEngine()->getWindows()->pushWindow (
+                        getEngine()->getWindows()->createWindow<SelectionWindow>(
+                            &l_entities));
             }
         }
         if (m_action != 'i') getEngine()->swapTurn();
         m_action = 'm';
     }
     if (key == KEY_ESC) {
-        EscapeWindow* menu = new EscapeWindow();
-        menu->initialise (getEngine());
-        getEngine()->getWindows()->pushWindow (menu);
+        getEngine()->getWindows()->pushWindow (
+                getEngine()->getWindows()->createWindow<EscapeWindow>());
     }
     if (key == 'm' ||
             key == 'k' ||
@@ -142,9 +141,8 @@ void MapWindow::keyDown (unsigned char key)
         }
     }
     if (key == 'E') {
-        EquipmentWindow* l_win = new EquipmentWindow();
-        l_win->initialise(getEngine());
-        getEngine()->getWindows()->pushWindow (l_win);
+        getEngine()->getWindows()->pushWindow (
+                getEngine()->getWindows()->createWindow<EquipmentWindow>());
     }
     if (key == 'S') {
         FileSaver saver;
@@ -163,9 +161,8 @@ void MapWindow::keyDown (unsigned char key)
 
     }
     if (key == 'q') {
-        QuestWindow* l_win = new QuestWindow();
-        l_win->initialise(getEngine());
-        getEngine()->getWindows()->pushWindow(l_win);
+        getEngine()->getWindows()->pushWindow(
+                getEngine()->getWindows()->createWindow<QuestWindow>());
     }
     if (key == '[') {
         unsigned int height = getEngine()->getGraphics()->getTileHeight();
@@ -180,9 +177,8 @@ void MapWindow::keyDown (unsigned char key)
         getEngine()->getWindows()->resize();
     }
     if (key == '`') {
-        DebugWindow* l_win = new DebugWindow();
-        l_win->initialise(getEngine());
-        getEngine()->getWindows()->pushWindow (l_win);
+        getEngine()->getWindows()->pushWindow (
+                getEngine()->getWindows()->createWindow<DebugWindow>());
     }
 
     //std::cout << "Key: " << key << std::endl;

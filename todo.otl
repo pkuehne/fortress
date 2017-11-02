@@ -1,11 +1,11 @@
 [_] 28% Alpha 4
 	[_] 23% WindowManager upgrade
-		[_] 66% Windows should be created templatized
+		[_] 60% Windows should be created templatized
 			[X] WindowManager has create<T>(args, retval) function
 			[X] create<T>() function calls initialise
 			[_] Add onCreate() and onDestroy() functions
 			[_] Change pushWindow function
-			[_] Remove WindowManagerInterface
+			[X] Remove WindowManagerInterface
 		[_] 0% Correct Focus support
 			[_] 0% getFocus() and loseFocs() should be called correctly
 			: At the moment they are only called once, when the window is created

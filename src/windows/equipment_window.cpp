@@ -141,9 +141,8 @@ void EquipmentWindow::keyDown (unsigned char key) {
     if (m_selectedItem && key == 'i') {
         EntityId* l_target = new EntityId(m_selectedItem);
 
-        InspectionWindow* l_win = new InspectionWindow();
-        l_win->initialise(getEngine(), l_target);
-        getEngine()->getWindows()->pushWindow (l_win);
+        getEngine()->getWindows()->pushWindow (
+            getEngine()->getWindows()->createWindow<InspectionWindow>(l_target));
     }
     if (m_selectedItem && key == 'd') {
         DropEquipmentEvent* event = new DropEquipmentEvent();

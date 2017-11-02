@@ -1,7 +1,6 @@
 #ifndef __GAMEENGINE_H__
 #define __GAMEENGINE_H__
 
-#include "game_engine_interface.h"
 #include "graphics_interface.h"
 #include "../core/window_manager.h"
 #include "game_system_interface.h"
@@ -14,7 +13,7 @@
 #include <cstdlib>
 
 
-class GameEngine { //: public GameEngineInterface {
+class GameEngine {
 public:
     GameEngine (GraphicsInterface* a_graphics);
     ~GameEngine ();
