@@ -8,7 +8,7 @@
 
 class FileLoader {
 public:
-    void initialise (GameEngineInterface* engine) { m_engine = engine; }
+    void initialise (GameEngine* engine) { m_engine = engine; }
     void loadState ();
 
     Location loadLocation (unsigned int& pos);
@@ -17,7 +17,7 @@ public:
 
 private:
     std::vector<Tag>        m_tags;
-    GameEngineInterface*    m_engine;
+    GameEngine*    m_engine;
 };
 
 #endif

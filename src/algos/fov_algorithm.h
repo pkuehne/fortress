@@ -1,7 +1,7 @@
 #ifndef FOV_ALGORITHM
 #define FOV_ALGORITHM
 
-#include "game_engine_interface.h"
+#include "game_engine.h"
 
 class Shadow {
 public:
@@ -23,7 +23,7 @@ private:
 
 class FovAlgorithm {
 public:
-    void initialise (GameEngineInterface* engine) { m_engine = engine; }
+    void initialise (GameEngine* engine) { m_engine = engine; }
     void calculateFov ();
 
 private:
@@ -31,7 +31,7 @@ private:
     Shadow projectTile(double row, double col);
 
 private:
-    GameEngineInterface*    m_engine;
+    GameEngine*    m_engine;
 };
 
 #endif

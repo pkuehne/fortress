@@ -3,7 +3,7 @@
 
 #include "game_engine_interface.h"
 #include "graphics_interface.h"
-#include "../windows/window_manager_interface.h"
+#include "../core/window_manager.h"
 #include "game_system_interface.h"
 #include "event_manager_interface.h"
 #include "location.h"
@@ -14,7 +14,7 @@
 #include <cstdlib>
 
 
-class GameEngine : public GameEngineInterface {
+class GameEngine { //: public GameEngineInterface {
 public:
     GameEngine (GraphicsInterface* a_graphics);
     ~GameEngine ();
@@ -34,9 +34,9 @@ public:
 
     GraphicsInterface* getGraphics() { return m_graphics; }
 
-    void setWindowManager (WindowManagerInterface* a_manager) { m_windowManager = a_manager; }
+    void setWindowManager (WindowManager* a_manager) { m_windowManager = a_manager; }
     void setEventManager (EventManagerInterface* a_manager) { m_eventManager = a_manager; }
-    WindowManagerInterface* getWindows() { return m_windowManager; }
+    WindowManager* getWindows() { return m_windowManager; }
 
     void addSystem (GameSystemInterface* a_system) { m_systems.push_back(a_system); }
 
@@ -48,7 +48,7 @@ private:
     unsigned int        m_turn;
 
     EventManagerInterface*  m_eventManager;
-    WindowManagerInterface* m_windowManager;
+    WindowManager* m_windowManager;
     GameState*              m_state;
 
     std::vector<GameSystemInterface*>   m_systems;

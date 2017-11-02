@@ -7,7 +7,7 @@
 
 #include "../components/player_component.h"
 
-void EntityManager::initialise (GameEngineInterface* engine)
+void EntityManager::initialise (GameEngine* engine)
 {
     m_maxId = 1;
     m_engine = engine;

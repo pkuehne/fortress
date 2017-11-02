@@ -8,13 +8,15 @@
 #include <map>
 #include <vector>
 
+class GameEngine;
+
 typedef std::map<EntityId, Location> LocationMap;
 typedef LocationMap::const_iterator LocationConstIter;
 typedef LocationMap::iterator LocationIter;
 
-class EntityManager : public EntityManagerInterface {
+class EntityManager { //: public EntityManagerInterface {
 public:
-    void initialise (GameEngineInterface* engine);
+    void initialise (GameEngine* engine);
     void destroy() {}
 
     EntityId createEntity (Location& location);
@@ -31,7 +33,7 @@ public:
     EntityHolder& get(unsigned int area = 0);
 
 private:
-    GameEngineInterface*                m_engine;
+    GameEngine*                m_engine;
     unsigned long                       m_maxId;
     EntityId                            m_player;
     LocationMap                         m_locations;

@@ -7,8 +7,10 @@
 #include <map>
 #include <vector>
 
-typedef bool (*ConditionFunc) (GameEngineInterface*, EntityId, NpcComponent*);
-typedef void (*ActionFunc) (GameEngineInterface*, EntityId, NpcComponent*);
+class GameEngine;
+
+typedef bool (*ConditionFunc) (GameEngine*, EntityId, NpcComponent*);
+typedef void (*ActionFunc) (GameEngine*, EntityId, NpcComponent*);
 
 struct Transition {
     ConditionFunc   condition;

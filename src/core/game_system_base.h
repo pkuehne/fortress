@@ -9,15 +9,15 @@
 class GameSystemBase : public GameSystemInterface {
 public:
     GameSystemBase() : m_engine (0) { }
-    virtual void initialise (GameEngineInterface* engine) { m_engine = engine; }
-    virtual GameEngineInterface* getEngine () { return m_engine; }
+    virtual void initialise (GameEngine* engine) { m_engine = engine; }
+    virtual GameEngine* getEngine () { return m_engine; }
     virtual void handleEvent (const Event* event) { }
     virtual void update () { }
 
     virtual ~GameSystemBase() { }
 
 protected:
-    GameEngineInterface*    m_engine;
+    GameEngine*    m_engine;
 };
 
 #endif

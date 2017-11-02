@@ -5,12 +5,12 @@
 #include <vector>
 #include <string>
 
-class GameEngineInterface;
+class GameEngine;
 
 class WindowInterface {
 public:
     virtual ~WindowInterface() {}
-    virtual void initialise (GameEngineInterface* a_engine, void* Args = 0, void* Retval = 0) = 0;
+    virtual void initialise (GameEngine* a_engine, void* Args = 0, void* Retval = 0) = 0;
     virtual void destroy (void) = 0;
     virtual void setDimensions (int x, int y, int width, int height) = 0;
     virtual void setTitle (const std::string& title) = 0;
@@ -25,7 +25,7 @@ public:
     virtual void drawBorder (int y, int x, int height, int width) = 0;
     virtual void clearArea (int y, int x, int height, int width) = 0;
 
-    virtual GameEngineInterface* getEngine() = 0;
+    virtual GameEngine* getEngine() = 0;
     virtual void keyDown (unsigned char key) = 0;
     virtual void keyUp (unsigned char key) = 0;
     virtual bool getKey (unsigned char key) = 0;

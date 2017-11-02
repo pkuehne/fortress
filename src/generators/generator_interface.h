@@ -3,7 +3,7 @@
 
 #include <cstring>
 
-class GameEngineInterface;
+class GameEngine;
 
 class GeneratorInterface {
 public:
@@ -12,7 +12,7 @@ public:
     virtual bool generate() = 0;
     virtual void createEntitiesFromMap() = 0;
 
-    virtual void initialise (GameEngineInterface* engine) { m_engine = engine; }
+    virtual void initialise (GameEngine* engine) { m_engine = engine; }
     virtual void reset () {
         if (m_map) {
             delete[] m_map;
@@ -44,7 +44,7 @@ protected:
     unsigned int            m_area      = 0;
     unsigned int            m_mapWidth  = 0;
     unsigned int            m_mapHeight = 0;
-    GameEngineInterface*    m_engine    = nullptr;
+    GameEngine*    m_engine    = nullptr;
 };
 
 #endif

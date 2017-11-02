@@ -1,24 +1,24 @@
 #ifndef __WINDOW_H__
 #define __WINDOW_H__
 
-#include "window_interface.h"
 #include "widget.h"
 #include "label.h"
-#include "../core/game_engine_interface.h"
+#include "../core/game_engine.h"
 
 #include <map>
 
-class Window : public WindowInterface
+class Window
 {
     public:
         static const int MAX_BUTTONS = 5;
 
         Window() {}
         virtual ~Window() { }
-        virtual void initialise (GameEngineInterface* a_engine, void* Args = 0, void* Retval = 0);
+        virtual void initialise (GameEngine* a_engine, void* Args = 0, void* Retval = 0);
         virtual void destroy (void);
         virtual void setDimensions (int x, int y, int width, int height);
         virtual void setTitle (const std::string& title) { m_title = title; }
+        virtual void setFullscreen(bool fullscreen) { m_fullscreen = true; }
         virtual std::string getTitle () { return m_title; }
         virtual int getXOffset() { return m_xOffset; }
         virtual int getYOffset() { return m_yOffset; }
@@ -34,7 +34,7 @@ class Window : public WindowInterface
         virtual void drawBorder (int y, int x, int height, int width);
         virtual void clearArea (int y, int x, int height, int width);
 
-        virtual GameEngineInterface* getEngine() { return m_engine; }
+        virtual GameEngine* getEngine() { return m_engine; }
         virtual void keyDown (unsigned char key);
         virtual void keyUp (unsigned char key) { ascii_keys[key] = false; }
         virtual bool getKey (unsigned char key) { return ascii_keys[key]; }
@@ -83,7 +83,7 @@ class Window : public WindowInterface
         bool                    ascii_keys[256]     = {0};
         bool                    special_keys[256]   = {0};
         int                     m_buttons[MAX_BUTTONS] = {0};
-        GameEngineInterface*    m_engine    = nullptr;
+        GameEngine*    m_engine    = nullptr;
         void*                   m_args      = nullptr;
         void*                   m_retval    = nullptr;
         int                     m_xOffset   = 0;
@@ -91,6 +91,7 @@ class Window : public WindowInterface
         int                     m_width     = 0;
         int                     m_height    = 0;
         std::string             m_title;
+        bool                    m_fullscreen= false;
         // std::vector<Widget*>    m_widgets;
         std::map<std::string, Widget*>  m_widgets;
 };

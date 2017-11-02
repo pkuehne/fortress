@@ -2,6 +2,7 @@
 #include "event_manager.h"
 #include "entity_manager.h"
 #include "window_manager.h"
+#include "window.h"
 #include "map_manager.h"
 #include "fov_algorithm.h"
 #include <string>

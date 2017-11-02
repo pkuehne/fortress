@@ -4,6 +4,7 @@
 #include "algorithm.h"
 #include "collider_component.h"
 #include "description_component.h"
+#include "game_engine.h"
 #include <iostream>
 #include <cmath>
 
@@ -16,9 +17,9 @@ unsigned int getDistance (
         const Location& end,
         void* customData = nullptr);
 
-bool canSeeTarget (GameEngineInterface* engine, EntityId entity, NpcComponent* npc);
-bool canAttackTarget (GameEngineInterface* engine, EntityId entity, NpcComponent* npc);
-bool canMoveTo (GameEngineInterface* engine, Location& location);
+bool canSeeTarget (GameEngine* engine, EntityId entity, NpcComponent* npc);
+bool canAttackTarget (GameEngine* engine, EntityId entity, NpcComponent* npc);
+bool canMoveTo (GameEngine* engine, Location& location);
 
 EntityId findNearestVisibleMatching(GameState* state,
         const Location& location,
@@ -26,7 +27,7 @@ EntityId findNearestVisibleMatching(GameState* state,
         std::string name);
 
 void setPathToTarget (
-        GameEngineInterface* engine,
+        GameEngine* engine,
         EntityId entity,
         EntityId target,
         NpcComponent* npc);
@@ -44,7 +45,7 @@ void NpcSystem::createHumanStateMachine()
     State NoneState;
     Transition NoneToIdle;
     NoneToIdle.condition =
-        [](GameEngineInterface* g, EntityId e, NpcComponent* n)
+        [](GameEngine* g, EntityId e, NpcComponent* n)
         {
             return true;
         };
@@ -55,7 +56,7 @@ void NpcSystem::createHumanStateMachine()
     State IdleState;
     Transition IdleToSeeking;
     IdleToSeeking.condition =
-        [](GameEngineInterface* g, EntityId e, NpcComponent* n)
+        [](GameEngine* g, EntityId e, NpcComponent* n)
         {
             return true;
         };
@@ -66,14 +67,14 @@ void NpcSystem::createHumanStateMachine()
     State SeekingState;
     Transition SeekingToMoving;
     SeekingToMoving.condition =
-        [](GameEngineInterface* g, EntityId e, NpcComponent* n)
+        [](GameEngine* g, EntityId e, NpcComponent* n)
         {
             return n->target != 0;
         };
     SeekingToMoving.endState = "Moving";
     SeekingState.transitions.push_back(SeekingToMoving);
     SeekingState.onUpdate =
-        [](GameEngineInterface* g, EntityId e, NpcComponent* n)
+        [](GameEngine* g, EntityId e, NpcComponent* n)
         {
             n->target = findNearestVisibleMatching(
                     g->state(),
@@ -89,7 +90,7 @@ void NpcSystem::createHumanStateMachine()
     MovingToAttacking.endState = "Attacking";
     MovingState.transitions.push_back(MovingToAttacking);
     MovingState.onUpdate =
-        [](GameEngineInterface* g, EntityId e, NpcComponent* n)
+        [](GameEngine* g, EntityId e, NpcComponent* n)
         {
             setPathToTarget (g, e, n->target, n);
             if (!n->path.empty()) {
@@ -105,14 +106,14 @@ void NpcSystem::createHumanStateMachine()
     State AttackingState;
     Transition AttackingNotPossible;
     AttackingNotPossible.condition =
-        [](GameEngineInterface* g, EntityId e, NpcComponent* n)
+        [](GameEngine* g, EntityId e, NpcComponent* n)
         {
             return !canAttackTarget(g,e,n);
         };
     AttackingNotPossible.endState = "Seeking";
     AttackingState.transitions.push_back(AttackingNotPossible);
     AttackingState.onUpdate =
-        [](GameEngineInterface* g, EntityId e, NpcComponent* n)
+        [](GameEngine* g, EntityId e, NpcComponent* n)
         {
             AttackEntityEvent* l_event = new AttackEntityEvent;
             l_event->attacker = e;
@@ -120,7 +121,7 @@ void NpcSystem::createHumanStateMachine()
             g->raiseEvent (l_event);
         };
     AttackingState.onLeave = 
-        [](GameEngineInterface* g, EntityId e, NpcComponent* n)
+        [](GameEngine* g, EntityId e, NpcComponent* n)
         {
             n->target = 0;
         };
@@ -128,7 +129,7 @@ void NpcSystem::createHumanStateMachine()
     m_stateMachines["human"] = human;
 }
 
-bool canSeeTarget (GameEngineInterface* engine, EntityId entity, NpcComponent* npc)
+bool canSeeTarget (GameEngine* engine, EntityId entity, NpcComponent* npc)
 {
     LosAlgorithm los;
     los.initialise (engine);
@@ -138,7 +139,7 @@ bool canSeeTarget (GameEngineInterface* engine, EntityId entity, NpcComponent* n
                 engine->state()->location(entity)));
 }
 
-bool canAttackTarget (GameEngineInterface* engine, EntityId entity, NpcComponent* npc)
+bool canAttackTarget (GameEngine* engine, EntityId entity, NpcComponent* npc)
 {
     EntityHolder l_entities;
     Location location = engine->state()->location(entity);
@@ -194,7 +195,7 @@ void NpcSystem::update ()
 
 int getPathCost (const Location& location, void* customData)
 {
-    GameEngineInterface* l_engine = static_cast<GameEngineInterface*> (customData);
+    GameEngine* l_engine = static_cast<GameEngine*> (customData);
     Tile& tile = l_engine->state()->tile(location);
 
     for (EntityId entity : tile.entities()) {
@@ -208,7 +209,7 @@ unsigned int findNeighbours4 (  const Location& location,
         Location* neighbours,
         void* customData)
 {
-    GameEngineInterface* l_engine = static_cast<GameEngineInterface*> (customData);
+    GameEngine* l_engine = static_cast<GameEngine*> (customData);
 
     unsigned int count = 0;
     Location neighbour = location;
@@ -233,7 +234,7 @@ unsigned int getDistance (const Location& start, const Location& end, void* cust
     return (abs (start.x - end.x) + abs(start.y - end.y));
 }
 
-bool canMoveTo (GameEngineInterface* engine, Location& location)
+bool canMoveTo (GameEngine* engine, Location& location)
 {
     const EntityHolder& l_targets = engine->state()->tile(location).entities();
     for (EntityId l_target : l_targets) {
@@ -265,7 +266,7 @@ EntityId findNearestVisibleMatching(GameState* state,
     return retval;
 }
 
-void setPathToTarget (GameEngineInterface* engine,
+void setPathToTarget (GameEngine* engine,
         EntityId entity,
         EntityId target,
         NpcComponent* npc)

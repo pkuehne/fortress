@@ -1,9 +1,11 @@
-[_] 27% Alpha 4
-	[_] 17% WindowManager upgrade
-		[_] 0% Windows should be created templatized
-			[_] 0% WindowManager has create<T>(args, retval) function
-			[_] 0% create<T>() function calls initialise
-			[_] 0% Add onCreate() and onDestroy() functions
+[_] 28% Alpha 4
+	[_] 23% WindowManager upgrade
+		[_] 66% Windows should be created templatized
+			[X] WindowManager has create<T>(args, retval) function
+			[X] create<T>() function calls initialise
+			[_] Add onCreate() and onDestroy() functions
+			[_] Change pushWindow function
+			[_] Remove WindowManagerInterface
 		[_] 0% Correct Focus support
 			[_] 0% getFocus() and loseFocs() should be called correctly
 			: At the moment they are only called once, when the window is created
@@ -22,7 +24,7 @@
 			: replace with keyPress
 			[X] Give Widget pointer to Window
 			[_] Widgets get de-alloc'ed on window pop
-		[_] % Migrate Windows to Widget basis
+		[_] 0% Migrate Windows to Widget basis
 			[_] Window Action Queue?
 			[_] Add destroy flag and do self->close()
 			[_] Add destroy_on_esc flag

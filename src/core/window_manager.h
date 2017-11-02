@@ -1,27 +1,36 @@
 #ifndef __WINDOW_MANAGER_H__
 #define __WINDOW_MANAGER_H__
 
-#include "window_manager_interface.h"
-#include "window_interface.h"
 #include <vector>
 
-class GameEngineInterface;
+class GameEngine;
+class Window;
 
-class WindowManager : public WindowManagerInterface {
+class WindowManager 
+{
 public:
-    void initialise (GameEngineInterface* engine);
-    void pushWindow (WindowInterface* win);
+    WindowManager() { }
+    void initialise (GameEngine* engine);
+    void pushWindow (Window* win);
     void popWindow ();
-    void replaceWindow (WindowInterface* win);
-    void replaceAllWindows (WindowInterface* win);
-    WindowInterface* getActive();
+    void replaceWindow (Window* win);
+    void replaceAllWindows (Window* win);
+    Window* getActive();
     void redraw ();
     void resize ();
     void update ();
 
+    template<typename T>
+        T* createWindow(void* args = nullptr, void* retval = nullptr)
+        {
+            T* win = new T();
+            win->initialise(m_engine, args, retval);
+            win->registerWidgets();
+            return win;
+        }
 private:
-    GameEngineInterface*            m_engine;
-    std::vector<WindowInterface*>   m_windows;
+    GameEngine*            m_engine = nullptr;
+    std::vector<Window*>   m_windows;
 };
 
 #endif

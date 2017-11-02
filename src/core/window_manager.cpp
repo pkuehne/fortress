@@ -2,7 +2,7 @@
 #include "window_manager.h"
 #include "splash_window.h"
 
-void WindowManager::initialise (GameEngineInterface* engine) {
+void WindowManager::initialise (GameEngine* engine) {
     m_engine = engine;
 
     Window* l_window = new SplashWindow();
@@ -10,7 +10,7 @@ void WindowManager::initialise (GameEngineInterface* engine) {
     pushWindow (l_window);
 }
 
-void WindowManager::pushWindow (WindowInterface* win) {
+void WindowManager::pushWindow (Window* win) {
     m_windows.push_back (win);
     win->gainFocus();
     win->resize();
@@ -19,18 +19,18 @@ void WindowManager::pushWindow (WindowInterface* win) {
 
 void WindowManager::popWindow () {
     if (m_windows.size() == 0) return;
-    WindowInterface* win = m_windows.back();
+    Window* win = m_windows.back();
     win->loseFocus();
     delete win;
     m_windows.pop_back();
 }
 
-void WindowManager::replaceWindow (WindowInterface* win) {
+void WindowManager::replaceWindow (Window* win) {
     popWindow();
     pushWindow (win);
 }
 
-void WindowManager::replaceAllWindows (WindowInterface* win) {
+void WindowManager::replaceAllWindows (Window* win) {
     int size = m_windows.size();
     for (int ii = 0; ii < size; ii++) {
         popWindow();
@@ -38,7 +38,7 @@ void WindowManager::replaceAllWindows (WindowInterface* win) {
     pushWindow (win);
 }
 
-WindowInterface* WindowManager::getActive()
+Window* WindowManager::getActive()
 {
     if (m_windows.size() == 0) return NULL;
     return m_windows.back();

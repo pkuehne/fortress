@@ -2,7 +2,7 @@
 #include "../core/game_engine.h"
 #include <iostream>
 
-void Window::initialise (GameEngineInterface* a_engine, void* args, void* retval)
+void Window::initialise (GameEngine* a_engine, void* args, void* retval)
 {
     m_engine    = a_engine;
     m_args      = args;

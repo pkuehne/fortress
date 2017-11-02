@@ -7,7 +7,7 @@
 #include "wieldable_component.h"
 
 namespace {
-    const char* nameOrNothing (EntityId item, GameEngineInterface* engine) {
+    const char* nameOrNothing (EntityId item, GameEngine* engine) {
         DescriptionComponent* description = engine->state()->components()->get<DescriptionComponent>(item);
         if (item == 0) return "<Nothing>";
         if (description == 0) return "?Something?";

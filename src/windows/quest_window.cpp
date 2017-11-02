@@ -36,7 +36,7 @@ void QuestWindow::registerWidgets()
 
 void QuestWindow::resize()
 {
-    setDimensions (10,10, 20, 20);
+    setDimensions (0, 0, 20, 20);
 }
 
 void QuestWindow::keyPress (unsigned char key)

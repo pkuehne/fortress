@@ -63,7 +63,7 @@ void MainWindow::keyDown (unsigned char key) {
         l_win->initialise (getEngine());
 
         FileLoader loader;
-        loader.initialise (getEngine());
+        //loader.initialise (getEngine());
         loader.loadState();
         getEngine()->getWindows()->pushWindow (l_win);
     }

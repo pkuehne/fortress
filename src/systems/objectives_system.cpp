@@ -15,9 +15,6 @@ void ObjectivesSystem::handleEvent (const Event* event)
                     getEngine()->getWindows()->pushWindow (l_win);
                     return;
                 }
-                if (l_event->entity == m_boss) {
-                    std::cout << "Killed the boss!" << std::endl;
-                }
                 if (updateQuests()) {
                     GameOverWindow* l_win = new GameOverWindow();
                     l_win->initialise(getEngine(),(void*)(1));
@@ -51,11 +48,9 @@ void ObjectivesSystem::update()
 bool ObjectivesSystem::updateQuests()
 {
     bool allComplete = true;
-    std::cout << "Updating Quests" << std::endl;
     for (Quest* quest : getEngine()->state()->getQuests()) {
         if (!quest->isCompleted() && !quest->isFailed()) {
             allComplete = false;
-            std::cout << "Updating " << quest->title() << std::endl;
             quest->update(*(getEngine()->state()));
             if (quest->isCompleted()) {
                 std::cout << "Quest " << quest->title()
