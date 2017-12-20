@@ -1,23 +1,20 @@
 #include "game_over_window.h"
 #include "game_engine.h"
 
-void GameOverWindow::gainFocus()
+void GameOverWindow::registerWidgets()
 {
-    setTitle ("GAME OVER");
-}
-
-void GameOverWindow::redraw()
-{
+    auto l = createWidget<Label>("lblResult", 2, 2);
     EntityId* l_entity = static_cast<EntityId*>(getArgs());
     if (l_entity) {
-        drawString (2, 2, "You Win!");
+        l->text("You Win!");
     } else {
-        drawString (2, 2, "You Lose!");
+        l->text("You Lose!");
     }
 }
 
-void GameOverWindow::resize()
+void GameOverWindow::setup()
 {
+    setTitle ("GAME OVER");
     setDimensions (0, 0, 13, 5);
 }
 

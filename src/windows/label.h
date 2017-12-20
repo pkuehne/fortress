@@ -19,5 +19,4 @@ class Label : public Widget {
 
     private:
         std::string m_text = "";
-
 };

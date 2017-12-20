@@ -1,43 +1,39 @@
-[_] 28% Alpha 4
-	[_] 23% WindowManager upgrade
-		[_] 60% Windows should be created templatized
+[_] 32% Alpha 4
+	[_] 41% WindowManager upgrade
+		[X] 100% Windows should be created templatized
 			[X] WindowManager has create<T>(args, retval) function
 			[X] create<T>() function calls initialise
-			[_] Add onCreate() and onDestroy() functions
-			[_] Change pushWindow function
+			[X] Add setup() function
+			[X] Change pushWindow function
 			[X] Remove WindowManagerInterface
-		[_] 0% Correct Focus support
-			[_] 0% getFocus() and loseFocs() should be called correctly
-			: At the moment they are only called once, when the window is created
-			: Instead they should be called each time the window is shown or
-			: hidden
-		[_] 0% Make Windows only dependent on GameState
-		[X] 100% Differentiate drawChar() from drawTile()
-		: The first uses the Fontset, the second the GraphicsSet
-		[_] 0% Move graphicsBegin/End out of WindowManager engine
-			[_] 0% Add unit tests
-		[_] Add full-screen setting
-		: Removes the need for getEngine() to retrieve the size of the screen
-		[_] 25% Widgets
+		[_] 50% Window Enhancements
+			[_] Remove getEngine() from Windows
+			[X] Differentiate drawChar() from drawTile()
+			: The first uses the Fontset, the second the GraphicsSet
+			[_] Move graphicsBegin/End out of WindowManager engine
+			[X] Add full-screen setting
+			: Removes the need for getEngine() to retrieve the size of the screen
+		[_] 14% Widgets
 			[_] Move wrapText into Widget
 			[_] Move drawProgress into a new widget
 			: replace with keyPress
 			[X] Give Widget pointer to Window
 			[_] Widgets get de-alloc'ed on window pop
+			[_] Allow sub-widgets 
+			[_] Put base widget in Window
+			[_] Allow finding of Widget from base Widget
 		[_] 0% Migrate Windows to Widget basis
-			[_] Window Action Queue?
-			[_] Add destroy flag and do self->close()
-			[_] Add destroy_on_esc flag
+			[_] Add close_on_esc flag
 			[_] Make keyDown/keyUp non-virtual in window.h
 	[_] 33% Make NPCs smarter
 		[X] 100% Better FSM for NPCs
 		[_] 0% Allow NPCs to traverse levels
 		[_] 0% GOAP for NPCs
-	[_] 75% Quests
+	[X] 100% Quests
 		[X] Add basic quest
 		[X] Add kill quest
 		[X] Make quest complete/fail
-		[_] QuestWindow
+		[X] QuestWindow
 	[X] 100% Better rendering code
 		[X] 100% Camera
 			[X] 100% Window Width + Height

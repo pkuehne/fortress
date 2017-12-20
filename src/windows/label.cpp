@@ -9,7 +9,7 @@ void Label::render()
                             this->commandChar-1,
                             this->sensitive);
     } else {
-        Color fg = Color(WHITE);
+        Color fg = this->fg;
         fg *= (this->sensitive ? 1.0 : 0.5);
         drawString( 0, 0, this->m_text.c_str(), fg);
     }

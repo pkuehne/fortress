@@ -5,6 +5,9 @@
 void Window::initialise (GameEngine* a_engine, void* args, void* retval)
 {
     m_engine    = a_engine;
+    m_graphics  = m_engine->getGraphics();
+    m_state     = m_engine->state();
+    m_manager   = m_engine->getWindows();
     m_args      = args;
     m_retval    = retval;
     setDimensions (2, 2, 2, 2);
@@ -17,7 +20,7 @@ void Window::setDimensions (int x, int y, int width, int height)
     m_width     = width;
     m_height    = height;
 
-    getEngine()->getGraphics()->calculateWindowOffsetsFromCentre (height, width, y, x);
+    m_graphics->calculateWindowOffsetsFromCentre (height, width, y, x);
     if (m_xOffset == 0) {
         m_xOffset = x;
     }
@@ -29,7 +32,7 @@ void Window::setDimensions (int x, int y, int width, int height)
 unsigned int Window::drawString (int y, int x, const char* text, Color fg, Color bg)
 {
     if (x < 0) x = (m_width/2) - (strlen(text)/2);
-    return getEngine()->getGraphics()->drawString (m_yOffset+y, m_xOffset+x, text, fg, bg);
+    return m_graphics->drawString (m_yOffset+y, m_xOffset+x, text, fg, bg);
 }
 
 unsigned int Window::drawCommandString (int y, int x, const char* text, int pos, bool active)
@@ -54,25 +57,31 @@ unsigned int Window::drawCommandString (int y, int x, const char* text, int pos,
 
 void Window::drawTile (int y, int x, unsigned int tile, Color fg, Color bg)
 {
-    getEngine()->getGraphics()->drawTile (m_yOffset+y, m_xOffset+x, tile, fg, bg);
+    m_graphics->drawTile (m_yOffset+y, m_xOffset+x, tile, fg, bg);
 }
 
 void Window::drawBorder (int y, int x, int height, int width) {
-    getEngine()->getGraphics()->drawBorder (m_yOffset+y, m_xOffset+x, height, width);
+    m_graphics->drawBorder (m_yOffset+y, m_xOffset+x, height, width);
 }
 
 void Window::clearArea (int y, int x, int height, int width) {
-    getEngine()->getGraphics()->clearArea (m_yOffset+y, m_xOffset+x, height, width);
+    m_graphics->clearArea (m_yOffset+y, m_xOffset+x, height, width);
 }
 
 void Window::beforeRedraw()
 {
-    getEngine()->getGraphics()->clearArea (m_yOffset, m_xOffset, m_height, m_width);
-    getEngine()->getGraphics()->drawBorder (m_yOffset, m_xOffset, m_height-2, m_width-2);
+    if (m_fullscreen) {
+        m_width = m_graphics->getScreenWidth();
+        m_height = m_graphics->getScreenHeight();
+        m_xOffset = 0;
+        m_yOffset = 0;
+    }
+    m_graphics->clearArea (m_yOffset, m_xOffset, m_height, m_width);
+    m_graphics->drawBorder (m_yOffset, m_xOffset, m_height-2, m_width-2);
 
     int x, y;
-    getEngine()->getGraphics()->calculateWindowOffsetsFromCentre (0, m_title.size(), y, x);
-    getEngine()->getGraphics()->clearArea (m_yOffset, x, 1, m_title.size());
+    m_graphics->calculateWindowOffsetsFromCentre (0, m_title.size(), y, x);
+    m_graphics->clearArea (m_yOffset, x, 1, m_title.size());
     drawString (0, x-m_xOffset, m_title.c_str());
 
 }
@@ -82,6 +91,7 @@ void Window::renderWidgets()
     for (auto iter : m_widgets) {
         Widget* w = iter.second;
         if(!w) continue;
+        if(!w->visible()) continue;
         w->realignWidget(m_width-2, m_height-2);
         w->render();
     }
@@ -169,7 +179,8 @@ void Window::keyDown (unsigned char key)
     ascii_keys[key] = true;
 
     for (auto iter : m_widgets) {
-        iter.second->keyDown(key);
+        Widget* w = iter.second;
+        if (w->visible()) w->keyDown(key);
     }
     this->keyPress(key);
 }

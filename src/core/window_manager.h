@@ -25,7 +25,7 @@ public:
         {
             T* win = new T();
             win->initialise(m_engine, args, retval);
-            win->registerWidgets();
+            pushWindow(win);
             return win;
         }
 private:

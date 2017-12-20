@@ -45,13 +45,11 @@ void MainWindow::keyDown (unsigned char key) {
     }
 
     if (key == 'q' || key == 'Q') {
-        getEngine()->getWindows()->pushWindow (
-                getEngine()->getWindows()->createWindow<GeneratorWindow>((void*)1));
+        getEngine()->getWindows()->createWindow<GeneratorWindow>((void*)1);
     }
 
     if (key == 'c' || key == 'C') {
-        getEngine()->getWindows()->pushWindow (
-            getEngine()->getWindows()->createWindow<GeneratorWindow>());
+        getEngine()->getWindows()->createWindow<GeneratorWindow>();
     }
 
     if (key == 'l' || key == 'L') {
@@ -59,8 +57,6 @@ void MainWindow::keyDown (unsigned char key) {
         //FileLoader loader;
         //loader.initialise (getEngine());
         //loader.loadState();
-
-        getEngine()->getWindows()->pushWindow (
-                getEngine()->getWindows()->createWindow<MapWindow>());
+        getEngine()->getWindows()->createWindow<MapWindow>();
     }
 }

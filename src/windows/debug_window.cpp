@@ -4,9 +4,8 @@
 
 const char CONSOLE_DIR[] = "./scripts/console";
 
-void DebugWindow::gainFocus()
+void DebugWindow::setupLua()
 {
-    setTitle (" Debug Console ");
     command[0] = '\0';
     m_lua.setGameState(getEngine()->state());
     try {
@@ -15,6 +14,12 @@ void DebugWindow::gainFocus()
         Output line (error.what(), ERROR_COLOR);
         history.push_back (line);
     }
+}
+
+void DebugWindow::setup()
+{
+    setTitle (" Debug Console ");
+    setFullscreen(true);
 }
 
 void DebugWindow::loadLuaScripts()
@@ -57,13 +62,6 @@ void DebugWindow::redraw()
     drawString (getHeight()-3, 3, "Command:");
     drawString (getHeight()-3, 12, command);
     drawString (getHeight()-3, 12 + length, "#", Color(RED));
-}
-
-void DebugWindow::resize()
-{
-    setDimensions (0, 0,
-            getEngine()->getGraphics()->getScreenWidth() - 6,
-            getEngine()->getGraphics()->getScreenHeight() - 6);
 }
 
 void DebugWindow::keyDown (unsigned char key)

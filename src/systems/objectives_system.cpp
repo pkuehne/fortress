@@ -10,18 +10,11 @@ void ObjectivesSystem::handleEvent (const Event* event)
             {
                 const RemoveEntityEvent* l_event = static_cast<const RemoveEntityEvent*> (event);
                 if (l_event->entity == getEngine()->state()->player()) {
-                    auto l_win = getEngine()->getWindows()->createWindow<GameOverWindow>();
-                    //GameOverWindow* l_win = new GameOverWindow();
-                    //l_win->initialise(getEngine());
-                    getEngine()->getWindows()->pushWindow (l_win);
+                    getEngine()->getWindows()->createWindow<GameOverWindow>();
                     return;
                 }
                 if (updateQuests()) {
-                    // GameOverWindow* l_win = new GameOverWindow();
-                    // l_win->initialise(getEngine(),(void*)(1));
-                    getEngine()->getWindows()->pushWindow (
-                            getEngine()->getWindows()->createWindow<GameOverWindow>(
-                                (void*)(1)));
+                    getEngine()->getWindows()->createWindow<GameOverWindow>((void*)(1));
                 }
 
                 break;

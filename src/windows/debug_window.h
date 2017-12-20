@@ -2,8 +2,8 @@
 #define __DEBUG_WINDOW_H__
 
 #include "window.h"
-#include "utility.h"
-#include "lua_wrapper.h"
+#include "../core/utility.h"
+#include "../core/lua_wrapper.h"
 
 struct Output {
     Output (const std::string& t, const Color& c)
@@ -20,12 +20,12 @@ const Color OUTPUT_COLOR = Color (GREY);
 const unsigned int COMMAND_MAX_LEN = 128;
 class DebugWindow : public Window {
 public:
-    void gainFocus();
-    void resize();
+    void setup();
     void redraw();
     void keyDown (unsigned char key);
 
 private:
+    void setupLua();
     void loadLuaScripts();
 
 private:

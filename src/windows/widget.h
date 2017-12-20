@@ -36,11 +36,12 @@ class Widget {
                 Color fg = Color(WHITE),
                 Color bg = Color(BLACK));
 
-        // Overridable methods
         virtual void render() {}
+        // Overridable methods
         KeyFunc onKeyPress = nullptr;
 
         const std::string& name() { return m_name; }
+        bool& visible() { return m_visible; }
 
     public:
         enum class HorizontalAlign { Left, Centre, Right, };
@@ -65,6 +66,7 @@ class Widget {
         unsigned int m_yPos     = 0;
         GraphicsInterface*  m_graphics = nullptr;
         std::string  m_name     = "";
+        bool         m_visible  = true;
 };
 
 #endif

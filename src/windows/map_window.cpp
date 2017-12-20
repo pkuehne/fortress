@@ -97,17 +97,14 @@ void MapWindow::keyDown (unsigned char key)
         if (m_action == 'i') {
             EntityHolder l_entities = getEngine()->state()->map()->findEntitiesAt(newLocation);
             if (l_entities.size() > 0) {
-                getEngine()->getWindows()->pushWindow (
-                        getEngine()->getWindows()->createWindow<SelectionWindow>(
-                            &l_entities));
+                getEngine()->getWindows()->createWindow<SelectionWindow>(&l_entities);
             }
         }
         if (m_action != 'i') getEngine()->swapTurn();
         m_action = 'm';
     }
     if (key == KEY_ESC) {
-        getEngine()->getWindows()->pushWindow (
-                getEngine()->getWindows()->createWindow<EscapeWindow>());
+        getEngine()->getWindows()->createWindow<EscapeWindow>();
     }
     if (key == 'm' ||
             key == 'k' ||
@@ -141,8 +138,7 @@ void MapWindow::keyDown (unsigned char key)
         }
     }
     if (key == 'E') {
-        getEngine()->getWindows()->pushWindow (
-                getEngine()->getWindows()->createWindow<EquipmentWindow>());
+        getEngine()->getWindows()->createWindow<EquipmentWindow>();
     }
     if (key == 'S') {
         FileSaver saver;
@@ -161,8 +157,7 @@ void MapWindow::keyDown (unsigned char key)
 
     }
     if (key == 'q') {
-        getEngine()->getWindows()->pushWindow(
-                getEngine()->getWindows()->createWindow<QuestWindow>());
+        getEngine()->getWindows()->createWindow<QuestWindow>();
     }
     if (key == '[') {
         unsigned int height = getEngine()->getGraphics()->getTileHeight();
@@ -177,8 +172,7 @@ void MapWindow::keyDown (unsigned char key)
         getEngine()->getWindows()->resize();
     }
     if (key == '`') {
-        getEngine()->getWindows()->pushWindow (
-                getEngine()->getWindows()->createWindow<DebugWindow>());
+        getEngine()->getWindows()->createWindow<DebugWindow>();
     }
 
     //std::cout << "Key: " << key << std::endl;

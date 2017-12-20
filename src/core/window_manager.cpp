@@ -5,16 +5,14 @@
 void WindowManager::initialise (GameEngine* engine) {
     m_engine = engine;
 
-    // Window* l_window = new SplashWindow();
-    // l_window->initialise(m_engine);
-    // pushWindow (l_window);
-    pushWindow(createWindow<SplashWindow>());
+    createWindow<SplashWindow>();
 }
 
 void WindowManager::pushWindow (Window* win) {
     m_windows.push_back (win);
     win->gainFocus();
     win->resize();
+    win->setup();
     win->registerWidgets();
 }
 
