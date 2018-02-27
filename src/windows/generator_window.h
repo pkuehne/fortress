@@ -2,7 +2,7 @@
 #define GENERATOR_WINDOW
 
 #include "window.h"
-#include "generator_interface.h"
+#include "../generators/generator_interface.h"
 
 enum PositionSelect {
     NONE = 0,

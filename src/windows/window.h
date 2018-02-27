@@ -51,16 +51,17 @@ class Window
                 unsigned int x,
                 unsigned int y)
         {
-            T* w = new T();
-            w->setWindowOffsets(m_xOffset, m_yOffset);
-            w->setGraphics(m_graphics);
-            w->setName(name);
-            w->x = x;
-            w->y = y;
-            w->window = this;
-            m_widgets[name] = w;
+            T* widget = new T();
+            widget
+                ->setWindowOffsets(m_xOffset, m_yOffset)
+                ->setGraphics(m_graphics)
+                ->setName(name)
+                ->setX(x)
+                ->setY(y)
+                ->setWindow(this);
+            m_widgets[name] = widget;
 
-            return w;
+            return widget;
         };
 
         // Non-overridable

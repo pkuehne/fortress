@@ -91,7 +91,7 @@ void Window::renderWidgets()
     for (auto iter : m_widgets) {
         Widget* w = iter.second;
         if(!w) continue;
-        if(!w->visible()) continue;
+        if(!w->getVisible()) continue;
         w->realignWidget(m_width-2, m_height-2);
         w->render();
     }
@@ -180,7 +180,7 @@ void Window::keyDown (unsigned char key)
 
     for (auto iter : m_widgets) {
         Widget* w = iter.second;
-        if (w->visible()) w->keyDown(key);
+        if (w->getVisible()) w->keyDown(key);
     }
     this->keyPress(key);
 }

@@ -1,14 +1,14 @@
 #include "game_over_window.h"
-#include "game_engine.h"
+#include "../core/game_engine.h"
 
 void GameOverWindow::registerWidgets()
 {
     auto l = createWidget<Label>("lblResult", 2, 2);
     EntityId* l_entity = static_cast<EntityId*>(getArgs());
     if (l_entity) {
-        l->text("You Win!");
+        l->setText("You Win!");
     } else {
-        l->text("You Lose!");
+        l->setText("You Lose!");
     }
 }
 

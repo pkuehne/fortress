@@ -1,7 +1,7 @@
 #ifndef EQUIPMENT_COMPONENT_H
 #define EQUIPMENT_COMPONENT_H
 
-#include "entity.h"
+#include "../core/entity.h"
 #include "component_base.h"
 #include <vector>
 

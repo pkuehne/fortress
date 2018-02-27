@@ -1,6 +1,6 @@
 #pragma once
 
-#include <window.h>
+#include "window.h"
 
 class QuestWindow : public Window {
     public:

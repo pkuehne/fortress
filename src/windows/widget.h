@@ -3,70 +3,196 @@
 
 #include "../core/graphics.h"
 
-typedef void(*KeyFunc)(unsigned char);
+typedef void (*KeyFunc)(unsigned char);
 
 class Window;
 
-class Widget {
-    public:
-        Widget() {}
-        virtual ~Widget() {}
+class Widget
+{
+  public:
+    enum class HorizontalAlign
+    {
+        Left,
+        Centre,
+        Right,
+    };
+    enum class VerticalAlign
+    {
+        Top,
+        Centre,
+        Bottom,
+    };
 
-        // Methods to set basic info on creation
-        void setWindowOffsets(unsigned int x, unsigned int y) {
-            m_xOffset = x; m_yOffset = y;
-        }
-        void setGraphics(GraphicsInterface* graphics) { m_graphics = graphics; }
-        
-        void setName(std::string& name) { m_name = name; }
-        void realignWidget(unsigned int screenWidth, unsigned int screenHeight);
+  public:
+    Widget() {}
+    virtual ~Widget() {}
 
-        void keyDown(unsigned char key) { keyPress(key); } // Not overridable
-        virtual void keyPress (unsigned char key);  // Overridable
+    // Methods to set basic info on creation
+    Widget *setWindowOffsets(unsigned int x, unsigned int y)
+    {
+        m_xOffset = x;
+        m_yOffset = y;
+        return this;
+    }
+    Widget *setGraphics(GraphicsInterface *graphics)
+    {
+        m_graphics = graphics;
+        return this;
+    }
 
-        // Utility methods for widgets
-        void drawCommandString (unsigned int x,
-                unsigned int y,
-                const char* text,
-                unsigned int pos,
-                bool active);
-        void drawString (   unsigned int x,
-                unsigned int y,
-                const char* text,
-                Color fg = Color(WHITE),
-                Color bg = Color(BLACK));
+    Widget *setName(std::string &name)
+    {
+        m_name = name;
+        return this;
+    }
+    std::string getName() const
+    {
+        return m_name;
+    }
+    Widget *setX(unsigned int x)
+    {
+        this->m_x = x;
+        return this;
+    }
+    unsigned int getX() const
+    {
+        return m_x;
+    }
+    Widget *setY(unsigned int y)
+    {
+        this->m_y = y;
+        return this;
+    }
+    unsigned int getY() const
+    {
+        return m_y;
+    }
+    Widget *setWindow(Window *win)
+    {
+        this->m_window = win;
+        return this;
+    }
+    Window *getWindow() const
+    {
+        return m_window;
+    }
+    Widget *setVisible(bool visible)
+    {
+        this->m_visible = visible;
+        return this;
+    }
+    bool getVisible() const
+    {
+        return m_visible;
+    }
+    Widget* setSensitive(bool sensitive)
+    {
+        m_sensitive = sensitive;
+        return this;
+    }
+    bool getSensitive() const
+    {
+        return m_sensitive;
+    }
+    Widget *setWidth(unsigned int width)
+    {
+        this->m_width = width;
+        return this;
+    }
+    unsigned int getWidth()
+    {
+        return m_width;
+    }
+    Widget *setHeight(unsigned int height)
+    {
+        this->m_height = height;
+        return this;
+    }
+    unsigned int getHeight()
+    {
+        return m_height;
+    }
+    Widget *setHorizontalAlign(HorizontalAlign align)
+    {
+        m_hAlign = align;
+        return this;
+    }
+    HorizontalAlign getHorizontalAlign()
+    {
+        return m_hAlign;
+    }
+    Widget *setVerticalAlign(VerticalAlign align)
+    {
+        m_vAlign = align;
+        return this;
+    }
+    VerticalAlign getVerticalAlign()
+    {
+        return m_vAlign;
+    }
+    Widget *setForegroundColor(Color color)
+    {
+        m_fgColor = color;
+        return this;
+    }
+    Color getForegroundColor()
+    {
+        return m_fgColor;
+    }
+    Widget *setBackgroundColor(Color color)
+    {
+        m_bgColor = color;
+        return this;
+    }
+    Color getBackgroundColor()
+    {
+        return m_bgColor;
+    }
 
-        virtual void render() {}
-        // Overridable methods
-        KeyFunc onKeyPress = nullptr;
+    // Subclass overrideable
+    virtual void keyPress(unsigned char key);
+    virtual void render() {}
 
-        const std::string& name() { return m_name; }
-        bool& visible() { return m_visible; }
+    // Callbacks
+    KeyFunc onKeyPress = nullptr;
 
-    public:
-        enum class HorizontalAlign { Left, Centre, Right, };
-        enum class VerticalAlign { Top, Centre, Bottom, };
-    public:
-        unsigned int x = 1;
-        unsigned int y = 1;
-        unsigned int width = 1;
-        unsigned int height = 1;
-        HorizontalAlign hAlign = HorizontalAlign::Left;
-        VerticalAlign vAlign = VerticalAlign::Top;
+    // Utility methods for widgets
+    Widget *drawCommandString(unsigned int x,
+                              unsigned int y,
+                              const char *text,
+                              unsigned int pos,
+                              bool active);
+    Widget *drawString(unsigned int x,
+                       unsigned int y,
+                       const char *text,
+                       Color fg = Color(WHITE),
+                       Color bg = Color(BLACK));
 
-        Color fg = Color(WHITE);
-        Color bg = Color(BLACK);
-        
-        Window* window = nullptr;
+    // Internal Methods
+    Widget *realignWidget(unsigned int screenWidth, unsigned int screenHeight);
+    void keyDown(unsigned char key) { keyPress(key); }
 
-    private:
-        unsigned int m_xOffset  = 0;
-        unsigned int m_yOffset  = 0;
-        unsigned int m_xPos     = 0;
-        unsigned int m_yPos     = 0;
-        GraphicsInterface*  m_graphics = nullptr;
-        std::string  m_name     = "";
-        bool         m_visible  = true;
+  private:
+    Window *m_window = nullptr;
+    unsigned int m_x = 1; ///< The Window X offset
+    unsigned int m_y = 1; ///< The Window Y offset
+
+    unsigned int m_xOffset = 0; ///< X Offset within the Window
+    unsigned int m_yOffset = 0; ///< Y Offset within the Window
+    unsigned int m_xPos = 0;    ///< The actual X position on screen
+    unsigned int m_yPos = 0;    ///< The actual Y position on screen
+    unsigned int m_width = 1;
+    unsigned int m_height = 1;
+
+    GraphicsInterface *m_graphics = nullptr;
+    std::string m_name = "";
+    bool m_visible = true;
+    bool m_sensitive = true;
+
+    HorizontalAlign m_hAlign = HorizontalAlign::Left;
+    VerticalAlign m_vAlign = VerticalAlign::Top;
+    Color m_fgColor = Color(WHITE);
+    Color m_bgColor = Color(BLACK);
 };
 
 #endif

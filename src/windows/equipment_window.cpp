@@ -15,33 +15,33 @@ const char* nameOrNothing (EntityId item, GameEngine* engine) {
 }
 
 void selectItem(Label* l) {
-    EntityId player = l->window->getState()->player();
+    EntityId player = l->getWindow()->getState()->player();
     EquipmentComponent* equipment =
-        l->window->getState()->components()->get<EquipmentComponent>(player);
-    EquipmentWindow* win = dynamic_cast<EquipmentWindow*>(l->window);
+        l->getWindow()->getState()->components()->get<EquipmentComponent>(player);
+    EquipmentWindow* win = dynamic_cast<EquipmentWindow*>(l->getWindow());
 
-    if (l->name() == "lblRight")
+    if (l->getName() == "lblRight")
         win->setSelectedItem(equipment->rightHandWieldable);
-    if (l->name() == "lblLeft")
+    if (l->getName() == "lblLeft")
         win->setSelectedItem(equipment->leftHandWieldable);
-    if (l->name() == "lblHead")
+    if (l->getName() == "lblHead")
         win->setSelectedItem(equipment->headWearable);
-    if (l->name() == "lblFace")
+    if (l->getName() == "lblFace")
         win->setSelectedItem(equipment->faceWearable);
-    if (l->name() == "lblChest")
+    if (l->getName() == "lblChest")
         win->setSelectedItem(equipment->chestWearable);
-    if (l->name() == "lblArms")
+    if (l->getName() == "lblArms")
         win->setSelectedItem(equipment->armsWearable);
-    if (l->name() == "lblHands")
+    if (l->getName() == "lblHands")
         win->setSelectedItem(equipment->handsWearable);
-    if (l->name() == "lblLegs")
+    if (l->getName() == "lblLegs")
         win->setSelectedItem(equipment->legsWearable);
-    if (l->name() == "lblFeet")
+    if (l->getName() == "lblFeet")
         win->setSelectedItem(equipment->feetWearable);
     if (win->itemSelected()) {
         Label* s = win->getWidget<Label>("lblItemSelector");
-        s->y = l->y;
-        s->visible() = true;
+        s->setY(l->getY());
+        s->setVisible(true);
     }
 }
 
@@ -62,49 +62,49 @@ void EquipmentWindow::registerWidgets()
 {
     Label* l = nullptr;
 
-    createWidget<Label>("lblEquipment", 4, 2)->text("Equipment");
-    createWidget<Label>("lblRucksack", 16, 2)->text("Rucksack");
+    createWidget<Label>("lblEquipment", 4, 2)->setText("Equipment");
+    createWidget<Label>("lblRucksack", 16, 2)->setText("Rucksack");
 
-    createWidget<Label>("lblWielding", 2, 4)->text("Wielding");
-    createWidget<Label>("lblWearing", 2, 8)->text("Wearing");
+    createWidget<Label>("lblWielding", 2, 4)->setText("Wielding");
+    createWidget<Label>("lblWearing", 2, 8)->setText("Wearing");
 
     l = createWidget<Label>("lblRight", 4, 5);
-    l->text("Right:");
-    l->commandChar = 1;
+    l->setText("Right:");
+    l->setCommandChar(1);
     l->onCommandChar = selectItem;
 
     l = createWidget<Label>("lblLeft", 4, 6);
-    l->text("Left :");
-    l->commandChar = 1;
+    l->setText("Left :");
+    l->setCommandChar(1);
     l->onCommandChar = selectItem;
 
     l = createWidget<Label>("lblHead", 4, 9);
-    l->text("Head :");
-    l->commandChar = 1;
+    l->setText("Head :");
+    l->setCommandChar(1);
     l->onCommandChar = selectItem;
     l = createWidget<Label>("lblFace", 4, 10);
-    l->text("Face :");
-    l->commandChar = 1;
+    l->setText("Face :");
+    l->setCommandChar(1);
     l->onCommandChar = selectItem;
     l = createWidget<Label>("lblChest", 4, 11);
-    l->text("Chest:");
-    l->commandChar = 1;
+    l->setText("Chest:");
+    l->setCommandChar(1);
     l->onCommandChar = selectItem;
     l = createWidget<Label>("lblArms", 4, 12);
-    l->text("Arms :");
-    l->commandChar = 1;
+    l->setText("Arms :");
+    l->setCommandChar(1);
     l->onCommandChar = selectItem;
     l = createWidget<Label>("lblHands", 4, 13);
-    l->text("Hands:");
-    l->commandChar = 3;
+    l->setText("Hands:");
+    l->setCommandChar(3);
     l->onCommandChar = selectItem;
     l = createWidget<Label>("lblLegs", 4, 14);
-    l->text("Legs :");
-    l->commandChar = 2;
+    l->setText("Legs :");
+    l->setCommandChar(2);
     l->onCommandChar = selectItem;
     l = createWidget<Label>("lblFeet", 4, 15);
-    l->text("Feet :");
-    l->commandChar = 4;
+    l->setText("Feet :");
+    l->setCommandChar(4);
     l->onCommandChar = selectItem;
 
     createWidget<Label>("lblLeftItem", 11, 6);
@@ -118,29 +118,29 @@ void EquipmentWindow::registerWidgets()
     createWidget<Label>("lblFeetItem",  11, 15);
 
     l = createWidget<Label>("lblPageSelector", 3, 2);
-    l->text(">");
-    l->fg = Color(RED);
+    l->setText(">");
+    l->setForegroundColor(Color(RED));
     l = createWidget<Label>("lblItemSelector", 3, 5);
-    l->text(">");
-    l->fg = Color(RED);
-    l->visible() = false;
+    l->setText(">");
+    l->setForegroundColor(Color(RED));
+    l->setVisible(false);
 
     l = createWidget<Label>("lblSelectItem", 2, 0);
-    l->text("Select item");
-    l->vAlign = Widget::VerticalAlign::Centre;
-    l->hAlign = Widget::HorizontalAlign::Right;
+    l->setText("Select item");
+    l->setVerticalAlign(Widget::VerticalAlign::Centre);
+    l->setHorizontalAlign(Widget::HorizontalAlign::Right);
 
     l = createWidget<Label>("lblSelectedItem", 29, 2);
-    l->text("");
-    l->visible() = false;
+    l->setText("");
+    l->setVisible(false);
 
-    l->visible() = false;
+    l->setVisible(false);
     l = createWidget<Label>("lblConsume", 29, 3);
-    l->text("consume");
-    l->vAlign = Widget::VerticalAlign::Bottom;
-    l->commandChar = 1;
+    l->setText("consume");
+    l->setVerticalAlign(Widget::VerticalAlign::Bottom);
+    l->setCommandChar(1);
     l->onCommandChar = [](Label* l) {
-        EquipmentWindow* win = dynamic_cast<EquipmentWindow*>(l->window);
+        EquipmentWindow* win = dynamic_cast<EquipmentWindow*>(l->getWindow());
         GameEngine* engine = win->getEngine();
         ConsumeItemEvent* event = new ConsumeItemEvent();
         event->entity = engine->state()->player();
@@ -149,26 +149,26 @@ void EquipmentWindow::registerWidgets()
         engine->raiseEvent (event);
         engine->swapTurn();
     };
-    l->visible() = false;
+    l->setVisible(false);
 
     l = createWidget<Label>("lblInspect", 29, 2);
-    l->text("inspect");
-    l->vAlign = Widget::VerticalAlign::Bottom;
-    l->commandChar = 1;
+    l->setText("inspect");
+    l->setVerticalAlign(Widget::VerticalAlign::Bottom);
+    l->setCommandChar(1);
     l->onCommandChar = [](Label* l) {
-        EquipmentWindow* win = dynamic_cast<EquipmentWindow*>(l->window);
+        EquipmentWindow* win = dynamic_cast<EquipmentWindow*>(l->getWindow());
         GameEngine* engine = win->getEngine();
         EntityId* l_target = new EntityId(win->getSelectedItem());
         engine->getWindows()->createWindow<InspectionWindow>(l_target);
     };
-    l->visible() = false;
+    l->setVisible(false);
 
     l = createWidget<Label>("lblUnequip", 29, 1);
-    l->text("unequip");
-    l->vAlign = Widget::VerticalAlign::Bottom;
-    l->commandChar = 1;
+    l->setText("unequip");
+    l->setVerticalAlign(Widget::VerticalAlign::Bottom);
+    l->setCommandChar(1);
     l->onCommandChar = [](Label* l) {
-        EquipmentWindow* win = dynamic_cast<EquipmentWindow*>(l->window);
+        EquipmentWindow* win = dynamic_cast<EquipmentWindow*>(l->getWindow());
         GameEngine* engine = win->getEngine();
         UnequipItemEvent* event = new UnequipItemEvent();
         event->entity = engine->state()->player();
@@ -178,14 +178,14 @@ void EquipmentWindow::registerWidgets()
         engine->swapTurn();
         win->updateItemNames();
     };
-    l->visible() = false;
+    l->setVisible(false);
 
     l = createWidget<Label>("lblEquip", 29, 1);
-    l->text("equip");
-    l->vAlign = Widget::VerticalAlign::Bottom;
-    l->commandChar = 1;
+    l->setText("equip");
+    l->setVerticalAlign(Widget::VerticalAlign::Bottom);
+    l->setCommandChar(1);
     l->onCommandChar = [](Label* l) {
-        EquipmentWindow* win = dynamic_cast<EquipmentWindow*>(l->window);
+        EquipmentWindow* win = dynamic_cast<EquipmentWindow*>(l->getWindow());
         GameEngine* engine = win->getEngine();
         EquipItemEvent* event = new EquipItemEvent();
         event->entity = engine->state()->player();
@@ -195,14 +195,14 @@ void EquipmentWindow::registerWidgets()
         engine->swapTurn();
         win->updateItemNames();
     };
-    l->visible() = false;
+    l->setVisible(false);
 
     l = createWidget<Label>("lblDrop", 29, 0);
-    l->text("drop");
-    l->vAlign = Widget::VerticalAlign::Bottom;
-    l->commandChar = 1;
+    l->setText("drop");
+    l->setVerticalAlign(Widget::VerticalAlign::Bottom);
+    l->setCommandChar(1);
     l->onCommandChar = [](Label* l) {
-        EquipmentWindow* win = dynamic_cast<EquipmentWindow*>(l->window);
+        EquipmentWindow* win = dynamic_cast<EquipmentWindow*>(l->getWindow());
         GameEngine* engine = win->getEngine();
         DropEquipmentEvent* event = new DropEquipmentEvent();
         event->entity = engine->state()->player();
@@ -212,7 +212,7 @@ void EquipmentWindow::registerWidgets()
         engine->swapTurn();
         win->updateItemNames();
     };
-    l->visible() = false;
+    l->setVisible(false);
 }
 
 void EquipmentWindow::redraw() {
@@ -221,7 +221,9 @@ void EquipmentWindow::redraw() {
 
     if (m_selectedPage == 1) {
         for (size_t ii = 0; ii < equipment->carriedEquipment.size(); ii++) {
-            if (equipment->carriedEquipment[ii] == m_selectedItem) drawString (ii+4, 4, ">", Color (RED), Color (GREY));
+            if (equipment->carriedEquipment[ii] == m_selectedItem) {
+                drawString (ii+4, 4, ">", Color (RED), Color (GREY));
+            }
             drawTile (ii+4, 5, ii+65, Color (GREEN), Color (GREY));
             drawString (ii+4, 7, nameOrNothing (equipment->carriedEquipment[ii], getEngine()));
         }
@@ -241,40 +243,40 @@ void EquipmentWindow::keyDown (unsigned char key)
 
     if (key == KEY_TAB) {
         m_selectedPage = (m_selectedPage == 0) ? 1 : 0;
-        getWidget<Label>("lblPageSelector")->x = 3 + (12*m_selectedPage);
+        getWidget<Label>("lblPageSelector")->setX(3 + (12*m_selectedPage));
 
-        getWidget<Label>("lblWielding")->visible() = (m_selectedPage == 0);
-        getWidget<Label>("lblWearing")->visible() = (m_selectedPage == 0);
-        getWidget<Label>("lblRight")->visible() = (m_selectedPage == 0);
-        getWidget<Label>("lblRightItem")->visible() = (m_selectedPage == 0);
-        getWidget<Label>("lblLeft")->visible() = (m_selectedPage == 0);
-        getWidget<Label>("lblLeftItem")->visible() = (m_selectedPage == 0);
-        getWidget<Label>("lblHead")->visible() = (m_selectedPage == 0);
-        getWidget<Label>("lblFace")->visible() = (m_selectedPage == 0);
-        getWidget<Label>("lblChest")->visible() = (m_selectedPage == 0);
-        getWidget<Label>("lblArms")->visible() = (m_selectedPage == 0);
-        getWidget<Label>("lblHands")->visible() = (m_selectedPage == 0);
-        getWidget<Label>("lblLegs")->visible() = (m_selectedPage == 0);
-        getWidget<Label>("lblFeet")->visible() = (m_selectedPage == 0);
-        getWidget<Label>("lblHeadItem")->visible() = (m_selectedPage == 0);
-        getWidget<Label>("lblFaceItem")->visible() = (m_selectedPage == 0);
-        getWidget<Label>("lblChestItem")->visible() = (m_selectedPage == 0);
-        getWidget<Label>("lblArmsItem")->visible() = (m_selectedPage == 0);
-        getWidget<Label>("lblHandsItem")->visible() = (m_selectedPage == 0);
-        getWidget<Label>("lblLegsItem")->visible() = (m_selectedPage == 0);
-        getWidget<Label>("lblFeetItem")->visible() = (m_selectedPage == 0);
+        getWidget<Label>("lblWielding")->setVisible((m_selectedPage == 0));
+        getWidget<Label>("lblWearing")->setVisible((m_selectedPage == 0));
+        getWidget<Label>("lblRight")->setVisible((m_selectedPage == 0));
+        getWidget<Label>("lblRightItem")->setVisible((m_selectedPage == 0));
+        getWidget<Label>("lblLeft")->setVisible((m_selectedPage == 0));
+        getWidget<Label>("lblLeftItem")->setVisible((m_selectedPage == 0));
+        getWidget<Label>("lblHead")->setVisible((m_selectedPage == 0));
+        getWidget<Label>("lblFace")->setVisible((m_selectedPage == 0));
+        getWidget<Label>("lblChest")->setVisible((m_selectedPage == 0));
+        getWidget<Label>("lblArms")->setVisible((m_selectedPage == 0));
+        getWidget<Label>("lblHands")->setVisible((m_selectedPage == 0));
+        getWidget<Label>("lblLegs")->setVisible((m_selectedPage == 0));
+        getWidget<Label>("lblFeet")->setVisible((m_selectedPage == 0));
+        getWidget<Label>("lblHeadItem")->setVisible((m_selectedPage == 0));
+        getWidget<Label>("lblFaceItem")->setVisible((m_selectedPage == 0));
+        getWidget<Label>("lblChestItem")->setVisible((m_selectedPage == 0));
+        getWidget<Label>("lblArmsItem")->setVisible((m_selectedPage == 0));
+        getWidget<Label>("lblHandsItem")->setVisible((m_selectedPage == 0));
+        getWidget<Label>("lblLegsItem")->setVisible((m_selectedPage == 0));
+        getWidget<Label>("lblFeetItem")->setVisible((m_selectedPage == 0));
 
         m_selectedItem = 0;
-        getWidget<Label>("lblItemSelector")->visible() = false;
+        getWidget<Label>("lblItemSelector")->setVisible(false);
     }
 
-    getWidget<Label>("lblSelectItem")->visible() = (m_selectedItem == 0);
-    getWidget<Label>("lblSelectedItem")->visible() = (m_selectedItem > 0);
-    getWidget<Label>("lblConsume")->visible() = (m_selectedItem > 0);
-    getWidget<Label>("lblInspect")->visible() = (m_selectedItem > 0);
-    getWidget<Label>("lblDrop")->visible() = (m_selectedItem > 0);
-    getWidget<Label>("lblUnequip")->visible() = (m_selectedItem > 0 && m_selectedPage == 0);
-    getWidget<Label>("lblEquip")->visible() = (m_selectedItem > 0 && m_selectedPage == 1);
+    getWidget<Label>("lblSelectItem")->setVisible((m_selectedItem == 0));
+    getWidget<Label>("lblSelectedItem")->setVisible((m_selectedItem > 0));
+    getWidget<Label>("lblConsume")->setVisible((m_selectedItem > 0));
+    getWidget<Label>("lblInspect")->setVisible((m_selectedItem > 0));
+    getWidget<Label>("lblDrop")->setVisible((m_selectedItem > 0));
+    getWidget<Label>("lblUnequip")->setVisible((m_selectedItem > 0 && m_selectedPage == 0));
+    getWidget<Label>("lblEquip")->setVisible((m_selectedItem > 0 && m_selectedPage == 1));
 
     updateItemNames();
 }
@@ -285,25 +287,25 @@ void EquipmentWindow::updateItemNames()
     EquipmentComponent* equipment =
         getState()->components()->get<EquipmentComponent>(player);
 
-    getWidget<Label>("lblRightItem")->text(
+    getWidget<Label>("lblRightItem")->setText(
             nameOrNothing (equipment->rightHandWieldable, getEngine()));
-    getWidget<Label>("lblLeftItem")->text(
+    getWidget<Label>("lblLeftItem")->setText(
             nameOrNothing (equipment->leftHandWieldable, getEngine()));
-    getWidget<Label>("lblHeadItem")->text(
+    getWidget<Label>("lblHeadItem")->setText(
             nameOrNothing (equipment->headWearable, getEngine()));
-    getWidget<Label>("lblFaceItem")->text(
+    getWidget<Label>("lblFaceItem")->setText(
             nameOrNothing (equipment->faceWearable, getEngine()));
-    getWidget<Label>("lblChestItem")->text(
+    getWidget<Label>("lblChestItem")->setText(
             nameOrNothing (equipment->chestWearable, getEngine()));
-    getWidget<Label>("lblArmsItem")->text(
+    getWidget<Label>("lblArmsItem")->setText(
             nameOrNothing (equipment->armsWearable, getEngine()));
-    getWidget<Label>("lblHandsItem")->text(
+    getWidget<Label>("lblHandsItem")->setText(
             nameOrNothing (equipment->handsWearable, getEngine()));
-    getWidget<Label>("lblLegsItem")->text(
+    getWidget<Label>("lblLegsItem")->setText(
             nameOrNothing (equipment->legsWearable, getEngine()));
-    getWidget<Label>("lblFeetItem")->text(
+    getWidget<Label>("lblFeetItem")->setText(
             nameOrNothing (equipment->feetWearable, getEngine()));
 
-    getWidget<Label>("lblSelectedItem")->text(
+    getWidget<Label>("lblSelectedItem")->setText(
             nameOrNothing (m_selectedItem, getEngine()));
 }

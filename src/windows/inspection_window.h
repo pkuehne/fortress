@@ -2,7 +2,7 @@
 #define INSPECTION_WINDOW_H
 
 #include "window.h"
-#include "description_component.h"
+#include "../components/description_component.h"
 
 class InspectionWindow : public Window {
 public:
