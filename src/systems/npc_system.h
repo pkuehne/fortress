@@ -1,9 +1,9 @@
 #ifndef NPC_SYSTEM_H
 #define NPC_SYSTEM_H
 
-#include "game_system_base.h"
-#include "utility.h"
-#include "npc_component.h"
+#include "../core/game_system_base.h"
+#include "../core/utility.h"
+#include "../components/npc_component.h"
 #include <map>
 #include <vector>
 

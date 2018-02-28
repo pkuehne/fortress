@@ -2,7 +2,7 @@
 #define NPC_COMPONENT_H
 
 #include "component_base.h"
-#include "utility.h"
+#include "../core/utility.h"
 #include <map>
 
 struct NpcComponent : ComponentBase {

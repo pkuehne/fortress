@@ -8,8 +8,10 @@ OBJ_DIR = $(ART_DIR)/objects
 DEP_DIR = $(ART_DIR)/depends
 COV_DIR = $(ART_DIR)/coverage
 ALL_DIR = $(ART_DIR) $(OBJ_DIR) $(DEP_DIR) $(COV_DIR)
+TEST_DIR = ./tests/
+MOCK_DIR = ./mocks/
 
-INC_DIRS += -I. -I/usr/include/ $(addprefix -I, $(MODULES))
+INC_DIRS += -I. -I/usr/include/ -I$(TEST_DIR) -I$(MOCK_DIR) $(addprefix -I, $(MODULES))
 CFLAGS=-g -rdynamic -Wall -Werror -std=c++14 $(INC_DIRS)
 LDFLAGS= -g -rdynamic 
 GLFW_LIBS=$(shell pkg-config glfw3 --libs --static)
@@ -22,10 +24,11 @@ LIBRARIES+=-lGL -lc -lm -lSOIL -lpthread -lglog
 
 SOURCES = $(foreach sdir, $(MODULES), $(wildcard $(sdir)/*.cpp))
 SOURCES+= $(wildcard *.cpp)
+SOURCES+= $(wildcard $(TEST_DIR)/*.cpp)
 OBJECTS = $(addprefix $(OBJ_DIR)/, $(notdir $($(notdir SOURCES):.cpp=.o)))
 DEPENDS = $(addprefix $(DEP_DIR)/, $(notdir $($(notdir SOURCES):.cpp=.d)))
 
-vpath %.cpp $(MODULES)
+vpath %.cpp $(MODULES) $(TEST_DIR)
 
 all: $(SOURCES) $(PROGRAM)
 

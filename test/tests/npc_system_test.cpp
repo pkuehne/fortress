@@ -1,8 +1,8 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
-#include <game_engine_mock.h>
-#include <game_state_mock.h>
-#include <npc_system.h>
+#include "game_engine_mock.h"
+#include "game_state_mock.h"
+#include "npc_system.h"
 
 using namespace ::testing;
 

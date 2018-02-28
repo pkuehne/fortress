@@ -22,7 +22,7 @@ public:
     void tick (void);
 
     void quit() { m_graphics->terminate(); }
-    bool isPlayerTurn() { return m_playerTurn; }
+    virtual bool isPlayerTurn() { return m_playerTurn; }
     void swapTurn();
     unsigned int getTurn() { return m_turn; }
     void setTurn (unsigned int turn) { m_turn = turn; }
@@ -39,7 +39,7 @@ public:
 
     void addSystem (GameSystemInterface* a_system) { m_systems.push_back(a_system); }
 
-    GameState* state() { return m_state; }
+    virtual GameState* state() { return m_state; }
 
 private:
     unsigned long long  m_tick;

@@ -3,8 +3,8 @@
 
 #include <vector>
 #include <map>
-#include <utility.h>
-#include "location.h"
+#include "../core/utility.h"
+#include "../core/location.h"
 
 class Node
 {

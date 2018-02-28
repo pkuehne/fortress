@@ -1,7 +1,7 @@
 #ifndef __GAME_ENGINE_MOCK_H__
 #define __GAME_ENGINE_MOCK_H__
 
-#include "game_engine.h"
+#include "../src/core/game_engine.h"
 #include <gmock/gmock.h>
 
 class GameEngineMock : public GameEngine {

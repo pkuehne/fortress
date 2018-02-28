@@ -1,10 +1,10 @@
 #include "npc_system.h"
-#include "npc_component.h"
-#include "los_algorithm.h"
-#include "algorithm.h"
-#include "collider_component.h"
-#include "description_component.h"
-#include "game_engine.h"
+#include "../components/npc_component.h"
+#include "../algos/los_algorithm.h"
+#include "../algos/algorithm.h"
+#include "../components/collider_component.h"
+#include "../components/description_component.h"
+#include "../core/game_engine.h"
 #include <iostream>
 #include <cmath>
 
