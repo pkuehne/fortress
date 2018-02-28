@@ -3,12 +3,13 @@
 
 #include "window.h"
 
-class EscapeWindow : public Window {
-public:
-    void gainFocus();
+class EscapeWindow : public Window
+{
+  public:
+    void registerWidgets();
+
     void resize();
-    void redraw();
-    void keyDown (unsigned char key);
+    void keyDown(unsigned char key);
 };
 
 #endif

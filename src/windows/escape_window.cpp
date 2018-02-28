@@ -1,33 +1,46 @@
 #include "escape_window.h"
-#include "game_engine.h"
+#include "../core/game_engine.h"
 
-void EscapeWindow::gainFocus()
+void EscapeWindow::registerWidgets()
 {
-    setTitle (" FORTRESS ");
-}
+    setTitle(" FORTRESS ");
 
-void EscapeWindow::redraw()
-{
-    int y = 2;
-    drawString (y++, -1, "Press ESC to return");
-    drawCommandString (y++, -1, "Save Game", 0, false);
-    drawCommandString (y++, -1, "Reload Config", 0, false);
-    drawCommandString (y++, -1, "Quit Game", 0);
+    this->createWidget<Label>("lblEsc", 0, 2)
+        ->setText("Press ESC to return")
+        ->setVerticalAlign(Widget::VerticalAlign::Top)
+        ->setHorizontalAlign(Widget::HorizontalAlign::Centre);
+    this->createWidget<Label>("lblSaveGame", 0, 3)
+        ->setText("Save Game")
+        ->setCommandChar(1)
+        ->setVerticalAlign(Widget::VerticalAlign::Top)
+        ->setHorizontalAlign(Widget::HorizontalAlign::Centre);
+    this->createWidget<Label>("lblReload", 0, 4)
+        ->setText("Reload Config")
+        ->setCommandChar(1)
+        ->setVerticalAlign(Widget::VerticalAlign::Top)
+        ->setHorizontalAlign(Widget::HorizontalAlign::Centre);
+    this->createWidget<Label>("lblQuit", 0, 5)
+        ->setText("Quit Game")
+        ->setCommandChar(1)
+        ->setVerticalAlign(Widget::VerticalAlign::Top)
+        ->setHorizontalAlign(Widget::HorizontalAlign::Centre);
 }
 
 void EscapeWindow::resize()
 {
-    setDimensions (0, 0, 
-            getEngine()->getGraphics()->getScreenWidth(), 
-            getEngine()->getGraphics()->getScreenHeight());
+    setDimensions(0, 0,
+                  getEngine()->getGraphics()->getScreenWidth(),
+                  getEngine()->getGraphics()->getScreenHeight());
 }
 
-void EscapeWindow::keyDown (unsigned char key)
+void EscapeWindow::keyDown(unsigned char key)
 {
-    if (key == KEY_ESC) {
+    if (key == KEY_ESC)
+    {
         getEngine()->getWindows()->popWindow();
     }
-    if (toupper(key) == 'Q') {
+    if (toupper(key) == 'Q')
+    {
         getEngine()->quit();
     }
 }
