@@ -1,6 +1,11 @@
 #include "escape_window.h"
 #include "../core/game_engine.h"
 
+void quit(Label *l)
+{
+    l->getWindow()->getEngine()->quit();
+}
+
 void EscapeWindow::registerWidgets()
 {
     setTitle(" FORTRESS ");
@@ -22,8 +27,14 @@ void EscapeWindow::registerWidgets()
     this->createWidget<Label>("lblQuit", 0, 5)
         ->setText("Quit Game")
         ->setCommandChar(1)
+        ->setCommandCharCallback(quit)
         ->setVerticalAlign(Widget::VerticalAlign::Top)
         ->setHorizontalAlign(Widget::HorizontalAlign::Centre);
+    this->createWidget<Label>("lblQuit2", 0, 0)
+        ->setText("quit")
+        ->setCommandChar(1)
+        ->setCommandCharCallback(quit)
+        ->setVisible(false);
 }
 
 void EscapeWindow::resize()
@@ -35,12 +46,9 @@ void EscapeWindow::resize()
 
 void EscapeWindow::keyDown(unsigned char key)
 {
+    Window::keyDown(key);
     if (key == KEY_ESC)
     {
         getEngine()->getWindows()->popWindow();
-    }
-    if (toupper(key) == 'Q')
-    {
-        getEngine()->quit();
     }
 }

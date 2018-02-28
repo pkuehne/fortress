@@ -71,41 +71,41 @@ void EquipmentWindow::registerWidgets()
     l = createWidget<Label>("lblRight", 4, 5);
     l->setText("Right:");
     l->setCommandChar(1);
-    l->onCommandChar = selectItem;
+    l->setCommandCharCallback(selectItem);
 
     l = createWidget<Label>("lblLeft", 4, 6);
     l->setText("Left :");
     l->setCommandChar(1);
-    l->onCommandChar = selectItem;
+    l->setCommandCharCallback(selectItem);
 
     l = createWidget<Label>("lblHead", 4, 9);
     l->setText("Head :");
     l->setCommandChar(1);
-    l->onCommandChar = selectItem;
+    l->setCommandCharCallback(selectItem);
     l = createWidget<Label>("lblFace", 4, 10);
     l->setText("Face :");
     l->setCommandChar(1);
-    l->onCommandChar = selectItem;
+    l->setCommandCharCallback(selectItem);
     l = createWidget<Label>("lblChest", 4, 11);
     l->setText("Chest:");
     l->setCommandChar(1);
-    l->onCommandChar = selectItem;
+    l->setCommandCharCallback(selectItem);
     l = createWidget<Label>("lblArms", 4, 12);
     l->setText("Arms :");
     l->setCommandChar(1);
-    l->onCommandChar = selectItem;
+    l->setCommandCharCallback(selectItem);
     l = createWidget<Label>("lblHands", 4, 13);
     l->setText("Hands:");
     l->setCommandChar(3);
-    l->onCommandChar = selectItem;
+    l->setCommandCharCallback(selectItem);
     l = createWidget<Label>("lblLegs", 4, 14);
     l->setText("Legs :");
     l->setCommandChar(2);
-    l->onCommandChar = selectItem;
+    l->setCommandCharCallback(selectItem);
     l = createWidget<Label>("lblFeet", 4, 15);
     l->setText("Feet :");
     l->setCommandChar(4);
-    l->onCommandChar = selectItem;
+    l->setCommandCharCallback(selectItem);
 
     createWidget<Label>("lblLeftItem", 11, 6);
     createWidget<Label>("lblRightItem", 11, 5);
@@ -139,7 +139,7 @@ void EquipmentWindow::registerWidgets()
     l->setText("consume");
     l->setVerticalAlign(Widget::VerticalAlign::Bottom);
     l->setCommandChar(1);
-    l->onCommandChar = [](Label* l) {
+    l->setCommandCharCallback([](Label* l) {
         EquipmentWindow* win = dynamic_cast<EquipmentWindow*>(l->getWindow());
         GameEngine* engine = win->getEngine();
         ConsumeItemEvent* event = new ConsumeItemEvent();
@@ -148,26 +148,26 @@ void EquipmentWindow::registerWidgets()
         win->setSelectedItem(0);
         engine->raiseEvent (event);
         engine->swapTurn();
-    };
+    });
     l->setVisible(false);
 
     l = createWidget<Label>("lblInspect", 29, 2);
     l->setText("inspect");
     l->setVerticalAlign(Widget::VerticalAlign::Bottom);
     l->setCommandChar(1);
-    l->onCommandChar = [](Label* l) {
+    l->setCommandCharCallback([](Label* l) {
         EquipmentWindow* win = dynamic_cast<EquipmentWindow*>(l->getWindow());
         GameEngine* engine = win->getEngine();
         EntityId* l_target = new EntityId(win->getSelectedItem());
         engine->getWindows()->createWindow<InspectionWindow>(l_target);
-    };
+    });
     l->setVisible(false);
 
     l = createWidget<Label>("lblUnequip", 29, 1);
     l->setText("unequip");
     l->setVerticalAlign(Widget::VerticalAlign::Bottom);
     l->setCommandChar(1);
-    l->onCommandChar = [](Label* l) {
+    l->setCommandCharCallback([](Label* l) {
         EquipmentWindow* win = dynamic_cast<EquipmentWindow*>(l->getWindow());
         GameEngine* engine = win->getEngine();
         UnequipItemEvent* event = new UnequipItemEvent();
@@ -177,14 +177,14 @@ void EquipmentWindow::registerWidgets()
         engine->raiseEvent (event);
         engine->swapTurn();
         win->updateItemNames();
-    };
+    });
     l->setVisible(false);
 
     l = createWidget<Label>("lblEquip", 29, 1);
     l->setText("equip");
     l->setVerticalAlign(Widget::VerticalAlign::Bottom);
     l->setCommandChar(1);
-    l->onCommandChar = [](Label* l) {
+    l->setCommandCharCallback([](Label* l) {
         EquipmentWindow* win = dynamic_cast<EquipmentWindow*>(l->getWindow());
         GameEngine* engine = win->getEngine();
         EquipItemEvent* event = new EquipItemEvent();
@@ -194,14 +194,14 @@ void EquipmentWindow::registerWidgets()
         engine->raiseEvent (event);
         engine->swapTurn();
         win->updateItemNames();
-    };
+    });
     l->setVisible(false);
 
     l = createWidget<Label>("lblDrop", 29, 0);
     l->setText("drop");
     l->setVerticalAlign(Widget::VerticalAlign::Bottom);
     l->setCommandChar(1);
-    l->onCommandChar = [](Label* l) {
+    l->setCommandCharCallback([](Label* l) {
         EquipmentWindow* win = dynamic_cast<EquipmentWindow*>(l->getWindow());
         GameEngine* engine = win->getEngine();
         DropEquipmentEvent* event = new DropEquipmentEvent();
@@ -211,7 +211,7 @@ void EquipmentWindow::registerWidgets()
         engine->raiseEvent (event);
         engine->swapTurn();
         win->updateItemNames();
-    };
+    });
     l->setVisible(false);
 }
 

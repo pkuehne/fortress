@@ -20,9 +20,9 @@ void Label::render()
 
 void Label::keyPress(unsigned char key)
 {
-    if (this->getSensitive() && m_commandChar && key == m_text[m_commandChar - 1] && onCommandChar)
+    if (this->getSensitive() && m_commandChar && key == m_text[m_commandChar - 1] && m_onCommandChar)
     {
-        onCommandChar(this);
+        m_onCommandChar(this);
     }
     Widget::keyPress(key);
 }

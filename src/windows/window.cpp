@@ -180,7 +180,7 @@ void Window::keyDown (unsigned char key)
 
     for (auto iter : m_widgets) {
         Widget* w = iter.second;
-        if (w->getVisible()) w->keyDown(key);
+        if (w->getSensitive()) w->keyDown(key);
     }
     this->keyPress(key);
 }
