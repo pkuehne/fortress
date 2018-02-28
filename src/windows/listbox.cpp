@@ -19,13 +19,13 @@ void ListBox::render()
 
 void ListBox::keyPress(unsigned char key)
 {
-    if (key == '+') {
+    if (key == '+' || key == KEY_DOWN) {
         m_selectedItem = (m_selectedItem == items.size()-1) ? items.size()-1: m_selectedItem+1;
         if (m_selectedItem >= this->getHeight()) {
             m_topOffset = m_selectedItem - this->getHeight() + 1;
         }
     }
-    if (key == '-') {
+    if (key == '-' || key == KEY_UP) {
         m_selectedItem = (m_selectedItem == 0) ? 0 : m_selectedItem-1;
         if (m_selectedItem < m_topOffset) {
             m_topOffset = 0;
