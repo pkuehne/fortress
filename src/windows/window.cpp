@@ -193,9 +193,17 @@ void Window::keyDown(unsigned char key)
 {
     ascii_keys[key] = true;
 
-    if (m_onEscape == EscapeBehaviour::CloseWindow && key == KEY_ESC)
+    if (m_onEscape != EscapeBehaviour::None && key == KEY_ESC)
     {
-        getEngine()->getWindows()->popWindow();
+        if (m_onEscape == EscapeBehaviour::CloseWindow)
+        {
+            getEngine()->getWindows()->popWindow();
+        }
+        if (m_onEscape == EscapeBehaviour::QuitGame)
+        {
+            std::cout << "Quitting" << std::endl;
+            getEngine()->quit();
+        }
         return;
     }
     for (auto iter : m_widgets)

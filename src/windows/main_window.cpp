@@ -2,62 +2,56 @@
 #include "map_window.h"
 #include "generator_window.h"
 #include "../core/game_engine.h"
-#include "../core/file_loader.h"
 
 void MainWindow::setup()
 {
     setTitle(" FORTRESS ");
     setFullscreen(true);
+    setEscapeBehaviour(Window::EscapeBehaviour::QuitGame);
 }
 void MainWindow::registerWidgets()
 {
+    Label::CommandCharCB quickstart = [](Label *l) {
+        l->getWindow()->getEngine()->getWindows()->createWindow<GeneratorWindow>((void *)1);
+    };
+    Label::CommandCharCB create = [](Label *l) {
+        l->getWindow()->getEngine()->getWindows()->createWindow<GeneratorWindow>();
+    };
 
-    Label *l = nullptr;
-    l = this->createWidget<Label>("lblQuickstart", 1, 15);
-    l->setText("Quickstart");
-    l->setCommandChar(1);
-    l->setVerticalAlign(Widget::VerticalAlign::Bottom)->setHorizontalAlign(Widget::HorizontalAlign::Centre);
+    this->createWidget<Label>("lblQuickstart", 1, 15)
+        ->setText("Quickstart")
+        ->setCommandChar(1)
+        ->setCommandCharCallback(quickstart)
+        ->setVerticalAlign(Widget::VerticalAlign::Bottom)
+        ->setHorizontalAlign(Widget::HorizontalAlign::Centre);
+    this->createWidget<Label>("lblQuickstart2", 1, 15)
+        ->setText("quickstart")
+        ->setCommandChar(1)
+        ->setCommandCharCallback(quickstart)
+        ->setVisible(false);
 
-    l = this->createWidget<Label>("lblCreate", 1, 12);
-    l->setText("Create New World");
-    l->setCommandChar(1);
-    l->setVerticalAlign(Widget::VerticalAlign::Bottom)->setHorizontalAlign(Widget::HorizontalAlign::Centre);
+    this->createWidget<Label>("lblCreate", 1, 12)
+        ->setText("Create New World")
+        ->setCommandChar(1)
+        ->setCommandCharCallback(create)
+        ->setVerticalAlign(Widget::VerticalAlign::Bottom)
+        ->setHorizontalAlign(Widget::HorizontalAlign::Centre);
+    this->createWidget<Label>("lblCreate2", 1, 12)
+        ->setText("create")
+        ->setCommandChar(1)
+        ->setCommandCharCallback(create)
+        ->setVisible(false);
 
-    l = this->createWidget<Label>("lblLoad", 1, 9);
-    l->setText("Load Existing World");
-    l->setCommandChar(1);
-    l->setVerticalAlign(Widget::VerticalAlign::Bottom)->setHorizontalAlign(Widget::HorizontalAlign::Centre);
+    this->createWidget<Label>("lblLoad", 1, 9)
+        ->setText("Load Existing World")
+        ->setCommandChar(1)
+        ->setVerticalAlign(Widget::VerticalAlign::Bottom)
+        ->setHorizontalAlign(Widget::HorizontalAlign::Centre);
 
-    l = this->createWidget<Label>("lblTutorial", 1, 6);
-    l->setText("Start The Tutorial");
-    l->setCommandChar(1);
-    l->setSensitive(false);
-    l->setVerticalAlign(Widget::VerticalAlign::Bottom)->setHorizontalAlign(Widget::HorizontalAlign::Centre);
-}
-
-void MainWindow::keyDown(unsigned char key)
-{
-    if (key == KEY_ESC)
-    {
-        getEngine()->quit();
-    }
-
-    if (key == 'q' || key == 'Q')
-    {
-        getEngine()->getWindows()->createWindow<GeneratorWindow>((void *)1);
-    }
-
-    if (key == 'c' || key == 'C')
-    {
-        getEngine()->getWindows()->createWindow<GeneratorWindow>();
-    }
-
-    if (key == 'l' || key == 'L')
-    {
-        // Load a file - then show the map
-        //FileLoader loader;
-        //loader.initialise (getEngine());
-        //loader.loadState();
-        // getEngine()->getWindows()->createWindow<MapWindow>();
-    }
+    this->createWidget<Label>("lblTutorial", 1, 6)
+        ->setText("Start The Tutorial")
+        ->setCommandChar(1)
+        ->setSensitive(false)
+        ->setVerticalAlign(Widget::VerticalAlign::Bottom)
+        ->setHorizontalAlign(Widget::HorizontalAlign::Centre);
 }

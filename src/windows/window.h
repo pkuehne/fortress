@@ -10,10 +10,12 @@
 class Window
 {
   public:
+    /// \brief Controls the behaviour on the Window when the Esc key is presed
     enum class EscapeBehaviour
     {
         None,
-        CloseWindow
+        CloseWindow,
+        QuitGame ///!< Terminates the game immediately
     };
 
   public:

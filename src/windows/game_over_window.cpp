@@ -16,6 +16,7 @@ void GameOverWindow::setup()
 {
     setTitle ("GAME OVER");
     setDimensions (0, 0, 13, 5);
+    setEscapeBehaviour(Window::EscapeBehaviour::QuitGame);
 }
 
 void GameOverWindow::keyDown (unsigned char key)

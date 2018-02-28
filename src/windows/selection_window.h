@@ -6,10 +6,11 @@
 
 class SelectionWindow : public Window {
     public:
-        virtual void gainFocus ();
-        virtual void resize();
-        virtual void redraw();
-        virtual void keyDown (unsigned char key);
+        virtual void setup();
+        virtual void registerWidgets();
+
+        void setEntities(EntityHolder* entities);
+        std::vector<EntityId>& getEntities() { return m_entities; }
 
     private:
         std::vector<std::string>    m_lines;
