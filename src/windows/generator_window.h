@@ -22,8 +22,10 @@ enum GenerationStatus {
 
 class GeneratorWindow : public Window {
 public:
-    virtual void gainFocus ();
-    virtual void resize();
+
+    virtual void setup();
+    virtual void registerWidgets();
+
     virtual void redraw();
     virtual void update();
     virtual void keyDown (unsigned char key);

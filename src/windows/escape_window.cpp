@@ -33,11 +33,7 @@ void EscapeWindow::registerWidgets()
         ->setText("Quit Game")
         ->setCommandChar(1)
         ->setCommandCharCallback(quit)
+        ->setIgnoreCommandCharCase(true)
         ->setVerticalAlign(Widget::VerticalAlign::Top)
         ->setHorizontalAlign(Widget::HorizontalAlign::Centre);
-    this->createWidget<Label>("lblQuit2", 0, 0)
-        ->setText("quit")
-        ->setCommandChar(1)
-        ->setCommandCharCallback(quit)
-        ->setVisible(false);
 }

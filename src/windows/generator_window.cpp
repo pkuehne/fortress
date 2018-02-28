@@ -16,8 +16,7 @@ std::string GeneratorWindow::formatNumber (int number) {
     return str.str();
 }
 
-void GeneratorWindow::gainFocus () {
-    setTitle (" Create New World ");
+void GeneratorWindow::setup() {
     m_levelWidth = 30;
     m_levelHeight = 30;
     m_levelDepth = 2;
@@ -25,11 +24,14 @@ void GeneratorWindow::gainFocus () {
     m_worldSize = 129;
     m_selectedPosition = WIDTH;
     m_status = WAITING;
+
+    setTitle (" Create New World ");
+    setFullscreen(true);
+    setEscapeBehaviour(Window::EscapeBehaviour::CloseWindow);
 }
 
-void GeneratorWindow::resize() {
-    setDimensions (0, 0, getEngine()->getGraphics()->getScreenWidth(),
-            getEngine()->getGraphics()->getScreenHeight());
+void GeneratorWindow::registerWidgets() {
+
 }
 
 void GeneratorWindow::redraw() {
@@ -61,8 +63,8 @@ void GeneratorWindow::redraw() {
     if (m_selectedPosition == DEPTH) selY = middleY - 7;
 
     if (m_status != PROGRESS && m_selectedPosition != NONE) {
-        drawTile (selY, middleX + 1, '<', Color(RED), Color(BLACK));
-        drawTile (selY, middleX + 5, '>', Color(RED), Color(BLACK));
+        drawString (selY, middleX + 1, "<", Color(RED), Color(BLACK));
+        drawString (selY, middleX + 5, ">", Color(RED), Color(BLACK));
     }
 
     drawString (middleY - 5, middleX - 6, "Create: ");
@@ -91,9 +93,7 @@ void GeneratorWindow::update () {
 }
 
 void GeneratorWindow::keyDown (unsigned char key) {
-    if (key == KEY_ESC) {
-        getEngine()->getWindows()->popWindow();
-    }
+    Window::keyDown(key);
 
     if (m_status == PROGRESS) return; // Don't allow updates during generating
 

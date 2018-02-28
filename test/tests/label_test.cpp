@@ -45,3 +45,35 @@ TEST(LabelTest, pressingCommandCharInvokesCallbackIfNotVisible)
 
     EXPECT_ANY_THROW(l.keyPress('f'));
 }
+
+TEST(LabelTest, byDefaultCaseIsNotIgnored)
+{
+    Label l;
+    l.setText("foo");
+    l.setCommandChar(1);
+    l.setCommandCharCallback([](Label *b) { throw "Selected"; });
+
+    EXPECT_NO_THROW(l.keyPress('F'));
+}
+
+TEST(LabelTest, ignoreCaseAllowsUseOfUppercaseForLowercaseCommandChar)
+{
+    Label l;
+    l.setText("foo");
+    l.setCommandChar(1);
+    l.setCommandCharCallback([](Label *b) { throw "Selected"; });
+    l.setIgnoreCommandCharCase(true);
+
+    EXPECT_ANY_THROW(l.keyPress('F'));
+}
+
+TEST(LabelTest, ignoreCaseAllowsUseOfLowercaseForUppercaseCommandChar)
+{
+    Label l;
+    l.setText("Foo");
+    l.setCommandChar(1);
+    l.setCommandCharCallback([](Label *b) { throw "Selected"; });
+    l.setIgnoreCommandCharCase(true);
+    
+    EXPECT_ANY_THROW(l.keyPress('f'));
+}

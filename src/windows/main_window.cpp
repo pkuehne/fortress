@@ -22,25 +22,17 @@ void MainWindow::registerWidgets()
         ->setText("Quickstart")
         ->setCommandChar(1)
         ->setCommandCharCallback(quickstart)
+        ->setIgnoreCommandCharCase(true)
         ->setVerticalAlign(Widget::VerticalAlign::Bottom)
         ->setHorizontalAlign(Widget::HorizontalAlign::Centre);
-    this->createWidget<Label>("lblQuickstart2", 1, 15)
-        ->setText("quickstart")
-        ->setCommandChar(1)
-        ->setCommandCharCallback(quickstart)
-        ->setVisible(false);
 
     this->createWidget<Label>("lblCreate", 1, 12)
         ->setText("Create New World")
         ->setCommandChar(1)
         ->setCommandCharCallback(create)
+        ->setIgnoreCommandCharCase(true)
         ->setVerticalAlign(Widget::VerticalAlign::Bottom)
         ->setHorizontalAlign(Widget::HorizontalAlign::Centre);
-    this->createWidget<Label>("lblCreate2", 1, 12)
-        ->setText("create")
-        ->setCommandChar(1)
-        ->setCommandCharCallback(create)
-        ->setVisible(false);
 
     this->createWidget<Label>("lblLoad", 1, 9)
         ->setText("Load Existing World")

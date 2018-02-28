@@ -20,7 +20,21 @@ void Label::render()
 
 void Label::keyPress(unsigned char key)
 {
-    if (this->getSensitive() && m_commandChar && key == m_text[m_commandChar - 1] && m_onCommandChar)
+    if (!this->getSensitive() || !m_commandChar || !m_onCommandChar)
+    {
+        return;
+    }
+
+    unsigned char l_commandChar = m_text[m_commandChar - 1];
+    unsigned char l_inputChar = key;
+
+    if (m_ignoreCase)
+    {
+        l_commandChar = toupper(l_commandChar);
+        l_inputChar = toupper(l_inputChar);
+    }
+
+    if (l_commandChar == l_inputChar)
     {
         m_onCommandChar(this);
     }

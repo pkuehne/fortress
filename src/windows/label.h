@@ -37,6 +37,15 @@ class Label : public Widget
         m_onCommandChar = cb;
         return this;
     }
+    Label *setIgnoreCommandCharCase(bool ignore) 
+    {
+        m_ignoreCase = ignore;
+        return this;
+    }
+    bool getIgnoreCommandCharCase()
+    {
+        return m_ignoreCase;
+    }
 
     virtual void keyPress(unsigned char key);
     virtual void render();
@@ -45,4 +54,5 @@ class Label : public Widget
     std::string m_text = "";
     unsigned char m_commandChar = 0;
     CommandCharCB m_onCommandChar = nullptr;
+    bool m_ignoreCase = false;
 };

@@ -2,7 +2,7 @@
 #define RURAL_GENERATOR
 
 #include "generator_interface.h"
-#include "entity.h"
+#include "../core/entity.h"
 #include <vector>
 
 class RuralGenerator : public GeneratorInterface {
