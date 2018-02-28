@@ -7,6 +7,7 @@
 void MainWindow::registerWidgets()
 {
     setTitle(" FORTRESS ");
+    setFullscreen(true);
 
     Label *l = nullptr;
     l = this->createWidget<Label>("lblQuickstart", 1, 15);
@@ -29,11 +30,6 @@ void MainWindow::registerWidgets()
     l->setCommandChar(1);
     l->setSensitive(false);
     l->setVerticalAlign(Widget::VerticalAlign::Bottom)->setHorizontalAlign(Widget::HorizontalAlign::Centre);
-}
-
-void MainWindow::resize()
-{
-    setDimensions(0, 0, getEngine()->getGraphics()->getScreenWidth(), getEngine()->getGraphics()->getScreenHeight());
 }
 
 void MainWindow::keyDown(unsigned char key)

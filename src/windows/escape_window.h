@@ -8,7 +8,6 @@ class EscapeWindow : public Window
   public:
     void registerWidgets();
 
-    void resize();
     void keyDown(unsigned char key);
 };
 

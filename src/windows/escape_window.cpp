@@ -9,6 +9,7 @@ void quit(Label *l)
 void EscapeWindow::registerWidgets()
 {
     setTitle(" FORTRESS ");
+    setFullscreen(true);
 
     this->createWidget<Label>("lblEsc", 0, 2)
         ->setText("Press ESC to return")
@@ -35,13 +36,6 @@ void EscapeWindow::registerWidgets()
         ->setCommandChar(1)
         ->setCommandCharCallback(quit)
         ->setVisible(false);
-}
-
-void EscapeWindow::resize()
-{
-    setDimensions(0, 0,
-                  getEngine()->getGraphics()->getScreenWidth(),
-                  getEngine()->getGraphics()->getScreenHeight());
 }
 
 void EscapeWindow::keyDown(unsigned char key)

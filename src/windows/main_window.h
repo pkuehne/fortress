@@ -7,7 +7,6 @@
 class MainWindow : public Window {
 public:
     virtual void registerWidgets();
-    virtual void resize();
     virtual void keyDown (unsigned char key);
 
 private:
