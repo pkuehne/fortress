@@ -4,7 +4,6 @@
 
 class QuestWindow : public Window {
     public:
+        void setup();
         void registerWidgets();
-        void resize();
-        void keyPress(unsigned char key);
 };

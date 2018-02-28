@@ -4,10 +4,13 @@
 #include "../core/game_engine.h"
 #include "../core/file_loader.h"
 
-void MainWindow::registerWidgets()
+void MainWindow::setup()
 {
     setTitle(" FORTRESS ");
     setFullscreen(true);
+}
+void MainWindow::registerWidgets()
+{
 
     Label *l = nullptr;
     l = this->createWidget<Label>("lblQuickstart", 1, 15);
@@ -55,6 +58,6 @@ void MainWindow::keyDown(unsigned char key)
         //FileLoader loader;
         //loader.initialise (getEngine());
         //loader.loadState();
-        getEngine()->getWindows()->createWindow<MapWindow>();
+        // getEngine()->getWindows()->createWindow<MapWindow>();
     }
 }

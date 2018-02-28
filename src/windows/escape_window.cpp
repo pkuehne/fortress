@@ -6,12 +6,15 @@ void quit(Label *l)
     l->getWindow()->getEngine()->quit();
 }
 
-void EscapeWindow::registerWidgets()
+void EscapeWindow::setup()
 {
     setTitle(" FORTRESS ");
     setFullscreen(true);
     setEscapeBehaviour(Window::EscapeBehaviour::CloseWindow);
+}
 
+void EscapeWindow::registerWidgets()
+{
     this->createWidget<Label>("lblEsc", 0, 2)
         ->setText("Press ESC to return")
         ->setVerticalAlign(Widget::VerticalAlign::Top)

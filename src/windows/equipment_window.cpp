@@ -53,6 +53,7 @@ void EquipmentWindow::setup () {
 
     setTitle ("Equipment");
     setDimensions (0, 0, width, height);
+    setEscapeBehaviour(Window::EscapeBehaviour::CloseWindow);
     m_selectedItem = 0;
     m_selectedPage = 0;
 }
@@ -235,11 +236,6 @@ void EquipmentWindow::redraw() {
 void EquipmentWindow::keyDown (unsigned char key)
 {
     Window::keyDown (key);
-
-    if (key == KEY_ESC) {
-        getEngine()->getWindows()->popWindow();
-        return;
-    }
 
     if (key == KEY_TAB) {
         m_selectedPage = (m_selectedPage == 0) ? 1 : 0;

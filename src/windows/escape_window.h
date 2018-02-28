@@ -6,6 +6,7 @@
 class EscapeWindow : public Window
 {
   public:
+    void setup();
     void registerWidgets();
 };
 
