@@ -1,5 +1,5 @@
 #include "window.h"
-#include "camera.h"
+#include "../core/camera.h"
 #include "map_window.h"
 #include "inspection_window.h"
 #include "equipment_window.h"
@@ -7,15 +7,13 @@
 #include "escape_window.h"
 #include "debug_window.h"
 #include "quest_window.h"
-#include "game_engine.h"
-#include "event.h"
-#include "health_component.h"
-#include "droppable_component.h"
-#include "graphics_effect_component.h"
-#include "npc_component.h"
-#include "file_saver.h"
-#include "file_loader.h"
-#include "fov_algorithm.h"
+#include "../core/game_engine.h"
+#include "../core/event.h"
+#include "../components/health_component.h"
+#include "../components/droppable_component.h"
+#include "../components/graphics_effect_component.h"
+#include "../components/npc_component.h"
+#include "../algos/fov_algorithm.h"
 
 void MapWindow::gainFocus ()
 {
@@ -141,9 +139,9 @@ void MapWindow::keyDown (unsigned char key)
         getEngine()->getWindows()->createWindow<EquipmentWindow>();
     }
     if (key == 'S') {
-        FileSaver saver;
-        saver.initialise (getEngine());
-        saver.saveState();
+        // FileSaver saver;
+        // saver.initialise (getEngine());
+        // saver.saveState();
         getEngine()->state()->addMessage (INFO, "Game saved!");
     }
     if (key == '=') {

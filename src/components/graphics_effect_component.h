@@ -1,8 +1,8 @@
 #ifndef GRAPHICS_EFFECT_COMPONENT_H_
 #define GRAPHICS_EFFECT_COMPONENT_H_
 
-#include <component_base.h>
-#include <color.h>
+#include "component_base.h"
+#include "../core/color.h"
 
 typedef enum {
 	EFFECT_NONE = 0,

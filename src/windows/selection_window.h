@@ -2,7 +2,7 @@
 #define SELECTION_WINDOW_H
 
 #include "window.h"
-#include "entity.h"
+#include "../core/entity.h"
 
 class SelectionWindow : public Window {
     public:

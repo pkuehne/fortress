@@ -1,7 +1,7 @@
 #ifndef FOV_ALGORITHM
 #define FOV_ALGORITHM
 
-#include "game_engine.h"
+#include "../core/game_engine.h"
 
 class Shadow {
 public:
