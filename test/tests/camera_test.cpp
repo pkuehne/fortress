@@ -1,8 +1,8 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
-#include "camera.h"
-#include "game_state_mock.h"
-#include "graphics_mock.h"
+#include "../../src/core/camera.h"
+#include "../mocks/game_state_mock.h"
+#include "../mocks/graphics_mock.h"
 
 using namespace ::testing;
 class CameraTest : public ::testing::Test
