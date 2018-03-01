@@ -55,7 +55,10 @@ unsigned int Window::drawCommandString(int y, int x, const char *text, int pos, 
 
     unsigned int retval = drawString(y, x, text, fg, bg);
     command[0] = text[pos];
-    retval += drawString(y, x + pos, command, cc, bg);
+    if (active)
+    {
+        retval += drawString(y, x + pos, command, cc, bg);
+    }
     return retval;
 }
 

@@ -15,7 +15,7 @@ void EscapeWindow::setup()
 
 void EscapeWindow::registerWidgets()
 {
-    this->createWidget<Label>("lblEsc", 0, 2)
+    this->createWidget<Label>("lblEsc", 0, 1)
         ->setText("Press ESC to return")
         ->setVerticalAlign(Widget::VerticalAlign::Top)
         ->setHorizontalAlign(Widget::HorizontalAlign::Centre);

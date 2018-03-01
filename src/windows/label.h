@@ -12,12 +12,12 @@ class Label : public Widget
     Label *setText(const std::string &text)
     {
         m_text = text;
+        setWidth(text.size());
         return this;
     }
-    Label *settext(const char *text)
+    Label *setText(const char *text)
     {
-        m_text = std::string(text);
-        return this;
+        return setText(std::string(text));
     }
     std::string getText() const
     {
@@ -37,7 +37,7 @@ class Label : public Widget
         m_onCommandChar = cb;
         return this;
     }
-    Label *setIgnoreCommandCharCase(bool ignore) 
+    Label *setIgnoreCommandCharCase(bool ignore)
     {
         m_ignoreCase = ignore;
         return this;

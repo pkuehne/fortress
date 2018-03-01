@@ -77,3 +77,14 @@ TEST(LabelTest, ignoreCaseAllowsUseOfLowercaseForUppercaseCommandChar)
     
     EXPECT_ANY_THROW(l.keyPress('f'));
 }
+
+TEST(LabelTest, settingTextAlsoSetsWidgetWidth)
+{
+    Label l;
+
+    EXPECT_EQ(l.getWidth(), 1);
+
+    l.setText("Foo");
+
+    EXPECT_EQ(l.getWidth(), l.getText().size());
+}
