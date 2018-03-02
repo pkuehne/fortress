@@ -6,10 +6,11 @@
 
 class InspectionWindow : public Window {
 public:
-    void keyDown (unsigned char key);
-    void redraw();
-    void resize();
+    void setup();
+    void registerWidgets();
 
+    void redraw();
+    
     void gainFocus();
     void loseFocus();
 private:
