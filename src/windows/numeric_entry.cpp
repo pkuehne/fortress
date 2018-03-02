@@ -1,19 +1,24 @@
+#include "../core/utility.h"
 #include "numeric_entry.h"
 
 void NumericEntry::render()
 {
-
-    drawString(0,0, m_text.c_str());
+    if (getSensitive())
+    {
+        drawCommandString(0, 0, "<", 0, true);
+        drawCommandString(2, 0, ">", 0, true);
+    }
+    drawString(1, 0, m_text.c_str());
 }
 
 void NumericEntry::keyPress(unsigned char key)
 {
-    if (key == '+')
+    if (key == '+' || key == KEY_RIGHT)
     {
-        setNumber(m_number+1);
+        setNumber(m_number + 1);
     }
-    if (key == '-')
+    if (key == '-' || key == KEY_LEFT)
     {
-        setNumber(m_number-1);
+        setNumber(m_number - 1);
     }
 }

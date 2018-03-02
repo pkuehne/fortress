@@ -10,6 +10,7 @@ class NumericEntry : public Widget
     {
         m_number = number;
         m_text = std::to_string(number);
+        setWidth(m_text.size() + 2); ///< To account for angle brackets
         return this;
     }
     int getNumber()
