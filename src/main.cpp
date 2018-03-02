@@ -63,7 +63,9 @@ int main (int argc, char** argv)
         l_engine->initialise();
         l_graphics->spin();
     } catch (char const * err) {
-        std::cout << err << std::endl;
+        std::cerr << "Main: Exception caught: " << err << std::endl;
+    } catch (const std::string& err) {
+        std::cerr << "Main: Exception caught: " << err << std::endl;
     }
     return 0;
 }

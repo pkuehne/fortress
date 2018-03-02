@@ -1,4 +1,5 @@
 #include "game_over_window.h"
+#include "label.h"
 #include "../core/game_engine.h"
 
 void GameOverWindow::registerWidgets()

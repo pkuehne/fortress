@@ -26,23 +26,16 @@ public:
     virtual void setup();
     virtual void registerWidgets();
 
-    virtual void redraw();
     virtual void update();
-    virtual void keyDown (unsigned char key);
 
 private:
-    std::string formatNumber (int number);
     void startGenerating ();
     void generateLevel();
     void startPlaying();
 
 private:
     PositionSelect m_selectedPosition;
-    unsigned int m_levelWidth;
-    unsigned int m_levelHeight;
-    unsigned int m_levelRooms;
     unsigned int m_worldSize;
-    unsigned int m_levelDepth;
 
     GenerationStatus	m_status;
     unsigned int m_progress = 0;

@@ -2,7 +2,6 @@
 #define __WINDOW_H__
 
 #include "widget.h"
-#include "label.h"
 #include "../core/game_engine.h"
 
 #include <map>
@@ -76,7 +75,15 @@ class Window
 
     // Non-overridable
     template <class T>
-    T *getWidget(std::string name) { return dynamic_cast<T *>(m_widgets[name]); }
+    T *getWidget(std::string name)
+    {
+        T *widget = dynamic_cast<T *>(m_widgets[name]);
+        if (!widget)
+        {
+            throw ("Widget '" + name + "' does not exist");
+        }
+        return widget;
+    }
     void initialise(GameEngine *a_engine, void *Args = 0, void *Retval = 0);
     void *getArgs() { return m_args; }
     void *getRetval() { return m_retval; }

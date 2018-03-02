@@ -1,4 +1,5 @@
 #include "escape_window.h"
+#include "label.h"
 #include "../core/game_engine.h"
 
 void quit(Label *l)

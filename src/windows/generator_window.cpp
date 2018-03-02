@@ -4,27 +4,25 @@
 #include "../generators/rural_generator.h"
 #include "map_window.h"
 #include "../components/stair_component.h"
+#include "label.h"
+#include "numeric_entry.h"
 #include <sstream>
 #include <glog/logging.h>
 
-std::string GeneratorWindow::formatNumber(int number)
+void updateNumericEntrySensitivity(GeneratorWindow *win, std::string numName)
 {
-    std::stringstream str;
+    auto setSensitive = [](NumericEntry* l, std::string name) {
+        l->setSensitive(l->getName() == name);
+    };
 
-    if (number < 10)
-        str << " ";
-    if (number < 100)
-        str << " ";
-    str << number;
-    return str.str();
+    setSensitive(win->getWidget<NumericEntry>("numWidth"), numName);
+    setSensitive(win->getWidget<NumericEntry>("numHeight"), numName);
+    setSensitive(win->getWidget<NumericEntry>("numDepth"), numName);
+    setSensitive(win->getWidget<NumericEntry>("numRooms"), numName);
 }
 
 void GeneratorWindow::setup()
 {
-    m_levelWidth = 30;
-    m_levelHeight = 30;
-    m_levelDepth = 2;
-    m_levelRooms = 2;
     m_worldSize = 129;
     m_selectedPosition = WIDTH;
     m_status = WAITING;
@@ -43,21 +41,33 @@ void GeneratorWindow::registerWidgets()
         ->setText("Width:")
         ->setCommandChar(1)
         ->setIgnoreCommandCharCase(true)
+        ->setCommandCharCallback([](Label *l) {
+            updateNumericEntrySensitivity(dynamic_cast<GeneratorWindow *>(l->getWindow()), "numWidth");
+        })
         ->setVerticalAlign(Widget::VerticalAlign::Bottom);
     createWidget<Label>("lblHeight", 1, 9)
         ->setText("Height:")
         ->setCommandChar(1)
         ->setIgnoreCommandCharCase(true)
+        ->setCommandCharCallback([](Label *l) {
+            updateNumericEntrySensitivity(dynamic_cast<GeneratorWindow *>(l->getWindow()), "numHeight");
+        })
         ->setVerticalAlign(Widget::VerticalAlign::Bottom);
     createWidget<Label>("lblRooms", 1, 8)
         ->setText("Rooms:")
         ->setCommandChar(1)
         ->setIgnoreCommandCharCase(true)
+        ->setCommandCharCallback([](Label *l) {
+            updateNumericEntrySensitivity(dynamic_cast<GeneratorWindow *>(l->getWindow()), "numRooms");
+        })
         ->setVerticalAlign(Widget::VerticalAlign::Bottom);
     createWidget<Label>("lblDepth", 1, 7)
         ->setText("Depth:")
         ->setCommandChar(1)
         ->setIgnoreCommandCharCase(true)
+        ->setCommandCharCallback([](Label *l) {
+            updateNumericEntrySensitivity(dynamic_cast<GeneratorWindow *>(l->getWindow()), "numDepth");
+        })
         ->setVerticalAlign(Widget::VerticalAlign::Bottom);
     createWidget<Label>("lblCreate", 1, 6)
         ->setText("Create:")
@@ -78,55 +88,22 @@ void GeneratorWindow::registerWidgets()
         })
         ->setVerticalAlign(Widget::VerticalAlign::Bottom)
         ->setSensitive(false);
-}
 
-void GeneratorWindow::redraw()
-{
-
-    if (getArgs())
-        return;
-
-    int middleX = getWidth() / 2;
-    int middleY = getHeight();
-    int selY = 0;
-
-    drawString(middleY - 10, middleX + 2, formatNumber(m_levelWidth).c_str());
-    if (m_selectedPosition == WIDTH)
-        selY = middleY - 10;
-    drawString(middleY - 9, middleX + 2, formatNumber(m_levelHeight).c_str());
-    if (m_selectedPosition == HEIGHT)
-        selY = middleY - 9;
-    drawString(middleY - 8, middleX + 2, formatNumber(m_levelRooms).c_str());
-    if (m_selectedPosition == ROOMS)
-        selY = middleY - 8;
-    drawString(middleY - 7, middleX + 2, formatNumber(m_levelDepth).c_str());
-    if (m_selectedPosition == DEPTH)
-        selY = middleY - 7;
-
-    if (m_status != PROGRESS && m_selectedPosition != NONE)
-    {
-        drawString(selY, middleX + 1, "<", Color(RED), Color(BLACK));
-        drawString(selY, middleX + 5, ">", Color(RED), Color(BLACK));
-    }
-
-    drawString(middleY - 5, middleX - 6, "Create: ");
-    if (m_status == WAITING)
-        drawTile(middleY - 5, middleX - 6, 'C', Color(GREEN), Color(BLACK));
-
-    if (m_status == PROGRESS)
-    {
-        drawProgress(middleX + 2, middleY - 5, m_progress, m_levelDepth);
-    }
-    else if (m_status == COMPLETED)
-    {
-        drawString(middleY - 5, middleX + 2, "Done!");
-        drawString(middleY - 4, middleX - 6, "Play");
-        drawTile(middleY - 4, middleX - 6, 'P', Color(GREEN), Color(BLACK));
-    }
-
-    std::string explanation("Use '+' and '-' to change values");
-    int offset = getWidth() / 2 - explanation.length() / 2;
-    drawString(getHeight() - 2, offset, explanation.c_str());
+    createWidget<NumericEntry>("numWidth", 9, 10)
+        ->setNumber(30)
+        ->setVerticalAlign(Widget::VerticalAlign::Bottom);
+    createWidget<NumericEntry>("numHeight", 9, 9)
+        ->setNumber(30)
+        ->setVerticalAlign(Widget::VerticalAlign::Bottom)
+        ->setSensitive(false);
+    createWidget<NumericEntry>("numRooms", 9, 8)
+        ->setNumber(2)
+        ->setVerticalAlign(Widget::VerticalAlign::Bottom)
+        ->setSensitive(false);
+    createWidget<NumericEntry>("numDepth", 9, 7)
+        ->setNumber(2)
+        ->setVerticalAlign(Widget::VerticalAlign::Bottom)
+        ->setSensitive(false);
 }
 
 void GeneratorWindow::update()
@@ -139,85 +116,24 @@ void GeneratorWindow::update()
     }
 }
 
-void GeneratorWindow::keyDown(unsigned char key)
-{
-    Window::keyDown(key);
-
-    if (m_status == PROGRESS)
-        return; // Don't allow updates during generating
-
-    if (key == 'W' || key == 'w')
-        m_selectedPosition = WIDTH;
-    if (key == 'H' || key == 'h')
-        m_selectedPosition = HEIGHT;
-    if (key == 'R' || key == 'r')
-        m_selectedPosition = ROOMS;
-    if (key == 'D' || key == 'd')
-        m_selectedPosition = DEPTH;
-
-    int adjustment = 0;
-    if (key == KEY_RIGHT)
-        adjustment = 1;
-    if (key == KEY_LEFT)
-        adjustment = -1;
-    if (adjustment)
-    {
-        switch (m_selectedPosition)
-        {
-        case WIDTH:
-            m_levelWidth += adjustment;
-            break;
-        case HEIGHT:
-            m_levelHeight += adjustment;
-            break;
-        case ROOMS:
-            m_levelRooms += adjustment;
-            break;
-        case DEPTH:
-            m_levelDepth += adjustment;
-            break;
-        default:
-            break;
-        }
-    }
-    if (key == KEY_DOWN)
-    {
-        if (m_selectedPosition == WIDTH)
-            m_selectedPosition = HEIGHT;
-        else if (m_selectedPosition == HEIGHT)
-            m_selectedPosition = ROOMS;
-        else if (m_selectedPosition == ROOMS)
-            m_selectedPosition = DEPTH;
-        else if (m_selectedPosition == DEPTH)
-            m_selectedPosition = WIDTH;
-    }
-    if (key == KEY_UP)
-    {
-        if (m_selectedPosition == WIDTH)
-            m_selectedPosition = DEPTH;
-        else if (m_selectedPosition == HEIGHT)
-            m_selectedPosition = WIDTH;
-        else if (m_selectedPosition == ROOMS)
-            m_selectedPosition = HEIGHT;
-        else if (m_selectedPosition == DEPTH)
-            m_selectedPosition = ROOMS;
-    }
-}
-
 void GeneratorWindow::startGenerating()
 {
     m_progress = 1;
     m_status = PROGRESS;
+    unsigned int l_levelWidth = getWidget<NumericEntry>("numWidth")->getNumber();
+    unsigned int l_levelHeight = getWidget<NumericEntry>("numHeight")->getNumber();
+    unsigned int l_levelRooms = getWidget<NumericEntry>("numRooms")->getNumber();
+    unsigned int l_levelDepth = getWidget<NumericEntry>("numDepth")->getNumber();
 
     unsigned int startArea = getEngine()->state()->map()->createArea(
-        m_levelWidth,
-        m_levelHeight,
+        l_levelWidth,
+        l_levelHeight,
         1);
 
     RuralGenerator rural;
     rural.initialise(getEngine());
-    rural.mapHeight() = m_levelHeight;
-    rural.mapWidth() = m_levelWidth;
+    rural.mapHeight() = l_levelHeight;
+    rural.mapWidth() = l_levelWidth;
     rural.area() = startArea;
     rural.generate();
 
@@ -226,18 +142,18 @@ void GeneratorWindow::startGenerating()
         int retries = 0;
         bool success = false;
         unsigned int area =
-            getEngine()->state()->map()->createArea(m_levelWidth,
-                                                    m_levelHeight,
-                                                    m_levelDepth);
+            getEngine()->state()->map()->createArea(l_levelWidth,
+                                                    l_levelHeight,
+                                                    l_levelDepth);
 
         LOG(INFO) << "Generating area: " << area << std::endl;
         DungeonGenerator l_generator;
         l_generator.initialise(getEngine());
-        l_generator.maxDepth() = m_levelDepth;
-        l_generator.mapHeight() = m_levelHeight;
-        l_generator.mapWidth() = m_levelWidth;
+        l_generator.maxDepth() = l_levelDepth;
+        l_generator.mapHeight() = l_levelHeight;
+        l_generator.mapWidth() = l_levelWidth;
         l_generator.area() = area;
-        l_generator.numberOfRooms() = m_levelRooms;
+        l_generator.numberOfRooms() = l_levelRooms;
         l_generator.downStairTarget() = 0;
         l_generator.upStairTarget() = stair;
         if (area == 2)

@@ -1,6 +1,7 @@
 #include "main_window.h"
 #include "map_window.h"
 #include "generator_window.h"
+#include "label.h"
 #include "../core/game_engine.h"
 
 void MainWindow::setup()

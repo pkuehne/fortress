@@ -5,8 +5,8 @@ void NumericEntry::render()
 {
     if (getSensitive())
     {
-        drawCommandString(0, 0, "<", 0, true);
-        drawCommandString(2, 0, ">", 0, true);
+        drawCommandString(0, 0, "-", 0, true);
+        drawCommandString(m_text.size()+1, 0, "+", 0, true);
     }
     drawString(1, 0, m_text.c_str());
 }

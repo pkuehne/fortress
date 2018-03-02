@@ -1,5 +1,6 @@
 #include "equipment_window.h"
 #include "inspection_window.h"
+#include "label.h"
 #include "../core/game_engine.h"
 #include "../components/equipment_component.h"
 #include "../components/description_component.h"
