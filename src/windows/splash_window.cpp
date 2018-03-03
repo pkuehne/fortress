@@ -1,10 +1,15 @@
 #include "splash_window.h"
 #include "main_window.h"
-#include "game_engine.h"
-#include "graphics.h"
+#include "../core/game_engine.h"
+#include "../core/graphics.h"
 
-void SplashWindow::resize() {
-    setDimensions (0, 0, getEngine()->getGraphics()->getScreenWidth(), getEngine()->getGraphics()->getScreenHeight());
+void SplashWindow::setup() {
+    setFullscreen(true);
+}
+
+void SplashWindow::registerWidgets()
+{
+
 }
 
 void SplashWindow::redraw() {

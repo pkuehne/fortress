@@ -167,6 +167,7 @@ class Widget
                        const char *text,
                        Color fg = Color(WHITE),
                        Color bg = Color(BLACK));
+    Widget *drawTile(unsigned int x, unsigned int y, unsigned char text);
 
     // Internal Methods
     Widget *realignWidget(unsigned int screenWidth, unsigned int screenHeight);
