@@ -28,123 +28,123 @@ class Widget
     virtual ~Widget() {}
 
     // Methods to set basic info on creation
-    Widget *setWindowOffsets(unsigned int x, unsigned int y)
+    virtual Widget *setWindowOffsets(unsigned int x, unsigned int y)
     {
         m_xOffset = x;
         m_yOffset = y;
         return this;
     }
-    Widget *setGraphics(GraphicsInterface *graphics)
+    virtual Widget *setGraphics(GraphicsInterface *graphics)
     {
         m_graphics = graphics;
         return this;
     }
 
-    Widget *setName(std::string &name)
+    virtual Widget *setName(std::string &name)
     {
         m_name = name;
         return this;
     }
-    std::string getName() const
+    virtual std::string getName() const
     {
         return m_name;
     }
-    Widget *setX(unsigned int x)
+    virtual Widget *setX(unsigned int x)
     {
         this->m_x = x;
         return this;
     }
-    unsigned int getX() const
+    virtual unsigned int getX() const
     {
         return m_x;
     }
-    Widget *setY(unsigned int y)
+    virtual Widget *setY(unsigned int y)
     {
         this->m_y = y;
         return this;
     }
-    unsigned int getY() const
+    virtual unsigned int getY() const
     {
         return m_y;
     }
-    Widget *setWindow(Window *win)
+    virtual Widget *setWindow(Window *win)
     {
         this->m_window = win;
         return this;
     }
-    Window *getWindow() const
+    virtual Window *getWindow() const
     {
         return m_window;
     }
-    Widget *setVisible(bool visible)
+    virtual Widget *setVisible(bool visible)
     {
         this->m_visible = visible;
         return this;
     }
-    bool getVisible() const
+    virtual bool getVisible() const
     {
         return m_visible;
     }
-    Widget* setSensitive(bool sensitive)
+    virtual Widget* setSensitive(bool sensitive)
     {
         m_sensitive = sensitive;
         return this;
     }
-    bool getSensitive() const
+    virtual bool getSensitive() const
     {
         return m_sensitive;
     }
-    Widget *setWidth(unsigned int width)
+    virtual Widget *setWidth(unsigned int width)
     {
         this->m_width = width;
         return this;
     }
-    unsigned int getWidth()
+    virtual unsigned int getWidth()
     {
         return m_width;
     }
-    Widget *setHeight(unsigned int height)
+    virtual Widget *setHeight(unsigned int height)
     {
         this->m_height = height;
         return this;
     }
-    unsigned int getHeight()
+    virtual unsigned int getHeight()
     {
         return m_height;
     }
-    Widget *setHorizontalAlign(HorizontalAlign align)
+    virtual Widget *setHorizontalAlign(HorizontalAlign align)
     {
         m_hAlign = align;
         return this;
     }
-    HorizontalAlign getHorizontalAlign()
+    virtual HorizontalAlign getHorizontalAlign()
     {
         return m_hAlign;
     }
-    Widget *setVerticalAlign(VerticalAlign align)
+    virtual Widget *setVerticalAlign(VerticalAlign align)
     {
         m_vAlign = align;
         return this;
     }
-    VerticalAlign getVerticalAlign()
+    virtual VerticalAlign getVerticalAlign()
     {
         return m_vAlign;
     }
-    Widget *setForegroundColor(Color color)
+    virtual Widget *setForegroundColor(Color color)
     {
         m_fgColor = color;
         return this;
     }
-    Color getForegroundColor()
+    virtual Color getForegroundColor()
     {
         return m_fgColor;
     }
-    Widget *setBackgroundColor(Color color)
+    virtual Widget *setBackgroundColor(Color color)
     {
         m_bgColor = color;
         return this;
     }
-    Color getBackgroundColor()
+    virtual Color getBackgroundColor()
     {
         return m_bgColor;
     }
