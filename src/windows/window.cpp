@@ -29,6 +29,12 @@ void Window::setDimensions(int x, int y, int width, int height)
     {
         m_yOffset = y;
     }
+
+    for (auto iter : m_widgets)
+    {
+        Widget *w = iter.second;
+        w->setWindowOffsets(m_xOffset, m_yOffset);
+    }
 }
 
 unsigned int Window::drawString(int y, int x, const char *text, Color fg, Color bg)

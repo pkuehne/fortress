@@ -32,3 +32,11 @@ void TextBlock::wrapText()
         wordStart = wordEnd + 1;
     }
 }
+
+void TextBlock::render()
+{
+    for (unsigned int ii = 0; ii < m_lines.size(); ii++)
+    {
+        drawString(0, ii, m_lines[ii].c_str());
+    }
+}

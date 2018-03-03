@@ -22,6 +22,8 @@ class TextBlock : public Widget
     void wrapText();
     std::vector<std::string> &getLines() { return m_lines; }
 
+    void render();
+
   private:
     std::string m_text = "";
     std::vector<std::string> m_lines;
