@@ -85,7 +85,7 @@ class Widget
     {
         return m_visible;
     }
-    virtual Widget* setSensitive(bool sensitive)
+    virtual Widget *setSensitive(bool sensitive)
     {
         m_sensitive = sensitive;
         return this;

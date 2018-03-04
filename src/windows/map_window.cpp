@@ -15,10 +15,19 @@
 #include "../components/npc_component.h"
 #include "../algos/fov_algorithm.h"
 
-void MapWindow::gainFocus ()
+void MapWindow::setup()
 {
     setTitle ("Map");
 
+}
+
+void MapWindow::registerWidgets()
+{
+
+}
+
+void MapWindow::gainFocus ()
+{
     m_mapXOffset = 1;
     m_mapYOffset = 9;
     m_mapStartX = 0;

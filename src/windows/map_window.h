@@ -8,6 +8,9 @@ class Camera;
 
 class MapWindow : public Window {
 public:
+    virtual void setup();
+    virtual void registerWidgets();
+    
     virtual void gainFocus ();
     virtual void resize();
     virtual void redraw();

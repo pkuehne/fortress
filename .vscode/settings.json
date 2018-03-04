@@ -4,5 +4,6 @@
         "slist": "cpp",
         "initializer_list": "cpp",
         "utility": "cpp"
-    }
+    },
+    "C_Cpp.errorSquiggles": "Disabled"
 }
