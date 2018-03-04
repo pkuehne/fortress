@@ -10,9 +10,9 @@ TEST(Icon, renderUsesIconTileset)
     GraphicsMock graphics;
 
     icon.setGraphics(&graphics);
-    icon.setIcon('x');
+    icon.setIcon('F');
 
-    EXPECT_CALL(graphics, drawTile(_,_,Eq('x'),_,_)).Times(1);
+    EXPECT_CALL(graphics, drawTile(_,_,Eq('F'),_,_)).Times(1);
 
     icon.render();
 }

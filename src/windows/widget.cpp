@@ -12,9 +12,9 @@ Widget *Widget::realignWidget(unsigned int windowWidth, unsigned int windowHeigh
     }
     case VerticalAlign::Centre:
     {
-        this->m_yPos = m_yOffset + (windowHeight / 2 - this->getHeight() / 2);
+        this->m_yPos = m_yOffset + this->m_y + (windowHeight / 2 - this->getHeight() / 2);
         break;
-    }
+    } 
     case VerticalAlign::Bottom:
     {
         this->m_yPos = m_yOffset + windowHeight - this->getHeight() - this->m_y + 1;
@@ -30,7 +30,7 @@ Widget *Widget::realignWidget(unsigned int windowWidth, unsigned int windowHeigh
     }
     case HorizontalAlign::Centre:
     {
-        this->m_xPos = m_xOffset + (windowWidth / 2 - this->getWidth() / 2);
+        this->m_xPos = m_xOffset + this->m_x + (windowWidth / 2 - this->getWidth() / 2);
         break;
     }
     case HorizontalAlign::Right:
@@ -92,7 +92,7 @@ Widget *Widget::drawCommandString(unsigned int x, unsigned int y,
 
 Widget *Widget::drawTile(unsigned int x, unsigned int y, unsigned char text)
 {
-    m_graphics->drawTile(y, x, text, m_fgColor, m_bgColor);
+    m_graphics->drawTile(m_yPos + y, m_xPos + x, text, m_fgColor, m_bgColor);
 
     return this;
 }

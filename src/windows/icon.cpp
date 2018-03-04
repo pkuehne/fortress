@@ -2,5 +2,5 @@
 
 void Icon::render()
 {
-    drawTile(0, 0, 'x');
+    drawTile(0, 0, m_icon);
 }
