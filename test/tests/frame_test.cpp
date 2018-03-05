@@ -19,18 +19,34 @@ TEST(Frame, setWinowOffsetsPassedDownToChildren)
     frame.setWindowOffsets(x, y);
 }
 
-TEST(Frame, realignWidgetPassedDownToChildren)
+TEST(Frame, realignWidgetSubtractsBorderWidth)
 {
     Frame frame;
     WidgetMock mock;
 
+    frame.setBorder(true);
     frame.addChild(&mock);
-    unsigned int x = 5;
-    unsigned int y = 7;
+    unsigned int width = 5;
+    unsigned int height = 7;
 
-    EXPECT_CALL(mock, realignWidget(Eq(x-2), Eq(y-2)));
+    EXPECT_CALL(mock, realignWidget(Eq(width-2),Eq(height-2)));
 
-    frame.realignWidget(x, y);
+    frame.realignWidget(width, height);
+}
+
+TEST(Frame, realignWidgetSubtractsMargin)
+{
+    Frame frame;
+    WidgetMock mock;
+
+    frame.setMargin(10);
+    frame.addChild(&mock);
+    unsigned int width = 5;
+    unsigned int height = 7;
+
+    EXPECT_CALL(mock, realignWidget(Eq(width-20),Eq(height-20)));
+
+    frame.realignWidget(width, height);
 }
 
 TEST(Frame, renderPassedDownToChildren)
@@ -56,4 +72,32 @@ TEST(Frame, keyPressPassedDownToChildren)
     EXPECT_CALL(mock, keyPress(Eq(key)));
 
     frame.keyPress(key);
+}
+
+TEST(Frame, EnablingBorderIncreasesWindowOffsetForChildren)
+{
+    Frame frame;
+    WidgetMock mock;
+    frame.setBorder(true);
+    frame.addChild(&mock);
+    unsigned int x = 5;
+    unsigned int y = 7;
+
+    EXPECT_CALL(mock, setWindowOffsets(Eq(x + 1), Eq(y + 1)));
+
+    frame.setWindowOffsets(x, y);
+}
+
+TEST(Frame, WindoOffsetIncreasesByMarginSize)
+{
+    Frame frame;
+    WidgetMock mock;
+    frame.setMargin(10);
+    frame.addChild(&mock);
+    unsigned int x = 5;
+    unsigned int y = 7;
+
+    EXPECT_CALL(mock, setWindowOffsets(Eq(x + 10), Eq(y + 10)));
+
+    frame.setWindowOffsets(x, y);
 }
