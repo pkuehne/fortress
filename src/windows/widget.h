@@ -168,6 +168,14 @@ class Widget
     {
         return m_bgColor;
     }
+    virtual unsigned int getXPos()
+    {
+        return m_xPos;
+    }
+    virtual unsigned int getYPos()
+    {
+        return m_yPos;
+    }
 
     // Subclass overrideable
     virtual Widget *realignWidget(unsigned int screenWidth, unsigned int screenHeight);
@@ -189,14 +197,16 @@ class Widget
                        Color fg = Color(WHITE),
                        Color bg = Color(BLACK));
     Widget *drawTile(unsigned int x, unsigned int y, unsigned char text);
+    Widget* drawBorder();
+    Widget* drawBorder(unsigned int x, unsigned int y, unsigned int width, unsigned int height);
 
   private:
     Window *m_window = nullptr;
     Widget *m_parent = nullptr;
     std::map<std::string, Widget *> m_children;
 
-    unsigned int m_x = 1; ///< The Window X offset
-    unsigned int m_y = 1; ///< The Window Y offset
+    unsigned int m_x = 0; ///< The Window X offset
+    unsigned int m_y = 0; ///< The Window Y offset
 
     unsigned int m_xOffset = 0; ///< X Offset within the Window
     unsigned int m_yOffset = 0; ///< Y Offset within the Window

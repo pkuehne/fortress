@@ -1,9 +1,11 @@
 #include "frame.h"
+#include <iostream>
 
 Widget *Frame::setWindowOffsets(unsigned int x, unsigned int y)
 {
     Widget::setWindowOffsets(x, y);
 
+    std::cout << "Setting: " << x << " - " << y << std::endl;
     unsigned int internalOffset = m_margin;
     if (m_border)
     {
@@ -12,7 +14,7 @@ Widget *Frame::setWindowOffsets(unsigned int x, unsigned int y)
     for (auto iter : getChildren())
     {
         Widget *w = iter.second;
-        w->setWindowOffsets(x+internalOffset, y+internalOffset);
+        w->setWindowOffsets(x + internalOffset, y + internalOffset);
     }
     return this;
 }
@@ -21,12 +23,12 @@ Widget *Frame::realignWidget(unsigned int width, unsigned int height)
 {
     Widget::realignWidget(width, height);
 
-    unsigned int internalOffset = m_margin*2;
+    unsigned int internalOffset = m_margin * 2;
     if (m_border)
     {
-        internalOffset+=2;
+        internalOffset += 2;
     }
-    
+
     for (auto iter : getChildren())
     {
         Widget *w = iter.second;
@@ -39,6 +41,10 @@ void Frame::render()
 {
     Widget::render();
 
+    if (m_border)
+    {
+        drawBorder();
+    }
     for (auto iter : getChildren())
     {
         Widget *w = iter.second;

@@ -10,7 +10,7 @@ void quit(Label *l)
 void EscapeWindow::setup()
 {
     setTitle(" FORTRESS ");
-    setFullscreen(true);
+    setFullscreen();
     setEscapeBehaviour(Window::EscapeBehaviour::CloseWindow);
 }
 

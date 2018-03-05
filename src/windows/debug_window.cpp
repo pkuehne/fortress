@@ -19,7 +19,7 @@ void DebugWindow::setupLua()
 void DebugWindow::setup()
 {
     setTitle (" Debug Console ");
-    setFullscreen(true);
+    setFullscreen();
 }
 
 void DebugWindow::loadLuaScripts()

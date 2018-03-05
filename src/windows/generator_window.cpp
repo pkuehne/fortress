@@ -28,7 +28,7 @@ void GeneratorWindow::setup()
     m_status = WAITING;
 
     setTitle(" Create New World ");
-    setFullscreen(true);
+    setFullscreen();
     setEscapeBehaviour(Window::EscapeBehaviour::CloseWindow);
 }
 

@@ -14,7 +14,7 @@ Widget *Widget::realignWidget(unsigned int windowWidth, unsigned int windowHeigh
     {
         this->m_yPos = m_yOffset + this->m_y + (windowHeight / 2 - this->getHeight() / 2);
         break;
-    } 
+    }
     case VerticalAlign::Bottom:
     {
         this->m_yPos = m_yOffset + windowHeight - this->getHeight() - this->m_y + 1;
@@ -86,5 +86,17 @@ Widget *Widget::drawTile(unsigned int x, unsigned int y, unsigned char text)
 {
     m_graphics->drawTile(m_yPos + y, m_xPos + x, text, m_fgColor, m_bgColor);
 
+    return this;
+}
+
+Widget *Widget::drawBorder()
+{
+    return this->drawBorder(0, 0, getWidth(), getHeight());
+}
+
+Widget *Widget::drawBorder(unsigned int x, unsigned int y, unsigned int width, unsigned int height)
+{
+    std::cout << "Border - x: " << (m_xPos) << " w: " << width << std::endl;
+    m_graphics->drawBorder(m_yPos + y, m_xPos + x, height-2, width-2);
     return this;
 }

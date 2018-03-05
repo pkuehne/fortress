@@ -11,8 +11,8 @@ void Window::initialise(GameEngine *a_engine, void *args, void *retval)
     m_manager = m_engine->getWindows();
     m_args = args;
     m_retval = retval;
-    m_baseWidget = createWidget<Frame>("frmBase", 0, 0);
-    setDimensions(2, 2, 2, 2);
+    m_baseWidget = createWidget<Frame>("frmBase", 0, 0)->setBorder(true);
+    //setDimensions(2, 2, 2, 2);
 }
 
 void Window::setDimensions(int x, int y, int width, int height)
@@ -32,7 +32,10 @@ void Window::setDimensions(int x, int y, int width, int height)
         m_yOffset = y;
     }
 
-    m_baseWidget->setWindowOffsets(m_xOffset, m_yOffset);
+    m_baseWidget
+        ->setWindowOffsets(m_xOffset, m_yOffset)
+        ->setHeight(m_height)
+        ->setWidth(m_width);
 }
 
 unsigned int Window::drawString(int y, int x, const char *text, Color fg, Color bg)
@@ -83,15 +86,15 @@ void Window::clearArea(int y, int x, int height, int width)
 
 void Window::beforeRedraw()
 {
-    if (m_fullscreen)
-    {
-        m_width = m_graphics->getScreenWidth();
-        m_height = m_graphics->getScreenHeight();
-        m_xOffset = 0;
-        m_yOffset = 0;
-    }
+    // if (m_fullscreen)
+    // {
+    //     m_width = m_graphics->getScreenWidth();
+    //     m_height = m_graphics->getScreenHeight();
+    //     m_xOffset = 0;
+    //     m_yOffset = 0;
+    // }
     m_graphics->clearArea(m_yOffset, m_xOffset, m_height, m_width);
-    m_graphics->drawBorder(m_yOffset, m_xOffset, m_height - 2, m_width - 2);
+    //m_graphics->drawBorder(m_yOffset, m_xOffset, m_height - 2, m_width - 2);
 
     int x, y;
     m_graphics->calculateWindowOffsetsFromCentre(0, m_title.size(), y, x);

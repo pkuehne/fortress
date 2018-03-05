@@ -7,7 +7,7 @@
 void MainWindow::setup()
 {
     setTitle(" FORTRESS ");
-    setFullscreen(true);
+    setFullscreen();
     setEscapeBehaviour(Window::EscapeBehaviour::QuitGame);
 }
 void MainWindow::registerWidgets()

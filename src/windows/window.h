@@ -102,7 +102,10 @@ class Window
     void *getRetval() { return m_retval; }
 
     void setTitle(const std::string &title) { m_title = title; }
-    void setFullscreen(bool fullscreen) { m_fullscreen = true; }
+    void setFullscreen()
+    {
+        setDimensions(0, 0, m_graphics->getScreenWidth(), m_graphics->getScreenHeight());
+    }
     void setDimensions(int x, int y, int width, int height);
     void setEscapeBehaviour(EscapeBehaviour b) { m_onEscape = b; }
 
@@ -130,7 +133,6 @@ class Window
     int m_width = 0;
     int m_height = 0;
     std::string m_title;
-    bool m_fullscreen = false;
     EscapeBehaviour m_onEscape;
     std::map<std::string, Widget *> m_widgets;
     Widget *m_baseWidget;
