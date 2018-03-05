@@ -58,7 +58,8 @@ class Window
     T *createWidget(
         std::string name,
         unsigned int x,
-        unsigned int y)
+        unsigned int y,
+        Widget *parent = 0)
     {
         T *widget = new T();
         widget
@@ -68,6 +69,18 @@ class Window
             ->setX(x)
             ->setY(y)
             ->setWindow(this);
+        if (!parent)
+        {
+            widget->setParent(m_baseWidget);
+        }
+        else
+        {
+            widget->setParent(parent);
+        }
+        if (m_baseWidget)
+        {
+            m_baseWidget->addChild(widget);
+        }
         m_widgets[name] = widget;
 
         return widget;
@@ -80,7 +93,7 @@ class Window
         T *widget = dynamic_cast<T *>(m_widgets[name]);
         if (!widget)
         {
-            throw ("Widget '" + name + "' does not exist");
+            throw("Widget '" + name + "' does not exist");
         }
         return widget;
     }
@@ -120,6 +133,7 @@ class Window
     bool m_fullscreen = false;
     EscapeBehaviour m_onEscape;
     std::map<std::string, Widget *> m_widgets;
+    Widget *m_baseWidget;
 };
 
 #endif

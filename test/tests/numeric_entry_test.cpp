@@ -45,7 +45,7 @@ TEST(NumericEntry, PlusKeyIncreases)
     NumericEntry num;
     num.setNumber(23);
 
-    num.keyDown('+');
+    num.keyPress('+');
 
     EXPECT_EQ(num.getNumber(), 24);
 }
@@ -55,7 +55,7 @@ TEST(NumericEntry, MinusKeyIncreases)
     NumericEntry num;
     num.setNumber(23);
 
-    num.keyDown('-');
+    num.keyPress('-');
 
     EXPECT_EQ(num.getNumber(), 22);
 }
@@ -65,7 +65,7 @@ TEST(NumericEntry, RightArrowKeyIncreases)
     NumericEntry num;
     num.setNumber(23);
 
-    num.keyDown(KEY_RIGHT);
+    num.keyPress(KEY_RIGHT);
 
     EXPECT_EQ(num.getNumber(), 24);
 }
@@ -75,7 +75,7 @@ TEST(NumericEntry, LeftArrowKeyIncreases)
     NumericEntry num;
     num.setNumber(23);
 
-    num.keyDown(KEY_LEFT);
+    num.keyPress(KEY_LEFT);
 
     EXPECT_EQ(num.getNumber(), 22);
 }

@@ -2,6 +2,7 @@
 #define __WIDGET_H__
 
 #include "../core/graphics.h"
+#include <map>
 
 typedef void (*KeyFunc)(unsigned char);
 
@@ -76,6 +77,25 @@ class Widget
     {
         return m_window;
     }
+    virtual Widget *setParent(Widget *parent)
+    {
+        m_parent = parent;
+        return this;
+    }
+    virtual Widget *getParent()
+    {
+        return m_parent;
+    }
+    virtual Widget *addChild(Widget *child)
+    {
+        m_children[child->getName()] = child;
+        return this;
+    }
+    virtual std::map<std::string, Widget *> getChildren()
+    {
+        return m_children;
+    }
+
     virtual Widget *setVisible(bool visible)
     {
         this->m_visible = visible;
@@ -150,7 +170,8 @@ class Widget
     }
 
     // Subclass overrideable
-    virtual void keyPress(unsigned char key);
+    virtual Widget *realignWidget(unsigned int screenWidth, unsigned int screenHeight);
+    virtual void keyPress(unsigned char key) {};
     virtual void render() {}
 
     // Callbacks
@@ -169,12 +190,11 @@ class Widget
                        Color bg = Color(BLACK));
     Widget *drawTile(unsigned int x, unsigned int y, unsigned char text);
 
-    // Internal Methods
-    Widget *realignWidget(unsigned int screenWidth, unsigned int screenHeight);
-    void keyDown(unsigned char key) { keyPress(key); }
-
   private:
     Window *m_window = nullptr;
+    Widget *m_parent = nullptr;
+    std::map<std::string, Widget *> m_children;
+
     unsigned int m_x = 1; ///< The Window X offset
     unsigned int m_y = 1; ///< The Window Y offset
 

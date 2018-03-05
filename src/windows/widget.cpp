@@ -48,14 +48,6 @@ Widget *Widget::realignWidget(unsigned int windowWidth, unsigned int windowHeigh
     return this;
 }
 
-void Widget::keyPress(unsigned char key)
-{
-    if (onKeyPress != nullptr)
-    {
-        onKeyPress(key);
-    }
-}
-
 Widget *Widget::drawString(unsigned int x, unsigned int y,
                            const char *text, Color fg, Color bg)
 {

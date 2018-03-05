@@ -1,4 +1,5 @@
 #include "window.h"
+#include "frame.h"
 #include "../core/game_engine.h"
 #include <iostream>
 
@@ -10,6 +11,7 @@ void Window::initialise(GameEngine *a_engine, void *args, void *retval)
     m_manager = m_engine->getWindows();
     m_args = args;
     m_retval = retval;
+    m_baseWidget = createWidget<Frame>("frmBase", 0, 0);
     setDimensions(2, 2, 2, 2);
 }
 
@@ -30,11 +32,7 @@ void Window::setDimensions(int x, int y, int width, int height)
         m_yOffset = y;
     }
 
-    for (auto iter : m_widgets)
-    {
-        Widget *w = iter.second;
-        w->setWindowOffsets(m_xOffset, m_yOffset);
-    }
+    m_baseWidget->setWindowOffsets(m_xOffset, m_yOffset);
 }
 
 unsigned int Window::drawString(int y, int x, const char *text, Color fg, Color bg)
@@ -103,16 +101,8 @@ void Window::beforeRedraw()
 
 void Window::renderWidgets()
 {
-    for (auto iter : m_widgets)
-    {
-        Widget *w = iter.second;
-        if (!w)
-            continue;
-        if (!w->getVisible())
-            continue;
-        w->realignWidget(m_width - 2, m_height - 2);
-        w->render();
-    }
+    m_baseWidget->realignWidget(m_width, m_height);
+    m_baseWidget->render();
 }
 
 void Window::afterRedraw()
@@ -215,11 +205,7 @@ void Window::keyDown(unsigned char key)
         }
         return;
     }
-    for (auto iter : m_widgets)
-    {
-        Widget *w = iter.second;
-        if (w->getSensitive())
-            w->keyDown(key);
-    }
+
+    m_baseWidget->keyPress(key);
     this->keyPress(key);
 }
