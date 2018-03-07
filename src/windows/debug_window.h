@@ -22,7 +22,7 @@ class DebugWindow : public Window {
 public:
     void setup();
     void redraw();
-    void keyDown (unsigned char key);
+    void keyPress (unsigned char key);
 
 private:
     void setupLua();

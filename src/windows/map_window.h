@@ -13,7 +13,7 @@ public:
     
     virtual void gainFocus ();
     virtual void redraw();
-    virtual void keyDown (unsigned char key);
+    virtual void keyPress (unsigned char key);
 
 private:
     void drawMap ();

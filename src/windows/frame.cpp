@@ -42,11 +42,13 @@ void Frame::render()
     if (m_border)
     {
         drawBorder();
+        if (m_title.length())
+        {
+            int x = getWidth() / 2 - m_title.length() / 2;
 
-        int x = getWidth() / 2 - m_title.length() / 2;
-
-        clearArea(x - 1, 0, m_title.length() + 1 , 1);
-        drawString(x, 0, m_title.c_str());
+            clearArea(x - 1, 0, m_title.length() + 2, 1);
+            drawString(x, 0, m_title.c_str());
+        }
     }
     for (auto iter : getChildren())
     {

@@ -21,8 +21,3 @@ void GameOverWindow::setup()
 
     setEscapeBehaviour(Window::EscapeBehaviour::QuitGame);
 }
-
-void GameOverWindow::keyDown (unsigned char key)
-{
-    if (key == KEY_ESC) getEngine()->quit();
-}

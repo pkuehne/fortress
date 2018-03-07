@@ -64,7 +64,7 @@ void DebugWindow::redraw()
     drawString (getHeight()-3, 12 + length, "#", Color(RED));
 }
 
-void DebugWindow::keyDown (unsigned char key)
+void DebugWindow::keyPress (unsigned char key)
 {
     if (key == KEY_ESC) {
         getEngine()->getWindows()->popWindow();

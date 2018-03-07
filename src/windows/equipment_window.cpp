@@ -235,9 +235,8 @@ void EquipmentWindow::redraw() {
     drawBorder (0, getWidth()-18, getHeight()-2, 16);
 }
 
-void EquipmentWindow::keyDown (unsigned char key)
+void EquipmentWindow::keyPress (unsigned char key)
 {
-    Window::keyDown (key);
 
     if (key == KEY_TAB) {
         m_selectedPage = (m_selectedPage == 0) ? 1 : 0;

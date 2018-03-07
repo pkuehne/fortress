@@ -7,7 +7,6 @@ class GameOverWindow : public Window {
 public:
     void setup();
     void registerWidgets();
-    void keyDown (unsigned char key);
 };
 
 #endif

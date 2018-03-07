@@ -142,7 +142,7 @@ void SplashWindow::registerWidgets()
     createWidget<Icon>("icon387", xOffset + 38, yOffset + 7)->setIcon(tile);
 }
 
-void SplashWindow::keyDown(unsigned char key)
+void SplashWindow::keyPress(unsigned char key)
 {
     MainWindow *l_win = new MainWindow();
     l_win->initialise(getEngine());

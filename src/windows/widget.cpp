@@ -102,6 +102,6 @@ Widget *Widget::drawBorder(unsigned int x, unsigned int y, unsigned int width, u
 
 Widget *Widget::clearArea(unsigned int x, unsigned int y, unsigned int width, unsigned int height)
 {
-    m_graphics->clearArea(m_yPos + y, m_xPos + x, height - 1, width - 1);
+    m_graphics->clearArea(m_yPos + y, m_xPos + x, height, width);
     return this;
 }

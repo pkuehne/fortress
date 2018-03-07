@@ -65,9 +65,8 @@ void MapWindow::redraw()
     drawSidebar();
 }
 
-void MapWindow::keyDown(unsigned char key)
+void MapWindow::keyPress(unsigned char key)
 {
-    Window::keyDown(key);
     EntityId playerId = getEngine()->state()->player();
     if (key == 'w' || key == 'a' || key == 's' || key == 'd')
     {
