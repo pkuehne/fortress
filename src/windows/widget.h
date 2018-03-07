@@ -199,6 +199,7 @@ class Widget
     Widget *drawTile(unsigned int x, unsigned int y, unsigned char text);
     Widget* drawBorder();
     Widget* drawBorder(unsigned int x, unsigned int y, unsigned int width, unsigned int height);
+    Widget* clearArea(unsigned int x, unsigned int y, unsigned int width, unsigned int height);
 
   private:
     Window *m_window = nullptr;

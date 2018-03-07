@@ -4,8 +4,6 @@
 Widget *Frame::setWindowOffsets(unsigned int x, unsigned int y)
 {
     Widget::setWindowOffsets(x, y);
-
-    std::cout << "Setting: " << x << " - " << y << std::endl;
     unsigned int internalOffset = m_margin;
     if (m_border)
     {
@@ -44,6 +42,11 @@ void Frame::render()
     if (m_border)
     {
         drawBorder();
+
+        int x = getWidth() / 2 - m_title.length() / 2;
+
+        clearArea(x - 1, 0, m_title.length() + 1 , 1);
+        drawString(x, 0, m_title.c_str());
     }
     for (auto iter : getChildren())
     {

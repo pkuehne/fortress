@@ -27,7 +27,7 @@ class Window
     virtual int getYOffset() { return m_yOffset; }
     virtual int getWidth() { return m_width; }
     virtual int getHeight() { return m_height; }
-    virtual void resize() { setDimensions(m_xOffset, m_yOffset, m_width, m_height); }
+    virtual void resize();
     virtual void update() {}
 
     virtual unsigned int drawString(int y, int x, const char *text, Color fg = Color(WHITE), Color bg = Color(BLACK));
@@ -46,7 +46,6 @@ class Window
     virtual void redraw(){};
     virtual void renderWidgets();
     virtual void afterRedraw();
-    virtual void resize(int width, int height);
 
     virtual void gainFocus(){};
     virtual void loseFocus(){};
@@ -102,8 +101,9 @@ class Window
     void *getRetval() { return m_retval; }
 
     void setTitle(const std::string &title) { m_title = title; }
-    void setFullscreen()
+    void setFullscreen(bool fullscreen = true)
     {
+        m_fullscreen = fullscreen;
         setDimensions(0, 0, m_graphics->getScreenWidth(), m_graphics->getScreenHeight());
     }
     void setDimensions(int x, int y, int width, int height);
@@ -132,6 +132,7 @@ class Window
     int m_yOffset = 0;
     int m_width = 0;
     int m_height = 0;
+    bool m_fullscreen = 0;
     std::string m_title;
     EscapeBehaviour m_onEscape;
     std::map<std::string, Widget *> m_widgets;

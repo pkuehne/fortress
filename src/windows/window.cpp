@@ -12,7 +12,6 @@ void Window::initialise(GameEngine *a_engine, void *args, void *retval)
     m_args = args;
     m_retval = retval;
     m_baseWidget = createWidget<Frame>("frmBase", 0, 0)->setBorder(true);
-    //setDimensions(2, 2, 2, 2);
 }
 
 void Window::setDimensions(int x, int y, int width, int height)
@@ -21,16 +20,6 @@ void Window::setDimensions(int x, int y, int width, int height)
     m_yOffset = y;
     m_width = width;
     m_height = height;
-
-    m_graphics->calculateWindowOffsetsFromCentre(height, width, y, x);
-    if (m_xOffset == 0)
-    {
-        m_xOffset = x;
-    }
-    if (m_yOffset == 0)
-    {
-        m_yOffset = y;
-    }
 
     m_baseWidget
         ->setWindowOffsets(m_xOffset, m_yOffset)
@@ -86,20 +75,7 @@ void Window::clearArea(int y, int x, int height, int width)
 
 void Window::beforeRedraw()
 {
-    // if (m_fullscreen)
-    // {
-    //     m_width = m_graphics->getScreenWidth();
-    //     m_height = m_graphics->getScreenHeight();
-    //     m_xOffset = 0;
-    //     m_yOffset = 0;
-    // }
     m_graphics->clearArea(m_yOffset, m_xOffset, m_height, m_width);
-    //m_graphics->drawBorder(m_yOffset, m_xOffset, m_height - 2, m_width - 2);
-
-    int x, y;
-    m_graphics->calculateWindowOffsetsFromCentre(0, m_title.size(), y, x);
-    m_graphics->clearArea(m_yOffset, x, 1, m_title.size());
-    drawString(0, x - m_xOffset, m_title.c_str());
 }
 
 void Window::renderWidgets()
@@ -116,8 +92,23 @@ void Window::destroy(void)
 {
 }
 
-void Window::resize(int width, int height)
+/// The "screen" dimensions have changed, reload them and re-apply depending on whether this window is fullscreen or not
+void Window::resize()
 {
+    if (m_fullscreen)
+    {
+        setDimensions(0, 0, m_graphics->getScreenWidth(), m_graphics->getScreenHeight());
+    }
+    else
+    {
+        int x = 0;
+        int y = 0;
+
+        m_graphics->calculateWindowOffsetsFromCentre(m_height, m_width, y, x);
+        m_xOffset = x;
+        m_yOffset = y;
+        setDimensions(x, y, m_width, m_height);
+    }
 }
 
 void Window::mouseDown(int x, int y, int button)

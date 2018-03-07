@@ -8,7 +8,6 @@
 void SplashWindow::setup()
 {
     setFullscreen();
-    std::cout << "After Fullscreen" << std::endl;
 }
 
 void SplashWindow::registerWidgets()
