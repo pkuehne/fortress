@@ -203,3 +203,14 @@ void Window::keyDown(unsigned char key)
     m_baseWidget->keyPress(key);
     this->keyPress(key);
 }
+
+void Window::setFullscreen(bool fullscreen)
+{
+    m_fullscreen = fullscreen;
+    setDimensions(0, 0, m_graphics->getScreenWidth(), m_graphics->getScreenHeight());
+}
+
+void Window::setTitle(const std::string &title)
+{
+    dynamic_cast<Frame*>(m_baseWidget)->setTitle(title);
+}

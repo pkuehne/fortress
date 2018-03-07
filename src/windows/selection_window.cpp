@@ -9,7 +9,8 @@ void SelectionWindow::setup()
     setEntities(static_cast<EntityHolder *>(getArgs()));
 
     setEscapeBehaviour(Window::EscapeBehaviour::CloseWindow);
-    setDimensions(0, 0, 20, m_entities.size() + 4);
+    setWidth(20);
+    setHeight(m_entities.size() + 4);
     
 }
 

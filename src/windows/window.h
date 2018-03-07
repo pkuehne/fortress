@@ -30,11 +30,14 @@ class Window
     virtual void resize();
     virtual void update() {}
 
+    // All of these can be removed when MapWindow has been migrated
     virtual unsigned int drawString(int y, int x, const char *text, Color fg = Color(WHITE), Color bg = Color(BLACK));
     unsigned int drawCommandString(int y, int x, const char *text, int pos, bool active = true);
     virtual void drawTile(int y, int x, unsigned int tile, Color fg, Color bg);
     virtual void drawBorder(int y, int x, int height, int width);
     virtual void clearArea(int y, int x, int height, int width);
+    virtual void drawProgress(unsigned int x, unsigned int y, unsigned int value, unsigned int max);
+    virtual unsigned int wrapText(const std::string &text, std::vector<std::string> &lines, unsigned int maxWidth, unsigned int maxRows);
 
     virtual void keyDown(unsigned char key);
     virtual void keyUp(unsigned char key) { ascii_keys[key] = false; }
@@ -42,6 +45,7 @@ class Window
     virtual void mouseDown(int x, int y, int button);
     virtual void mouseUp(int x, int y, int button);
     virtual bool getMouseButton(int button);
+
     virtual void beforeRedraw();
     virtual void redraw(){};
     virtual void renderWidgets();
@@ -49,9 +53,6 @@ class Window
 
     virtual void gainFocus(){};
     virtual void loseFocus(){};
-
-    virtual void drawProgress(unsigned int x, unsigned int y, unsigned int value, unsigned int max);
-    virtual unsigned int wrapText(const std::string &text, std::vector<std::string> &lines, unsigned int maxWidth, unsigned int maxRows);
 
     template <class T>
     T *createWidget(
@@ -100,13 +101,10 @@ class Window
     void *getArgs() { return m_args; }
     void *getRetval() { return m_retval; }
 
-    void setTitle(const std::string &title) { m_title = title; }
-    void setFullscreen(bool fullscreen = true)
-    {
-        m_fullscreen = fullscreen;
-        setDimensions(0, 0, m_graphics->getScreenWidth(), m_graphics->getScreenHeight());
-    }
-    void setDimensions(int x, int y, int width, int height);
+    void setFullscreen(bool fullscreen = true);
+    void setTitle(const std::string &title);
+    void setWidth(unsigned int width) { m_width = width; resize(); }
+    void setHeight(unsigned int height) { m_height = height; resize(); }
     void setEscapeBehaviour(EscapeBehaviour b) { m_onEscape = b; }
 
     virtual GameEngine *getEngine() { return m_engine; }
@@ -117,6 +115,9 @@ class Window
     virtual void keyPress(unsigned char key) { /* Overrideable */}
     virtual void setup() { /* Overrideable */}
     virtual void registerWidgets() {}
+
+  private:
+    void setDimensions(int x, int y, int width, int height);
 
   private:
     bool ascii_keys[256] = {0};

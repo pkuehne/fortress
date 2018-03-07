@@ -11,7 +11,8 @@ void QuestWindow::setup()
 {
     setTitle("Quest Log");
     setEscapeBehaviour(Window::EscapeBehaviour::CloseWindow);
-    setDimensions(0, 0, 20, 20);
+    setHeight(20);
+    setWidth(20);
 }
 
 void QuestWindow::registerWidgets()

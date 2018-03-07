@@ -7,7 +7,6 @@ void InspectionWindow::setup()
 {
     setTitle("Details");
     setEscapeBehaviour(Window::EscapeBehaviour::CloseWindow);
-    setDimensions(0, 0, 2, 2);
 }
 
 void InspectionWindow::registerWidgets()
@@ -32,7 +31,8 @@ void InspectionWindow::registerWidgets()
 
     block->setText(l_description->text);
     setTitle(l_description->title);
-    setDimensions(0, 0, l_windowWidth + 4, block->getHeight() + 4);
+    setHeight(block->getHeight() + 4);
+    setWidth(l_windowWidth + 4);
 }
 
 void InspectionWindow::destroy()

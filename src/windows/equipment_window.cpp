@@ -53,7 +53,8 @@ void EquipmentWindow::setup () {
     int height = 17;
 
     setTitle ("Equipment");
-    setDimensions (0, 0, width, height);
+    setHeight(height);
+    setWidth(width);
     setEscapeBehaviour(Window::EscapeBehaviour::CloseWindow);
     m_selectedItem = 0;
     m_selectedPage = 0;

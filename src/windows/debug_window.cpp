@@ -1,5 +1,5 @@
 #include "debug_window.h"
-#include "game_engine.h"
+#include "../core/game_engine.h"
 #include <dirent.h>
 
 const char CONSOLE_DIR[] = "./scripts/console";

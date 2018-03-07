@@ -12,7 +12,6 @@ public:
     virtual void registerWidgets();
     
     virtual void gainFocus ();
-    virtual void resize();
     virtual void redraw();
     virtual void keyDown (unsigned char key);
 
