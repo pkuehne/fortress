@@ -179,7 +179,7 @@ class Widget
 
     // Subclass overrideable
     virtual Widget *realignWidget(unsigned int screenWidth, unsigned int screenHeight);
-    virtual void keyPress(unsigned char key) {};
+    virtual void keyPress(unsigned char key){};
     virtual void render() {}
 
     // Callbacks
@@ -196,10 +196,12 @@ class Widget
                        const char *text,
                        Color fg = Color(WHITE),
                        Color bg = Color(BLACK));
-    Widget *drawTile(unsigned int x, unsigned int y, unsigned char text);
-    Widget* drawBorder();
-    Widget* drawBorder(unsigned int x, unsigned int y, unsigned int width, unsigned int height);
-    Widget* clearArea(unsigned int x, unsigned int y, unsigned int width, unsigned int height);
+    Widget *drawTile(unsigned int x, unsigned int y, unsigned char text,
+                     Color fg = Color(WHITE),
+                     Color bg = Color(BLACK));
+    Widget *drawBorder();
+    Widget *drawBorder(unsigned int x, unsigned int y, unsigned int width, unsigned int height);
+    Widget *clearArea(unsigned int x, unsigned int y, unsigned int width, unsigned int height);
 
   private:
     Window *m_window = nullptr;

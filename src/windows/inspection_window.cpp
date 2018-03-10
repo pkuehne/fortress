@@ -13,7 +13,7 @@ void InspectionWindow::registerWidgets()
 {
     const unsigned int l_windowWidth = 30;
 
-    TextBlock *block = createWidget<TextBlock>("txtDescription", 2, 2);
+    TextBlock *block = createWidget<TextBlock>("txtDescription", 1, 1);
     block->setWidth(l_windowWidth);
 
     EntityId *l_entity = static_cast<EntityId *>(getArgs());

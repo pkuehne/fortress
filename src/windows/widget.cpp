@@ -82,9 +82,13 @@ Widget *Widget::drawCommandString(unsigned int x, unsigned int y,
     return this;
 }
 
-Widget *Widget::drawTile(unsigned int x, unsigned int y, unsigned char text)
+Widget *Widget::drawTile(unsigned int x,
+                         unsigned int y,
+                         unsigned char text,
+                         Color fg,
+                         Color bg)
 {
-    m_graphics->drawTile(m_yPos + y, m_xPos + x, text, m_fgColor, m_bgColor);
+    m_graphics->drawTile(m_yPos + y, m_xPos + x, text, fg, bg);
 
     return this;
 }

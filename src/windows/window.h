@@ -61,7 +61,7 @@ class Window
         unsigned int y,
         Widget *parent = 0)
     {
-        T *widget = new T();
+        T *widget = new T(); // TODO: Clean this up in the destructor!
         widget
             ->setWindowOffsets(m_xOffset, m_yOffset)
             ->setGraphics(m_graphics)
@@ -72,14 +72,15 @@ class Window
         if (!parent)
         {
             widget->setParent(m_baseWidget);
+            if (m_baseWidget)
+            {
+                m_baseWidget->addChild(widget);
+            }
         }
         else
         {
             widget->setParent(parent);
-        }
-        if (m_baseWidget)
-        {
-            m_baseWidget->addChild(widget);
+            parent->addChild(widget);
         }
         m_widgets[name] = widget;
 
@@ -103,8 +104,16 @@ class Window
 
     void setFullscreen(bool fullscreen = true);
     void setTitle(const std::string &title);
-    void setWidth(unsigned int width) { m_width = width; resize(); }
-    void setHeight(unsigned int height) { m_height = height; resize(); }
+    void setWidth(unsigned int width)
+    {
+        m_width = width;
+        resize();
+    }
+    void setHeight(unsigned int height)
+    {
+        m_height = height;
+        resize();
+    }
     void setEscapeBehaviour(EscapeBehaviour b) { m_onEscape = b; }
 
     virtual GameEngine *getEngine() { return m_engine; }
