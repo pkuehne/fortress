@@ -1,5 +1,4 @@
-#ifndef __COLOR_H__
-#define __COLOR_H__
+#pragma once
 
 typedef enum {
     RED,
@@ -29,5 +28,3 @@ private:
     float m_blue;
 
 };
-
-#endif

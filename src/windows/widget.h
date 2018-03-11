@@ -1,5 +1,4 @@
-#ifndef __WIDGET_H__
-#define __WIDGET_H__
+#pragma once
 
 #include "../core/graphics.h"
 #include <map>
@@ -179,7 +178,7 @@ class Widget
 
     // Subclass overrideable
     virtual Widget *realignWidget(unsigned int screenWidth, unsigned int screenHeight);
-    virtual void keyPress(unsigned char key){};
+    virtual void keyPress(unsigned char key){}
     virtual void render() {}
 
     // Callbacks
@@ -228,5 +227,3 @@ class Widget
     Color m_fgColor = Color(WHITE);
     Color m_bgColor = Color(BLACK);
 };
-
-#endif

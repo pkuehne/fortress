@@ -3,7 +3,6 @@
 Page *Tab::addPage(const std::string &title)
 {
     Page *page = new Page(title);
-    page->getFrame().setWindowOffsets(0, 1);
     m_pages.push_back(page);
     return page;
 }
@@ -16,15 +15,16 @@ void Tab::render()
     {
         Page *page = m_pages[ii];
 
-        if (ii == m_selection) {
-            drawTile(currOffset - 1, 0, '>', Color(RED));
+        if (ii == m_selection)
+        {
+            drawString(currOffset - 1, 0, ">", Color(RED));
         }
         drawString(currOffset, 0, page->getTitle().c_str());
 
         currOffset += page->getTitle().length() + 2; // Space and indicator symbol
     }
 
-    m_pages[m_selection]->getFrame().render();
+    m_pages[m_selection]->getFrame()->render();
 }
 
 void Tab::keyPress(unsigned char key)
@@ -35,5 +35,28 @@ void Tab::keyPress(unsigned char key)
         //return;
     }
 
-    m_pages[m_selection]->getFrame().keyPress(key);
+    m_pages[m_selection]->getFrame()->keyPress(key);
+}
+
+Widget *Tab::setWindowOffsets(unsigned int x, unsigned int y)
+{
+    Widget::setWindowOffsets(x, y);
+
+    for (Page *page : m_pages)
+    {
+        // For some reason this is not passed to the widgets in the frame properly
+        page->getFrame()->setWindowOffsets(x, y+2);
+    }
+    return this;
+}
+
+Widget *Tab::realignWidget(unsigned int width, unsigned int height)
+{
+    Widget::realignWidget(width, height);
+
+    for (Page *page : m_pages)
+    {
+        page->getFrame()->realignWidget(width, height);
+    }
+    return this;
 }

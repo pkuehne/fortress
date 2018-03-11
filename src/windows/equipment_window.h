@@ -8,7 +8,6 @@ class EquipmentWindow : public Window {
     public:
         virtual void setup ();
         virtual void registerWidgets();
-        virtual void redraw();
         virtual void keyPress (unsigned char key);
 
         void setSelectedItem(EntityId item) { m_selectedItem = item; }
@@ -17,7 +16,6 @@ class EquipmentWindow : public Window {
         void updateItemNames();
     private:
         EntityId    m_selectedItem;
-        int         m_selectedPage;
 };
 
 #endif

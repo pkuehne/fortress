@@ -7,7 +7,7 @@
 class Page
 {
   public:
-    Page(const std::string &title)
+    explicit Page(const std::string &title)
         : m_title(title)
     {
     }
@@ -21,9 +21,9 @@ class Page
     {
         return m_title;
     }
-    Frame &getFrame()
+    Frame *getFrame()
     {
-        return m_frame;
+        return &m_frame;
     }
 
   private:
@@ -48,6 +48,8 @@ class Tab : public Widget
     }
     void render();
     void keyPress(unsigned char key);
+    Widget* setWindowOffsets(unsigned int x, unsigned int y);
+    Widget *realignWidget(unsigned int width, unsigned int height);
 
   private:
     std::vector<Page *> m_pages;
