@@ -34,24 +34,34 @@ class Page
 class Tab : public Widget
 {
   public:
+    typedef void (*PageSwitchCB)(Tab *);
+
     Page *addPage(const std::string &title);
     std::vector<Page *> &getPages() { return m_pages; }
-    Tab *setSelection(unsigned int selection) { 
+    Tab *setSelection(unsigned int selection)
+    {
         m_selection = selection;
-        if (m_selection >= m_pages.size()) {
+        if (m_selection >= m_pages.size())
+        {
             m_selection = 0;
         }
         return this;
     }
-    unsigned int getSelection() {
+    unsigned int getSelection()
+    {
         return m_selection;
+    }
+    Tab* setPageSwitchCallback(PageSwitchCB cb) {
+        m_pageSwitchCallback = cb;
+        return this;
     }
     void render();
     void keyPress(unsigned char key);
-    Widget* setWindowOffsets(unsigned int x, unsigned int y);
+    Widget *setWindowOffsets(unsigned int x, unsigned int y);
     Widget *realignWidget(unsigned int width, unsigned int height);
 
   private:
     std::vector<Page *> m_pages;
     unsigned int m_selection = 0;
+    PageSwitchCB m_pageSwitchCallback = 0;
 };

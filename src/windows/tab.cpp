@@ -32,6 +32,9 @@ void Tab::keyPress(unsigned char key)
     if (key == KEY_TAB)
     {
         setSelection(m_selection + 1);
+        if (m_pageSwitchCallback && m_pages.size() > 1) {
+            m_pageSwitchCallback(this);
+        }
         //return;
     }
 

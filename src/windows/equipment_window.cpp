@@ -66,12 +66,14 @@ void EquipmentWindow::setup()
     setWidth(width);
     setEscapeBehaviour(Window::EscapeBehaviour::CloseWindow);
     m_selectedItem = 0;
-    m_selectedPage = 0;
 }
 
 void EquipmentWindow::registerWidgets()
 {
     Tab *tab = createWidget<Tab>("tabEquipment", 1, 1);
+    tab->setPageSwitchCallback([](Tab *t) {
+        dynamic_cast<EquipmentWindow *>(t->getWindow())->setSelectedItem(0);
+    });
     Frame *equipment = tab->addPage("Equipment")->getFrame();
 
     createWidget<Label>("lblWielding", 2, 4, equipment)->setText("Wielding");
@@ -224,17 +226,19 @@ void EquipmentWindow::registerWidgets()
     updateItemNames();
 }
 
-void EquipmentWindow::keyPress(unsigned char key)
+void EquipmentWindow::setSelectedItem(EntityId item)
 {
-    unsigned int selection = getWidget<ListBox>("lstRucksack")->getSelectedItem();
-    
+    m_selectedItem = item;
+
+    Tab *tab = getWidget<Tab>("tabEquipment");
+
     getWidget<Label>("lblSelectItem")->setVisible((m_selectedItem == 0));
     getWidget<Label>("lblSelectedItem")->setVisible((m_selectedItem > 0));
     getWidget<Label>("lblConsume")->setVisible((m_selectedItem > 0));
     getWidget<Label>("lblInspect")->setVisible((m_selectedItem > 0));
     getWidget<Label>("lblDrop")->setVisible((m_selectedItem > 0));
-    getWidget<Label>("lblUnequip")->setVisible((m_selectedItem > 0 && m_selectedPage == 0));
-    getWidget<Label>("lblEquip")->setVisible((m_selectedItem > 0 && m_selectedPage == 1));
+    getWidget<Label>("lblUnequip")->setVisible((m_selectedItem > 0 && tab->getSelection() == 0));
+    getWidget<Label>("lblEquip")->setVisible((m_selectedItem > 0 && tab->getSelection() == 1));
 
     updateItemNames();
 }

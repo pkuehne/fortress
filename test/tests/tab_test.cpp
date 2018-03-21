@@ -59,7 +59,7 @@ TEST(Tab, rendersOnlySelectedTab)
     tab.render();
 }
 
-TEST(Tab, setsWindowOffsetForAllPages)
+TEST(Tab, setsWindowOffsetForAllPagesAndAccountsForPageNames)
 {
     WidgetMock wOne;
     WidgetMock wTwo;
@@ -76,8 +76,8 @@ TEST(Tab, setsWindowOffsetForAllPages)
 
     unsigned int x = 20;
     unsigned int y = 30;
-    EXPECT_CALL(wOne, setWindowOffsets(Eq(x), Eq(y))).Times(1);
-    EXPECT_CALL(wTwo, setWindowOffsets(Eq(x), Eq(y))).Times(1);
+    EXPECT_CALL(wOne, setWindowOffsets(Eq(x), Eq(y+2))).Times(1);
+    EXPECT_CALL(wTwo, setWindowOffsets(Eq(x), Eq(y+2))).Times(1);
 
     tab.setWindowOffsets(x, y);
 }
@@ -159,3 +159,23 @@ TEST(Tab, OneTabDoesNoSwitching)
     tab.keyPress(KEY_TAB);
     EXPECT_EQ(tab.getSelection(), 0);
 }
+
+TEST(Tab, SwitchingPagesCallsCallback)
+{
+    Tab tab;
+
+    tab.addPage("Foo");
+    tab.addPage("Bar");
+    tab.setPageSwitchCallback([](Tab *t) { throw "Selected"; });
+
+    EXPECT_ANY_THROW(tab.keyPress(KEY_TAB));
+}
+
+TEST(Tab, SinglePageDoesNotCallCallback)
+{
+    Tab tab;
+
+    tab.addPage("Foo");
+    tab.setPageSwitchCallback([](Tab *t) { throw "Selected"; });
+
+    EXPECT_NO_THROW(tab.keyPress(KEY_TAB));}
