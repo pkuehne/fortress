@@ -70,78 +70,88 @@ void EquipmentWindow::setup()
 
 void EquipmentWindow::registerWidgets()
 {
+    getWidget<Frame>("frmBase")->setMergeBorders();
+
     Tab *tab = createWidget<Tab>("tabEquipment", 1, 1);
     tab->setPageSwitchCallback([](Tab *t) {
         dynamic_cast<EquipmentWindow *>(t->getWindow())->setSelectedItem(0);
     });
     Frame *equipment = tab->addPage("Equipment")->getFrame();
+    equipment->setMargin();
 
-    createWidget<Label>("lblWielding", 2, 4, equipment)->setText("Wielding");
-    createWidget<Label>("lblWearing", 2, 8, equipment)->setText("Wearing");
+    createWidget<Label>("lblWielding", 0, 0, equipment)->setText("Wielding");
+    createWidget<Label>("lblWearing", 0, 4, equipment)->setText("Wearing");
 
-    createWidget<Label>("lblRight", 4, 5, equipment)
+    createWidget<Label>("lblRight", 2, 1, equipment)
         ->setText("Right:")
         ->setCommandChar(1)
         ->setCommandCharCallback(selectItem);
-    createWidget<Label>("lblLeft", 4, 6, equipment)
+    createWidget<Label>("lblLeft", 2, 2, equipment)
         ->setText("Left :")
         ->setCommandChar(1)
         ->setCommandCharCallback(selectItem);
 
-    createWidget<Label>("lblHead", 4, 9, equipment)
+    createWidget<Label>("lblHead", 2, 5, equipment)
         ->setText("Head :")
         ->setCommandChar(1)
         ->setCommandCharCallback(selectItem);
-    createWidget<Label>("lblFace", 4, 10, equipment)
+    createWidget<Label>("lblFace", 2, 6, equipment)
         ->setText("Face :")
         ->setCommandChar(1)
         ->setCommandCharCallback(selectItem);
-    createWidget<Label>("lblChest", 4, 11, equipment)
+    createWidget<Label>("lblChest", 2, 7, equipment)
         ->setText("Chest:")
         ->setCommandChar(1)
         ->setCommandCharCallback(selectItem);
-    createWidget<Label>("lblArms", 4, 12, equipment)
+    createWidget<Label>("lblArms", 2, 8, equipment)
         ->setText("Arms :")
         ->setCommandChar(1)
         ->setCommandCharCallback(selectItem);
-    createWidget<Label>("lblHands", 4, 13, equipment)
+    createWidget<Label>("lblHands", 2, 9, equipment)
         ->setText("Hands:")
         ->setCommandChar(3)
         ->setCommandCharCallback(selectItem);
-    createWidget<Label>("lblLegs", 4, 14, equipment)
+    createWidget<Label>("lblLegs", 2, 10, equipment)
         ->setText("Legs :")
         ->setCommandChar(2)
         ->setCommandCharCallback(selectItem);
-    createWidget<Label>("lblFeet", 4, 15, equipment)
+    createWidget<Label>("lblFeet", 2, 11, equipment)
         ->setText("Feet :")
         ->setCommandChar(4)
         ->setCommandCharCallback(selectItem);
 
-    createWidget<Label>("lblLeftItem", 11, 6, equipment);
-    createWidget<Label>("lblRightItem", 11, 5, equipment);
-    createWidget<Label>("lblHeadItem", 11, 9, equipment);
-    createWidget<Label>("lblFaceItem", 11, 10, equipment);
-    createWidget<Label>("lblChestItem", 11, 11, equipment);
-    createWidget<Label>("lblArmsItem", 11, 12, equipment);
-    createWidget<Label>("lblHandsItem", 11, 13, equipment);
-    createWidget<Label>("lblLegsItem", 11, 14, equipment);
-    createWidget<Label>("lblFeetItem", 11, 15, equipment);
+    createWidget<Label>("lblRightItem", 9, 1, equipment);
+    createWidget<Label>("lblLeftItem", 9, 2, equipment);
+    createWidget<Label>("lblHeadItem", 9, 5, equipment);
+    createWidget<Label>("lblFaceItem", 9, 6, equipment);
+    createWidget<Label>("lblChestItem", 9, 7, equipment);
+    createWidget<Label>("lblArmsItem", 9, 8, equipment);
+    createWidget<Label>("lblHandsItem", 9, 9, equipment);
+    createWidget<Label>("lblLegsItem", 9, 10, equipment);
+    createWidget<Label>("lblFeetItem", 9, 11, equipment);
 
-    createWidget<Label>("lblItemSelector", 3, 5, equipment)
+    createWidget<Label>("lblItemSelector", 1, 1, equipment)
         ->setText(">")
         ->setForegroundColor(Color(RED))
         ->setVisible(false);
 
-    createWidget<Label>("lblSelectItem", 2, 0, equipment)
+
+    Widget *actions = createWidget<Frame>("frmActions", 30, 0)
+                          ->setBorder()
+                          ->setMargin()
+                          ->setWidth(15)
+                          ->setHeight(17);
+
+    createWidget<Label>("lblSelectItem", 0, 0, actions)
         ->setText("Select item")
         ->setVerticalAlign(Widget::VerticalAlign::Centre)
-        ->setHorizontalAlign(Widget::HorizontalAlign::Right);
+        ->setHorizontalAlign(Widget::HorizontalAlign::Left);
 
-    createWidget<Label>("lblSelectedItem", 29, 2, equipment)
+    createWidget<Label>("lblSelectedItem", 0, 2, actions)
         ->setText("")
         ->setVisible(false);
 
-    createWidget<Label>("lblConsume", 29, 3)
+    createWidget<Label>("lblConsume", 0, 3, actions)
         ->setText("consume")
         ->setCommandChar(1)
         ->setCommandCharCallback([](Label *l) {
@@ -157,7 +167,7 @@ void EquipmentWindow::registerWidgets()
         ->setVerticalAlign(Widget::VerticalAlign::Bottom)
         ->setVisible(false);
 
-    createWidget<Label>("lblInspect", 29, 2)
+    createWidget<Label>("lblInspect", 0, 2, actions)
         ->setText("inspect")
         ->setCommandChar(1)
         ->setCommandCharCallback([](Label *l) {
@@ -169,7 +179,7 @@ void EquipmentWindow::registerWidgets()
         ->setVerticalAlign(Widget::VerticalAlign::Bottom)
         ->setVisible(false);
 
-    createWidget<Label>("lblUnequip", 29, 1)
+    createWidget<Label>("lblUnequip", 0, 1, actions)
         ->setText("unequip")
         ->setCommandChar(1)
         ->setCommandCharCallback([](Label *l) {
@@ -186,7 +196,7 @@ void EquipmentWindow::registerWidgets()
         ->setVerticalAlign(Widget::VerticalAlign::Bottom)
         ->setVisible(false);
 
-    createWidget<Label>("lblEquip", 29, 1)
+    createWidget<Label>("lblEquip", 0, 1, actions)
         ->setText("equip")
         ->setCommandChar(1)
         ->setCommandCharCallback([](Label *l) {
@@ -203,7 +213,7 @@ void EquipmentWindow::registerWidgets()
         ->setVerticalAlign(Widget::VerticalAlign::Bottom)
         ->setVisible(false);
 
-    createWidget<Label>("lblDrop", 29, 0)
+    createWidget<Label>("lblDrop", 0, 0, actions)
         ->setText("drop")
         ->setCommandChar(1)
         ->setCommandCharCallback([](Label *l) {
@@ -232,6 +242,7 @@ void EquipmentWindow::setSelectedItem(EntityId item)
 
     Tab *tab = getWidget<Tab>("tabEquipment");
 
+    getWidget<Label>("lblItemSelector")->setVisible(m_selectedItem > 0);
     getWidget<Label>("lblSelectItem")->setVisible((m_selectedItem == 0));
     getWidget<Label>("lblSelectedItem")->setVisible((m_selectedItem > 0));
     getWidget<Label>("lblConsume")->setVisible((m_selectedItem > 0));

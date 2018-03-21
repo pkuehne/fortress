@@ -12,7 +12,14 @@ Widget *Frame::setWindowOffsets(unsigned int x, unsigned int y)
     for (auto iter : getChildren())
     {
         Widget *w = iter.second;
-        w->setWindowOffsets(x + internalOffset, y + internalOffset);
+        if (m_mergeBorders && dynamic_cast<Frame *>(w))
+        {
+            w->setWindowOffsets(x, y);
+        }
+        else
+        {
+            w->setWindowOffsets(x + internalOffset, y + internalOffset);
+        }
     }
     return this;
 }
@@ -21,16 +28,25 @@ Widget *Frame::realignWidget(unsigned int width, unsigned int height)
 {
     Widget::realignWidget(width, height);
 
-    unsigned int internalOffset = m_margin * 2;
+    unsigned int internalOffset = m_margin;
     if (m_border)
     {
-        internalOffset += 2;
+        internalOffset += 1;
     }
 
     for (auto iter : getChildren())
     {
         Widget *w = iter.second;
-        w->realignWidget(width - internalOffset, height - internalOffset);
+        if (m_mergeBorders && dynamic_cast<Frame *>(w))
+        {
+            w->setWindowOffsets(getXPos(), getYPos());
+            w->realignWidget(width, height);
+        }
+        else
+        {
+            w->setWindowOffsets(getXPos() + internalOffset, getYPos() + internalOffset);
+            w->realignWidget(width - internalOffset * 2, height - internalOffset * 2);
+        }
     }
     return this;
 }

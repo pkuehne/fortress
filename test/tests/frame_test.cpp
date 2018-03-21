@@ -34,6 +34,46 @@ TEST(Frame, realignWidgetSubtractsBorderWidth)
     frame.realignWidget(width, height);
 }
 
+TEST(Frame, SetsOwnPositionAsWindowOffset)
+{
+    Frame frame;
+    WidgetMock mock;
+
+    unsigned int height = 20;
+    unsigned int width = 30;
+
+
+    frame.setWindowOffsets(0, 0);
+    frame.setX(10);
+    frame.setHorizontalAlign(Widget::HorizontalAlign::Right);
+    frame.addChild(&mock);
+
+    EXPECT_CALL(mock, setWindowOffsets(Eq(20), Eq(0)));
+    frame.realignWidget(width, height);
+
+    EXPECT_EQ(frame.getXPos(), width - frame.getX());
+}
+
+TEST(Frame, SettingWindowOffsetOnChildrenIncludesBorderAndMargin)
+{
+    Frame frame;
+    WidgetMock mock;
+
+    unsigned int height = 20;
+    unsigned int width = 30;
+
+
+    frame.setWindowOffsets(0, 0);
+    frame.setX(10);
+    frame.setHorizontalAlign(Widget::HorizontalAlign::Right);
+    frame.setBorder();
+    frame.setMargin();
+    frame.addChild(&mock);
+
+    EXPECT_CALL(mock, setWindowOffsets(Eq(22), Eq(2)));
+    frame.realignWidget(width, height);
+}
+
 TEST(Frame, realignWidgetSubtractsMargin)
 {
     Frame frame;
@@ -100,4 +140,24 @@ TEST(Frame, WindoOffsetIncreasesByMarginSize)
     EXPECT_CALL(mock, setWindowOffsets(Eq(x + 10), Eq(y + 10)));
 
     frame.setWindowOffsets(x, y);
+}
+
+TEST(Frame, MergeBordersIgnoresOffsetsForOtherFrames)
+{
+    Frame frame;
+    Frame subFrame;
+
+    frame.setBorder();
+    frame.setMargin();
+    frame.setMergeBorders();
+    frame.addChild(&subFrame);
+
+    unsigned int x = 5;
+    unsigned int y = 7;
+
+    frame.setWindowOffsets(x, y);
+    frame.realignWidget(20, 20);
+
+    EXPECT_EQ(subFrame.getXPos(), x);
+    EXPECT_EQ(subFrame.getYPos(), y);
 }

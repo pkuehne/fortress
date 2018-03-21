@@ -20,6 +20,11 @@ class Frame : public Widget
         m_title = title;
         return this;
     }
+    Frame* setMergeBorders(bool merge = true)
+    {
+        m_mergeBorders = merge;
+        return this;
+    }
     Widget *setWindowOffsets(unsigned int x, unsigned int y);
     Widget *realignWidget(unsigned int width, unsigned int height);
     void render();
@@ -27,6 +32,7 @@ class Frame : public Widget
 
   private:
     bool m_border = false;
+    bool m_mergeBorders = false;
     unsigned int m_margin = 0;
     std::string m_title;
 };
