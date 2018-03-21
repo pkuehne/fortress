@@ -49,6 +49,6 @@ install: build
 	sudo cp -r ./graphics/ /usr/games/fortress
 	sudo cp -r ./config/ /usr/games/fortress
 
-doxy:
+docs:
 	doxygen Doxyfile
 	cp -r doxygen/html/* /var/www/html/fortress/

@@ -59,3 +59,5 @@ fortress.tgz
 
 #vim swap file
 *.swp
+
+doxygen/
