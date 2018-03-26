@@ -6,32 +6,31 @@
 void ListBox::render()
 {
     for (unsigned int ii = 0; ii < this->getHeight(); ii++) {
-        if (ii >= items.size()) {
+        if (ii >= m_items.size()) {
             break;
         }
-        if (m_selectedItem-m_topOffset == ii) {
+        if (m_selection-m_topOffset == ii) {
             this->drawString(0, ii, ">", COLOR(RED));
         }
-
-        this->drawString(1, ii, items[ii+m_topOffset].c_str());
+        this->drawString(1, ii, m_items[ii+m_topOffset].getText().c_str());
     }
 }
 
 void ListBox::keyPress(unsigned char key)
 {
     if (key == '+' || key == KEY_DOWN) {
-        m_selectedItem = (m_selectedItem == items.size()-1) ? items.size()-1: m_selectedItem+1;
-        if (m_selectedItem >= this->getHeight()) {
-            m_topOffset = m_selectedItem - this->getHeight() + 1;
+        m_selection = (m_selection == m_items.size()-1) ? m_items.size()-1: m_selection+1;
+        if (m_selection >= this->getHeight()) {
+            m_topOffset = m_selection - this->getHeight() + 1;
         }
     }
     if (key == '-' || key == KEY_UP) {
-        m_selectedItem = (m_selectedItem == 0) ? 0 : m_selectedItem-1;
-        if (m_selectedItem < m_topOffset) {
+        m_selection = (m_selection == 0) ? 0 : m_selection-1;
+        if (m_selection < m_topOffset) {
             m_topOffset = 0;
         }
     }
-    if (key == KEY_ENTER && onItemSelected) {
-        onItemSelected(this);
+    if (key == KEY_ENTER && m_itemSelectedCb) {
+        m_itemSelectedCb(this);
     }
 }

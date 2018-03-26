@@ -29,12 +29,14 @@ void QuestWindow::registerWidgets()
 
     for (Quest *quest : getEngine()->state()->getQuests())
     {
-        b->items.push_back(quest->title());
+        ListBoxItem item;
+        item.setText(quest->title());
+        b->addItem(item);
     }
-    b->onItemSelected = [](ListBox *b) {
+    b->setItemSelectedCallback([](ListBox *b) {
         Label *l = b->getWindow()->getWidget<Label>("lblQuestDetail");
-        l->setText(b->items[b->getSelectedItem()]);
-    };
+        l->setText(b->getSelectedItem().getText().c_str());
+    });
 
     l = this->createWidget<Label>("lblSep2", 1, 7);
     l->setText("===========");

@@ -52,6 +52,7 @@ void selectItem(Label *l)
         s->setY(l->getY());
         s->setVisible(true);
     }
+    win->updateItemNames();
 }
 
 } // Close namespace
@@ -73,8 +74,23 @@ void EquipmentWindow::registerWidgets()
     getWidget<Frame>("frmBase")->setMergeBorders();
 
     Tab *tab = createWidget<Tab>("tabEquipment", 1, 1);
+
     tab->setPageSwitchCallback([](Tab *t) {
-        dynamic_cast<EquipmentWindow *>(t->getWindow())->setSelectedItem(0);
+        EquipmentWindow *win = dynamic_cast<EquipmentWindow *>(t->getWindow());
+
+        if (t->getCurrentPage() == 0)
+        {
+            win->setSelectedItem(0);
+        }
+        else
+        {
+            ListBox *l = t->getWindow()->getWidget<ListBox>("lstRucksack");
+            if (l->getItems().size())
+            {
+                win->setSelectedItem(l->getSelectedItem().getValue());
+            }
+        }
+        win->updateItemNames();
     });
     Frame *equipment = tab->addPage("Equipment")->getFrame();
     equipment->setMargin();
@@ -134,7 +150,6 @@ void EquipmentWindow::registerWidgets()
         ->setText(">")
         ->setForegroundColor(Color(RED))
         ->setVisible(false);
-
 
     Widget *actions = createWidget<Frame>("frmActions", 30, 0)
                           ->setBorder()
@@ -231,7 +246,12 @@ void EquipmentWindow::registerWidgets()
         ->setVisible(false);
 
     Frame *rucksack = tab->addPage("Rucksack")->getFrame();
-    createWidget<ListBox>("lstRucksack", 1, 3, rucksack);
+    createWidget<ListBox>("lstRucksack", 1, 3, rucksack)
+        ->setItemSelectedCallback([](ListBox *l) {
+            EquipmentWindow *win = dynamic_cast<EquipmentWindow *>(l->getWindow());
+            win->setSelectedItem(l->getSelectedItem().getValue());
+        })
+        ->setHeight(10);
 
     updateItemNames();
 }
@@ -248,10 +268,10 @@ void EquipmentWindow::setSelectedItem(EntityId item)
     getWidget<Label>("lblConsume")->setVisible((m_selectedItem > 0));
     getWidget<Label>("lblInspect")->setVisible((m_selectedItem > 0));
     getWidget<Label>("lblDrop")->setVisible((m_selectedItem > 0));
-    getWidget<Label>("lblUnequip")->setVisible((m_selectedItem > 0 && tab->getSelection() == 0));
-    getWidget<Label>("lblEquip")->setVisible((m_selectedItem > 0 && tab->getSelection() == 1));
+    getWidget<Label>("lblUnequip")->setVisible((m_selectedItem > 0 && tab->getCurrentPage() == 0));
+    getWidget<Label>("lblEquip")->setVisible((m_selectedItem > 0 && tab->getCurrentPage() == 1));
 
-    updateItemNames();
+    getWidget<Label>("lblSelectedItem")->setText(nameOrNothing(m_selectedItem, getEngine()));
 }
 
 void EquipmentWindow::updateItemNames()
@@ -270,13 +290,15 @@ void EquipmentWindow::updateItemNames()
     getWidget<Label>("lblLegsItem")->setText(nameOrNothing(equipment->legsWearable, getEngine()));
     getWidget<Label>("lblFeetItem")->setText(nameOrNothing(equipment->feetWearable, getEngine()));
 
-    getWidget<Label>("lblSelectedItem")->setText(nameOrNothing(m_selectedItem, getEngine()));
-
     ListBox *list = getWidget<ListBox>("lstRucksack");
+    list->clearItems();
 
     EquipmentComponent *carried = getEngine()->state()->components()->get<EquipmentComponent>(player);
     for (unsigned int ii = 0; ii < carried->carriedEquipment.size(); ii++)
     {
-        list->items.push_back(nameOrNothing(carried->carriedEquipment[ii], getEngine()));
+        ListBoxItem item;
+        item.setText(nameOrNothing(carried->carriedEquipment[ii], getEngine()));
+        item.setValue(carried->carriedEquipment[ii]);
+        list->addItem(item);
     }
 }

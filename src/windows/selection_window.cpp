@@ -20,15 +20,17 @@ void SelectionWindow::registerWidgets()
 
     for (std::string line : m_lines)
     {
-        box->items.push_back(line);
+        ListBoxItem item;
+        item.setText(line);
+        box->addItem(item);
     }
 
     box->setHeight(m_lines.size());
-    box->onItemSelected = [](ListBox *box) {
+    box->setItemSelectedCallback([](ListBox *box) {
         SelectionWindow *win = dynamic_cast<SelectionWindow *>(box->getWindow());
-        EntityId *l_target = new EntityId(win->getEntities()[box->getSelectedItem()]);
+        EntityId *l_target = new EntityId(win->getEntities()[box->getSelection()]);
         win->getEngine()->getWindows()->createWindow<InspectionWindow>(l_target);
-    };
+    });
 }
 
 void SelectionWindow::setEntities(EntityHolder* entities)

@@ -76,8 +76,8 @@ TEST(Tab, setsWindowOffsetForAllPagesAndAccountsForPageNames)
 
     unsigned int x = 20;
     unsigned int y = 30;
-    EXPECT_CALL(wOne, setWindowOffsets(Eq(x), Eq(y+2))).Times(1);
-    EXPECT_CALL(wTwo, setWindowOffsets(Eq(x), Eq(y+2))).Times(1);
+    EXPECT_CALL(wOne, setWindowOffsets(Eq(x), Eq(y + 2))).Times(1);
+    EXPECT_CALL(wTwo, setWindowOffsets(Eq(x), Eq(y + 2))).Times(1);
 
     tab.setWindowOffsets(x, y);
 }
@@ -139,16 +139,16 @@ TEST(Tab, TabKeySwitchesBetweenTabs)
     tab.addPage(titleTwo);
     tab.addPage(titleThree);
 
-    EXPECT_EQ(tab.getSelection(), 0);
+    EXPECT_EQ(tab.getCurrentPage(), 0);
 
     tab.keyPress(KEY_TAB);
-    EXPECT_EQ(tab.getSelection(), 1);
+    EXPECT_EQ(tab.getCurrentPage(), 1);
 
     tab.keyPress(KEY_TAB);
-    EXPECT_EQ(tab.getSelection(), 2);
+    EXPECT_EQ(tab.getCurrentPage(), 2);
 
     tab.keyPress(KEY_TAB);
-    EXPECT_EQ(tab.getSelection(), 0);
+    EXPECT_EQ(tab.getCurrentPage(), 0);
 }
 
 TEST(Tab, OneTabDoesNoSwitching)
@@ -157,10 +157,10 @@ TEST(Tab, OneTabDoesNoSwitching)
     tab.addPage("page1");
 
     tab.keyPress(KEY_TAB);
-    EXPECT_EQ(tab.getSelection(), 0);
+    EXPECT_EQ(tab.getCurrentPage(), 0);
 }
 
-TEST(Tab, SwitchingPagesCallsCallback)
+TEST(Tab, SwitchingPagesByKeyCallsCallback)
 {
     Tab tab;
 
@@ -171,6 +171,28 @@ TEST(Tab, SwitchingPagesCallsCallback)
     EXPECT_ANY_THROW(tab.keyPress(KEY_TAB));
 }
 
+TEST(Tab, SwitchingPagesBySettingCallsCallback)
+{
+    Tab tab;
+
+    tab.addPage("Foo");
+    tab.addPage("Bar");
+    tab.setPageSwitchCallback([](Tab *t) { throw "Selected"; });
+
+    EXPECT_ANY_THROW(tab.setCurrentPage(1));
+}
+
+TEST(Tab, SwitchingPagesToSamePageDoesNotCallCallback)
+{
+    Tab tab;
+
+    tab.addPage("Foo");
+    tab.addPage("Bar");
+    tab.setPageSwitchCallback([](Tab *t) { throw "Selected"; });
+
+    EXPECT_NO_THROW(tab.setCurrentPage(0));
+}
+
 TEST(Tab, SinglePageDoesNotCallCallback)
 {
     Tab tab;
@@ -178,4 +200,5 @@ TEST(Tab, SinglePageDoesNotCallCallback)
     tab.addPage("Foo");
     tab.setPageSwitchCallback([](Tab *t) { throw "Selected"; });
 
-    EXPECT_NO_THROW(tab.keyPress(KEY_TAB));}
+    EXPECT_NO_THROW(tab.keyPress(KEY_TAB));
+}

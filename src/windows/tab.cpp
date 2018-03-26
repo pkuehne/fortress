@@ -7,6 +7,22 @@ Page *Tab::addPage(const std::string &title)
     return page;
 }
 
+Tab *Tab::setCurrentPage(unsigned int page)
+{
+    unsigned int prevPage = m_currentPage;
+    m_currentPage = page;
+    if (m_currentPage >= m_pages.size())
+    {
+        m_currentPage = 0;
+    }
+    if (m_currentPage != prevPage && m_pageSwitchCallback && m_pages.size() > 1)
+    {
+        m_pageSwitchCallback(this);
+    }
+
+    return this;
+}
+
 void Tab::render()
 {
     unsigned int currOffset = 1; // To account for selector
@@ -15,7 +31,7 @@ void Tab::render()
     {
         Page *page = m_pages[ii];
 
-        if (ii == m_selection)
+        if (ii == m_currentPage)
         {
             drawString(currOffset - 1, 0, ">", Color(RED));
         }
@@ -24,21 +40,18 @@ void Tab::render()
         currOffset += page->getTitle().length() + 2; // Space and indicator symbol
     }
 
-    m_pages[m_selection]->getFrame()->render();
+    m_pages[m_currentPage]->getFrame()->render();
 }
 
 void Tab::keyPress(unsigned char key)
 {
     if (key == KEY_TAB)
     {
-        setSelection(m_selection + 1);
-        if (m_pageSwitchCallback && m_pages.size() > 1) {
-            m_pageSwitchCallback(this);
-        }
+        setCurrentPage(m_currentPage + 1);
         //return;
     }
 
-    m_pages[m_selection]->getFrame()->keyPress(key);
+    m_pages[m_currentPage]->getFrame()->keyPress(key);
 }
 
 Widget *Tab::setWindowOffsets(unsigned int x, unsigned int y)
@@ -48,7 +61,7 @@ Widget *Tab::setWindowOffsets(unsigned int x, unsigned int y)
     for (Page *page : m_pages)
     {
         // For some reason this is not passed to the widgets in the frame properly
-        page->getFrame()->setWindowOffsets(x, y+2);
+        page->getFrame()->setWindowOffsets(x, y + 2);
     }
     return this;
 }

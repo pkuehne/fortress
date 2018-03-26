@@ -38,20 +38,13 @@ class Tab : public Widget
 
     Page *addPage(const std::string &title);
     std::vector<Page *> &getPages() { return m_pages; }
-    Tab *setSelection(unsigned int selection)
+    Tab *setCurrentPage(unsigned int page);    
+    unsigned int getCurrentPage()
     {
-        m_selection = selection;
-        if (m_selection >= m_pages.size())
-        {
-            m_selection = 0;
-        }
-        return this;
+        return m_currentPage;
     }
-    unsigned int getSelection()
+    Tab *setPageSwitchCallback(PageSwitchCB cb)
     {
-        return m_selection;
-    }
-    Tab* setPageSwitchCallback(PageSwitchCB cb) {
         m_pageSwitchCallback = cb;
         return this;
     }
@@ -62,6 +55,6 @@ class Tab : public Widget
 
   private:
     std::vector<Page *> m_pages;
-    unsigned int m_selection = 0;
+    unsigned int m_currentPage = 0;
     PageSwitchCB m_pageSwitchCallback = 0;
 };

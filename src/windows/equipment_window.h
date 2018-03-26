@@ -15,6 +15,7 @@ class EquipmentWindow : public Window {
         void updateItemNames();
     private:
         EntityId    m_selectedItem;
+        std::vector<EntityId> m_rucksackEntities;
 };
 
 #endif
