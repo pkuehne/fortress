@@ -19,10 +19,11 @@ void WindowManager::initialise(GameEngine *engine)
 void WindowManager::pushWindow(Window *win)
 {
     m_windows.push_back(win);
-    win->gainFocus();
-    win->resize(); // Todo: Remove when MapWindow is migrated
+
+    win->gainFocus(); // TODO: Remove when MapWindow is migrated
     win->setup();
     win->registerWidgets();
+    win->resize();
 }
 
 void WindowManager::popWindow()
