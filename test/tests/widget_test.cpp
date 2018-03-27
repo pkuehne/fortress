@@ -56,7 +56,7 @@ TEST(Widget, realignVerticalBottomSetsTopOfWidgetItsHeightAwayFromBottom)
 
     w.realign(0, 10, 0, 100);
 
-    EXPECT_EQ(w.getYPos(), 105);
+    EXPECT_EQ(w.getYPos(), 104);
 }
 
 TEST(Widget, realignHorizontalTopSetsRelativePlusOrigin)
@@ -82,7 +82,7 @@ TEST(Widget, realignHorizontalCentreSetsMiddleOfWidgetOnMiddleOfScreen)
     EXPECT_EQ(w.getXPos(), 57);
 }
 
-TEST(Widget, realignHorizontalBottomSetsTopOfWidgetItsHeightAwayFromBottom)
+TEST(Widget, realignHorizontalBottomSetsLeftOfWidgetItsWidthAwayFromRight)
 {
     Widget w;
     w.setX(0);
@@ -91,5 +91,5 @@ TEST(Widget, realignHorizontalBottomSetsTopOfWidgetItsHeightAwayFromBottom)
 
     w.realign(10, 0, 100, 0);
 
-    EXPECT_EQ(w.getXPos(), 105);
+    EXPECT_EQ(w.getXPos(), 104);
 }

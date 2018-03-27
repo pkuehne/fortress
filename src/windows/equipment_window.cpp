@@ -151,11 +151,12 @@ void EquipmentWindow::registerWidgets()
         ->setForegroundColor(Color(RED))
         ->setVisible(false);
 
-    Widget *actions = createWidget<Frame>("frmActions", 30, 0)
+    Widget *actions = createWidget<Frame>("frmActions", 0, 0)
                           ->setBorder()
                           ->setMargin()
                           ->setWidth(15)
-                          ->setHeight(17);
+                          ->setHeight(17)
+                          ->setHorizontalAlign(Widget::HorizontalAlign::Right);
 
     createWidget<Label>("lblSelectItem", 0, 0, actions)
         ->setText("Select item")
@@ -246,7 +247,7 @@ void EquipmentWindow::registerWidgets()
         ->setVisible(false);
 
     Frame *rucksack = tab->addPage("Rucksack")->getFrame();
-    createWidget<ListBox>("lstRucksack", 1, 3, rucksack)
+    createWidget<ListBox>("lstRucksack", 0, 0, rucksack)
         ->setItemSelectedCallback([](ListBox *l) {
             EquipmentWindow *win = dynamic_cast<EquipmentWindow *>(l->getWindow());
             win->setSelectedItem(l->getSelectedItem().getValue());

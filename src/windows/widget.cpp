@@ -17,7 +17,7 @@ void Widget::realign(unsigned int xOrigin, unsigned int yOrigin, unsigned int pa
     }
     case VerticalAlign::Bottom:
     {
-        this->m_yPos = yOrigin + parentHeight - this->getHeight() - this->m_relativeYPos + 1;
+        this->m_yPos = yOrigin + parentHeight - this->getHeight() - this->m_relativeYPos;
         break;
     }
     }
@@ -35,7 +35,7 @@ void Widget::realign(unsigned int xOrigin, unsigned int yOrigin, unsigned int pa
     }
     case HorizontalAlign::Right:
     {
-        this->m_xPos = xOrigin + parentWidth - this->getWidth() - this->m_relativeXPos + 1;
+        this->m_xPos = xOrigin + parentWidth - this->getWidth() - this->m_relativeXPos;
         break;
     }
     }
