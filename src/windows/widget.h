@@ -51,21 +51,21 @@ class Widget
     }
     virtual Widget *setX(unsigned int x)
     {
-        this->m_x = x;
+        this->m_relativeXPos = x;
         return this;
     }
     virtual unsigned int getX() const
     {
-        return m_x;
+        return m_relativeXPos;
     }
     virtual Widget *setY(unsigned int y)
     {
-        this->m_y = y;
+        this->m_relativeYPos = y;
         return this;
     }
     virtual unsigned int getY() const
     {
-        return m_y;
+        return m_relativeYPos;
     }
     virtual Widget *setWindow(Window *win)
     {
@@ -177,9 +177,9 @@ class Widget
     }
 
     // Subclass overrideable
-    virtual Widget *realignWidget(unsigned int screenWidth, unsigned int screenHeight);
     virtual void keyPress(unsigned char key){}
     virtual void render() {}
+    virtual void realign(unsigned int xOrigin, unsigned int yOrigin, unsigned int parentWidth, unsigned int parentHeight);
 
     // Callbacks
     KeyFunc onKeyPress = nullptr;
@@ -207,13 +207,13 @@ class Widget
     Widget *m_parent = nullptr;
     std::map<std::string, Widget *> m_children;
 
-    unsigned int m_x = 0; ///< The Window X offset
-    unsigned int m_y = 0; ///< The Window Y offset
+    unsigned int m_relativeXPos = 0; ///< The relative left position within the parent widget
+    unsigned int m_relativeYPos = 0; ///< The relative top position within the parent widget
 
-    unsigned int m_xOffset = 0; ///< X Offset within the Window
-    unsigned int m_yOffset = 0; ///< Y Offset within the Window
-    unsigned int m_xPos = 0;    ///< The actual X position on screen
-    unsigned int m_yPos = 0;    ///< The actual Y position on screen
+    unsigned int m_xOffset = 0; ///< X Offset within the Window - TODO: Remove
+    unsigned int m_yOffset = 0; ///< Y Offset within the Window - TODO: Remove
+    unsigned int m_xPos = 0;    ///< The absolute left position of the widget on screen
+    unsigned int m_yPos = 0;    ///< The absolute top position of the widget on screen
     unsigned int m_width = 1;
     unsigned int m_height = 1;
 

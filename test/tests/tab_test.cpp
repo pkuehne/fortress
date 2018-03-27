@@ -7,7 +7,12 @@ using namespace ::testing;
 
 TEST(Tab, AddingPageCreatesNewFrame)
 {
+    unsigned int width = 100;
+    unsigned int height = 200;
     Tab tab;
+    tab.setWidth(width);
+    tab.setHeight(height);
+
     std::string title("Foo");
     tab.addPage(title);
 
@@ -59,50 +64,34 @@ TEST(Tab, rendersOnlySelectedTab)
     tab.render();
 }
 
-TEST(Tab, setsWindowOffsetForAllPagesAndAccountsForPageNames)
+TEST(Tab, setsYOffsetForAllPagesToAccountForPageNames)
 {
-    WidgetMock wOne;
-    WidgetMock wTwo;
-    GraphicsMock graphics;
-
-    Tab tab;
-    tab.setGraphics(&graphics);
-
-    std::string titleOne("Foor");
-    std::string titleTwo("Bar");
-
-    tab.addPage(titleOne)->getFrame()->addChild(&wOne);
-    tab.addPage(titleTwo)->getFrame()->addChild(&wTwo);
-
     unsigned int x = 20;
     unsigned int y = 30;
-    EXPECT_CALL(wOne, setWindowOffsets(Eq(x), Eq(y + 2))).Times(1);
-    EXPECT_CALL(wTwo, setWindowOffsets(Eq(x), Eq(y + 2))).Times(1);
+    unsigned int width = 100;
+    unsigned int height = 200;
 
-    tab.setWindowOffsets(x, y);
-}
-
-TEST(Tab, callsRealingWidgetForAllPages)
-{
-    WidgetMock wOne;
-    WidgetMock wTwo;
     GraphicsMock graphics;
 
     Tab tab;
     tab.setGraphics(&graphics);
+    tab.setHeight(height);
+    tab.setWidth(width);
 
     std::string titleOne("Foor");
     std::string titleTwo("Bar");
 
-    tab.addPage(titleOne)->getFrame()->addChild(&wOne);
-    tab.addPage(titleTwo)->getFrame()->addChild(&wTwo);
+    Frame *frame1 = tab.addPage(titleOne)->getFrame();
+    Frame *frame2 = tab.addPage(titleTwo)->getFrame();
 
-    unsigned int width = 20;
-    unsigned int height = 30;
-    EXPECT_CALL(wOne, realignWidget(Eq(width), Eq(height))).Times(1);
-    EXPECT_CALL(wTwo, realignWidget(Eq(width), Eq(height))).Times(1);
+    tab.realign(x, y, width, height);
+    EXPECT_EQ(frame1->getXPos(), tab.getXPos());
+    EXPECT_EQ(frame1->getYPos(), tab.getYPos() + 2);
+    EXPECT_EQ(frame1->getWidth(), tab.getWidth());
+    EXPECT_EQ(frame1->getHeight(), tab.getHeight()-2);
 
-    tab.realignWidget(width, height);
+    EXPECT_EQ(frame2->getXPos(), tab.getXPos());
+    EXPECT_EQ(frame2->getYPos(), tab.getYPos() + 2);
 }
 
 TEST(Tab, passedOnKeyPressOnlyForSelectedFrame)

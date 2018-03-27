@@ -20,13 +20,12 @@ class Frame : public Widget
         m_title = title;
         return this;
     }
-    Frame* setMergeBorders(bool merge = true)
+    Frame *setMergeBorders(bool merge = true)
     {
         m_mergeBorders = merge;
         return this;
     }
-    Widget *setWindowOffsets(unsigned int x, unsigned int y);
-    Widget *realignWidget(unsigned int width, unsigned int height);
+    void realign(unsigned int xOrigin, unsigned int yOrigin, unsigned int parentWidth, unsigned int parentHeight);
     void render();
     void keyPress(unsigned char key);
 

@@ -5,88 +5,63 @@
 
 using namespace ::testing;
 
-TEST(Frame, setWinowOffsetsPassedDownToChildren)
+TEST(Frame, realignCalledForChildren)
 {
-    Frame frame;
-    WidgetMock mock;
-
-    frame.addChild(&mock);
     unsigned int x = 5;
     unsigned int y = 7;
+    unsigned int width = 100;
+    unsigned int height = 200;
 
-    EXPECT_CALL(mock, setWindowOffsets(Eq(x), Eq(y)));
-
-    frame.setWindowOffsets(x, y);
-}
-
-TEST(Frame, realignWidgetSubtractsBorderWidth)
-{
     Frame frame;
     WidgetMock mock;
-
-    frame.setBorder(true);
     frame.addChild(&mock);
-    unsigned int width = 5;
-    unsigned int height = 7;
+    frame.setWidth(width);
+    frame.setHeight(height);
+    
+    EXPECT_CALL(mock, realign(Eq(x), Eq(y), Eq(width), Eq(height)));
 
-    EXPECT_CALL(mock, realignWidget(Eq(width-2),Eq(height-2)));
-
-    frame.realignWidget(width, height);
+    frame.realign(x, y, width, height);
 }
 
-TEST(Frame, SetsOwnPositionAsWindowOffset)
+TEST(Frame, realignAccountsForBorderWidth)
 {
+    unsigned int x = 5;
+    unsigned int y = 7;
+    unsigned int width = 100;
+    unsigned int height = 200;
+
     Frame frame;
     WidgetMock mock;
 
-    unsigned int height = 20;
-    unsigned int width = 30;
-
-
-    frame.setWindowOffsets(0, 0);
-    frame.setX(10);
-    frame.setHorizontalAlign(Widget::HorizontalAlign::Right);
-    frame.addChild(&mock);
-
-    EXPECT_CALL(mock, setWindowOffsets(Eq(20), Eq(0)));
-    frame.realignWidget(width, height);
-
-    EXPECT_EQ(frame.getXPos(), width - frame.getX());
-}
-
-TEST(Frame, SettingWindowOffsetOnChildrenIncludesBorderAndMargin)
-{
-    Frame frame;
-    WidgetMock mock;
-
-    unsigned int height = 20;
-    unsigned int width = 30;
-
-
-    frame.setWindowOffsets(0, 0);
-    frame.setX(10);
-    frame.setHorizontalAlign(Widget::HorizontalAlign::Right);
     frame.setBorder();
+    frame.addChild(&mock);
+    frame.setWidth(width);
+    frame.setHeight(height);
+
+    EXPECT_CALL(mock, realign(Eq(x+1), Eq(y+1), Eq(width-2), Eq(height-2)));
+
+    frame.realign(x, y, width, height);
+}
+
+
+TEST(Frame, realignAccountsForMargin)
+{
+    unsigned int x = 5;
+    unsigned int y = 7;
+    unsigned int width = 100;
+    unsigned int height = 200;
+
+    Frame frame;
+    WidgetMock mock;
+
     frame.setMargin();
     frame.addChild(&mock);
+    frame.setWidth(width);
+    frame.setHeight(height);
 
-    EXPECT_CALL(mock, setWindowOffsets(Eq(22), Eq(2)));
-    frame.realignWidget(width, height);
-}
+    EXPECT_CALL(mock, realign(Eq(x+1), Eq(y+1), Eq(width-2), Eq(height-2)));
 
-TEST(Frame, realignWidgetSubtractsMargin)
-{
-    Frame frame;
-    WidgetMock mock;
-
-    frame.setMargin(10);
-    frame.addChild(&mock);
-    unsigned int width = 5;
-    unsigned int height = 7;
-
-    EXPECT_CALL(mock, realignWidget(Eq(width-20),Eq(height-20)));
-
-    frame.realignWidget(width, height);
+    frame.realign(x, y, width, height);
 }
 
 TEST(Frame, renderPassedDownToChildren)
@@ -114,34 +89,6 @@ TEST(Frame, keyPressPassedDownToChildren)
     frame.keyPress(key);
 }
 
-TEST(Frame, EnablingBorderIncreasesWindowOffsetForChildren)
-{
-    Frame frame;
-    WidgetMock mock;
-    frame.setBorder(true);
-    frame.addChild(&mock);
-    unsigned int x = 5;
-    unsigned int y = 7;
-
-    EXPECT_CALL(mock, setWindowOffsets(Eq(x + 1), Eq(y + 1)));
-
-    frame.setWindowOffsets(x, y);
-}
-
-TEST(Frame, WindoOffsetIncreasesByMarginSize)
-{
-    Frame frame;
-    WidgetMock mock;
-    frame.setMargin(10);
-    frame.addChild(&mock);
-    unsigned int x = 5;
-    unsigned int y = 7;
-
-    EXPECT_CALL(mock, setWindowOffsets(Eq(x + 10), Eq(y + 10)));
-
-    frame.setWindowOffsets(x, y);
-}
-
 TEST(Frame, MergeBordersIgnoresOffsetsForOtherFrames)
 {
     Frame frame;
@@ -154,10 +101,10 @@ TEST(Frame, MergeBordersIgnoresOffsetsForOtherFrames)
 
     unsigned int x = 5;
     unsigned int y = 7;
+    unsigned int width = 100;
+    unsigned int height = 200;
 
-    frame.setWindowOffsets(x, y);
-    frame.realignWidget(20, 20);
-
-    EXPECT_EQ(subFrame.getXPos(), x);
-    EXPECT_EQ(subFrame.getYPos(), y);
+    frame.realign(x, y, width, height);
+    EXPECT_EQ(subFrame.getXPos(), frame.getXPos());
+    EXPECT_EQ(subFrame.getYPos(), frame.getYPos());
 }

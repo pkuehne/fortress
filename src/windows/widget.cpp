@@ -1,23 +1,23 @@
 #include "widget.h"
 #include <iostream>
 
-Widget *Widget::realignWidget(unsigned int windowWidth, unsigned int windowHeight)
+void Widget::realign(unsigned int xOrigin, unsigned int yOrigin, unsigned int parentWidth, unsigned int parentHeight)
 {
     switch (this->getVerticalAlign())
     {
     case VerticalAlign::Top:
     {
-        this->m_yPos = this->m_y + m_yOffset;
+        this->m_yPos = yOrigin + this->m_relativeYPos;
         break;
     }
     case VerticalAlign::Centre:
     {
-        this->m_yPos = m_yOffset + this->m_y + (windowHeight / 2 - this->getHeight() / 2);
+        this->m_yPos = yOrigin + this->m_relativeYPos + (parentHeight / 2 - this->getHeight() / 2);
         break;
     }
     case VerticalAlign::Bottom:
     {
-        this->m_yPos = m_yOffset + windowHeight - this->getHeight() - this->m_y + 1;
+        this->m_yPos = yOrigin + parentHeight - this->getHeight() - this->m_relativeYPos + 1;
         break;
     }
     }
@@ -25,27 +25,23 @@ Widget *Widget::realignWidget(unsigned int windowWidth, unsigned int windowHeigh
     {
     case HorizontalAlign::Left:
     {
-        m_xPos = this->m_x + m_xOffset;
+        this->m_xPos = xOrigin + this->m_relativeXPos;
         break;
     }
     case HorizontalAlign::Centre:
     {
-        this->m_xPos = m_xOffset + this->m_x + (windowWidth / 2 - this->getWidth() / 2);
+        this->m_xPos = xOrigin + this->m_relativeXPos + (parentWidth / 2 - this->getWidth() / 2);
         break;
     }
     case HorizontalAlign::Right:
     {
-        this->m_xPos = m_xOffset + windowWidth - this->getWidth() - this->m_x + 1;
+        this->m_xPos = xOrigin + parentWidth - this->getWidth() - this->m_relativeXPos + 1;
         break;
     }
     }
-    // std::cout << "width: " << windowWidth << " height: " << windowHeight << std::endl;
-    // std::cout << "offX: " << m_xOffset << " offY: " << m_yOffset << std::endl;
+    // std::cout << "width: " << parentWidth << " height: " << parentHeight << std::endl;
+    // std::cout << "offX: " << xOrigin << " offY: " << yOrigin << std::endl;
     // std::cout << "XPos: " << m_xPos << " YPos: " << m_yPos << std::endl;
-    // std::cout << "X: " << x << " Y: " << y << std::endl;
-    // std::cout << "W: " << this->getWidth() << std::endl;
-
-    return this;
 }
 
 Widget *Widget::drawString(unsigned int x, unsigned int y,

@@ -54,25 +54,21 @@ void Tab::keyPress(unsigned char key)
     m_pages[m_currentPage]->getFrame()->keyPress(key);
 }
 
-Widget *Tab::setWindowOffsets(unsigned int x, unsigned int y)
+void Tab::realign(unsigned int xOrigin, unsigned int yOrigin, unsigned int parentWidth, unsigned int parentHeight)
 {
-    Widget::setWindowOffsets(x, y);
+    Widget::realign(xOrigin, yOrigin, parentWidth, parentHeight);
+
+    unsigned int offsetForPageLabels = 2;
 
     for (Page *page : m_pages)
     {
-        // For some reason this is not passed to the widgets in the frame properly
-        page->getFrame()->setWindowOffsets(x, y + 2);
-    }
-    return this;
-}
+        page->getFrame()->setHeight(getHeight() - offsetForPageLabels);
+        page->getFrame()->setWidth(getWidth());
 
-Widget *Tab::realignWidget(unsigned int width, unsigned int height)
-{
-    Widget::realignWidget(width, height);
-
-    for (Page *page : m_pages)
-    {
-        page->getFrame()->realignWidget(width, height);
+        page->getFrame()->realign(
+            getXPos(),
+            getYPos() + offsetForPageLabels,
+            getWidth(),
+            getHeight());
     }
-    return this;
-}
+} 

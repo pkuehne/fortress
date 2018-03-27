@@ -1,32 +1,9 @@
 #include "frame.h"
 #include <iostream>
 
-Widget *Frame::setWindowOffsets(unsigned int x, unsigned int y)
+void Frame::realign(unsigned int xOrigin, unsigned int yOrigin, unsigned int parentWidth, unsigned int parentHeight)
 {
-    Widget::setWindowOffsets(x, y);
-    unsigned int internalOffset = m_margin;
-    if (m_border)
-    {
-        internalOffset++;
-    }
-    for (auto iter : getChildren())
-    {
-        Widget *w = iter.second;
-        if (m_mergeBorders && dynamic_cast<Frame *>(w))
-        {
-            w->setWindowOffsets(x, y);
-        }
-        else
-        {
-            w->setWindowOffsets(x + internalOffset, y + internalOffset);
-        }
-    }
-    return this;
-}
-
-Widget *Frame::realignWidget(unsigned int width, unsigned int height)
-{
-    Widget::realignWidget(width, height);
+    Widget::realign(xOrigin, yOrigin, parentWidth, parentHeight);
 
     unsigned int internalOffset = m_margin;
     if (m_border)
@@ -39,16 +16,16 @@ Widget *Frame::realignWidget(unsigned int width, unsigned int height)
         Widget *w = iter.second;
         if (m_mergeBorders && dynamic_cast<Frame *>(w))
         {
-            w->setWindowOffsets(getXPos(), getYPos());
-            w->realignWidget(width, height);
+            w->realign(getXPos(), getYPos(), getWidth(), getHeight());
         }
         else
         {
-            w->setWindowOffsets(getXPos() + internalOffset, getYPos() + internalOffset);
-            w->realignWidget(width - internalOffset * 2, height - internalOffset * 2);
+            w->realign(getXPos() + internalOffset,
+                       getYPos() + internalOffset,
+                       getWidth() - internalOffset * 2,
+                       getHeight() - internalOffset * 2);
         }
     }
-    return this;
 }
 
 void Frame::render()

@@ -22,9 +22,10 @@ void Window::setDimensions(int x, int y, int width, int height)
     m_height = height;
 
     m_baseWidget
-        ->setWindowOffsets(m_xOffset, m_yOffset)
+        ->setWindowOffsets(m_xOffset, m_yOffset) // TODO: Remove
         ->setHeight(m_height)
-        ->setWidth(m_width);
+        ->setWidth(m_width)
+        ->realign(x, y, width, height);
 }
 
 unsigned int Window::drawString(int y, int x, const char *text, Color fg, Color bg)
@@ -80,7 +81,6 @@ void Window::beforeRedraw()
 
 void Window::renderWidgets()
 {
-    m_baseWidget->realignWidget(m_width, m_height);
     m_baseWidget->render();
 }
 
