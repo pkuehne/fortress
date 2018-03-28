@@ -35,43 +35,9 @@ unsigned int Window::drawString(int y, int x, const char *text, Color fg, Color 
     return m_graphics->drawString(m_yOffset + y, m_xOffset + x, text, fg, bg);
 }
 
-unsigned int Window::drawCommandString(int y, int x, const char *text, int pos, bool active)
-{
-    char command[2] = {0};
-    if (x < 0)
-        x = (m_width / 2) - (strlen(text) / 2);
-    Color fg = Color(WHITE);
-    Color bg = Color(BLACK);
-    Color cc = Color(GREEN);
-    if (!active)
-    {
-        float factor = 0.5;
-        fg *= factor;
-        cc *= factor;
-    }
-
-    unsigned int retval = drawString(y, x, text, fg, bg);
-    command[0] = text[pos];
-    if (active)
-    {
-        retval += drawString(y, x + pos, command, cc, bg);
-    }
-    return retval;
-}
-
-void Window::drawTile(int y, int x, unsigned int tile, Color fg, Color bg)
-{
-    m_graphics->drawTile(m_yOffset + y, m_xOffset + x, tile, fg, bg);
-}
-
 void Window::drawBorder(int y, int x, int height, int width)
 {
     m_graphics->drawBorder(m_yOffset + y, m_xOffset + x, height, width);
-}
-
-void Window::clearArea(int y, int x, int height, int width)
-{
-    m_graphics->clearArea(m_yOffset + y, m_xOffset + x, height, width);
 }
 
 void Window::beforeRedraw()
@@ -136,18 +102,6 @@ bool Window::getMouseButton(int button)
     return false;
 }
 
-void Window::drawProgress(unsigned int x, unsigned int y, unsigned int value, unsigned int max)
-{
-    float l_value = (float)value;
-    float l_max = (float)max;
-    Color l_color((1.0f - (l_value / l_max)), l_value / l_max, 0);
-
-    for (unsigned int xx = 0; xx < value; xx++)
-    {
-        drawTile(y, x + xx, 178, l_color, Color(BLACK));
-    }
-}
-
 unsigned int Window::wrapText(const std::string &text, std::vector<std::string> &lines, unsigned int maxWidth, unsigned int maxRows)
 {
     size_t wordStart = 0;
@@ -194,7 +148,6 @@ void Window::keyDown(unsigned char key)
         }
         if (m_onEscape == EscapeBehaviour::QuitGame)
         {
-            std::cout << "Quitting" << std::endl;
             getEngine()->quit();
         }
         return;

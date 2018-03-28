@@ -32,11 +32,7 @@ class Window
 
     // All of these can be removed when MapWindow has been migrated
     virtual unsigned int drawString(int y, int x, const char *text, Color fg = Color(WHITE), Color bg = Color(BLACK));
-    unsigned int drawCommandString(int y, int x, const char *text, int pos, bool active = true);
-    virtual void drawTile(int y, int x, unsigned int tile, Color fg, Color bg);
     virtual void drawBorder(int y, int x, int height, int width);
-    virtual void clearArea(int y, int x, int height, int width);
-    virtual void drawProgress(unsigned int x, unsigned int y, unsigned int value, unsigned int max);
     virtual unsigned int wrapText(const std::string &text, std::vector<std::string> &lines, unsigned int maxWidth, unsigned int maxRows);
 
     virtual void keyDown(unsigned char key);
