@@ -11,16 +11,15 @@ public:
     virtual void setup();
     virtual void registerWidgets();
     
-    virtual void gainFocus ();
     virtual void redraw();
     virtual void keyPress (unsigned char key);
+    void setAction(char action, unsigned int yPos);
 
 private:
     void drawMap ();
     void drawSeparators();
     void drawMessages();
     void drawSidebar();
-    void drawProgressBar (int x, int y, int value);
 
 private:
     unsigned int m_mapXOffset;

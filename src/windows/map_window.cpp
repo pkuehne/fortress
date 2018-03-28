@@ -15,18 +15,15 @@
 #include "../components/npc_component.h"
 #include "../algos/fov_algorithm.h"
 
+#include "frame.h"
+#include "label.h"
+#include "progress_bar.h"
+
 void MapWindow::setup()
 {
     setTitle("Map");
     setFullscreen();
-}
 
-void MapWindow::registerWidgets()
-{
-}
-
-void MapWindow::gainFocus()
-{
     m_mapXOffset = 1;
     m_mapYOffset = 9;
     m_mapStartX = 0;
@@ -45,7 +42,100 @@ void MapWindow::gainFocus()
     l_algo.calculateFov();
 
     m_camera = new Camera(getEngine()->getGraphics(), getEngine()->state());
-    std::cout << "Map gain focus" << std::endl;
+}
+
+void MapWindow::registerWidgets()
+{
+    getWidget<Frame>("frmBase")->setMergeBorders();
+
+    Frame *sidebar = createWidget<Frame>("frmSidebar", 0, 0);
+    sidebar
+        ->setBorder()
+        ->setMargin()
+        ->setWidth(m_sidebarWidth + 1)
+        ->setHeight(30)
+        ->setHorizontalAlign(Widget::HorizontalAlign::Right);
+    createWidget<Label>("lblHealth", 0, 0, sidebar)
+        ->setText("Health:");
+    createWidget<ProgressBar>("pgbHealth", 8, 0, sidebar)
+        ->setMaxValue(10)
+        ->setWidth(9);
+    createWidget<Label>("lblHunger", 0, 1, sidebar)
+        ->setText("Hunger:");
+    createWidget<ProgressBar>("pgbHunger", 8, 0, sidebar)
+        ->setMaxValue(10)
+        ->setWidth(9);
+    createWidget<Label>("lblThirst", 0, 2, sidebar)
+        ->setText("Thirst:");
+    createWidget<ProgressBar>("pgbThirst", 8, 0, sidebar)
+        ->setMaxValue(10)
+        ->setWidth(9);
+
+    createWidget<Label>("lblSkipTurn", 1, 0, sidebar)
+        ->setText("Skip Turn (.)")
+        ->setCommandChar(12)
+        ->setCommandCharCallback([](Label *l) {
+            l->getWindow()->getEngine()->swapTurn();
+        })
+        ->setVerticalAlign(Widget::VerticalAlign::Bottom);
+    createWidget<Label>("lblEquipment", 1, 1, sidebar)
+        ->setText("View Equipment")
+        ->setCommandChar(6)
+        ->setCommandCharCallback([](Label *l) {
+            l->getWindow()->getEngine()->getWindows()->createWindow<EquipmentWindow>();
+
+        })
+        ->setVerticalAlign(Widget::VerticalAlign::Bottom);
+    createWidget<Label>("lblQuests", 1, 2, sidebar)
+        ->setText("View Quests")
+        ->setCommandChar(6)
+        ->setCommandCharCallback([](Label *l) {
+            l->getWindow()->getEngine()->getWindows()->createWindow<QuestWindow>();
+
+        })
+        ->setVerticalAlign(Widget::VerticalAlign::Bottom);
+    createWidget<Label>("lblPickup", 1, 3, sidebar)
+        ->setText("pick up here")
+        ->setCommandChar(1)
+        ->setCommandCharCallback([](Label *l) {
+        })
+        ->setVerticalAlign(Widget::VerticalAlign::Bottom);
+
+    createWidget<Label>("lblInspect", 1, 4, sidebar)
+        ->setText("inspect (wasd)")
+        ->setCommandChar(1)
+        ->setCommandCharCallback([](Label *l) {
+            MapWindow *win = dynamic_cast<MapWindow *>(l->getWindow());
+            win->setAction('i', l->getY());
+        })
+        ->setVerticalAlign(Widget::VerticalAlign::Bottom);
+    createWidget<Label>("lblAttack", 1, 5, sidebar)
+        ->setText("attack (wasd)")
+        ->setCommandChar(6)
+        ->setCommandCharCallback([](Label *l) {
+            MapWindow *win = dynamic_cast<MapWindow *>(l->getWindow());
+            win->setAction('k', l->getY());
+        })
+        ->setVerticalAlign(Widget::VerticalAlign::Bottom);
+    createWidget<Label>("lblMove", 1, 6, sidebar)
+        ->setText("move (wasd)")
+        ->setCommandChar(1)
+        ->setCommandCharCallback([](Label *l) {
+            MapWindow *win = dynamic_cast<MapWindow *>(l->getWindow());
+            win->setAction('m', l->getY());
+        })
+        ->setVerticalAlign(Widget::VerticalAlign::Bottom);
+    createWidget<Label>("lblAction", 0, 6, sidebar)
+        ->setText(">")
+        ->setForegroundColor(RED)
+        ->setVerticalAlign(Widget::VerticalAlign::Bottom);
+}
+
+void MapWindow::setAction(char action, unsigned int yPos)
+{
+    m_action = action;
+    getWidget<Label>("lblAction")->setY(yPos);
+    resize();
 }
 
 void MapWindow::redraw()
@@ -124,16 +214,6 @@ void MapWindow::keyPress(unsigned char key)
     {
         getEngine()->getWindows()->createWindow<EscapeWindow>();
     }
-    if (key == 'm' ||
-        key == 'k' ||
-        key == 'i')
-    {
-        m_action = key;
-    }
-    if (key == '.')
-    {
-        getEngine()->swapTurn();
-    }
     if (key == 'p')
     {
         Location l_playerLoc = getEngine()->state()->location(playerId);
@@ -164,31 +244,6 @@ void MapWindow::keyPress(unsigned char key)
             getEngine()->state()->addMessage(INFO, "There's nothing here...");
         }
     }
-    if (key == 'E')
-    {
-        getEngine()->getWindows()->createWindow<EquipmentWindow>();
-    }
-    if (key == 'S')
-    {
-        // FileSaver saver;
-        // saver.initialise (getEngine());
-        // saver.saveState();
-        getEngine()->state()->addMessage(INFO, "Game saved!");
-    }
-    if (key == '=')
-    {
-        std::cout << "Switching debug mode" << std::endl;
-        m_debugMode = !m_debugMode;
-        EntityId player = getEngine()->state()->player();
-        GraphicsEffectComponent *effect =
-            getEngine()->state()->components()->make<GraphicsEffectComponent>(player);
-        effect->type = EFFECT_BLINK_FAST;
-        effect->duration = 20;
-    }
-    if (key == 'q')
-    {
-        getEngine()->getWindows()->createWindow<QuestWindow>();
-    }
     if (key == '[')
     {
         unsigned int height = getEngine()->getGraphics()->getTileHeight();
@@ -214,7 +269,6 @@ void MapWindow::keyPress(unsigned char key)
 void MapWindow::drawSeparators()
 {
     getEngine()->getGraphics()->drawBorder(m_mapYOffset - 1, m_mapXOffset - 1, m_mapHeight, m_mapWidth);
-    getEngine()->getGraphics()->drawBorder(0, m_sidebarXOffset, getHeight() - 2, m_sidebarWidth - 1);
 }
 
 void MapWindow::drawMap()
@@ -263,51 +317,13 @@ void MapWindow::drawMessages()
 
 void MapWindow::drawSidebar()
 {
-    // Current health
-    drawString(2, m_sidebarXOffset + 2, "Health:");
-    drawString(3, m_sidebarXOffset + 2, "Hunger:");
-    drawString(4, m_sidebarXOffset + 2, "Thirst:");
     EntityId player = getEngine()->state()->player();
     HealthComponent *l_health = getEngine()->state()->components()->get<HealthComponent>(player);
-    if (l_health)
+    if (!l_health)
     {
-        drawProgressBar(m_sidebarXOffset + 10, 2, l_health->health);
-        drawProgressBar(m_sidebarXOffset + 10, 3, l_health->hunger);
-        drawProgressBar(m_sidebarXOffset + 10, 4, l_health->thirst);
+        throw std::string("Player must have a health component!");
     }
-
-    // Actions to take
-    drawCommandString(getHeight() - 10, m_sidebarXOffset + 2, "Save Game", 0);
-
-    drawCommandString(getHeight() - 8, m_sidebarXOffset + 2, "pickup Items", 0);
-
-    drawCommandString(getHeight() - 7, m_sidebarXOffset + 2, "move (wasd)", 0);
-    if (m_action == 'm')
-    {
-        drawString(getHeight() - 7, m_sidebarXOffset + 1, ">", Color(RED));
-    }
-
-    drawCommandString(getHeight() - 6, m_sidebarXOffset + 2, "attack (wasd)", 5);
-    if (m_action == 'k')
-    {
-        drawString(getHeight() - 6, m_sidebarXOffset + 1, ">", Color(RED));
-    }
-
-    drawCommandString(getHeight() - 5, m_sidebarXOffset + 2, "inspect (wasd)", 0);
-    if (m_action == 'i')
-    {
-        drawString(getHeight() - 5, m_sidebarXOffset + 1, ">", Color(RED));
-    }
-
-    drawCommandString(getHeight() - 4, m_sidebarXOffset + 2, "skip turn (.)", 11);
-
-    drawCommandString(getHeight() - 2, m_sidebarXOffset + 2, "View Equipment", 5);
-}
-
-void MapWindow::drawProgressBar(int x, int y, int value)
-{
-    for (int xx = 0; xx < value; xx++)
-    {
-        drawTile(y, x + xx, 178, Color(GREEN), Color(BLACK));
-    }
+    getWidget<ProgressBar>("pgbHealth")->setValue(l_health->health);
+    getWidget<ProgressBar>("pgbHunger")->setValue(l_health->hunger);
+    getWidget<ProgressBar>("pgbThirst")->setValue(l_health->thirst);
 }

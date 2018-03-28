@@ -10,72 +10,80 @@
 class Tile;
 
 typedef enum {
-    INFO    = 0,
-    GOOD    = 1,
-    WARN    = 2,
-    CRIT    = 3
+    INFO = 0,
+    GOOD = 1,
+    WARN = 2,
+    CRIT = 3
 } MessageType;
 
-typedef struct {
+typedef struct
+{
     MessageType severity;
     std::string message;
 } Message;
 
-struct Debug {
+struct Debug
+{
     bool showNpcPaths = false;
 };
 
 typedef unsigned long long tick_t;
 
-class GameState {
-    public:
-        GameState ( MapManager* map = new MapManager(),
-                    EntityManager* entities = new EntityManager(),
-                    ComponentManager* components = new ComponentManager());
-        virtual ~GameState() { }
+class GameState
+{
+  public:
+    GameState(MapManager *map = new MapManager(),
+              EntityManager *entities = new EntityManager(),
+              ComponentManager *components = new ComponentManager());
+    virtual ~GameState() {}
 
-        bool isPlayerTurn() { return m_playerTurn; }
-        void nextTurn() { m_turn++; m_playerTurn = !m_playerTurn; }
-        tick_t turn() { return m_turn; }
+    bool isPlayerTurn() { return m_playerTurn; }
+    void nextTurn()
+    {
+        m_turn++;
+        m_playerTurn = !m_playerTurn;
+    }
+    tick_t turn() { return m_turn; }
 
-        MapManager* map();
-        EntityManager* entityManager();
-        ComponentManager* components();
+    MapManager *map();
+    EntityManager *entityManager();
+    ComponentManager *components();
 
-        Debug& debug() { return m_debug; }
+    Debug &debug() { return m_debug; }
 
-        Tile& tile (const Location&);
-        virtual bool isValidTile (const Location&);
+    Tile &tile(const Location &);
+    virtual bool isValidTile(const Location &);
 
-        virtual const EntityHolder& entities ();
-        virtual EntityHolder entities (const Location& loc);
+    virtual const EntityHolder &entities();
+    virtual EntityHolder entities(const Location &loc);
 
-        Location location (EntityId entity);
-        Location location (const Location&, Direction direction);
+    Location location(EntityId entity);
+    Location location(const Location &, Direction direction);
 
-        EntityId player();
-        EntityId createEntity(Location&);
+    EntityId player();
+    EntityId createEntity(Location &);
 
-        void setArea (unsigned int area);
-        unsigned int getArea();
+    void setArea(unsigned int area);
+    unsigned int getArea();
 
-        void save (const std::string& filename);
-        void load (const std::string& filename);
+    void save(const std::string &filename);
+    void load(const std::string &filename);
 
-        void addMessage (const Message& message);
-        void addMessage (const MessageType&, const std::string& message);
-        std::vector<Message>& getMessages();
+    void addMessage(const Message &message);
+    void addMessage(const MessageType &, const std::string &message);
+    std::vector<Message> &getMessages();
 
-        std::vector<Quest*>& getQuests() { return m_quests; }
-    private:
-        bool                m_playerTurn = true;
-        tick_t              m_turn = 0;
-        MapManager*         m_map = 0;
-        EntityManager*      m_entities = 0;
-        ComponentManager*   m_components = 0;
-        std::vector<Message>    m_messages;
-        Debug               m_debug;
-        std::vector<Quest*>     m_quests;
+    std::vector<Quest *> &getQuests() { return m_quests; }
+
+  private:
+    bool m_playerTurn = true;
+    tick_t m_turn = 0;
+    MapManager *m_map = 0;
+    EntityManager *m_entities = 0;
+    ComponentManager *m_components = 0;
+    std::vector<Message> m_messages;
+    Debug m_debug;
+    std::vector<Quest *> m_quests;
 };
 
 #endif

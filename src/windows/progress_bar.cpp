@@ -7,6 +7,7 @@ void ProgressBar::render()
 
     for (unsigned int ii = 0; ii < getWidth() * percent && ii < getWidth(); ii++)
     {
-        drawString(0, 0, "=");
+        //drawString(ii, 0, "=");
+        drawTile(ii, 0, 178);
     }
 }
