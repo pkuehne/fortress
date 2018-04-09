@@ -93,3 +93,83 @@ TEST(Widget, realignHorizontalBottomSetsLeftOfWidgetItsWidthAwayFromRight)
 
     EXPECT_EQ(w.getXPos(), 104);
 }
+
+TEST(Widget, setWidthSetsSizingToFixed)
+{
+    Widget w;
+    w.setWidth(0);
+
+    EXPECT_EQ(Widget::HorizontalSizing::Fixed, w.getHorizontalSizing());
+}
+
+TEST(Widget, setWidthStretchMarginSetsSizingToStretch)
+{
+    Widget w;
+    w.setWidthStretchMargin(0);
+
+    EXPECT_EQ(Widget::HorizontalSizing::Stretch, w.getHorizontalSizing());
+}
+
+TEST(Widget, setHeightSetsSizingToFixed)
+{
+    Widget w;
+    w.setHeight(0);
+
+    EXPECT_EQ(Widget::HorizontalSizing::Fixed, w.getHorizontalSizing());
+}
+
+TEST(Widget, setHeightStretchMarginSetsSizingToStretch)
+{
+    Widget w;
+    w.setHeightStretchMargin(0);
+
+    EXPECT_EQ(Widget::VerticalSizing::Stretch, w.getVerticalSizing());
+}
+
+TEST(Widget, horizontalStretchSizingFillsWidthOnRealign)
+{
+    Widget w;
+    w.setX(5);
+    w.setWidthStretchMargin(0);
+
+    w.realign(10, 0, 100, 0);
+
+    EXPECT_EQ(w.getXPos(), 15);
+    EXPECT_EQ(w.getWidth(), 95);
+}
+
+TEST(Widget, horizontalStretchSizingFillsWidthMinusMargintOnRealign)
+{
+    Widget w;
+    w.setX(5);
+    w.setWidthStretchMargin(10);
+
+    w.realign(10, 0, 100, 0);
+
+    EXPECT_EQ(w.getXPos(), 15);
+    EXPECT_EQ(w.getWidth(), 85);
+}
+
+TEST(Widget, verticalStretchSizingFillsHeightOnRealign)
+{
+    Widget w;
+    w.setY(5);
+    w.setHeightStretchMargin(0);
+
+    w.realign(0, 10, 0, 100);
+
+    EXPECT_EQ(w.getYPos(), 15);
+    EXPECT_EQ(w.getHeight(), 95);
+}
+
+TEST(Widget, verticalStretchSizingFillsHeightMinusMarginOnRealign)
+{
+    Widget w;
+    w.setY(5);
+    w.setHeightStretchMargin(10);
+
+    w.realign(0, 10, 0, 100);
+
+    EXPECT_EQ(w.getYPos(), 15);
+    EXPECT_EQ(w.getHeight(), 85);
+}

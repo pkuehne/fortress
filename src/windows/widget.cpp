@@ -3,6 +3,15 @@
 
 void Widget::realign(unsigned int xOrigin, unsigned int yOrigin, unsigned int parentWidth, unsigned int parentHeight)
 {
+    if (this->getHorizontalSizing() == HorizontalSizing::Stretch)
+    {
+        this->m_width = parentWidth - m_relativeXPos - m_widthStretchMargin;
+    }
+    if (this->getVerticalSizing() == VerticalSizing::Stretch)
+    {
+        this->m_height = parentHeight - m_relativeYPos - m_heightStretchMargin;
+    }
+
     switch (this->getVerticalAlign())
     {
     case VerticalAlign::Top:

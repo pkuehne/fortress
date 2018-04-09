@@ -22,6 +22,16 @@ class Widget
         Centre,
         Bottom,
     };
+    enum class HorizontalSizing
+    {
+        Fixed,
+        Stretch,
+    };
+    enum class VerticalSizing
+    {
+        Fixed,
+        Stretch,
+    };
 
   public:
     Widget() {}
@@ -116,20 +126,26 @@ class Widget
     virtual Widget *setWidth(unsigned int width)
     {
         this->m_width = width;
+        this->m_hSizing = HorizontalSizing::Fixed;
         return this;
     }
     virtual unsigned int getWidth()
     {
         return m_width;
     }
-    virtual Widget *setHeight(unsigned int height)
+    virtual Widget *setWidthStretchMargin(unsigned int margin)
     {
-        this->m_height = height;
+        this->m_widthStretchMargin = margin;
+        this->m_hSizing = HorizontalSizing::Stretch;
         return this;
     }
-    virtual unsigned int getHeight()
+    virtual unsigned int getWidthStretchMargin()
     {
-        return m_height;
+        return this->m_widthStretchMargin;
+    }
+    virtual HorizontalSizing getHorizontalSizing()
+    {
+        return this->m_hSizing;
     }
     virtual Widget *setHorizontalAlign(HorizontalAlign align)
     {
@@ -139,6 +155,31 @@ class Widget
     virtual HorizontalAlign getHorizontalAlign()
     {
         return m_hAlign;
+    }
+
+    virtual Widget *setHeight(unsigned int height)
+    {
+        this->m_height = height;
+        this->m_vSizing = VerticalSizing::Fixed;
+        return this;
+    }
+    virtual unsigned int getHeight()
+    {
+        return m_height;
+    }
+    virtual Widget *setHeightStretchMargin(unsigned int margin)
+    {
+        this->m_heightStretchMargin = margin;
+        this->m_vSizing = VerticalSizing::Stretch;
+        return this;
+    }
+    virtual unsigned int getHeightStretchMargin()
+    {
+        return this->m_heightStretchMargin;
+    }
+    virtual VerticalSizing getVerticalSizing() 
+    {
+        return this->m_vSizing;
     }
     virtual Widget *setVerticalAlign(VerticalAlign align)
     {
@@ -177,7 +218,7 @@ class Widget
     }
 
     // Subclass overrideable
-    virtual void keyPress(unsigned char key){}
+    virtual void keyPress(unsigned char key) {}
     virtual void render() {}
     virtual void realign(unsigned int xOrigin, unsigned int yOrigin, unsigned int parentWidth, unsigned int parentHeight);
 
@@ -216,6 +257,8 @@ class Widget
     unsigned int m_yPos = 0;    ///< The absolute top position of the widget on screen
     unsigned int m_width = 1;
     unsigned int m_height = 1;
+    unsigned int m_widthStretchMargin = 0;
+    unsigned int m_heightStretchMargin = 0;
 
     GraphicsInterface *m_graphics = nullptr;
     std::string m_name = "";
@@ -224,6 +267,8 @@ class Widget
 
     HorizontalAlign m_hAlign = HorizontalAlign::Left;
     VerticalAlign m_vAlign = VerticalAlign::Top;
+    HorizontalSizing m_hSizing = HorizontalSizing::Fixed;
+    VerticalSizing m_vSizing = VerticalSizing::Fixed;
     Color m_fgColor = Color(WHITE);
     Color m_bgColor = Color(BLACK);
 };

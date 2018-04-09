@@ -53,7 +53,7 @@ void MapWindow::registerWidgets()
         ->setBorder()
         ->setMargin()
         ->setWidth(m_sidebarWidth + 1)
-        ->setHeight(30)
+        ->setHeightStretchMargin(0)
         ->setHorizontalAlign(Widget::HorizontalAlign::Right);
     createWidget<Label>("lblHealth", 0, 0, sidebar)
         ->setText("Health:");
