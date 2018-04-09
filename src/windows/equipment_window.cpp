@@ -207,7 +207,6 @@ void EquipmentWindow::registerWidgets()
             win->setSelectedItem(0);
             engine->raiseEvent(event);
             engine->swapTurn();
-            win->updateItemNames();
         })
         ->setVerticalAlign(Widget::VerticalAlign::Bottom)
         ->setVisible(false);
@@ -224,7 +223,6 @@ void EquipmentWindow::registerWidgets()
             win->setSelectedItem(0);
             engine->raiseEvent(event);
             engine->swapTurn();
-            win->updateItemNames();
         })
         ->setVerticalAlign(Widget::VerticalAlign::Bottom)
         ->setVisible(false);
@@ -241,7 +239,6 @@ void EquipmentWindow::registerWidgets()
             win->setSelectedItem(0);
             engine->raiseEvent(event);
             engine->swapTurn();
-            win->updateItemNames();
         })
         ->setVerticalAlign(Widget::VerticalAlign::Bottom)
         ->setVisible(false);
@@ -273,6 +270,11 @@ void EquipmentWindow::setSelectedItem(EntityId item)
     getWidget<Label>("lblEquip")->setVisible((m_selectedItem > 0 && tab->getCurrentPage() == 1));
 
     getWidget<Label>("lblSelectedItem")->setText(nameOrNothing(m_selectedItem, getEngine()));
+}
+
+void EquipmentWindow::nextTurn()
+{
+    updateItemNames();
 }
 
 void EquipmentWindow::updateItemNames()

@@ -25,7 +25,8 @@ class WindowManager
     Window *getActive();
     void redraw();
     void resize();
-    void update();
+    void nextTick();
+    void nextTurn();
 
     template <typename T>
     T *createWindow(void *args = nullptr, void *retval = nullptr)

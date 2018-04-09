@@ -105,8 +105,7 @@ void GameEngine::tick ()
         m_systems[ii]->update();
     }
 
-    getWindows()->update();
-    getWindows()->redraw();
+    getWindows()->nextTick();
 
     if (!m_playerTurn) swapTurn();
     return;
@@ -118,6 +117,8 @@ void GameEngine::swapTurn()
     m_turn++;
 
     m_state->nextTurn();
+    getWindows()->nextTurn();
+
 
     FovAlgorithm l_algo;
     l_algo.initialise (this);

@@ -152,7 +152,6 @@ void MapWindow::redraw()
     drawSeparators();
     drawMap();
     drawMessages();
-    drawSidebar();
 }
 
 void MapWindow::keyPress(unsigned char key)
@@ -315,7 +314,7 @@ void MapWindow::drawMessages()
     }
 }
 
-void MapWindow::drawSidebar()
+void MapWindow::nextTurn()
 {
     EntityId player = getEngine()->state()->player();
     HealthComponent *l_health = getEngine()->state()->components()->get<HealthComponent>(player);

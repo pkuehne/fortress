@@ -28,7 +28,7 @@ class Window
     virtual int getWidth() { return m_width; }
     virtual int getHeight() { return m_height; }
     virtual void resize();
-    virtual void update() {}
+    virtual void nextTurn() {}
 
     // All of these can be removed when MapWindow has been migrated
     virtual unsigned int drawString(int y, int x, const char *text, Color fg = Color(WHITE), Color bg = Color(BLACK));

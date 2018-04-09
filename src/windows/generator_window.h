@@ -26,7 +26,7 @@ public:
     virtual void setup();
     virtual void registerWidgets();
 
-    virtual void update();
+    virtual void redraw();
 
 private:
     void startGenerating ();

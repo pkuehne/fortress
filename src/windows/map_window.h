@@ -12,6 +12,7 @@ public:
     virtual void registerWidgets();
     
     virtual void redraw();
+    virtual void nextTurn();
     virtual void keyPress (unsigned char key);
     void setAction(char action, unsigned int yPos);
 
@@ -19,7 +20,6 @@ private:
     void drawMap ();
     void drawSeparators();
     void drawMessages();
-    void drawSidebar();
 
 private:
     unsigned int m_mapXOffset;

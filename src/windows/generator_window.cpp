@@ -106,7 +106,7 @@ void GeneratorWindow::registerWidgets()
         ->setSensitive(false);
 }
 
-void GeneratorWindow::update()
+void GeneratorWindow::redraw()
 {
     if (getArgs() && m_status == WAITING)
     {

@@ -55,7 +55,7 @@ Window *WindowManager::getActive()
     return m_windows.back();
 }
 
-void WindowManager::redraw()
+void WindowManager::nextTick()
 {
     m_engine->getGraphics()->beginScreenUpdate();
 
@@ -66,8 +66,9 @@ void WindowManager::redraw()
         m_windows[ii]->renderWidgets();
         m_windows[ii]->afterRedraw();
     }
-
     m_engine->getGraphics()->endScreenUpdate();
+    
+    manageNextWindow();
 }
 
 void WindowManager::resize()
@@ -78,13 +79,12 @@ void WindowManager::resize()
     }
 }
 
-void WindowManager::update()
+void WindowManager::nextTurn()
 {
     for (size_t ii = 0; ii < m_windows.size(); ii++)
     {
-        m_windows[ii]->update();
+        m_windows[ii]->nextTurn();
     }
-    manageNextWindow();
 }
 
 void WindowManager::manageNextWindow()
