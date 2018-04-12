@@ -17,9 +17,6 @@ public:
     void setAction(char action, unsigned int yPos);
 
 private:
-    void drawMap ();
-
-private:
     unsigned int m_mapXOffset;
     unsigned int m_mapYOffset;
     unsigned int m_mapWidth;
@@ -32,8 +29,6 @@ private:
     int m_mapStartY;
 
     char    m_action;
-
-    Camera* m_camera;
 };
 
 #endif

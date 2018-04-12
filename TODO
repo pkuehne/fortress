@@ -1,0 +1,122 @@
+Alpha 4:
+    WindowManager upgrade:
+        ✔ Windows should be created templatized:
+            ✔ WindowManager has create<T>(args, retval) function
+            ✔ create<T>() function calls initialise
+            ✔ Add setup() function
+            ✔ Change pushWindow function
+            ✔ Remove WindowManagerInterface
+        Window Enhancements:
+            ☐ Remove getEngine() from Windows
+            ✔ Differentiate drawChar() from drawTile()
+                The first uses the Fontset, the second the GraphicsSet
+            ☐ Move graphicsBegin/End out of WindowManager engine
+            ✔ Add full-screen setting
+                Removes the need for getEngine() to retrieve the size of the screen
+        ✔ Widgets: @done(18-04-12 18:19)
+            ✔ Move wrapText into Widget @done(18-04-12 18:18)
+            ✔ Move drawProgress into a new widget @done(18-04-12 18:18)
+            ✔ Give Widget pointer to Window
+            ✔ Widgets get de-alloc'ed on window pop @done(18-04-12 18:18)
+            ✔ Allow sub-widgets @done(18-04-12 18:18)
+            ✔ Put base widget in Window @done(18-04-12 18:18)
+            ✔ Allow finding of Widget from base Widget @done(18-04-12 18:18)
+        ✔ Migrate Windows to Widget basis: @done(18-04-12 18:19)
+            ✔ Add close_on_esc flag @done(18-04-12 18:19)
+            ✔ Make keyDown/keyUp non-virtual in window.h @done(18-04-12 18:19)
+            Widgets Created:
+                ✔ Label @done(18-04-12 18:12)
+                ✔ Icon @done(18-04-12 18:12)
+                ✔ ListBox @done(18-04-12 18:12)
+                ✔ Frame @done(18-04-12 18:12)
+                ✔ NumericEntry @done(18-04-12 18:12)
+                ✔ ProgressBar @done(18-04-12 18:12)
+                ☐ Camera
+            Windows Converted:
+                ✔ SplashWindow @done(18-04-12 18:11)
+                ✔ SelectionWindow @done(18-04-12 18:11)
+                ✔ QuestWindow @done(18-04-12 18:11)
+                ✔ InspectionWindow @done(18-04-12 18:11)
+                ✔ MapWindow @done(18-04-12 18:11)
+                ✔ GeneratorWindow @done(18-04-12 18:11)
+                ✔ GameOverWindow @done(18-04-12 18:11)
+                ✔ EscapeWindow @done(18-04-12 18:11)
+                ✔ MainWindow @done(18-04-12 18:12)
+                ☐ DebugWindow
+                ✔ EquipmentWindow @done(18-04-12 18:12)
+        
+    Make NPCs smarter:
+        ✔ Better FSM for NPCs
+    ✔ Quests:
+        ✔ Add basic quest
+        ✔ Add kill quest
+        ✔ Make quest complete/fail
+        ✔ QuestWindow
+    ✔ Better rendering code:
+        ✔ Camera:
+            ✔ Window Width + Height
+            ✔ Map Offset x, y
+            ✔ Add debug path flag to GameState
+            ✔ Debug shows path of NPCs
+    GameState:
+        ✔ Move turn and tick info into GameState @done(18-04-12 18:26)
+        Entities not in current area should be moved:
+            ☐ Could be held in GameState instead
+            ☐ MapManager could then be loaded with MapInfo
+    Map/Generator Improvement:
+        ✔ Create Areas from map with size
+        ✔ Pass Area ID into generator
+        ✔ Use Area ID when creating Entity
+        ☐ Remove the use of getArea
+        ☐ Set Player from Generator
+    Bugs:
+        ☐ Can consume non-consumable items in Equipment Window
+        ☐ Picking up equipment doesn't remove it from map
+
+Backlog:
+    Animals:
+        Food:
+            ☐ Food grows on grass tiles
+            ☐ Food regrows after a while
+        Behaviour:
+            Food Seeking:
+                ☐ Animals seek out food
+                ☐ Eat food when they find it
+            Predators:
+                ☐ See predators
+                ☐ Run away from them
+    Cleanup:
+        ☐ Make Event Manager part of GameState
+        ☐ Remove GameEngine dependency from EntityManager
+        Debug Class in GameState:
+            This should not be saveable, but needs to be set from the Lua console
+            ✔ Debug class
+            ✔ Show NPC paths
+            ☐ Turn of FoW
+            ✔ Add Lua bindings
+        Lua Enhancements:
+            Redirect print to the Debug Console:
+                ☐ print stores output into a table
+                ☐ Table is dumped after each command is run
+    Improved Loading/Saving:
+        Windows:
+            Save As Window:
+                ☐ Typing and backspace
+                ☐ Calls save on GameState
+                ☐ Hook into escape window
+            Load Window:
+                ☐ List all save games
+                ☐ Selecting one calls load on GameState
+                ☐ Hook into main window
+        Process:
+            Loading:
+                ☐ Load all areas
+                ☐ Load all entities
+                ☐ Load all components
+            Saving:
+                ☐ Save all areas
+                ☐ Save all entities
+                ☐ Save all components
+    Make NPCs smarter:
+        ☐ Allow NPCs to traverse levels
+        ☐ GOAP for NPCs

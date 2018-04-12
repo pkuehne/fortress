@@ -1,5 +1,4 @@
 #include "window.h"
-#include "../core/camera.h"
 #include "map_window.h"
 #include "inspection_window.h"
 #include "equipment_window.h"
@@ -19,6 +18,7 @@
 #include "label.h"
 #include "progress_bar.h"
 #include "listbox.h"
+#include "camera.h"
 
 void MapWindow::setup()
 {
@@ -35,8 +35,6 @@ void MapWindow::setup()
     m_messagesHeight = 9;
 
     m_action = 'm';
-
-    m_camera = new Camera(getEngine()->getGraphics(), getEngine()->state());
 }
 
 void MapWindow::registerWidgets()
@@ -136,6 +134,11 @@ void MapWindow::registerWidgets()
         ->setHeightStretchMargin(0)
         ->setSensitive(false);
 
+    createWidget<Camera>("camCamera", 1, m_messagesHeight+1)
+        ->setHeightStretchMargin(0)
+        ->setWidthStretchMargin(m_sidebarWidth)
+        ->setVisible(false);
+
     getEngine()->swapTurn();
 }
 
@@ -150,13 +153,6 @@ void MapWindow::redraw()
 {
     m_mapWidth = getWidth() - m_mapXOffset - m_sidebarWidth - 1;
     m_mapHeight = getHeight() - m_mapYOffset - 1;
-
-    m_camera->viewport().width = m_mapWidth;
-    m_camera->viewport().height = m_mapHeight;
-    m_camera->viewport().x = m_mapXOffset;
-    m_camera->viewport().y = m_mapYOffset;
-
-    drawMap();
 }
 
 void MapWindow::keyPress(unsigned char key)
@@ -270,20 +266,6 @@ void MapWindow::keyPress(unsigned char key)
     //std::cout << "Key: " << key << std::endl;
 }
 
-void MapWindow::drawMap()
-{
-    Location l_player = getEngine()->state()->location(
-        getEngine()->state()->player());
-
-    m_mapStartX = l_player.x - (m_mapWidth / 2);
-    m_mapStartY = l_player.y - (m_mapHeight / 2);
-
-    m_camera->setMapOffset(m_mapStartX, m_mapStartY, l_player.z);
-    m_camera->render();
-
-    return;
-}
-
 void MapWindow::nextTurn()
 {
     EntityId player = getEngine()->state()->player();
@@ -307,4 +289,11 @@ void MapWindow::nextTurn()
         list->addItem(item);
     }
     list->scrollToBottom();
+
+    Location l_playerLoc = getEngine()->state()->location(player);
+
+    m_mapStartX = l_playerLoc.x - (m_mapWidth / 2);
+    m_mapStartY = l_playerLoc.y - (m_mapHeight / 2);
+
+    getWidget<Camera>("camCamera")->setMapOffset(m_mapStartX, m_mapStartY, l_playerLoc.z);
 }
