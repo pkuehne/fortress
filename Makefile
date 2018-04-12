@@ -16,10 +16,7 @@ build:
 test: 
 	@$(MAKE) -C test build -j 8
 	@echo "Starting tests"
-	@./unit_tests
-
-shuffle:
-	@$(MAKE) -C test shuffle
+	@./unit_tests --gtest_shuffle
 
 coverity:
 	cov-build --dir cov-int $(MAKE) build

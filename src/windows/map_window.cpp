@@ -18,6 +18,7 @@
 #include "frame.h"
 #include "label.h"
 #include "progress_bar.h"
+#include "listbox.h"
 
 void MapWindow::setup()
 {
@@ -31,15 +32,12 @@ void MapWindow::setup()
     m_mapWidth = 0;
     m_mapHeight = 0;
     m_sidebarWidth = 20;
+    m_messagesHeight = 9;
+
+    // Remove
     m_sidebarXOffset = getWidth() - m_sidebarWidth;
 
     m_action = 'm';
-    m_lastDraw = clock();
-    m_debugMode = false;
-
-    FovAlgorithm l_algo;
-    l_algo.initialise(getEngine());
-    l_algo.calculateFov();
 
     m_camera = new Camera(getEngine()->getGraphics(), getEngine()->state());
 }
@@ -129,6 +127,19 @@ void MapWindow::registerWidgets()
         ->setText(">")
         ->setForegroundColor(RED)
         ->setVerticalAlign(Widget::VerticalAlign::Bottom);
+
+    Frame *messages = createWidget<Frame>("frmMessages", 0, 0);
+    messages
+        ->setBorder()
+        ->setMargin()
+        ->setWidthStretchMargin(m_sidebarWidth)
+        ->setHeight(m_messagesHeight);
+    createWidget<ListBox>("lstMessages", 0, 0, messages)
+        ->setWidthStretchMargin(0)
+        ->setHeightStretchMargin(0)
+        ->setSensitive(false);
+
+    getEngine()->swapTurn();
 }
 
 void MapWindow::setAction(char action, unsigned int yPos)
@@ -149,9 +160,8 @@ void MapWindow::redraw()
     m_camera->viewport().x = m_mapXOffset;
     m_camera->viewport().y = m_mapYOffset;
 
-    drawSeparators();
     drawMap();
-    drawMessages();
+    // drawMessages();
 }
 
 void MapWindow::keyPress(unsigned char key)
@@ -265,11 +275,6 @@ void MapWindow::keyPress(unsigned char key)
     //std::cout << "Key: " << key << std::endl;
 }
 
-void MapWindow::drawSeparators()
-{
-    getEngine()->getGraphics()->drawBorder(m_mapYOffset - 1, m_mapXOffset - 1, m_mapHeight, m_mapWidth);
-}
-
 void MapWindow::drawMap()
 {
     Location l_player = getEngine()->state()->location(
@@ -325,4 +330,16 @@ void MapWindow::nextTurn()
     getWidget<ProgressBar>("pgbHealth")->setValue(l_health->health);
     getWidget<ProgressBar>("pgbHunger")->setValue(l_health->hunger);
     getWidget<ProgressBar>("pgbThirst")->setValue(l_health->thirst);
+
+    std::vector<Message> &l_messages = getEngine()->state()->getMessages();
+    ListBox *list = getWidget<ListBox>("lstMessages");
+    
+    list->clearItems();
+    for (auto message : l_messages)
+    {
+        ListBoxItem item;
+        item.setText(message.message);
+        list->addItem(item);
+    }
+    list->scrollToBottom();
 }

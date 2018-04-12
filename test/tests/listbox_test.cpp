@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 #include "../../src/windows/listbox.h"
 #include "../../src/core/utility.h"
+#include "../mocks/graphics_mock.h"
 
 using namespace ::testing;
 class ListBoxTest : public ::testing::Test
@@ -112,4 +113,35 @@ TEST_F(ListBoxTest, gettingSelectedItemFromEmptyBoxTHrows)
     ListBox b;
 
     EXPECT_ANY_THROW(b.getSelectedItem());
+}
+
+TEST_F(ListBoxTest, SelectorIsDrawnNextToSelectedItem)
+{
+    GraphicsMock graphics;
+    box.setGraphics(&graphics);
+
+    EXPECT_CALL(graphics, drawString(Eq(0), Eq(0), StrEq(">"), _, _)).Times(1);
+    EXPECT_CALL(graphics, drawString(_, Eq(1), StrNe(">"), _, _)).Times(AtLeast(1));
+
+    box.render();
+}
+
+TEST_F(ListBoxTest, SelectorIsNotDrawnWhenListBoxIsNotSensitive)
+{
+    GraphicsMock graphics;
+    box.setGraphics(&graphics);
+    box.setSensitive(false);
+
+    EXPECT_CALL(graphics, drawString(Eq(0), Eq(0), StrEq(">"), _, _)).Times(0);
+    EXPECT_CALL(graphics, drawString(_, Eq(0), StrNe(">"), _, _)).Times(AtLeast(1));
+
+    box.render();
+}
+
+TEST_F(ListBoxTest, ScrollToEndMovesSelectionToLastItem)
+{
+    box.setHeight(3);
+    box.scrollToBottom();
+
+    EXPECT_EQ(4, box.getSelection());
 }

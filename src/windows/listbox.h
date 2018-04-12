@@ -56,6 +56,7 @@ class ListBox : public Widget
     ListBox *setSelection(unsigned int item)
     {
         m_selection = item;
+        updateTopOffset();
         return this;
     }
     unsigned int getSelection()
@@ -64,7 +65,8 @@ class ListBox : public Widget
     }
     ListBoxItem getSelectedItem()
     {
-        if (!m_items.size()) {
+        if (!m_items.size())
+        {
             throw std::string("Cannot get selected item from empty ListBox");
         }
         return m_items[m_selection];
@@ -74,8 +76,14 @@ class ListBox : public Widget
         m_itemSelectedCb = cb;
         return this;
     }
+
+    void scrollToBottom();
+
     virtual void render();
     virtual void keyPress(unsigned char key);
+
+  private:
+    void updateTopOffset();
 
   private:
     std::vector<ListBoxItem> m_items;

@@ -29,14 +29,13 @@ private:
 
     unsigned int m_sidebarXOffset;
     unsigned int m_sidebarWidth;
+    unsigned int m_messagesHeight;
 
     int m_mapStartX;
     int m_mapStartY;
 
     char    m_action;
-    clock_t m_lastDraw;
 
-    bool m_debugMode;
     Camera* m_camera;
 };
 
