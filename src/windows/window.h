@@ -21,7 +21,11 @@ class Window
     static const int MAX_BUTTONS = 5;
 
     Window() {}
-    virtual ~Window() {}
+    virtual ~Window() {
+        for (auto w : m_widgets) {
+            delete w.second;
+        }
+    }
     virtual void destroy(void);
     virtual int getXOffset() { return m_xOffset; }
     virtual int getYOffset() { return m_yOffset; }
@@ -52,7 +56,7 @@ class Window
         unsigned int y,
         Widget *parent = 0)
     {
-        T *widget = new T(); // TODO: Clean this up in the destructor!
+        T *widget = new T();
         widget
             ->setGraphics(m_graphics)
             ->setName(name)
