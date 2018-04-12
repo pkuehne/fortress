@@ -52,16 +52,16 @@ void DebugWindow::loadLuaScripts()
 
 void DebugWindow::redraw()
 {
-    std::vector<Output>::reverse_iterator iter = history.rbegin();
-    int offset = 7;
-    for (; iter != history.rend(); iter++) {
-        drawString (getHeight() - offset++, 3, iter->text.c_str(), iter->color);
-    }
+    // std::vector<Output>::reverse_iterator iter = history.rbegin();
+    // int offset = 7;
+    // for (; iter != history.rend(); iter++) {
+    //     drawString (getHeight() - offset++, 3, iter->text.c_str(), iter->color);
+    // }
 
-    drawBorder (getHeight()-5, 0, 3, getWidth()-2);
-    drawString (getHeight()-3, 3, "Command:");
-    drawString (getHeight()-3, 12, command);
-    drawString (getHeight()-3, 12 + length, "#", Color(RED));
+    // drawBorder (getHeight()-5, 0, 3, getWidth()-2);
+    // drawString (getHeight()-3, 3, "Command:");
+    // drawString (getHeight()-3, 12, command);
+    // drawString (getHeight()-3, 12 + length, "#", Color(RED));
 }
 
 void DebugWindow::keyPress (unsigned char key)

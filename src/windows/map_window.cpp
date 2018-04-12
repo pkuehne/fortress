@@ -34,9 +34,6 @@ void MapWindow::setup()
     m_sidebarWidth = 20;
     m_messagesHeight = 9;
 
-    // Remove
-    m_sidebarXOffset = getWidth() - m_sidebarWidth;
-
     m_action = 'm';
 
     m_camera = new Camera(getEngine()->getGraphics(), getEngine()->state());
@@ -151,7 +148,6 @@ void MapWindow::setAction(char action, unsigned int yPos)
 
 void MapWindow::redraw()
 {
-    m_sidebarXOffset = getWidth() - m_sidebarWidth - 1;
     m_mapWidth = getWidth() - m_mapXOffset - m_sidebarWidth - 1;
     m_mapHeight = getHeight() - m_mapYOffset - 1;
 
@@ -161,7 +157,6 @@ void MapWindow::redraw()
     m_camera->viewport().y = m_mapYOffset;
 
     drawMap();
-    // drawMessages();
 }
 
 void MapWindow::keyPress(unsigned char key)
@@ -287,36 +282,6 @@ void MapWindow::drawMap()
     m_camera->render();
 
     return;
-}
-
-void MapWindow::drawMessages()
-{
-    std::vector<Message> &l_messages = getEngine()->state()->getMessages();
-    size_t ii = l_messages.size();
-    size_t hh = m_mapYOffset - 2;
-
-    for (; ii > 0 && hh > 0; hh--, ii--)
-    {
-        Color fg;
-        switch (l_messages[ii - 1].severity)
-        {
-        case INFO:
-            fg = Color(WHITE);
-            break;
-        case WARN:
-            fg = Color(RED);
-            break;
-        case GOOD:
-            fg = Color(GREEN);
-            break;
-        case CRIT:
-            fg = Color(BLUE);
-            break;
-        }
-        std::vector<std::string> lines;
-        wrapText(l_messages[ii - 1].message, lines, m_sidebarXOffset, 1);
-        drawString(hh, 1, lines[0].c_str(), fg);
-    }
 }
 
 void MapWindow::nextTurn()

@@ -18,8 +18,6 @@ public:
 
 private:
     void drawMap ();
-    void drawSeparators();
-    void drawMessages();
 
 private:
     unsigned int m_mapXOffset;
@@ -27,7 +25,6 @@ private:
     unsigned int m_mapWidth;
     unsigned int m_mapHeight;
 
-    unsigned int m_sidebarXOffset;
     unsigned int m_sidebarWidth;
     unsigned int m_messagesHeight;
 

@@ -30,11 +30,6 @@ class Window
     virtual void resize();
     virtual void nextTurn() {}
 
-    // All of these can be removed when MapWindow has been migrated
-    virtual unsigned int drawString(int y, int x, const char *text, Color fg = Color(WHITE), Color bg = Color(BLACK));
-    virtual void drawBorder(int y, int x, int height, int width);
-    virtual unsigned int wrapText(const std::string &text, std::vector<std::string> &lines, unsigned int maxWidth, unsigned int maxRows);
-
     virtual void keyDown(unsigned char key);
     virtual void keyUp(unsigned char key) { ascii_keys[key] = false; }
     virtual bool getKey(unsigned char key) { return ascii_keys[key]; }

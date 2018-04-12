@@ -28,18 +28,6 @@ void Window::setDimensions(int x, int y, int width, int height)
         ->realign(x, y, width, height);
 }
 
-unsigned int Window::drawString(int y, int x, const char *text, Color fg, Color bg)
-{
-    if (x < 0)
-        x = (m_width / 2) - (strlen(text) / 2);
-    return m_graphics->drawString(m_yOffset + y, m_xOffset + x, text, fg, bg);
-}
-
-void Window::drawBorder(int y, int x, int height, int width)
-{
-    m_graphics->drawBorder(m_yOffset + y, m_xOffset + x, height, width);
-}
-
 void Window::beforeRedraw()
 {
     m_graphics->clearArea(m_yOffset, m_xOffset, m_height, m_width);
@@ -100,40 +88,6 @@ bool Window::getMouseButton(int button)
         return m_buttons[button];
     }
     return false;
-}
-
-unsigned int Window::wrapText(const std::string &text, std::vector<std::string> &lines, unsigned int maxWidth, unsigned int maxRows)
-{
-    size_t wordStart = 0;
-    size_t wordEnd = 0;
-    unsigned int lineNum = 0;
-    lines.resize(maxRows);
-
-    while (wordEnd != std::string::npos)
-    {
-        wordEnd = text.find(' ', wordStart);
-        std::string word(text.substr(wordStart, wordEnd - wordStart));
-        if (lines[lineNum].length() + word.length() + 3 /*...*/ + 2 /*spaces*/ > maxWidth && lineNum + 1 >= maxRows)
-        {
-            lines[lineNum].append("...");
-            return lineNum;
-        }
-        if (lines[lineNum].length() + word.length() + 1 > maxWidth)
-        {
-            if (lineNum + 1 >= maxRows)
-            {
-                lines[lineNum].append("...");
-                return lineNum;
-            }
-            // Start the next line
-            lineNum++;
-        }
-        lines[lineNum].append(word);
-        lines[lineNum].append(" ");
-        wordStart = wordEnd + 1;
-    }
-
-    return lineNum;
 }
 
 void Window::keyDown(unsigned char key)
