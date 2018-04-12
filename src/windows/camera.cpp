@@ -6,17 +6,17 @@
 #include "../components/npc_component.h"
 #include <glog/logging.h>
 
-void Camera::setMapOffset(int x, int y, int z)
-{
-    m_mapOffsetX = x;
-    m_mapOffsetY = y;
-    m_mapOffsetZ = z;
-}
-
 void Camera::render()
 {
-    if (!m_enabled)
-        return;
+    if (!m_state) {
+        throw ("Game State must be set on Camera");
+    }
+
+    Location l_playerLoc = m_state->location(m_state->player());
+
+    m_mapOffsetX = l_playerLoc.x - (getWidth() / 2);
+    m_mapOffsetY = l_playerLoc.y - (getHeight() / 2);
+    m_mapOffsetZ = l_playerLoc.z;
 
     renderSprites();
     if (m_state->debug().showNpcPaths)

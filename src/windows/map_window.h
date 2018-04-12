@@ -11,17 +11,11 @@ public:
     virtual void setup();
     virtual void registerWidgets();
     
-    virtual void redraw();
     virtual void nextTurn();
     virtual void keyPress (unsigned char key);
     void setAction(char action, unsigned int yPos);
 
 private:
-    unsigned int m_mapXOffset;
-    unsigned int m_mapYOffset;
-    unsigned int m_mapWidth;
-    unsigned int m_mapHeight;
-
     unsigned int m_sidebarWidth;
     unsigned int m_messagesHeight;
 

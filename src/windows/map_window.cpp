@@ -25,12 +25,6 @@ void MapWindow::setup()
     setTitle("Map");
     setFullscreen();
 
-    m_mapXOffset = 1;
-    m_mapYOffset = 9;
-    m_mapStartX = 0;
-    m_mapStartY = 0;
-    m_mapWidth = 0;
-    m_mapHeight = 0;
     m_sidebarWidth = 20;
     m_messagesHeight = 9;
 
@@ -134,10 +128,10 @@ void MapWindow::registerWidgets()
         ->setHeightStretchMargin(0)
         ->setSensitive(false);
 
-    createWidget<Camera>("camCamera", 1, m_messagesHeight+1)
+    createWidget<Camera>("camCamera", 0, m_messagesHeight)
+        ->setGameState(getState())
         ->setHeightStretchMargin(0)
-        ->setWidthStretchMargin(m_sidebarWidth)
-        ->setVisible(false);
+        ->setWidthStretchMargin(m_sidebarWidth);
 
     getEngine()->swapTurn();
 }
@@ -147,12 +141,6 @@ void MapWindow::setAction(char action, unsigned int yPos)
     m_action = action;
     getWidget<Label>("lblAction")->setY(yPos);
     resize();
-}
-
-void MapWindow::redraw()
-{
-    m_mapWidth = getWidth() - m_mapXOffset - m_sidebarWidth - 1;
-    m_mapHeight = getHeight() - m_mapYOffset - 1;
 }
 
 void MapWindow::keyPress(unsigned char key)
@@ -280,7 +268,7 @@ void MapWindow::nextTurn()
 
     std::vector<Message> &l_messages = getEngine()->state()->getMessages();
     ListBox *list = getWidget<ListBox>("lstMessages");
-    
+
     list->clearItems();
     for (auto message : l_messages)
     {
@@ -289,11 +277,4 @@ void MapWindow::nextTurn()
         list->addItem(item);
     }
     list->scrollToBottom();
-
-    Location l_playerLoc = getEngine()->state()->location(player);
-
-    m_mapStartX = l_playerLoc.x - (m_mapWidth / 2);
-    m_mapStartY = l_playerLoc.y - (m_mapHeight / 2);
-
-    getWidget<Camera>("camCamera")->setMapOffset(m_mapStartX, m_mapStartY, l_playerLoc.z);
 }
