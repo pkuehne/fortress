@@ -37,13 +37,6 @@ class Widget
     Widget() {}
     virtual ~Widget() {}
 
-    // Methods to set basic info on creation
-    virtual Widget *setWindowOffsets(unsigned int x, unsigned int y)
-    {
-        m_xOffset = x;
-        m_yOffset = y;
-        return this;
-    }
     virtual Widget *setGraphics(GraphicsInterface *graphics)
     {
         m_graphics = graphics;
@@ -251,8 +244,6 @@ class Widget
     unsigned int m_relativeXPos = 0; ///< The relative left position within the parent widget
     unsigned int m_relativeYPos = 0; ///< The relative top position within the parent widget
 
-    unsigned int m_xOffset = 0; ///< X Offset within the Window - TODO: Remove
-    unsigned int m_yOffset = 0; ///< Y Offset within the Window - TODO: Remove
     unsigned int m_xPos = 0;    ///< The absolute left position of the widget on screen
     unsigned int m_yPos = 0;    ///< The absolute top position of the widget on screen
     unsigned int m_width = 1;

@@ -22,7 +22,6 @@ void Window::setDimensions(int x, int y, int width, int height)
     m_height = height;
 
     m_baseWidget
-        ->setWindowOffsets(m_xOffset, m_yOffset) // TODO: Remove
         ->setHeight(m_height)
         ->setWidth(m_width)
         ->realign(x, y, width, height);

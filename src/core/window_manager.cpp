@@ -20,7 +20,6 @@ void WindowManager::pushWindow(Window *win)
 {
     m_windows.push_back(win);
 
-    win->gainFocus(); // TODO: Remove when MapWindow is migrated
     win->setup();
     win->registerWidgets();
     win->resize();

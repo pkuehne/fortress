@@ -54,7 +54,6 @@ class Window
     {
         T *widget = new T(); // TODO: Clean this up in the destructor!
         widget
-            ->setWindowOffsets(m_xOffset, m_yOffset)
             ->setGraphics(m_graphics)
             ->setName(name)
             ->setX(x)
