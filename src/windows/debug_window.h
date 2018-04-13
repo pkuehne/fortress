@@ -21,7 +21,8 @@ const unsigned int COMMAND_MAX_LEN = 128;
 class DebugWindow : public Window {
 public:
     void setup();
-    void redraw();
+    void registerWidgets();
+    void nextTurn();
     void keyPress (unsigned char key);
 
 private:

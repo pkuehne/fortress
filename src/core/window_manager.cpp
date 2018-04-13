@@ -23,6 +23,7 @@ void WindowManager::pushWindow(Window *win)
     win->setup();
     win->registerWidgets();
     win->resize();
+    win->nextTurn(); // Force re-fresh on all widgets
 }
 
 void WindowManager::popWindow()

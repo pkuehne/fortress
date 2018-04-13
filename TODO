@@ -6,11 +6,9 @@ Alpha 4:
             ✔ Add setup() function
             ✔ Change pushWindow function
             ✔ Remove WindowManagerInterface
-        Window Enhancements:
-            ☐ Remove getEngine() from Windows
+        ✔ Window Enhancements: @done(18-04-12 19:24)
             ✔ Differentiate drawChar() from drawTile()
                 The first uses the Fontset, the second the GraphicsSet
-            ☐ Move graphicsBegin/End out of WindowManager engine
             ✔ Add full-screen setting
                 Removes the need for getEngine() to retrieve the size of the screen
         ✔ Widgets: @done(18-04-12 18:19)
@@ -31,7 +29,8 @@ Alpha 4:
                 ✔ Frame @done(18-04-12 18:12)
                 ✔ NumericEntry @done(18-04-12 18:12)
                 ✔ ProgressBar @done(18-04-12 18:12)
-                ☐ Camera
+                ✔ Camera @done(18-04-12 19:16)
+                ☐ TextEntry
             Windows Converted:
                 ✔ SplashWindow @done(18-04-12 18:11)
                 ✔ SelectionWindow @done(18-04-12 18:11)
@@ -44,8 +43,9 @@ Alpha 4:
                 ✔ MainWindow @done(18-04-12 18:12)
                 ☐ DebugWindow
                 ✔ EquipmentWindow @done(18-04-12 18:12)
-        
-    Make NPCs smarter:
+            ☐ Call nextTurn() on Window after registering Widgets to allow for setup
+            ☐ Add colour to list items and use it for rendering
+    ✔ Make NPCs smarter: @done(18-04-12 19:21)
         ✔ Better FSM for NPCs
     ✔ Quests:
         ✔ Add basic quest
@@ -72,8 +72,16 @@ Alpha 4:
     Bugs:
         ☐ Can consume non-consumable items in Equipment Window
         ☐ Picking up equipment doesn't remove it from map
+        ☐ Change MapWindow frames to be around Sidebar and Camera, not Message List
+            This otherwise obscures the title of the MapWindow
+        ☐ Investigate weird intermittent crashes on startup
 
 Backlog:
+    Cleanup:
+        ☐ Make Event Manager part of GameState
+        ☐ Remove GameEngine dependency from EntityManager
+        ☐ Move graphicsBegin/End out of WindowManager engine
+        ☐ Remove getEngine() from Windows
     Animals:
         Food:
             ☐ Food grows on grass tiles
@@ -85,20 +93,37 @@ Backlog:
             Predators:
                 ☐ See predators
                 ☐ Run away from them
-    Cleanup:
-        ☐ Make Event Manager part of GameState
-        ☐ Remove GameEngine dependency from EntityManager
-        Debug Class in GameState:
-            This should not be saveable, but needs to be set from the Lua console
-            ✔ Debug class
-            ✔ Show NPC paths
-            ☐ Turn of FoW
-            ✔ Add Lua bindings
-        Lua Enhancements:
-            Redirect print to the Debug Console:
-                ☐ print stores output into a table
-                ☐ Table is dumped after each command is run
-    Improved Loading/Saving:
+    Window Handling:
+        Merge Borders properly:
+            ☐ Don't draw borders directly when called
+            ☐ Store border state for Window in a grid (boolean will suffice)
+            ☐ Just before redrawing, iterate through and set char based on neighbours
+            ☐ Then draw Window elements and finally the border chars
+    Widgets:
+        Widget creation from file:
+            Load widgets and Window information from a YAML file instead of registering widgets directly.
+            Tnis will also allow for faster iteration, because there is no recompilation when changing the layout
+            ☐ Window class has own implementation of registerWidgets()
+            ☐ Loads a YAML file with the same name as the Window
+            ☐ Divided into two sections: Window and Widgets
+            Window allows setting of:
+                ☐ Title
+                ☐ EscapeBehaviour
+                ☐ MergeBorders
+            Widgets allows creation of any Widget:
+                ☐ If a given property is in the yaml, set it on the widget
+            ☐ Overriding must still be allowed to set callbacks
+    Debug Class in GameState:
+        This should not be saveable, but needs to be set from the Lua console
+        ✔ Debug class
+        ✔ Show NPC paths
+        ☐ Turn of FoW
+        ✔ Add Lua bindings
+    Lua Enhancements:
+        Redirect print to the Debug Console:
+            ☐ print stores output into a table
+            ☐ Table is dumped after each command is run
+    Loading/Saving:
         Windows:
             Save As Window:
                 ☐ Typing and backspace

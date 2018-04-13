@@ -1,7 +1,7 @@
 #ifndef __PREFAB_BUILDER_H__
 #define __PREFAB_BUILDER_H__
 
-#include <entity.h>
+#include "entity.h"
 #include "utility.h"
 class GameState;
 class Location;
