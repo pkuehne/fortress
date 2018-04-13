@@ -28,7 +28,7 @@ coverage:
 	rm -f src/*.gcno
 	rm -f test/*.gcno
 	$(MAKE) -C test clean
-	$(MAKE) -C test test -j 8 COVERAGE=Y
+	$(MAKE) -C test build -j 8 COVERAGE=Y
 	gcovr -r src
 
 run: build $(LOG_DIR)
