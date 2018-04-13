@@ -2,6 +2,7 @@
 #include "../core/game_engine.h"
 #include "frame.h"
 #include "listbox.h"
+#include "text_entry.h"
 
 #include <dirent.h>
 
@@ -9,7 +10,6 @@ const char CONSOLE_DIR[] = "./scripts/console";
 
 void DebugWindow::setupLua()
 {
-    command[0] = '\0';
     m_lua.setGameState(getEngine()->state());
     try
     {
@@ -72,11 +72,41 @@ void DebugWindow::registerWidgets()
         ->setBorder()
         ->setMargin()
         ->setWidthStretchMargin(0)
-        ->setHeightStretchMargin(4);
+        ->setHeightStretchMargin(5);
     createWidget<ListBox>("lstOutput", 0, 0, frmOutput)
         ->setWidthStretchMargin(0)
         ->setHeightStretchMargin(0)
         ->setSensitive(false);
+    Frame *frmEntry = createWidget<Frame>("frmEntry", 0, 0);
+    frmEntry
+        ->setBorder()
+        ->setMargin()
+        ->setWidthStretchMargin(0)
+        ->setHeight(5)
+        ->setVerticalAlign(Widget::VerticalAlign::Bottom);
+    createWidget<TextEntry>("txtInput", 0, 0, frmEntry)
+        ->setEnterCallback([&](TextEntry *e) {
+            Output line;
+            line.text = std::string(e->getText());
+            line.color = COMMAND_COLOR;
+            history.push_back(line);
+
+            try
+            {
+                line.text = std::string(">>>").append(
+                    m_lua.executeCommand(e->getText()));
+                line.color = OUTPUT_COLOR;
+            }
+            catch (std::runtime_error &error)
+            {
+                line.text = std::string(">>>").append(
+                    error.what());
+                line.color = ERROR_COLOR;
+            }
+            history.push_back(line);
+        })
+        ->setWidthStretchMargin(0)
+        ->setHeightStretchMargin(0);
 }
 
 void DebugWindow::nextTurn()
@@ -90,45 +120,4 @@ void DebugWindow::nextTurn()
         item.setText(line.text);
         lstOutput->addItem(item);
     }
-}
-
-void DebugWindow::keyPress(unsigned char key)
-{
-    Window::keyPress(key);
-
-    if (key == KEY_ENTER)
-    {
-        Output line;
-        line.text = std::string(command);
-        line.color = COMMAND_COLOR;
-        history.push_back(line);
-        command[length = 0] = '\0';
-
-        // Execute command
-        try
-        {
-            line.text = std::string(">>>").append(
-                m_lua.executeCommand(line.text));
-            line.color = OUTPUT_COLOR;
-        }
-        catch (std::runtime_error &error)
-        {
-            line.text = std::string(">>>").append(
-                error.what());
-            line.color = ERROR_COLOR;
-        }
-        history.push_back(line);
-        //std::cout << "Command output: " << line.text << std::endl;
-        return;
-    }
-    if (key == KEY_BACKSPACE)
-    {
-        if (length > 0)
-        {
-            command[--length] = '\0';
-        }
-        return;
-    }
-    command[length] = key;
-    command[++length] = '\0';
 }

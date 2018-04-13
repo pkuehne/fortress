@@ -23,15 +23,12 @@ public:
     void setup();
     void registerWidgets();
     void nextTurn();
-    void keyPress (unsigned char key);
 
 private:
     void setupLua();
     void loadLuaScripts();
 
 private:
-    char command[COMMAND_MAX_LEN] = {0};
-    int length;
     std::vector<Output> history;
     LuaWrapper  m_lua;
 };

@@ -22,7 +22,7 @@ Alpha 4:
         ✔ Migrate Windows to Widget basis: @done(18-04-12 18:19)
             ✔ Add close_on_esc flag @done(18-04-12 18:19)
             ✔ Make keyDown/keyUp non-virtual in window.h @done(18-04-12 18:19)
-            Widgets Created:
+            ✔ Widgets Created: @done(18-04-13 15:01)
                 ✔ Label @done(18-04-12 18:12)
                 ✔ Icon @done(18-04-12 18:12)
                 ✔ ListBox @done(18-04-12 18:12)
@@ -30,7 +30,7 @@ Alpha 4:
                 ✔ NumericEntry @done(18-04-12 18:12)
                 ✔ ProgressBar @done(18-04-12 18:12)
                 ✔ Camera @done(18-04-12 19:16)
-                ☐ TextEntry
+                ✔ TextEntry @done(18-04-13 15:00)
             Windows Converted:
                 ✔ SplashWindow @done(18-04-12 18:11)
                 ✔ SelectionWindow @done(18-04-12 18:11)
@@ -41,10 +41,11 @@ Alpha 4:
                 ✔ GameOverWindow @done(18-04-12 18:11)
                 ✔ EscapeWindow @done(18-04-12 18:11)
                 ✔ MainWindow @done(18-04-12 18:12)
-                ☐ DebugWindow
+                ✔ DebugWindow @done(18-04-13 15:18)
                 ✔ EquipmentWindow @done(18-04-12 18:12)
             ☐ Call nextTurn() on Window after registering Widgets to allow for setup
             ☐ Add colour to list items and use it for rendering
+            ☐ Migrate all lambda callbacks to std::function
     ✔ Make NPCs smarter: @done(18-04-12 19:21)
         ✔ Better FSM for NPCs
     ✔ Quests:
