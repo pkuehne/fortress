@@ -31,7 +31,7 @@ Alpha 4:
                 ✔ ProgressBar @done(18-04-12 18:12)
                 ✔ Camera @done(18-04-12 19:16)
                 ✔ TextEntry @done(18-04-13 15:00)
-            Windows Converted:
+            ✔ Windows Converted: @done(18-04-13 16:45)
                 ✔ SplashWindow @done(18-04-12 18:11)
                 ✔ SelectionWindow @done(18-04-12 18:11)
                 ✔ QuestWindow @done(18-04-12 18:11)
@@ -43,9 +43,9 @@ Alpha 4:
                 ✔ MainWindow @done(18-04-12 18:12)
                 ✔ DebugWindow @done(18-04-13 15:18)
                 ✔ EquipmentWindow @done(18-04-12 18:12)
-            ☐ Call nextTurn() on Window after registering Widgets to allow for setup
+            ✔ Call nextTurn() on Window after registering Widgets to allow for setup @done(18-04-13 16:41)
+            ✔ Migrate all lambda callbacks to std::function @done(18-04-13 16:45)
             ☐ Add colour to list items and use it for rendering
-            ☐ Migrate all lambda callbacks to std::function
     ✔ Make NPCs smarter: @done(18-04-12 19:21)
         ✔ Better FSM for NPCs
     ✔ Quests:

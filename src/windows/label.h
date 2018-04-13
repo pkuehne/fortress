@@ -1,12 +1,12 @@
 #pragma once
 
 #include "widget.h"
+#include <functional>
 
 class Label : public Widget
 {
   public:
-    typedef void (*CommandCharCB)(Label *);
-
+    typedef std::function<void(Label*)> CommandCharCB;
     Label() {}
 
     Label *setText(const std::string &text)

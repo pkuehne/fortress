@@ -5,6 +5,7 @@
 #include "text_entry.h"
 
 #include <dirent.h>
+#include <iostream>
 
 const char CONSOLE_DIR[] = "./scripts/console";
 
@@ -18,7 +19,7 @@ void DebugWindow::setupLua()
     catch (const std::runtime_error &error)
     {
         Output line(error.what(), ERROR_COLOR);
-        history.push_back(line);
+        m_history.push_back(line);
     }
 }
 
@@ -44,12 +45,12 @@ void DebugWindow::loadLuaScripts()
             {
                 m_lua.loadFile(filename);
                 Output line(std::string("Loaded: ").append(filename), OUTPUT_COLOR);
-                history.push_back(line);
+                m_history.push_back(line);
             }
             catch (const std::runtime_error &error)
             {
                 Output line(error.what(), ERROR_COLOR);
-                history.push_back(line);
+                m_history.push_back(line);
             }
         }
     }
@@ -89,7 +90,7 @@ void DebugWindow::registerWidgets()
             Output line;
             line.text = std::string(e->getText());
             line.color = COMMAND_COLOR;
-            history.push_back(line);
+            m_history.push_back(line);
 
             try
             {
@@ -103,7 +104,9 @@ void DebugWindow::registerWidgets()
                     error.what());
                 line.color = ERROR_COLOR;
             }
-            history.push_back(line);
+            m_history.push_back(line);
+            e->setText("");
+            e->getWindow()->nextTurn();
         })
         ->setWidthStretchMargin(0)
         ->setHeightStretchMargin(0);
@@ -114,7 +117,7 @@ void DebugWindow::nextTurn()
     ListBox *lstOutput = getWidget<ListBox>("lstOutput");
     lstOutput->clearItems();
 
-    for (Output line : history)
+    for (Output line : m_history)
     {
         ListBoxItem item;
         item.setText(line.text);

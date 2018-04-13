@@ -2,8 +2,9 @@
 
 #include "../core/graphics.h"
 #include <map>
+#include <functional>
 
-typedef void (*KeyFunc)(unsigned char);
+typedef std::function<void(unsigned char)> KeyFunc;
 
 class Window;
 

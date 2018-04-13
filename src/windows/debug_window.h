@@ -29,7 +29,7 @@ private:
     void loadLuaScripts();
 
 private:
-    std::vector<Output> history;
+    std::vector<Output> m_history;
     LuaWrapper  m_lua;
 };
 

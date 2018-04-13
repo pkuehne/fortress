@@ -2,6 +2,7 @@
 
 #include "widget.h"
 #include <vector>
+#include <functional>
 
 class ListBoxItem
 {
@@ -35,7 +36,7 @@ class ListBoxItem
 class ListBox : public Widget
 {
   public:
-    typedef void (*ItemSelectedCB)(ListBox *);
+    typedef std::function<void(ListBox *)> ItemSelectedCB;
 
     ListBox *addItem(ListBoxItem &item)
     {

@@ -3,6 +3,7 @@
 #include "frame.h"
 #include "../core/utility.h"
 #include <vector>
+#include <functional>
 
 class Page
 {
@@ -34,7 +35,7 @@ class Page
 class Tab : public Widget
 {
   public:
-    typedef void (*PageSwitchCB)(Tab *);
+    typedef std::function<void(Tab *)> PageSwitchCB;
 
     Page *addPage(const std::string &title);
     std::vector<Page *> &getPages() { return m_pages; }

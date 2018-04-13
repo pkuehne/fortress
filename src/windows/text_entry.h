@@ -6,6 +6,8 @@
 class TextEntry : public Widget
 {
   public:
+    typedef std::function<void(TextEntry *)> EnterCB;
+
     TextEntry *setText(const std::string &text)
     {
         m_text = text;
@@ -17,14 +19,16 @@ class TextEntry : public Widget
         return m_text;
     }
 
-    TextEntry* setEnterCallback(const std::function<void(TextEntry*)>& cb) {
+    TextEntry *setEnterCallback(const EnterCB &cb)
+    {
         m_enterCb = cb;
         return this;
     }
     void keyPress(unsigned char key);
     void render();
+
   private:
     std::string m_text = std::string("");
     bool m_blink = false;
-    std::function<void(TextEntry*)> m_enterCb = [](TextEntry*){};
+    EnterCB m_enterCb = [](TextEntry *) {};
 };
