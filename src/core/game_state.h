@@ -6,6 +6,7 @@
 #include "map_manager.h"
 #include "component_manager.h"
 #include "quest.h"
+#include "color.h"
 
 class Tile;
 
@@ -20,6 +21,21 @@ typedef struct
 {
     MessageType severity;
     std::string message;
+    Color getColor()
+    {
+        switch (severity)
+        {
+        case INFO:
+            return Color(WHITE);
+        case GOOD:
+            return Color(GREEN);
+        case WARN:
+            return Color(YELLOW);
+        case CRIT:
+        default:
+            return Color(RED);
+        }
+    }
 } Message;
 
 struct Debug

@@ -274,6 +274,7 @@ void MapWindow::nextTurn()
     {
         ListBoxItem item;
         item.setText(message.message);
+        item.setColor(message.getColor());
         list->addItem(item);
     }
     list->scrollToBottom();

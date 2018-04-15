@@ -121,6 +121,7 @@ void DebugWindow::nextTurn()
     {
         ListBoxItem item;
         item.setText(line.text);
+        item.setColor(line.color);
         lstOutput->addItem(item);
     }
 }
