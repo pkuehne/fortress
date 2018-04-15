@@ -1,6 +1,8 @@
 #pragma once
 
 #include "widget.h"
+#include "../core/color.h"
+
 #include <vector>
 #include <functional>
 
@@ -22,15 +24,22 @@ class ListBoxItem
         m_index = index;
         return this;
     }
+    ListBoxItem *setColor(Color color)
+    {
+        m_color = color;
+        return this;
+    }
 
     std::string getText() { return m_text; }
     unsigned int getValue() { return m_value; }
     unsigned int getIndex() { return m_index; }
+    Color getColor() { return m_color; }
 
   private:
     std::string m_text = "";
     unsigned int m_value = 0;
     unsigned int m_index = 0;
+    Color m_color = Color(WHITE);
 };
 
 class ListBox : public Widget

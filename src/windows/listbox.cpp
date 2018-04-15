@@ -17,7 +17,8 @@ void ListBox::render()
         {
             this->drawString(0, ii, ">", COLOR(RED));
         }
-        this->drawString(itemLeftOffset, ii, m_items[ii + m_topOffset].getText().c_str());
+        ListBoxItem& item = m_items[ii + m_topOffset];
+        this->drawString(itemLeftOffset, ii, item.getText().c_str(), item.getColor());
     }
 }
 

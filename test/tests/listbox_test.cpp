@@ -9,26 +9,22 @@ class ListBoxTest : public ::testing::Test
   public:
     void SetUp()
     {
-        ListBoxItem item1;
         item1.setText("item1");
         item1.setValue(1);
 
-        ListBoxItem item2;
-        item1.setText("item2");
-        item1.setValue(2);
-        
-        ListBoxItem item3;
-        item1.setText("item3");
-        item1.setValue(3);
-        
-        ListBoxItem item4;
-        item1.setText("item4");
-        item1.setValue(4);
-        
-        ListBoxItem item5;
-        item1.setText("item5");
-        item1.setValue(5);
-        
+        item2.setText("item2");
+        item2.setValue(2);
+
+        item3.setText("item3");
+        item3.setValue(3);
+
+        item4.setText("item4");
+        item4.setValue(4);
+
+        item5.setText("item5");
+        item5.setValue(5);
+        item5.setColor(Color(RED));
+
         box.addItem(item1);
         box.addItem(item2);
         box.addItem(item3);
@@ -38,13 +34,21 @@ class ListBoxTest : public ::testing::Test
         box.setSelection(0);
     }
     ListBox box;
+    ListBoxItem item1;
+    ListBoxItem item2;
+    ListBoxItem item3;
+    ListBoxItem item4;
+    ListBoxItem item5;
 };
 
 TEST_F(ListBoxTest, pressingEnterInvokesCallback)
 {
-    box.setItemSelectedCallback([](ListBox *b) { throw "Selected"; });
+    bool called = false;
+    box.setItemSelectedCallback([&](ListBox *b) { called = true; });
 
-    EXPECT_ANY_THROW(box.keyPress(KEY_ENTER));
+    box.keyPress(KEY_ENTER);
+
+    EXPECT_TRUE(called);
 }
 
 TEST_F(ListBoxTest, ScrollingUpDecrementsSelectedItem)
@@ -113,6 +117,22 @@ TEST_F(ListBoxTest, gettingSelectedItemFromEmptyBoxTHrows)
     ListBox b;
 
     EXPECT_ANY_THROW(b.getSelectedItem());
+}
+
+TEST_F(ListBoxTest, ItemsAreRenderedWithColour)
+{
+    GraphicsMock graphics;
+    box.setGraphics(&graphics);
+    box.setHeight(10);       // give enough space
+    box.setSensitive(false); // Hide the selector
+     
+    EXPECT_CALL(graphics, drawString(Eq(0), Eq(0), StrEq(item1.getText()), _, _)).Times(1);
+    EXPECT_CALL(graphics, drawString(Eq(1), Eq(0), StrEq(item2.getText()), _, _)).Times(1);
+    EXPECT_CALL(graphics, drawString(Eq(2), Eq(0), StrEq(item3.getText()), _, _)).Times(1);
+    EXPECT_CALL(graphics, drawString(Eq(3), Eq(0), StrEq(item4.getText()), _, _)).Times(1);
+    EXPECT_CALL(graphics, drawString(Eq(4), Eq(0), StrEq(item5.getText()), Eq(Color(RED)), _)).Times(1);
+
+    box.render();
 }
 
 TEST_F(ListBoxTest, SelectorIsDrawnNextToSelectedItem)

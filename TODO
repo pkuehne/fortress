@@ -114,6 +114,8 @@ Backlog:
             Widgets allows creation of any Widget:
                 ☐ If a given property is in the yaml, set it on the widget
             ☐ Overriding must still be allowed to set callbacks
+        Namespacing:
+            ☐ Move widgets into own directory
     Debug Class in GameState:
         This should not be saveable, but needs to be set from the Lua console
         ✔ Debug class
