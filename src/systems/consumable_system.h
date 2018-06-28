@@ -1,5 +1,5 @@
-#include "game_system_base.h"
-#include "utility.h"
+#include "../core/game_system_base.h"
+#include "../core/utility.h"
 
 class ConsumableSystem : public GameSystemBase {
 public:

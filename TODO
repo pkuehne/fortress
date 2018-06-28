@@ -59,25 +59,20 @@ Alpha 4:
             ✔ Map Offset x, y
             ✔ Add debug path flag to GameState
             ✔ Debug shows path of NPCs
-    GameState:
-        ✔ Move turn and tick info into GameState @done(18-04-12 18:26)
-        Entities not in current area should be moved:
-            ☐ Could be held in GameState instead
-            ☐ MapManager could then be loaded with MapInfo
-    Map/Generator Improvement:
+    ✔ Map/Generator Improvement: @done(18-04-15 11:23)
         ✔ Create Areas from map with size
         ✔ Pass Area ID into generator
         ✔ Use Area ID when creating Entity
-        ☐ Remove the use of getArea
-        ☐ Set Player from Generator
+        ✔ Remove the use of getArea @done(18-04-15 11:18)
     Bugs:
-        ☐ Can consume non-consumable items in Equipment Window
         ☐ Picking up equipment doesn't remove it from map
         ☐ Change MapWindow frames to be around Sidebar and Camera, not Message List
             This otherwise obscures the title of the MapWindow
         ☐ Investigate weird intermittent crashes on startup
 
 Backlog:
+    Bugs:
+        ☐ non-consumable items in Equipment Window can be selected for consumption
     Cleanup:
         ☐ Make Event Manager part of GameState
         ☐ Remove GameEngine dependency from EntityManager
@@ -148,3 +143,13 @@ Backlog:
     Make NPCs smarter:
         ☐ Allow NPCs to traverse levels
         ☐ GOAP for NPCs
+    Generator:
+        Smaller Enhancements:
+            ☐ Set Player from Generator
+        Cave Generator:
+        Town Generator:
+    GameState:
+        ✔ Move turn and tick info into GameState @done(18-04-12 18:26)
+        Entities not in current area should be moved:
+            ☐ Could be held in GameState instead
+            ☐ MapManager could then be loaded with MapInfo

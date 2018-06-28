@@ -1,6 +1,6 @@
 #include "consumable_system.h"
-#include "consumable_component.h"
-#include "health_component.h"
+#include "../components/consumable_component.h"
+#include "../components/health_component.h"
 
 void ConsumableSystem::handleEvent (const Event* event)
 {
