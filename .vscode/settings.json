@@ -37,5 +37,6 @@
         "type_traits": "cpp",
         "typeinfo": "cpp"
     },
-    "C_Cpp.errorSquiggles": "Disabled"
+    "C_Cpp.errorSquiggles": "Disabled",
+    "clang.cxxflags": ["-g", "-Wall", "-Werror", "-std=c++14"]
 }

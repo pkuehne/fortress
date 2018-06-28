@@ -10,10 +10,6 @@
 
 static Graphics* g_graphics = 0;
 
-static void empty (void) {
-
-}
-
 void resizeWindowCallBack (GLFWwindow*, int width, int height)
 {
     g_graphics->callResizeFunc (width, height);
@@ -187,7 +183,7 @@ void Graphics::setDisplayFunc (DisplayFuncPtr func)
 
 void Graphics::setMouseFunc (MouseFuncPtr func)
 {
-
+    // Todo: Implement mouse support
 }
 
 
@@ -262,7 +258,7 @@ void Graphics::initialise (int argc, char** argv)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    setDisplayFunc      (empty);
+    setDisplayFunc      ([]() { });
 
     m_tileTexture = loadTexture(
             m_config.tileset,
