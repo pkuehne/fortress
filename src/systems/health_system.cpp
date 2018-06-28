@@ -1,5 +1,5 @@
 #include "health_system.h"
-#include "health_component.h"
+#include "../components/health_component.h"
 #include <glog/logging.h>
 
 void HealthSystem::handleEvent (const Event* event)
