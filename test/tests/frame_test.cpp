@@ -5,8 +5,7 @@
 
 using namespace ::testing;
 
-TEST(Frame, realignCalledForChildren)
-{
+TEST(Frame, realignCalledForChildren) {
     unsigned int x = 5;
     unsigned int y = 7;
     unsigned int width = 100;
@@ -17,14 +16,13 @@ TEST(Frame, realignCalledForChildren)
     frame.addChild(&mock);
     frame.setWidth(width);
     frame.setHeight(height);
-    
+
     EXPECT_CALL(mock, realign(Eq(x), Eq(y), Eq(width), Eq(height)));
 
     frame.realign(x, y, width, height);
 }
 
-TEST(Frame, realignAccountsForBorderWidth)
-{
+TEST(Frame, realignAccountsForBorderWidth) {
     unsigned int x = 5;
     unsigned int y = 7;
     unsigned int width = 100;
@@ -38,14 +36,13 @@ TEST(Frame, realignAccountsForBorderWidth)
     frame.setWidth(width);
     frame.setHeight(height);
 
-    EXPECT_CALL(mock, realign(Eq(x+1), Eq(y+1), Eq(width-2), Eq(height-2)));
+    EXPECT_CALL(mock,
+                realign(Eq(x + 1), Eq(y + 1), Eq(width - 2), Eq(height - 2)));
 
     frame.realign(x, y, width, height);
 }
 
-
-TEST(Frame, realignAccountsForMargin)
-{
+TEST(Frame, realignAccountsForMargin) {
     unsigned int x = 5;
     unsigned int y = 7;
     unsigned int width = 100;
@@ -59,13 +56,13 @@ TEST(Frame, realignAccountsForMargin)
     frame.setWidth(width);
     frame.setHeight(height);
 
-    EXPECT_CALL(mock, realign(Eq(x+1), Eq(y+1), Eq(width-2), Eq(height-2)));
+    EXPECT_CALL(mock,
+                realign(Eq(x + 1), Eq(y + 1), Eq(width - 2), Eq(height - 2)));
 
     frame.realign(x, y, width, height);
 }
 
-TEST(Frame, renderPassedDownToChildren)
-{
+TEST(Frame, renderPassedDownToChildren) {
     Frame frame;
     WidgetMock mock;
 
@@ -76,8 +73,7 @@ TEST(Frame, renderPassedDownToChildren)
     frame.render();
 }
 
-TEST(Frame, keyPressPassedDownToChildren)
-{
+TEST(Frame, keyPressPassedDownToChildren) {
     Frame frame;
     WidgetMock mock;
 
@@ -89,8 +85,7 @@ TEST(Frame, keyPressPassedDownToChildren)
     frame.keyPress(key);
 }
 
-TEST(Frame, MergeBordersIgnoresOffsetsForOtherFrames)
-{
+TEST(Frame, MergeBordersIgnoresOffsetsForOtherFrames) {
     Frame frame;
     Frame subFrame;
 

@@ -9,5 +9,4 @@ typedef std::set<EntityId> EntityHolder;
 typedef EntityHolder::iterator EntityIter;
 typedef EntityHolder::const_iterator EntityConstIter;
 
-
 #endif

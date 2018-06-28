@@ -1,115 +1,114 @@
 #ifndef __EVENT_H__
 #define __EVENT_H__
 
-#include <map>
-#include <iostream>
 #include "entity.h"
-#include "utility.h"
 #include "location.h"
-
+#include "utility.h"
+#include <iostream>
+#include <map>
 
 typedef enum {
-    EVENT_INVALID           = 0,
-    EVENT_ADD_ENTITY        ,
-    EVENT_REMOVE_ENTITY     ,
-    EVENT_MOVE_ENTITY       ,
-    EVENT_CHANGE_LOCATION   ,
-    EVENT_ATTACK_ENTITY     ,
-    EVENT_CHANGE_LEVEL      ,
-    EVENT_DROP_EQUIPMENT    ,
-    EVENT_PICKUP_EQUIPMENT  ,
-    EVENT_EQUIP_ITEM        ,
-    EVENT_UNEQUIP_ITEM      ,
-    EVENT_CONSUME_ITEM      ,
+    EVENT_INVALID = 0,
+    EVENT_ADD_ENTITY,
+    EVENT_REMOVE_ENTITY,
+    EVENT_MOVE_ENTITY,
+    EVENT_CHANGE_LOCATION,
+    EVENT_ATTACK_ENTITY,
+    EVENT_CHANGE_LEVEL,
+    EVENT_DROP_EQUIPMENT,
+    EVENT_PICKUP_EQUIPMENT,
+    EVENT_EQUIP_ITEM,
+    EVENT_UNEQUIP_ITEM,
+    EVENT_CONSUME_ITEM,
     EVENT_MAX
 } EventType;
 
 class Event {
 public:
-    Event (EventType type) : m_type (type) { }
-    virtual ~Event() { }
-    EventType getType () const { return m_type; }
+    Event(EventType type) : m_type(type) {}
+    virtual ~Event() {}
+    EventType getType() const { return m_type; }
 
 protected:
-    EventType       m_type;
+    EventType m_type;
 };
 
 class AddEntityEvent : public Event {
 public:
-    AddEntityEvent () : Event (EVENT_ADD_ENTITY) { }
-    EntityId     entity;
+    AddEntityEvent() : Event(EVENT_ADD_ENTITY) {}
+    EntityId entity;
 };
 
 class RemoveEntityEvent : public Event {
 public:
-    RemoveEntityEvent () : Event (EVENT_REMOVE_ENTITY) { }
-    EntityId     entity;
+    RemoveEntityEvent() : Event(EVENT_REMOVE_ENTITY) {}
+    EntityId entity;
 };
 
 class MoveEntityEvent : public Event {
 public:
-    MoveEntityEvent () : Event (EVENT_MOVE_ENTITY) { }
-    EntityId    entity;
-    Location    newLocation;
+    MoveEntityEvent() : Event(EVENT_MOVE_ENTITY) {}
+    EntityId entity;
+    Location newLocation;
 };
 
 class ChangeLocationEvent : public Event {
 public:
-    ChangeLocationEvent() : Event (EVENT_CHANGE_LOCATION) { }
-    EntityId    entity;
-    Location    oldLocation;
-    Location    newLocation;
+    ChangeLocationEvent() : Event(EVENT_CHANGE_LOCATION) {}
+    EntityId entity;
+    Location oldLocation;
+    Location newLocation;
 };
 
 class AttackEntityEvent : public Event {
 public:
-    AttackEntityEvent () : Event (EVENT_ATTACK_ENTITY) { }
-    EntityId    attacker;
-    EntityId    defender;
-    EntityId    weapon;
+    AttackEntityEvent() : Event(EVENT_ATTACK_ENTITY) {}
+    EntityId attacker;
+    EntityId defender;
+    EntityId weapon;
 };
 
 // Deprecated
 class ChangeLevelEvent : public Event {
 public:
-    ChangeLevelEvent () : Event (EVENT_CHANGE_LEVEL) { }
-    unsigned int    level;
-    STAIR           direction;
+    ChangeLevelEvent() : Event(EVENT_CHANGE_LEVEL) {}
+    unsigned int level;
+    STAIR direction;
 };
 
 class DropEquipmentEvent : public Event {
 public:
-    DropEquipmentEvent () : Event (EVENT_DROP_EQUIPMENT) { }
-    EntityId        entity;
-    EntityId        item;
+    DropEquipmentEvent() : Event(EVENT_DROP_EQUIPMENT) {}
+    EntityId entity;
+    EntityId item;
 };
 
 class PickupEquipmentEvent : public Event {
 public:
-    PickupEquipmentEvent () : Event (EVENT_PICKUP_EQUIPMENT) { }
-    EntityId        entity;
-    EntityId        item;
+    PickupEquipmentEvent() : Event(EVENT_PICKUP_EQUIPMENT) {}
+    EntityId entity;
+    EntityId item;
 };
 
 class EquipItemEvent : public Event {
 public:
-    EquipItemEvent () : Event (EVENT_EQUIP_ITEM) { }
-    EntityId        entity;
-    EntityId        item;
+    EquipItemEvent() : Event(EVENT_EQUIP_ITEM) {}
+    EntityId entity;
+    EntityId item;
 };
 
 class UnequipItemEvent : public Event {
 public:
-    UnequipItemEvent () : Event (EVENT_UNEQUIP_ITEM) { }
-    EntityId        entity;
-    EntityId        item;
+    UnequipItemEvent() : Event(EVENT_UNEQUIP_ITEM) {}
+    EntityId entity;
+    EntityId item;
 };
 
 class ConsumeItemEvent : public Event {
 public:
-    ConsumeItemEvent () : Event (EVENT_CONSUME_ITEM) { }
-    EntityId    entity;
-    EntityId    item;
+    ConsumeItemEvent() : Event(EVENT_CONSUME_ITEM) {}
+    EntityId entity;
+    EntityId item;
 };
 
 #endif

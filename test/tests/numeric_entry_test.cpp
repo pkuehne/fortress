@@ -1,18 +1,19 @@
-#include <gtest/gtest.h>
 #include "../../src/core/utility.h"
 #include "../../src/windows/numeric_entry.h"
 #include "../mocks/graphics_mock.h"
+#include <gtest/gtest.h>
 
 using namespace ::testing;
 
-TEST(NumericEntry, drawsNumber)
-{
+TEST(NumericEntry, drawsNumber) {
     GraphicsMock graphics;
     NumericEntry num;
 
     const char* text = nullptr;
-    EXPECT_CALL(graphics, drawString(_, Ne(1), _, _, _)).WillRepeatedly(Return(0));
-    EXPECT_CALL(graphics, drawString(_, Eq(1), _,_,_)).WillOnce(SaveArg<2>(&text));
+    EXPECT_CALL(graphics, drawString(_, Ne(1), _, _, _))
+        .WillRepeatedly(Return(0));
+    EXPECT_CALL(graphics, drawString(_, Eq(1), _, _, _))
+        .WillOnce(SaveArg<2>(&text));
 
     num.setGraphics(&graphics);
     num.setNumber(23);
@@ -22,14 +23,14 @@ TEST(NumericEntry, drawsNumber)
     EXPECT_STREQ("23", text);
 }
 
-TEST(NumericEntry, DoesNotPrintAngleBracketsWhenNotSensitive)
-{
+TEST(NumericEntry, DoesNotPrintAngleBracketsWhenNotSensitive) {
     GraphicsMock graphics;
     NumericEntry num;
 
     const char* text = nullptr;
     EXPECT_CALL(graphics, drawString(_, Ne(1), _, _, _)).Times(0);
-    EXPECT_CALL(graphics, drawString(_, Eq(1), _,_,_)).WillOnce(SaveArg<2>(&text));
+    EXPECT_CALL(graphics, drawString(_, Eq(1), _, _, _))
+        .WillOnce(SaveArg<2>(&text));
 
     num.setGraphics(&graphics);
     num.setNumber(23);
@@ -40,8 +41,7 @@ TEST(NumericEntry, DoesNotPrintAngleBracketsWhenNotSensitive)
     EXPECT_STREQ("23", text);
 }
 
-TEST(NumericEntry, PlusKeyIncreases)
-{
+TEST(NumericEntry, PlusKeyIncreases) {
     NumericEntry num;
     num.setNumber(23);
 
@@ -50,8 +50,7 @@ TEST(NumericEntry, PlusKeyIncreases)
     EXPECT_EQ(num.getNumber(), 24);
 }
 
-TEST(NumericEntry, MinusKeyIncreases)
-{
+TEST(NumericEntry, MinusKeyIncreases) {
     NumericEntry num;
     num.setNumber(23);
 
@@ -60,8 +59,7 @@ TEST(NumericEntry, MinusKeyIncreases)
     EXPECT_EQ(num.getNumber(), 22);
 }
 
-TEST(NumericEntry, RightArrowKeyIncreases)
-{
+TEST(NumericEntry, RightArrowKeyIncreases) {
     NumericEntry num;
     num.setNumber(23);
 
@@ -70,8 +68,7 @@ TEST(NumericEntry, RightArrowKeyIncreases)
     EXPECT_EQ(num.getNumber(), 24);
 }
 
-TEST(NumericEntry, LeftArrowKeyIncreases)
-{
+TEST(NumericEntry, LeftArrowKeyIncreases) {
     NumericEntry num;
     num.setNumber(23);
 
@@ -80,8 +77,7 @@ TEST(NumericEntry, LeftArrowKeyIncreases)
     EXPECT_EQ(num.getNumber(), 22);
 }
 
-TEST(NumericEntry, WidthIsSetToTextSize)
-{
+TEST(NumericEntry, WidthIsSetToTextSize) {
     NumericEntry num;
     num.setNumber(100);
 

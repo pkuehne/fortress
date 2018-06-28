@@ -1,10 +1,9 @@
-#include <config_manager.h>
+#include "config_manager.h"
 #include <fstream>
 #include <iostream>
 #include <yaml-cpp/yaml.h>
 
-ConfigManager::ConfigManager (const std::string& filename)
-{
+ConfigManager::ConfigManager(const std::string& filename) {
     YAML::Node config = YAML::LoadFile(filename);
     fullscreen = config["fullscreen"].as<bool>(true);
     windowWidth = config["WindowWidth"].as<int>(800);

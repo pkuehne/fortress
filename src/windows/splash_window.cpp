@@ -1,17 +1,13 @@
 #include "splash_window.h"
-#include "main_window.h"
 #include "../core/game_engine.h"
 #include "../core/graphics.h"
 #include "icon.h"
 #include "label.h"
+#include "main_window.h"
 
-void SplashWindow::setup()
-{
-    setFullscreen();
-}
+void SplashWindow::setup() { setFullscreen(); }
 
-void SplashWindow::registerWidgets()
-{
+void SplashWindow::registerWidgets() {
     int xOffset = getEngine()->getGraphics()->getScreenWidth() / 2 - 25;
     int yOffset = getEngine()->getGraphics()->getScreenHeight() / 2;
     unsigned char tile = 178;
@@ -142,9 +138,8 @@ void SplashWindow::registerWidgets()
     createWidget<Icon>("icon387", xOffset + 38, yOffset + 7)->setIcon(tile);
 }
 
-void SplashWindow::keyPress(unsigned char key)
-{
-    MainWindow *l_win = new MainWindow();
+void SplashWindow::keyPress(unsigned char key) {
+    MainWindow* l_win = new MainWindow();
     l_win->initialise(getEngine());
 
     getEngine()->getWindows()->replaceAllWindows(l_win);

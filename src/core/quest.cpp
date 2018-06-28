@@ -3,8 +3,7 @@
 
 #include <iostream>
 
-void KillQuest::update(GameState& state)
-{
+void KillQuest::update(GameState& state) {
     bool found = false;
     for (auto area : state.map()->getAreas()) {
         for (EntityId entity : state.entityManager()->get(area.first)) {

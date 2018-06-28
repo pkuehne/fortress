@@ -1,37 +1,32 @@
 #include "prefab_builder.h"
-#include "game_state.h"
 #include "entity_manager.h"
+#include "game_state.h"
 
-#include "sprite_component.h"
-#include "collider_component.h"
-#include "health_component.h"
-#include "description_component.h"
-#include "player_component.h"
-#include "npc_component.h"
-#include "stair_component.h"
-#include "equipment_component.h"
-#include "wearable_component.h"
-#include "wieldable_component.h"
-#include "droppable_component.h"
-#include "consumable_component.h"
+#include "../components/collider_component.h"
+#include "../components/consumable_component.h"
+#include "../components/description_component.h"
+#include "../components/droppable_component.h"
+#include "../components/equipment_component.h"
+#include "../components/health_component.h"
+#include "../components/npc_component.h"
+#include "../components/player_component.h"
+#include "../components/sprite_component.h"
+#include "../components/stair_component.h"
+#include "../components/wearable_component.h"
+#include "../components/wieldable_component.h"
 #include "floor.h"
 
-PrefabBuilder::PrefabBuilder (GameState* state)
-    : m_state (state)
-{
+PrefabBuilder::PrefabBuilder(GameState* state) : m_state(state) {}
 
-}
-
-EntityId PrefabBuilder::createWallPrefab (Location& location)
-{
+EntityId PrefabBuilder::createWallPrefab(Location& location) {
     EntityId l_entity = m_state->createEntity(location);
 
     // Sprite Component
     SpriteComponent* l_sprite =
         m_state->components()->make<SpriteComponent>(l_entity);
-    l_sprite->fgColor    = Color (GREY);
-    l_sprite->bgColor    = Color (BLACK);
-    l_sprite->sprite     = 'W';
+    l_sprite->fgColor = Color(GREY);
+    l_sprite->bgColor = Color(BLACK);
+    l_sprite->sprite = 'W';
 
     // Collider Component
     m_state->components()->make<ColliderComponent>(l_entity);
@@ -44,17 +39,16 @@ EntityId PrefabBuilder::createWallPrefab (Location& location)
     return l_entity;
 }
 
-EntityId PrefabBuilder::createPlayerPrefab (Location& location)
-{
-    EntityId l_entity = m_state->createEntity (location);
+EntityId PrefabBuilder::createPlayerPrefab(Location& location) {
+    EntityId l_entity = m_state->createEntity(location);
 
     // Sprite Component
     SpriteComponent* l_sprite =
         m_state->components()->make<SpriteComponent>(l_entity);
-    l_sprite->fgColor    = Color (WHITE);
-    l_sprite->bgColor    = Color (BLACK);
-    l_sprite->sprite     = '@';
-    l_sprite->renderLayer= 2;
+    l_sprite->fgColor = Color(WHITE);
+    l_sprite->bgColor = Color(BLACK);
+    l_sprite->sprite = '@';
+    l_sprite->renderLayer = 2;
 
     // Collider Component
     m_state->components()->make<ColliderComponent>(l_entity);
@@ -83,17 +77,16 @@ EntityId PrefabBuilder::createPlayerPrefab (Location& location)
     return l_entity;
 }
 
-EntityId PrefabBuilder::createEnemyPrefab (Location& location)
-{
+EntityId PrefabBuilder::createEnemyPrefab(Location& location) {
     EntityId l_entity = m_state->createEntity(location);
 
     // Sprite Component
     SpriteComponent* l_sprite =
         m_state->components()->make<SpriteComponent>(l_entity);
-    l_sprite->fgColor    = Color (RED);
-    l_sprite->bgColor    = Color (BLACK);
-    l_sprite->sprite     = 'O';
-    l_sprite->renderLayer= 2;
+    l_sprite->fgColor = Color(RED);
+    l_sprite->bgColor = Color(BLACK);
+    l_sprite->sprite = 'O';
+    l_sprite->renderLayer = 2;
 
     // Collider Component
     m_state->components()->make<ColliderComponent>(l_entity);
@@ -110,8 +103,7 @@ EntityId PrefabBuilder::createEnemyPrefab (Location& location)
     l_health->health = 1;
 
     // NPC Component
-    NpcComponent* l_npc =
-        m_state->components()->make<NpcComponent>(l_entity);
+    NpcComponent* l_npc = m_state->components()->make<NpcComponent>(l_entity);
     l_npc->state = "";
     l_npc->attribs["seek_target"] = "Player";
     l_npc->stateMachine = "human";
@@ -126,16 +118,15 @@ EntityId PrefabBuilder::createEnemyPrefab (Location& location)
     return l_entity;
 }
 
-EntityId PrefabBuilder::createTrollPrefab (Location& location)
-{
+EntityId PrefabBuilder::createTrollPrefab(Location& location) {
     EntityId l_entity = m_state->createEntity(location);
 
     // Sprite Component
     SpriteComponent* l_sprite =
         m_state->components()->make<SpriteComponent>(l_entity);
-    l_sprite->fgColor    = Color (RED);
-    l_sprite->bgColor    = Color (BLACK);
-    l_sprite->sprite     = 'T';
+    l_sprite->fgColor = Color(RED);
+    l_sprite->bgColor = Color(BLACK);
+    l_sprite->sprite = 'T';
 
     // Collider Component
     m_state->components()->make<ColliderComponent>(l_entity);
@@ -144,7 +135,8 @@ EntityId PrefabBuilder::createTrollPrefab (Location& location)
     DescriptionComponent* l_description =
         m_state->components()->make<DescriptionComponent>(l_entity);
     l_description->title = "Troll";
-    l_description->text = "It is huge, with fierce red eyes, crackling with magic.";
+    l_description->text =
+        "It is huge, with fierce red eyes, crackling with magic.";
 
     // Health Component
     HealthComponent* l_health =
@@ -152,8 +144,7 @@ EntityId PrefabBuilder::createTrollPrefab (Location& location)
     l_health->health = 8;
 
     // NPC Component
-    NpcComponent* l_npc =
-        m_state->components()->make<NpcComponent>(l_entity);
+    NpcComponent* l_npc = m_state->components()->make<NpcComponent>(l_entity);
     l_npc->state = "";
     l_npc->stateMachine = "monster";
 
@@ -167,35 +158,34 @@ EntityId PrefabBuilder::createTrollPrefab (Location& location)
     return l_entity;
 }
 
-EntityId PrefabBuilder::createMarkerPrefab (Location& location)
-{
+EntityId PrefabBuilder::createMarkerPrefab(Location& location) {
     EntityId l_entity = m_state->createEntity(location);
 
-    //Sprite Component
+    // Sprite Component
     SpriteComponent* l_sprite =
         m_state->components()->make<SpriteComponent>(l_entity);
-    l_sprite->fgColor    = Color (YELLOW);
-    l_sprite->bgColor    = Color (BLACK);
-    l_sprite->sprite     = 'X';
+    l_sprite->fgColor = Color(YELLOW);
+    l_sprite->bgColor = Color(BLACK);
+    l_sprite->sprite = 'X';
 
     return l_entity;
 }
 
-EntityId PrefabBuilder::createStairPrefab (STAIR dir, Location& location)
-{
+EntityId PrefabBuilder::createStairPrefab(STAIR dir, Location& location) {
     EntityId l_entity = m_state->createEntity(location);
 
-    //Sprite Component
+    // Sprite Component
     SpriteComponent* l_sprite =
         m_state->components()->make<SpriteComponent>(l_entity);
-    l_sprite->fgColor    = Color (WHITE);
-    l_sprite->bgColor    = Color (BLACK);
-    l_sprite->sprite     = (dir == STAIR_DOWN) ? 31 : 30; //'>' : '<';
+    l_sprite->fgColor = Color(WHITE);
+    l_sprite->bgColor = Color(BLACK);
+    l_sprite->sprite = (dir == STAIR_DOWN) ? 31 : 30; //'>' : '<';
 
     // Description Component
     DescriptionComponent* l_description =
         m_state->components()->make<DescriptionComponent>(l_entity);
-    l_description->title = (dir == STAIR_DOWN) ? "A stairway down" : "A stairway up";
+    l_description->title =
+        (dir == STAIR_DOWN) ? "A stairway down" : "A stairway up";
     l_description->text = "It has rough-hewn steps";
 
     // StairComponent
@@ -207,20 +197,19 @@ EntityId PrefabBuilder::createStairPrefab (STAIR dir, Location& location)
     return l_entity;
 }
 
-EntityId PrefabBuilder::createWeaponPrefab (Location& location)
-{
+EntityId PrefabBuilder::createWeaponPrefab(Location& location) {
     EntityId l_entity = m_state->createEntity(location);
 
     SpriteComponent* l_sprite =
         m_state->components()->make<SpriteComponent>(l_entity);
-    l_sprite->fgColor    = Color (YELLOW);
-    l_sprite->bgColor    = Color (BLACK);
-    l_sprite->sprite     = 189; //'$';
+    l_sprite->fgColor = Color(YELLOW);
+    l_sprite->bgColor = Color(BLACK);
+    l_sprite->sprite = 189; //'$';
 
     WieldableComponent* l_wieldable =
         m_state->components()->make<WieldableComponent>(l_entity);
     l_wieldable->position = WieldableRightHand;
-    l_wieldable->baseDamage  = 2;
+    l_wieldable->baseDamage = 2;
     l_wieldable->baseDefence = 0;
 
     DescriptionComponent* l_description =
@@ -233,20 +222,19 @@ EntityId PrefabBuilder::createWeaponPrefab (Location& location)
     return l_entity;
 }
 
-EntityId PrefabBuilder::createShieldPrefab (Location& location)
-{
+EntityId PrefabBuilder::createShieldPrefab(Location& location) {
     EntityId l_entity = m_state->createEntity(location);
 
     SpriteComponent* l_sprite =
         m_state->components()->make<SpriteComponent>(l_entity);
-    l_sprite->fgColor    = Color (YELLOW);
-    l_sprite->bgColor    = Color (BLACK);
-    l_sprite->sprite     = 189; //'$';
+    l_sprite->fgColor = Color(YELLOW);
+    l_sprite->bgColor = Color(BLACK);
+    l_sprite->sprite = 189; //'$';
 
     WieldableComponent* l_wieldable =
         m_state->components()->make<WieldableComponent>(l_entity);
     l_wieldable->position = WieldableLeftHand;
-    l_wieldable->baseDamage  = 0;
+    l_wieldable->baseDamage = 0;
     l_wieldable->baseDefence = 4;
 
     DescriptionComponent* l_description =
@@ -259,15 +247,14 @@ EntityId PrefabBuilder::createShieldPrefab (Location& location)
     return l_entity;
 }
 
-EntityId PrefabBuilder::createHelmetPrefab (Location& location)
-{
+EntityId PrefabBuilder::createHelmetPrefab(Location& location) {
     EntityId l_entity = m_state->createEntity(location);
 
     SpriteComponent* l_sprite =
         m_state->components()->make<SpriteComponent>(l_entity);
-    l_sprite->fgColor    = Color (YELLOW);
-    l_sprite->bgColor    = Color (BLACK);
-    l_sprite->sprite     = 189; //'$';
+    l_sprite->fgColor = Color(YELLOW);
+    l_sprite->bgColor = Color(BLACK);
+    l_sprite->sprite = 189; //'$';
 
     WearableComponent* l_wearable =
         m_state->components()->make<WearableComponent>(l_entity);
@@ -283,15 +270,14 @@ EntityId PrefabBuilder::createHelmetPrefab (Location& location)
     return l_entity;
 }
 
-EntityId PrefabBuilder::createPotionPrefab (Location& location)
-{
-    EntityId l_entity = m_state->createEntity (location);
+EntityId PrefabBuilder::createPotionPrefab(Location& location) {
+    EntityId l_entity = m_state->createEntity(location);
 
     SpriteComponent* l_sprite =
         m_state->components()->make<SpriteComponent>(l_entity);
-    l_sprite->fgColor    = Color (YELLOW);
-    l_sprite->bgColor    = Color (BLACK);
-    l_sprite->sprite     = 'Z' + 1; //'$';
+    l_sprite->fgColor = Color(YELLOW);
+    l_sprite->bgColor = Color(BLACK);
+    l_sprite->sprite = 'Z' + 1; //'$';
 
     DescriptionComponent* l_description =
         m_state->components()->make<DescriptionComponent>(l_entity);
@@ -302,23 +288,22 @@ EntityId PrefabBuilder::createPotionPrefab (Location& location)
 
     ConsumableComponent* l_consumable =
         m_state->components()->make<ConsumableComponent>(l_entity);
-    l_consumable->quenches       = THIRST;
+    l_consumable->quenches = THIRST;
     l_consumable->quenchStrength = 3;
-    l_consumable->effect         = HEALTH_EFFECT;
+    l_consumable->effect = HEALTH_EFFECT;
     l_consumable->effectStrength = 2;
 
     return l_entity;
 }
 
-EntityId PrefabBuilder::createTreePrefab(Location& location)
-{
-    EntityId l_entity = m_state->createEntity (location);
+EntityId PrefabBuilder::createTreePrefab(Location& location) {
+    EntityId l_entity = m_state->createEntity(location);
 
     SpriteComponent* l_sprite =
         m_state->components()->make<SpriteComponent>(l_entity);
-    l_sprite->fgColor    = Color (BROWN);
-    l_sprite->bgColor    = Color (BLACK);
-    l_sprite->sprite     = 'T';
+    l_sprite->fgColor = Color(BROWN);
+    l_sprite->bgColor = Color(BLACK);
+    l_sprite->sprite = 'T';
 
     // Description Component
     DescriptionComponent* l_description =
@@ -336,15 +321,14 @@ EntityId PrefabBuilder::createTreePrefab(Location& location)
     return l_entity;
 }
 
-EntityId PrefabBuilder::createCorpsePrefab(Location& location, char sprite)
-{
-    EntityId l_entity = m_state->createEntity (location);
+EntityId PrefabBuilder::createCorpsePrefab(Location& location, char sprite) {
+    EntityId l_entity = m_state->createEntity(location);
 
     SpriteComponent* l_sprite =
         m_state->components()->make<SpriteComponent>(l_entity);
-    l_sprite->fgColor    = Color (GREY);
-    l_sprite->bgColor    = Color (BLACK);
-    l_sprite->sprite     = sprite;
+    l_sprite->fgColor = Color(GREY);
+    l_sprite->bgColor = Color(BLACK);
+    l_sprite->sprite = sprite;
 
     // Description Component
     DescriptionComponent* l_description =
@@ -355,15 +339,14 @@ EntityId PrefabBuilder::createCorpsePrefab(Location& location, char sprite)
     return l_entity;
 }
 
-EntityId PrefabBuilder::createForesterPrefab (Location& location)
-{
-    EntityId l_entity = m_state->createEntity (location);
+EntityId PrefabBuilder::createForesterPrefab(Location& location) {
+    EntityId l_entity = m_state->createEntity(location);
 
     SpriteComponent* l_sprite =
         m_state->components()->make<SpriteComponent>(l_entity);
-    l_sprite->fgColor    = Color (GREEN);
-    l_sprite->bgColor    = Color (BLACK);
-    l_sprite->sprite     = 'H';
+    l_sprite->fgColor = Color(GREEN);
+    l_sprite->bgColor = Color(BLACK);
+    l_sprite->sprite = 'H';
 
     // Collider Component
     m_state->components()->make<ColliderComponent>(l_entity);
@@ -380,8 +363,7 @@ EntityId PrefabBuilder::createForesterPrefab (Location& location)
     l_health->health = 4;
 
     // NPC Component
-    NpcComponent* l_npc =
-        m_state->components()->make<NpcComponent>(l_entity);
+    NpcComponent* l_npc = m_state->components()->make<NpcComponent>(l_entity);
     l_npc->state = "";
     l_npc->stateMachine = "human";
     l_npc->attribs["seek_target"] = "Tree";
@@ -392,7 +374,6 @@ EntityId PrefabBuilder::createForesterPrefab (Location& location)
     l_equipment->rightHandWieldable = createWeaponPrefab(location);
     l_equipment->leftHandWieldable = createShieldPrefab(location);
     l_equipment->headWearable = createHelmetPrefab(location);
-
 
     LOG(INFO) << "Created Forester: " << l_entity << std::endl;
     return l_entity;

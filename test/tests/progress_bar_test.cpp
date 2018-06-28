@@ -1,11 +1,10 @@
-#include <gtest/gtest.h>
 #include "../../src/windows/progress_bar.h"
 #include "../mocks/graphics_mock.h"
+#include <gtest/gtest.h>
 
 using namespace ::testing;
 
-TEST(ProgressBar, 100PercentRendersProgressBarWidth)
-{
+TEST(ProgressBar, 100PercentRendersProgressBarWidth) {
     GraphicsMock graphics;
 
     ProgressBar bar;
@@ -19,8 +18,7 @@ TEST(ProgressBar, 100PercentRendersProgressBarWidth)
     bar.render();
 }
 
-TEST(ProgressBar, 0PercentRendersNothing)
-{
+TEST(ProgressBar, 0PercentRendersNothing) {
     GraphicsMock graphics;
 
     ProgressBar bar;
@@ -34,8 +32,7 @@ TEST(ProgressBar, 0PercentRendersNothing)
     bar.render();
 }
 
-TEST(ProgressBar, 50PercentRendersHalf)
-{
+TEST(ProgressBar, 50PercentRendersHalf) {
     GraphicsMock graphics;
 
     ProgressBar bar;
@@ -49,8 +46,7 @@ TEST(ProgressBar, 50PercentRendersHalf)
     bar.render();
 }
 
-TEST(ProgressBar, ValueAboveMaxOnlyRendersMax)
-{
+TEST(ProgressBar, ValueAboveMaxOnlyRendersMax) {
     GraphicsMock graphics;
 
     ProgressBar bar;
@@ -64,8 +60,7 @@ TEST(ProgressBar, ValueAboveMaxOnlyRendersMax)
     bar.render();
 }
 
-TEST(ProgressBar, DrawsAlongTheHorizontalAxis)
-{
+TEST(ProgressBar, DrawsAlongTheHorizontalAxis) {
     GraphicsMock graphics;
 
     ProgressBar bar;

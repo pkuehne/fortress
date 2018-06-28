@@ -10,9 +10,9 @@ class MapWindow : public Window {
 public:
     virtual void setup();
     virtual void registerWidgets();
-    
+
     virtual void nextTurn();
-    virtual void keyPress (unsigned char key);
+    virtual void keyPress(unsigned char key);
     void setAction(char action, unsigned int yPos);
 
 private:
@@ -22,7 +22,7 @@ private:
     int m_mapStartX;
     int m_mapStartY;
 
-    char    m_action;
+    char m_action;
 };
 
 #endif

@@ -2,6 +2,6 @@
 
 class HealthSystem : public GameSystemBase {
 public:
-    virtual void handleEvent (const Event* event);
-    virtual void update () override;
+    virtual void handleEvent(const Event* event) override;
+    virtual void update() override;
 };

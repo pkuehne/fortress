@@ -1,12 +1,11 @@
-#include <gtest/gtest.h>
 #include "../../src/windows/tab.h"
 #include "../mocks/graphics_mock.h"
 #include "../mocks/widget_mock.h"
+#include <gtest/gtest.h>
 
 using namespace ::testing;
 
-TEST(Tab, AddingPageCreatesNewFrame)
-{
+TEST(Tab, AddingPageCreatesNewFrame) {
     unsigned int width = 100;
     unsigned int height = 200;
     Tab tab;
@@ -20,8 +19,7 @@ TEST(Tab, AddingPageCreatesNewFrame)
     EXPECT_EQ(tab.getPages()[0]->getTitle(), title);
 }
 
-TEST(Tab, RendersAllPageTitlesAndSelector)
-{
+TEST(Tab, RendersAllPageTitlesAndSelector) {
     GraphicsMock graphics;
     Tab tab;
     tab.setGraphics(&graphics);
@@ -42,8 +40,7 @@ TEST(Tab, RendersAllPageTitlesAndSelector)
     tab.render();
 }
 
-TEST(Tab, rendersOnlySelectedTab)
-{
+TEST(Tab, rendersOnlySelectedTab) {
     WidgetMock wOne;
     WidgetMock wTwo;
     GraphicsMock graphics;
@@ -64,8 +61,7 @@ TEST(Tab, rendersOnlySelectedTab)
     tab.render();
 }
 
-TEST(Tab, setsYOffsetForAllPagesToAccountForPageNames)
-{
+TEST(Tab, setsYOffsetForAllPagesToAccountForPageNames) {
     unsigned int x = 20;
     unsigned int y = 30;
     unsigned int width = 100;
@@ -81,21 +77,20 @@ TEST(Tab, setsYOffsetForAllPagesToAccountForPageNames)
     std::string titleOne("Foor");
     std::string titleTwo("Bar");
 
-    Frame *frame1 = tab.addPage(titleOne)->getFrame();
-    Frame *frame2 = tab.addPage(titleTwo)->getFrame();
+    Frame* frame1 = tab.addPage(titleOne)->getFrame();
+    Frame* frame2 = tab.addPage(titleTwo)->getFrame();
 
     tab.realign(x, y, width, height);
     EXPECT_EQ(frame1->getXPos(), tab.getXPos());
     EXPECT_EQ(frame1->getYPos(), tab.getYPos() + 2);
     EXPECT_EQ(frame1->getWidth(), tab.getWidth());
-    EXPECT_EQ(frame1->getHeight(), tab.getHeight()-2);
+    EXPECT_EQ(frame1->getHeight(), tab.getHeight() - 2);
 
     EXPECT_EQ(frame2->getXPos(), tab.getXPos());
     EXPECT_EQ(frame2->getYPos(), tab.getYPos() + 2);
 }
 
-TEST(Tab, passedOnKeyPressOnlyForSelectedFrame)
-{
+TEST(Tab, passedOnKeyPressOnlyForSelectedFrame) {
     WidgetMock wOne;
     WidgetMock wTwo;
     GraphicsMock graphics;
@@ -116,8 +111,7 @@ TEST(Tab, passedOnKeyPressOnlyForSelectedFrame)
     tab.keyPress(key);
 }
 
-TEST(Tab, TabKeySwitchesBetweenTabs)
-{
+TEST(Tab, TabKeySwitchesBetweenTabs) {
     Tab tab;
 
     std::string titleOne("Foor");
@@ -140,8 +134,7 @@ TEST(Tab, TabKeySwitchesBetweenTabs)
     EXPECT_EQ(tab.getCurrentPage(), 0);
 }
 
-TEST(Tab, OneTabDoesNoSwitching)
-{
+TEST(Tab, OneTabDoesNoSwitching) {
     Tab tab;
     tab.addPage("page1");
 
@@ -149,45 +142,41 @@ TEST(Tab, OneTabDoesNoSwitching)
     EXPECT_EQ(tab.getCurrentPage(), 0);
 }
 
-TEST(Tab, SwitchingPagesByKeyCallsCallback)
-{
+TEST(Tab, SwitchingPagesByKeyCallsCallback) {
     Tab tab;
 
     tab.addPage("Foo");
     tab.addPage("Bar");
-    tab.setPageSwitchCallback([](Tab *t) { throw "Selected"; });
+    tab.setPageSwitchCallback([](Tab* t) { throw "Selected"; });
 
     EXPECT_ANY_THROW(tab.keyPress(KEY_TAB));
 }
 
-TEST(Tab, SwitchingPagesBySettingCallsCallback)
-{
+TEST(Tab, SwitchingPagesBySettingCallsCallback) {
     Tab tab;
 
     tab.addPage("Foo");
     tab.addPage("Bar");
-    tab.setPageSwitchCallback([](Tab *t) { throw "Selected"; });
+    tab.setPageSwitchCallback([](Tab* t) { throw "Selected"; });
 
     EXPECT_ANY_THROW(tab.setCurrentPage(1));
 }
 
-TEST(Tab, SwitchingPagesToSamePageDoesNotCallCallback)
-{
+TEST(Tab, SwitchingPagesToSamePageDoesNotCallCallback) {
     Tab tab;
 
     tab.addPage("Foo");
     tab.addPage("Bar");
-    tab.setPageSwitchCallback([](Tab *t) { throw "Selected"; });
+    tab.setPageSwitchCallback([](Tab* t) { throw "Selected"; });
 
     EXPECT_NO_THROW(tab.setCurrentPage(0));
 }
 
-TEST(Tab, SinglePageDoesNotCallCallback)
-{
+TEST(Tab, SinglePageDoesNotCallCallback) {
     Tab tab;
 
     tab.addPage("Foo");
-    tab.setPageSwitchCallback([](Tab *t) { throw "Selected"; });
+    tab.setPageSwitchCallback([](Tab* t) { throw "Selected"; });
 
     EXPECT_NO_THROW(tab.keyPress(KEY_TAB));
 }

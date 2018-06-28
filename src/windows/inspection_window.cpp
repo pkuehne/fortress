@@ -1,30 +1,28 @@
 #include "inspection_window.h"
-#include "../core/game_engine.h"
 #include "../components/description_component.h"
+#include "../core/game_engine.h"
 #include "text_block.h"
 
-void InspectionWindow::setup()
-{
+void InspectionWindow::setup() {
     setTitle("Details");
     setEscapeBehaviour(Window::EscapeBehaviour::CloseWindow);
 }
 
-void InspectionWindow::registerWidgets()
-{
+void InspectionWindow::registerWidgets() {
     const unsigned int l_windowWidth = 30;
 
-    TextBlock *block = createWidget<TextBlock>("txtDescription", 1, 1);
+    TextBlock* block = createWidget<TextBlock>("txtDescription", 1, 1);
     block->setWidth(l_windowWidth);
 
-    EntityId *l_entity = static_cast<EntityId *>(getArgs());
-    if (!l_entity)
-    {
+    EntityId* l_entity = static_cast<EntityId*>(getArgs());
+    if (!l_entity) {
         block->setText("There is nothing here...");
         return;
     }
-    DescriptionComponent *l_description = getEngine()->state()->components()->get<DescriptionComponent>(*l_entity);
-    if (!l_description)
-    {
+    DescriptionComponent* l_description =
+        getEngine()->state()->components()->get<DescriptionComponent>(
+            *l_entity);
+    if (!l_description) {
         block->setText("There are no words...");
         return;
     }
@@ -35,11 +33,9 @@ void InspectionWindow::registerWidgets()
     setWidth(l_windowWidth + 4);
 }
 
-void InspectionWindow::destroy()
-{
-    EntityId *l_entity = static_cast<EntityId *>(getArgs());
-    if (l_entity)
-    {
+void InspectionWindow::destroy() {
+    EntityId* l_entity = static_cast<EntityId*>(getArgs());
+    if (l_entity) {
         delete l_entity;
     }
     Window::destroy();

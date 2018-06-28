@@ -1,8 +1,7 @@
-#include <gtest/gtest.h>
 #include "../../src/windows/text_block.h"
+#include <gtest/gtest.h>
 
-TEST(TextBlock, fitsAllTextOnOneLineWhenTextSizeLessThanWidth)
-{
+TEST(TextBlock, fitsAllTextOnOneLineWhenTextSizeLessThanWidth) {
     TextBlock block;
     block.setWidth(6);
     block.setText("12345");
@@ -10,8 +9,7 @@ TEST(TextBlock, fitsAllTextOnOneLineWhenTextSizeLessThanWidth)
     EXPECT_EQ(block.getHeight(), 1);
 }
 
-TEST(TextBlock, TwoWordsSplitOverTwoLinesIfTheyDontFit)
-{
+TEST(TextBlock, TwoWordsSplitOverTwoLinesIfTheyDontFit) {
     TextBlock block;
     block.setWidth(6);
     block.setText("12345 12345");
@@ -19,8 +17,7 @@ TEST(TextBlock, TwoWordsSplitOverTwoLinesIfTheyDontFit)
     EXPECT_EQ(block.getHeight(), 2);
 }
 
-TEST(TextBlock, WhenWidthIsChangedTextIsReWrapped)
-{
+TEST(TextBlock, WhenWidthIsChangedTextIsReWrapped) {
     TextBlock block;
     block.setWidth(6);
     block.setText("12345 12345 67890 67890");

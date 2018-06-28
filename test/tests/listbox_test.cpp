@@ -1,14 +1,12 @@
-#include <gtest/gtest.h>
-#include "../../src/windows/listbox.h"
 #include "../../src/core/utility.h"
+#include "../../src/windows/listbox.h"
 #include "../mocks/graphics_mock.h"
+#include <gtest/gtest.h>
 
 using namespace ::testing;
-class ListBoxTest : public ::testing::Test
-{
-  public:
-    void SetUp()
-    {
+class ListBoxTest : public ::testing::Test {
+public:
+    void SetUp() {
         item1.setText("item1");
         item1.setValue(1);
 
@@ -41,18 +39,16 @@ class ListBoxTest : public ::testing::Test
     ListBoxItem item5;
 };
 
-TEST_F(ListBoxTest, pressingEnterInvokesCallback)
-{
+TEST_F(ListBoxTest, pressingEnterInvokesCallback) {
     bool called = false;
-    box.setItemSelectedCallback([&](ListBox *b) { called = true; });
+    box.setItemSelectedCallback([&](ListBox* b) { called = true; });
 
     box.keyPress(KEY_ENTER);
 
     EXPECT_TRUE(called);
 }
 
-TEST_F(ListBoxTest, ScrollingUpDecrementsSelectedItem)
-{
+TEST_F(ListBoxTest, ScrollingUpDecrementsSelectedItem) {
     box.setSelection(1);
 
     box.keyPress('-');
@@ -60,15 +56,13 @@ TEST_F(ListBoxTest, ScrollingUpDecrementsSelectedItem)
     EXPECT_EQ(box.getSelection(), 0);
 }
 
-TEST_F(ListBoxTest, ScrollingUpBeyondFirstItemDoesNothing)
-{
+TEST_F(ListBoxTest, ScrollingUpBeyondFirstItemDoesNothing) {
     box.keyPress('+');
 
     EXPECT_EQ(box.getSelection(), 1);
 }
 
-TEST_F(ListBoxTest, ScrollingDownIncrementsSelection)
-{
+TEST_F(ListBoxTest, ScrollingDownIncrementsSelection) {
     box.setSelection(4);
 
     box.keyPress('+');
@@ -76,8 +70,7 @@ TEST_F(ListBoxTest, ScrollingDownIncrementsSelection)
     EXPECT_EQ(box.getSelection(), 4);
 }
 
-TEST_F(ListBoxTest, ClearingItemsRemovesAll)
-{
+TEST_F(ListBoxTest, ClearingItemsRemovesAll) {
     EXPECT_NE(0, box.getItems().size());
 
     box.clearItems();
@@ -85,17 +78,15 @@ TEST_F(ListBoxTest, ClearingItemsRemovesAll)
     EXPECT_EQ(0, box.getItems().size());
 }
 
-TEST_F(ListBoxTest, ClearingItemsResetsSelectionButDoesNotCallCallback)
-{
+TEST_F(ListBoxTest, ClearingItemsResetsSelectionButDoesNotCallCallback) {
     box.setSelection(3);
-    box.setItemSelectedCallback([](ListBox *b) { throw "Selected"; });
+    box.setItemSelectedCallback([](ListBox* b) { throw "Selected"; });
 
     EXPECT_NO_THROW(box.clearItems());
     EXPECT_EQ(0, box.getSelection());
 }
 
-TEST_F(ListBoxTest, AddingItemSetsItsIndex)
-{
+TEST_F(ListBoxTest, AddingItemSetsItsIndex) {
     ListBoxItem item1;
     ListBoxItem item2;
 
@@ -105,61 +96,67 @@ TEST_F(ListBoxTest, AddingItemSetsItsIndex)
     EXPECT_EQ(1, box.getItems()[1].getIndex());
 }
 
-TEST_F(ListBoxTest, getSelectedItemDoesJustThat)
-{
+TEST_F(ListBoxTest, getSelectedItemDoesJustThat) {
     box.setSelection(3);
 
     EXPECT_EQ(box.getSelectedItem().getIndex(), 3);
 }
 
-TEST_F(ListBoxTest, gettingSelectedItemFromEmptyBoxTHrows)
-{
+TEST_F(ListBoxTest, gettingSelectedItemFromEmptyBoxTHrows) {
     ListBox b;
 
     EXPECT_ANY_THROW(b.getSelectedItem());
 }
 
-TEST_F(ListBoxTest, ItemsAreRenderedWithColour)
-{
+TEST_F(ListBoxTest, ItemsAreRenderedWithColour) {
     GraphicsMock graphics;
     box.setGraphics(&graphics);
     box.setHeight(10);       // give enough space
     box.setSensitive(false); // Hide the selector
-     
-    EXPECT_CALL(graphics, drawString(Eq(0), Eq(0), StrEq(item1.getText()), _, _)).Times(1);
-    EXPECT_CALL(graphics, drawString(Eq(1), Eq(0), StrEq(item2.getText()), _, _)).Times(1);
-    EXPECT_CALL(graphics, drawString(Eq(2), Eq(0), StrEq(item3.getText()), _, _)).Times(1);
-    EXPECT_CALL(graphics, drawString(Eq(3), Eq(0), StrEq(item4.getText()), _, _)).Times(1);
-    EXPECT_CALL(graphics, drawString(Eq(4), Eq(0), StrEq(item5.getText()), Eq(Color(RED)), _)).Times(1);
+
+    EXPECT_CALL(graphics,
+                drawString(Eq(0), Eq(0), StrEq(item1.getText()), _, _))
+        .Times(1);
+    EXPECT_CALL(graphics,
+                drawString(Eq(1), Eq(0), StrEq(item2.getText()), _, _))
+        .Times(1);
+    EXPECT_CALL(graphics,
+                drawString(Eq(2), Eq(0), StrEq(item3.getText()), _, _))
+        .Times(1);
+    EXPECT_CALL(graphics,
+                drawString(Eq(3), Eq(0), StrEq(item4.getText()), _, _))
+        .Times(1);
+    EXPECT_CALL(graphics, drawString(Eq(4), Eq(0), StrEq(item5.getText()),
+                                     Eq(Color(RED)), _))
+        .Times(1);
 
     box.render();
 }
 
-TEST_F(ListBoxTest, SelectorIsDrawnNextToSelectedItem)
-{
+TEST_F(ListBoxTest, SelectorIsDrawnNextToSelectedItem) {
     GraphicsMock graphics;
     box.setGraphics(&graphics);
 
     EXPECT_CALL(graphics, drawString(Eq(0), Eq(0), StrEq(">"), _, _)).Times(1);
-    EXPECT_CALL(graphics, drawString(_, Eq(1), StrNe(">"), _, _)).Times(AtLeast(1));
+    EXPECT_CALL(graphics, drawString(_, Eq(1), StrNe(">"), _, _))
+        .Times(AtLeast(1));
 
     box.render();
 }
 
-TEST_F(ListBoxTest, SelectorIsNotDrawnWhenListBoxIsNotSensitive)
-{
+TEST_F(ListBoxTest, SelectorIsNotDrawnWhenListBoxIsNotSensitive) {
     GraphicsMock graphics;
     box.setGraphics(&graphics);
     box.setSensitive(false);
 
     EXPECT_CALL(graphics, drawString(Eq(0), Eq(0), StrEq(">"), _, _)).Times(0);
-    EXPECT_CALL(graphics, drawString(_, Eq(0), StrNe(">"), _, _)).Times(AtLeast(1));
+    EXPECT_CALL(graphics, drawString(_, Eq(0), StrNe(">"), _, _))
+        .Times(AtLeast(1));
 
     box.render();
 }
 
-TEST_F(ListBoxTest, ScrollToEndMovesSelectionToLastItem)
-{
+TEST_F(ListBoxTest, ScrollToEndMovesSelectionToLastItem) {
     box.setHeight(3);
     box.scrollToBottom();
 

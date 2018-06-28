@@ -3,5 +3,5 @@
 
 class ConsumableSystem : public GameSystemBase {
 public:
-    virtual void handleEvent (const Event* event);
+    virtual void handleEvent(const Event* event);
 };

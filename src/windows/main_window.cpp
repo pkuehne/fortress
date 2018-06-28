@@ -1,22 +1,26 @@
 #include "main_window.h"
-#include "map_window.h"
+#include "../core/game_engine.h"
 #include "generator_window.h"
 #include "label.h"
-#include "../core/game_engine.h"
+#include "map_window.h"
 
-void MainWindow::setup()
-{
+void MainWindow::setup() {
     setTitle("FORTRESS");
     setFullscreen();
     setEscapeBehaviour(Window::EscapeBehaviour::QuitGame);
 }
-void MainWindow::registerWidgets()
-{
-    Label::CommandCharCB quickstart = [](Label *l) {
-        l->getWindow()->getEngine()->getWindows()->createWindow<GeneratorWindow>((void *)1);
+void MainWindow::registerWidgets() {
+    Label::CommandCharCB quickstart = [](Label* l) {
+        l->getWindow()
+            ->getEngine()
+            ->getWindows()
+            ->createWindow<GeneratorWindow>((void*)1);
     };
-    Label::CommandCharCB create = [](Label *l) {
-        l->getWindow()->getEngine()->getWindows()->createWindow<GeneratorWindow>();
+    Label::CommandCharCB create = [](Label* l) {
+        l->getWindow()
+            ->getEngine()
+            ->getWindows()
+            ->createWindow<GeneratorWindow>();
     };
 
     this->createWidget<Label>("lblQuickstart", 1, 15)

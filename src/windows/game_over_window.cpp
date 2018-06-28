@@ -1,9 +1,8 @@
 #include "game_over_window.h"
-#include "label.h"
 #include "../core/game_engine.h"
+#include "label.h"
 
-void GameOverWindow::registerWidgets()
-{
+void GameOverWindow::registerWidgets() {
     Label* l = createWidget<Label>("lblResult", 2, 2);
     EntityId* l_entity = static_cast<EntityId*>(getArgs());
     if (l_entity) {
@@ -13,9 +12,8 @@ void GameOverWindow::registerWidgets()
     }
 }
 
-void GameOverWindow::setup()
-{
-    setTitle ("GAME OVER");
+void GameOverWindow::setup() {
+    setTitle("GAME OVER");
     setHeight(13);
     setWidth(5);
 

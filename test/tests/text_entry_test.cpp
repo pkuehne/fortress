@@ -1,13 +1,12 @@
-#include "../../src/windows/text_entry.h"
 #include "../../src/core/utility.h"
+#include "../../src/windows/text_entry.h"
 
 #include "../mocks/graphics_mock.h"
 #include <gtest/gtest.h>
 
 using namespace ::testing;
 
-TEST(TextEntry, CanSetAndGetText)
-{
+TEST(TextEntry, CanSetAndGetText) {
     TextEntry entry;
     std::string testText("Fooo");
 
@@ -16,8 +15,7 @@ TEST(TextEntry, CanSetAndGetText)
     EXPECT_EQ(testText, entry.getText());
 }
 
-TEST(TextEntry, HasBlinkingCursor)
-{
+TEST(TextEntry, HasBlinkingCursor) {
     GraphicsMock graphics;
     TextEntry entry;
     entry.setGraphics(&graphics);
@@ -29,14 +27,14 @@ TEST(TextEntry, HasBlinkingCursor)
     entry.render();
 }
 
-TEST(TextEntry, renderShowsTextPlusCursor)
-{
+TEST(TextEntry, renderShowsTextPlusCursor) {
     GraphicsMock graphics;
     TextEntry entry;
     entry.setGraphics(&graphics);
     entry.setText(std::string("Foo"));
 
-    EXPECT_CALL(graphics, drawString(Eq(0), Eq(0), StrEq("Foo"), _, _)).Times(2);
+    EXPECT_CALL(graphics, drawString(Eq(0), Eq(0), StrEq("Foo"), _, _))
+        .Times(2);
     EXPECT_CALL(graphics, drawString(Eq(0), Eq(3), StrEq("_"), _, _)).Times(1);
 
     // Run render twice, underscore should render only once!
@@ -44,8 +42,7 @@ TEST(TextEntry, renderShowsTextPlusCursor)
     entry.render();
 }
 
-TEST(TextEntry, KeyStrokesAreAppendedToText)
-{
+TEST(TextEntry, KeyStrokesAreAppendedToText) {
     TextEntry entry;
 
     entry.keyPress('b');
@@ -56,8 +53,7 @@ TEST(TextEntry, KeyStrokesAreAppendedToText)
     EXPECT_EQ(std::string("bar!"), entry.getText());
 }
 
-TEST(TextEntry, NonPrintableKeystrokesAreIgnored)
-{
+TEST(TextEntry, NonPrintableKeystrokesAreIgnored) {
     TextEntry entry;
 
     entry.keyPress('\0');
@@ -67,8 +63,7 @@ TEST(TextEntry, NonPrintableKeystrokesAreIgnored)
     EXPECT_EQ(std::string(""), entry.getText());
 }
 
-TEST(TextEntry, BackspaceRemovesLastChar)
-{
+TEST(TextEntry, BackspaceRemovesLastChar) {
     TextEntry entry;
 
     entry.keyPress('b');
@@ -80,8 +75,7 @@ TEST(TextEntry, BackspaceRemovesLastChar)
     EXPECT_EQ(std::string("bar"), entry.getText());
 }
 
-TEST(TextEntry, BackspaceOnEmptyStringDoesNothing)
-{
+TEST(TextEntry, BackspaceOnEmptyStringDoesNothing) {
     TextEntry entry;
 
     EXPECT_NO_THROW(entry.keyPress(KEY_BACKSPACE));
@@ -89,14 +83,11 @@ TEST(TextEntry, BackspaceOnEmptyStringDoesNothing)
     EXPECT_EQ(std::string(""), entry.getText());
 }
 
-TEST(TextEntry, ReturnCallsCallback)
-{
+TEST(TextEntry, ReturnCallsCallback) {
     TextEntry entry;
     bool called = false;
 
-    entry.setEnterCallback([&](TextEntry* e) {
-        called = true;
-    });
+    entry.setEnterCallback([&](TextEntry* e) { called = true; });
 
     entry.keyPress(KEY_ENTER);
     EXPECT_TRUE(called);

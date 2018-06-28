@@ -29,30 +29,30 @@ private:
 
 private:
     void createEntitiesFromMap();
-    bool generateRoom ();
+    bool generateRoom();
     bool generateLevel();
-    void connectRooms (Room& start, Room& end);
+    void connectRooms(Room& start, Room& end);
     void placeUpStair();
     void placeDownStair();
     void placeOrcs();
     void placeItems();
-    void loadMap ();
-    unsigned char wallSprite (unsigned int x, unsigned int y);
+    void loadMap();
+    unsigned char wallSprite(unsigned int x, unsigned int y);
 
 private:
-    unsigned int            m_roomTarget        = 1;
-    unsigned int            m_startRoom         = 0;
-    unsigned int            m_level             = 1;
-    unsigned int            m_maxDepth          = 1;
-    unsigned int            m_upStairTarget     = 0;
-    unsigned int            m_downStairTarget   = 0;
-    unsigned int            m_upStairLink       = 0;
-    unsigned int            m_downStairLink     = 0;
-    unsigned int            m_prevDownStair     = 0;
-    unsigned int            m_downStair         = 0;
-    unsigned int            m_upStair           = 0;
-    std::vector<Room>       m_rooms;
-    bool                    m_createBoss        = false;
+    unsigned int m_roomTarget = 1;
+    unsigned int m_startRoom = 0;
+    unsigned int m_level = 1;
+    unsigned int m_maxDepth = 1;
+    unsigned int m_upStairTarget = 0;
+    unsigned int m_downStairTarget = 0;
+    unsigned int m_upStairLink = 0;
+    unsigned int m_downStairLink = 0;
+    unsigned int m_prevDownStair = 0;
+    unsigned int m_downStair = 0;
+    unsigned int m_upStair = 0;
+    std::vector<Room> m_rooms;
+    bool m_createBoss = false;
 };
 
 #endif

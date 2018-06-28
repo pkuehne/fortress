@@ -1,16 +1,15 @@
 #include "generator_window.h"
+#include "../components/stair_component.h"
 #include "../core/game_engine.h"
 #include "../generators/dungeon_generator.h"
 #include "../generators/rural_generator.h"
-#include "map_window.h"
-#include "../components/stair_component.h"
 #include "label.h"
+#include "map_window.h"
 #include "numeric_entry.h"
-#include <sstream>
 #include <glog/logging.h>
+#include <sstream>
 
-void updateNumericEntrySensitivity(GeneratorWindow *win, std::string numName)
-{
+void updateNumericEntrySensitivity(GeneratorWindow* win, std::string numName) {
     auto setSensitive = [](NumericEntry* l, std::string name) {
         l->setSensitive(l->getName() == name);
     };
@@ -21,8 +20,7 @@ void updateNumericEntrySensitivity(GeneratorWindow *win, std::string numName)
     setSensitive(win->getWidget<NumericEntry>("numRooms"), numName);
 }
 
-void GeneratorWindow::setup()
-{
+void GeneratorWindow::setup() {
     m_worldSize = 129;
     m_selectedPosition = WIDTH;
     m_status = WAITING;
@@ -32,8 +30,7 @@ void GeneratorWindow::setup()
     setEscapeBehaviour(Window::EscapeBehaviour::CloseWindow);
 }
 
-void GeneratorWindow::registerWidgets()
-{
+void GeneratorWindow::registerWidgets() {
     createWidget<Label>("lblParameters", 1, 11)
         ->setText("Level Parameters:")
         ->setVerticalAlign(Widget::VerticalAlign::Bottom);
@@ -41,40 +38,45 @@ void GeneratorWindow::registerWidgets()
         ->setText("Width:")
         ->setCommandChar(1)
         ->setIgnoreCommandCharCase(true)
-        ->setCommandCharCallback([](Label *l) {
-            updateNumericEntrySensitivity(dynamic_cast<GeneratorWindow *>(l->getWindow()), "numWidth");
+        ->setCommandCharCallback([](Label* l) {
+            updateNumericEntrySensitivity(
+                dynamic_cast<GeneratorWindow*>(l->getWindow()), "numWidth");
         })
         ->setVerticalAlign(Widget::VerticalAlign::Bottom);
     createWidget<Label>("lblHeight", 1, 9)
         ->setText("Height:")
         ->setCommandChar(1)
         ->setIgnoreCommandCharCase(true)
-        ->setCommandCharCallback([](Label *l) {
-            updateNumericEntrySensitivity(dynamic_cast<GeneratorWindow *>(l->getWindow()), "numHeight");
+        ->setCommandCharCallback([](Label* l) {
+            updateNumericEntrySensitivity(
+                dynamic_cast<GeneratorWindow*>(l->getWindow()), "numHeight");
         })
         ->setVerticalAlign(Widget::VerticalAlign::Bottom);
     createWidget<Label>("lblRooms", 1, 8)
         ->setText("Rooms:")
         ->setCommandChar(1)
         ->setIgnoreCommandCharCase(true)
-        ->setCommandCharCallback([](Label *l) {
-            updateNumericEntrySensitivity(dynamic_cast<GeneratorWindow *>(l->getWindow()), "numRooms");
+        ->setCommandCharCallback([](Label* l) {
+            updateNumericEntrySensitivity(
+                dynamic_cast<GeneratorWindow*>(l->getWindow()), "numRooms");
         })
         ->setVerticalAlign(Widget::VerticalAlign::Bottom);
     createWidget<Label>("lblDepth", 1, 7)
         ->setText("Depth:")
         ->setCommandChar(1)
         ->setIgnoreCommandCharCase(true)
-        ->setCommandCharCallback([](Label *l) {
-            updateNumericEntrySensitivity(dynamic_cast<GeneratorWindow *>(l->getWindow()), "numDepth");
+        ->setCommandCharCallback([](Label* l) {
+            updateNumericEntrySensitivity(
+                dynamic_cast<GeneratorWindow*>(l->getWindow()), "numDepth");
         })
         ->setVerticalAlign(Widget::VerticalAlign::Bottom);
     createWidget<Label>("lblCreate", 1, 6)
         ->setText("Create:")
         ->setCommandChar(1)
         ->setIgnoreCommandCharCase(true)
-        ->setCommandCharCallback([](Label *l) {
-            GeneratorWindow *win = dynamic_cast<GeneratorWindow *>(l->getWindow());
+        ->setCommandCharCallback([](Label* l) {
+            GeneratorWindow* win =
+                dynamic_cast<GeneratorWindow*>(l->getWindow());
             win->startGenerating();
         })
         ->setVerticalAlign(Widget::VerticalAlign::Bottom);
@@ -82,8 +84,9 @@ void GeneratorWindow::registerWidgets()
         ->setText("Play:")
         ->setCommandChar(1)
         ->setIgnoreCommandCharCase(true)
-        ->setCommandCharCallback([](Label *l) {
-            GeneratorWindow *win = dynamic_cast<GeneratorWindow *>(l->getWindow());
+        ->setCommandCharCallback([](Label* l) {
+            GeneratorWindow* win =
+                dynamic_cast<GeneratorWindow*>(l->getWindow());
             win->startPlaying();
         })
         ->setVerticalAlign(Widget::VerticalAlign::Bottom)
@@ -106,29 +109,28 @@ void GeneratorWindow::registerWidgets()
         ->setSensitive(false);
 }
 
-void GeneratorWindow::redraw()
-{
-    if (getArgs() && m_status == WAITING)
-    {
+void GeneratorWindow::redraw() {
+    if (getArgs() && m_status == WAITING) {
         startGenerating();
         startPlaying();
         return;
     }
 }
 
-void GeneratorWindow::startGenerating()
-{
+void GeneratorWindow::startGenerating() {
     m_progress = 1;
     m_status = PROGRESS;
-    unsigned int l_levelWidth = getWidget<NumericEntry>("numWidth")->getNumber();
-    unsigned int l_levelHeight = getWidget<NumericEntry>("numHeight")->getNumber();
-    unsigned int l_levelRooms = getWidget<NumericEntry>("numRooms")->getNumber();
-    unsigned int l_levelDepth = getWidget<NumericEntry>("numDepth")->getNumber();
+    unsigned int l_levelWidth =
+        getWidget<NumericEntry>("numWidth")->getNumber();
+    unsigned int l_levelHeight =
+        getWidget<NumericEntry>("numHeight")->getNumber();
+    unsigned int l_levelRooms =
+        getWidget<NumericEntry>("numRooms")->getNumber();
+    unsigned int l_levelDepth =
+        getWidget<NumericEntry>("numDepth")->getNumber();
 
-    unsigned int startArea = getEngine()->state()->map()->createArea(
-        l_levelWidth,
-        l_levelHeight,
-        1);
+    unsigned int startArea =
+        getEngine()->state()->map()->createArea(l_levelWidth, l_levelHeight, 1);
 
     RuralGenerator rural;
     rural.initialise(getEngine());
@@ -137,14 +139,11 @@ void GeneratorWindow::startGenerating()
     rural.area() = startArea;
     rural.generate();
 
-    for (EntityId stair : rural.getAreaLinks())
-    {
+    for (EntityId stair : rural.getAreaLinks()) {
         int retries = 0;
         bool success = false;
-        unsigned int area =
-            getEngine()->state()->map()->createArea(l_levelWidth,
-                                                    l_levelHeight,
-                                                    l_levelDepth);
+        unsigned int area = getEngine()->state()->map()->createArea(
+            l_levelWidth, l_levelHeight, l_levelDepth);
 
         LOG(INFO) << "Generating area: " << area << std::endl;
         DungeonGenerator l_generator;
@@ -156,38 +155,30 @@ void GeneratorWindow::startGenerating()
         l_generator.numberOfRooms() = l_levelRooms;
         l_generator.downStairTarget() = 0;
         l_generator.upStairTarget() = stair;
-        if (area == 2)
-        {
+        if (area == 2) {
             l_generator.createBoss() = true;
         }
-        do
-        {
+        do {
             success = l_generator.generate();
         } while (!success && retries++ < 20);
-        if (!success)
-        {
+        if (!success) {
             LOG(ERROR) << "Failed to generate a valid map" << std::endl;
         }
         getEngine()->state()->components()->get<StairComponent>(stair)->target =
             l_generator.upStairLink();
     }
-    LOG(INFO) << "Placed "
-              << getEngine()->state()->entityManager()->getMaxId()
-              << " entities!"
-              << std::endl;
+    LOG(INFO) << "Placed " << getEngine()->state()->entityManager()->getMaxId()
+              << " entities!" << std::endl;
 
     getEngine()->state()->map()->setArea(startArea);
     m_status = COMPLETED;
     getWidget<Label>("lblPlay")->setSensitive(true);
 }
 
-void GeneratorWindow::generateLevel()
-{
-}
+void GeneratorWindow::generateLevel() {}
 
-void GeneratorWindow::startPlaying()
-{
-    MapWindow *l_win = new MapWindow();
+void GeneratorWindow::startPlaying() {
+    MapWindow* l_win = new MapWindow();
     l_win->initialise(getEngine());
     getEngine()->getWindows()->replaceAllWindows(l_win);
 }

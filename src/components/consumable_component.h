@@ -12,10 +12,10 @@ typedef enum {
 } EFFECT;
 
 struct ConsumableComponent : ComponentBase {
-    HUNGER_THIRST   quenches;
-    int             quenchStrength;
-    EFFECT          effect;
-    int             effectStrength;
+    HUNGER_THIRST quenches;
+    int quenchStrength;
+    EFFECT effect;
+    int effectStrength;
 };
 
 #endif

@@ -3,9 +3,8 @@
 
 #include "window.h"
 
-class EscapeWindow : public Window
-{
-  public:
+class EscapeWindow : public Window {
+public:
     void setup();
     void registerWidgets();
 };

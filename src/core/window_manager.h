@@ -6,44 +6,38 @@
 class GameEngine;
 class Window;
 
-class WindowManager
-{
-  public:
-    enum class NextWindowAction
-    {
-        Replace,
-        ReplaceAll
-    };
+class WindowManager {
+public:
+    enum class NextWindowAction { Replace, ReplaceAll };
 
-  public:
+public:
     WindowManager() {}
-    void initialise(GameEngine *engine);
-    void pushWindow(Window *win);
+    void initialise(GameEngine* engine);
+    void pushWindow(Window* win);
     void popWindow();
-    void replaceWindow(Window *win);
-    void replaceAllWindows(Window *win);
-    Window *getActive();
+    void replaceWindow(Window* win);
+    void replaceAllWindows(Window* win);
+    Window* getActive();
     void redraw();
     void resize();
     void nextTick();
     void nextTurn();
 
     template <typename T>
-    T *createWindow(void *args = nullptr, void *retval = nullptr)
-    {
-        T *win = new T();
+    T* createWindow(void* args = nullptr, void* retval = nullptr) {
+        T* win = new T();
         win->initialise(m_engine, args, retval);
         pushWindow(win);
         return win;
     }
 
-  private:
+private:
     void manageNextWindow();
 
-  private:
-    GameEngine *m_engine = nullptr;
-    std::vector<Window *> m_windows;
-    Window *m_nextWindow;
+private:
+    GameEngine* m_engine = nullptr;
+    std::vector<Window*> m_windows;
+    Window* m_nextWindow;
     NextWindowAction m_nextAction;
 };
 

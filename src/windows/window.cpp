@@ -1,10 +1,9 @@
 #include "window.h"
-#include "frame.h"
 #include "../core/game_engine.h"
+#include "frame.h"
 #include <iostream>
 
-void Window::initialise(GameEngine *a_engine, void *args, void *retval)
-{
+void Window::initialise(GameEngine* a_engine, void* args, void* retval) {
     m_engine = a_engine;
     m_graphics = m_engine->getGraphics();
     m_state = m_engine->state();
@@ -14,46 +13,33 @@ void Window::initialise(GameEngine *a_engine, void *args, void *retval)
     m_baseWidget = createWidget<Frame>("frmBase", 0, 0)->setBorder(true);
 }
 
-void Window::setDimensions(int x, int y, int width, int height)
-{
+void Window::setDimensions(int x, int y, int width, int height) {
     m_xOffset = x;
     m_yOffset = y;
     m_width = width;
     m_height = height;
 
-    m_baseWidget
-        ->setHeight(m_height)
-        ->setWidth(m_width)
-        ->realign(x, y, width, height);
+    m_baseWidget->setHeight(m_height)->setWidth(m_width)->realign(x, y, width,
+                                                                  height);
 }
 
-void Window::beforeRedraw()
-{
+void Window::beforeRedraw() {
     m_graphics->clearArea(m_yOffset, m_xOffset, m_height, m_width);
 }
 
-void Window::renderWidgets()
-{
-    m_baseWidget->render();
-}
+void Window::renderWidgets() { m_baseWidget->render(); }
 
-void Window::afterRedraw()
-{
-}
+void Window::afterRedraw() {}
 
-void Window::destroy(void)
-{
-}
+void Window::destroy(void) {}
 
-/// The "screen" dimensions have changed, reload them and re-apply depending on whether this window is fullscreen or not
-void Window::resize()
-{
-    if (m_fullscreen)
-    {
-        setDimensions(0, 0, m_graphics->getScreenWidth(), m_graphics->getScreenHeight());
-    }
-    else
-    {
+/// The "screen" dimensions have changed, reload them and re-apply depending on
+/// whether this window is fullscreen or not
+void Window::resize() {
+    if (m_fullscreen) {
+        setDimensions(0, 0, m_graphics->getScreenWidth(),
+                      m_graphics->getScreenHeight());
+    } else {
         int x = 0;
         int y = 0;
 
@@ -64,43 +50,33 @@ void Window::resize()
     }
 }
 
-void Window::mouseDown(int x, int y, int button)
-{
-    if (button < MAX_BUTTONS)
-    {
+void Window::mouseDown(int x, int y, int button) {
+    if (button < MAX_BUTTONS) {
         m_buttons[button] = true;
     }
 }
 
-void Window::mouseUp(int x, int y, int button)
-{
-    if (button < MAX_BUTTONS)
-    {
+void Window::mouseUp(int x, int y, int button) {
+    if (button < MAX_BUTTONS) {
         m_buttons[button] = false;
     }
 }
 
-bool Window::getMouseButton(int button)
-{
-    if (button < MAX_BUTTONS)
-    {
+bool Window::getMouseButton(int button) {
+    if (button < MAX_BUTTONS) {
         return m_buttons[button];
     }
     return false;
 }
 
-void Window::keyDown(unsigned char key)
-{
+void Window::keyDown(unsigned char key) {
     ascii_keys[key] = true;
 
-    if (m_onEscape != EscapeBehaviour::None && key == KEY_ESC)
-    {
-        if (m_onEscape == EscapeBehaviour::CloseWindow)
-        {
+    if (m_onEscape != EscapeBehaviour::None && key == KEY_ESC) {
+        if (m_onEscape == EscapeBehaviour::CloseWindow) {
             getEngine()->getWindows()->popWindow();
         }
-        if (m_onEscape == EscapeBehaviour::QuitGame)
-        {
+        if (m_onEscape == EscapeBehaviour::QuitGame) {
             getEngine()->quit();
         }
         return;
@@ -110,13 +86,12 @@ void Window::keyDown(unsigned char key)
     this->keyPress(key);
 }
 
-void Window::setFullscreen(bool fullscreen)
-{
+void Window::setFullscreen(bool fullscreen) {
     m_fullscreen = fullscreen;
-    setDimensions(0, 0, m_graphics->getScreenWidth(), m_graphics->getScreenHeight());
+    setDimensions(0, 0, m_graphics->getScreenWidth(),
+                  m_graphics->getScreenHeight());
 }
 
-void Window::setTitle(const std::string &title)
-{
+void Window::setTitle(const std::string& title) {
     dynamic_cast<Frame*>(m_baseWidget)->setTitle(title);
 }

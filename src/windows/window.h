@@ -1,23 +1,21 @@
 #ifndef __WINDOW_H__
 #define __WINDOW_H__
 
-#include "widget.h"
 #include "../core/game_engine.h"
+#include "widget.h"
 
 #include <map>
 
-class Window
-{
-  public:
+class Window {
+public:
     /// \brief Controls the behaviour on the Window when the Esc key is presed
-    enum class EscapeBehaviour
-    {
+    enum class EscapeBehaviour {
         None,
         CloseWindow,
         QuitGame ///!< Terminates the game immediately
     };
 
-  public:
+public:
     static const int MAX_BUTTONS = 5;
 
     Window() {}
@@ -50,29 +48,20 @@ class Window
     virtual void loseFocus(){};
 
     template <class T>
-    T *createWidget(
-        std::string name,
-        unsigned int x,
-        unsigned int y,
-        Widget *parent = 0)
-    {
-        T *widget = new T();
-        widget
-            ->setGraphics(m_graphics)
+    T* createWidget(std::string name, unsigned int x, unsigned int y,
+                    Widget* parent = 0) {
+        T* widget = new T();
+        widget->setGraphics(m_graphics)
             ->setName(name)
             ->setX(x)
             ->setY(y)
             ->setWindow(this);
-        if (!parent)
-        {
+        if (!parent) {
             widget->setParent(m_baseWidget);
-            if (m_baseWidget)
-            {
+            if (m_baseWidget) {
                 m_baseWidget->addChild(widget);
             }
-        }
-        else
-        {
+        } else {
             widget->setParent(parent);
             parent->addChild(widget);
         }
@@ -82,56 +71,53 @@ class Window
     };
 
     // Non-overridable
-    template <class T>
-    T *getWidget(std::string name)
-    {
-        T *widget = dynamic_cast<T *>(m_widgets[name]);
-        if (!widget)
-        {
+    template <class T> T* getWidget(std::string name) {
+        T* widget = dynamic_cast<T*>(m_widgets[name]);
+        if (!widget) {
             throw("Widget '" + name + "' does not exist");
         }
         return widget;
     }
-    void initialise(GameEngine *a_engine, void *Args = 0, void *Retval = 0);
-    void *getArgs() { return m_args; }
-    void *getRetval() { return m_retval; }
+    void initialise(GameEngine* a_engine, void* Args = 0, void* Retval = 0);
+    void* getArgs() { return m_args; }
+    void* getRetval() { return m_retval; }
 
     void setFullscreen(bool fullscreen = true);
-    void setTitle(const std::string &title);
-    void setWidth(unsigned int width)
-    {
+    void setTitle(const std::string& title);
+    void setWidth(unsigned int width) {
         m_width = width;
         resize();
     }
-    void setHeight(unsigned int height)
-    {
+    void setHeight(unsigned int height) {
         m_height = height;
         resize();
     }
     void setEscapeBehaviour(EscapeBehaviour b) { m_onEscape = b; }
 
-    virtual GameEngine *getEngine() { return m_engine; }
-    virtual GameState *getState() { return m_state; }
-    virtual WindowManager *getManager() { return m_manager; }
+    virtual GameEngine* getEngine() { return m_engine; }
+    virtual GameState* getState() { return m_state; }
+    virtual WindowManager* getManager() { return m_manager; }
 
     // Overrideable methods
-    virtual void keyPress(unsigned char key) { /* Overrideable */}
-    virtual void setup() { /* Overrideable */}
+    virtual void keyPress(unsigned char key) { /* Overrideable */
+    }
+    virtual void setup() { /* Overrideable */
+    }
     virtual void registerWidgets() {}
 
-  private:
+private:
     void setDimensions(int x, int y, int width, int height);
 
-  private:
+private:
     bool ascii_keys[256] = {0};
     bool special_keys[256] = {0};
     int m_buttons[MAX_BUTTONS] = {0};
-    GameEngine *m_engine = nullptr;
-    GraphicsInterface *m_graphics = nullptr;
-    GameState *m_state = nullptr;
-    WindowManager *m_manager = nullptr;
-    void *m_args = nullptr;
-    void *m_retval = nullptr;
+    GameEngine* m_engine = nullptr;
+    GraphicsInterface* m_graphics = nullptr;
+    GameState* m_state = nullptr;
+    WindowManager* m_manager = nullptr;
+    void* m_args = nullptr;
+    void* m_retval = nullptr;
     int m_xOffset = 0;
     int m_yOffset = 0;
     int m_width = 0;
@@ -139,8 +125,8 @@ class Window
     bool m_fullscreen = 0;
     std::string m_title;
     EscapeBehaviour m_onEscape;
-    std::map<std::string, Widget *> m_widgets;
-    Widget *m_baseWidget;
+    std::map<std::string, Widget*> m_widgets;
+    Widget* m_baseWidget;
 };
 
 #endif

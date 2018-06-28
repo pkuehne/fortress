@@ -1,21 +1,16 @@
 #include "escape_window.h"
-#include "label.h"
 #include "../core/game_engine.h"
+#include "label.h"
 
-void quit(Label *l)
-{
-    l->getWindow()->getEngine()->quit();
-}
+void quit(Label* l) { l->getWindow()->getEngine()->quit(); }
 
-void EscapeWindow::setup()
-{
+void EscapeWindow::setup() {
     setTitle(" FORTRESS ");
     setFullscreen();
     setEscapeBehaviour(Window::EscapeBehaviour::CloseWindow);
 }
 
-void EscapeWindow::registerWidgets()
-{
+void EscapeWindow::registerWidgets() {
     this->createWidget<Label>("lblEsc", 0, 1)
         ->setText("Press ESC to return")
         ->setVerticalAlign(Widget::VerticalAlign::Top)

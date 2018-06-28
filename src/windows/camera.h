@@ -4,11 +4,9 @@
 #include "widget.h"
 class GameState;
 
-class Camera : public Widget
-{
-  public:
-    Camera *setGameState(GameState *state)
-    {
+class Camera : public Widget {
+public:
+    Camera* setGameState(GameState* state) {
         m_state = state;
         return this;
     }
@@ -16,8 +14,8 @@ class Camera : public Widget
     void renderSprites();
     void renderNpcPaths();
 
-  private:
-    GameState *m_state;
+private:
+    GameState* m_state;
     int m_mapOffsetX = 0;
     int m_mapOffsetY = 0;
     int m_mapOffsetZ = 0;
