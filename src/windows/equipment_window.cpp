@@ -163,11 +163,16 @@ void EquipmentWindow::registerWidgets() {
         ->setText("consume")
         ->setCommandChar(1)
         ->setCommandCharCallback([&](Label* l) {
+            EquipmentWindow* win =
+                dynamic_cast<EquipmentWindow*>(l->getWindow());
+            GameEngine* engine = win->getEngine();
+
             ConsumeItemEvent* event = new ConsumeItemEvent();
             event->entity = getState()->player();
             event->item = getSelectedItem();
             setSelectedItem(0);
             getEngine()->raiseEvent(event);
+            engine->swapTurn();
         })
         ->setVerticalAlign(Widget::VerticalAlign::Bottom)
         ->setVisible(false);

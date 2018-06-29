@@ -12,6 +12,7 @@ const unsigned char EMPTY = '.';
 const unsigned char TREE = 'T';
 const unsigned char LINK = '>';
 const unsigned char HUMAN = 'H';
+const unsigned char APPLE = 'A';
 
 bool RuralGenerator::generate() {
     reset();
@@ -21,6 +22,7 @@ bool RuralGenerator::generate() {
     placeWoods();
     placePlayer();
     placeDungeonStairs();
+    placeApples();
     placeForester();
     createEntitiesFromMap();
     LOG(INFO) << "Done generating area" << std::endl;
@@ -52,6 +54,9 @@ void RuralGenerator::createEntitiesFromMap() {
                     break;
                 case HUMAN:
                     l_entity = prefabs.createForesterPrefab(location);
+                    break;
+                case APPLE:
+                    l_entity = prefabs.createApplePrefab(location);
                     break;
                 default:
                     break;
@@ -117,6 +122,23 @@ void RuralGenerator::placeForester() {
             if (getByCoordinate(x, y) == EMPTY) {
                 getByCoordinate(x, y) = HUMAN;
                 break;
+            }
+        }
+    }
+}
+
+void RuralGenerator::placeApples() {
+    unsigned int numApples = 10;
+    unsigned int numTries = 50;
+
+    while (numApples && numTries) {
+        numTries--;
+        unsigned int x = Utility::randBetween(0, m_mapWidth);
+        unsigned int y = Utility::randBetween(0, m_mapHeight);
+        if (isValidCoordinate(x, y)) {
+            if (getByCoordinate(x, y) == EMPTY) {
+                getByCoordinate(x, y) = APPLE;
+                numApples--;
             }
         }
     }

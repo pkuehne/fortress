@@ -378,3 +378,28 @@ EntityId PrefabBuilder::createForesterPrefab(Location& location) {
     LOG(INFO) << "Created Forester: " << l_entity << std::endl;
     return l_entity;
 }
+
+EntityId PrefabBuilder::createApplePrefab(Location& location) {
+    EntityId l_entity = m_state->createEntity(location);
+
+    SpriteComponent* l_sprite =
+        m_state->components()->make<SpriteComponent>(l_entity);
+    l_sprite->fgColor = Color(RED);
+    l_sprite->bgColor = Color(BLACK);
+    l_sprite->sprite = 'A';
+
+    // Description Component
+    DescriptionComponent* l_description =
+        m_state->components()->make<DescriptionComponent>(l_entity);
+    l_description->title = "Apple";
+    l_description->text = "One of these a day, keeps the sawbones away";
+
+    m_state->components()->make<DroppableComponent>(l_entity);
+
+    ConsumableComponent* l_consumable =
+        m_state->components()->make<ConsumableComponent>(l_entity);
+    l_consumable->quenches = HUNGER;
+    l_consumable->quenchStrength = 2;
+
+    return l_entity;
+}

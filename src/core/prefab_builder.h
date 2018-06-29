@@ -23,6 +23,7 @@ public:
     EntityId createTreePrefab(Location& location);
     EntityId createCorpsePrefab(Location& location, char sprite);
     EntityId createForesterPrefab(Location& location);
+    EntityId createApplePrefab(Location& location);
 
 private:
     GameState* m_state;

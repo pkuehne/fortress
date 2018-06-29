@@ -44,11 +44,11 @@ void MapWindow::registerWidgets() {
         ->setMaxValue(10)
         ->setWidth(9);
     createWidget<Label>("lblHunger", 0, 1, sidebar)->setText("Hunger:");
-    createWidget<ProgressBar>("pgbHunger", 8, 0, sidebar)
+    createWidget<ProgressBar>("pgbHunger", 8, 1, sidebar)
         ->setMaxValue(10)
         ->setWidth(9);
     createWidget<Label>("lblThirst", 0, 2, sidebar)->setText("Thirst:");
-    createWidget<ProgressBar>("pgbThirst", 8, 0, sidebar)
+    createWidget<ProgressBar>("pgbThirst", 8, 2, sidebar)
         ->setMaxValue(10)
         ->setWidth(9);
 

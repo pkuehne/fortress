@@ -17,6 +17,7 @@ private:
     void placeDungeonStairs();
     void placeForester();
     void placePlayer();
+    void placeApples();
 
 private:
     std::vector<EntityId> m_areaLinks;
