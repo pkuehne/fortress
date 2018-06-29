@@ -113,6 +113,9 @@ void DungeonGenerator::createEntitiesFromMap() {
                         prefabs.createEnemyPrefab(location);
                     }
                     break;
+                case DOOR:
+                    l_entity = prefabs.createDoorPrefab(location);
+                    break;
                 case RESTRICTED:
                     break;
                 default:

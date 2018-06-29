@@ -9,6 +9,7 @@
 #include "../components/equipment_component.h"
 #include "../components/health_component.h"
 #include "../components/npc_component.h"
+#include "../components/openable_component.h"
 #include "../components/player_component.h"
 #include "../components/sprite_component.h"
 #include "../components/stair_component.h"
@@ -400,6 +401,27 @@ EntityId PrefabBuilder::createApplePrefab(Location& location) {
         m_state->components()->make<ConsumableComponent>(l_entity);
     l_consumable->quenches = HUNGER;
     l_consumable->quenchStrength = 2;
+
+    return l_entity;
+}
+
+EntityId PrefabBuilder::createDoorPrefab(Location& location) {
+    EntityId l_entity = m_state->createEntity(location);
+
+    auto l_sprite = m_state->components()->make<SpriteComponent>(l_entity);
+    l_sprite->fgColor = Color(GREY);
+    l_sprite->bgColor = Color(BLACK);
+    l_sprite->sprite = 'D';
+
+    auto l_description =
+        m_state->components()->make<DescriptionComponent>(l_entity);
+    l_description->title = "Door";
+    l_description->text = "A wall that moves";
+
+    auto l_openable = m_state->components()->make<OpenableComponent>(l_entity);
+    l_openable->open = false;
+
+    m_state->components()->make<ColliderComponent>(l_entity);
 
     return l_entity;
 }

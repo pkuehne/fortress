@@ -20,6 +20,8 @@ typedef enum {
     EVENT_EQUIP_ITEM,
     EVENT_UNEQUIP_ITEM,
     EVENT_CONSUME_ITEM,
+    EVENT_OPEN_ENTITY,
+    EVENT_CLOSE_ENTITY,
     EVENT_MAX
 } EventType;
 
@@ -109,6 +111,18 @@ public:
     ConsumeItemEvent() : Event(EVENT_CONSUME_ITEM) {}
     EntityId entity;
     EntityId item;
+};
+
+class OpenEntityEvent : public Event {
+public:
+    OpenEntityEvent() : Event(EVENT_OPEN_ENTITY) {}
+    EntityId entity;
+};
+
+class CloseEntityEvent : public Event {
+public:
+    CloseEntityEvent() : Event(EVENT_CLOSE_ENTITY) {}
+    EntityId entity;
 };
 
 #endif
