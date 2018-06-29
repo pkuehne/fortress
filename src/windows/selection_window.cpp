@@ -13,7 +13,7 @@ void SelectionWindow::setup() {
 }
 
 void SelectionWindow::registerWidgets() {
-    ListBox* box = this->createWidget<ListBox>("lstEntities", 2, 2);
+    ListBox* box = this->createWidget<ListBox>("lstEntities", 1, 1);
 
     for (std::string line : m_lines) {
         ListBoxItem item;
