@@ -4,8 +4,7 @@
 
 void GameOverWindow::registerWidgets() {
     Label* l = createWidget<Label>("lblResult", 2, 2);
-    EntityId* l_entity = static_cast<EntityId*>(getArgs());
-    if (l_entity) {
+    if (m_arguments->win) {
         l->setText("You Win!");
     } else {
         l->setText("You Lose!");

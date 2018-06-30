@@ -110,7 +110,7 @@ void GeneratorWindow::registerWidgets() {
 }
 
 void GeneratorWindow::redraw() {
-    if (getArgs() && m_status == WAITING) {
+    if (m_arguments->hideWindow && m_status == WAITING) {
         startGenerating();
         startPlaying();
         return;

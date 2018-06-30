@@ -14,14 +14,10 @@ void InspectionWindow::registerWidgets() {
     TextBlock* block = createWidget<TextBlock>("txtDescription", 1, 1);
     block->setWidth(l_windowWidth);
 
-    EntityId* l_entity = static_cast<EntityId*>(getArgs());
-    if (!l_entity) {
-        block->setText("There is nothing here...");
-        return;
-    }
+    EntityId l_entity = m_arguments->entity;
     DescriptionComponent* l_description =
         getEngine()->state()->components()->get<DescriptionComponent>(
-            *l_entity);
+            l_entity);
     if (!l_description) {
         block->setText("There are no words...");
         return;
@@ -31,12 +27,4 @@ void InspectionWindow::registerWidgets() {
     setTitle(l_description->title);
     setHeight(block->getHeight() + 4);
     setWidth(l_windowWidth + 4);
-}
-
-void InspectionWindow::destroy() {
-    EntityId* l_entity = static_cast<EntityId*>(getArgs());
-    if (l_entity) {
-        delete l_entity;
-    }
-    Window::destroy();
 }

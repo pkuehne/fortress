@@ -78,9 +78,7 @@ public:
         }
         return widget;
     }
-    void initialise(GameEngine* a_engine, void* Args = 0, void* Retval = 0);
-    void* getArgs() { return m_args; }
-    void* getRetval() { return m_retval; }
+    void initialise(GameEngine* a_engine);
 
     void setFullscreen(bool fullscreen = true);
     void setTitle(const std::string& title);
@@ -116,8 +114,6 @@ private:
     GraphicsInterface* m_graphics = nullptr;
     GameState* m_state = nullptr;
     WindowManager* m_manager = nullptr;
-    void* m_args = nullptr;
-    void* m_retval = nullptr;
     int m_xOffset = 0;
     int m_yOffset = 0;
     int m_width = 0;

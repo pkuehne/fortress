@@ -11,16 +11,20 @@ void MainWindow::setup() {
 }
 void MainWindow::registerWidgets() {
     Label::CommandCharCB quickstart = [](Label* l) {
+        auto args = std::make_shared<GeneratorWindowArgs>();
+        args->hideWindow = true;
         l->getWindow()
             ->getEngine()
             ->getWindows()
-            ->createWindow<GeneratorWindow>((void*)1);
+            ->createWindow<GeneratorWindow>(args);
     };
     Label::CommandCharCB create = [](Label* l) {
+        auto args = std::make_shared<GeneratorWindowArgs>();
+        args->hideWindow = false;
         l->getWindow()
             ->getEngine()
             ->getWindows()
-            ->createWindow<GeneratorWindow>();
+            ->createWindow<GeneratorWindow>(args);
     };
 
     this->createWidget<Label>("lblQuickstart", 1, 15)

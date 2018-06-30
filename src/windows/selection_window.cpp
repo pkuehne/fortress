@@ -5,7 +5,7 @@
 #include "listbox.h"
 
 void SelectionWindow::setup() {
-    setEntities(static_cast<EntityHolder*>(getArgs()));
+    setEntities(m_arguments->entities);
 
     setEscapeBehaviour(Window::EscapeBehaviour::CloseWindow);
     setWidth(20);
@@ -22,20 +22,14 @@ void SelectionWindow::registerWidgets() {
     }
 
     box->setHeight(m_lines.size());
-    box->setItemSelectedCallback([](ListBox* box) {
-        SelectionWindow* win = dynamic_cast<SelectionWindow*>(box->getWindow());
-        EntityId* l_target =
-            new EntityId(win->getEntities()[box->getSelection()]);
-        win->getEngine()->getWindows()->createWindow<InspectionWindow>(
-            l_target);
+    box->setItemSelectedCallback([&](ListBox* box) {
+        EntityId target = m_entities[box->getSelection()];
+        m_arguments->selectionCallback(getEngine(), target);
     });
 }
 
-void SelectionWindow::setEntities(EntityHolder* entities) {
-    if (!entities)
-        return;
-
-    for (EntityId entity : *entities) {
+void SelectionWindow::setEntities(EntityHolder& entities) {
+    for (EntityId entity : entities) {
         DescriptionComponent* desc =
             getEngine()->state()->components()->get<DescriptionComponent>(
                 entity);

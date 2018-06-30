@@ -184,8 +184,9 @@ void EquipmentWindow::registerWidgets() {
             EquipmentWindow* win =
                 dynamic_cast<EquipmentWindow*>(l->getWindow());
             GameEngine* engine = win->getEngine();
-            EntityId* l_target = new EntityId(win->getSelectedItem());
-            engine->getWindows()->createWindow<InspectionWindow>(l_target);
+            auto args = std::make_shared<InspectionWindowArgs>();
+            args->entity = win->getSelectedItem();
+            engine->getWindows()->createWindow<InspectionWindow>(args);
         })
         ->setVerticalAlign(Widget::VerticalAlign::Bottom)
         ->setVisible(false);

@@ -1,6 +1,7 @@
 #ifndef __WINDOW_MANAGER_H__
 #define __WINDOW_MANAGER_H__
 
+#include <memory>
 #include <vector>
 
 class GameEngine;
@@ -23,10 +24,18 @@ public:
     void nextTick();
     void nextTurn();
 
-    template <typename T>
-    T* createWindow(void* args = nullptr, void* retval = nullptr) {
+    template <typename T> T* createWindow() {
         T* win = new T();
-        win->initialise(m_engine, args, retval);
+        win->initialise(m_engine);
+        pushWindow(win);
+        return win;
+    }
+
+    template <typename T, typename A>
+    T* createWindow(std::shared_ptr<A>& arguments) {
+        T* win = new T();
+        win->setArguments(arguments);
+        win->initialise(m_engine);
         pushWindow(win);
         return win;
     }

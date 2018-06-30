@@ -3,13 +3,11 @@
 #include "frame.h"
 #include <iostream>
 
-void Window::initialise(GameEngine* a_engine, void* args, void* retval) {
+void Window::initialise(GameEngine* a_engine) {
     m_engine = a_engine;
     m_graphics = m_engine->getGraphics();
     m_state = m_engine->state();
     m_manager = m_engine->getWindows();
-    m_args = args;
-    m_retval = retval;
     m_baseWidget = createWidget<Frame>("frmBase", 0, 0)->setBorder(true);
 }
 

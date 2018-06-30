@@ -3,18 +3,23 @@
 #include "../core/quest.h"
 #include "../windows/game_over_window.h"
 
+void ObjectivesSystem::showGameOverWindow(bool gameWon) {
+    auto gameOverArgs = std::make_shared<GameOverWindowArgs>();
+    gameOverArgs->win = gameWon;
+    getEngine()->getWindows()->createWindow<GameOverWindow>(gameOverArgs);
+}
+
 void ObjectivesSystem::handleEvent(const Event* event) {
     switch (event->getType()) {
         case EVENT_REMOVE_ENTITY: {
             const RemoveEntityEvent* l_event =
                 static_cast<const RemoveEntityEvent*>(event);
             if (l_event->entity == getEngine()->state()->player()) {
-                getEngine()->getWindows()->createWindow<GameOverWindow>();
+                showGameOverWindow(false);
                 return;
             }
             if (updateQuests()) {
-                getEngine()->getWindows()->createWindow<GameOverWindow>(
-                    (void*)(1));
+                showGameOverWindow(true);
             }
 
             break;

@@ -86,10 +86,10 @@ void MapWindow::registerWidgets() {
 
     createWidget<Label>("lblInspect", 1, 4, sidebar)
         ->setText("inspect (wasd)")
-        ->setCommandChar(1)
+        ->setCommandChar(2)
         ->setCommandCharCallback([](Label* l) {
             MapWindow* win = dynamic_cast<MapWindow*>(l->getWindow());
-            win->setAction('i', l->getY());
+            win->setAction('n', l->getY());
         })
         ->setVerticalAlign(Widget::VerticalAlign::Bottom);
     createWidget<Label>("lblAttack", 1, 5, sidebar)
@@ -177,12 +177,21 @@ void MapWindow::keyPress(unsigned char key) {
                 //}
             }
         }
-        if (m_action == 'i') {
+        if (m_action == 'n') {
             EntityHolder l_entities =
                 getEngine()->state()->map()->findEntitiesAt(newLocation);
             if (l_entities.size() > 0) {
+                auto selectionArgs = std::make_shared<SelectionWindowArgs>();
+                selectionArgs->entities = l_entities;
+                selectionArgs->selectionCallback = [](GameEngine* engine, EntityId id) {
+                    auto inspectionArgs =
+                        std::make_shared<InspectionWindowArgs>();
+                    inspectionArgs->entity = id;
+                    engine->getWindows()->createWindow<InspectionWindow>(
+                        inspectionArgs);
+                };
                 getEngine()->getWindows()->createWindow<SelectionWindow>(
-                    &l_entities);
+                    selectionArgs);
             }
         }
         if (m_action != 'i')
