@@ -46,11 +46,11 @@ void EquipmentSystem::handleEvent(const Event* event) {
                     break;
                 }
             }
-            SpriteComponent* sprite =
-                getEngine()->state()->components()->make<SpriteComponent>(
-                    l_event->item);
-            sprite->fgColor = Color(RED);
-            sprite->sprite = '*';
+            // SpriteComponent* sprite =
+            //     getEngine()->state()->components()->make<SpriteComponent>(
+            //         l_event->item);
+            // sprite->fgColor = Color(RED);
+            // sprite->sprite = '*';
 
             Location location = getEngine()->state()->location(l_event->entity);
             getEngine()->state()->entityManager()->setLocation(l_event->item,
@@ -63,8 +63,11 @@ void EquipmentSystem::handleEvent(const Event* event) {
             EquipmentComponent* equipment =
                 getEngine()->state()->components()->get<EquipmentComponent>(
                     l_event->entity);
-            getEngine()->state()->components()->remove<SpriteComponent>(
-                l_event->item);
+            // getEngine()->state()->components()->remove<SpriteComponent>(
+            //     l_event->item);
+            Location invalid;
+            getEngine()->state()->entityManager()->setLocation(l_event->item,
+                                                               invalid);
 
             equipment->carriedEquipment.push_back(l_event->item);
             break;

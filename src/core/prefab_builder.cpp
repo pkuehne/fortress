@@ -69,11 +69,12 @@ EntityId PrefabBuilder::createPlayerPrefab(Location& location) {
     m_state->components()->make<PlayerComponent>(l_entity);
 
     // Euipment Component
+    Location invalidLoc;
     EquipmentComponent* l_equipment =
         m_state->components()->make<EquipmentComponent>(l_entity);
-    l_equipment->rightHandWieldable = createWeaponPrefab(location);
-    l_equipment->leftHandWieldable = createShieldPrefab(location);
-    l_equipment->headWearable = createHelmetPrefab(location);
+    l_equipment->rightHandWieldable = createWeaponPrefab(invalidLoc);
+    l_equipment->leftHandWieldable = createShieldPrefab(invalidLoc);
+    l_equipment->headWearable = createHelmetPrefab(invalidLoc);
 
     return l_entity;
 }
@@ -110,11 +111,12 @@ EntityId PrefabBuilder::createEnemyPrefab(Location& location) {
     l_npc->stateMachine = "human";
 
     // Euipment Component
+    Location invalidLoc;
     EquipmentComponent* l_equipment =
         m_state->components()->make<EquipmentComponent>(l_entity);
-    l_equipment->rightHandWieldable = createWeaponPrefab(location);
-    l_equipment->leftHandWieldable = createShieldPrefab(location);
-    l_equipment->headWearable = createHelmetPrefab(location);
+    l_equipment->rightHandWieldable = createWeaponPrefab(invalidLoc);
+    l_equipment->leftHandWieldable = createShieldPrefab(invalidLoc);
+    l_equipment->headWearable = createHelmetPrefab(invalidLoc);
 
     return l_entity;
 }
@@ -150,11 +152,12 @@ EntityId PrefabBuilder::createTrollPrefab(Location& location) {
     l_npc->stateMachine = "monster";
 
     // Euipment Component
+    Location invalidLoc;
     EquipmentComponent* l_equipment =
         m_state->components()->make<EquipmentComponent>(l_entity);
-    l_equipment->rightHandWieldable = createWeaponPrefab(location);
-    l_equipment->leftHandWieldable = createShieldPrefab(location);
-    l_equipment->headWearable = createHelmetPrefab(location);
+    l_equipment->rightHandWieldable = createWeaponPrefab(invalidLoc);
+    l_equipment->leftHandWieldable = createShieldPrefab(invalidLoc);
+    l_equipment->headWearable = createHelmetPrefab(invalidLoc);
 
     return l_entity;
 }
@@ -370,11 +373,12 @@ EntityId PrefabBuilder::createForesterPrefab(Location& location) {
     l_npc->attribs["seek_target"] = "Tree";
 
     // Euipment Component
+    Location invalidLoc;
     EquipmentComponent* l_equipment =
         m_state->components()->make<EquipmentComponent>(l_entity);
-    l_equipment->rightHandWieldable = createWeaponPrefab(location);
-    l_equipment->leftHandWieldable = createShieldPrefab(location);
-    l_equipment->headWearable = createHelmetPrefab(location);
+    l_equipment->rightHandWieldable = createWeaponPrefab(invalidLoc);
+    l_equipment->leftHandWieldable = createShieldPrefab(invalidLoc);
+    l_equipment->headWearable = createHelmetPrefab(invalidLoc);
 
     LOG(INFO) << "Created Forester: " << l_entity << std::endl;
     return l_entity;

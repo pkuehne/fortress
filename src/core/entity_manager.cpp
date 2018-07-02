@@ -17,7 +17,7 @@ EntityId EntityManager::createEntity(Location& location) {
     EntityId l_entity = m_maxId++;
 
     if (!location.area) {
-        std::cout << "Zero area in createEntity: " << l_entity << std::endl;
+        // std::cout << "Zero area in createEntity: " << l_entity << std::endl;
     }
 
     addEntity(l_entity, location);
@@ -40,10 +40,13 @@ void EntityManager::addEntity(EntityId id, Location& location) {
 }
 
 void EntityManager::destroyEntity(EntityId id) {
-    m_engine->state()->components()->removeAll(id);
-    m_engine->state()->tile(m_locations[id]).removeEntity(id);
+    Location& location = m_locations[id];
 
-    m_entities[m_locations[id].area].erase(id);
+    m_engine->state()->components()->removeAll(id);
+    if (validLocation(location)) {
+        m_engine->state()->tile(m_locations[id]).removeEntity(id);
+        m_entities[m_locations[id].area].erase(id);
+    }
     m_locations.erase(id);
 
     // Raise event for removal
@@ -58,8 +61,8 @@ void EntityManager::setLocation(EntityId entity, Location& location) {
         m_entities[location.area].erase(entity);
     }
     m_locations[entity] = location;
-    m_engine->state()->map()->setArea(location.area);
     if (validLocation(m_locations[entity])) {
+        m_engine->state()->map()->setArea(location.area);
         m_engine->state()->tile(m_locations[entity]).addEntity(entity);
         m_entities[location.area].insert(entity);
     }

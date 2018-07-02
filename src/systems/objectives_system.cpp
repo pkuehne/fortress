@@ -50,15 +50,16 @@ bool ObjectivesSystem::updateQuests() {
     bool allComplete = true;
     for (Quest* quest : getEngine()->state()->getQuests()) {
         if (!quest->isCompleted() && !quest->isFailed()) {
-            allComplete = false;
             quest->update(*(getEngine()->state()));
             if (quest->isCompleted()) {
                 std::cout << "Quest " << quest->title()
                           << " has just completed!" << std::endl;
+                continue;
             } else if (quest->isFailed()) {
                 std::cout << "Quest " << quest->title() << " has just failed!"
                           << std::endl;
             }
+            allComplete = false;
         }
     }
     return allComplete;

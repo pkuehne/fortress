@@ -7,7 +7,6 @@ void InteractionSystem::update() {}
 void InteractionSystem::handleEvent(const Event* event) {
     switch (event->getType()) {
         case EVENT_OPEN_ENTITY: {
-            std::cout << "Opening: !" << std::endl;
             const OpenEntityEvent* l_event =
                 dynamic_cast<const OpenEntityEvent*>(event);
             handleOpenEntityEvent(l_event);
@@ -28,7 +27,6 @@ void InteractionSystem::handleOpenEntityEvent(const OpenEntityEvent* event) {
     OpenableComponent* openable =
         m_engine->state()->components()->get<OpenableComponent>(event->entity);
     if (!openable) {
-        std::cout << "is not openable!" << std::endl;
         return;
     }
     openable->open = true;

@@ -91,7 +91,7 @@ void MapManager::setArea(unsigned int area) {
 
     LOG(ERROR) << "Could not set area " << area << " because it doesn't exist!"
                << std::endl;
-    throw int(1);
+    throw std::string("Invalid area set!");
 }
 
 Location MapManager::location(const Location& loc, Direction dir) {
