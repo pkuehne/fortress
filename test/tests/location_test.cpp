@@ -5,12 +5,31 @@ using namespace ::testing;
 
 class LocationTest : public ::testing::Test {};
 
-TEST_F(LocationTest, emptyLocationIsInvalid) {
+TEST_F(LocationTest, emptyLocationIsDefaulted) {
+    // Given
     Location location;
+
+    // Then
     EXPECT_EQ(UINT_MAX, location.x);
     EXPECT_EQ(UINT_MAX, location.y);
     EXPECT_EQ(UINT_MAX, location.z);
     EXPECT_EQ(0, location.area);
+}
+
+TEST_F(LocationTest, defaultLocationIsInvalid) {
+    // Given
+    Location location;
+
+    // Then
+    EXPECT_FALSE(location.isValid());
+}
+
+TEST_F(LocationTest, setLocationIsValid) {
+    // Given 
+    Location location(1,2,3);
+
+    // Then
+    EXPECT_TRUE(location.isValid());
 }
 
 TEST_F(LocationTest, InitializedLocationHasThoseValues) {

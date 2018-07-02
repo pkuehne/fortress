@@ -30,7 +30,7 @@ void EntityManager::addEntity(EntityId id, Location& location) {
 
     m_locations[id] = location;
     m_entities[location.area].insert(id);
-    if (validLocation(location)) {
+    if (location.isValid()) {
         m_engine->state()->tile(location).addEntity(id);
     }
 
@@ -43,7 +43,7 @@ void EntityManager::destroyEntity(EntityId id) {
     Location& location = m_locations[id];
 
     m_engine->state()->components()->removeAll(id);
-    if (validLocation(location)) {
+    if (location.isValid()) {
         m_engine->state()->tile(m_locations[id]).removeEntity(id);
         m_entities[m_locations[id].area].erase(id);
     }
@@ -56,21 +56,16 @@ void EntityManager::destroyEntity(EntityId id) {
 }
 
 void EntityManager::setLocation(EntityId entity, Location& location) {
-    if (validLocation(m_locations[entity])) {
+    if (m_locations[entity].isValid()) {
         m_engine->state()->tile(m_locations[entity]).removeEntity(entity);
         m_entities[location.area].erase(entity);
     }
     m_locations[entity] = location;
-    if (validLocation(m_locations[entity])) {
+    if (m_locations[entity].isValid()) {
         m_engine->state()->map()->setArea(location.area);
         m_engine->state()->tile(m_locations[entity]).addEntity(entity);
         m_entities[location.area].insert(entity);
     }
-}
-
-bool EntityManager::validLocation(Location& location) {
-    return (location.x != UINT_MAX && location.y != UINT_MAX &&
-            location.z != UINT_MAX);
 }
 
 EntityId EntityManager::getPlayer() {
