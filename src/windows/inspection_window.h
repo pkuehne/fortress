@@ -1,7 +1,5 @@
-#ifndef INSPECTION_WINDOW_H
-#define INSPECTION_WINDOW_H
+#pragma once
 
-#include "../components/description_component.h"
 #include "window.h"
 
 typedef struct {
@@ -19,5 +17,3 @@ public:
 private:
     std::shared_ptr<InspectionWindowArgs> m_arguments;
 };
-
-#endif

@@ -5,6 +5,7 @@
 #include "systems/equipment_system.h"
 #include "systems/graphics_effect_system.h"
 #include "systems/health_system.h"
+#include "systems/interaction_system.h"
 #include "systems/movement_system.h"
 #include "systems/npc_system.h"
 #include "systems/objectives_system.h"
@@ -59,6 +60,7 @@ int main(int argc, char** argv) {
         l_engine->addSystem(new ConsumableSystem());
         l_engine->addSystem(new GraphicsEffectSystem());
         l_engine->addSystem(new HealthSystem());
+        l_engine->addSystem(new InteractionSystem());
         l_engine->initialise();
         l_graphics->spin();
     } catch (char const* err) {

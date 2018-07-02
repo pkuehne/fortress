@@ -10,6 +10,7 @@
 #include "equipment_window.h"
 #include "escape_window.h"
 #include "inspection_window.h"
+#include "interaction_window.h"
 #include "quest_window.h"
 #include "selection_window.h"
 #include "window.h"
@@ -92,7 +93,16 @@ void MapWindow::registerWidgets() {
             win->setAction('n', l->getY());
         })
         ->setVerticalAlign(Widget::VerticalAlign::Bottom);
-    createWidget<Label>("lblAttack", 1, 5, sidebar)
+    createWidget<Label>("lblInteract", 1, 5, sidebar)
+        ->setText("interact (wasd)")
+        ->setCommandChar(1)
+        ->setCommandCharCallback([](Label* l) {
+            MapWindow* win = dynamic_cast<MapWindow*>(l->getWindow());
+            win->setAction('i', l->getY());
+        })
+        ->setVerticalAlign(Widget::VerticalAlign::Bottom);
+
+    createWidget<Label>("lblAttack", 1, 6, sidebar)
         ->setText("attack (wasd)")
         ->setCommandChar(6)
         ->setCommandCharCallback([](Label* l) {
@@ -100,7 +110,7 @@ void MapWindow::registerWidgets() {
             win->setAction('k', l->getY());
         })
         ->setVerticalAlign(Widget::VerticalAlign::Bottom);
-    createWidget<Label>("lblMove", 1, 6, sidebar)
+    createWidget<Label>("lblMove", 1, 7, sidebar)
         ->setText("move (wasd)")
         ->setCommandChar(1)
         ->setCommandCharCallback([](Label* l) {
@@ -183,7 +193,8 @@ void MapWindow::keyPress(unsigned char key) {
             if (l_entities.size() > 0) {
                 auto selectionArgs = std::make_shared<SelectionWindowArgs>();
                 selectionArgs->entities = l_entities;
-                selectionArgs->selectionCallback = [](GameEngine* engine, EntityId id) {
+                selectionArgs->selectionCallback = [](GameEngine* engine,
+                                                      EntityId id) {
                     auto inspectionArgs =
                         std::make_shared<InspectionWindowArgs>();
                     inspectionArgs->entity = id;
@@ -194,7 +205,25 @@ void MapWindow::keyPress(unsigned char key) {
                     selectionArgs);
             }
         }
-        if (m_action != 'i')
+        if (m_action == 'i') {
+            EntityHolder l_entities =
+                getEngine()->state()->map()->findEntitiesAt(newLocation);
+            if (l_entities.size() > 0) {
+                auto selectionArgs = std::make_shared<SelectionWindowArgs>();
+                selectionArgs->entities = l_entities;
+                selectionArgs->selectionCallback = [](GameEngine* engine,
+                                                      EntityId id) {
+                    auto interactArgs =
+                        std::make_shared<InteractionWindowArgs>();
+                    interactArgs->entity = id;
+                    engine->getWindows()->createWindow<InteractionWindow>(
+                        interactArgs);
+                };
+                getEngine()->getWindows()->createWindow<SelectionWindow>(
+                    selectionArgs);
+            }
+        }
+        if (m_action != 'n')
             getEngine()->swapTurn();
         m_action = 'm';
     }
