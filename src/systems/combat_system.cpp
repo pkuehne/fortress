@@ -9,16 +9,8 @@
 #include <iostream>
 #include <sstream>
 
-void CombatSystem::handleEvent(const Event* event) {
-    switch (event->getType()) {
-        case EVENT_ATTACK_ENTITY: {
-            const AttackEntityEvent* l_event =
-                static_cast<const AttackEntityEvent*>(event);
-            handleAttack(l_event->attacker, l_event->defender);
-        } break;
-        default:
-            break;
-    }
+void CombatSystem::handleAttackEntityEvent(const AttackEntityEvent* event) {
+    handleAttack(event->attacker, event->defender);
 }
 
 void CombatSystem::handleAttack(EntityId attacker, EntityId defender) {

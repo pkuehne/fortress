@@ -5,8 +5,9 @@
 
 class ObjectivesSystem : public GameSystemBase {
 public:
-    virtual void handleEvent(const Event* event);
-    virtual void update();
+    void handleAddEntityEvent(const AddEntityEvent* event);
+    void handleRemoveEntityEvent(const RemoveEntityEvent* event);
+    
     bool updateQuests();
     void showGameOverWindow(bool gameWon);
 

@@ -6,7 +6,7 @@
 class MovementSystem : public GameSystemBase {
 public:
     virtual ~MovementSystem() {}
-    virtual void handleEvent(const Event* event);
+    void handleMoveEntityEvent(const MoveEntityEvent* event);
 
 private:
 };

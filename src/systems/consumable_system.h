@@ -2,6 +2,6 @@
 #include "../core/utility.h"
 
 class ConsumableSystem : public GameSystemBase {
-public:
-    virtual void handleEvent(const Event* event);
+private:
+    virtual void handleConsumeItemEvent(const ConsumeItemEvent* event) override;
 };

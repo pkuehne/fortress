@@ -123,8 +123,6 @@ bool canAttackTarget(GameEngine* engine, EntityId entity, NpcComponent* npc) {
     return false;
 }
 
-void NpcSystem::handleEvent(const Event* event) {}
-
 void NpcSystem::update() {
     if (getEngine()->isPlayerTurn())
         return;

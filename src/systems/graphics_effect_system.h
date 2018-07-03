@@ -8,7 +8,6 @@
 class GraphicsEffectSystem : public GameSystemBase {
 public:
     virtual ~GraphicsEffectSystem() {}
-    virtual void handleEvent(const Event* event) {}
     virtual void update();
 
 private:

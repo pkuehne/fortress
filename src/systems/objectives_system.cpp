@@ -9,42 +9,28 @@ void ObjectivesSystem::showGameOverWindow(bool gameWon) {
     getEngine()->getWindows()->createWindow<GameOverWindow>(gameOverArgs);
 }
 
-void ObjectivesSystem::handleEvent(const Event* event) {
-    switch (event->getType()) {
-        case EVENT_REMOVE_ENTITY: {
-            const RemoveEntityEvent* l_event =
-                static_cast<const RemoveEntityEvent*>(event);
-            if (l_event->entity == getEngine()->state()->player()) {
-                showGameOverWindow(false);
-                return;
-            }
-            if (updateQuests()) {
-                showGameOverWindow(true);
-            }
-
-            break;
-        }
-        case EVENT_ADD_ENTITY: {
-            const AddEntityEvent* l_event =
-                static_cast<const AddEntityEvent*>(event);
-            DescriptionComponent* l_desc =
-                getEngine()->state()->components()->get<DescriptionComponent>(
-                    l_event->entity);
-            if (l_desc && l_desc->title == "Troll") {
-                m_boss = l_event->entity;
-                KillQuest* quest = new KillQuest(getEngine()->state()->player(),
-                                                 l_event->entity);
-                quest->title() = "Kill the Troll";
-                getEngine()->state()->getQuests().push_back(quest);
-            }
-            break;
-        }
-        default:
-            break;
+void ObjectivesSystem::handleAddEntityEvent(const AddEntityEvent* event) {
+    DescriptionComponent* l_desc =
+        getEngine()->state()->components()->get<DescriptionComponent>(
+            event->entity);
+    if (l_desc && l_desc->title == "Troll") {
+        m_boss = event->entity;
+        KillQuest* quest =
+            new KillQuest(getEngine()->state()->player(), event->entity);
+        quest->title() = "Kill the Troll";
+        getEngine()->state()->getQuests().push_back(quest);
     }
 }
 
-void ObjectivesSystem::update() {}
+void ObjectivesSystem::handleRemoveEntityEvent(const RemoveEntityEvent* event) {
+    if (event->entity == getEngine()->state()->player()) {
+        showGameOverWindow(false);
+        return;
+    }
+    if (updateQuests()) {
+        showGameOverWindow(true);
+    }
+}
 
 bool ObjectivesSystem::updateQuests() {
     bool allComplete = true;

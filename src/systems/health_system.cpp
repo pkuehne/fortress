@@ -2,17 +2,6 @@
 #include "../components/health_component.h"
 #include <glog/logging.h>
 
-void HealthSystem::handleEvent(const Event* event) {
-    switch (event->getType()) {
-        case EVENT_ATTACK_ENTITY: {
-            // const AttackEntityEvent* l_event = static_cast<const
-            // AttackEntityEvent*> (event);
-        } break;
-        default:
-            break;
-    }
-}
-
 void HealthSystem::update() {
     if (getEngine()->isPlayerTurn())
         return;
