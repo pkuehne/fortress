@@ -24,7 +24,10 @@ EntityId findNearestVisibleMatching(GameState* state, const Location& location,
 void setPathToTarget(GameEngine* engine, EntityId entity, EntityId target,
                      NpcComponent* npc);
 
-NpcSystem::NpcSystem() { createHumanStateMachine(); }
+NpcSystem::NpcSystem() {
+    createHumanStateMachine();
+    createDogStateMachine();
+}
 
 void NpcSystem::createHumanStateMachine() {
     StateMachine human;
@@ -97,6 +100,71 @@ void NpcSystem::createHumanStateMachine() {
     };
     human["Attacking"] = AttackingState;
     m_stateMachines["human"] = human;
+}
+
+void NpcSystem::createDogStateMachine() {
+    StateMachine dog;
+
+    State NoneState;
+    Transition NoneToIdle;
+    NoneToIdle.condition = [](GameEngine* g, EntityId e, NpcComponent* n) {
+        return true;
+    };
+    NoneToIdle.endState = "Idle";
+    NoneState.transitions.push_back(NoneToIdle);
+    dog[""] = NoneState;
+
+    State IdleState;
+    Transition IdleToSeeking;
+    IdleToSeeking.condition = [](GameEngine* g, EntityId e, NpcComponent* n) {
+        // When human is too far away - 5 tiles
+        return 0 == findNearestVisibleMatching(g->state(),
+                                               g->state()->location(e), 3,
+                                               n->attribs["seek_target"]);
+        ;
+    };
+    IdleToSeeking.endState = "Seeking";
+    IdleState.transitions.push_back(IdleToSeeking);
+    dog["Idle"] = IdleState;
+
+    State SeekingState;
+    Transition SeekingToMoving;
+    SeekingToMoving.condition = [](GameEngine* g, EntityId e, NpcComponent* n) {
+        return true;
+    };
+    SeekingToMoving.endState = "Moving";
+    SeekingState.transitions.push_back(SeekingToMoving);
+    SeekingState.onUpdate = [](GameEngine* g, EntityId e, NpcComponent* n) {
+        n->target = findNearestVisibleMatching(
+            g->state(), g->state()->location(e), n->losDistance,
+            n->attribs["seek_target"]);
+    };
+    dog["Seeking"] = SeekingState;
+
+    State MovingState;
+    Transition MovingToIdle;
+    MovingToIdle.condition = [](GameEngine* g, EntityId e, NpcComponent* n) {
+        // When human is too far away - x tiles
+        return 0 != findNearestVisibleMatching(g->state(),
+                                               g->state()->location(e), 3,
+                                               n->attribs["seek_target"]);
+        ;
+    };
+    MovingToIdle.endState = "Idle";
+    MovingState.transitions.push_back(MovingToIdle);
+    MovingState.onUpdate = [](GameEngine* g, EntityId e, NpcComponent* n) {
+        setPathToTarget(g, e, n->target, n);
+        if (!n->path.empty()) {
+            MoveEntityEvent* l_event = new MoveEntityEvent();
+            l_event->entity = e;
+            l_event->newLocation = n->path[0];
+            g->raiseEvent(l_event);
+            n->path.erase(n->path.begin());
+        }
+    };
+    dog["Moving"] = MovingState;
+
+    m_stateMachines["dog"] = dog;
 }
 
 bool canSeeTarget(GameEngine* engine, EntityId entity, NpcComponent* npc) {

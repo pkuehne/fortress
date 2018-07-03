@@ -380,7 +380,38 @@ EntityId PrefabBuilder::createForesterPrefab(Location& location) {
     l_equipment->leftHandWieldable = createShieldPrefab(invalidLoc);
     l_equipment->headWearable = createHelmetPrefab(invalidLoc);
 
-    LOG(INFO) << "Created Forester: " << l_entity << std::endl;
+    return l_entity;
+}
+
+EntityId PrefabBuilder::createDogPrefab(Location& location) {
+    EntityId l_entity = m_state->createEntity(location);
+
+    SpriteComponent* l_sprite =
+        m_state->components()->make<SpriteComponent>(l_entity);
+    l_sprite->fgColor = Color(GREEN);
+    l_sprite->bgColor = Color(BLACK);
+    l_sprite->sprite = 'd';
+
+    // Collider Component
+    m_state->components()->make<ColliderComponent>(l_entity);
+
+    // Description Component
+    DescriptionComponent* l_description =
+        m_state->components()->make<DescriptionComponent>(l_entity);
+    l_description->title = "Dog";
+    l_description->text = "Man's best friend";
+
+    // Health Component
+    HealthComponent* l_health =
+        m_state->components()->make<HealthComponent>(l_entity);
+    l_health->health = 4;
+
+    // NPC Component
+    NpcComponent* l_npc = m_state->components()->make<NpcComponent>(l_entity);
+    l_npc->state = "";
+    l_npc->stateMachine = "dog";
+    l_npc->attribs["seek_target"] = "Forester";
+
     return l_entity;
 }
 

@@ -13,6 +13,7 @@ const unsigned char TREE = 'T';
 const unsigned char LINK = '>';
 const unsigned char HUMAN = 'H';
 const unsigned char APPLE = 'A';
+const unsigned char DOG = 'D';
 
 bool RuralGenerator::generate() {
     reset();
@@ -54,6 +55,10 @@ void RuralGenerator::createEntitiesFromMap() {
                     break;
                 case HUMAN:
                     l_entity = prefabs.createForesterPrefab(location);
+                    break;
+                case DOG:
+                    std::cout << "Placed dog" << std::endl;
+                    l_entity = prefabs.createDogPrefab(location);
                     break;
                 case APPLE:
                     l_entity = prefabs.createApplePrefab(location);
@@ -115,14 +120,36 @@ void RuralGenerator::placeDungeonStairs() {
 
 void RuralGenerator::placeForester() {
     unsigned int numTries = 50;
+    unsigned int x = 0;
+    unsigned int y = 0;
+
     for (unsigned int ii = 0; ii < numTries; ii++) {
-        unsigned int x = Utility::randBetween(0, m_mapWidth);
-        unsigned int y = Utility::randBetween(0, m_mapHeight);
+        x = Utility::randBetween(0, m_mapWidth);
+        y = Utility::randBetween(0, m_mapHeight);
         if (isValidCoordinate(x, y)) {
             if (getByCoordinate(x, y) == EMPTY) {
                 getByCoordinate(x, y) = HUMAN;
                 break;
             }
+        }
+    }
+
+    // Place the dog too
+    bool dogPlaced = false;
+    auto checkAndPlace = [&](int x, int y) {
+        if (!dogPlaced && isValidCoordinate(x, y)) {
+            if (getByCoordinate(x, y) == EMPTY) {
+                getByCoordinate(x, y) = DOG;
+                dogPlaced = true;
+            }
+        }
+    };
+    for (unsigned int xx = 0; xx < 10 && !dogPlaced; xx++) {
+        for (unsigned int yy = 0; yy < 10 && !dogPlaced; yy++) {
+            checkAndPlace(x + xx, y + yy);
+            checkAndPlace(x - xx, y + yy);
+            checkAndPlace(x + xx, y - yy);
+            checkAndPlace(x - xx, y - yy);
         }
     }
 }

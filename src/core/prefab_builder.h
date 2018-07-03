@@ -23,6 +23,7 @@ public:
     EntityId createTreePrefab(Location& location);
     EntityId createCorpsePrefab(Location& location, char sprite);
     EntityId createForesterPrefab(Location& location);
+    EntityId createDogPrefab(Location& location);
     EntityId createApplePrefab(Location& location);
     EntityId createDoorPrefab(Location& location);
 

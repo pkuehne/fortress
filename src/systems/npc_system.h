@@ -34,6 +34,7 @@ public:
 
 private:
     void createHumanStateMachine();
+    void createDogStateMachine();
 
     std::map<std::string, StateMachine> m_stateMachines;
 };
