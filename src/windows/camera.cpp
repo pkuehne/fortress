@@ -39,8 +39,13 @@ void Camera::renderSprites() {
             for (EntityId entity : l_tile.entities()) {
                 SpriteComponent* l_sprite =
                     m_state->components()->get<SpriteComponent>(entity);
+                NpcComponent* l_npc =
+                    m_state->components()->get<NpcComponent>(entity);
                 if (!l_sprite)
                     continue;
+                if (l_npc && l_tile.lastVisited < m_state->turn()) {
+                    continue;
+                }
                 l_sprites[l_sprite->renderLayer].push_back(l_sprite);
             }
             l_sprites[0].push_back(&(l_tile.getFloor().getSprite()));
