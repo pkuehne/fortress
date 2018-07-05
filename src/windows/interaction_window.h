@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../components/description_component.h"
+#include "../components/droppable_component.h"
 #include "../components/openable_component.h"
 #include "window.h"
 
@@ -13,6 +14,7 @@ typedef struct {
 typedef struct {
     DescriptionComponent* desc;
     OpenableComponent* open;
+    DroppableComponent* drop;
 } ComponentStore;
 
 class InteractionWindow : public Window {

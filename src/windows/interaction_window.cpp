@@ -65,6 +65,21 @@ void InteractionWindow::registerWidgets() {
         ->setText("talk")
         ->setCommandChar(1)
         ->setSensitive(false);
+    createWidget<Label>("txtDrop", descriptionWidth, 4)
+        ->setText("pickup")
+        ->setCommandChar(1)
+        ->setCommandCharCallback([&](Label* l) {
+            ListBox* lstEntities = this->getWidget<ListBox>("lstEntities");
+            EntityId entity = m_entities[lstEntities->getSelection()];
+            EntityId playerId = getEngine()->state()->player();
+
+            PickupEquipmentEvent* event = new PickupEquipmentEvent();
+            event->entity = playerId;
+            event->item = entity;
+            getEngine()->raiseEvent(event);
+            getEngine()->swapTurn();
+        })
+        ->setSensitive(false);
 
     setHeight(windowHeight);
     setWidth(descriptionWidth + commandWidth);
@@ -77,6 +92,8 @@ void InteractionWindow::registerWidgets() {
                 entity);
         store.open =
             getEngine()->state()->components()->get<OpenableComponent>(entity);
+        store.drop =
+            getEngine()->state()->components()->get<DroppableComponent>(entity);
 
         ListBoxItem item;
         item.setText(store.desc ? store.desc->title : "<Unknown>");
@@ -91,8 +108,13 @@ void InteractionWindow::updateScreen() {
     ListBox* lstEntities = getWidget<ListBox>("lstEntities");
     Label* txtInspect = getWidget<Label>("txtInspect");
     Label* txtOpen = getWidget<Label>("txtOpen");
+    Label* txtDrop = getWidget<Label>("txtDrop");
 
     ComponentStore& store = m_components[lstEntities->getSelection()];
+
+    txtInspect->setSensitive(store.desc != nullptr);
+    txtOpen->setSensitive(store.open != nullptr);
+    txtDrop->setSensitive(store.drop != nullptr);
 
     if (store.desc) {
         setTitle(store.desc->title);
@@ -100,9 +122,6 @@ void InteractionWindow::updateScreen() {
     if (store.open) {
         txtOpen->setText(store.open->open ? "close" : "open");
     }
-
-    txtInspect->setSensitive(store.desc != nullptr);
-    txtOpen->setSensitive(store.open != nullptr);
 }
 
 void InteractionWindow::listSelection(ListBox* box) { updateScreen(); }

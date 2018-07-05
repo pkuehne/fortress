@@ -58,7 +58,7 @@ void MapWindow::registerWidgets() {
         ->setCommandCharCallback(
             [](Label* l) { l->getWindow()->getEngine()->swapTurn(); })
         ->setVerticalAlign(Widget::VerticalAlign::Bottom);
-    createWidget<Label>("lblEquipment", 1, 1, sidebar)
+    createWidget<Label>("lblEquipment", 1, 2, sidebar)
         ->setText("View Equipment")
         ->setCommandChar(6)
         ->setCommandCharCallback([](Label* l) {
@@ -68,7 +68,7 @@ void MapWindow::registerWidgets() {
                 ->createWindow<EquipmentWindow>();
         })
         ->setVerticalAlign(Widget::VerticalAlign::Bottom);
-    createWidget<Label>("lblQuests", 1, 2, sidebar)
+    createWidget<Label>("lblQuests", 1, 3, sidebar)
         ->setText("View Quests")
         ->setCommandChar(6)
         ->setCommandCharCallback([](Label* l) {
@@ -77,11 +77,6 @@ void MapWindow::registerWidgets() {
                 ->getWindows()
                 ->createWindow<QuestWindow>();
         })
-        ->setVerticalAlign(Widget::VerticalAlign::Bottom);
-    createWidget<Label>("lblPickup", 1, 4, sidebar)
-        ->setText("pick up here")
-        ->setCommandChar(1)
-        ->setCommandCharCallback([](Label* l) {})
         ->setVerticalAlign(Widget::VerticalAlign::Bottom);
 
     createWidget<Label>("lblInteract", 1, 5, sidebar)
@@ -168,14 +163,10 @@ void MapWindow::keyPress(unsigned char key) {
             EntityHolder l_entities =
                 getEngine()->state()->map()->findEntitiesAt(newLocation);
             for (EntityId entity : l_entities) {
-                // if
-                // (getEngine()->state()->components()->get<NpcComponent>(entity))
-                // {
                 AttackEntityEvent* l_event = new AttackEntityEvent;
                 l_event->attacker = playerId;
                 l_event->defender = entity;
                 getEngine()->raiseEvent(l_event);
-                //}
             }
         }
         if (m_action == 'i') {
@@ -195,33 +186,6 @@ void MapWindow::keyPress(unsigned char key) {
     }
     if (key == KEY_ESC) {
         getEngine()->getWindows()->createWindow<EscapeWindow>();
-    }
-    if (key == 'p') {
-        Location l_playerLoc = getEngine()->state()->location(playerId);
-        EntityHolder l_entities =
-            getEngine()->state()->map()->findEntitiesAt(l_playerLoc);
-        bool foundSomethingAlready = false;
-        for (EntityId l_entity : l_entities) {
-            DroppableComponent* droppable =
-                getEngine()->state()->components()->get<DroppableComponent>(
-                    l_entity);
-            if (droppable) {
-                if (!foundSomethingAlready) {
-                    PickupEquipmentEvent* event = new PickupEquipmentEvent();
-                    event->entity = playerId;
-                    event->item = l_entity;
-                    getEngine()->raiseEvent(event);
-                    foundSomethingAlready = true;
-                } else {
-                    getEngine()->state()->addMessage(
-                        INFO, "There's something else here...");
-                    break;
-                }
-            }
-        }
-        if (!foundSomethingAlready) {
-            getEngine()->state()->addMessage(INFO, "There's nothing here...");
-        }
     }
     if (key == '[') {
         unsigned int height = getEngine()->getGraphics()->getTileHeight();
