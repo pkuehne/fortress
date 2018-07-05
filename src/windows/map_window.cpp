@@ -12,7 +12,6 @@
 #include "inspection_window.h"
 #include "interaction_window.h"
 #include "quest_window.h"
-#include "selection_window.h"
 #include "window.h"
 
 #include "camera.h"
