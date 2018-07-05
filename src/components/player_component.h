@@ -3,8 +3,6 @@
 
 #include "component_base.h"
 
-struct PlayerComponent : public ComponentBase {
-
-};
+struct PlayerComponent : public ComponentBase {};
 
 #endif

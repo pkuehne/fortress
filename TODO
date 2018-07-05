@@ -1,0 +1,155 @@
+Alpha 4:
+    ✔ WindowManager upgrade: @done(18-04-15 10:53)
+        ✔ Windows should be created templatized:
+            ✔ WindowManager has create<T>(args, retval) function
+            ✔ create<T>() function calls initialise
+            ✔ Add setup() function
+            ✔ Change pushWindow function
+            ✔ Remove WindowManagerInterface
+        ✔ Window Enhancements: @done(18-04-12 19:24)
+            ✔ Differentiate drawChar() from drawTile()
+                The first uses the Fontset, the second the GraphicsSet
+            ✔ Add full-screen setting
+                Removes the need for getEngine() to retrieve the size of the screen
+        ✔ Widgets: @done(18-04-12 18:19)
+            ✔ Move wrapText into Widget @done(18-04-12 18:18)
+            ✔ Move drawProgress into a new widget @done(18-04-12 18:18)
+            ✔ Give Widget pointer to Window
+            ✔ Widgets get de-alloc'ed on window pop @done(18-04-12 18:18)
+            ✔ Allow sub-widgets @done(18-04-12 18:18)
+            ✔ Put base widget in Window @done(18-04-12 18:18)
+            ✔ Allow finding of Widget from base Widget @done(18-04-12 18:18)
+        ✔ Migrate Windows to Widget basis: @done(18-04-12 18:19)
+            ✔ Add close_on_esc flag @done(18-04-12 18:19)
+            ✔ Make keyDown/keyUp non-virtual in window.h @done(18-04-12 18:19)
+            ✔ Widgets Created: @done(18-04-13 15:01)
+                ✔ Label @done(18-04-12 18:12)
+                ✔ Icon @done(18-04-12 18:12)
+                ✔ ListBox @done(18-04-12 18:12)
+                ✔ Frame @done(18-04-12 18:12)
+                ✔ NumericEntry @done(18-04-12 18:12)
+                ✔ ProgressBar @done(18-04-12 18:12)
+                ✔ Camera @done(18-04-12 19:16)
+                ✔ TextEntry @done(18-04-13 15:00)
+            ✔ Windows Converted: @done(18-04-13 16:45)
+                ✔ SplashWindow @done(18-04-12 18:11)
+                ✔ SelectionWindow @done(18-04-12 18:11)
+                ✔ QuestWindow @done(18-04-12 18:11)
+                ✔ InspectionWindow @done(18-04-12 18:11)
+                ✔ MapWindow @done(18-04-12 18:11)
+                ✔ GeneratorWindow @done(18-04-12 18:11)
+                ✔ GameOverWindow @done(18-04-12 18:11)
+                ✔ EscapeWindow @done(18-04-12 18:11)
+                ✔ MainWindow @done(18-04-12 18:12)
+                ✔ DebugWindow @done(18-04-13 15:18)
+                ✔ EquipmentWindow @done(18-04-12 18:12)
+            ✔ Call nextTurn() on Window after registering Widgets to allow for setup @done(18-04-13 16:41)
+            ✔ Migrate all lambda callbacks to std::function @done(18-04-13 16:45)
+            ✔ Add colour to list items and use it for rendering @done(18-04-15 10:53)
+    ✔ Make NPCs smarter: @done(18-04-12 19:21)
+        ✔ Better FSM for NPCs
+    ✔ Quests:
+        ✔ Add basic quest
+        ✔ Add kill quest
+        ✔ Make quest complete/fail
+        ✔ QuestWindow
+    ✔ Better rendering code:
+        ✔ Camera:
+            ✔ Window Width + Height
+            ✔ Map Offset x, y
+            ✔ Add debug path flag to GameState
+            ✔ Debug shows path of NPCs
+    ✔ Map/Generator Improvement: @done(18-04-15 11:23)
+        ✔ Create Areas from map with size
+        ✔ Pass Area ID into generator
+        ✔ Use Area ID when creating Entity
+        ✔ Remove the use of getArea @done(18-04-15 11:18)
+    Bugs:
+        ☐ Picking up equipment doesn't remove it from map
+        ☐ Change MapWindow frames to be around Sidebar and Camera, not Message List
+            This otherwise obscures the title of the MapWindow
+        ☐ Investigate weird intermittent crashes on startup
+
+Backlog:
+    Bugs:
+        ☐ non-consumable items in Equipment Window can be selected for consumption
+    Cleanup:
+        ☐ Make Event Manager part of GameState
+        ☐ Remove GameEngine dependency from EntityManager
+        ☐ Move graphicsBegin/End out of WindowManager engine
+        ☐ Remove getEngine() from Windows
+    Animals:
+        Food:
+            ☐ Food grows on grass tiles
+            ☐ Food regrows after a while
+        Behaviour:
+            Food Seeking:
+                ☐ Animals seek out food
+                ☐ Eat food when they find it
+            Predators:
+                ☐ See predators
+                ☐ Run away from them
+    Window Handling:
+        Merge Borders properly:
+            ☐ Don't draw borders directly when called
+            ☐ Store border state for Window in a grid (boolean will suffice)
+            ☐ Just before redrawing, iterate through and set char based on neighbours
+            ☐ Then draw Window elements and finally the border chars
+    Widgets:
+        Widget creation from file:
+            Load widgets and Window information from a YAML file instead of registering widgets directly.
+            Tnis will also allow for faster iteration, because there is no recompilation when changing the layout
+            ☐ Window class has own implementation of registerWidgets()
+            ☐ Loads a YAML file with the same name as the Window
+            ☐ Divided into two sections: Window and Widgets
+            Window allows setting of:
+                ☐ Title
+                ☐ EscapeBehaviour
+                ☐ MergeBorders
+            Widgets allows creation of any Widget:
+                ☐ If a given property is in the yaml, set it on the widget
+            ☐ Overriding must still be allowed to set callbacks
+        Namespacing:
+            ☐ Move widgets into own directory
+    Debug Class in GameState:
+        This should not be saveable, but needs to be set from the Lua console
+        ✔ Debug class
+        ✔ Show NPC paths
+        ☐ Turn of FoW
+        ✔ Add Lua bindings
+    Lua Enhancements:
+        Redirect print to the Debug Console:
+            ☐ print stores output into a table
+            ☐ Table is dumped after each command is run
+    Loading/Saving:
+        Windows:
+            Save As Window:
+                ☐ Typing and backspace
+                ☐ Calls save on GameState
+                ☐ Hook into escape window
+            Load Window:
+                ☐ List all save games
+                ☐ Selecting one calls load on GameState
+                ☐ Hook into main window
+        Process:
+            Loading:
+                ☐ Load all areas
+                ☐ Load all entities
+                ☐ Load all components
+            Saving:
+                ☐ Save all areas
+                ☐ Save all entities
+                ☐ Save all components
+    Make NPCs smarter:
+        ☐ Allow NPCs to traverse levels
+        ☐ GOAP for NPCs
+    Generator:
+        Smaller Enhancements:
+            ☐ Set Player from Generator
+        Cave Generator:
+        Town Generator:
+    GameState:
+        ✔ Move turn and tick info into GameState @done(18-04-12 18:26)
+        Entities not in current area should be moved:
+            ☐ Could be held in GameState instead
+            ☐ MapManager could then be loaded with MapInfo

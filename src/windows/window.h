@@ -1,67 +1,128 @@
 #ifndef __WINDOW_H__
 #define __WINDOW_H__
 
-#include <cstring>
-#include "window_interface.h"
+#include "../core/game_engine.h"
+#include "widget.h"
 
-class GameEngineInterface;
+#include <map>
 
-class Window : public WindowInterface
-{
+class Window {
+public:
+    /// \brief Controls the behaviour on the Window when the Esc key is presed
+    enum class EscapeBehaviour {
+        None,
+        CloseWindow,
+        QuitGame ///!< Terminates the game immediately
+    };
+
 public:
     static const int MAX_BUTTONS = 5;
 
-    Window(): m_engine(0) { memset (ascii_keys, false, sizeof(ascii_keys)); }
-    virtual ~Window() { }
-    virtual void initialise (GameEngineInterface* a_engine, void* Args = 0, void* Retval = 0);
-    virtual void destroy (void);
-    virtual void setDimensions (int x, int y, int width, int height);
-    virtual void setTitle (const std::string& title) { m_title = title; }
-    virtual std::string getTitle () { return m_title; }
+    Window() {}
+    virtual ~Window() {
+        for (auto w : m_widgets) {
+            delete w.second;
+        }
+    }
+    virtual void destroy(void);
     virtual int getXOffset() { return m_xOffset; }
     virtual int getYOffset() { return m_yOffset; }
     virtual int getWidth() { return m_width; }
     virtual int getHeight() { return m_height; }
-    virtual void resize() { setDimensions (m_xOffset, m_yOffset, m_width, m_height); }
-    virtual void update() { }
+    virtual void resize();
+    virtual void nextTurn() {}
 
-    virtual unsigned int drawString (int y, int x, const char* text, Color fg = Color(WHITE), Color bg = Color(BLACK));
-    virtual void drawTile (int y, int x, unsigned int tile, Color fg, Color bg);
-    virtual void drawBorder (int y, int x, int height, int width);
-    virtual void clearArea (int y, int x, int height, int width);
+    virtual void keyDown(unsigned char key);
+    virtual void keyUp(unsigned char key) { ascii_keys[key] = false; }
+    virtual bool getKey(unsigned char key) { return ascii_keys[key]; }
+    virtual void mouseDown(int x, int y, int button);
+    virtual void mouseUp(int x, int y, int button);
+    virtual bool getMouseButton(int button);
 
-    virtual GameEngineInterface* getEngine() { return m_engine; }
-    virtual void keyDown (unsigned char key) { ascii_keys[key] = true; }
-    virtual void keyUp (unsigned char key) { ascii_keys[key] = false; }
-    virtual bool getKey (unsigned char key) { return ascii_keys[key]; }
-    virtual void mouseDown (int x, int y, int button);
-    virtual void mouseUp (int x, int y, int button);
-    virtual bool getMouseButton (int button);
     virtual void beforeRedraw();
-    virtual void redraw () { };
+    virtual void redraw(){};
+    virtual void renderWidgets();
     virtual void afterRedraw();
-    virtual void resize (int width, int height);
-    virtual void* getArgs() { return m_args; }
-    virtual void* getRetval() { return m_retval; }
 
-    virtual void gainFocus() { };
-    virtual void loseFocus() { };
+    virtual void gainFocus(){};
+    virtual void loseFocus(){};
 
-    virtual void drawProgress (unsigned int x, unsigned int y, unsigned int value, unsigned int max);
-    virtual unsigned int wrapText (const std::string& text, std::vector<std::string>& lines, unsigned int maxWidth, unsigned int maxRows);
-    
+    template <class T>
+    T* createWidget(std::string name, unsigned int x, unsigned int y,
+                    Widget* parent = 0) {
+        T* widget = new T();
+        widget->setGraphics(m_graphics)
+            ->setName(name)
+            ->setX(x)
+            ->setY(y)
+            ->setWindow(this);
+        if (!parent) {
+            widget->setParent(m_baseWidget);
+            if (m_baseWidget) {
+                m_baseWidget->addChild(widget);
+            }
+        } else {
+            widget->setParent(parent);
+            parent->addChild(widget);
+        }
+        m_widgets[name] = widget;
+
+        return widget;
+    };
+
+    // Non-overridable
+    template <class T> T* getWidget(std::string name) {
+        T* widget = dynamic_cast<T*>(m_widgets[name]);
+        if (!widget) {
+            throw("Widget '" + name + "' does not exist");
+        }
+        return widget;
+    }
+    void initialise(GameEngine* a_engine);
+
+    void setFullscreen(bool fullscreen = true);
+    void setTitle(const std::string& title);
+    void setWidth(unsigned int width) {
+        m_width = width;
+        resize();
+    }
+    void setHeight(unsigned int height) {
+        m_height = height;
+        resize();
+    }
+    void setEscapeBehaviour(EscapeBehaviour b) { m_onEscape = b; }
+
+    virtual GameEngine* getEngine() { return m_engine; }
+    virtual GameState* getState() { return m_state; }
+    virtual WindowManager* getManager() { return m_manager; }
+
+    // Overrideable methods
+    virtual void keyPress(unsigned char key) { /* Overrideable */
+    }
+    virtual void setup() { /* Overrideable */
+    }
+    virtual void registerWidgets() {}
+
 private:
-    bool                    ascii_keys[256];
-    bool                    special_keys[256];
-    int                     m_buttons[MAX_BUTTONS];
-    GameEngineInterface*    m_engine;
-    void*                   m_args;
-    void*                   m_retval;
-    int                     m_xOffset;
-    int                     m_yOffset;
-    int                     m_width;
-    int                     m_height;
-    std::string             m_title;
+    void setDimensions(int x, int y, int width, int height);
+
+private:
+    bool ascii_keys[256] = {0};
+    bool special_keys[256] = {0};
+    int m_buttons[MAX_BUTTONS] = {0};
+    GameEngine* m_engine = nullptr;
+    GraphicsInterface* m_graphics = nullptr;
+    GameState* m_state = nullptr;
+    WindowManager* m_manager = nullptr;
+    int m_xOffset = 0;
+    int m_yOffset = 0;
+    int m_width = 0;
+    int m_height = 0;
+    bool m_fullscreen = 0;
+    std::string m_title;
+    EscapeBehaviour m_onEscape;
+    std::map<std::string, Widget*> m_widgets;
+    Widget* m_baseWidget;
 };
 
 #endif

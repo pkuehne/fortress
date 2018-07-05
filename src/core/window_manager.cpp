@@ -1,66 +1,98 @@
 #include "window_manager.h"
-#include "splash_window.h"
+#include "../windows/splash_window.h"
+#include "game_engine.h"
+#include <cassert>
 
-void WindowManager::initialise (GameEngineInterface* engine) {
-    m_engine = engine;
-
-    Window* l_window = new SplashWindow();
-    l_window->initialise(m_engine);
-    pushWindow (l_window);
-}
-
-void WindowManager::pushWindow (WindowInterface* win) {
-    m_windows.push_back (win);
-    win->gainFocus();
-    win->resize();
-}
-
-void WindowManager::popWindow () {
-    if (m_windows.size() == 0) return;
-    WindowInterface* win = m_windows.back();
+void removeWindow(Window* win) {
     win->loseFocus();
     delete win;
+}
+
+void WindowManager::initialise(GameEngine* engine) {
+    m_engine = engine;
+
+    createWindow<SplashWindow>();
+}
+
+void WindowManager::pushWindow(Window* win) {
+    m_windows.push_back(win);
+
+    win->setup();
+    win->registerWidgets();
+    win->resize();
+    win->nextTurn(); // Force re-fresh on all widgets
+}
+
+void WindowManager::popWindow() {
+    if (!m_windows.size()) {
+        return;
+    }
+    removeWindow(m_windows.back());
     m_windows.pop_back();
 }
 
-void WindowManager::replaceWindow (WindowInterface* win) {
-    int size = m_windows.size();
-    for (int ii = 0; ii < size; ii++) {
-        popWindow();
-    }
-    pushWindow (win);
+void WindowManager::replaceWindow(Window* win) {
+    popWindow();
+    pushWindow(win);
 }
 
-WindowInterface* WindowManager::getActive()
-{
-    if (m_windows.size() == 0) return NULL;
+void WindowManager::replaceAllWindows(Window* win) {
+    m_nextWindow = win;
+    m_nextAction = NextWindowAction::ReplaceAll;
+}
+
+Window* WindowManager::getActive() {
+    if (m_windows.size() == 0)
+        return NULL;
     return m_windows.back();
 }
 
-void WindowManager::redraw()
-{
+void WindowManager::nextTick() {
     m_engine->getGraphics()->beginScreenUpdate();
 
     for (size_t ii = 0; ii < m_windows.size(); ii++) {
         m_windows[ii]->beforeRedraw();
         m_windows[ii]->redraw();
+        m_windows[ii]->renderWidgets();
         m_windows[ii]->afterRedraw();
     }
-
     m_engine->getGraphics()->endScreenUpdate();
 
+    manageNextWindow();
 }
 
-void WindowManager::resize ()
-{
+void WindowManager::resize() {
     for (size_t ii = 0; ii < m_windows.size(); ii++) {
         m_windows[ii]->resize();
     }
 }
 
-void WindowManager::update()
-{
+void WindowManager::nextTurn() {
     for (size_t ii = 0; ii < m_windows.size(); ii++) {
-        m_windows[ii]->update();
+        m_windows[ii]->nextTurn();
     }
+}
+
+void WindowManager::manageNextWindow() {
+    if (!m_nextWindow) {
+        return;
+    }
+
+    switch (m_nextAction) {
+        case NextWindowAction::Replace: {
+            popWindow();
+            pushWindow(m_nextWindow);
+            break;
+        }
+        case NextWindowAction::ReplaceAll: {
+            for (Window* win : m_windows) {
+                removeWindow(win);
+            }
+            m_windows.clear();
+
+            pushWindow(m_nextWindow);
+            break;
+        }
+    }
+    m_nextWindow = nullptr;
 }

@@ -1,73 +1,58 @@
 #include "main_window.h"
-#include "map_window.h"
+#include "../core/game_engine.h"
 #include "generator_window.h"
-#include "game_engine.h"
-#include "file_loader.h"
+#include "label.h"
+#include "map_window.h"
 
-void MainWindow::gainFocus () {
-    setTitle (" FORTRESS ");
-
+void MainWindow::setup() {
+    setTitle("FORTRESS");
+    setFullscreen();
+    setEscapeBehaviour(Window::EscapeBehaviour::QuitGame);
 }
+void MainWindow::registerWidgets() {
+    Label::CommandCharCB quickstart = [](Label* l) {
+        auto args = std::make_shared<GeneratorWindowArgs>();
+        args->hideWindow = true;
+        l->getWindow()
+            ->getEngine()
+            ->getWindows()
+            ->createWindow<GeneratorWindow>(args);
+    };
+    Label::CommandCharCB create = [](Label* l) {
+        auto args = std::make_shared<GeneratorWindowArgs>();
+        args->hideWindow = false;
+        l->getWindow()
+            ->getEngine()
+            ->getWindows()
+            ->createWindow<GeneratorWindow>(args);
+    };
 
-void MainWindow::resize() {
-    setDimensions (0, 0, getEngine()->getGraphics()->getScreenWidth(), getEngine()->getGraphics()->getScreenHeight());
-}
+    this->createWidget<Label>("lblQuickstart", 1, 15)
+        ->setText("Quickstart")
+        ->setCommandChar(1)
+        ->setCommandCharCallback(quickstart)
+        ->setIgnoreCommandCharCase(true)
+        ->setVerticalAlign(Widget::VerticalAlign::Bottom)
+        ->setHorizontalAlign(Widget::HorizontalAlign::Centre);
 
-void MainWindow::redraw() {
+    this->createWidget<Label>("lblCreate", 1, 12)
+        ->setText("Create New World")
+        ->setCommandChar(1)
+        ->setCommandCharCallback(create)
+        ->setIgnoreCommandCharCase(true)
+        ->setVerticalAlign(Widget::VerticalAlign::Bottom)
+        ->setHorizontalAlign(Widget::HorizontalAlign::Centre);
 
-    std::string newGame ("Quickstart!");
-    std::string newWorld ("Create New World");
-    std::string loadGame ("Load Existing World");
-    std::string tutorial ("Start The Tutorial");
+    this->createWidget<Label>("lblLoad", 1, 9)
+        ->setText("Load Existing World")
+        ->setCommandChar(1)
+        ->setVerticalAlign(Widget::VerticalAlign::Bottom)
+        ->setHorizontalAlign(Widget::HorizontalAlign::Centre);
 
-    int yPos = getHeight() - 15;
-    int spacing = 3;
-    Color darkGrey (GREY);
-    darkGrey.Red()   *= 0.3;
-    darkGrey.Green() *= 0.3;
-    darkGrey.Blue()  *= 0.3;
-    Color darkGreen (GREEN);
-    darkGreen.Red()   *= 0.3;
-    darkGreen.Green() *= 0.3;
-    darkGreen.Blue()  *= 0.3;
-
-    drawString (yPos, (getWidth()/2) - (newGame.length()/2), newGame.c_str());
-    drawTile (yPos, (getWidth()/2) - (newGame.length()/2), 'Q', Color (GREEN), Color (BLACK));
-    drawString (yPos += spacing, (getWidth()/2) - (newWorld.length()/2), newWorld.c_str());
-    drawTile (yPos, (getWidth()/2) - (newWorld.length()/2), 'C', Color (GREEN), Color (BLACK));
-    drawString (yPos += spacing, (getWidth()/2) - (loadGame.length()/2), loadGame.c_str());
-    drawTile (yPos, (getWidth()/2) - (loadGame.length()/2), 'L', Color(GREEN), Color (BLACK));
-    drawString (yPos += spacing, (getWidth()/2) - (tutorial.length()/2), tutorial.c_str(), darkGrey, Color (BLACK));
-    drawTile (yPos, (getWidth()/2) - (tutorial.length()/2), 'S', darkGreen, Color (BLACK));
-
-}
-
-void MainWindow::keyDown (unsigned char key) {
-    if (key == ESC) {
-        getEngine()->quit();
-    }
-
-    if (key == 'q' || key == 'Q') {
-        GeneratorWindow* l_win = new GeneratorWindow();
-        l_win->initialise (getEngine(), (void*)1);
-
-        getEngine()->getWindows()->pushWindow (l_win);
-    }
-
-    if (key == 'c' || key == 'C') {
-        GeneratorWindow* l_win = new GeneratorWindow();
-        l_win->initialise (getEngine());
-
-        getEngine()->getWindows()->pushWindow (l_win);
-    }
-
-    if (key == 'l' || key == 'L') {
-        MapWindow* l_win = new MapWindow();
-        l_win->initialise (getEngine());
-
-        FileLoader loader;
-        loader.initialise (getEngine());
-        loader.loadState();
-        getEngine()->getWindows()->pushWindow (l_win);
-    }
+    this->createWidget<Label>("lblTutorial", 1, 6)
+        ->setText("Start The Tutorial")
+        ->setCommandChar(1)
+        ->setSensitive(false)
+        ->setVerticalAlign(Widget::VerticalAlign::Bottom)
+        ->setHorizontalAlign(Widget::HorizontalAlign::Centre);
 }

@@ -1,7 +1,6 @@
-.PHONY: all clean build run
+.PHONY: all clean build run clear
 CC=g++
-
-MODULES = $(wildcard */)
+MODULES = $(sort $(dir $(wildcard ../src/*/)))
 OUT_DIR = ..
 PROGRAM = $(OUT_DIR)/fortress
 ART_DIR = $(OUT_DIR)/artifacts
@@ -11,11 +10,15 @@ COV_DIR = $(ART_DIR)/coverage
 ALL_DIR = $(ART_DIR) $(OBJ_DIR) $(DEP_DIR) $(COV_DIR)
 
 INC_DIRS += -I. -I/usr/include/ $(addprefix -I, $(MODULES))
-CFLAGS=-g -rdynamic -Wall -Werror -std=c++11 $(INC_DIRS)
+CFLAGS=-g -rdynamic -Wall -Werror -std=c++14 $(INC_DIRS)
 LDFLAGS= -g -rdynamic
-LIBRARIES=-lglfw -lGL -lc -lm -lSOIL -lpthread -lglog
+GLFW_LIBS=$(shell pkg-config glfw3 --libs --static)
+YAML_LIBS=$(shell pkg-config yaml-cpp --libs --static)
+LUA_LIBS=$(shell pkg-config lua5.3 --libs --static)
+LIBRARIES=$(GLFW_LIBS) $(YAML_LIBS) $(LUA_LIBS) -lGL -lc -lm -lSOIL -lpthread -lglog 
 
 SOURCES = $(foreach sdir, $(MODULES), $(wildcard $(sdir)/*.cpp))
+#SOURCES+=main.cpp
 OBJECTS = $(addprefix $(OBJ_DIR)/, $(notdir $($(notdir SOURCES):.cpp=.o)))
 DEPENDS = $(addprefix $(DEP_DIR)/, $(notdir $($(notdir SOURCES):.cpp=.d)))
 
@@ -26,20 +29,27 @@ all: $(SOURCES) $(PROGRAM)
 clean:
 	@rm -fr $(ART_DIR)
 	@rm -fr $(PROGRAM)
-	@echo "Cleanup completed"
+	@echo "Build Cleanup completed"
 
-build: $(PROGRAM)
+clear:
+	clear
 
-$(PROGRAM): $(ALL_DIR) $(OBJECTS)
-	@$(CC) $(LDFLAGS) $(OBJECTS) $(LIBRARIES) -o $@
-	@echo "Building $(notdir $@)"
+build: clear $(PROGRAM)
 
 -include $(DEPENDS)
 
-$(OBJ_DIR)/%.o: %.cpp
-	@$(CC) -c  $(CFLAGS) $< -o $@
-	@$(CC) -MM $(CFLAGS) $< > $(DEP_DIR)/$*.d
+$(PROGRAM): $(ALL_DIR) $(OBJECTS)
+	@echo "Linking $(notdir $@)"
+	@$(CC) $(LDFLAGS) $(OBJECTS) $(LIBRARIES) -o $@
+
+$(OBJ_DIR)/main.o: main.cpp
+	@echo "Overriding main"
+	@$(CC) -c  $(CFLAGS) main.cpp -o $@
+
+$(OBJ_DIR)/%.o: %.cpp 
 	@echo "Building $(notdir $<)"
+	@$(CC) -c  $(CFLAGS) $< -o $@
+	@$(CC) -MM $(CFLAGS) $< -MT $@ -MF $(DEP_DIR)/$*.d
 
 $(ART_DIR) $(OBJ_DIR) $(DEP_DIR) $(COV_DIR):
 	@mkdir -p $@

@@ -1,11 +1,12 @@
-#ifndef EQUIPMENT_SYSTEM
-#define EQUIPMENT_SYSTEM
+#pragma once
 
-#include "game_system_base.h"
+#include "../core/game_system_base.h"
 
 class EquipmentSystem : public GameSystemBase {
-public:
-    void handleEvent (const Event* event);
+private:
+    void handleDropEquipmentEvent(const DropEquipmentEvent* event) override;
+    void handlePickupEquipmentEvent(const PickupEquipmentEvent* event) override;
+    void handleUnequipItemEvent(const UnequipItemEvent* event) override;
+    void handleEquipItemEvent(const EquipItemEvent* event) override;
+    void handleConsumeItemEvent(const ConsumeItemEvent* event) override;
 };
-
-#endif

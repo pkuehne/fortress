@@ -1,54 +1,56 @@
-.PHONY: all clean test shuffle
+.PHONY: all clean build run 
 CC=g++
-CFLAGS=-c -g -Wall -I. -I/usr/include -I../src/ -std=c++11
-LDFLAGS=
-LIBRARIES=-lGL -lGLU -lglut -lc -lm -lSOIL -lgtest -lgmock -lpthread -lgcov
-SOURCES=$(wildcard *.cpp)
-SOURCES+= \
-../src/algorithm.cpp \
-../src/color.cpp \
-../src/combat_system.cpp \
-../src/component_manager.cpp \
-../src/config_manager.cpp \
-../src/entity.cpp \
-../src/entity_manager.cpp \
-../src/equipment_window.cpp \
-../src/event.cpp \
-../src/event_manager.cpp \
-../src/game_engine.cpp \
-../src/game_system_base.cpp \
-../src/generator.cpp \
-../src/graphics.cpp \
-../src/inspection_window.cpp \
-../src/map_window.cpp \
-../src/movement_system.cpp \
-../src/npc_system.cpp \
-../src/splash_window.cpp \
-../src/sprite_system.cpp \
-../src/window.cpp \
-../src/window_manager.cpp \
+MODULES = $(filter-out ../src/, $(sort $(dir $(wildcard ../src/*/))))
+OUT_DIR = ..
+PROGRAM = $(OUT_DIR)/unit_tests
+ART_DIR = $(OUT_DIR)/artifacts
+OBJ_DIR = $(ART_DIR)/objects
+DEP_DIR = $(ART_DIR)/depends
+COV_DIR = $(ART_DIR)/coverage
+ALL_DIR = $(ART_DIR) $(OBJ_DIR) $(DEP_DIR) $(COV_DIR)
+TEST_DIR = ./tests/
+MOCK_DIR = ./mocks/
 
-ifeq ($(COVERAGE), Y)
-  CFLAGS+= -fprofile-arcs -ftest-coverage
-endif
+INC_DIRS += -I. -I/usr/include/ -I$(TEST_DIR) -I$(MOCK_DIR) $(addprefix -I, $(MODULES))
+CFLAGS=-g -rdynamic -Wall -Werror -std=c++14 $(INC_DIRS)
+LDFLAGS= -g -rdynamic 
+GLFW_LIBS=$(shell pkg-config glfw3 --libs --static)
+YAML_LIBS=$(shell pkg-config yaml-cpp --libs --static)
+LUA_LIBS=$(shell pkg-config lua5.3 --libs --static)
+GTEST_LIBS=$(shell pkg-config gtest --libs --static)
+GMOCK_LIBS=$(shell pkg-config gmock --libs --static)
+LIBRARIES=$(GLFW_LIBS) $(YAML_LIBS) $(LUA_LIBS) $(GMOCK_LIBS) $(GTEST_LIBS)
+LIBRARIES+=-lGL -lc -lm -lSOIL -lpthread -lglog 
 
-OBJECTS=$(SOURCES:.cpp=.o)
-EXECUTABLE=unit_test
+SOURCES = $(foreach sdir, $(MODULES), $(wildcard $(sdir)/*.cpp))
+SOURCES+= $(wildcard *.cpp)
+SOURCES+= $(wildcard $(TEST_DIR)/*.cpp)
+OBJECTS = $(addprefix $(OBJ_DIR)/, $(notdir $($(notdir SOURCES):.cpp=.o)))
+DEPENDS = $(addprefix $(DEP_DIR)/, $(notdir $($(notdir SOURCES):.cpp=.d)))
 
-all: $(SOURCES) $(EXECUTABLE)
+vpath %.cpp $(MODULES) $(TEST_DIR)
+
+all: $(SOURCES) $(PROGRAM)
 
 clean:
-	@rm -f $(OBJECTS) $(EXECUTABLE) ||:
+	@rm -fr $(ART_DIR)
+	@rm -fr $(PROGRAM)
+	@echo "Test Cleanup completed"
 
-test:
-	$(MAKE) all
-	./unit_test --gtest_shuffle
 
-shuffle:
-	./unit_test --gtest_repeat=100 --gtest_shuffle
+build: $(PROGRAM)
 
-$(EXECUTABLE): $(OBJECTS)
-	$(CC) $(LDFLAGS) $(OBJECTS) $(LIBRARIES) -o $@
+-include $(DEPENDS)
 
-.cpp.o:
-	$(CC) $(CFLAGS) $< -o $@
+$(PROGRAM): $(ALL_DIR) $(OBJECTS)
+	@echo "Linking $(notdir $@)"
+	@$(CC) $(LDFLAGS) $(OBJECTS) $(LIBRARIES) -o $@
+
+$(OBJ_DIR)/%.o: %.cpp 
+	@echo "Building $(notdir $<)"
+	@$(CC) -c  $(CFLAGS) $< -o $@
+	@$(CC) -MM $(CFLAGS) $< -MT $@ -MF $(DEP_DIR)/$*.d
+
+$(ART_DIR) $(OBJ_DIR) $(DEP_DIR) $(COV_DIR):
+	@mkdir -p $@
+	@echo "Creating directory $@"

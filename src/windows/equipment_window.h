@@ -1,19 +1,23 @@
 #ifndef EQUIPMENT_WINDOW
 #define EQUIPMENT_WINDOW
 
+#include "../core/entity.h"
 #include "window.h"
-#include "entity.h"
 
 class EquipmentWindow : public Window {
 public:
-    virtual void gainFocus ();
-    virtual void resize();
-    virtual void redraw();
-    virtual void keyDown (unsigned char key);
+    virtual void setup();
+    virtual void registerWidgets();
+    virtual void nextTurn();
+
+    void setSelectedItem(EntityId item);
+    EntityId getSelectedItem() { return m_selectedItem; }
+    bool itemSelected() { return m_selectedItem != 0; }
+    void updateItemNames();
 
 private:
-    EntityId    m_selectedItem;
-    int         m_selectedPage;
+    EntityId m_selectedItem;
+    std::vector<EntityId> m_rucksackEntities;
 };
 
 #endif

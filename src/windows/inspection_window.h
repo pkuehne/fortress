@@ -1,22 +1,19 @@
-#ifndef INSPECTION_WINDOW_H
-#define INSPECTION_WINDOW_H
+#pragma once
 
 #include "window.h"
-#include "description_component.h"
+
+typedef struct {
+    EntityId entity;
+} InspectionWindowArgs;
 
 class InspectionWindow : public Window {
 public:
-    void keyDown (unsigned char key);
-    void redraw();
-    void resize();
+    void setArguments(std::shared_ptr<InspectionWindowArgs> args) {
+        m_arguments = args;
+    }
+    void setup();
+    void registerWidgets();
 
-    void gainFocus();
-    void loseFocus();
 private:
-    DescriptionComponent*   m_description;
-    std::vector<std::string>    m_lines;
-    unsigned int                m_height;
-    unsigned int                m_width;
+    std::shared_ptr<InspectionWindowArgs> m_arguments;
 };
-
-#endif
