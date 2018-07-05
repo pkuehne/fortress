@@ -57,7 +57,6 @@ void RuralGenerator::createEntitiesFromMap() {
                     l_entity = prefabs.createForesterPrefab(location);
                     break;
                 case DOG:
-                    std::cout << "Placed dog" << std::endl;
                     l_entity = prefabs.createDogPrefab(location);
                     break;
                 case APPLE:

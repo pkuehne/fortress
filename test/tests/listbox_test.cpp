@@ -108,6 +108,19 @@ TEST_F(ListBoxTest, gettingSelectedItemFromEmptyBoxTHrows) {
     EXPECT_ANY_THROW(b.getSelectedItem());
 }
 
+TEST_F(ListBoxTest, settingSelectedItemCallsCallback) {
+
+    // Given
+    bool called = false;
+    box.setItemSelectedCallback([&](ListBox* b) { called = true; });
+
+    // When
+    box.setSelection(3);
+
+    // Then
+    EXPECT_TRUE(called);
+}
+
 TEST_F(ListBoxTest, ItemsAreRenderedWithColour) {
     GraphicsMock graphics;
     box.setGraphics(&graphics);

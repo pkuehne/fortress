@@ -35,7 +35,10 @@
         "system_error": "cpp",
         "thread": "cpp",
         "type_traits": "cpp",
-        "typeinfo": "cpp"
+        "typeinfo": "cpp",
+        "strstream": "cpp",
+        "cinttypes": "cpp",
+        "typeindex": "cpp"
     },
     "C_Cpp.errorSquiggles": "Disabled",
     "clang.cxxflags": ["-g", "-Wall", "-Werror", "-std=c++14", "-Wno-pragma-once-outside-header"]

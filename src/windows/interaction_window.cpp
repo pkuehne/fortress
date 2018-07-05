@@ -1,16 +1,12 @@
 #include "interaction_window.h"
 #include "frame.h"
+#include "inspection_window.h"
 #include "label.h"
-#include "text_block.h"
+#include "listbox.h"
 
 void InteractionWindow::setup() {
     setTitle("Interact");
     setEscapeBehaviour(Window::EscapeBehaviour::CloseWindow);
-
-    m_desc = getEngine()->state()->components()->get<DescriptionComponent>(
-        m_arguments->entity);
-    m_open = getEngine()->state()->components()->get<OpenableComponent>(
-        m_arguments->entity);
 }
 
 void InteractionWindow::registerWidgets() {
@@ -20,31 +16,46 @@ void InteractionWindow::registerWidgets() {
 
     getWidget<Frame>("frmBase")->setMergeBorders();
 
-    Frame* frmDesc = createWidget<Frame>("frmDescription", 0, 0);
-    frmDesc->setMargin()
+    Frame* frmEntityList = createWidget<Frame>("frmEntityList", 0, 0);
+    frmEntityList->setMargin()
         ->setBorder()
         ->setWidth(descriptionWidth)
         ->setHeight(windowHeight);
 
-    createWidget<TextBlock>("txtDescription", 0, 0, frmDesc)
-        ->setText("An Entity")
-        ->setWidth(descriptionWidth);
+    ListBox* lstEntities =
+        createWidget<ListBox>("lstEntities", 0, 0, frmEntityList);
+    lstEntities->setItemSelectedCallback(std::bind(
+        &InteractionWindow::listSelection, this, std::placeholders::_1));
+    lstEntities->setWidthStretchMargin(0)->setHeightStretchMargin(0);
 
     createWidget<Label>("txtInspect", descriptionWidth, 1)
         ->setText("inspect")
         ->setCommandChar(1)
+        ->setCommandCharCallback([&](Label* l) {
+            ListBox* lstEntities = this->getWidget<ListBox>("lstEntities");
+            EntityId entity = m_entities[lstEntities->getSelection()];
+
+            auto inspectionArgs = std::make_shared<InspectionWindowArgs>();
+            inspectionArgs->entity = entity;
+            getEngine()->getWindows()->createWindow<InspectionWindow>(
+                inspectionArgs);
+        })
         ->setSensitive(false);
     createWidget<Label>("txtOpen", descriptionWidth, 2)
         ->setText("open")
         ->setCommandChar(1)
         ->setCommandCharCallback([&](Label* l) {
-            if (m_open->open) {
+            ListBox* lstEntities = this->getWidget<ListBox>("lstEntities");
+            EntityId entity = m_entities[lstEntities->getSelection()];
+            ComponentStore& store = m_components[lstEntities->getSelection()];
+
+            if (store.open->open) {
                 auto event = new CloseEntityEvent;
-                event->entity = m_arguments->entity;
+                event->entity = entity;
                 getEngine()->raiseEvent(event);
             } else {
                 auto event = new OpenEntityEvent;
-                event->entity = m_arguments->entity;
+                event->entity = entity;
                 getEngine()->raiseEvent(event);
             }
             getEngine()->swapTurn();
@@ -57,21 +68,43 @@ void InteractionWindow::registerWidgets() {
 
     setHeight(windowHeight);
     setWidth(descriptionWidth + commandWidth);
+
+    lstEntities->clearItems();
+    for (EntityId entity : m_arguments->entities) {
+        ComponentStore store;
+        store.desc =
+            getEngine()->state()->components()->get<DescriptionComponent>(
+                entity);
+        store.open =
+            getEngine()->state()->components()->get<OpenableComponent>(entity);
+
+        ListBoxItem item;
+        item.setText(store.desc ? store.desc->title : "<Unknown>");
+        lstEntities->addItem(item);
+        m_entities.push_back(entity);
+        m_components.push_back(store);
+    }
+    lstEntities->setSelection(0);
 }
 
-void InteractionWindow::nextTurn() {
-    TextBlock* txtDesc = getWidget<TextBlock>("txtDescription");
+void InteractionWindow::updateScreen() {
+    ListBox* lstEntities = getWidget<ListBox>("lstEntities");
     Label* txtInspect = getWidget<Label>("txtInspect");
     Label* txtOpen = getWidget<Label>("txtOpen");
 
-    if (m_desc) {
-        setTitle(m_desc->title);
-        txtDesc->setText(m_desc->text);
+    ComponentStore& store = m_components[lstEntities->getSelection()];
+
+    if (store.desc) {
+        setTitle(store.desc->title);
     }
-    if (m_open) {
-        txtOpen->setText(m_open->open ? "close" : "open");
+    if (store.open) {
+        txtOpen->setText(store.open->open ? "close" : "open");
     }
 
-    txtInspect->setSensitive(m_desc != nullptr);
-    txtOpen->setSensitive(m_open != nullptr);
+    txtInspect->setSensitive(store.desc != nullptr);
+    txtOpen->setSensitive(store.open != nullptr);
 }
+
+void InteractionWindow::listSelection(ListBox* box) { updateScreen(); }
+
+void InteractionWindow::nextTurn() { updateScreen(); }

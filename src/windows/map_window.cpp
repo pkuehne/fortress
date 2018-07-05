@@ -79,20 +79,12 @@ void MapWindow::registerWidgets() {
                 ->createWindow<QuestWindow>();
         })
         ->setVerticalAlign(Widget::VerticalAlign::Bottom);
-    createWidget<Label>("lblPickup", 1, 3, sidebar)
+    createWidget<Label>("lblPickup", 1, 4, sidebar)
         ->setText("pick up here")
         ->setCommandChar(1)
         ->setCommandCharCallback([](Label* l) {})
         ->setVerticalAlign(Widget::VerticalAlign::Bottom);
 
-    createWidget<Label>("lblInspect", 1, 4, sidebar)
-        ->setText("inspect (wasd)")
-        ->setCommandChar(2)
-        ->setCommandCharCallback([](Label* l) {
-            MapWindow* win = dynamic_cast<MapWindow*>(l->getWindow());
-            win->setAction('n', l->getY());
-        })
-        ->setVerticalAlign(Widget::VerticalAlign::Bottom);
     createWidget<Label>("lblInteract", 1, 5, sidebar)
         ->setText("interact (wasd)")
         ->setCommandChar(1)
@@ -118,7 +110,7 @@ void MapWindow::registerWidgets() {
             win->setAction('m', l->getY());
         })
         ->setVerticalAlign(Widget::VerticalAlign::Bottom);
-    createWidget<Label>("lblAction", 0, 6, sidebar)
+    createWidget<Label>("lblAction", 0, 7, sidebar)
         ->setText(">")
         ->setForegroundColor(RED)
         ->setVerticalAlign(Widget::VerticalAlign::Bottom);
@@ -187,43 +179,18 @@ void MapWindow::keyPress(unsigned char key) {
                 //}
             }
         }
-        if (m_action == 'n') {
-            EntityHolder l_entities =
-                getEngine()->state()->map()->findEntitiesAt(newLocation);
-            if (l_entities.size() > 0) {
-                auto selectionArgs = std::make_shared<SelectionWindowArgs>();
-                selectionArgs->entities = l_entities;
-                selectionArgs->selectionCallback = [](GameEngine* engine,
-                                                      EntityId id) {
-                    auto inspectionArgs =
-                        std::make_shared<InspectionWindowArgs>();
-                    inspectionArgs->entity = id;
-                    engine->getWindows()->createWindow<InspectionWindow>(
-                        inspectionArgs);
-                };
-                getEngine()->getWindows()->createWindow<SelectionWindow>(
-                    selectionArgs);
-            }
-        }
         if (m_action == 'i') {
             EntityHolder l_entities =
                 getEngine()->state()->map()->findEntitiesAt(newLocation);
             if (l_entities.size() > 0) {
-                auto selectionArgs = std::make_shared<SelectionWindowArgs>();
-                selectionArgs->entities = l_entities;
-                selectionArgs->selectionCallback = [](GameEngine* engine,
-                                                      EntityId id) {
-                    auto interactArgs =
-                        std::make_shared<InteractionWindowArgs>();
-                    interactArgs->entity = id;
-                    engine->getWindows()->createWindow<InteractionWindow>(
-                        interactArgs);
-                };
-                getEngine()->getWindows()->createWindow<SelectionWindow>(
-                    selectionArgs);
+
+                auto interactArgs = std::make_shared<InteractionWindowArgs>();
+                interactArgs->entities = l_entities;
+                getEngine()->getWindows()->createWindow<InteractionWindow>(
+                    interactArgs);
             }
         }
-        if (m_action != 'n')
+        if (m_action != 'i')
             getEngine()->swapTurn();
         m_action = 'm';
     }

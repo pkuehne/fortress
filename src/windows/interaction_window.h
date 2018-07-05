@@ -4,9 +4,16 @@
 #include "../components/openable_component.h"
 #include "window.h"
 
+class ListBox;
+
 typedef struct {
-    EntityId entity;
+    EntityHolder entities;
+
 } InteractionWindowArgs;
+typedef struct {
+    DescriptionComponent* desc;
+    OpenableComponent* open;
+} ComponentStore;
 
 class InteractionWindow : public Window {
 public:
@@ -18,7 +25,11 @@ public:
     void nextTurn();
 
 private:
+    void listSelection(ListBox* box);
+    void updateScreen();
+
+private:
     std::shared_ptr<InteractionWindowArgs> m_arguments;
-    DescriptionComponent* m_desc;
-    OpenableComponent* m_open;
+    std::vector<EntityId> m_entities;
+    std::vector<ComponentStore> m_components;
 };

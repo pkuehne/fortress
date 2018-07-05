@@ -55,6 +55,10 @@ public:
     ListBox* setSelection(unsigned int item) {
         m_selection = item;
         updateTopOffset();
+        if (m_itemSelectedCb) {
+            m_itemSelectedCb(this);
+        }
+
         return this;
     }
     unsigned int getSelection() { return m_selection; }
