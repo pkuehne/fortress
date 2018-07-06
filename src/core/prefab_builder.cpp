@@ -149,7 +149,8 @@ EntityId PrefabBuilder::createTrollPrefab(Location& location) {
     // NPC Component
     NpcComponent* l_npc = m_state->components()->make<NpcComponent>(l_entity);
     l_npc->state = "";
-    l_npc->stateMachine = "monster";
+    l_npc->attribs["seek_target"] = "Player";
+    l_npc->stateMachine = "human";
 
     // Euipment Component
     Location invalidLoc;
