@@ -1,19 +1,16 @@
-language: cpp
+sudo: required
+
+services:
+  - docker
+
 before_install:
-    - sudo add-apt-repository ppa:keithw/glfw3 -y
-    - sudo apt-get update -q
-    - sudo apt-get install -y libglfw3-dev 
-    - sudo apt-get install -y libsoil-dev
-    - sudo apt-get install -y libgoogle-glog-dev
-    - sudo apt-get install -y libyaml-cpp-dev
-    - sudo apt-get install -y cppcheck
-    - sudo apt-get install -y liblua5.2-dev
-    - sudo apt-get install -y libboost-all-dev
+    - docker build -t fortress .
+
 jobs:
     include:
         - stage: build
-          script: make build
+          script: docker run --rm fortress /bin/sh -c 'make build'
         - stage: test
-          script: make test
+          script: docker run --rm fortress /bin/sh -c 'make test'
         - stage: analysis
-          script: make lint
+          script: docker run --rm fortress /bin/sh -c 'make lint'

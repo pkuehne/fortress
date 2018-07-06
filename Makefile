@@ -2,10 +2,7 @@
 
 LOG_DIR=artifacts/logs/
 
-all: clear clean build test run
-
-clear:
-	clear
+all: clean build test run
 
 clean:
 	@$(MAKE) -C src clean

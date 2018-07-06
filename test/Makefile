@@ -12,14 +12,13 @@ TEST_DIR = ./tests/
 MOCK_DIR = ./mocks/
 
 INC_DIRS += -I. -I/usr/include/ -I$(TEST_DIR) -I$(MOCK_DIR) $(addprefix -I, $(MODULES))
-CFLAGS=-g -rdynamic -Wall -Werror -std=c++11 $(INC_DIRS)
+CFLAGS=-g -rdynamic -Wall -Werror -std=c++14 $(INC_DIRS)
 LDFLAGS= -g -rdynamic 
 GLFW_LIBS=$(shell pkg-config glfw3 --libs --static)
 YAML_LIBS=$(shell pkg-config yaml-cpp --libs --static)
-LUA_LIBS=$(shell pkg-config lua5.2 --libs --static)
-GTEST_LIBS=$(shell pkg-config gtest --libs --static)
-GMOCK_LIBS=$(shell pkg-config gmock --libs --static)
-LIBRARIES=$(GLFW_LIBS) $(YAML_LIBS) $(LUA_LIBS) $(GMOCK_LIBS) $(GTEST_LIBS)
+LUA_LIBS=$(shell pkg-config lua5.3 --libs --static)
+GMOCK_LIBS=-lgmock
+LIBRARIES=$(GLFW_LIBS) $(YAML_LIBS) $(LUA_LIBS) $(GMOCK_LIBS)
 LIBRARIES+=-lGL -lc -lm -lSOIL -lpthread -lglog 
 
 SOURCES = $(foreach sdir, $(MODULES), $(wildcard $(sdir)/*.cpp))
