@@ -1,4 +1,4 @@
-.PHONY: all clean build test coverage run shuffle test
+.PHONY: all clean build test coverage run shuffle test lint
 
 LOG_DIR=artifacts/logs/
 
@@ -6,6 +6,7 @@ all: clear clean build test run
 
 clear:
 	clear
+
 clean:
 	@$(MAKE) -C src clean
 	@$(MAKE) -C test clean
@@ -49,3 +50,6 @@ install: build
 docs:
 	doxygen Doxyfile
 	cp -r doxygen/html/* /var/www/html/fortress/
+
+lint:
+	$(MAKE) -C src lint
