@@ -175,8 +175,6 @@ void GeneratorWindow::startGenerating() {
     getWidget<Label>("lblPlay")->setSensitive(true);
 }
 
-void GeneratorWindow::generateLevel() {}
-
 void GeneratorWindow::startPlaying() {
     MapWindow* l_win = new MapWindow();
     l_win->initialise(getEngine());

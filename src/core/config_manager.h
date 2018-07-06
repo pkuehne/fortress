@@ -5,7 +5,7 @@
 
 class ConfigManager {
 public:
-    ConfigManager(const std::string& filename);
+    explicit ConfigManager(const std::string& filename);
 
     bool fullscreen;
     int windowWidth;

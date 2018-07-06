@@ -2,9 +2,10 @@
 #include "../windows/splash_window.h"
 #include "game_engine.h"
 #include <cassert>
+#include <glog/logging.h>
 
 void removeWindow(Window* win) {
-    win->loseFocus();
+    win->destroy();
     delete win;
 }
 
@@ -31,10 +32,10 @@ void WindowManager::popWindow() {
     m_windows.pop_back();
 }
 
-void WindowManager::replaceWindow(Window* win) {
-    popWindow();
-    pushWindow(win);
-}
+// void WindowManager::replaceWindow(Window* win) {
+//     m_nextWindow = win;
+//     m_nextAction = NextWindowAction::Replace;
+// }
 
 void WindowManager::replaceAllWindows(Window* win) {
     m_nextWindow = win;
@@ -93,6 +94,11 @@ void WindowManager::manageNextWindow() {
             pushWindow(m_nextWindow);
             break;
         }
+        case NextWindowAction::None:
+        default:
+            LOG(ERROR) << "Invalid window action for next window" << std::endl;
+            break;
     }
     m_nextWindow = nullptr;
+    m_nextAction = NextWindowAction::None;
 }

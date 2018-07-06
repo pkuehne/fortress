@@ -15,12 +15,8 @@ public:
 
     Node() {}
 
-    Node(const Location& l, unsigned int d, unsigned int p, const Location& o) {
-        location = l;
-        distance = d;
-        priority = p;
-        origin = o;
-    }
+    Node(const Location& l, unsigned int d, unsigned int p, const Location& o)
+        : location(l), distance(d), priority(p), origin(o) {}
 };
 
 typedef std::map<Location, Node> NodeMap;
@@ -55,8 +51,8 @@ private:
     costFunc m_costFunction;
     neighbourFunc m_neighbourFunction;
     distanceFunc m_distanceFunction;
-    void* m_customData;
-    unsigned int m_numNeighbours;
+    void* m_customData = 0;
+    unsigned int m_numNeighbours = 0;
 };
 
 #endif

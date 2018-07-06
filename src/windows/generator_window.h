@@ -14,6 +14,8 @@ typedef struct {
 
 class GeneratorWindow : public Window {
 public:
+    GeneratorWindow() {}
+    ~GeneratorWindow() {}
     virtual void setup();
     virtual void registerWidgets();
 
@@ -25,14 +27,13 @@ public:
 
 private:
     void startGenerating();
-    void generateLevel();
     void startPlaying();
 
 private:
-    PositionSelect m_selectedPosition;
-    unsigned int m_worldSize;
+    PositionSelect m_selectedPosition = PositionSelect::NONE;
+    unsigned int m_worldSize = 0;
 
-    GenerationStatus m_status;
+    GenerationStatus m_status = GenerationStatus::WAITING;
     unsigned int m_progress = 0;
 
     std::shared_ptr<GeneratorWindowArgs> m_arguments;

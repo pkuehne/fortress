@@ -1,11 +1,13 @@
 language: cpp
 before_install:
-    - sudo apt-get install libglfw3-dev 
-    - sudo apt-get install libsoil-dev
-    - sudo apt-get install libgoogle-glog-dev
-    - sudo apt-get install libyaml-cpp-dev
-    - sudo apt-get install liblua5.3
-    - sudo apt-get install cppcheck
+    - sudo add-apt-repository ppa:keithw/glfw3 -y
+    - sudo apt-get update -q
+    - sudo apt-get install -y libglfw3-dev 
+    - sudo apt-get install -y libsoil-dev
+    - sudo apt-get install -y libgoogle-glog-dev
+    - sudo apt-get install -y libyaml-cpp-dev
+    - sudo apt-get install -y liblua5.3
+    - sudo apt-get install -y cppcheck
 jobs:
     include:
         - stage: build

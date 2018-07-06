@@ -4,6 +4,8 @@
 
 class NumericEntry : public Widget {
 public:
+    NumericEntry() {}
+    ~NumericEntry() {}
     void render();
     NumericEntry* setNumber(int number) {
         m_number = number;
@@ -16,6 +18,6 @@ public:
     void keyPress(unsigned char key);
 
 private:
-    int m_number;
+    int m_number = 0;
     std::string m_text;
 };

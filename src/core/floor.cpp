@@ -12,21 +12,21 @@ void Floor::setMaterial(Material material) {
         case Material::Grass:
             m_sprite.sprite = floor_sprites[Utility::randBetween(
                 0, sizeof(floor_sprites) - 2)];
-            m_sprite.fgColor = GREEN;
-            m_sprite.bgColor = DARK_GREEN;
+            m_sprite.fgColor = Color(GREEN);
+            m_sprite.bgColor = Color(DARK_GREEN);
             break;
         case Material::Rock:
             m_sprite.sprite = floor_sprites[Utility::randBetween(
                 0, sizeof(floor_sprites) - 2)];
-            m_sprite.fgColor = GREY;
-            m_sprite.bgColor = GREY;
+            m_sprite.fgColor = Color(GREY);
+            m_sprite.bgColor = Color(GREY);
             break;
 
         case Material::None: // Default
         default:
             m_sprite.sprite = 0;
-            m_sprite.fgColor = BLACK;
-            m_sprite.bgColor = BLACK;
+            m_sprite.fgColor = Color(BLACK);
+            m_sprite.bgColor = Color(BLACK);
             break;
     }
 }

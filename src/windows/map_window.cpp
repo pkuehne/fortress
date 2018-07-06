@@ -106,7 +106,7 @@ void MapWindow::registerWidgets() {
         ->setVerticalAlign(Widget::VerticalAlign::Bottom);
     createWidget<Label>("lblAction", 0, 7, sidebar)
         ->setText(">")
-        ->setForegroundColor(RED)
+        ->setForegroundColor(Color(RED))
         ->setVerticalAlign(Widget::VerticalAlign::Bottom);
 
     Frame* messages = createWidget<Frame>("frmMessages", 0, 0);

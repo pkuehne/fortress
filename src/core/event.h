@@ -1,5 +1,4 @@
-#ifndef __EVENT_H__
-#define __EVENT_H__
+#pragma once
 
 #include "entity.h"
 #include "location.h"
@@ -27,7 +26,7 @@ typedef enum {
 
 class Event {
 public:
-    Event(EventType type) : m_type(type) {}
+    explicit Event(EventType type) : m_type(type) {}
     virtual ~Event() {}
     EventType getType() const { return m_type; }
 
@@ -38,26 +37,26 @@ protected:
 class AddEntityEvent : public Event {
 public:
     AddEntityEvent() : Event(EVENT_ADD_ENTITY) {}
-    EntityId entity;
+    EntityId entity = 0;
 };
 
 class RemoveEntityEvent : public Event {
 public:
     RemoveEntityEvent() : Event(EVENT_REMOVE_ENTITY) {}
-    EntityId entity;
+    EntityId entity = 0;
 };
 
 class MoveEntityEvent : public Event {
 public:
     MoveEntityEvent() : Event(EVENT_MOVE_ENTITY) {}
-    EntityId entity;
+    EntityId entity = 0;
     Location newLocation;
 };
 
 class ChangeLocationEvent : public Event {
 public:
     ChangeLocationEvent() : Event(EVENT_CHANGE_LOCATION) {}
-    EntityId entity;
+    EntityId entity = 0;
     Location oldLocation;
     Location newLocation;
 };
@@ -65,64 +64,62 @@ public:
 class AttackEntityEvent : public Event {
 public:
     AttackEntityEvent() : Event(EVENT_ATTACK_ENTITY) {}
-    EntityId attacker;
-    EntityId defender;
-    EntityId weapon;
+    EntityId attacker = 0;
+    EntityId defender = 0;
+    EntityId weapon = 0;
 };
 
 // Deprecated
 class ChangeLevelEvent : public Event {
 public:
     ChangeLevelEvent() : Event(EVENT_CHANGE_LEVEL) {}
-    unsigned int level;
-    STAIR direction;
+    unsigned int level = 0;
+    STAIR direction = STAIR::STAIR_DOWN;
 };
 
 class DropEquipmentEvent : public Event {
 public:
     DropEquipmentEvent() : Event(EVENT_DROP_EQUIPMENT) {}
-    EntityId entity;
-    EntityId item;
+    EntityId entity = 0;
+    EntityId item = 0;
 };
 
 class PickupEquipmentEvent : public Event {
 public:
     PickupEquipmentEvent() : Event(EVENT_PICKUP_EQUIPMENT) {}
-    EntityId entity;
-    EntityId item;
+    EntityId entity = 0;
+    EntityId item = 0;
 };
 
 class EquipItemEvent : public Event {
 public:
     EquipItemEvent() : Event(EVENT_EQUIP_ITEM) {}
-    EntityId entity;
-    EntityId item;
+    EntityId entity = 0;
+    EntityId item = 0;
 };
 
 class UnequipItemEvent : public Event {
 public:
     UnequipItemEvent() : Event(EVENT_UNEQUIP_ITEM) {}
-    EntityId entity;
-    EntityId item;
+    EntityId entity = 0;
+    EntityId item = 0;
 };
 
 class ConsumeItemEvent : public Event {
 public:
     ConsumeItemEvent() : Event(EVENT_CONSUME_ITEM) {}
-    EntityId entity;
-    EntityId item;
+    EntityId entity = 0;
+    EntityId item = 0;
 };
 
 class OpenEntityEvent : public Event {
 public:
     OpenEntityEvent() : Event(EVENT_OPEN_ENTITY) {}
-    EntityId entity;
+    EntityId entity = 0;
 };
 
 class CloseEntityEvent : public Event {
 public:
     CloseEntityEvent() : Event(EVENT_CLOSE_ENTITY) {}
-    EntityId entity;
+    EntityId entity = 0;
 };
-
-#endif

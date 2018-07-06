@@ -8,12 +8,13 @@
 class GameEngine;
 class FileSaver {
 public:
+    FileSaver() {}
+    ~FileSaver() {}
     void initialise(GameEngine* engine) { m_engine = engine; }
-    void saveState();
-    void saveComponent(ComponentBase* component);
+    // void saveState();
 
 private:
-    GameEngine* m_engine;
+    GameEngine* m_engine = 0;
     std::ofstream m_file;
 };
 

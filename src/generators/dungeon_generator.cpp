@@ -271,9 +271,8 @@ void DungeonGenerator::placeOrcs() {
 
     unsigned int numOrcs = Utility::randBetween(1, m_rooms.size() + m_level);
     for (size_t ii = 0; ii < numOrcs; ii++) {
-        unsigned int room = 0;
         while (1) {
-            room = Utility::randBetween(0, m_rooms.size() - 1);
+            unsigned int room = Utility::randBetween(0, m_rooms.size() - 1);
             if (m_startRoom == room)
                 continue;
             unsigned int x, y;
@@ -298,9 +297,8 @@ void DungeonGenerator::placeItems() {
     unsigned int numItems = Utility::randBetween(0, maxItems);
 
     PrefabBuilder prefabs(m_engine->state());
-    unsigned int room = 0;
     for (size_t ii = 0; ii < numItems; ii++) {
-        room = Utility::randBetween(0, m_rooms.size() - 1);
+        unsigned int room = Utility::randBetween(0, m_rooms.size() - 1);
         unsigned int x, y;
         do {
             x = m_rooms[room].x +
@@ -326,20 +324,6 @@ void DungeonGenerator::placeItems() {
             prefabs.createHelmetPrefab(location);
         }
     }
-}
-
-void DungeonGenerator::loadMap() {
-    /*
-       std::ifstream file ("../maps/test.map");
-       char line[m_mapWidth];
-       int lineCnt = 0;
-       do {
-       memset (line, EMPTY, sizeof (line));
-       file.getline (line, sizeof (line));
-       memcpy (m_map+(m_mapWidth*lineCnt), line, sizeof(line));
-       lineCnt++;
-       } while (file.gcount() > 0);
-       */
 }
 
 unsigned char DungeonGenerator::wallSprite(unsigned int x, unsigned int y) {
