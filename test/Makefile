@@ -12,7 +12,7 @@ TEST_DIR = ./tests/
 MOCK_DIR = ./mocks/
 
 INC_DIRS += -I. -I/usr/include/ -I$(TEST_DIR) -I$(MOCK_DIR) $(addprefix -I, $(MODULES))
-CFLAGS=-g -rdynamic -Wall -Werror -std=c++14 $(INC_DIRS)
+CFLAGS=-g -rdynamic -Wall -Werror -std=c++11 $(INC_DIRS)
 LDFLAGS= -g -rdynamic 
 GLFW_LIBS=$(shell pkg-config glfw3 --libs --static)
 YAML_LIBS=$(shell pkg-config yaml-cpp --libs --static)
