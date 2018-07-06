@@ -6,8 +6,10 @@ before_install:
     - sudo apt-get install -y libsoil-dev
     - sudo apt-get install -y libgoogle-glog-dev
     - sudo apt-get install -y libyaml-cpp-dev
-    - sudo apt-get install -y liblua5.3
     - sudo apt-get install -y cppcheck
+    - echo "deb http://archive.ubuntu.com/ubuntu xenial-backports main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list
+    - sudo apt-get update -q
+    - sudo apt-get install -y liblua5.3-dev
 jobs:
     include:
         - stage: build
