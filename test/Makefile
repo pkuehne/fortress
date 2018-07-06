@@ -16,7 +16,7 @@ CFLAGS=-g -rdynamic -Wall -Werror -std=c++14 $(INC_DIRS)
 LDFLAGS= -g -rdynamic 
 GLFW_LIBS=$(shell pkg-config glfw3 --libs --static)
 YAML_LIBS=$(shell pkg-config yaml-cpp --libs --static)
-LUA_LIBS=$(shell pkg-config lua5.3 --libs --static)
+LUA_LIBS=$(shell pkg-config lua5.2 --libs --static)
 GTEST_LIBS=$(shell pkg-config gtest --libs --static)
 GMOCK_LIBS=$(shell pkg-config gmock --libs --static)
 LIBRARIES=$(GLFW_LIBS) $(YAML_LIBS) $(LUA_LIBS) $(GMOCK_LIBS) $(GTEST_LIBS)

@@ -2,9 +2,9 @@
 #define __LUA_WRAPPER_H__
 
 #include "game_state.h"
-#include <lua5.3/lauxlib.h>
-#include <lua5.3/lua.hpp>
-#include <lua5.3/lualib.h>
+#include <lua5.2/lauxlib.h>
+#include <lua5.2/lua.hpp>
+#include <lua5.2/lualib.h>
 
 class LuaWrapper {
 public:
