@@ -8,6 +8,7 @@ before_install:
     - sudo apt-get install -y libyaml-cpp-dev
     - sudo apt-get install -y cppcheck
     - sudo apt-get install -y liblua5.2-dev
+    - sudo apt-get install -y libboost-all-dev
 jobs:
     include:
         - stage: build
