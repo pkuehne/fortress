@@ -13,7 +13,7 @@ public:
     bool operator==(const Location& rhs) const;
     bool operator!=(const Location& rhs) const;
     bool operator<(const Location& rhs) const;
-    void operator=(const Location& rhs);
+    Location& operator=(const Location& rhs);
     bool isValid() { return (x != UINT_MAX && y != UINT_MAX && z != UINT_MAX); }
 
 public:

@@ -16,7 +16,7 @@ class Color {
 public:
     Color() : m_red(0), m_green(0), m_blue(0) {}
     Color(float red, float green, float blue);
-    Color(COLOR color);
+    explicit Color(COLOR color);
     float& Red() { return m_red; }
     float& Green() { return m_green; }
     float& Blue() { return m_blue; }

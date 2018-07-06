@@ -43,11 +43,6 @@ int main(int argc, char** argv) {
     google::InitGoogleLogging(argv[0]);
 
     try {
-        std::string l_map("testmap.txt");
-        if (argc > 1) {
-            l_map = argv[1];
-        }
-
         Graphics* l_graphics = new Graphics();
         l_graphics->initialise(argc, argv);
         GameEngine* l_engine = new GameEngine(l_graphics);

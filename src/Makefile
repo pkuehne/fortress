@@ -1,4 +1,4 @@
-.PHONY: all clean build run clear
+.PHONY: all clean build run lint
 CC=g++
 MODULES = $(sort $(dir $(wildcard ../src/*/)))
 OUT_DIR = ..
@@ -31,10 +31,10 @@ clean:
 	@rm -fr $(PROGRAM)
 	@echo "Build Cleanup completed"
 
-clear:
-	clear
+lint:
+	cppcheck . --enable=all 2>lint-errors.txt
 
-build: clear $(PROGRAM)
+build: $(PROGRAM)
 
 -include $(DEPENDS)
 

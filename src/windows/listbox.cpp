@@ -11,7 +11,7 @@ void ListBox::render() {
             break;
         }
         if (m_selection - m_topOffset == ii && getSensitive()) {
-            this->drawString(0, ii, ">", COLOR(RED));
+            this->drawString(0, ii, ">", Color(RED));
         }
         ListBoxItem& item = m_items[ii + m_topOffset];
         this->drawString(itemLeftOffset, ii, item.getText().c_str(),

@@ -16,6 +16,9 @@ typedef LocationMap::iterator LocationIter;
 
 class EntityManager { //: public EntityManagerInterface {
 public:
+    EntityManager() {}
+    ~EntityManager() {}
+
     void initialise(GameEngine* engine);
     void destroy() {}
 
@@ -31,9 +34,9 @@ public:
     EntityHolder& get(unsigned int area = 0);
 
 private:
-    GameEngine* m_engine;
-    unsigned long m_maxId;
-    EntityId m_player;
+    GameEngine* m_engine = nullptr;
+    unsigned long m_maxId = 0;
+    EntityId m_player = 0;
     LocationMap m_locations;
     std::map<unsigned int, EntityHolder> m_entities;
 };

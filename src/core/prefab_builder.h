@@ -8,7 +8,7 @@ class Location;
 
 class PrefabBuilder {
 public:
-    PrefabBuilder(GameState* state);
+    explicit PrefabBuilder(GameState* state);
 
     EntityId createWallPrefab(Location& location);
     EntityId createPlayerPrefab(Location& location);
@@ -28,7 +28,7 @@ public:
     EntityId createDoorPrefab(Location& location);
 
 private:
-    GameState* m_state;
+    GameState* m_state = nullptr;
 };
 
 #endif

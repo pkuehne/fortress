@@ -83,3 +83,19 @@ TEST_F(LocationTest, AssignmentCopiesAllFields) {
     EXPECT_EQ(lhs.z, rhs.z);
     EXPECT_EQ(lhs.area, rhs.area);
 }
+
+TEST_F(LocationTest, AssignmentIsTransitive) {
+    // Given
+    Location c(1, 2, 3, 4);
+    Location b;
+    Location a;
+
+    // When
+    a = b = c;
+
+    // Then
+    EXPECT_EQ(c.x, a.x);
+    EXPECT_EQ(c.y, a.y);
+    EXPECT_EQ(c.z, a.z);
+    EXPECT_EQ(c.area, a.area);
+}

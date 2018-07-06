@@ -67,7 +67,7 @@ GameState* getState(lua_State* runtime) {
         lua_pushstring(runtime, "GameState not defined!");
         lua_error(runtime);
     }
-    GameState* state = (GameState*)lua_touserdata(runtime, -1);
+    GameState* state = static_cast<GameState*>(lua_touserdata(runtime, -1));
     return state;
 }
 

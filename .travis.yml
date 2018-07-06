@@ -1,5 +1,19 @@
 language: cpp
+
+sudo: required
+
+
+services:
+  - docker
+
 before_install:
-    - sudo apt-get update -qq
-    - sudo apt-get install -qq libglfw3-dev libsoil-dev libgoogle-glog-dev -t vivid
-script: make build
+    - docker build -t fortress .
+
+jobs:
+    include:
+        - stage: build
+          script: docker run --rm fortress /bin/sh -c 'make build'
+        - stage: test
+          script: docker run --rm fortress /bin/sh -c 'make test'
+        - stage: analysis
+          script: docker run --rm fortress /bin/sh -c 'make lint'

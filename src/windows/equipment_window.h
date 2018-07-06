@@ -6,6 +6,8 @@
 
 class EquipmentWindow : public Window {
 public:
+    EquipmentWindow() {}
+    ~EquipmentWindow() {}
     virtual void setup();
     virtual void registerWidgets();
     virtual void nextTurn();
@@ -16,7 +18,7 @@ public:
     void updateItemNames();
 
 private:
-    EntityId m_selectedItem;
+    EntityId m_selectedItem = 0;
     std::vector<EntityId> m_rucksackEntities;
 };
 

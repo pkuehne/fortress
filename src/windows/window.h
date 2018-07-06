@@ -37,15 +37,11 @@ public:
     virtual bool getKey(unsigned char key) { return ascii_keys[key]; }
     virtual void mouseDown(int x, int y, int button);
     virtual void mouseUp(int x, int y, int button);
-    virtual bool getMouseButton(int button);
 
     virtual void beforeRedraw();
     virtual void redraw(){};
     virtual void renderWidgets();
     virtual void afterRedraw();
-
-    virtual void gainFocus(){};
-    virtual void loseFocus(){};
 
     template <class T>
     T* createWidget(std::string name, unsigned int x, unsigned int y,
@@ -120,9 +116,9 @@ private:
     int m_height = 0;
     bool m_fullscreen = 0;
     std::string m_title;
-    EscapeBehaviour m_onEscape;
+    EscapeBehaviour m_onEscape = EscapeBehaviour::None;
     std::map<std::string, Widget*> m_widgets;
-    Widget* m_baseWidget;
+    Widget* m_baseWidget = nullptr;
 };
 
 #endif

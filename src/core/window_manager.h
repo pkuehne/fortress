@@ -9,14 +9,14 @@ class Window;
 
 class WindowManager {
 public:
-    enum class NextWindowAction { Replace, ReplaceAll };
+    enum class NextWindowAction { None, Replace, ReplaceAll };
 
 public:
     WindowManager() {}
     void initialise(GameEngine* engine);
     void pushWindow(Window* win);
     void popWindow();
-    void replaceWindow(Window* win);
+    // void replaceWindow(Window* win);
     void replaceAllWindows(Window* win);
     Window* getActive();
     void redraw();
@@ -46,8 +46,8 @@ private:
 private:
     GameEngine* m_engine = nullptr;
     std::vector<Window*> m_windows;
-    Window* m_nextWindow;
-    NextWindowAction m_nextAction;
+    Window* m_nextWindow = nullptr;
+    NextWindowAction m_nextAction = NextWindowAction::None;
 };
 
 #endif

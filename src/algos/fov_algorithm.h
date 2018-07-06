@@ -25,6 +25,8 @@ private:
 
 class FovAlgorithm {
 public:
+    FovAlgorithm() {}
+    ~FovAlgorithm() {}
     void initialise(GameEngine* engine) { m_engine = engine; }
     void calculateFov();
 
@@ -34,7 +36,7 @@ private:
     Shadow projectTile(double row, double col);
 
 private:
-    GameEngine* m_engine;
+    GameEngine* m_engine = nullptr;
 };
 
 #endif

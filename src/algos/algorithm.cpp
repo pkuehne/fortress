@@ -32,9 +32,7 @@ unsigned int defaultDistanceFunction(const Location& start, const Location& end,
 Algorithm::Algorithm()
     : m_costFunction(defaultCostFunction),
       m_neighbourFunction(defaultNeighbourFunction),
-      m_distanceFunction(defaultDistanceFunction),
-      m_numNeighbours(0) // To be safe
-{}
+      m_distanceFunction(defaultDistanceFunction) {}
 
 void Algorithm::findPath(const Location& start, const Location& end,
                          PathVector& output) {

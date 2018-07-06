@@ -12,7 +12,7 @@ enum class Material {
 
 class Floor {
 public:
-    Floor(Material material);
+    explicit Floor(Material material);
     SpriteComponent& getSprite() { return m_sprite; }
     void setMaterial(Material material);
 

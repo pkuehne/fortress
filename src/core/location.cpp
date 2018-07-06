@@ -29,11 +29,12 @@ bool Location::operator<(const Location& rhs) const {
     }
     return false;
 }
-void Location::operator=(const Location& rhs) {
+Location& Location::operator=(const Location& rhs) {
     x = rhs.x;
     y = rhs.y;
     z = rhs.z;
     area = rhs.area;
+    return *this;
 }
 
 std::ostream& operator<<(std::ostream& out, const Location& loc) {

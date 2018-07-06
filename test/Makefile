@@ -17,9 +17,8 @@ LDFLAGS= -g -rdynamic
 GLFW_LIBS=$(shell pkg-config glfw3 --libs --static)
 YAML_LIBS=$(shell pkg-config yaml-cpp --libs --static)
 LUA_LIBS=$(shell pkg-config lua5.3 --libs --static)
-GTEST_LIBS=$(shell pkg-config gtest --libs --static)
-GMOCK_LIBS=$(shell pkg-config gmock --libs --static)
-LIBRARIES=$(GLFW_LIBS) $(YAML_LIBS) $(LUA_LIBS) $(GMOCK_LIBS) $(GTEST_LIBS)
+GMOCK_LIBS=-lgmock
+LIBRARIES=$(GLFW_LIBS) $(YAML_LIBS) $(LUA_LIBS) $(GMOCK_LIBS)
 LIBRARIES+=-lGL -lc -lm -lSOIL -lpthread -lglog 
 
 SOURCES = $(foreach sdir, $(MODULES), $(wildcard $(sdir)/*.cpp))

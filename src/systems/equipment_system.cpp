@@ -36,7 +36,7 @@ void EquipmentSystem::handleDropEquipmentEvent(
         equipment->feetWearable = 0;
     }
     std::vector<EntityId>::iterator it = equipment->carriedEquipment.begin();
-    for (; it != equipment->carriedEquipment.end(); it++) {
+    for (; it != equipment->carriedEquipment.end(); ++it) {
         if (*it == event->item) {
             equipment->carriedEquipment.erase(it);
             break;
@@ -110,7 +110,7 @@ void EquipmentSystem::handleEquipItemEvent(const EquipItemEvent* event) {
     if (equipped) {
         std::vector<EntityId>::iterator it =
             equipment->carriedEquipment.begin();
-        for (; it != equipment->carriedEquipment.end(); it++) {
+        for (; it != equipment->carriedEquipment.end(); ++it) {
             if (*it == event->item) {
                 equipment->carriedEquipment.erase(it);
                 break;
@@ -155,7 +155,7 @@ void EquipmentSystem::handleConsumeItemEvent(const ConsumeItemEvent* event) {
         getEngine()->state()->components()->get<EquipmentComponent>(
             event->entity);
     std::vector<EntityId>::iterator it = equipment->carriedEquipment.begin();
-    for (; it != equipment->carriedEquipment.end(); it++) {
+    for (; it != equipment->carriedEquipment.end(); ++it) {
         if (*it == event->item) {
             equipment->carriedEquipment.erase(it);
             break;

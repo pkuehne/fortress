@@ -9,7 +9,7 @@ void EventManager::processEvents() {
         // std::cout << *l_event << std::endl;
 
         for (HandlersIter iter = m_handlers.begin(); iter != m_handlers.end();
-             iter++) {
+             ++iter) {
             (*iter)->handleEvent(l_event);
         }
         delete l_event;

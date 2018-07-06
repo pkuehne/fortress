@@ -60,13 +60,6 @@ void Window::mouseUp(int x, int y, int button) {
     }
 }
 
-bool Window::getMouseButton(int button) {
-    if (button < MAX_BUTTONS) {
-        return m_buttons[button];
-    }
-    return false;
-}
-
 void Window::keyDown(unsigned char key) {
     ascii_keys[key] = true;
 

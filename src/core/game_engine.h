@@ -14,7 +14,7 @@
 
 class GameEngine {
 public:
-    GameEngine(GraphicsInterface* a_graphics);
+    explicit GameEngine(GraphicsInterface* a_graphics);
     ~GameEngine();
 
     void initialise(void);

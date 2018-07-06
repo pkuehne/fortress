@@ -131,28 +131,28 @@ void Graphics::drawRect(Texture& texture, int x, int y, unsigned int tile,
 
 void Graphics::drawBorder(int y, int x, int height, int width) {
     // Draw Corners
-    drawTile(y, x, 201, WHITE, WHITE);
-    drawTile(y + 1 + height, x, 200, WHITE, WHITE);
-    drawTile(y, x + 1 + width, 187, WHITE, WHITE);
-    drawTile(y + 1 + height, x + 1 + width, 188, WHITE, WHITE);
+    drawTile(y, x, 201, Color(WHITE), Color(WHITE));
+    drawTile(y + 1 + height, x, 200, Color(WHITE), Color(WHITE));
+    drawTile(y, x + 1 + width, 187, Color(WHITE), Color(WHITE));
+    drawTile(y + 1 + height, x + 1 + width, 188, Color(WHITE), Color(WHITE));
 
     // Draw Horizontals
     for (int xx = x + 1; xx <= x + width; xx++) {
-        drawTile(y, xx, 205, WHITE, WHITE);
-        drawTile(y + height + 1, xx, 205, WHITE, WHITE);
+        drawTile(y, xx, 205, Color(WHITE), Color(WHITE));
+        drawTile(y + height + 1, xx, 205, Color(WHITE), Color(WHITE));
     }
 
     // Draw Verticals
     for (int yy = y + 1; yy <= y + height; yy++) {
-        drawTile(yy, x, 186, WHITE, WHITE);
-        drawTile(yy, x + width + 1, 186, WHITE, WHITE);
+        drawTile(yy, x, 186, Color(WHITE), Color(WHITE));
+        drawTile(yy, x + width + 1, 186, Color(WHITE), Color(WHITE));
     }
 }
 
 void Graphics::clearArea(int y, int x, int height, int width) {
     for (int xx = x; xx < x + width; xx++) {
         for (int yy = y; yy < y + height; yy++) {
-            drawTile(yy, xx, 219, BLACK, BLACK);
+            drawTile(yy, xx, 219, Color(BLACK), Color(BLACK));
         }
     }
 }
