@@ -1,10 +1,10 @@
 FROM ubuntu:xenial
 
 # Refresh repo information
-RUN apt update -qq
+RUN apt -qq update
 
 # Install build and test libs and tools
-RUN apt install -y -qq \
+RUN apt install -qq -y \
     cmake \
     cppcheck \
     google-mock \
@@ -14,7 +14,8 @@ RUN apt install -y -qq \
     liblua5.3-dev \
     libsoil-dev \
     libyaml-cpp-dev \
-    software-properties-common
+    software-properties-common \
+    > /dev/null
 
 # Build gmock and install
 WORKDIR /usr/src/gmock
