@@ -25,4 +25,4 @@ bool randChance(unsigned int percentage) {
     return (randBetween(1, 100) < percentage);
 }
 
-}; // namespace Utility
+} // namespace Utility

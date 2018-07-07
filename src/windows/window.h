@@ -64,7 +64,7 @@ public:
         m_widgets[name] = widget;
 
         return widget;
-    };
+    }
 
     // Non-overridable
     template <class T> T* getWidget(std::string name) {

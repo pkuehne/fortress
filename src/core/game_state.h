@@ -1,11 +1,11 @@
-#ifndef __GAME_STATE_H__
-#define __GAME_STATE_H__
+#pragma once
 
 #include "color.h"
 #include "component_manager.h"
 #include "entity_manager.h"
 #include "location.h"
 #include "map_manager.h"
+#include "prefab_builder.h"
 #include "quest.h"
 
 class Tile;
@@ -68,6 +68,8 @@ public:
     EntityId player();
     EntityId createEntity(Location&);
 
+    PrefabBuilder& prefabs() { return m_prefabs; }
+
     void setArea(unsigned int area);
     unsigned int getArea();
 
@@ -83,12 +85,12 @@ public:
 private:
     bool m_playerTurn = true;
     tick_t m_turn = 0;
-    MapManager* m_map = 0;
-    EntityManager* m_entities = 0;
-    ComponentManager* m_components = 0;
+    MapManager* m_map = nullptr;
+    EntityManager* m_entities = nullptr;
+    ComponentManager* m_components = nullptr;
+    PrefabBuilder m_prefabs;
+
     std::vector<Message> m_messages;
     Debug m_debug;
     std::vector<Quest*> m_quests;
 };
-
-#endif

@@ -34,7 +34,6 @@ void RuralGenerator::createEntitiesFromMap() {
     EntityId l_entity = 0;
     Location location;
 
-    PrefabBuilder prefabs(m_engine->state());
     for (unsigned int yy = 0; yy < m_mapHeight; yy++) {
         for (unsigned int xx = 0; xx < m_mapWidth; xx++) {
             location.x = xx;
@@ -47,20 +46,20 @@ void RuralGenerator::createEntitiesFromMap() {
                 case EMPTY:
                     break;
                 case TREE:
-                    l_entity = prefabs.createTreePrefab(location);
+                    l_entity = m_engine->state()->prefabs().createTreePrefab(location);
                     break;
                 case LINK:
-                    l_entity = prefabs.createStairPrefab(STAIR_DOWN, location);
+                    l_entity = m_engine->state()->prefabs().createStairPrefab(STAIR_DOWN, location);
                     m_areaLinks.push_back(l_entity);
                     break;
                 case HUMAN:
-                    l_entity = prefabs.createForesterPrefab(location);
+                    l_entity = m_engine->state()->prefabs().createForesterPrefab(location);
                     break;
                 case DOG:
-                    l_entity = prefabs.createDogPrefab(location);
+                    l_entity = m_engine->state()->prefabs().createDogPrefab(location);
                     break;
                 case APPLE:
-                    l_entity = prefabs.createApplePrefab(location);
+                    l_entity = m_engine->state()->prefabs().createApplePrefab(location);
                     break;
                 default:
                     break;
@@ -71,7 +70,7 @@ void RuralGenerator::createEntitiesFromMap() {
     location.y = m_mapHeight / 2;
     location.z = 0;
     location.area = m_area;
-    prefabs.createPlayerPrefab(location);
+    m_engine->state()->prefabs().createPlayerPrefab(location);
 }
 
 void RuralGenerator::reset() { GeneratorInterface::reset(); }

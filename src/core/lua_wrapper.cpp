@@ -95,10 +95,9 @@ int createOrc(lua_State* runtime) {
     Location location = state->location(state->player());
     location.x += x;
     location.y += y;
-    PrefabBuilder prefabs(state);
-    prefabs.createEnemyPrefab(location);
+    state->prefabs().createEnemyPrefab(location);
 
-    return 0;
+    return 0; 
 }
 
 int playerLocation(lua_State* runtime) {

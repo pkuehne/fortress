@@ -6,7 +6,8 @@
 
 GameState::GameState(MapManager* map, EntityManager* entities,
                      ComponentManager* components)
-    : m_map(map), m_entities(entities), m_components(components) {
+    : m_map(map), m_entities(entities), m_components(components),
+      m_prefabs(entities, components) {
     if (m_map == nullptr || m_entities == nullptr || m_components == nullptr) {
         LOG(ERROR) << "Game State initialised with nullptr" << std::endl;
         throw std::logic_error("Input parameter cannot be nullptr");

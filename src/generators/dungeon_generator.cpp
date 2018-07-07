@@ -76,7 +76,6 @@ bool DungeonGenerator::generateLevel() {
 void DungeonGenerator::createEntitiesFromMap() {
     EntityId l_entity = 0;
 
-    PrefabBuilder prefabs(m_engine->state());
     for (unsigned int yy = 0; yy < m_mapHeight; yy++) {
         for (unsigned int xx = 0; xx < m_mapWidth; xx++) {
             Location location;
@@ -84,42 +83,42 @@ void DungeonGenerator::createEntitiesFromMap() {
             location.y = yy;
             location.z = m_level;
             location.area = m_area;
-
+ 
             m_engine->state()->tile(location).getFloor().setMaterial(
                 Material::Rock);
             switch (getByCoordinate(xx, yy)) {
                 case WALL:
                 case CORNER:
-                    l_entity = prefabs.createWallPrefab(location);
+                    l_entity = m_engine->state()->prefabs().createWallPrefab(location);
                     m_engine->state()
                         ->components()
                         ->get<SpriteComponent>(l_entity)
                         ->sprite = wallSprite(xx, yy);
                     break;
                 case UP:
-                    m_upStair = prefabs.createStairPrefab(STAIR_UP, location);
+                    m_upStair = m_engine->state()->prefabs().createStairPrefab(STAIR_UP, location);
                     break;
                 case DOWN:
                     if (m_level < m_maxDepth - 1 || m_downStairTarget) {
                         m_downStair =
-                            prefabs.createStairPrefab(STAIR_DOWN, location);
+                            m_engine->state()->prefabs().createStairPrefab(STAIR_DOWN, location);
                     }
                     break;
                 case ORC:
                     if (m_createBoss && m_level == m_maxDepth - 1) {
-                        prefabs.createTrollPrefab(location);
+                        m_engine->state()->prefabs().createTrollPrefab(location);
                         m_createBoss = false;
                     } else {
-                        prefabs.createEnemyPrefab(location);
+                        m_engine->state()->prefabs().createEnemyPrefab(location);
                     }
                     break;
                 case DOOR:
-                    l_entity = prefabs.createDoorPrefab(location);
+                    l_entity = m_engine->state()->prefabs().createDoorPrefab(location);
                     break;
                 case RESTRICTED:
                     break;
                 default:
-                    l_entity = prefabs.createMarkerPrefab(location);
+                    l_entity = m_engine->state()->prefabs().createMarkerPrefab(location);
                     m_engine->state()
                         ->components()
                         ->get<SpriteComponent>(l_entity)
@@ -296,7 +295,6 @@ void DungeonGenerator::placeItems() {
 
     unsigned int numItems = Utility::randBetween(0, maxItems);
 
-    PrefabBuilder prefabs(m_engine->state());
     for (size_t ii = 0; ii < numItems; ii++) {
         unsigned int room = Utility::randBetween(0, m_rooms.size() - 1);
         unsigned int x, y;
@@ -315,13 +313,13 @@ void DungeonGenerator::placeItems() {
 
         unsigned int type = Utility::randBetween(0, 100);
         if (type < 70) { // Potion
-            prefabs.createPotionPrefab(location);
+            m_engine->state()->prefabs().createPotionPrefab(location);
         } else if (type < 80) {
-            prefabs.createWeaponPrefab(location);
+            m_engine->state()->prefabs().createWeaponPrefab(location);
         } else if (type < 90) {
-            prefabs.createShieldPrefab(location);
+            m_engine->state()->prefabs().createShieldPrefab(location);
         } else if (type < 100) {
-            prefabs.createHelmetPrefab(location);
+            m_engine->state()->prefabs().createHelmetPrefab(location);
         }
     }
 }

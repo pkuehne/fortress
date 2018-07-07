@@ -5,10 +5,12 @@
 #include "utility.h"
 class GameState;
 class Location;
+class EntityManager;
+class ComponentManager;
 
 class PrefabBuilder {
 public:
-    explicit PrefabBuilder(GameState* state);
+    PrefabBuilder(EntityManager* e, ComponentManager* c);
 
     EntityId createWallPrefab(Location& location);
     EntityId createPlayerPrefab(Location& location);
@@ -28,7 +30,8 @@ public:
     EntityId createDoorPrefab(Location& location);
 
 private:
-    GameState* m_state = nullptr;
+    EntityManager* m_entities = nullptr;
+    ComponentManager* m_components = nullptr;
 };
 
 #endif

@@ -46,11 +46,10 @@ void CombatSystem::handleAttack(EntityId attacker, EntityId defender) {
         if (defender == getEngine()->state()->player()) {
             m_engine->state()->entityManager()->destroyEntity(defender);
         } else {
-            PrefabBuilder prefabs(m_engine->state());
             Location l_targetLoc = m_engine->state()->location(defender);
             SpriteComponent* l_sprite =
                 m_engine->state()->components()->get<SpriteComponent>(defender);
-            prefabs.createCorpsePrefab(l_targetLoc, l_sprite->sprite);
+            getEngine()->state()->prefabs().createCorpsePrefab(l_targetLoc, l_sprite->sprite);
             getEngine()->state()->entityManager()->destroyEntity(defender);
         }
     }
