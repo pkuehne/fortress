@@ -1,5 +1,4 @@
 .PHONY: all clean build run 
-CC=g++
 MODULES = $(filter-out ../src/, $(sort $(dir $(wildcard ../src/*/))))
 OUT_DIR = ..
 PROGRAM = $(OUT_DIR)/unit_tests
@@ -11,15 +10,36 @@ ALL_DIR = $(ART_DIR) $(OBJ_DIR) $(DEP_DIR) $(COV_DIR)
 TEST_DIR = ./tests/
 MOCK_DIR = ./mocks/
 
-INC_DIRS += -I. -I/usr/include/ -I$(TEST_DIR) -I$(MOCK_DIR) $(addprefix -I, $(MODULES))
-CFLAGS=-g -rdynamic -Wall -Werror -std=c++14 $(INC_DIRS)
-LDFLAGS= -g -rdynamic 
+MAJOR_VER?=0
+MINOR_VER?=0
+PATCH_VER?=0
+BUILD_NUM?=\"unit-tests\"
+
+DEFINES=-DMAJOR=$(MAJOR_VER) -DMINOR=$(MINOR_VER) -DPATCH=$(PATCH_VER) -DBUILD=$(BUILD_NUM)
+INC_DIRS += -I. -I/usr/include/ $(addprefix -I, $(MODULES))
+
+CXX?=g++
+WARNINGS=-Wall -Werror -pedantic
+STANDARD=-std=c++14
+DEBUG_INFO=-g
+BACKTRACE=-rdynamic
+CXXFLAGS= $(DEBUG_INFO) $(BACKTRACE) $(WARNINGS) $(STANDARD) $(INC_DIRS) $(DEFINES)
+
 GLFW_LIBS=$(shell pkg-config glfw3 --libs --static)
 YAML_LIBS=$(shell pkg-config yaml-cpp --libs --static)
 LUA_LIBS=$(shell pkg-config lua5.3 --libs --static)
+SOIL_LIBS=-lSOIL
+GLOG_LIBS=-lglog
 GMOCK_LIBS=-lgmock
-LIBRARIES=$(GLFW_LIBS) $(YAML_LIBS) $(LUA_LIBS) $(GMOCK_LIBS)
-LIBRARIES+=-lGL -lc -lm -lSOIL -lpthread -lglog 
+EXTERNAL_LIBS=$(GLFW_LIBS) $(YAML_LIBS) $(LUA_LIBS) $(SOIL_LIBS) $(GLOG_LIBS) $(GMOCK_LIBS)
+EXPERIMENTAL_LIBS=-lstdc++fs
+OPENGL_LIBS=-lGL
+CSTD_LIBS=-lc
+MATH_LIBs=-lm
+STANDARD_LIBS=$(EXPERIMENTAL_LIBS) $(OPENGL_LIBS) $(CSTD_LIBS) $(MATH_LIBS)
+
+LIBRARIES= $(EXTERNAL_LIBS) $(STANDARD_LIBS) 
+LDFLAGS= $(DEBUG) $(BACKTRACE)
 
 SOURCES = $(foreach sdir, $(MODULES), $(wildcard $(sdir)/*.cpp))
 SOURCES+= $(wildcard *.cpp)
@@ -43,12 +63,12 @@ build: $(PROGRAM)
 
 $(PROGRAM): $(ALL_DIR) $(OBJECTS)
 	@echo "Linking $(notdir $@)"
-	@$(CC) $(LDFLAGS) $(OBJECTS) $(LIBRARIES) -o $@
+	@$(CXX) $(LDFLAGS) $(OBJECTS) $(LIBRARIES) -o $@
 
 $(OBJ_DIR)/%.o: %.cpp 
 	@echo "Building $(notdir $<)"
-	@$(CC) -c  $(CFLAGS) $< -o $@
-	@$(CC) -MM $(CFLAGS) $< -MT $@ -MF $(DEP_DIR)/$*.d
+	@$(CXX) -c  $(CXXFLAGS) $< -o $@
+	@$(CXX) -MM $(CXXFLAGS) $< -MT $@ -MF $(DEP_DIR)/$*.d
 
 $(ART_DIR) $(OBJ_DIR) $(DEP_DIR) $(COV_DIR):
 	@mkdir -p $@

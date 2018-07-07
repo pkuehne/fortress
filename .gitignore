@@ -61,4 +61,4 @@ fortress.tgz
 *.swp
 
 doxygen/
-src/lint-errors.txt
+lint-errors.txt
