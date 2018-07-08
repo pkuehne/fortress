@@ -11,6 +11,7 @@ public:
 
     void saveState(const std::string& filename);
     void encodeMap(YAML::Node& node);
+    void encodeArea(YAML::Node& node, unsigned int area);
 
 private:
     GameState* m_state = nullptr;

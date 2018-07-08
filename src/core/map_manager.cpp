@@ -18,16 +18,12 @@ unsigned int MapManager::createArea(unsigned int width, unsigned int height,
     if (existing != m_areas.end())
         m_areas.erase(existing);
 
-    MapInfo info;
-    info.areaId = area;
-    info.mapData = new Tile[width * height * depth];
-    info.height = height;
-    info.width = width;
-    info.depth = depth;
+    AreaInfo info;
+    info.setSize(width, height, depth);
 
-    m_areas[info.areaId] = info;
+    m_areas[area] = info;
     setArea(area);
-    LOG(INFO) << "Created area " << info.areaId << std::endl;
+    LOG(INFO) << "Created area " << area << std::endl;
 
     return area;
 }
@@ -36,14 +32,10 @@ bool MapManager::isValidTile(const Location& loc) {
     if (!loc.area) {
         LOG(ERROR) << "Called isValidTile with zero area" << std::endl;
     }
-    bool xValid = (loc.x < m_mapWidth);
-    bool yValid = (loc.y < m_mapHeight);
-    bool zValid = (loc.z < m_mapDepth);
+    bool xValid = (loc.x < m_areas[m_currentArea].getWidth());
+    bool yValid = (loc.y < m_areas[m_currentArea].getHeight());
+    bool zValid = (loc.z < m_areas[m_currentArea].getDepth());
     return (xValid && yValid && zValid);
-}
-
-unsigned int MapManager::loc2index(const Location& loc) {
-    return (loc.z * m_mapHeight * m_mapWidth) + (loc.y * m_mapHeight) + loc.x;
 }
 
 EntityHolder MapManager::findEntitiesAt(const Location& location) {
@@ -74,24 +66,13 @@ EntityHolder MapManager::findEntitiesNear(const Location& location,
 
 void MapManager::setArea(unsigned int area) {
     // std::cout << "Setting area to " << area << std::endl;
-    m_currentArea = area;
-    m_map = nullptr;
-    m_mapHeight = 0;
-    m_mapWidth = 0;
-    m_mapDepth = 0;
-
     auto info = m_areas.find(area);
-    if (info != m_areas.end()) {
-        m_map = info->second.mapData;
-        m_mapHeight = info->second.height;
-        m_mapWidth = info->second.width;
-        m_mapDepth = info->second.depth;
-        return;
+    if (info == m_areas.end()) {
+        LOG(ERROR) << "Could not set area " << area
+                   << " because it doesn't exist!" << std::endl;
+        throw std::string("Invalid area set!");
     }
-
-    LOG(ERROR) << "Could not set area " << area << " because it doesn't exist!"
-               << std::endl;
-    throw std::string("Invalid area set!");
+    m_currentArea = area;
 }
 
 Location MapManager::location(const Location& loc, Direction dir) {

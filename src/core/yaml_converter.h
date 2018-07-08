@@ -1,11 +1,13 @@
 #pragma once
 
 #include "../components/sprite_component.h"
+#include "area_info.h"
 #include "color.h"
 #include "floor.h"
 #include "location.h"
+#include "map_manager.h"
 #include "tile.h"
-
+#include <vector>
 #include <yaml-cpp/yaml.h>
 
 namespace YAML {
@@ -137,6 +139,30 @@ template <> struct convert<SpriteComponent> {
         rhs.renderLayer = node["layer"].as<unsigned int>();
         rhs.fgColor = node["foreground"].as<Color>();
         rhs.bgColor = node["background"].as<Color>();
+        return true;
+    }
+};
+
+// AreaInfo
+template <> struct convert<AreaInfo> {
+    static Node encode(const AreaInfo& rhs) {
+        Node node;
+        node["width"] = rhs.getWidth();
+        node["height"] = rhs.getHeight();
+        node["depth"] = rhs.getDepth();
+        node["tiles"] = rhs.getTiles();
+        return node;
+    }
+
+    static bool decode(const Node& node, AreaInfo& rhs) {
+        if (!node.IsMap() || node.size() != 4) {
+            return false;
+        }
+
+        rhs.setSize(node["width"].as<unsigned int>(),
+                    node["height"].as<unsigned int>(),
+                    node["depth"].as<unsigned int>());
+        rhs.setTiles(node["tiles"].as<std::vector<Tile>>());
         return true;
     }
 };

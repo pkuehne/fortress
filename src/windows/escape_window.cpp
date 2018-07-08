@@ -18,6 +18,7 @@ void EscapeWindow::registerWidgets() {
         ->setCommandChar(1)
         ->setCommandCharCallback([&](Label* l) {
             l->getWindow()->getEngine()->state()->save("test.yaml");
+            l->setSensitive(false);
         })
         ->setVerticalAlign(Widget::VerticalAlign::Top)
         ->setHorizontalAlign(Widget::HorizontalAlign::Centre);

@@ -1,41 +1,29 @@
 #ifndef MAP_MANAGER_H
 #define MAP_MANAGER_H
 
+#include "area_info.h"
 #include "entity.h"
+#include "location.h"
 #include "tile.h"
 #include "utility.h"
 #include <map>
 
-class Location;
-
-struct MapInfo {
-    unsigned int areaId;
-    Tile* mapData;
-    unsigned int height;
-    unsigned int width;
-    unsigned int depth;
-    friend bool operator<(const MapInfo& lhs, const MapInfo& rhs) {
-        return lhs.areaId < rhs.areaId;
-    }
-};
-
-typedef std::map<unsigned int, MapInfo> AreaMap;
+typedef std::map<unsigned int, AreaInfo> AreaMap;
 
 class MapManager {
-private:
-    unsigned int loc2index(const Location& loc);
-
 public:
     bool isValidTile(const Location& location);
     Tile& getTile(const Location& location) {
-        return m_map[loc2index(location)];
+        return m_areas[location.area].getTile(location);
     }
 
-    unsigned int getMapHeight() { return m_mapHeight; }
-    unsigned int getMapWidth() { return m_mapWidth; }
-    unsigned int getMapDepth() { return m_mapDepth; }
+    unsigned int getMapHeight() { return m_areas[m_currentArea].getHeight(); }
+    unsigned int getMapWidth() { return m_areas[m_currentArea].getWidth(); }
+    unsigned int getMapDepth() { return m_areas[m_currentArea].getDepth(); }
 
     /// @brief Creates a new Area with the given dimensions
+    /// @details Provide an area ID when loading from file, leave it when
+    /// creating
     // @param[in]   width   The map width
     // @param[in]   height  The map height
     // @param[in]   depth   The map depth
@@ -54,10 +42,6 @@ public:
                                   unsigned int radius);
 
 private:
-    unsigned int m_mapWidth = 0;
-    unsigned int m_mapHeight = 0;
-    unsigned int m_mapDepth = 0;
-    Tile* m_map = nullptr;
     unsigned int m_currentArea = 0;
     unsigned int m_maxAreaId = 0;
     AreaMap m_areas;

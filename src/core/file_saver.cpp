@@ -17,20 +17,12 @@ void FileSaver::saveState(const std::string& filename) {
 void FileSaver::encodeMap(YAML::Node& node) {
 
     MapManager* map = m_state->map();
-    unsigned int height = map->getMapHeight();
-    unsigned int width = map->getMapWidth();
-    unsigned int depth = map->getMapDepth();
-
-    for (unsigned int d = 0; d < depth; d++) {
-        for (unsigned int h = 0; h < height; h++) {
-            for (unsigned int w = 0; w < width; w++) {
-                Location loc(w, h, d, 0);
-                const Tile& tile = map->getTile(loc);
-                node.push_back(tile);
-            }
-        }
+    for (auto iter : map->getAreas()) {
+        node[iter.first] = iter.second;
     }
 }
+
+void FileSaver::encodeArea(YAML::Node& node, unsigned int area) {}
 
 // void FileSaver::saveState() {
 
