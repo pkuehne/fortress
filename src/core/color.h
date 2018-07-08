@@ -18,8 +18,11 @@ public:
     Color(float red, float green, float blue);
     explicit Color(COLOR color);
     float& Red() { return m_red; }
+    float Red() const { return m_red; }
     float& Green() { return m_green; }
+    float Green() const { return m_green; }
     float& Blue() { return m_blue; }
+    float Blue() const { return m_blue; }
 
     void operator*=(float lhs);
     bool operator==(const Color& lhs) const {

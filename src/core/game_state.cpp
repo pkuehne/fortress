@@ -1,5 +1,6 @@
 #include "game_state.h"
 #include "entity_manager.h"
+#include "file_saver.h"
 #include "map_manager.h"
 #include <glog/logging.h>
 #include <stdexcept>
@@ -52,9 +53,10 @@ void GameState::setArea(unsigned int area) { m_map->setArea(area); }
 
 unsigned int GameState::getArea() { return m_map->getArea(); }
 
-// void save(const std::string& filename) {
-//     // TODO: YAML savefile
-// }
+void GameState::save(const std::string& filename) {
+    FileSaver saver(this);
+    saver.saveState(filename);
+}
 
 // void load(const std::string& filename) {
 //     // TODO: YAML savefile

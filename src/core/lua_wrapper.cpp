@@ -97,7 +97,7 @@ int createOrc(lua_State* runtime) {
     location.y += y;
     state->prefabs().createEnemyPrefab(location);
 
-    return 0; 
+    return 0;
 }
 
 int playerLocation(lua_State* runtime) {
@@ -119,8 +119,8 @@ int revealMap(lua_State* runtime) {
             for (unsigned z = 0; z < state->map()->getMapDepth(); z++) {
                 Location location(x, y, z);
                 Tile& tile = state->tile(location);
-                if (tile.lastVisited < state->turn()) {
-                    tile.lastVisited = state->turn();
+                if (tile.lastVisited() < state->turn()) {
+                    tile.lastVisited() = state->turn();
                 }
             }
         }

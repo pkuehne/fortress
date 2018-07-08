@@ -7,17 +7,21 @@
 class Tile {
 public:
     Tile() : m_floor(Material::Grass), m_entities(), m_lit(false) {}
-    unsigned int lastVisited = 0;
     bool& lit() { return m_lit; }
+    bool lit() const { return m_lit; }
     const EntityHolder& entities() { return m_entities; }
     void addEntity(EntityId entity) { m_entities.insert(entity); }
     void removeEntity(EntityId entity) { m_entities.erase(entity); }
     Floor& getFloor() { return m_floor; }
+    Floor getFloor() const { return m_floor; }
+    unsigned int& lastVisited() { return m_lastVisited; }
+    unsigned int lastVisited() const { return m_lastVisited; }
 
 private:
     Floor m_floor;
     EntityHolder m_entities;
-    bool m_lit;
+    bool m_lit = false;
+    unsigned int m_lastVisited = 0;
 };
 
 #endif

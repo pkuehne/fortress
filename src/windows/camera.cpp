@@ -35,7 +35,8 @@ void Camera::renderSprites() {
                 continue;
 
             Tile& l_tile = m_state->tile(loc);
-            std::map<unsigned int, std::vector<SpriteComponent*>> l_sprites;
+            std::map<unsigned int, std::vector<const SpriteComponent*>>
+                l_sprites;
             for (EntityId entity : l_tile.entities()) {
                 SpriteComponent* l_sprite =
                     m_state->components()->get<SpriteComponent>(entity);
@@ -43,7 +44,7 @@ void Camera::renderSprites() {
                     m_state->components()->get<NpcComponent>(entity);
                 if (!l_sprite)
                     continue;
-                if (l_npc && l_tile.lastVisited < m_state->turn()) {
+                if (l_npc && l_tile.lastVisited() < m_state->turn()) {
                     continue;
                 }
                 l_sprites[l_sprite->renderLayer].push_back(l_sprite);
@@ -51,14 +52,14 @@ void Camera::renderSprites() {
             l_sprites[0].push_back(&(l_tile.getFloor().getSprite()));
 
             for (auto& layer : l_sprites) {
-                for (SpriteComponent* l_sprite : layer.second) {
+                for (auto l_sprite : layer.second) {
                     Color fgColor = l_sprite->fgColor;
-                    if (l_tile.lastVisited < m_state->turn()) {
+                    if (l_tile.lastVisited() < m_state->turn()) {
                         fgColor *= 0.4;
                     }
 
-                    if (l_tile.lastVisited > 0 &&
-                        l_tile.lastVisited + 200 > m_state->turn()) {
+                    if (l_tile.lastVisited() > 0 &&
+                        l_tile.lastVisited() + 200 > m_state->turn()) {
                         drawTile(xx, yy, l_sprite->sprite, fgColor,
                                  l_sprite->bgColor);
                     }

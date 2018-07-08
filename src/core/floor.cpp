@@ -1,4 +1,5 @@
 #include "floor.h"
+#include "color.h"
 #include "utility.h"
 
 Floor::Floor(Material material) : m_material(material) {

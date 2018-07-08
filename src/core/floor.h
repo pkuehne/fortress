@@ -1,8 +1,6 @@
-#ifndef __FLOOR_H__
-#define __FLOOR_H__
+#pragma once
 
 #include "../components/sprite_component.h"
-#include "color.h"
 
 enum class Material {
     None = 0,
@@ -12,13 +10,14 @@ enum class Material {
 
 class Floor {
 public:
+    Floor() { setMaterial(Material::None); }
     explicit Floor(Material material);
-    SpriteComponent& getSprite() { return m_sprite; }
+    const SpriteComponent& getSprite() const { return m_sprite; }
+    void setSprite(const SpriteComponent& sprite) { m_sprite = sprite; }
     void setMaterial(Material material);
+    Material getMaterial() const { return m_material; }
 
 private:
-    Material m_material;
+    Material m_material = Material::None;
     SpriteComponent m_sprite;
 };
-
-#endif

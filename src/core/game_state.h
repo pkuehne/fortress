@@ -73,7 +73,7 @@ public:
     void setArea(unsigned int area);
     unsigned int getArea();
 
-    // void save(const std::string& filename);
+    void save(const std::string& filename);
     // void load(const std::string& filename);
 
     void addMessage(const Message& message);

@@ -12,7 +12,7 @@ void FovAlgorithm::calculateFov() {
     if (player == 0)
         return;
 
-    m_engine->state()->tile(playerLoc).lastVisited = m_engine->getTurn();
+    m_engine->state()->tile(playerLoc).lastVisited() = m_engine->getTurn();
 
     int x = 0;
     int y = 0;
@@ -33,7 +33,7 @@ void FovAlgorithm::calculateFov() {
                 x += playerLoc.x;
                 Location loc(x, y, playerLoc.z, playerLoc.area);
                 if (m_engine->state()->isValidTile(loc) && visible) {
-                    m_engine->state()->tile(loc).lastVisited =
+                    m_engine->state()->tile(loc).lastVisited() =
                         m_engine->getTurn();
                     for (const EntityId entity :
                          m_engine->state()->tile(loc).entities()) {

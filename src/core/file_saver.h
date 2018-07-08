@@ -1,21 +1,17 @@
-#ifndef FILE_SAVER
-#define FILE_SAVER
+#pragma once
 
-#include "../components/component_base.h"
-#include <fstream>
-#include <iostream>
+#include <yaml-cpp/yaml.h>
 
-class GameEngine;
+class GameState;
+
 class FileSaver {
 public:
-    FileSaver() {}
+    FileSaver(GameState* state) : m_state(state) {}
     ~FileSaver() {}
-    void initialise(GameEngine* engine) { m_engine = engine; }
-    // void saveState();
+
+    void saveState(const std::string& filename);
+    void encodeMap(YAML::Node& node);
 
 private:
-    GameEngine* m_engine = 0;
-    std::ofstream m_file;
+    GameState* m_state = nullptr;
 };
-
-#endif
