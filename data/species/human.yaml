@@ -1,2 +1,7 @@
 name: Human
 description: "A gangly creature, prone to destroying its environment"
+symbol: H
+foreground-color: 1
+background-color: 4
+health: 4
+fsm: human

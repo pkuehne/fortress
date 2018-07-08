@@ -17,12 +17,56 @@
 #include "../components/wieldable_component.h"
 #include "floor.h"
 #include <experimental/filesystem>
+#include <iostream>
+#include <yaml-cpp/yaml.h>
 
 PrefabBuilder::PrefabBuilder(EntityManager* e, ComponentManager* c)
     : m_entities(e), m_components(c) {
+    namespace fs = std::experimental::filesystem;
+
     std::string path = "./data/species/";
-    for (auto& p : std::experimental::filesystem::directory_iterator(path))
-        LOG(ERROR) << p << std::endl;
+    for (auto& filename : fs::directory_iterator(path)) {
+        YAML::Node node = YAML::LoadFile(filename.path().relative_path());
+        m_species[filename.path().stem()] = node;
+    }
+}
+
+EntityId PrefabBuilder::createNpc(Location& location) {
+    YAML::Node& node = m_species["human"];
+
+    EntityId entity = m_entities->createEntity(location);
+
+    // Description Component
+    DescriptionComponent* l_description =
+        m_components->make<DescriptionComponent>(entity);
+    l_description->title = node["name"].as<std::string>("A creature");
+    l_description->text =
+        node["description"].as<std::string>("It's hard to describe");
+
+    // Sprite
+    SpriteComponent* l_sprite = m_components->make<SpriteComponent>(entity);
+    l_sprite->fgColor = Color(WHITE);
+    //    Color(static_cast<COLOR>(node["foreground-color"].as<int>(3)));
+    l_sprite->bgColor = Color(BLACK);
+    l_sprite->sprite = node["symbol"].as<unsigned int>('?');
+
+    // Collider Component
+    if (node["collidable"].as<bool>(true)) {
+        m_components->make<ColliderComponent>(entity);
+    }
+
+    // Health Component
+    if (node["health"].as<unsigned int>(0) > 0) {
+        HealthComponent* l_health = m_components->make<HealthComponent>(entity);
+        l_health->health = node["health"].as<unsigned int>(1);
+    }
+
+    // NPC Component
+    NpcComponent* l_npc = m_components->make<NpcComponent>(entity);
+    l_npc->state = "";
+    l_npc->stateMachine = node["fsm"].as<std::string>("human");
+
+    return entity;
 }
 
 EntityId PrefabBuilder::createWallPrefab(Location& location) {
