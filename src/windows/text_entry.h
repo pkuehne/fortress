@@ -11,8 +11,13 @@ public:
         m_text = text;
         return this;
     }
-
     std::string getText() { return m_text; }
+
+    TextEntry* setSuffix(const std::string& suffix) {
+        m_suffix = suffix; 
+        return this;
+    }
+    std::string getSuffix() { return m_suffix; }
 
     TextEntry* setEnterCallback(const EnterCB& cb) {
         m_enterCb = cb;
@@ -23,6 +28,7 @@ public:
 
 private:
     std::string m_text = std::string("");
+    std::string m_suffix;
     bool m_blink = false;
     EnterCB m_enterCb = [](TextEntry*) {};
 };
