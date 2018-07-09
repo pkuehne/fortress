@@ -26,3 +26,4 @@ RUN cp libgmock.a /usr/local/lib
 # Set up source files
 COPY . /fortress
 WORKDIR /fortress
+RUN make clean

@@ -18,7 +18,7 @@ void TextEntry::render() {
     if (!m_text.empty()) {
         drawString(0, 0, m_text.c_str());
     }
-    if (m_blink) {
+    if (m_blink && getSensitive()) {
         drawString(m_text.size(), 0, "_", Color(GREEN));
     }
 }

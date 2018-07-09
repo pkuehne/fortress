@@ -32,6 +32,22 @@ TEST(TextEntry, renderShowsTextPlusCursor) {
     TextEntry entry;
     entry.setGraphics(&graphics);
     entry.setText(std::string("Foo"));
+    entry.setSensitive(false);
+
+    EXPECT_CALL(graphics, drawString(Eq(0), Eq(0), StrEq("Foo"), _, _))
+        .Times(2);
+    EXPECT_CALL(graphics, drawString(Eq(0), Eq(3), StrEq("_"), _, _)).Times(0);
+
+    // Run render twice, underscore should not!
+    entry.render();
+    entry.render();
+}
+
+TEST(TextEntry, renderShowsTextButNoCursorWhenNotSensitive) {
+    GraphicsMock graphics;
+    TextEntry entry;
+    entry.setGraphics(&graphics);
+    entry.setText(std::string("Foo"));
 
     EXPECT_CALL(graphics, drawString(Eq(0), Eq(0), StrEq("Foo"), _, _))
         .Times(2);

@@ -1,6 +1,7 @@
 #include "escape_window.h"
 #include "../core/game_engine.h"
 #include "label.h"
+#include "save_window.h"
 
 void EscapeWindow::setup() {
     setTitle(" FORTRESS ");
@@ -17,9 +18,12 @@ void EscapeWindow::registerWidgets() {
         ->setText("Save Game")
         ->setCommandChar(1)
         ->setCommandCharCallback([&](Label* l) {
-            l->getWindow()->getEngine()->state()->save("test.yaml");
-            l->setSensitive(false);
+            l->getWindow()
+                ->getEngine()
+                ->getWindows()
+                ->createWindow<SaveWindow>();
         })
+        ->setIgnoreCommandCharCase(true)
         ->setVerticalAlign(Widget::VerticalAlign::Top)
         ->setHorizontalAlign(Widget::HorizontalAlign::Centre);
     this->createWidget<Label>("lblReload", 0, 4)

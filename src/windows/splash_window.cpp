@@ -11,7 +11,7 @@ extern int MAJOR;
 extern int MINOR;
 extern int PATCH;
 extern int BUILD;
-#endif 
+#endif
 
 void SplashWindow::setup() { setFullscreen(); }
 
@@ -144,15 +144,14 @@ void SplashWindow::registerWidgets() {
     createWidget<Icon>("icon383", xOffset + 38, yOffset + 3)->setIcon(tile);
     createWidget<Icon>("icon385", xOffset + 38, yOffset + 5)->setIcon(tile);
     createWidget<Icon>("icon387", xOffset + 38, yOffset + 7)->setIcon(tile);
-  
-    std::stringstream ss; 
+
+    std::stringstream ss;
     ss << MAJOR << "." << MINOR << "." << PATCH << " Build: " << BUILD;
 
-        createWidget<Label>("lblVersion", 1, 1)
+    createWidget<Label>("lblVersion", 1, 1)
         ->setText(ss.str())
         ->setHorizontalAlign(Widget::HorizontalAlign::Right)
         ->setVerticalAlign(Widget::VerticalAlign::Bottom);
-
 }
 
 void SplashWindow::keyPress(unsigned char key) {
