@@ -24,7 +24,11 @@ void SaveWindow::registerWidgets() {
     createTab->setMargin(0);
     createWidget<Label>("lblCreate", 0, 0, createTab)->setText("Filename:");
     createWidget<TextEntry>("entFilename", 10, 0, createTab)
-        ->setEnterCallback([&](TextEntry* e) { this->saveState(e->getText()); })
+        ->setEnterCallback([&](TextEntry* e) { 
+            std::string filename;
+            filename = e->getText();
+            filename.append(e->getSuffix()); 
+            this->saveState(filename); })
         ->setSuffix(std::string(".yaml"))
         ->setWidthStretchMargin(0)
         ->setHeightStretchMargin(0);
