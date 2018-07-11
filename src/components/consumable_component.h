@@ -1,7 +1,7 @@
-#ifndef CONSUMABLE_COMPONENT_H
-#define CONSUMABLE_COMPONENT_H
+#pragma once
 
 #include "component_base.h"
+
 typedef enum {
     HUNGER = 0,
     THIRST = 1,
@@ -17,5 +17,3 @@ struct ConsumableComponent : ComponentBase {
     EFFECT effect;
     int effectStrength;
 };
-
-#endif

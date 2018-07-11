@@ -32,6 +32,7 @@ public:
     void setLocation(EntityId entity, Location& location);
 
     EntityHolder& get(unsigned int area = 0);
+    unsigned int count() { return m_locations.size(); }
 
 private:
     GameEngine* m_engine = nullptr;
