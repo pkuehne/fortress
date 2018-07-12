@@ -16,7 +16,7 @@ void FileSaver::saveState(const std::string& filename) {
     m_totalSteps += m_state->entityManager()->count();
 
     encodeMap(node);
-
+    encodeAreaZero(node);
     std::ofstream fout(filename);
     fout << node;
 }
@@ -25,10 +25,20 @@ void FileSaver::encodeMap(YAML::Node& node) {
 
     MapManager* map = m_state->map();
     for (auto iter : map->getAreas()) {
-        updateStatus(std::string("Saving Area " + std::to_string(iter.first)));
         node[iter.first] = iter.second;
-        encodeEntities(node, iter.first);
+        encodeArea(node, iter.first);
     }
+}
+
+void FileSaver::encodeAreaZero(YAML::Node& node) {
+    // Catch ephemeral entities
+    encodeArea(node, 0);
+}
+
+void FileSaver::encodeArea(YAML::Node& node, unsigned int area) {
+    updateStatus(std::string("Saving Area " + std::to_string(area)));
+    YAML::Node&& entityNode = node[area]["entities"];
+    encodeEntities(entityNode, area);
 }
 
 void FileSaver::encodeEntities(YAML::Node& node, unsigned int area) {

@@ -82,9 +82,3 @@ EntityId EntityManager::getPlayer() {
     return m_player;
 }
 
-EntityHolder& EntityManager::get(unsigned int area) {
-    if (area == 0) {
-        area = m_engine->state()->map()->getArea();
-    }
-    return m_entities[area];
-}

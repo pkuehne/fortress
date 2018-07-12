@@ -1,5 +1,4 @@
-#ifndef __ENTITY_MANAGER_H__
-#define __ENTITY_MANAGER_H__
+#pragma once
 
 #include "entity.h"
 #include "entity_manager_interface.h"
@@ -16,8 +15,8 @@ typedef LocationMap::iterator LocationIter;
 
 class EntityManager { //: public EntityManagerInterface {
 public:
-    EntityManager() {}
-    ~EntityManager() {}
+    EntityManager() = default;
+    ~EntityManager() = default;
 
     void initialise(GameEngine* engine);
     void destroy() {}
@@ -31,7 +30,7 @@ public:
     Location getLocation(EntityId entity) { return m_locations[entity]; }
     void setLocation(EntityId entity, Location& location);
 
-    EntityHolder& get(unsigned int area = 0);
+    EntityHolder& get(unsigned int area) { return m_entities[area]; }
     unsigned int count() { return m_locations.size(); }
 
 private:
@@ -41,5 +40,3 @@ private:
     LocationMap m_locations;
     std::map<unsigned int, EntityHolder> m_entities;
 };
-
-#endif

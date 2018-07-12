@@ -33,7 +33,7 @@ EntityManager* GameState::entityManager() { return m_entities; }
 
 ComponentManager* GameState::components() { return m_components; }
 
-const EntityHolder& GameState::entities() { return m_entities->get(); }
+const EntityHolder& GameState::entities() { return m_entities->get(m_map->getArea()); }
 
 EntityHolder GameState::entities(const Location& loc) {
     return m_map->findEntitiesAt(loc);

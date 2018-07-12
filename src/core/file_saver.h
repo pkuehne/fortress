@@ -17,6 +17,8 @@ public:
     void updateStatus(const std::string& status);
     void saveState(const std::string& filename);
     void encodeMap(YAML::Node& node);
+    void encodeArea(YAML::Node& node, unsigned int area);
+    void encodeAreaZero(YAML::Node& node);
     void encodeEntities(YAML::Node& node, unsigned int area);
 
 private:

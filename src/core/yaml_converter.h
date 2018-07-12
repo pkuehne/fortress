@@ -79,8 +79,8 @@ void encodeEntity(GameState* state, YAML::Node& node, EntityId entity) {
     if (wear) {
         node[entity]["wear"] = *wear;
     }
-    if (wear) {
-        node[entity]["wear"] = *wield;
+    if (wield) {
+        node[entity]["wield"] = *wield;
     }
     node[entity]["location"] = state->entityManager()->getLocation(entity);
 }
