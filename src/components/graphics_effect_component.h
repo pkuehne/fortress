@@ -1,5 +1,4 @@
-#ifndef GRAPHICS_EFFECT_COMPONENT_H_
-#define GRAPHICS_EFFECT_COMPONENT_H_
+#pragma once
 
 #include "../core/color.h"
 #include "component_base.h"
@@ -10,16 +9,14 @@ typedef enum {
     EFFECT_BLINK_FAST,
     EFFECT_CHANGE_COLOR,
     EFFECT_MAX
-} EFFECT;
+} GRAPHICS_EFFECT;
 
 struct GraphicsEffectComponent : public ComponentBase {
     unsigned int ticks = 0;
     unsigned int duration = 0;
     unsigned int org_tile = 0;
     Color org_color;
-    EFFECT type = EFFECT_NONE;
+    GRAPHICS_EFFECT type = EFFECT_NONE;
     bool removeEntity = false;
     Color new_color;
 };
-
-#endif /* GRAPHICS_EFFECT_COMPONENT_H_ */

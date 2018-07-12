@@ -1,5 +1,4 @@
 #include "file_saver.h"
-#include "../components/sprite_component.h"
 #include "game_engine.h"
 #include "yaml_converter.h"
 #include <fstream>

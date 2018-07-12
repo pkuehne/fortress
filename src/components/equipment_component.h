@@ -20,7 +20,6 @@ struct EquipmentComponent : public ComponentBase {
     std::vector<EntityId> carriedEquipment;
     int maxCarryWeight = 0;
     int maxCarryVolume = 0;
-    EquipmentComponent() {}
 };
 
 #endif
