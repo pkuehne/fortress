@@ -83,42 +83,46 @@ void DungeonGenerator::createEntitiesFromMap() {
             location.y = yy;
             location.z = m_level;
             location.area = m_area;
- 
-            m_engine->state()->tile(location).getFloor().setMaterial(
-                Material::Rock);
+
+            Tile& tile = m_engine->state()->tile(location);
+            tile.setFloorMaterial(FloorMaterial::Rock);
+
             switch (getByCoordinate(xx, yy)) {
                 case WALL:
                 case CORNER:
-                    l_entity = m_engine->state()->prefabs().createWallPrefab(location);
-                    m_engine->state()
-                        ->components()
-                        ->get<SpriteComponent>(l_entity)
-                        ->sprite = wallSprite(xx, yy);
+                    tile.setWallMaterial(WallMaterial::Rock);
+                    tile.overrideSpriteSymbol(wallSprite(xx, yy));
                     break;
                 case UP:
-                    m_upStair = m_engine->state()->prefabs().createStairPrefab(STAIR_UP, location);
+                    m_upStair = m_engine->state()->prefabs().createStairPrefab(
+                        STAIR_UP, location);
                     break;
                 case DOWN:
                     if (m_level < m_maxDepth - 1 || m_downStairTarget) {
                         m_downStair =
-                            m_engine->state()->prefabs().createStairPrefab(STAIR_DOWN, location);
+                            m_engine->state()->prefabs().createStairPrefab(
+                                STAIR_DOWN, location);
                     }
                     break;
                 case ORC:
                     if (m_createBoss && m_level == m_maxDepth - 1) {
-                        m_engine->state()->prefabs().createTrollPrefab(location);
+                        m_engine->state()->prefabs().createTrollPrefab(
+                            location);
                         m_createBoss = false;
                     } else {
-                        m_engine->state()->prefabs().createEnemyPrefab(location);
+                        m_engine->state()->prefabs().createEnemyPrefab(
+                            location);
                     }
                     break;
                 case DOOR:
-                    l_entity = m_engine->state()->prefabs().createDoorPrefab(location);
+                    l_entity =
+                        m_engine->state()->prefabs().createDoorPrefab(location);
                     break;
                 case RESTRICTED:
                     break;
                 default:
-                    l_entity = m_engine->state()->prefabs().createMarkerPrefab(location);
+                    l_entity = m_engine->state()->prefabs().createMarkerPrefab(
+                        location);
                     m_engine->state()
                         ->components()
                         ->get<SpriteComponent>(l_entity)

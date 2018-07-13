@@ -156,7 +156,8 @@ template <> struct convert<Tile> {
         Node node;
         node["lit"] = rhs.lit();
         node["lastVisited"] = rhs.lastVisited();
-        node["floor"] = static_cast<int>(rhs.getFloor().getMaterial());
+        node["floor"] = static_cast<int>(rhs.getFloorMaterial());
+        node["wall"] = static_cast<int>(rhs.getFloorMaterial());
         return node;
     }
 
@@ -167,8 +168,9 @@ template <> struct convert<Tile> {
 
         rhs.lit() = node["lit"].as<bool>();
         rhs.lastVisited() = node["lastVisited"].as<unsigned int>();
-        rhs.getFloor().setMaterial(
-            static_cast<Material>(node["floor"].as<int>()));
+        rhs.setFloorMaterial(
+            static_cast<FloorMaterial>(node["floor"].as<int>()));
+        rhs.setWallMaterial(static_cast<WallMaterial>(node["wall"].as<int>()));
 
         return true;
     }

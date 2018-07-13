@@ -69,26 +69,6 @@ EntityId PrefabBuilder::createNpc(Location& location) {
     return entity;
 }
 
-EntityId PrefabBuilder::createWallPrefab(Location& location) {
-    EntityId l_entity = m_entities->createEntity(location);
-
-    // Sprite Component
-    SpriteComponent* l_sprite = m_components->make<SpriteComponent>(l_entity);
-    l_sprite->fgColor = Color(GREY);
-    l_sprite->bgColor = Color(BLACK);
-    l_sprite->sprite = 'W';
-
-    // Collider Component
-    m_components->make<ColliderComponent>(l_entity);
-
-    DescriptionComponent* l_description =
-        m_components->make<DescriptionComponent>(l_entity);
-    l_description->title = "Wall";
-    l_description->text = "A smooth granite wall";
-
-    return l_entity;
-}
-
 EntityId PrefabBuilder::createPlayerPrefab(Location& location) {
     EntityId l_entity = m_entities->createEntity(location);
 

@@ -17,7 +17,6 @@ public:
 
     EntityId createNpc(Location& location);
 
-    EntityId createWallPrefab(Location& location);
     EntityId createPlayerPrefab(Location& location);
     EntityId createEnemyPrefab(Location& location);
     EntityId createTrollPrefab(Location& location);

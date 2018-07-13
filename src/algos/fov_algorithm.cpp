@@ -32,18 +32,22 @@ void FovAlgorithm::calculateFov() {
                 y += playerLoc.y;
                 x += playerLoc.x;
                 Location loc(x, y, playerLoc.z, playerLoc.area);
+                Tile& tile = m_engine->state()->tile(loc);
                 if (m_engine->state()->isValidTile(loc) && visible) {
-                    m_engine->state()->tile(loc).lastVisited() =
-                        m_engine->getTurn();
+                    bool blocked = tile.blocked();
+                    tile.lastVisited() = m_engine->getTurn();
                     for (const EntityId entity :
                          m_engine->state()->tile(loc).entities()) {
                         if (m_engine->state()
                                 ->components()
                                 ->get<ColliderComponent>(entity)) {
-                            line.addShadow(projection);
-                            fullShadow = line.isInFullShadow();
+                            blocked = true;
                             break;
                         }
+                    }
+                    if (blocked) {
+                        line.addShadow(projection);
+                        fullShadow = line.isInFullShadow();
                     }
                 }
             }

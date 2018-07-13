@@ -40,26 +40,32 @@ void RuralGenerator::createEntitiesFromMap() {
             location.y = yy;
             location.z = 0;
             location.area = m_area;
-            m_engine->state()->tile(location).getFloor().setMaterial(
-                Material::Grass);
+            m_engine->state()->tile(location).setFloorMaterial(
+                FloorMaterial::Grass);
             switch (getByCoordinate(xx, yy)) {
                 case EMPTY:
                     break;
                 case TREE:
-                    l_entity = m_engine->state()->prefabs().createTreePrefab(location);
+                    l_entity =
+                        m_engine->state()->prefabs().createTreePrefab(location);
                     break;
                 case LINK:
-                    l_entity = m_engine->state()->prefabs().createStairPrefab(STAIR_DOWN, location);
+                    l_entity = m_engine->state()->prefabs().createStairPrefab(
+                        STAIR_DOWN, location);
                     m_areaLinks.push_back(l_entity);
                     break;
                 case HUMAN:
-                    l_entity = m_engine->state()->prefabs().createForesterPrefab(location);
+                    l_entity =
+                        m_engine->state()->prefabs().createForesterPrefab(
+                            location);
                     break;
                 case DOG:
-                    l_entity = m_engine->state()->prefabs().createDogPrefab(location);
+                    l_entity =
+                        m_engine->state()->prefabs().createDogPrefab(location);
                     break;
                 case APPLE:
-                    l_entity = m_engine->state()->prefabs().createApplePrefab(location);
+                    l_entity = m_engine->state()->prefabs().createApplePrefab(
+                        location);
                     break;
                 default:
                     break;

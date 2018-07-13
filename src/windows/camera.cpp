@@ -49,7 +49,7 @@ void Camera::renderSprites() {
                 }
                 l_sprites[l_sprite->renderLayer].push_back(l_sprite);
             }
-            l_sprites[0].push_back(&(l_tile.getFloor().getSprite()));
+            l_sprites[0].push_back(&(l_tile.getSprite()));
 
             for (auto& layer : l_sprites) {
                 for (auto l_sprite : layer.second) {
