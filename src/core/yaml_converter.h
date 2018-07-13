@@ -150,34 +150,13 @@ template <> struct convert<Color> {
     }
 };
 
-// Floor
-template <> struct convert<Floor> {
-    static Node encode(const Floor& rhs) {
-        Node node;
-        node["material"] = static_cast<int>(rhs.getMaterial());
-        node["sprite"] = rhs.getSprite();
-        return node;
-    }
-
-    static bool decode(const Node& node, Floor& rhs) {
-        if (!node.IsMap() || node.size() != 2) {
-            return false;
-        }
-
-        rhs.setMaterial(static_cast<Material>(node["material"].as<int>()));
-        rhs.setSprite(node["sprite"].as<SpriteComponent>());
-
-        return true;
-    }
-};
-
 // Tile
 template <> struct convert<Tile> {
     static Node encode(const Tile& rhs) {
         Node node;
         node["lit"] = rhs.lit();
         node["lastVisited"] = rhs.lastVisited();
-        node["floor"] = rhs.getFloor();
+        node["floor"] = static_cast<int>(rhs.getFloor().getMaterial());
         return node;
     }
 
@@ -188,7 +167,8 @@ template <> struct convert<Tile> {
 
         rhs.lit() = node["lit"].as<bool>();
         rhs.lastVisited() = node["lastVisited"].as<unsigned int>();
-        rhs.getFloor() = node["floor"].as<Floor>();
+        rhs.getFloor().setMaterial(
+            static_cast<Material>(node["floor"].as<int>()));
 
         return true;
     }

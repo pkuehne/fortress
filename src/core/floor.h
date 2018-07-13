@@ -10,10 +10,9 @@ enum class Material {
 
 class Floor {
 public:
-    Floor() { setMaterial(Material::None); }
+    Floor() = default;
     explicit Floor(Material material);
     const SpriteComponent& getSprite() const { return m_sprite; }
-    void setSprite(const SpriteComponent& sprite) { m_sprite = sprite; }
     void setMaterial(Material material);
     Material getMaterial() const { return m_material; }
 
