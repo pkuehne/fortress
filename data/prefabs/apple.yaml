@@ -1,0 +1,16 @@
+name: Apple
+description: "Shiny, red, don't accept from old ladies"
+symbol: 65
+foreground-color:
+  - 256
+  - 0
+  - 0  
+background-color:
+  - 0
+  - 0
+  - 0
+collidable: false
+droppable: true
+consumable:
+  quenches: 0
+  strength: 2

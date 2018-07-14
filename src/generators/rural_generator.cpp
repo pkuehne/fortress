@@ -62,8 +62,7 @@ void RuralGenerator::createEntitiesFromMap() {
                     m_engine->state()->prefabs().create("dog", location);
                     break;
                 case APPLE:
-                    l_entity = m_engine->state()->prefabs().createApplePrefab(
-                        location);
+                    m_engine->state()->prefabs().create("apple", location);
                     break;
                 default:
                     break;

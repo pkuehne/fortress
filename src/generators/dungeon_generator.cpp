@@ -74,8 +74,6 @@ bool DungeonGenerator::generateLevel() {
 }
 
 void DungeonGenerator::createEntitiesFromMap() {
-    EntityId l_entity = 0;
-
     for (unsigned int yy = 0; yy < m_mapHeight; yy++) {
         for (unsigned int xx = 0; xx < m_mapWidth; xx++) {
             Location location;
@@ -115,8 +113,7 @@ void DungeonGenerator::createEntitiesFromMap() {
                     }
                     break;
                 case DOOR:
-                    l_entity =
-                        m_engine->state()->prefabs().createDoorPrefab(location);
+                    m_engine->state()->prefabs().create("door", location);
                     break;
                 case EMPTY:
                 case FLOOR:
@@ -124,13 +121,8 @@ void DungeonGenerator::createEntitiesFromMap() {
                     break;
                 default:
                     LOG(WARNING) << "Creating marker prefab at " << location
-                              << std::endl;
-                    l_entity = m_engine->state()->prefabs().createMarkerPrefab(
-                        location);
-                    m_engine->state()
-                        ->components()
-                        ->get<SpriteComponent>(l_entity)
-                        ->sprite = getByCoordinate(xx, yy);
+                                 << std::endl;
+                    m_engine->state()->prefabs().create("marker", location);
                     break;
             }
         }

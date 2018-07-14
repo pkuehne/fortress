@@ -42,14 +42,13 @@ EntityId PrefabBuilder::create(const std::string& name, Location& location) {
     EntityId entity = m_entities->createEntity(location);
 
     // Description Component
-    DescriptionComponent* l_description =
-        m_components->make<DescriptionComponent>(entity);
+    auto l_description = m_components->make<DescriptionComponent>(entity);
     l_description->title = node["name"].as<std::string>("Unknown");
     l_description->text =
         node["description"].as<std::string>("It's hard to describe");
 
     // Sprite
-    SpriteComponent* l_sprite = m_components->make<SpriteComponent>(entity);
+    auto l_sprite = m_components->make<SpriteComponent>(entity);
     l_sprite->fgColor = node["foreground-color"].as<Color>(Color(WHITE));
     l_sprite->bgColor = node["background-color"].as<Color>(Color(BLACK));
     l_sprite->sprite = node["symbol"].as<unsigned int>('?');
@@ -60,14 +59,33 @@ EntityId PrefabBuilder::create(const std::string& name, Location& location) {
     }
 
     // Health Component
-    if (node["health"].as<unsigned int>(0) > 0) {
-        HealthComponent* l_health = m_components->make<HealthComponent>(entity);
+    if (node["health"].IsDefined()) {
+        auto l_health = m_components->make<HealthComponent>(entity);
         l_health->health = node["health"].as<unsigned int>(1);
     }
 
+    // Droppable Component
+    if (node["droppable"].IsDefined()) {
+        m_components->make<DroppableComponent>(entity);
+    }
+
+    // Consumable Component
+    if (node["consumable"].IsDefined()) {
+        auto l_consumable = m_components->make<ConsumableComponent>(entity);
+        l_consumable->quenches = static_cast<HUNGER_THIRST>(
+            node["consumable"]["quenches"].as<int>(0));
+        l_consumable->quenchStrength = node["consumable"]["strength"].as<int>();
+    }
+
+    // Openable Component
+    if (node["openable"].IsDefined()) {
+        auto l_openable = m_components->make<OpenableComponent>(entity);
+        l_openable->open = node["openable"]["open"].as<bool>(false);
+    }
+
     // NPC Component
-    if (node["smart"].IsMap()) {
-        NpcComponent* l_npc = m_components->make<NpcComponent>(entity);
+    if (node["smart"].IsDefined()) {
+        auto l_npc = m_components->make<NpcComponent>(entity);
         l_npc->stateMachine = node["smart"]["fsm"].as<std::string>("human");
         l_npc->attribs["seek_target"] =
             node["smart"]["target"].as<std::string>("");
@@ -188,18 +206,6 @@ EntityId PrefabBuilder::createTrollPrefab(Location& location) {
     l_equipment->rightHandWieldable = createWeaponPrefab(invalidLoc);
     l_equipment->leftHandWieldable = createShieldPrefab(invalidLoc);
     l_equipment->headWearable = createHelmetPrefab(invalidLoc);
-
-    return l_entity;
-}
-
-EntityId PrefabBuilder::createMarkerPrefab(Location& location) {
-    EntityId l_entity = m_entities->createEntity(location);
-
-    // Sprite Component
-    SpriteComponent* l_sprite = m_components->make<SpriteComponent>(l_entity);
-    l_sprite->fgColor = Color(YELLOW);
-    l_sprite->bgColor = Color(BLACK);
-    l_sprite->sprite = 'X';
 
     return l_entity;
 }
@@ -374,80 +380,6 @@ EntityId PrefabBuilder::createForesterPrefab(Location& location) {
     l_equipment->rightHandWieldable = createWeaponPrefab(invalidLoc);
     l_equipment->leftHandWieldable = createShieldPrefab(invalidLoc);
     l_equipment->headWearable = createHelmetPrefab(invalidLoc);
-
-    return l_entity;
-}
-
-EntityId PrefabBuilder::createDogPrefab(Location& location) {
-    EntityId l_entity = m_entities->createEntity(location);
-
-    SpriteComponent* l_sprite = m_components->make<SpriteComponent>(l_entity);
-    l_sprite->fgColor = Color(GREEN);
-    l_sprite->bgColor = Color(BLACK);
-    l_sprite->sprite = 'd';
-
-    // Collider Component
-    m_components->make<ColliderComponent>(l_entity);
-
-    // Description Component
-    DescriptionComponent* l_description =
-        m_components->make<DescriptionComponent>(l_entity);
-    l_description->title = "Dog";
-    l_description->text = "Man's best friend";
-
-    // Health Component
-    HealthComponent* l_health = m_components->make<HealthComponent>(l_entity);
-    l_health->health = 4;
-
-    // NPC Component
-    NpcComponent* l_npc = m_components->make<NpcComponent>(l_entity);
-    l_npc->state = "";
-    l_npc->stateMachine = "dog";
-    l_npc->attribs["seek_target"] = "Forester";
-
-    return l_entity;
-}
-
-EntityId PrefabBuilder::createApplePrefab(Location& location) {
-    EntityId l_entity = m_entities->createEntity(location);
-
-    SpriteComponent* l_sprite = m_components->make<SpriteComponent>(l_entity);
-    l_sprite->fgColor = Color(RED);
-    l_sprite->bgColor = Color(BLACK);
-    l_sprite->sprite = 'A';
-
-    // Description Component
-    DescriptionComponent* l_description =
-        m_components->make<DescriptionComponent>(l_entity);
-    l_description->title = "Apple";
-    l_description->text = "One of these a day, keeps the sawbones away";
-
-    m_components->make<DroppableComponent>(l_entity);
-
-    ConsumableComponent* l_consumable =
-        m_components->make<ConsumableComponent>(l_entity);
-    l_consumable->quenches = HUNGER;
-    l_consumable->quenchStrength = 2;
-
-    return l_entity;
-}
-
-EntityId PrefabBuilder::createDoorPrefab(Location& location) {
-    EntityId l_entity = m_entities->createEntity(location);
-
-    auto l_sprite = m_components->make<SpriteComponent>(l_entity);
-    l_sprite->fgColor = Color(GREY);
-    l_sprite->bgColor = Color(BLACK);
-    l_sprite->sprite = 'D';
-
-    auto l_description = m_components->make<DescriptionComponent>(l_entity);
-    l_description->title = "Door";
-    l_description->text = "A wall that moves";
-
-    auto l_openable = m_components->make<OpenableComponent>(l_entity);
-    l_openable->open = false;
-
-    m_components->make<ColliderComponent>(l_entity);
 
     return l_entity;
 }

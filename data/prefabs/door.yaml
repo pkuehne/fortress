@@ -1,0 +1,13 @@
+name: Door
+description: "A wall that moves"
+symbol: 68
+foreground-color:
+  - 128
+  - 128
+  - 128
+background-color:
+  - 0
+  - 0
+  - 0
+openable:
+  open: false
