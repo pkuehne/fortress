@@ -32,6 +32,11 @@ PrefabBuilder::PrefabBuilder(EntityManager* e, ComponentManager* c)
 }
 
 EntityId PrefabBuilder::create(const std::string& name, Location& location) {
+    if (m_prefabs.find(name) == m_prefabs.end()) {
+        LOG(WARNING) << "Invalid prefab '" << name << "' requested"
+                     << std::endl;
+        return 0;
+    }
     YAML::Node& node = m_prefabs[name];
 
     EntityId entity = m_entities->createEntity(location);
@@ -61,10 +66,11 @@ EntityId PrefabBuilder::create(const std::string& name, Location& location) {
     }
 
     // NPC Component
-    if (node["smart"].as<bool>(false)) {
+    if (node["smart"].IsMap()) {
         NpcComponent* l_npc = m_components->make<NpcComponent>(entity);
-        l_npc->state = "";
-        l_npc->stateMachine = node["fsm"].as<std::string>("human");
+        l_npc->stateMachine = node["smart"]["fsm"].as<std::string>("human");
+        l_npc->attribs["seek_target"] =
+            node["smart"]["target"].as<std::string>("");
     }
     return entity;
 }
@@ -313,29 +319,6 @@ EntityId PrefabBuilder::createPotionPrefab(Location& location) {
     l_consumable->quenchStrength = 3;
     l_consumable->effect = HEALTH_EFFECT;
     l_consumable->effectStrength = 2;
-
-    return l_entity;
-}
-
-EntityId PrefabBuilder::createTreePrefab(Location& location) {
-    EntityId l_entity = m_entities->createEntity(location);
-
-    SpriteComponent* l_sprite = m_components->make<SpriteComponent>(l_entity);
-    l_sprite->fgColor = Color(BROWN);
-    l_sprite->bgColor = Color(BLACK);
-    l_sprite->sprite = 'T';
-
-    // Description Component
-    DescriptionComponent* l_description =
-        m_components->make<DescriptionComponent>(l_entity);
-    l_description->title = "Tree";
-    l_description->text = "Or maybe an Ent...?";
-
-    // Health Component
-    HealthComponent* l_health = m_components->make<HealthComponent>(l_entity);
-    l_health->health = 2;
-
-    m_components->make<ColliderComponent>(l_entity);
 
     return l_entity;
 }

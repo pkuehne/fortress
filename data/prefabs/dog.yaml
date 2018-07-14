@@ -1,0 +1,15 @@
+name: Dog
+description: "Man's best friend"
+symbol: 100
+foreground-color:
+  - 0
+  - 256
+  - 0  
+background-color:
+  - 0
+  - 0
+  - 0
+health: 4
+smart:
+  fsm: dog
+  target: "Forester"

@@ -1,7 +1,15 @@
 name: Human
 description: "A gangly creature, prone to destroying its environment"
-symbol: H
-foreground-color: 1
-background-color: 4
+symbol: 72
+foreground-color:
+  - 0
+  - 256
+  - 0  
+background-color:
+  - 0
+  - 0
+  - 0
 health: 4
+smart: true
 fsm: human
+target: "Tree"
