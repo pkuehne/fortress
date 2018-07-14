@@ -1,7 +1,7 @@
 #pragma once
 
+#include "../components/sprite_component.h"
 #include "entity.h"
-#include "floor.h"
 
 enum class FloorMaterial {
     None = 0,

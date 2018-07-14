@@ -15,7 +15,6 @@
 #include "../components/stair_component.h"
 #include "../components/wearable_component.h"
 #include "../components/wieldable_component.h"
-#include "floor.h"
 #include <experimental/filesystem>
 #include <iostream>
 #include <yaml-cpp/yaml.h>

@@ -118,9 +118,13 @@ void DungeonGenerator::createEntitiesFromMap() {
                     l_entity =
                         m_engine->state()->prefabs().createDoorPrefab(location);
                     break;
+                case EMPTY:
+                case FLOOR:
                 case RESTRICTED:
                     break;
                 default:
+                    LOG(WARNING) << "Creating marker prefab at " << location
+                              << std::endl;
                     l_entity = m_engine->state()->prefabs().createMarkerPrefab(
                         location);
                     m_engine->state()
