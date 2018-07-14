@@ -46,8 +46,9 @@ void RuralGenerator::createEntitiesFromMap() {
                 case EMPTY:
                     break;
                 case TREE:
-                    l_entity =
-                        m_engine->state()->prefabs().createTreePrefab(location);
+
+                    // m_engine->state()->prefabs().createTreePrefab(location);
+                    m_engine->state()->prefabs().create("tree", location);
                     break;
                 case LINK:
                     l_entity = m_engine->state()->prefabs().createStairPrefab(

@@ -1,0 +1,12 @@
+name: Tree
+description: "Or maybe an ent..."
+symbol: 84
+foreground-color:
+  - 100
+  - 50
+  - 0
+background-color: 
+  - 0
+  - 0
+  - 0
+health: 2

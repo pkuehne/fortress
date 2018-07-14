@@ -15,6 +15,7 @@
 #include "../components/stair_component.h"
 #include "../components/wearable_component.h"
 #include "../components/wieldable_component.h"
+#include "yaml_converter.h"
 #include <experimental/filesystem>
 #include <iostream>
 #include <yaml-cpp/yaml.h>
@@ -23,30 +24,29 @@ PrefabBuilder::PrefabBuilder(EntityManager* e, ComponentManager* c)
     : m_entities(e), m_components(c) {
     namespace fs = std::experimental::filesystem;
 
-    std::string path = "./data/species/";
+    std::string path = "./data/prefabs/";
     for (auto& filename : fs::directory_iterator(path)) {
         YAML::Node node = YAML::LoadFile(filename.path().relative_path());
-        m_species[filename.path().stem()] = node;
+        m_prefabs[filename.path().stem()] = node;
     }
 }
 
-EntityId PrefabBuilder::createNpc(Location& location) {
-    YAML::Node& node = m_species["human"];
+EntityId PrefabBuilder::create(const std::string& name, Location& location) {
+    YAML::Node& node = m_prefabs[name];
 
     EntityId entity = m_entities->createEntity(location);
 
     // Description Component
     DescriptionComponent* l_description =
         m_components->make<DescriptionComponent>(entity);
-    l_description->title = node["name"].as<std::string>("A creature");
+    l_description->title = node["name"].as<std::string>("Unknown");
     l_description->text =
         node["description"].as<std::string>("It's hard to describe");
 
     // Sprite
     SpriteComponent* l_sprite = m_components->make<SpriteComponent>(entity);
-    l_sprite->fgColor = Color(WHITE);
-    //    Color(static_cast<COLOR>(node["foreground-color"].as<int>(3)));
-    l_sprite->bgColor = Color(BLACK);
+    l_sprite->fgColor = node["foreground-color"].as<Color>(Color(WHITE));
+    l_sprite->bgColor = node["background-color"].as<Color>(Color(BLACK));
     l_sprite->sprite = node["symbol"].as<unsigned int>('?');
 
     // Collider Component
@@ -61,10 +61,11 @@ EntityId PrefabBuilder::createNpc(Location& location) {
     }
 
     // NPC Component
-    NpcComponent* l_npc = m_components->make<NpcComponent>(entity);
-    l_npc->state = "";
-    l_npc->stateMachine = node["fsm"].as<std::string>("human");
-
+    if (node["smart"].as<bool>(false)) {
+        NpcComponent* l_npc = m_components->make<NpcComponent>(entity);
+        l_npc->state = "";
+        l_npc->stateMachine = node["fsm"].as<std::string>("human");
+    }
     return entity;
 }
 

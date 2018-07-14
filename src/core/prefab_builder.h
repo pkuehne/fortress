@@ -1,5 +1,4 @@
-#ifndef __PREFAB_BUILDER_H__
-#define __PREFAB_BUILDER_H__
+#pragma once
 
 #include "entity.h"
 #include "utility.h"
@@ -16,6 +15,7 @@ public:
     PrefabBuilder(EntityManager* e, ComponentManager* c);
 
     EntityId createNpc(Location& location);
+    EntityId create(const std::string& name, Location& location);
 
     EntityId createPlayerPrefab(Location& location);
     EntityId createEnemyPrefab(Location& location);
@@ -36,7 +36,5 @@ public:
 private:
     EntityManager* m_entities = nullptr;
     ComponentManager* m_components = nullptr;
-    std::map<std::string, YAML::Node> m_species;
+    std::map<std::string, YAML::Node> m_prefabs;
 };
-
-#endif
