@@ -1,0 +1,11 @@
+name: Corpse
+description: "A dead thing"
+symbol: 88
+foreground-color:
+  - 128
+  - 128
+  - 128
+background-color:
+  - 0
+  - 0
+  - 0

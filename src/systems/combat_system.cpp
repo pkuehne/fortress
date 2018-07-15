@@ -14,6 +14,7 @@ void CombatSystem::handleAttackEntityEvent(const AttackEntityEvent* event) {
 }
 
 void CombatSystem::handleAttack(EntityId attacker, EntityId defender) {
+    GameState* state = m_engine->state();
     EquipmentComponent* l_attackerEquipment =
         m_engine->state()->components()->get<EquipmentComponent>(attacker);
     unsigned int damage = 1;
@@ -44,13 +45,14 @@ void CombatSystem::handleAttack(EntityId attacker, EntityId defender) {
         l_health->health -= damage;
     } else {
         if (defender == getEngine()->state()->player()) {
-            m_engine->state()->entityManager()->destroyEntity(defender);
+            state->entityManager()->destroyEntity(defender);
         } else {
-            Location l_targetLoc = m_engine->state()->location(defender);
-            SpriteComponent* l_sprite =
-                m_engine->state()->components()->get<SpriteComponent>(defender);
-            getEngine()->state()->prefabs().createCorpsePrefab(l_targetLoc, l_sprite->sprite);
-            getEngine()->state()->entityManager()->destroyEntity(defender);
+            EntityId corpse =
+                state->prefabs().create("corpse", state->location(defender));
+            state->components()->get<SpriteComponent>(corpse)->sprite =
+                state->components()->get<SpriteComponent>(defender)->sprite;
+
+            state->entityManager()->destroyEntity(defender);
         }
     }
 }

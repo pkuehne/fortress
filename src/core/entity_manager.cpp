@@ -13,7 +13,7 @@ void EntityManager::initialise(GameEngine* engine) {
     m_player = 0;
 }
 
-EntityId EntityManager::createEntity(Location& location) {
+EntityId EntityManager::createEntity(const Location& location) {
     EntityId l_entity = m_maxId++;
 
     if (!location.area) {
@@ -24,7 +24,7 @@ EntityId EntityManager::createEntity(Location& location) {
     return l_entity;
 }
 
-void EntityManager::addEntity(EntityId id, Location& location) {
+void EntityManager::addEntity(EntityId id, const Location& location) {
     if (id >= m_maxId)
         m_maxId = id + 1;
 
@@ -81,4 +81,3 @@ EntityId EntityManager::getPlayer() {
     }
     return m_player;
 }
-

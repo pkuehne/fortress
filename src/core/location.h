@@ -14,7 +14,9 @@ public:
     bool operator!=(const Location& rhs) const;
     bool operator<(const Location& rhs) const;
     Location& operator=(const Location& rhs);
-    bool isValid() { return (x != UINT_MAX && y != UINT_MAX && z != UINT_MAX); }
+    bool isValid() const {
+        return (x != UINT_MAX && y != UINT_MAX && z != UINT_MAX);
+    }
 
 public:
     unsigned int x = UINT_MAX;

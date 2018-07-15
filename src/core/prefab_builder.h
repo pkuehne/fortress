@@ -13,13 +13,10 @@ class ComponentManager;
 class PrefabBuilder {
 public:
     PrefabBuilder(EntityManager* e, ComponentManager* c);
-
-    EntityId createNpc(Location& location);
-    EntityId create(const std::string& name, Location& location);
+    EntityId create(const std::string& name, const Location& location);
 
     EntityId createPlayerPrefab(Location& location);
     EntityId createStairPrefab(STAIR dir, Location& location);
-    EntityId createCorpsePrefab(Location& location, char sprite);
 
 private:
     EntityManager* m_entities = nullptr;

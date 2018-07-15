@@ -31,7 +31,7 @@ PrefabBuilder::PrefabBuilder(EntityManager* e, ComponentManager* c)
     }
 }
 
-EntityId PrefabBuilder::create(const std::string& name, Location& location) {
+EntityId PrefabBuilder::create(const std::string& name, const Location& location) {
     if (name.empty()) {
         return 0;
     }
@@ -202,23 +202,6 @@ EntityId PrefabBuilder::createStairPrefab(STAIR dir, Location& location) {
     StairComponent* l_stair = m_components->make<StairComponent>(l_entity);
     l_stair->direction = dir;
     l_stair->target = 0;
-
-    return l_entity;
-}
-
-EntityId PrefabBuilder::createCorpsePrefab(Location& location, char sprite) {
-    EntityId l_entity = m_entities->createEntity(location);
-
-    SpriteComponent* l_sprite = m_components->make<SpriteComponent>(l_entity);
-    l_sprite->fgColor = Color(GREY);
-    l_sprite->bgColor = Color(BLACK);
-    l_sprite->sprite = sprite;
-
-    // Description Component
-    DescriptionComponent* l_description =
-        m_components->make<DescriptionComponent>(l_entity);
-    l_description->title = "Corpse";
-    l_description->text = "A mangled body, splayed, leaking blood.";
 
     return l_entity;
 }

@@ -21,8 +21,8 @@ public:
     void initialise(GameEngine* engine);
     void destroy() {}
 
-    EntityId createEntity(Location& location);
-    void addEntity(EntityId id, Location& location);
+    EntityId createEntity(const Location& location);
+    void addEntity(EntityId id, const Location& location);
     void destroyEntity(EntityId);
     EntityId getPlayer();
     EntityId getMaxId() { return m_maxId; }
