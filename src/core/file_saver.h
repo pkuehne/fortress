@@ -10,7 +10,7 @@ typedef std::function<void(unsigned int current, unsigned int max,
 
 class FileSaver {
 public:
-    FileSaver(GameState* state) : m_state(state) {}
+    explicit FileSaver(GameState* state) : m_state(state) {}
     ~FileSaver() {}
 
     void setStatusCallback(StatusCallback cb) { m_cb = cb; }

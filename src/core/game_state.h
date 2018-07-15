@@ -9,21 +9,20 @@
 #include "quest.h"
 
 class Tile;
-
-typedef enum { INFO = 0, GOOD = 1, WARN = 2, CRIT = 3 } MessageType;
+enum class MessageType { INFO = 0, GOOD = 1, WARN = 2, CRIT = 3 };
 
 typedef struct {
     MessageType severity;
     std::string message;
     Color getColor() {
         switch (severity) {
-            case INFO:
+            case MessageType::INFO:
                 return Color(WHITE);
-            case GOOD:
+            case MessageType::GOOD:
                 return Color(GREEN);
-            case WARN:
+            case MessageType::WARN:
                 return Color(YELLOW);
-            case CRIT:
+            case MessageType::CRIT:
             default:
                 return Color(RED);
         }

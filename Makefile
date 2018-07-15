@@ -49,4 +49,4 @@ docs:
 	cp -r doxygen/html/* /var/www/html/fortress/
 
 lint:
-	cppcheck src/ --enable=all 2>lint-errors.txt
+	cppcheck src/ --enable=style,information,warning --error-exitcode=1 -DMAJOR=1 2>lint-errors.txt

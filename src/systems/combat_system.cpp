@@ -96,8 +96,8 @@ void CombatSystem::updateLog(const EntityId& attacker, const EntityId& target,
     str << " " << damage << " damage!";
 
     if (attacker == m_engine->state()->player()) {
-        m_engine->state()->addMessage(INFO, str.str());
+        m_engine->state()->addMessage(MessageType::INFO, str.str());
     } else {
-        m_engine->state()->addMessage(WARN, str.str());
+        m_engine->state()->addMessage(MessageType::WARN, str.str());
     }
 }

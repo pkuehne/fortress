@@ -31,7 +31,7 @@ public:
     EventType getType() const { return m_type; }
 
 protected:
-    EventType m_type;
+    EventType m_type = EVENT_INVALID;
 };
 
 class AddEntityEvent : public Event {

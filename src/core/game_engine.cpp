@@ -73,9 +73,11 @@ void GameEngine::initialise() {
     m_graphics->setMouseFunc(mouseClick);
     m_graphics->setResizeFunc(resize);
 
-    m_state->addMessage(INFO, "You find yourself in a forest.");
-    m_state->addMessage(INFO, "Stairs will lead you into the dungeons.");
-    m_state->addMessage(WARN, "Beware the Troll living in the depths!");
+    m_state->addMessage(MessageType::INFO, "You find yourself in a forest.");
+    m_state->addMessage(MessageType::INFO,
+                        "Stairs will lead you into the dungeons.");
+    m_state->addMessage(MessageType::WARN,
+                        "Beware the Troll living in the depths!");
 
     swapTurn();
 }
