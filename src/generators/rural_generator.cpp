@@ -33,6 +33,7 @@ bool RuralGenerator::generate() {
 void RuralGenerator::createEntitiesFromMap() {
     EntityId l_entity = 0;
     Location location;
+    auto state = m_engine->state();
 
     for (unsigned int yy = 0; yy < m_mapHeight; yy++) {
         for (unsigned int xx = 0; xx < m_mapWidth; xx++) {
@@ -49,8 +50,9 @@ void RuralGenerator::createEntitiesFromMap() {
                     m_engine->state()->prefabs().create("tree", location);
                     break;
                 case LINK:
-                    l_entity = m_engine->state()->prefabs().createStairPrefab(
-                        STAIR_DOWN, location);
+                    l_entity = state->prefabs().create("stair", location);
+                    state->components()->get<SpriteComponent>(l_entity)->sprite =
+                        31;
                     m_areaLinks.push_back(l_entity);
                     break;
                 case HUMAN:

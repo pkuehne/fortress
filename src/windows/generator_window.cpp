@@ -1,5 +1,5 @@
 #include "generator_window.h"
-#include "../components/stair_component.h"
+#include "../components/connector_component.h"
 #include "../core/game_engine.h"
 #include "../generators/dungeon_generator.h"
 #include "../generators/rural_generator.h"
@@ -164,7 +164,7 @@ void GeneratorWindow::startGenerating() {
         if (!success) {
             LOG(ERROR) << "Failed to generate a valid map" << std::endl;
         }
-        getEngine()->state()->components()->get<StairComponent>(stair)->target =
+        getEngine()->state()->components()->get<ConnectorComponent>(stair)->target =
             l_generator.upStairLink();
     }
     LOG(INFO) << "Placed " << getEngine()->state()->entityManager()->getMaxId()

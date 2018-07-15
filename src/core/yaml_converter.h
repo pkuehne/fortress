@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../components/collider_component.h"
+#include "../components/connector_component.h"
 #include "../components/consumable_component.h"
 #include "../components/description_component.h"
 #include "../components/droppable_component.h"
@@ -11,7 +12,6 @@
 #include "../components/openable_component.h"
 #include "../components/player_component.h"
 #include "../components/sprite_component.h"
-#include "../components/stair_component.h"
 #include "../components/wearable_component.h"
 #include "../components/wieldable_component.h"
 #include "area_info.h"
@@ -402,21 +402,19 @@ template <> struct convert<PlayerComponent> {
     }
 };
 
-// StairComponent
-template <> struct convert<StairComponent> {
-    static Node encode(const StairComponent& rhs) {
+// ConnectorComponent
+template <> struct convert<ConnectorComponent> {
+    static Node encode(const ConnectorComponent& rhs) {
         Node node;
-        node["direction"] = static_cast<int>(rhs.direction);
         node["target"] = rhs.target;
         return node;
     }
 
-    static bool decode(const Node& node, StairComponent& rhs) {
+    static bool decode(const Node& node, ConnectorComponent& rhs) {
         if (!node.IsMap() || node.size() != 4) {
             return false;
         }
 
-        rhs.direction = static_cast<STAIR>(node["direction"].as<int>());
         rhs.target = node["target"].as<EntityId>();
         return true;
     }

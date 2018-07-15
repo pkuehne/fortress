@@ -16,7 +16,6 @@ public:
     EntityId create(const std::string& name, const Location& location);
 
     EntityId createPlayerPrefab(Location& location);
-    EntityId createStairPrefab(STAIR dir, Location& location);
 
 private:
     EntityManager* m_entities = nullptr;

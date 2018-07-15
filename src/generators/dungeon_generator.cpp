@@ -1,7 +1,7 @@
 #include "dungeon_generator.h"
 #include "../algos/algorithm.h"
+#include "../components/connector_component.h"
 #include "../components/sprite_component.h"
-#include "../components/stair_component.h"
 #include "../core/game_engine.h"
 #include "../core/prefab_builder.h"
 #include <cstdlib>
@@ -74,6 +74,7 @@ bool DungeonGenerator::generateLevel() {
 }
 
 void DungeonGenerator::createEntitiesFromMap() {
+    auto state = m_engine->state();
     for (unsigned int yy = 0; yy < m_mapHeight; yy++) {
         for (unsigned int xx = 0; xx < m_mapWidth; xx++) {
             Location location;
@@ -92,14 +93,18 @@ void DungeonGenerator::createEntitiesFromMap() {
                     tile.overrideSpriteSymbol(wallSprite(xx, yy));
                     break;
                 case UP:
-                    m_upStair = m_engine->state()->prefabs().createStairPrefab(
-                        STAIR_UP, location);
+                    m_upStair = state->prefabs().create("stair", location);
+                    state->components()
+                        ->get<SpriteComponent>(m_upStair)
+                        ->sprite = 30;
                     break;
                 case DOWN:
                     if (m_level < m_maxDepth - 1 || m_downStairTarget) {
                         m_downStair =
-                            m_engine->state()->prefabs().createStairPrefab(
-                                STAIR_DOWN, location);
+                            state->prefabs().create("stair", location);
+                        state->components()
+                            ->get<SpriteComponent>(m_downStair)
+                            ->sprite = 31;
                     }
                     break;
                 case ORC:
@@ -128,26 +133,26 @@ void DungeonGenerator::createEntitiesFromMap() {
     if (m_level == 0) {
         m_engine->state()
             ->components()
-            ->get<StairComponent>(m_upStair)
+            ->get<ConnectorComponent>(m_upStair)
             ->target = m_upStairTarget;
         m_upStairLink = m_upStair;
     } else {
         m_engine->state()
             ->components()
-            ->get<StairComponent>(m_upStair)
+            ->get<ConnectorComponent>(m_upStair)
             ->target = m_prevDownStair;
     }
     if (m_level == m_maxDepth - 1 && m_downStairTarget) {
         m_engine->state()
             ->components()
-            ->get<StairComponent>(m_downStair)
+            ->get<ConnectorComponent>(m_downStair)
             ->target = m_downStairTarget;
         m_downStairLink = m_downStair;
     }
     if (m_level > 0 && m_prevDownStair > 0) {
         m_engine->state()
             ->components()
-            ->get<StairComponent>(m_prevDownStair)
+            ->get<ConnectorComponent>(m_prevDownStair)
             ->target = m_upStair;
     }
     m_prevDownStair = m_downStair;

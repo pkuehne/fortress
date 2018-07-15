@@ -1,7 +1,7 @@
 #include "movement_system.h"
 #include "../components/collider_component.h"
 #include "../components/graphics_effect_component.h"
-#include "../components/stair_component.h"
+#include "../components/connector_component.h"
 #include "../core/entity.h"
 #include "../core/event.h"
 #include "../core/game_engine.h"
@@ -33,8 +33,8 @@ void MovementSystem::handleMoveEntityEvent(const MoveEntityEvent* event) {
                     l_target)) {
                 blocked = true;
             }
-            StairComponent* l_stair =
-                m_engine->state()->components()->get<StairComponent>(l_target);
+            ConnectorComponent* l_stair =
+                m_engine->state()->components()->get<ConnectorComponent>(l_target);
             if (l_stair && l_stair->target &&
                 l_entity == m_engine->state()->player()) {
                 l_newLocation = m_engine->state()->location(l_stair->target);

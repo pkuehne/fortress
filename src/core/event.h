@@ -74,7 +74,6 @@ class ChangeLevelEvent : public Event {
 public:
     ChangeLevelEvent() : Event(EVENT_CHANGE_LEVEL) {}
     unsigned int level = 0;
-    STAIR direction = STAIR::STAIR_DOWN;
 };
 
 class DropEquipmentEvent : public Event {

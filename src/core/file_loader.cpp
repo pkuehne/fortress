@@ -8,7 +8,7 @@
 #include "../components/npc_component.h"
 #include "../components/player_component.h"
 #include "../components/sprite_component.h"
-#include "../components/stair_component.h"
+#include "../components/connector_component.h"
 #include "../components/wearable_component.h"
 #include "../components/wieldable_component.h"
 #include <fstream>

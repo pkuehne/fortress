@@ -3,6 +3,7 @@
 #include "game_state.h"
 
 #include "../components/collider_component.h"
+#include "../components/connector_component.h"
 #include "../components/consumable_component.h"
 #include "../components/description_component.h"
 #include "../components/droppable_component.h"
@@ -12,7 +13,6 @@
 #include "../components/openable_component.h"
 #include "../components/player_component.h"
 #include "../components/sprite_component.h"
-#include "../components/stair_component.h"
 #include "../components/wearable_component.h"
 #include "../components/wieldable_component.h"
 #include "yaml_converter.h"
@@ -31,7 +31,8 @@ PrefabBuilder::PrefabBuilder(EntityManager* e, ComponentManager* c)
     }
 }
 
-EntityId PrefabBuilder::create(const std::string& name, const Location& location) {
+EntityId PrefabBuilder::create(const std::string& name,
+                               const Location& location) {
     if (name.empty()) {
         return 0;
     }
@@ -135,6 +136,11 @@ EntityId PrefabBuilder::create(const std::string& name, const Location& location
             node["equipment"]["leftHand"].as<std::string>(""), invalidLoc);
     }
 
+    // Connector Component
+    if (node["connector"].IsDefined()) {
+        m_components->make<ConnectorComponent>(entity);
+    }
+
     // NPC Component
     if (node["smart"].IsDefined()) {
         auto l_npc = m_components->make<NpcComponent>(entity);
@@ -178,30 +184,6 @@ EntityId PrefabBuilder::createPlayerPrefab(Location& location) {
     l_equipment->rightHandWieldable = create("sword", invalidLoc);
     l_equipment->leftHandWieldable = create("shield", invalidLoc);
     l_equipment->headWearable = create("helmet", invalidLoc);
-
-    return l_entity;
-}
-
-EntityId PrefabBuilder::createStairPrefab(STAIR dir, Location& location) {
-    EntityId l_entity = m_entities->createEntity(location);
-
-    // Sprite Component
-    SpriteComponent* l_sprite = m_components->make<SpriteComponent>(l_entity);
-    l_sprite->fgColor = Color(WHITE);
-    l_sprite->bgColor = Color(BLACK);
-    l_sprite->sprite = (dir == STAIR_DOWN) ? 31 : 30; //'>' : '<';
-
-    // Description Component
-    DescriptionComponent* l_description =
-        m_components->make<DescriptionComponent>(l_entity);
-    l_description->title =
-        (dir == STAIR_DOWN) ? "A stairway down" : "A stairway up";
-    l_description->text = "It has rough-hewn steps";
-
-    // StairComponent
-    StairComponent* l_stair = m_components->make<StairComponent>(l_entity);
-    l_stair->direction = dir;
-    l_stair->target = 0;
 
     return l_entity;
 }

@@ -25,8 +25,6 @@ enum {
     KEY_MAX = 63
 };
 
-typedef enum { STAIR_UP = 0, STAIR_DOWN = 1 } STAIR;
-
 namespace Utility {
 unsigned int randBetween(unsigned int start, unsigned int end);
 bool randChance(unsigned int percentage);
