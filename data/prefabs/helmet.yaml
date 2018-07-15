@@ -1,0 +1,14 @@
+name: Helmet
+description: "'One size fits all'"
+symbol: 189
+foreground-color:
+  - 0
+  - 256
+  - 256
+background-color:
+  - 0
+  - 0
+  - 0
+droppable: true
+wearable:
+  position: 3

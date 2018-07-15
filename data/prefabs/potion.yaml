@@ -1,0 +1,18 @@
+name: Potion
+description: "Who knows what will happen when you drink it?"
+symbol: 129
+foreground-color:
+  - 0
+  - 256
+  - 256
+background-color:
+  - 0
+  - 0
+  - 0
+collidable: false
+droppable: true
+consumable:
+  quenches: 1
+  strength: 3
+  effect: 1
+  effectStrength: 2

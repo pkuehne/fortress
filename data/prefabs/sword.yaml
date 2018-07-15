@@ -1,0 +1,16 @@
+name: Sword
+description: "Stick 'em with the pointy end'"
+symbol: 189
+foreground-color:
+  - 0
+  - 256
+  - 256
+background-color:
+  - 0
+  - 0
+  - 0
+droppable: true
+wieldable:
+  position: 1
+  damage: 2
+  defence: 0

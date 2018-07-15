@@ -74,13 +74,34 @@ EntityId PrefabBuilder::create(const std::string& name, Location& location) {
         auto l_consumable = m_components->make<ConsumableComponent>(entity);
         l_consumable->quenches = static_cast<HUNGER_THIRST>(
             node["consumable"]["quenches"].as<int>(0));
-        l_consumable->quenchStrength = node["consumable"]["strength"].as<int>();
+        l_consumable->quenchStrength =
+            node["consumable"]["strength"].as<int>(0);
+        l_consumable->effect =
+            static_cast<EFFECT>(node["consumable"]["effect"].as<int>(0));
+        l_consumable->effectStrength =
+            node["consumable"]["effectStrength"].as<int>(0);
     }
 
     // Openable Component
     if (node["openable"].IsDefined()) {
         auto l_openable = m_components->make<OpenableComponent>(entity);
         l_openable->open = node["openable"]["open"].as<bool>(false);
+    }
+
+    // Wearable Comoponent
+    if (node["wearable"].IsDefined()) {
+        auto l_wearable = m_components->make<WearableComponent>(entity);
+        l_wearable->position = static_cast<WearablePosition>(
+            node["wearable"]["position"].as<int>(0));
+    }
+
+    // Wieldable Component
+    if (node["wieldable"].IsDefined()) {
+        auto l_wieldable = m_components->make<WieldableComponent>(entity);
+        l_wieldable->position = static_cast<WieldablePosition>(
+            node["wieldable"]["position"].as<int>(0));
+        l_wieldable->baseDamage = node["wieldable"]["damage"].as<int>(0);
+        l_wieldable->baseDefence = node["wieldable"]["defence"].as<int>(0);
     }
 
     // NPC Component
@@ -123,9 +144,9 @@ EntityId PrefabBuilder::createPlayerPrefab(Location& location) {
     Location invalidLoc;
     EquipmentComponent* l_equipment =
         m_components->make<EquipmentComponent>(l_entity);
-    l_equipment->rightHandWieldable = createWeaponPrefab(invalidLoc);
-    l_equipment->leftHandWieldable = createShieldPrefab(invalidLoc);
-    l_equipment->headWearable = createHelmetPrefab(invalidLoc);
+    l_equipment->rightHandWieldable = create("sword", invalidLoc);
+    l_equipment->leftHandWieldable = create("shield", invalidLoc);
+    l_equipment->headWearable = create("helmet", invalidLoc);
 
     return l_entity;
 }
@@ -163,9 +184,9 @@ EntityId PrefabBuilder::createEnemyPrefab(Location& location) {
     Location invalidLoc;
     EquipmentComponent* l_equipment =
         m_components->make<EquipmentComponent>(l_entity);
-    l_equipment->rightHandWieldable = createWeaponPrefab(invalidLoc);
-    l_equipment->leftHandWieldable = createShieldPrefab(invalidLoc);
-    l_equipment->headWearable = createHelmetPrefab(invalidLoc);
+    l_equipment->rightHandWieldable = create("sword", invalidLoc);
+    l_equipment->leftHandWieldable = create("shield", invalidLoc);
+    l_equipment->headWearable = create("helmet", invalidLoc);
 
     return l_entity;
 }
@@ -203,9 +224,9 @@ EntityId PrefabBuilder::createTrollPrefab(Location& location) {
     Location invalidLoc;
     EquipmentComponent* l_equipment =
         m_components->make<EquipmentComponent>(l_entity);
-    l_equipment->rightHandWieldable = createWeaponPrefab(invalidLoc);
-    l_equipment->leftHandWieldable = createShieldPrefab(invalidLoc);
-    l_equipment->headWearable = createHelmetPrefab(invalidLoc);
+    l_equipment->rightHandWieldable = create("sword", invalidLoc);
+    l_equipment->leftHandWieldable = create("shield", invalidLoc);
+    l_equipment->headWearable = create("helmet", invalidLoc);
 
     return l_entity;
 }
@@ -230,101 +251,6 @@ EntityId PrefabBuilder::createStairPrefab(STAIR dir, Location& location) {
     StairComponent* l_stair = m_components->make<StairComponent>(l_entity);
     l_stair->direction = dir;
     l_stair->target = 0;
-
-    return l_entity;
-}
-
-EntityId PrefabBuilder::createWeaponPrefab(Location& location) {
-    EntityId l_entity = m_entities->createEntity(location);
-
-    SpriteComponent* l_sprite = m_components->make<SpriteComponent>(l_entity);
-    l_sprite->fgColor = Color(YELLOW);
-    l_sprite->bgColor = Color(BLACK);
-    l_sprite->sprite = 189; //'$';
-
-    WieldableComponent* l_wieldable =
-        m_components->make<WieldableComponent>(l_entity);
-    l_wieldable->position = WieldableRightHand;
-    l_wieldable->baseDamage = 2;
-    l_wieldable->baseDefence = 0;
-
-    DescriptionComponent* l_description =
-        m_components->make<DescriptionComponent>(l_entity);
-    l_description->title = "Sword";
-    l_description->text = "Stick 'em with the pointy end!";
-
-    m_components->make<DroppableComponent>(l_entity);
-
-    return l_entity;
-}
-
-EntityId PrefabBuilder::createShieldPrefab(Location& location) {
-    EntityId l_entity = m_entities->createEntity(location);
-
-    SpriteComponent* l_sprite = m_components->make<SpriteComponent>(l_entity);
-    l_sprite->fgColor = Color(YELLOW);
-    l_sprite->bgColor = Color(BLACK);
-    l_sprite->sprite = 189; //'$';
-
-    WieldableComponent* l_wieldable =
-        m_components->make<WieldableComponent>(l_entity);
-    l_wieldable->position = WieldableLeftHand;
-    l_wieldable->baseDamage = 0;
-    l_wieldable->baseDefence = 4;
-
-    DescriptionComponent* l_description =
-        m_components->make<DescriptionComponent>(l_entity);
-    l_description->title = "Shield";
-    l_description->text = "Return with your shield or upon it!";
-
-    m_components->make<DroppableComponent>(l_entity);
-
-    return l_entity;
-}
-
-EntityId PrefabBuilder::createHelmetPrefab(Location& location) {
-    EntityId l_entity = m_entities->createEntity(location);
-
-    SpriteComponent* l_sprite = m_components->make<SpriteComponent>(l_entity);
-    l_sprite->fgColor = Color(YELLOW);
-    l_sprite->bgColor = Color(BLACK);
-    l_sprite->sprite = 189; //'$';
-
-    WearableComponent* l_wearable =
-        m_components->make<WearableComponent>(l_entity);
-    l_wearable->position = WearableHead;
-
-    DescriptionComponent* l_description =
-        m_components->make<DescriptionComponent>(l_entity);
-    l_description->title = "Helmet";
-    l_description->text = "It says: One Size Fits All";
-
-    m_components->make<DroppableComponent>(l_entity);
-
-    return l_entity;
-}
-
-EntityId PrefabBuilder::createPotionPrefab(Location& location) {
-    EntityId l_entity = m_entities->createEntity(location);
-
-    SpriteComponent* l_sprite = m_components->make<SpriteComponent>(l_entity);
-    l_sprite->fgColor = Color(YELLOW);
-    l_sprite->bgColor = Color(BLACK);
-    l_sprite->sprite = 'Z' + 1; //'$';
-
-    DescriptionComponent* l_description =
-        m_components->make<DescriptionComponent>(l_entity);
-    l_description->title = "Potion";
-    l_description->text = "The label proclaims: Zero Calories!";
-
-    m_components->make<DroppableComponent>(l_entity);
-
-    ConsumableComponent* l_consumable =
-        m_components->make<ConsumableComponent>(l_entity);
-    l_consumable->quenches = THIRST;
-    l_consumable->quenchStrength = 3;
-    l_consumable->effect = HEALTH_EFFECT;
-    l_consumable->effectStrength = 2;
 
     return l_entity;
 }
@@ -377,9 +303,9 @@ EntityId PrefabBuilder::createForesterPrefab(Location& location) {
     Location invalidLoc;
     EquipmentComponent* l_equipment =
         m_components->make<EquipmentComponent>(l_entity);
-    l_equipment->rightHandWieldable = createWeaponPrefab(invalidLoc);
-    l_equipment->leftHandWieldable = createShieldPrefab(invalidLoc);
-    l_equipment->headWearable = createHelmetPrefab(invalidLoc);
+    l_equipment->rightHandWieldable = create("sword", invalidLoc);
+    l_equipment->leftHandWieldable = create("shield", invalidLoc);
+    l_equipment->headWearable = create("helmet", invalidLoc);
 
     return l_entity;
 }

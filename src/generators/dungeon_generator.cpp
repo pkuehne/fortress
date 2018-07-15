@@ -313,13 +313,13 @@ void DungeonGenerator::placeItems() {
 
         unsigned int type = Utility::randBetween(0, 100);
         if (type < 70) { // Potion
-            m_engine->state()->prefabs().createPotionPrefab(location);
+            m_engine->state()->prefabs().create("potion", location);
         } else if (type < 80) {
-            m_engine->state()->prefabs().createWeaponPrefab(location);
+            m_engine->state()->prefabs().create("sword", location);
         } else if (type < 90) {
-            m_engine->state()->prefabs().createShieldPrefab(location);
+            m_engine->state()->prefabs().create("shield", location);
         } else if (type < 100) {
-            m_engine->state()->prefabs().createHelmetPrefab(location);
+            m_engine->state()->prefabs().create("helmet", location);
         }
     }
 }

@@ -1,0 +1,16 @@
+name: Shield
+description: "Return with your shield, or upon it!"
+symbol: 189
+foreground-color:
+  - 0
+  - 256
+  - 256
+background-color:
+  - 0
+  - 0
+  - 0
+droppable: true
+wieldable:
+  position: 2
+  damage: 0
+  defence: 6
