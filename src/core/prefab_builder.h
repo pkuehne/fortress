@@ -18,11 +18,8 @@ public:
     EntityId create(const std::string& name, Location& location);
 
     EntityId createPlayerPrefab(Location& location);
-    EntityId createEnemyPrefab(Location& location);
-    EntityId createTrollPrefab(Location& location);
     EntityId createStairPrefab(STAIR dir, Location& location);
     EntityId createCorpsePrefab(Location& location, char sprite);
-    EntityId createForesterPrefab(Location& location);
 
 private:
     EntityManager* m_entities = nullptr;

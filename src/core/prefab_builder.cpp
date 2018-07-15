@@ -32,14 +32,19 @@ PrefabBuilder::PrefabBuilder(EntityManager* e, ComponentManager* c)
 }
 
 EntityId PrefabBuilder::create(const std::string& name, Location& location) {
+    if (name.empty()) {
+        return 0;
+    }
     if (m_prefabs.find(name) == m_prefabs.end()) {
         LOG(WARNING) << "Invalid prefab '" << name << "' requested"
                      << std::endl;
         return 0;
     }
+
     YAML::Node& node = m_prefabs[name];
 
     EntityId entity = m_entities->createEntity(location);
+    Location invalidLoc;
 
     // Description Component
     auto l_description = m_components->make<DescriptionComponent>(entity);
@@ -104,6 +109,32 @@ EntityId PrefabBuilder::create(const std::string& name, Location& location) {
         l_wieldable->baseDefence = node["wieldable"]["defence"].as<int>(0);
     }
 
+    // Equipment Component
+    if (node["equipment"].IsDefined()) {
+        auto l_equipment = m_components->make<EquipmentComponent>(entity);
+        l_equipment->maxCarryVolume = node["equipment"]["maxVolume"].as<int>(0);
+        l_equipment->maxCarryWeight = node["equipment"]["maxWeight"].as<int>(0);
+        l_equipment->headWearable =
+            create(node["equipment"]["head"].as<std::string>(""), invalidLoc);
+        l_equipment->faceWearable =
+            create(node["equipment"]["face"].as<std::string>(""), invalidLoc);
+        l_equipment->chestWearable =
+            create(node["equipment"]["chest"].as<std::string>(""), invalidLoc);
+        l_equipment->armsWearable =
+            create(node["equipment"]["arms"].as<std::string>(""), invalidLoc);
+        l_equipment->handsWearable =
+            create(node["equipment"]["hands"].as<std::string>(""), invalidLoc);
+        l_equipment->legsWearable =
+            create(node["equipment"]["legs"].as<std::string>(""), invalidLoc);
+        l_equipment->feetWearable =
+            create(node["equipment"]["feet"].as<std::string>(""), invalidLoc);
+
+        l_equipment->rightHandWieldable = create(
+            node["equipment"]["rightHand"].as<std::string>(""), invalidLoc);
+        l_equipment->leftHandWieldable = create(
+            node["equipment"]["leftHand"].as<std::string>(""), invalidLoc);
+    }
+
     // NPC Component
     if (node["smart"].IsDefined()) {
         auto l_npc = m_components->make<NpcComponent>(entity);
@@ -139,86 +170,6 @@ EntityId PrefabBuilder::createPlayerPrefab(Location& location) {
 
     // Player Component
     m_components->make<PlayerComponent>(l_entity);
-
-    // Euipment Component
-    Location invalidLoc;
-    EquipmentComponent* l_equipment =
-        m_components->make<EquipmentComponent>(l_entity);
-    l_equipment->rightHandWieldable = create("sword", invalidLoc);
-    l_equipment->leftHandWieldable = create("shield", invalidLoc);
-    l_equipment->headWearable = create("helmet", invalidLoc);
-
-    return l_entity;
-}
-
-EntityId PrefabBuilder::createEnemyPrefab(Location& location) {
-    EntityId l_entity = m_entities->createEntity(location);
-
-    // Sprite Component
-    SpriteComponent* l_sprite = m_components->make<SpriteComponent>(l_entity);
-    l_sprite->fgColor = Color(RED);
-    l_sprite->bgColor = Color(BLACK);
-    l_sprite->sprite = 'O';
-    l_sprite->renderLayer = 2;
-
-    // Collider Component
-    m_components->make<ColliderComponent>(l_entity);
-
-    // Description Component
-    DescriptionComponent* l_description =
-        m_components->make<DescriptionComponent>(l_entity);
-    l_description->title = "Orc";
-    l_description->text = "A vile, stinking creature revelling in the dark.";
-
-    // Health Component
-    HealthComponent* l_health = m_components->make<HealthComponent>(l_entity);
-    l_health->health = 1;
-
-    // NPC Component
-    NpcComponent* l_npc = m_components->make<NpcComponent>(l_entity);
-    l_npc->state = "";
-    l_npc->attribs["seek_target"] = "Player";
-    l_npc->stateMachine = "human";
-
-    // Euipment Component
-    Location invalidLoc;
-    EquipmentComponent* l_equipment =
-        m_components->make<EquipmentComponent>(l_entity);
-    l_equipment->rightHandWieldable = create("sword", invalidLoc);
-    l_equipment->leftHandWieldable = create("shield", invalidLoc);
-    l_equipment->headWearable = create("helmet", invalidLoc);
-
-    return l_entity;
-}
-
-EntityId PrefabBuilder::createTrollPrefab(Location& location) {
-    EntityId l_entity = m_entities->createEntity(location);
-
-    // Sprite Component
-    SpriteComponent* l_sprite = m_components->make<SpriteComponent>(l_entity);
-    l_sprite->fgColor = Color(RED);
-    l_sprite->bgColor = Color(BLACK);
-    l_sprite->sprite = 'T';
-
-    // Collider Component
-    m_components->make<ColliderComponent>(l_entity);
-
-    // Description Component
-    DescriptionComponent* l_description =
-        m_components->make<DescriptionComponent>(l_entity);
-    l_description->title = "Troll";
-    l_description->text =
-        "It is huge, with fierce red eyes, crackling with magic.";
-
-    // Health Component
-    HealthComponent* l_health = m_components->make<HealthComponent>(l_entity);
-    l_health->health = 8;
-
-    // NPC Component
-    NpcComponent* l_npc = m_components->make<NpcComponent>(l_entity);
-    l_npc->state = "";
-    l_npc->attribs["seek_target"] = "Player";
-    l_npc->stateMachine = "human";
 
     // Euipment Component
     Location invalidLoc;
@@ -268,44 +219,6 @@ EntityId PrefabBuilder::createCorpsePrefab(Location& location, char sprite) {
         m_components->make<DescriptionComponent>(l_entity);
     l_description->title = "Corpse";
     l_description->text = "A mangled body, splayed, leaking blood.";
-
-    return l_entity;
-}
-
-EntityId PrefabBuilder::createForesterPrefab(Location& location) {
-    EntityId l_entity = m_entities->createEntity(location);
-
-    SpriteComponent* l_sprite = m_components->make<SpriteComponent>(l_entity);
-    l_sprite->fgColor = Color(GREEN);
-    l_sprite->bgColor = Color(BLACK);
-    l_sprite->sprite = 'H';
-
-    // Collider Component
-    m_components->make<ColliderComponent>(l_entity);
-
-    // Description Component
-    DescriptionComponent* l_description =
-        m_components->make<DescriptionComponent>(l_entity);
-    l_description->title = "Forester";
-    l_description->text = "Chopping trees, hunting foxes, all in a day's work.";
-
-    // Health Component
-    HealthComponent* l_health = m_components->make<HealthComponent>(l_entity);
-    l_health->health = 4;
-
-    // NPC Component
-    NpcComponent* l_npc = m_components->make<NpcComponent>(l_entity);
-    l_npc->state = "";
-    l_npc->stateMachine = "human";
-    l_npc->attribs["seek_target"] = "Tree";
-
-    // Euipment Component
-    Location invalidLoc;
-    EquipmentComponent* l_equipment =
-        m_components->make<EquipmentComponent>(l_entity);
-    l_equipment->rightHandWieldable = create("sword", invalidLoc);
-    l_equipment->leftHandWieldable = create("shield", invalidLoc);
-    l_equipment->headWearable = create("helmet", invalidLoc);
 
     return l_entity;
 }

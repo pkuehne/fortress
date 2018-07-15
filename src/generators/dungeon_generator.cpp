@@ -104,12 +104,10 @@ void DungeonGenerator::createEntitiesFromMap() {
                     break;
                 case ORC:
                     if (m_createBoss && m_level == m_maxDepth - 1) {
-                        m_engine->state()->prefabs().createTrollPrefab(
-                            location);
+                        m_engine->state()->prefabs().create("troll", location);
                         m_createBoss = false;
                     } else {
-                        m_engine->state()->prefabs().createEnemyPrefab(
-                            location);
+                        m_engine->state()->prefabs().create("orc", location);
                     }
                     break;
                 case DOOR:

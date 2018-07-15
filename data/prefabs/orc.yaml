@@ -1,0 +1,19 @@
+name: Orc
+description: "Ugh, what's that smell?"
+symbol: 79
+foreground-color:
+  - 256
+  - 0
+  - 0  
+background-color:
+  - 0
+  - 0
+  - 0
+health: 1
+equipment:
+  rightHand: "sword"
+  leftHand: "shield"
+  head: "helmet"
+smart:
+  fsm: human
+  target: "Player"

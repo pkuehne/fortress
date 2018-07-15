@@ -54,9 +54,8 @@ void RuralGenerator::createEntitiesFromMap() {
                     m_areaLinks.push_back(l_entity);
                     break;
                 case HUMAN:
-                    l_entity =
-                        m_engine->state()->prefabs().createForesterPrefab(
-                            location);
+                    // m_engine->state()->prefabs().createForesterPrefab(location);
+                    m_engine->state()->prefabs().create("forester", location);
                     break;
                 case DOG:
                     m_engine->state()->prefabs().create("dog", location);
