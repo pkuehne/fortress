@@ -83,7 +83,7 @@ void DungeonGenerator::createEntitiesFromMap() {
             location.z = m_level;
             location.area = m_area;
 
-            Tile& tile = m_engine->state()->tile(location);
+            Tile& tile = state->tile(location);
             tile.setFloorMaterial(FloorMaterial::Rock);
 
             switch (getByCoordinate(xx, yy)) {
@@ -109,14 +109,14 @@ void DungeonGenerator::createEntitiesFromMap() {
                     break;
                 case ORC:
                     if (m_createBoss && m_level == m_maxDepth - 1) {
-                        m_engine->state()->prefabs().create("troll", location);
+                        state->prefabs().create("troll", location);
                         m_createBoss = false;
                     } else {
-                        m_engine->state()->prefabs().create("orc", location);
+                        state->prefabs().create("orc", location);
                     }
                     break;
                 case DOOR:
-                    m_engine->state()->prefabs().create("door", location);
+                    state->prefabs().create("door", location);
                     break;
                 case EMPTY:
                 case FLOOR:
@@ -125,35 +125,27 @@ void DungeonGenerator::createEntitiesFromMap() {
                 default:
                     LOG(WARNING) << "Creating marker prefab at " << location
                                  << std::endl;
-                    m_engine->state()->prefabs().create("marker", location);
+                    state->prefabs().create("marker", location);
                     break;
             }
         }
     }
     if (m_level == 0) {
-        m_engine->state()
-            ->components()
-            ->get<ConnectorComponent>(m_upStair)
-            ->target = m_upStairTarget;
+        state->components()->get<ConnectorComponent>(m_upStair)->target =
+            m_upStairTarget;
         m_upStairLink = m_upStair;
     } else {
-        m_engine->state()
-            ->components()
-            ->get<ConnectorComponent>(m_upStair)
-            ->target = m_prevDownStair;
+        state->components()->get<ConnectorComponent>(m_upStair)->target =
+            m_prevDownStair;
     }
     if (m_level == m_maxDepth - 1 && m_downStairTarget) {
-        m_engine->state()
-            ->components()
-            ->get<ConnectorComponent>(m_downStair)
-            ->target = m_downStairTarget;
+        state->components()->get<ConnectorComponent>(m_downStair)->target =
+            m_downStairTarget;
         m_downStairLink = m_downStair;
     }
     if (m_level > 0 && m_prevDownStair > 0) {
-        m_engine->state()
-            ->components()
-            ->get<ConnectorComponent>(m_prevDownStair)
-            ->target = m_upStair;
+        state->components()->get<ConnectorComponent>(m_prevDownStair)->target =
+            m_upStair;
     }
     m_prevDownStair = m_downStair;
 }

@@ -53,15 +53,6 @@ void GameState::setArea(unsigned int area) { m_map->setArea(area); }
 
 unsigned int GameState::getArea() { return m_map->getArea(); }
 
-void GameState::save(const std::string& filename) {
-    FileSaver saver(this);
-    saver.saveState(filename);
-}
-
-// void load(const std::string& filename) {
-//     // TODO: YAML savefile
-// }
-
 void GameState::addMessage(const Message& message) {
     m_messages.push_back(message);
 }

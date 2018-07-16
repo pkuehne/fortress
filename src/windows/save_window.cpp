@@ -2,16 +2,22 @@
 #include "../core/file_saver.h"
 #include "frame.h"
 #include "label.h"
+#include "listbox.h"
 #include "progress_bar.h"
 #include "tab.h"
 #include "text_entry.h"
+#include <experimental/filesystem>
 #include <iostream>
 #include <thread>
+
+namespace {
+const std::string savePath = "./data/saves/";
+}
 
 void SaveWindow::setup() {
     setTitle("Save Game");
     setEscapeBehaviour(Window::EscapeBehaviour::CloseWindow);
-    setHeight(10);
+    setHeight(15);
     setWidth(30);
 }
 
@@ -20,7 +26,7 @@ void SaveWindow::registerWidgets() {
 
     Tab* tab = createWidget<Tab>("tabSaveLocation", 1, 1);
 
-    tab->setPageSwitchCallback([](Tab* t) {
+    tab->setPageSwitchCallback([=](Tab* t) {
         //
     });
     Frame* createTab = tab->addPage("Create")->getFrame();
@@ -29,7 +35,7 @@ void SaveWindow::registerWidgets() {
     createWidget<TextEntry>("entFilename", 10, 0, createTab)
         ->setEnterCallback([&](TextEntry* e) {
             std::string filename;
-            filename = e->getText();
+            filename.append(e->getText());
             filename.append(e->getSuffix());
             this->saveState(filename);
         })
@@ -50,13 +56,38 @@ void SaveWindow::registerWidgets() {
         ->setText("")
         ->setHorizontalAlign(Widget::HorizontalAlign::Left)
         ->setVerticalAlign(Widget::VerticalAlign::Bottom);
+
+    Frame* chooseTab = tab->addPage("Choose")->getFrame();
+    chooseTab->setMargin(0);
+
+    createWidget<ListBox>("lstFiles", 0, 0, chooseTab)
+        ->setItemSelectedCallback([=](ListBox* b) {
+            this->saveState(b->getSelectedItem().getText());
+        })
+        ->setHeight(8);
+    loadFiles();
+}
+
+void SaveWindow::loadFiles() {
+    namespace fs = std::experimental::filesystem;
+
+    auto lstFiles = getWidget<ListBox>("lstFiles");
+    for (auto& filename : fs::directory_iterator(savePath)) {
+        ListBoxItem item;
+        item.setText(filename.path().filename());
+        lstFiles->addItem(item);
+    }
 }
 
 void SaveWindow::saveState(const std::string& filename) {
+    getWidget<Tab>("tabSaveLocation")->setSensitive(false);
+    
     Label* lblStatus = getWidget<Label>("lblStatus");
     ProgressBar* pgbProgress = getWidget<ProgressBar>("pgbProgress");
+    
     lblStatus->setText("Saving...");
-    getWidget<TextEntry>("entFilename")->setSensitive(false);
+    
+    // Kick off background save
     std::thread update([=]() {
         FileSaver saver(this->getEngine()->state());
         saver.setStatusCallback([=](unsigned int current, unsigned int max,
@@ -65,7 +96,7 @@ void SaveWindow::saveState(const std::string& filename) {
             pgbProgress->setMaxValue(max)->setValue(current);
             lblStatus->setText(status);
         });
-        saver.saveState(filename);
+        saver.saveState(savePath + filename);
         lblStatus->setText("Saved!");
     });
     update.detach();
