@@ -12,7 +12,7 @@ void encodeEntity(GameState* state, YAML::Node& node, EntityId entity) {
     auto* open = state->components()->get<OpenableComponent>(entity);
     auto* player = state->components()->get<PlayerComponent>(entity);
     auto* sprite = state->components()->get<SpriteComponent>(entity);
-    auto* stair = state->components()->get<ConnectorComponent>(entity);
+    auto* connector = state->components()->get<ConnectorComponent>(entity);
     auto* wear = state->components()->get<WearableComponent>(entity);
     auto* wield = state->components()->get<WieldableComponent>(entity);
 
@@ -49,8 +49,8 @@ void encodeEntity(GameState* state, YAML::Node& node, EntityId entity) {
     if (sprite) {
         node[entity]["sprite"] = *sprite;
     }
-    if (stair) {
-        node[entity]["stair"] = *stair;
+    if (connector) {
+        node[entity]["connector"] = *connector;
     }
     if (wear) {
         node[entity]["wear"] = *wear;

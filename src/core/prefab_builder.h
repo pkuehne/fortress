@@ -15,8 +15,6 @@ public:
     PrefabBuilder(EntityManager* e, ComponentManager* c);
     EntityId create(const std::string& name, const Location& location);
 
-    EntityId createPlayerPrefab(Location& location);
-
 private:
     EntityManager* m_entities = nullptr;
     ComponentManager* m_components = nullptr;

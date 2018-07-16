@@ -148,42 +148,9 @@ EntityId PrefabBuilder::create(const std::string& name,
         l_npc->attribs["seek_target"] =
             node["smart"]["target"].as<std::string>("");
     }
+
+    if (node["player"].IsDefined()) {
+        m_components->make<PlayerComponent>(entity);
+    }
     return entity;
-}
-
-EntityId PrefabBuilder::createPlayerPrefab(Location& location) {
-    EntityId l_entity = m_entities->createEntity(location);
-
-    // Sprite Component
-    SpriteComponent* l_sprite = m_components->make<SpriteComponent>(l_entity);
-    l_sprite->fgColor = Color(WHITE);
-    l_sprite->bgColor = Color(BLACK);
-    l_sprite->sprite = '@';
-    l_sprite->renderLayer = 2;
-
-    // Collider Component
-    m_components->make<ColliderComponent>(l_entity);
-
-    // Description Component
-    DescriptionComponent* l_description =
-        m_components->make<DescriptionComponent>(l_entity);
-    l_description->title = "Player";
-    l_description->text = "This isn't the time for introspection";
-
-    // Health Component
-    HealthComponent* l_health = m_components->make<HealthComponent>(l_entity);
-    l_health->health = 10;
-
-    // Player Component
-    m_components->make<PlayerComponent>(l_entity);
-
-    // Euipment Component
-    Location invalidLoc;
-    EquipmentComponent* l_equipment =
-        m_components->make<EquipmentComponent>(l_entity);
-    l_equipment->rightHandWieldable = create("sword", invalidLoc);
-    l_equipment->leftHandWieldable = create("shield", invalidLoc);
-    l_equipment->headWearable = create("helmet", invalidLoc);
-
-    return l_entity;
 }

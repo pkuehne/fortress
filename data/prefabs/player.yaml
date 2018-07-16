@@ -1,0 +1,17 @@
+name: Player
+description: "This is you"
+symbol: 64
+foreground-color:
+  - 256
+  - 256
+  - 256
+background-color:
+  - 0
+  - 0
+  - 0
+health: 10
+equipment:
+  rightHand: "sword"
+  leftHand: "shield"
+  head: "helmet"
+player: true

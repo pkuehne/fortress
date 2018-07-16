@@ -21,3 +21,17 @@ TEST(Tile, setWallMaterial_MarksTileAsBlocked) {
     // Then
     EXPECT_TRUE(tile.blocked());
 }
+
+TEST(Tile, overrideSprite_resetsSpriteToSomethingElse) {
+    // Given
+    Tile tile;
+    char symbol = '-';
+
+    ASSERT_NE(symbol, tile.getSprite().sprite);
+
+    // When
+    tile.overrideSpriteSymbol(symbol);
+
+    // Then
+    EXPECT_EQ(symbol, tile.getSprite().sprite);
+}

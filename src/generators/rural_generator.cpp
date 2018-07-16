@@ -51,12 +51,12 @@ void RuralGenerator::createEntitiesFromMap() {
                     break;
                 case LINK:
                     l_entity = state->prefabs().create("stair", location);
-                    state->components()->get<SpriteComponent>(l_entity)->sprite =
-                        31;
+                    state->components()
+                        ->get<SpriteComponent>(l_entity)
+                        ->sprite = 31;
                     m_areaLinks.push_back(l_entity);
                     break;
                 case HUMAN:
-                    // m_engine->state()->prefabs().createForesterPrefab(location);
                     m_engine->state()->prefabs().create("forester", location);
                     break;
                 case DOG:
@@ -74,7 +74,7 @@ void RuralGenerator::createEntitiesFromMap() {
     location.y = m_mapHeight / 2;
     location.z = 0;
     location.area = m_area;
-    m_engine->state()->prefabs().createPlayerPrefab(location);
+    m_engine->state()->prefabs().create("player", location);
 }
 
 void RuralGenerator::reset() { GeneratorInterface::reset(); }
