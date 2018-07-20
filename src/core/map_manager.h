@@ -12,6 +12,9 @@ typedef std::map<unsigned int, AreaInfo> AreaMap;
 
 class MapManager {
 public:
+    MapManager() = default;
+    virtual ~MapManager() = default;
+
     bool isValidTile(const Location& location);
     Tile& getTile(const Location& location) {
         return m_areas[location.area].getTile(location);
@@ -30,7 +33,13 @@ public:
     // @param[in]   area    (optional) The AreaId to create
     // @return The ID for this area
     virtual unsigned int createArea(unsigned int width, unsigned int height,
-                                    unsigned int depth, unsigned int area = 0);
+                                    unsigned int depth);
+
+    /// @brief Adds the given area to the map with the specified ID
+    /// @param[in] area The area to add
+    /// @param[in] id The id to assign to the area
+    /// @return The ID for this area (0 on failure)
+    virtual unsigned int addArea(const AreaInfo& area, unsigned int id = 0);
 
     unsigned int getArea() { return m_currentArea; }
     void setArea(unsigned int area);

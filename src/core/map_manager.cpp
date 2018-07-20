@@ -3,29 +3,35 @@
 #include <glog/logging.h>
 
 unsigned int MapManager::createArea(unsigned int width, unsigned int height,
-                                    unsigned int depth, unsigned int area) {
+                                    unsigned int depth) {
     if (width == 0 || height == 0 || depth == 0) {
         LOG(ERROR) << "Cannot reset map with 0 values" << std::endl;
         exit(1);
     }
 
-    if (area == 0)
-        area = ++m_maxAreaId;
-    if (area > m_maxAreaId)
-        m_maxAreaId = area;
+    AreaInfo area;
+    area.setSize(width, height, depth);
 
-    auto existing = m_areas.find(area);
-    if (existing != m_areas.end())
+    unsigned int id = addArea(area);
+    LOG(INFO) << "Created area " << id << std::endl;
+
+    setArea(id);
+    return id;
+}
+
+unsigned int MapManager::addArea(const AreaInfo& area, unsigned int id) {
+    if (id == 0) {
+        id = ++m_maxAreaId;
+    }
+
+    auto existing = m_areas.find(id);
+    if (existing != m_areas.end()) {
         m_areas.erase(existing);
+    }
 
-    AreaInfo info;
-    info.setSize(width, height, depth);
+    m_areas[id] = area;
 
-    m_areas[area] = info;
-    setArea(area);
-    LOG(INFO) << "Created area " << area << std::endl;
-
-    return area;
+    return id;
 }
 
 bool MapManager::isValidTile(const Location& loc) {
