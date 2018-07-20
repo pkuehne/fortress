@@ -11,7 +11,7 @@ typedef std::function<void(unsigned int current, unsigned int max,
 class FileSaver {
 public:
     explicit FileSaver(GameState* state) : m_state(state) {}
-    ~FileSaver() {}
+    ~FileSaver() = default;
 
     void setStatusCallback(StatusCallback cb) { m_cb = cb; }
     void updateStatus(const std::string& status);

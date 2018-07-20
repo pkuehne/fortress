@@ -1,16 +1,19 @@
 #include "file_loader.h"
-#include "../components/collider_component.h"
-#include "../components/consumable_component.h"
-#include "../components/description_component.h"
-#include "../components/droppable_component.h"
-#include "../components/equipment_component.h"
-#include "../components/health_component.h"
-#include "../components/npc_component.h"
-#include "../components/player_component.h"
-#include "../components/sprite_component.h"
-#include "../components/connector_component.h"
-#include "../components/wearable_component.h"
-#include "../components/wieldable_component.h"
+#include "area_info.h"
+#include "yaml_converter.h"
 #include <fstream>
 #include <glog/logging.h>
 #include <iostream>
+
+void FileLoader::updateStatus(const std::string& status) {
+    m_cb(++m_currentStep, m_totalSteps, status);
+}
+
+void FileLoader::loadState(const std::string& filename) {
+    YAML::Node node = YAML::LoadFile(filename);
+    for (unsigned int ii = 1; ii < node.size(); ii++) {
+        std::cout << "Area = " << ii << std::endl;
+        AreaInfo info = node[ii].as<AreaInfo>();
+        std::cout << "w = " << info.getWidth() << " h = " << info.getHeight() << std::endl;
+    }
+}

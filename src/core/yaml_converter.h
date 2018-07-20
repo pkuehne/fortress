@@ -20,6 +20,7 @@
 #include "location.h"
 #include "map_manager.h"
 #include "tile.h"
+#include <iostream>
 #include <vector>
 #include <yaml-cpp/yaml.h>
 
@@ -102,7 +103,7 @@ template <> struct convert<Tile> {
     }
 
     static bool decode(const Node& node, Tile& rhs) {
-        if (!node.IsMap() || node.size() != 3) {
+        if (!node.IsMap() || node.size() != 4) {
             return false;
         }
 
@@ -128,7 +129,7 @@ template <> struct convert<AreaInfo> {
     }
 
     static bool decode(const Node& node, AreaInfo& rhs) {
-        if (!node.IsMap() || node.size() != 4) {
+        if (!node.IsMap() || node.size() < 4) {
             return false;
         }
 
