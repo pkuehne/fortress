@@ -4,7 +4,7 @@ symbol: 100
 foreground-color:
   - 0
   - 256
-  - 0  
+  - 0
 background-color:
   - 0
   - 0
