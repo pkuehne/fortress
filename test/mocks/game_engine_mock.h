@@ -10,6 +10,7 @@ public:
     MOCK_METHOD0(state, GameState*());
     MOCK_METHOD0(initialise, void());
     MOCK_METHOD0(isPlayerTurn, bool());
+    MOCK_METHOD1(raiseEvent, void(Event* event));
 };
 
 #endif

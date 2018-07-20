@@ -26,7 +26,7 @@ public:
     unsigned int getTurn() { return m_turn; }
     void setTurn(unsigned int turn) { m_turn = turn; }
 
-    void raiseEvent(Event* event) { m_eventManager->raiseEvent(event); }
+    virtual void raiseEvent(Event* event) { m_eventManager->raiseEvent(event); }
 
     unsigned long long getTick() { return m_tick; }
 

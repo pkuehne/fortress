@@ -31,6 +31,7 @@ public:
     void setLocation(EntityId entity, Location& location);
 
     EntityHolder& get(unsigned int area) { return m_entities[area]; }
+    EntityHolder& all() { return m_allEntities; }
     unsigned int count() { return m_locations.size(); }
 
 private:
@@ -38,5 +39,6 @@ private:
     unsigned long m_maxId = 0;
     EntityId m_player = 0;
     LocationMap m_locations;
+    EntityHolder m_allEntities;
     std::map<unsigned int, EntityHolder> m_entities;
 };

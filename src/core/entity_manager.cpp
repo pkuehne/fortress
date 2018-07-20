@@ -16,10 +16,6 @@ void EntityManager::initialise(GameEngine* engine) {
 EntityId EntityManager::createEntity(const Location& location) {
     EntityId l_entity = m_maxId++;
 
-    if (!location.area) {
-        // std::cout << "Zero area in createEntity: " << l_entity << std::endl;
-    }
-
     addEntity(l_entity, location);
     return l_entity;
 }
@@ -30,6 +26,7 @@ void EntityManager::addEntity(EntityId id, const Location& location) {
 
     m_locations[id] = location;
     m_entities[location.area].insert(id);
+    m_allEntities.insert(id);
     if (location.isValid()) {
         m_engine->state()->tile(location).addEntity(id);
     }
@@ -48,6 +45,7 @@ void EntityManager::destroyEntity(EntityId id) {
         m_entities[m_locations[id].area].erase(id);
     }
     m_locations.erase(id);
+    m_allEntities.erase(id);
 
     // Raise event for removal
     RemoveEntityEvent* l_event = new RemoveEntityEvent();
