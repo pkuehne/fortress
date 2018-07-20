@@ -10,7 +10,7 @@ typedef std::function<void(unsigned int current, unsigned int max,
 
 class FileLoader {
 public:
-    FileLoader(GameState* state) { m_state = state; }
+    explicit FileLoader(GameState* state) { m_state = state; }
     ~FileLoader() = default;
 
     void setStatusCallback(StatusCallback cb) { m_cb = cb; }

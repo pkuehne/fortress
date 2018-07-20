@@ -58,8 +58,11 @@ void Camera::renderSprites() {
                         fgColor *= 0.4;
                     }
 
-                    if (l_tile.lastVisited() > 0 &&
-                        l_tile.lastVisited() + 200 > m_state->turn()) {
+                    bool inMemory =
+                        l_tile.lastVisited() > 0 &&
+                        l_tile.lastVisited() + 200 > m_state->turn();
+
+                    if (m_state->debug().revealAllTiles || inMemory) {
                         drawTile(xx, yy, l_sprite->sprite, fgColor,
                                  l_sprite->bgColor);
                     }
