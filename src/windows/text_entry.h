@@ -14,7 +14,7 @@ public:
     std::string getText() { return m_text; }
 
     TextEntry* setSuffix(const std::string& suffix) {
-        m_suffix = suffix; 
+        m_suffix = suffix;
         return this;
     }
     std::string getSuffix() { return m_suffix; }

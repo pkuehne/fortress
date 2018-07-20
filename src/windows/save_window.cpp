@@ -81,12 +81,12 @@ void SaveWindow::loadFiles() {
 
 void SaveWindow::saveState(const std::string& filename) {
     getWidget<Tab>("tabSaveLocation")->setSensitive(false);
-    
+
     Label* lblStatus = getWidget<Label>("lblStatus");
     ProgressBar* pgbProgress = getWidget<ProgressBar>("pgbProgress");
-    
+
     lblStatus->setText("Saving...");
-    
+
     // Kick off background save
     std::thread update([=]() {
         FileSaver saver(this->getEngine()->state());

@@ -3,7 +3,6 @@
 #include "utility.h"
 
 void Tile::setSprite() {
-
     if (m_wallMaterial != WallMaterial::None) {
         m_sprite.fgColor = Color(GREY);
         m_sprite.bgColor = Color(BLACK);

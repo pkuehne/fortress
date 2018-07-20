@@ -1,19 +1,15 @@
 #include "utility.h"
-#include <cstdlib>
 #include <glog/logging.h>
+#include <random>
 
 namespace Utility {
 
 unsigned int randBetween(unsigned int start, unsigned int end) {
-    static unsigned int seed = 0;
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(start, end);
 
-    if (seed == 0) {
-        seed = time(nullptr);
-        srand(seed);
-        LOG(INFO) << "Created with seed " << seed << std::endl;
-    }
-
-    return ((rand() % (end - start + 1)) + start);
+    return dis(gen);
 }
 
 bool randChance(unsigned int percentage) {

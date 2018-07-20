@@ -70,7 +70,6 @@ void Camera::renderSprites() {
             }
         }
     }
-    // renderNpcPaths();
 }
 
 void Camera::renderNpcPaths() {

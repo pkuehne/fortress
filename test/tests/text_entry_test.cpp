@@ -130,7 +130,7 @@ TEST(TextEntry, SuffixIsDrawn) {
         .Times(2);
     EXPECT_CALL(graphics, drawString(Eq(0), Eq(4), StrEq("Bar"), _, _))
         .Times(2);
-    EXPECT_CALL(graphics, drawString(Eq(0), Eq(3), StrEq("_"), _, _)).Times(1); 
+    EXPECT_CALL(graphics, drawString(Eq(0), Eq(3), StrEq("_"), _, _)).Times(1);
 
     // When
     // Run render twice, underscore should not!
@@ -144,7 +144,7 @@ TEST(TextEntry, SuffixIsDrawnWithoutCursorSpaceIfNotSensitive) {
     TextEntry entry;
     entry.setGraphics(&graphics);
     entry.setText(std::string("Foo"));
-    entry.setSuffix(std::string("Bar")); 
+    entry.setSuffix(std::string("Bar"));
     entry.setSensitive(false);
 
     // Then

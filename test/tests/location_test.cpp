@@ -25,8 +25,8 @@ TEST_F(LocationTest, defaultLocationIsInvalid) {
 }
 
 TEST_F(LocationTest, setLocationIsValid) {
-    // Given 
-    Location location(1,2,3);
+    // Given
+    Location location(1, 2, 3);
 
     // Then
     EXPECT_TRUE(location.isValid());
