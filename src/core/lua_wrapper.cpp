@@ -113,18 +113,8 @@ int playerLocation(lua_State* runtime) {
 
 int revealMap(lua_State* runtime) {
     GameState* state = getState(runtime);
+    state->debug().revealAllTiles = true;
 
-    for (unsigned x = 0; x < state->map()->getMapWidth(); x++) {
-        for (unsigned y = 0; y < state->map()->getMapHeight(); y++) {
-            for (unsigned z = 0; z < state->map()->getMapDepth(); z++) {
-                Location location(x, y, z, state->map()->getArea());
-                Tile& tile = state->tile(location);
-                if (tile.lastVisited() < state->turn()) {
-                    tile.lastVisited() = state->turn();
-                }
-            }
-        }
-    }
     return 0;
 }
 

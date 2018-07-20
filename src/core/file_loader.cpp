@@ -13,7 +13,7 @@ void FileLoader::loadState(const std::string& filename) {
     YAML::Node node = YAML::LoadFile(filename);
     for (unsigned int ii = 1; ii < node.size(); ii++) {
         std::cout << "Area = " << ii << std::endl;
-        AreaInfo info = node[ii].as<AreaInfo>();
-        std::cout << "w = " << info.getWidth() << " h = " << info.getHeight() << std::endl;
+        AreaInfo area = node[ii].as<AreaInfo>();
+        m_state->map()->addArea(area, ii);
     }
 }

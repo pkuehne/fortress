@@ -33,7 +33,11 @@ EntityManager* GameState::entityManager() { return m_entities; }
 
 ComponentManager* GameState::components() { return m_components; }
 
-const EntityHolder& GameState::entities() { return m_entities->get(m_map->getArea()); }
+const EntityHolder& GameState::entities() {
+
+    return m_entities->get(
+        m_entities->getLocation(m_entities->getPlayer()).area);
+}
 
 EntityHolder GameState::entities(const Location& loc) {
     return m_map->findEntitiesAt(loc);
@@ -48,10 +52,6 @@ EntityId GameState::createEntity(Location& location) {
 Location GameState::location(EntityId entity) {
     return m_entities->getLocation(entity);
 }
-
-void GameState::setArea(unsigned int area) { m_map->setArea(area); }
-
-unsigned int GameState::getArea() { return m_map->getArea(); }
 
 void GameState::addMessage(const Message& message) {
     m_messages.push_back(message);

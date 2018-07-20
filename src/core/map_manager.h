@@ -20,10 +20,6 @@ public:
         return m_areas[location.area].getTile(location);
     }
 
-    unsigned int getMapHeight() { return m_areas[m_currentArea].getHeight(); }
-    unsigned int getMapWidth() { return m_areas[m_currentArea].getWidth(); }
-    unsigned int getMapDepth() { return m_areas[m_currentArea].getDepth(); }
-
     /// @brief Creates a new Area with the given dimensions
     /// @details Provide an area ID when loading from file, leave it when
     /// creating
@@ -41,8 +37,6 @@ public:
     /// @return The ID for this area (0 on failure)
     virtual unsigned int addArea(const AreaInfo& area, unsigned int id = 0);
 
-    unsigned int getArea() { return m_currentArea; }
-    void setArea(unsigned int area);
     AreaMap& getAreas() { return m_areas; }
 
     Location location(const Location&, Direction direction);
@@ -51,7 +45,6 @@ public:
                                   unsigned int radius);
 
 private:
-    unsigned int m_currentArea = 0;
     unsigned int m_maxAreaId = 0;
     AreaMap m_areas;
 };

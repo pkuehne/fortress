@@ -16,6 +16,7 @@ void Camera::render() {
     m_mapOffsetX = l_playerLoc.x - (getWidth() / 2);
     m_mapOffsetY = l_playerLoc.y - (getHeight() / 2);
     m_mapOffsetZ = l_playerLoc.z;
+    m_area = l_playerLoc.area;
 
     renderSprites();
     if (m_state->debug().showNpcPaths) {
@@ -24,13 +25,12 @@ void Camera::render() {
 }
 
 void Camera::renderSprites() {
-    unsigned int currentArea = m_state->getArea();
     unsigned int tileZ = m_mapOffsetZ;
     for (unsigned int yy = 0; yy < getHeight(); yy++) {
         unsigned int tileY = yy + m_mapOffsetY;
         for (unsigned int xx = 0; xx < getWidth(); xx++) {
             unsigned int tileX = xx + m_mapOffsetX;
-            Location loc(tileX, tileY, tileZ, currentArea);
+            Location loc(tileX, tileY, tileZ, m_area);
             if (!m_state->isValidTile(loc))
                 continue;
 

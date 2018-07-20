@@ -62,7 +62,6 @@ void EntityManager::setLocation(EntityId entity, Location& location) {
     }
     m_locations[entity] = location;
     if (m_locations[entity].isValid()) {
-        m_engine->state()->map()->setArea(location.area);
         m_engine->state()->tile(m_locations[entity]).addEntity(entity);
         m_entities[location.area].insert(entity);
     }

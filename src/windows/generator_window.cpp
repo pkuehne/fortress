@@ -164,13 +164,15 @@ void GeneratorWindow::startGenerating() {
         if (!success) {
             LOG(ERROR) << "Failed to generate a valid map" << std::endl;
         }
-        getEngine()->state()->components()->get<ConnectorComponent>(stair)->target =
-            l_generator.upStairLink();
+        getEngine()
+            ->state()
+            ->components()
+            ->get<ConnectorComponent>(stair)
+            ->target = l_generator.upStairLink();
     }
     LOG(INFO) << "Placed " << getEngine()->state()->entityManager()->getMaxId()
               << " entities!" << std::endl;
 
-    getEngine()->state()->map()->setArea(startArea);
     m_status = COMPLETED;
     getWidget<Label>("lblPlay")->setSensitive(true);
 }

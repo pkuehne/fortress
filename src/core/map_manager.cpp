@@ -15,7 +15,6 @@ unsigned int MapManager::createArea(unsigned int width, unsigned int height,
     unsigned int id = addArea(area);
     LOG(INFO) << "Created area " << id << std::endl;
 
-    setArea(id);
     return id;
 }
 
@@ -38,9 +37,9 @@ bool MapManager::isValidTile(const Location& loc) {
     if (!loc.area) {
         LOG(ERROR) << "Called isValidTile with zero area" << std::endl;
     }
-    bool xValid = (loc.x < m_areas[m_currentArea].getWidth());
-    bool yValid = (loc.y < m_areas[m_currentArea].getHeight());
-    bool zValid = (loc.z < m_areas[m_currentArea].getDepth());
+    bool xValid = (loc.x < m_areas[loc.area].getWidth());
+    bool yValid = (loc.y < m_areas[loc.area].getHeight());
+    bool zValid = (loc.z < m_areas[loc.area].getDepth());
     return (xValid && yValid && zValid);
 }
 
@@ -68,17 +67,6 @@ EntityHolder MapManager::findEntitiesNear(const Location& location,
         }
     }
     return l_entities;
-}
-
-void MapManager::setArea(unsigned int area) {
-    // std::cout << "Setting area to " << area << std::endl;
-    auto info = m_areas.find(area);
-    if (info == m_areas.end()) {
-        LOG(ERROR) << "Could not set area " << area
-                   << " because it doesn't exist!" << std::endl;
-        throw std::string("Invalid area set!");
-    }
-    m_currentArea = area;
 }
 
 Location MapManager::location(const Location& loc, Direction dir) {

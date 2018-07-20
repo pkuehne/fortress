@@ -31,6 +31,7 @@ typedef struct {
 
 struct Debug {
     bool showNpcPaths = false;
+    bool revealAllTiles = false;
 };
 
 typedef unsigned long long tick_t;
@@ -68,9 +69,6 @@ public:
     EntityId createEntity(Location&);
 
     PrefabBuilder& prefabs() { return m_prefabs; }
-
-    void setArea(unsigned int area);
-    unsigned int getArea();
 
     void addMessage(const Message& message);
     void addMessage(const MessageType&, const std::string& message);
