@@ -1,4 +1,4 @@
-.PHONY: all clean build test coverage run shuffle test lint
+.PHONY: all clean build test coverage run shuffle test lint validate
 
 LOG_DIR=artifacts/logs/
 
@@ -50,3 +50,6 @@ docs:
 
 lint:
 	cppcheck src/ --enable=style,information,warning --error-exitcode=1 -DMAJOR=1 2>lint-errors.txt
+
+validate: build test lint
+	@echo "Validation succeeded!"

@@ -29,6 +29,7 @@ private:
 
 private:
     void createEntitiesFromMap();
+    void connectStairs();
     bool generateRoom();
     bool generateLevel();
     void connectRooms(Room& start, Room& end);
@@ -37,6 +38,8 @@ private:
     void placeOrcs();
     void placeItems();
     unsigned char wallSprite(unsigned int x, unsigned int y);
+    bool validateRoom(unsigned int width, unsigned int height,
+                      unsigned int left, unsigned int top);
 
 private:
     unsigned int m_roomTarget = 1;

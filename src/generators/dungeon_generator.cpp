@@ -69,7 +69,7 @@ bool DungeonGenerator::generateLevel() {
     placeOrcs();
     placeItems();
     createEntitiesFromMap();
-
+    connectStairs();
     return true;
 }
 
@@ -130,6 +130,11 @@ void DungeonGenerator::createEntitiesFromMap() {
             }
         }
     }
+}
+
+void DungeonGenerator::connectStairs() {
+    auto state = m_engine->state();
+
     if (m_level == 0) {
         state->components()->get<ConnectorComponent>(m_upStair)->target =
             m_upStairTarget;
@@ -150,12 +155,8 @@ void DungeonGenerator::createEntitiesFromMap() {
     m_prevDownStair = m_downStair;
 }
 
-bool DungeonGenerator::generateRoom() {
-    unsigned int width = Utility::randBetween(5, 10);
-    unsigned int height = Utility::randBetween(5, 10);
-    unsigned int left = Utility::randBetween(2, (m_mapWidth - width - 2));
-    unsigned int top = Utility::randBetween(2, (m_mapHeight - height - 2));
-
+bool DungeonGenerator::validateRoom(unsigned int width, unsigned int height,
+                                    unsigned int left, unsigned int top) {
     if (left + width >= m_mapWidth || left < 1 || top + height >= m_mapHeight ||
         top < 1) {
         return false;
@@ -167,22 +168,34 @@ bool DungeonGenerator::generateRoom() {
                 return false;
         }
     }
+    return true;
+}
+
+bool DungeonGenerator::generateRoom() {
+    unsigned int width = Utility::randBetween(5, 10);
+    unsigned int height = Utility::randBetween(5, 10);
+    unsigned int left = Utility::randBetween(2, (m_mapWidth - width - 2));
+    unsigned int top = Utility::randBetween(2, (m_mapHeight - height - 2));
+
+    if (!validateRoom(width, height, left, top)) {
+        return false;
+    }
 
     for (unsigned int yy = top - 2; yy <= top + height + 1; yy++) {
         for (unsigned int xx = left - 2; xx <= left + width + 1; xx++) {
+            getByCoordinate(xx, yy) = FLOOR; // By default
+
+            // Check whether this should be something else
             if (yy < top || yy >= top + height || xx < left ||
                 xx >= left + width) {
                 getByCoordinate(xx, yy) = RESTRICTED;
             } else if (yy == top || yy == top + height - 1 || xx == left ||
                        xx == left + width - 1) {
+                getByCoordinate(xx, yy) = WALL; // It's a wall
                 if ((yy <= top + 1 || yy >= top + height - 2) &&
                     (xx <= left + 1 || xx >= left + width - 2)) {
-                    getByCoordinate(xx, yy) = CORNER;
-                } else {
-                    getByCoordinate(xx, yy) = WALL;
+                    getByCoordinate(xx, yy) = CORNER; // Wait, actually a corner
                 }
-            } else {
-                getByCoordinate(xx, yy) = FLOOR;
             }
         }
     }
@@ -319,6 +332,63 @@ void DungeonGenerator::placeItems() {
     }
 }
 
+int calculateSpriteKey(unsigned char left, unsigned char up,
+                       unsigned char right, unsigned char down) {
+    int sprite_key = 0;
+    if (left == WALL || left == CORNER) {
+        sprite_key |= 8;
+    }
+    if (up == WALL || up == CORNER) {
+        sprite_key |= 4;
+    }
+    if (right == WALL || right == CORNER) {
+        sprite_key |= 2;
+    }
+    if (down == WALL || down == CORNER) {
+        sprite_key |= 1;
+    }
+    return sprite_key;
+}
+
+unsigned char spriteCharFromKey(int sprite_key) {
+    switch (sprite_key) {
+        case 0:
+            return 206;
+        case 1:
+            return 210;
+        case 2:
+            return 198;
+        case 3:
+            return 201;
+        case 4:
+            return 208;
+        case 5:
+            return 186;
+        case 6:
+            return 200;
+        case 7:
+            return 204;
+        case 8:
+            return 181;
+        case 9:
+            return 187;
+        case 10:
+            return 205;
+        case 11:
+            return 203;
+        case 12:
+            return 188;
+        case 13:
+            return 185;
+        case 14:
+            return 202;
+        case 15:
+            return 206;
+    }
+    LOG(ERROR) << "Return default wall" << std::endl;
+    return 206;
+}
+
 unsigned char DungeonGenerator::wallSprite(unsigned int x, unsigned int y) {
     unsigned char left =
         isValidCoordinate(x - 1, y) ? getByCoordinate(x - 1, y) : 0;
@@ -329,68 +399,8 @@ unsigned char DungeonGenerator::wallSprite(unsigned int x, unsigned int y) {
     unsigned char down =
         isValidCoordinate(x, y + 1) ? getByCoordinate(x, y + 1) : 0;
 
-    int sprite_key = 0;
-    if (left == WALL || left == CORNER)
-        sprite_key |= 8;
-    if (up == WALL || up == CORNER)
-        sprite_key |= 4;
-    if (right == WALL || right == CORNER)
-        sprite_key |= 2;
-    if (down == WALL || down == CORNER)
-        sprite_key |= 1;
-
-    switch (sprite_key) {
-        case 0:
-            return 206;
-            break;
-        case 1:
-            return 210;
-            break;
-        case 2:
-            return 198;
-            break;
-        case 3:
-            return 201;
-            break;
-        case 4:
-            return 208;
-            break;
-        case 5:
-            return 186;
-            break;
-        case 6:
-            return 200;
-            break;
-        case 7:
-            return 204;
-            break;
-        case 8:
-            return 181;
-            break;
-        case 9:
-            return 187;
-            break;
-        case 10:
-            return 205;
-            break;
-        case 11:
-            return 203;
-            break;
-        case 12:
-            return 188;
-            break;
-        case 13:
-            return 185;
-            break;
-        case 14:
-            return 202;
-            break;
-        case 15:
-            return 206;
-            break;
-    }
-    LOG(ERROR) << "Return default wall" << std::endl;
-    return 206;
+    int sprite_key = calculateSpriteKey(left, up, right, down);
+    return spriteCharFromKey(sprite_key);
 }
 
 static int getPathCost(const Location& location, void* customData) {
@@ -426,15 +436,18 @@ static unsigned int findNeighbours4(const Location& location,
 
     unsigned int count = 0;
 
-    if (l_gen->isValidCoordinate(location.x - 1, location.y))
+    if (l_gen->isValidCoordinate(location.x - 1, location.y)) {
         neighbours[count++] = Location(location.x - 1, location.y, 0);
-    if (l_gen->isValidCoordinate(location.x + 1, location.y))
+    }
+    if (l_gen->isValidCoordinate(location.x + 1, location.y)) {
         neighbours[count++] = Location(location.x + 1, location.y, 0);
-    if (l_gen->isValidCoordinate(location.x, location.y - 1))
+    }
+    if (l_gen->isValidCoordinate(location.x, location.y - 1)) {
         neighbours[count++] = Location(location.x, location.y - 1, 0);
-    if (l_gen->isValidCoordinate(location.x, location.y + 1))
+    }
+    if (l_gen->isValidCoordinate(location.x, location.y + 1)) {
         neighbours[count++] = Location(location.x, location.y + 1, 0);
-    // std::cout << "Return " << count << " neightbours" << std::endl;
+    } // std::cout << "Return " << count << " neightbours" << std::endl;
 
     return count;
 }
@@ -444,23 +457,19 @@ static unsigned int findNeighbours8(const Location& location,
     DungeonGenerator* l_gen = static_cast<DungeonGenerator*>(customData);
     unsigned int count = 0;
 
-    if (l_gen->isValidCoordinate(location.x - 1, location.y))
-        neighbours[count++] = Location(location.x - 1, location.y, 0);
-    if (l_gen->isValidCoordinate(location.x + 1, location.y))
-        neighbours[count++] = Location(location.x + 1, location.y, 0);
-    if (l_gen->isValidCoordinate(location.x, location.y - 1))
-        neighbours[count++] = Location(location.x, location.y - 1, 0);
-    if (l_gen->isValidCoordinate(location.x, location.y + 1))
-        neighbours[count++] = Location(location.x, location.y + 1, 0);
-    if (l_gen->isValidCoordinate(location.x - 1, location.y - 1))
+    count = findNeighbours4(location, neighbours, customData);
+    if (l_gen->isValidCoordinate(location.x - 1, location.y - 1)) {
         neighbours[count++] = Location(location.x - 1, location.y - 1, 0);
-    if (l_gen->isValidCoordinate(location.x + 1, location.y - 1))
+    }
+    if (l_gen->isValidCoordinate(location.x + 1, location.y - 1)) {
         neighbours[count++] = Location(location.x + 1, location.y - 1, 0);
-    if (l_gen->isValidCoordinate(location.x - 1, location.y + 1))
+    }
+    if (l_gen->isValidCoordinate(location.x - 1, location.y + 1)) {
         neighbours[count++] = Location(location.x - 1, location.y + 1, 0);
-    if (l_gen->isValidCoordinate(location.x + 1, location.y + 1))
+    }
+    if (l_gen->isValidCoordinate(location.x + 1, location.y + 1)) {
         neighbours[count++] = Location(location.x + 1, location.y + 1, 0);
-
+    }
     // std::cout << "Return " << count << " neightbours" << std::endl;
 
     return count;
