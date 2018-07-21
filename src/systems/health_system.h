@@ -4,5 +4,5 @@
 
 class HealthSystem : public GameSystemBase {
 public:
-    virtual void update() override;
+    void update() override;
 };

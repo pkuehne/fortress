@@ -109,7 +109,6 @@ TEST_F(ListBoxTest, gettingSelectedItemFromEmptyBoxTHrows) {
 }
 
 TEST_F(ListBoxTest, settingSelectedItemCallsCallback) {
-
     // Given
     bool called = false;
     box.setItemSelectedCallback([&](ListBox* b) { called = true; });

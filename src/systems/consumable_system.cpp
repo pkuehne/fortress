@@ -21,7 +21,6 @@ void updateHealth(ConsumableComponent* consumable, HealthComponent* health) {
 }
 
 void ConsumableSystem::handleConsumeItemEvent(const ConsumeItemEvent* event) {
-
     ConsumableComponent* consumable =
         getEngine()->state()->components()->get<ConsumableComponent>(
             event->item);
