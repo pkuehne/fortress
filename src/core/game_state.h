@@ -60,7 +60,8 @@ public:
     virtual bool isValidTile(const Location&);
 
     virtual const EntityHolder& entities();
-    virtual EntityHolder entities(const Location& loc);
+    virtual const EntityHolder& entities(const Location& loc);
+    virtual const EntityHolder& entitiesInArea(unsigned int area);
 
     Location location(EntityId entity);
     Location location(const Location&, Direction direction);
