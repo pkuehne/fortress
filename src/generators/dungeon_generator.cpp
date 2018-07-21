@@ -352,8 +352,6 @@ int calculateSpriteKey(unsigned char left, unsigned char up,
 
 unsigned char spriteCharFromKey(int sprite_key) {
     switch (sprite_key) {
-        case 0:
-            return 206;
         case 1:
             return 210;
         case 2:
@@ -382,10 +380,11 @@ unsigned char spriteCharFromKey(int sprite_key) {
             return 185;
         case 14:
             return 202;
+        case 0:
         case 15:
+        default:
             return 206;
     }
-    LOG(ERROR) << "Return default wall" << std::endl;
     return 206;
 }
 

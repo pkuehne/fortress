@@ -3,5 +3,5 @@
 
 class ConsumableSystem : public GameSystemBase {
 private:
-    virtual void handleConsumeItemEvent(const ConsumeItemEvent* event) override;
+    void handleConsumeItemEvent(const ConsumeItemEvent* event) override;
 };

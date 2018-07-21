@@ -173,7 +173,6 @@ void MapWindow::keyPress(unsigned char key) {
             EntityHolder l_entities =
                 getEngine()->state()->map()->findEntitiesAt(newLocation);
             if (l_entities.size() > 0) {
-
                 auto interactArgs = std::make_shared<InteractionWindowArgs>();
                 interactArgs->entities = l_entities;
                 getEngine()->getWindows()->createWindow<InteractionWindow>(

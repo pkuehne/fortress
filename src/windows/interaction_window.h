@@ -9,8 +9,8 @@ class ListBox;
 
 typedef struct {
     EntityHolder entities;
-
 } InteractionWindowArgs;
+
 typedef struct {
     DescriptionComponent* desc;
     OpenableComponent* open;
