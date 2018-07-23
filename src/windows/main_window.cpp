@@ -3,7 +3,7 @@
 #include "../core/game_engine.h"
 #include "generator_window.h"
 #include "label.h"
-#include "map_window.h"
+#include "load_window.h"
 
 void MainWindow::setup() {
     setTitle("FORTRESS");
@@ -46,13 +46,7 @@ void MainWindow::registerWidgets() {
         ->setCommandChar(1)
         ->setIgnoreCommandCharCase(true)
         ->setCommandCharCallback([=](Label* l) {
-            std::cout << "Loading" << std::endl;
-            FileLoader loader(getEngine()->state());
-            loader.loadState("./data/saves/test.yaml");
-            
-            MapWindow* l_win = new MapWindow();
-            l_win->initialise(getEngine());
-            getEngine()->getWindows()->replaceAllWindows(l_win);
+            getEngine()->getWindows()->createWindow<LoadWindow>();
         })
         ->setVerticalAlign(Widget::VerticalAlign::Bottom)
         ->setHorizontalAlign(Widget::HorizontalAlign::Centre);
