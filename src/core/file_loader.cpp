@@ -10,8 +10,14 @@ void FileLoader::updateStatus(const std::string& status) {
 }
 
 void FileLoader::loadState(const std::string& filename) {
+    m_cb(m_currentStep, m_totalSteps, "Parsing file...");
+
     YAML::Node node = YAML::LoadFile(filename);
+
+    m_totalSteps += node.size();
+
     for (unsigned int ii = 0; ii < node.size(); ii++) {
+        updateStatus(std::string("Loading Area " + std::to_string(ii)));
         if (ii) {
             AreaInfo area = node[ii].as<AreaInfo>();
             m_state->map()->addArea(area, ii);
