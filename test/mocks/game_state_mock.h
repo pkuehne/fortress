@@ -10,6 +10,7 @@ public:
     MOCK_METHOD1(isValidTile, bool(const Location&));
     MOCK_METHOD0(entities, const EntityHolder&());
     MOCK_METHOD0(components, ComponentManager*());
+    MOCK_METHOD1(tile, Tile&(const Location&));
 };
 
 #endif

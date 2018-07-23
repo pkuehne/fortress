@@ -15,23 +15,25 @@ typedef LocationMap::iterator LocationIter;
 class EntityManager {
 public:
     EntityManager() = default;
-    ~EntityManager() = default;
+    virtual ~EntityManager() = default;
 
     void initialise(GameEngine* engine);
     void destroy() {}
 
-    EntityId createEntity(const Location& location);
-    void addEntity(EntityId id, const Location& location);
-    void destroyEntity(EntityId);
-    EntityId getPlayer();
-    EntityId getMaxId() { return m_maxId; }
+    virtual EntityId createEntity(const Location& location);
+    virtual void addEntity(EntityId id, const Location& location);
+    virtual void destroyEntity(EntityId);
+    virtual EntityId getPlayer();
+    virtual EntityId getMaxId() { return m_maxId; }
 
-    Location getLocation(EntityId entity) { return m_locations[entity]; }
-    void setLocation(EntityId entity, Location& location);
+    virtual Location getLocation(EntityId entity) {
+        return m_locations[entity];
+    }
+    virtual void setLocation(EntityId entity, Location& location);
 
-    EntityHolder& get(unsigned int area) { return m_entities[area]; }
-    EntityHolder& all() { return m_allEntities; }
-    unsigned int count() { return m_locations.size(); }
+    virtual EntityHolder& get(unsigned int area) { return m_entities[area]; }
+    virtual EntityHolder& all() { return m_allEntities; }
+    virtual unsigned int count() { return m_locations.size(); }
 
 private:
     GameEngine* m_engine = nullptr;

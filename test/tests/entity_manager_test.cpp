@@ -6,17 +6,39 @@
 
 using namespace ::testing;
 
-class EntityManager_addEntity : public ::testing::Test {};
+class EntityManager_createEntity : public ::testing::Test {};
 
-TEST_F(EntityManager_addEntity, addsEntityforAllList) {
+TEST_F(EntityManager_createEntity, raisedAddEntityEvent) {
     // Given
-    EntityId entity = 1234;
     Location location;
 
     EntityManager manager;
     GameEngineMock mock;
     manager.initialise(&mock);
 
+    // Then
+    EXPECT_CALL(mock, raiseEvent(_));
+
+    // When
+    manager.createEntity(location);
+}
+
+class EntityManager_addEntity : public ::testing::Test {
+public:
+    void SetUp() {
+        EXPECT_CALL(mock, state()).WillRepeatedly(Return(&state));
+        manager.initialise(&mock);
+    }
+
+protected:
+    EntityManager manager;
+    GameEngineMock mock;
+    GameStateMock state;
+    EntityId entity = 1234;
+    Location location;
+};
+
+TEST_F(EntityManager_addEntity, addsEntityforAllList) {
     // When
     manager.addEntity(entity, location);
 
@@ -24,26 +46,72 @@ TEST_F(EntityManager_addEntity, addsEntityforAllList) {
     ASSERT_EQ(1, manager.all().size());
 }
 
-class EntityManager_destroyEntity : public ::testing::Test {};
-
-TEST_F(EntityManager_destroyEntity, addsEntityforAllList) {
+TEST_F(EntityManager_addEntity, setsLocation) {
     // Given
+    location = Location(1, 2, 3, 4);
+    Tile tile;
+    EXPECT_CALL(state, tile(_)).WillOnce(ReturnRef(tile));
+
+    // When
+    manager.addEntity(entity, location);
+
+    // Then
+    ASSERT_EQ(location, manager.getLocation(entity));
+}
+
+class EntityManager_destroyEntity : public ::testing::Test {
+public:
+    void SetUp() {
+        EXPECT_CALL(state, components()).WillRepeatedly(Return(&components));
+        EXPECT_CALL(mock, state()).WillRepeatedly(Return(&state));
+        manager.initialise(&mock);
+        manager.addEntity(entity, location);
+    }
+
+protected:
     EntityId entity = 1234;
     Location location;
-
     EntityManager manager;
     GameEngineMock mock;
     GameStateMock state;
     ComponentManagerMock components;
+};
 
-    EXPECT_CALL(state, components()).WillRepeatedly(Return(&components));
-    EXPECT_CALL(mock, state()).WillRepeatedly(Return(&state));
-    manager.initialise(&mock);
-    manager.addEntity(entity, location);
+TEST_F(EntityManager_destroyEntity, addsEntityforAllList) {
+    // Given
 
     // When
     manager.destroyEntity(entity);
 
     // Then
     ASSERT_EQ(0, manager.all().size());
+}
+
+TEST_F(EntityManager_destroyEntity, raisesDeleteEvent) {
+    // Given
+    EXPECT_CALL(mock, raiseEvent(_));
+
+    // When
+    manager.destroyEntity(entity);
+
+    // Then
+}
+
+class EntityManager_getsetLocation : public ::testing::Test {};
+
+TEST_F(EntityManager_getsetLocation, raisedAddEntityEvent) {
+    // Given
+    Location location;
+    EntityId entity = 1234;
+
+    EntityManager manager;
+    GameEngineMock mock;
+    manager.initialise(&mock);
+
+    // When
+    manager.setLocation(entity, location);
+    Location l = manager.getLocation(entity);
+
+    // Then
+    EXPECT_EQ(l, location);
 }

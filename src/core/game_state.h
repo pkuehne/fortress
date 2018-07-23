@@ -56,7 +56,7 @@ public:
 
     Debug& debug() { return m_debug; }
 
-    Tile& tile(const Location&);
+    virtual Tile& tile(const Location&);
     virtual bool isValidTile(const Location&);
 
     virtual const EntityHolder& entities();
