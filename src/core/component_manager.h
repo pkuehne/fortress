@@ -46,6 +46,7 @@ public:
     ComponentHolder& getAll(EntityId id) { return m_components[id]; }
 
 private:
+    // cppcheck-suppress unusedPrivateFunction
     void add(EntityId entity, ComponentBase* component) {
         if (component == nullptr) {
             LOG(WARNING) << "Can't add a nullptr" << std::endl;
