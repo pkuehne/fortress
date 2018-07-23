@@ -1,7 +1,6 @@
 #pragma once
 
 #include "entity.h"
-#include "entity_manager_interface.h"
 #include "location.h"
 #include "utility.h"
 #include <map>
@@ -13,7 +12,7 @@ typedef std::map<EntityId, Location> LocationMap;
 typedef LocationMap::const_iterator LocationConstIter;
 typedef LocationMap::iterator LocationIter;
 
-class EntityManager { //: public EntityManagerInterface {
+class EntityManager {
 public:
     EntityManager() = default;
     ~EntityManager() = default;
