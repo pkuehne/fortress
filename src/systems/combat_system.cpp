@@ -20,10 +20,9 @@ void CombatSystem::handleAttack(EntityId attacker, EntityId defender) {
     unsigned int damage = 1;
     if (l_attackerEquipment && l_attackerEquipment->rightHandWieldable != 0) {
         EntityId l_weapon = l_attackerEquipment->rightHandWieldable;
-        damage = m_engine->state()
-                     ->components()
-                     ->get<WieldableComponent>(l_weapon)
-                     ->baseDamage;
+        WieldableComponent* l_wield =
+            m_engine->state()->components()->get<WieldableComponent>(l_weapon);
+        damage = l_wield->baseDamage;
     }
 
     HealthComponent* l_health =

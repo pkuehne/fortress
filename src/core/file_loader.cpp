@@ -11,9 +11,18 @@ void FileLoader::updateStatus(const std::string& status) {
 
 void FileLoader::loadState(const std::string& filename) {
     YAML::Node node = YAML::LoadFile(filename);
-    for (unsigned int ii = 1; ii < node.size(); ii++) {
-        std::cout << "Area = " << ii << std::endl;
-        AreaInfo area = node[ii].as<AreaInfo>();
-        m_state->map()->addArea(area, ii);
+    for (unsigned int ii = 0; ii < node.size(); ii++) {
+        if (ii) {
+            AreaInfo area = node[ii].as<AreaInfo>();
+            m_state->map()->addArea(area, ii);
+        }
+        YAML::Node&& entityNode = node[ii]["entities"];
+        decodeEntities(entityNode);
+    }
+}
+
+void FileLoader::decodeEntities(YAML::Node& node) {
+    for (YAML::const_iterator iter = node.begin(); iter != node.end(); ++iter) {
+        decodeEntity(m_state, iter->second, iter->first.as<EntityId>());
     }
 }

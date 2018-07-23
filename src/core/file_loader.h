@@ -17,6 +17,7 @@ public:
     void updateStatus(const std::string& status);
 
     void loadState(const std::string& filename);
+    void decodeEntities(YAML::Node& node);
 
 private:
     GameState* m_state = nullptr;

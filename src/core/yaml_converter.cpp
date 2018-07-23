@@ -60,3 +60,31 @@ void encodeEntity(GameState* state, YAML::Node& node, EntityId entity) {
     }
     node[entity]["location"] = state->entityManager()->getLocation(entity);
 }
+
+template <typename T>
+void decodeComponent(GameState* state, const YAML::Node& node, EntityId entity,
+                     const std::string& nodeName) {
+    if (node[nodeName].IsDefined()) {
+        *state->components()->make<T>(entity) = node[nodeName].as<T>();
+    }
+}
+
+void decodeEntity(GameState* state, const YAML::Node& node, EntityId entity) {
+    // Add Entity
+    state->entityManager()->addEntity(entity, node["location"].as<Location>());
+
+    decodeComponent<ColliderComponent>(state, node, entity, "collide");
+    decodeComponent<ConsumableComponent>(state, node, entity, "consume");
+    decodeComponent<DescriptionComponent>(state, node, entity, "describe");
+    decodeComponent<DroppableComponent>(state, node, entity, "drop");
+    decodeComponent<EquipmentComponent>(state, node, entity, "equip");
+    decodeComponent<GraphicsEffectComponent>(state, node, entity, "graphics");
+    decodeComponent<HealthComponent>(state, node, entity, "health");
+    decodeComponent<NpcComponent>(state, node, entity, "npc");
+    decodeComponent<OpenableComponent>(state, node, entity, "open");
+    decodeComponent<PlayerComponent>(state, node, entity, "player");
+    decodeComponent<SpriteComponent>(state, node, entity, "sprite");
+    decodeComponent<ConnectorComponent>(state, node, entity, "connector");
+    decodeComponent<WearableComponent>(state, node, entity, "wear");
+    decodeComponent<WieldableComponent>(state, node, entity, "wield");
+}

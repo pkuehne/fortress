@@ -13,7 +13,7 @@ class ComponentManager {
 public:
     template <class T> T* make(EntityId entity) {
         T* component = new T();
-        add(entity, component);
+        this->add(entity, component);
         return component;
     }
 

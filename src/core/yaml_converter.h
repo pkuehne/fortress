@@ -25,6 +25,7 @@
 #include <yaml-cpp/yaml.h>
 
 void encodeEntity(GameState* state, YAML::Node& node, EntityId entity);
+void decodeEntity(GameState* state, const YAML::Node& node, EntityId entity);
 
 namespace YAML {
 
@@ -98,12 +99,13 @@ template <> struct convert<Tile> {
         node["lit"] = rhs.lit();
         node["lastVisited"] = rhs.lastVisited();
         node["floor"] = static_cast<int>(rhs.getFloorMaterial());
-        node["wall"] = static_cast<int>(rhs.getFloorMaterial());
+        node["wall"] = static_cast<int>(rhs.getWallMaterial());
+        node["symbol"] = rhs.getSprite().sprite;
         return node;
     }
 
     static bool decode(const Node& node, Tile& rhs) {
-        if (!node.IsMap() || node.size() != 4) {
+        if (!node.IsMap() || node.size() != 5) {
             return false;
         }
 
@@ -112,7 +114,7 @@ template <> struct convert<Tile> {
         rhs.setFloorMaterial(
             static_cast<FloorMaterial>(node["floor"].as<int>()));
         rhs.setWallMaterial(static_cast<WallMaterial>(node["wall"].as<int>()));
-
+        rhs.overrideSpriteSymbol(node["symbol"].as<unsigned int>());
         return true;
     }
 };
@@ -193,7 +195,7 @@ template <> struct convert<ConsumableComponent> {
     }
 
     static bool decode(const Node& node, ConsumableComponent& rhs) {
-        if (!node.IsSequence() || node.size() != 4) {
+        if (!node.IsMap() || node.size() != 4) {
             return false;
         }
 
@@ -378,7 +380,7 @@ template <> struct convert<OpenableComponent> {
     }
 
     static bool decode(const Node& node, OpenableComponent& rhs) {
-        if (!node.IsMap() || node.size() != 4) {
+        if (!node.IsMap() || node.size() != 1) {
             return false;
         }
 
@@ -412,7 +414,7 @@ template <> struct convert<ConnectorComponent> {
     }
 
     static bool decode(const Node& node, ConnectorComponent& rhs) {
-        if (!node.IsMap() || node.size() != 4) {
+        if (!node.IsMap() || node.size() != 1) {
             return false;
         }
 
@@ -432,7 +434,7 @@ template <> struct convert<WearableComponent> {
     }
 
     static bool decode(const Node& node, WearableComponent& rhs) {
-        if (!node.IsMap() || node.size() != 4) {
+        if (!node.IsMap() || node.size() != 3) {
             return false;
         }
         rhs.baseDamageAbsorb = node["baseDamageAbsorb"].as<int>();
@@ -455,7 +457,7 @@ template <> struct convert<WieldableComponent> {
     }
 
     static bool decode(const Node& node, WieldableComponent& rhs) {
-        if (!node.IsMap() || node.size() != 4) {
+        if (!node.IsMap() || node.size() != 3) {
             return false;
         }
 

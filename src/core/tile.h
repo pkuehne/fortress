@@ -36,7 +36,7 @@ public:
     void setWallMaterial(const WallMaterial& material);
     WallMaterial getWallMaterial() const { return m_wallMaterial; }
 
-    void overrideSpriteSymbol(const char symbol) { m_sprite.sprite = symbol; }
+    void overrideSpriteSymbol(unsigned int symbol) { m_sprite.sprite = symbol; }
     const SpriteComponent& getSprite() const { return m_sprite; }
 
 private:

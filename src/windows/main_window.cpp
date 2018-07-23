@@ -49,6 +49,10 @@ void MainWindow::registerWidgets() {
             std::cout << "Loading" << std::endl;
             FileLoader loader(getEngine()->state());
             loader.loadState("./data/saves/test.yaml");
+            
+            MapWindow* l_win = new MapWindow();
+            l_win->initialise(getEngine());
+            getEngine()->getWindows()->replaceAllWindows(l_win);
         })
         ->setVerticalAlign(Widget::VerticalAlign::Bottom)
         ->setHorizontalAlign(Widget::HorizontalAlign::Centre);
