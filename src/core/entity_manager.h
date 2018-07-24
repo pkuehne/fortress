@@ -29,7 +29,7 @@ public:
     virtual Location getLocation(EntityId entity) {
         return m_locations[entity];
     }
-    virtual void setLocation(EntityId entity, Location& location);
+    virtual void setLocation(EntityId entity, const Location& location);
 
     virtual EntityHolder& get(unsigned int area) { return m_entities[area]; }
     virtual EntityHolder& all() { return m_allEntities; }

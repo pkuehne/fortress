@@ -53,7 +53,10 @@ void EntityManager::destroyEntity(EntityId id) {
     m_engine->raiseEvent(l_event);
 }
 
-void EntityManager::setLocation(EntityId entity, Location& location) {
+void EntityManager::setLocation(EntityId entity, const Location& location) {
+    if (!entity) {
+        return;
+    }
     if (m_locations[entity].isValid()) {
         m_engine->state()->tile(m_locations[entity]).removeEntity(entity);
         m_entities[location.area].erase(entity);

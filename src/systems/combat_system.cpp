@@ -16,7 +16,7 @@ void CombatSystem::handleAttackEntityEvent(const AttackEntityEvent* event) {
 void CombatSystem::handleAttack(EntityId attacker, EntityId defender) {
     GameState* state = m_engine->state();
     EquipmentComponent* l_attackerEquipment =
-        m_engine->state()->components()->get<EquipmentComponent>(attacker);
+        state->components()->get<EquipmentComponent>(attacker);
     unsigned int damage = 1;
     if (l_attackerEquipment && l_attackerEquipment->rightHandWieldable != 0) {
         EntityId l_weapon = l_attackerEquipment->rightHandWieldable;
@@ -34,8 +34,7 @@ void CombatSystem::handleAttack(EntityId attacker, EntityId defender) {
     updateLog(attacker, defender, damage);
 
     GraphicsEffectComponent* effect =
-        getEngine()->state()->components()->make<GraphicsEffectComponent>(
-            defender);
+        state->components()->make<GraphicsEffectComponent>(defender);
     effect->type = EFFECT_CHANGE_COLOR;
     effect->duration = 15;
     effect->new_color = Color(RED);
@@ -43,17 +42,39 @@ void CombatSystem::handleAttack(EntityId attacker, EntityId defender) {
     if (damage < l_health->health) {
         l_health->health -= damage;
     } else {
-        if (defender == getEngine()->state()->player()) {
-            state->entityManager()->destroyEntity(defender);
-        } else {
-            EntityId corpse =
-                state->prefabs().create("corpse", state->location(defender));
-            state->components()->get<SpriteComponent>(corpse)->sprite =
-                state->components()->get<SpriteComponent>(defender)->sprite;
+        killEntity(defender);
+    }
+}
 
-            state->entityManager()->destroyEntity(defender);
+void CombatSystem::killEntity(EntityId id) {
+    GameState* state = m_engine->state();
+    const Location location = state->location(id);
+
+    // Create the corpse
+    EntityId corpse = state->prefabs().create("corpse", location);
+    state->components()->get<SpriteComponent>(corpse)->sprite =
+        state->components()->get<SpriteComponent>(id)->sprite;
+
+    // Drop the equipment
+    EquipmentComponent* equipment =
+        state->components()->get<EquipmentComponent>(id);
+    if (equipment) {
+        equipment->carriedEquipment.push_back(equipment->headWearable);
+        equipment->carriedEquipment.push_back(equipment->faceWearable);
+        equipment->carriedEquipment.push_back(equipment->chestWearable);
+        equipment->carriedEquipment.push_back(equipment->armsWearable);
+        equipment->carriedEquipment.push_back(equipment->handsWearable);
+        equipment->carriedEquipment.push_back(equipment->legsWearable);
+        equipment->carriedEquipment.push_back(equipment->feetWearable);
+        equipment->carriedEquipment.push_back(equipment->rightHandWieldable);
+        equipment->carriedEquipment.push_back(equipment->leftHandWieldable);
+        equipment->carriedEquipment.push_back(equipment->armsWearable);
+
+        for (auto entity : equipment->carriedEquipment) {
+            state->entityManager()->setLocation(entity, location);
         }
     }
+    state->entityManager()->destroyEntity(id);
 }
 
 void CombatSystem::updateLog(const EntityId& attacker, const EntityId& target,
@@ -64,35 +85,21 @@ void CombatSystem::updateLog(const EntityId& attacker, const EntityId& target,
     DescriptionComponent* l_targetDesc =
         m_engine->state()->components()->get<DescriptionComponent>(target);
 
-    if (attacker == m_engine->state()->player()) {
-        str << "You";
-    } else if (l_attackerDesc != 0) {
+    if (l_attackerDesc != 0) {
         str << "The " << l_attackerDesc->title;
     } else {
         str << "Something";
     }
 
-    if (attacker == m_engine->state()->player()) {
-        str << " attack";
+    str << " attacks ";
+
+    if (l_targetDesc != 0) {
+        str << "the " << l_targetDesc->title;
     } else {
-        str << " attacks";
+        str << "something";
     }
 
-    if (target == m_engine->state()->player()) {
-        str << " you";
-    } else if (l_targetDesc != 0) {
-        str << " the " << l_targetDesc->title;
-    } else {
-        str << " something";
-    }
-
-    if (attacker == m_engine->state()->player()) {
-        str << " and cause";
-    } else {
-        str << " and causes";
-    }
-
-    str << " " << damage << " damage!";
+    str << " and causes " << damage << " damage!";
 
     if (attacker == m_engine->state()->player()) {
         m_engine->state()->addMessage(MessageType::INFO, str.str());

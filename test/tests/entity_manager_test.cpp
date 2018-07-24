@@ -115,3 +115,20 @@ TEST_F(EntityManager_getsetLocation, raisedAddEntityEvent) {
     // Then
     EXPECT_EQ(l, location);
 }
+
+TEST_F(EntityManager_getsetLocation, setDoesNothingForZeroEntity) {
+    // Given
+    Location location(1,2,3);
+    EntityId entity = 0;
+
+    EntityManager manager;
+    GameEngineMock mock;
+    manager.initialise(&mock);
+
+    // When
+    manager.setLocation(entity, location);
+    Location l = manager.getLocation(entity);
+
+    // Then
+    EXPECT_NE(l, location);
+}

@@ -10,4 +10,5 @@ private:
 
     void updateLog(const EntityId& attacker, const EntityId& target,
                    int damage);
+    void killEntity(EntityId id);
 };
