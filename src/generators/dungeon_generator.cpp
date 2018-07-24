@@ -73,8 +73,60 @@ bool DungeonGenerator::generateLevel() {
     return true;
 }
 
-void DungeonGenerator::createEntitiesFromMap() {
+void DungeonGenerator::createEntity(const Location& location) {
     auto state = m_engine->state();
+
+    auto createStair = [=](const Location& location, unsigned int& stair,
+                           bool down) {
+        stair = state->prefabs().create("stair", location);
+        state->components()->get<SpriteComponent>(stair)->sprite =
+            (30 + (down ? 1 : 0));
+    };
+    auto createOrc = [=](const Location& location) {
+        if (m_createBoss && m_level == m_maxDepth - 1) {
+            state->prefabs().create("troll", location);
+            m_createBoss = false;
+        } else {
+            state->prefabs().create("orc", location);
+        }
+    };
+
+    Tile& tile = state->tile(location);
+    tile.setFloorMaterial(FloorMaterial::Rock);
+
+    switch (getByCoordinate(location.x, location.y)) {
+        case WALL:
+        case CORNER:
+            tile.setWallMaterial(WallMaterial::Rock);
+            tile.overrideSpriteSymbol(wallSprite(location.x, location.y));
+            break;
+        case UP:
+            createStair(location, m_upStair, false);
+            break;
+        case DOWN:
+            if (m_level < m_maxDepth - 1 || m_downStairTarget) {
+                createStair(location, m_downStair, true);
+            }
+            break;
+        case ORC:
+            createOrc(location);
+            break;
+        case DOOR:
+            state->prefabs().create("door", location);
+            break;
+        case EMPTY:
+        case FLOOR:
+        case RESTRICTED:
+            break;
+        default:
+            LOG(WARNING) << "Creating marker prefab at " << location
+                         << std::endl;
+            state->prefabs().create("marker", location);
+            break;
+    }
+}
+
+void DungeonGenerator::createEntitiesFromMap() {
     for (unsigned int yy = 0; yy < m_mapHeight; yy++) {
         for (unsigned int xx = 0; xx < m_mapWidth; xx++) {
             Location location;
@@ -83,51 +135,7 @@ void DungeonGenerator::createEntitiesFromMap() {
             location.z = m_level;
             location.area = m_area;
 
-            Tile& tile = state->tile(location);
-            tile.setFloorMaterial(FloorMaterial::Rock);
-
-            switch (getByCoordinate(xx, yy)) {
-                case WALL:
-                case CORNER:
-                    tile.setWallMaterial(WallMaterial::Rock);
-                    tile.overrideSpriteSymbol(wallSprite(xx, yy));
-                    break;
-                case UP:
-                    m_upStair = state->prefabs().create("stair", location);
-                    state->components()
-                        ->get<SpriteComponent>(m_upStair)
-                        ->sprite = 30;
-                    break;
-                case DOWN:
-                    if (m_level < m_maxDepth - 1 || m_downStairTarget) {
-                        m_downStair =
-                            state->prefabs().create("stair", location);
-                        state->components()
-                            ->get<SpriteComponent>(m_downStair)
-                            ->sprite = 31;
-                    }
-                    break;
-                case ORC:
-                    if (m_createBoss && m_level == m_maxDepth - 1) {
-                        state->prefabs().create("troll", location);
-                        m_createBoss = false;
-                    } else {
-                        state->prefabs().create("orc", location);
-                    }
-                    break;
-                case DOOR:
-                    state->prefabs().create("door", location);
-                    break;
-                case EMPTY:
-                case FLOOR:
-                case RESTRICTED:
-                    break;
-                default:
-                    LOG(WARNING) << "Creating marker prefab at " << location
-                                 << std::endl;
-                    state->prefabs().create("marker", location);
-                    break;
-            }
+            createEntity(location);
         }
     }
 }
@@ -181,25 +189,6 @@ bool DungeonGenerator::generateRoom() {
         return false;
     }
 
-    for (unsigned int yy = top - 2; yy <= top + height + 1; yy++) {
-        for (unsigned int xx = left - 2; xx <= left + width + 1; xx++) {
-            getByCoordinate(xx, yy) = FLOOR; // By default
-
-            // Check whether this should be something else
-            if (yy < top || yy >= top + height || xx < left ||
-                xx >= left + width) {
-                getByCoordinate(xx, yy) = RESTRICTED;
-            } else if (yy == top || yy == top + height - 1 || xx == left ||
-                       xx == left + width - 1) {
-                getByCoordinate(xx, yy) = WALL; // It's a wall
-                if ((yy <= top + 1 || yy >= top + height - 2) &&
-                    (xx <= left + 1 || xx >= left + width - 2)) {
-                    getByCoordinate(xx, yy) = CORNER; // Wait, actually a corner
-                }
-            }
-        }
-    }
-
     Room l_room;
     l_room.x = left;
     l_room.y = top;
@@ -209,6 +198,29 @@ bool DungeonGenerator::generateRoom() {
     l_room.midY = top + (height / 2);
     l_room.index = CoordToIndex(l_room.midX, l_room.midY);
     m_rooms.push_back(l_room);
+
+    auto mapSetter = [=](unsigned int x, unsigned int y, Room& room) {
+        getByCoordinate(x, y) = FLOOR; // By default
+
+        // Check whether this should be something else
+        if (y < room.y || y >= room.y + room.height || x < room.x ||
+            x >= room.x + room.width) {
+            getByCoordinate(x, y) = RESTRICTED;
+        } else if (y == room.y || y == room.y + room.height - 1 ||
+                   x == room.x || x == room.x + room.width - 1) {
+            getByCoordinate(x, y) = WALL; // It's a wall
+            if ((y <= room.y + 1 || y >= room.y + room.height - 2) &&
+                (x <= room.x + 1 || x >= room.x + room.width - 2)) {
+                getByCoordinate(x, y) = CORNER; // Wait, actually a corner
+            }
+        }
+    };
+
+    for (unsigned int yy = top - 2; yy <= top + height + 1; yy++) {
+        for (unsigned int xx = left - 2; xx <= left + width + 1; xx++) {
+            mapSetter(xx, yy, l_room);
+        }
+    }
 
     return true;
 }
@@ -267,8 +279,9 @@ void DungeonGenerator::placeDownStair() {
     if (m_rooms.size() < 2)
         return; // No point
     unsigned int room = m_startRoom;
-    while (room == m_startRoom)
+    while (room == m_startRoom) {
         room = Utility::randBetween(0, m_rooms.size() - 1);
+    }
     getByCoordinate(m_rooms[room].midX, m_rooms[room].midY) = DOWN;
 }
 
@@ -280,8 +293,9 @@ void DungeonGenerator::placeOrcs() {
     for (size_t ii = 0; ii < numOrcs; ii++) {
         while (1) {
             unsigned int room = Utility::randBetween(0, m_rooms.size() - 1);
-            if (m_startRoom == room)
+            if (m_startRoom == room) {
                 continue;
+            }
             unsigned int x, y;
             x = m_rooms[room].x +
                 (Utility::randBetween(0, m_rooms[room].width - 2)) + 1;
@@ -293,6 +307,18 @@ void DungeonGenerator::placeOrcs() {
                 break;
             }
         }
+    }
+}
+void DungeonGenerator::placeItem(const Location& location) {
+    unsigned int type = Utility::randBetween(0, 100);
+    if (type < 70) { // Potion
+        m_engine->state()->prefabs().create("potion", location);
+    } else if (type < 80) {
+        m_engine->state()->prefabs().create("sword", location);
+    } else if (type < 90) {
+        m_engine->state()->prefabs().create("shield", location);
+    } else if (type < 100) {
+        m_engine->state()->prefabs().create("helmet", location);
     }
 }
 
@@ -318,17 +344,7 @@ void DungeonGenerator::placeItems() {
         location.y = y;
         location.z = m_level;
         location.area = m_area;
-
-        unsigned int type = Utility::randBetween(0, 100);
-        if (type < 70) { // Potion
-            m_engine->state()->prefabs().create("potion", location);
-        } else if (type < 80) {
-            m_engine->state()->prefabs().create("sword", location);
-        } else if (type < 90) {
-            m_engine->state()->prefabs().create("shield", location);
-        } else if (type < 100) {
-            m_engine->state()->prefabs().create("helmet", location);
-        }
+        placeItem(location);
     }
 }
 
@@ -351,41 +367,11 @@ int calculateSpriteKey(unsigned char left, unsigned char up,
 }
 
 unsigned char spriteCharFromKey(int sprite_key) {
-    switch (sprite_key) {
-        case 1:
-            return 210;
-        case 2:
-            return 198;
-        case 3:
-            return 201;
-        case 4:
-            return 208;
-        case 5:
-            return 186;
-        case 6:
-            return 200;
-        case 7:
-            return 204;
-        case 8:
-            return 181;
-        case 9:
-            return 187;
-        case 10:
-            return 205;
-        case 11:
-            return 203;
-        case 12:
-            return 188;
-        case 13:
-            return 185;
-        case 14:
-            return 202;
-        case 0:
-        case 15:
-        default:
-            return 206;
-    }
-    return 206;
+    static const unsigned char sprite[16] = {206, 210, 198, 201, 208, 186,
+                                             200, 204, 181, 187, 205, 203,
+                                             188, 185, 202, 206};
+
+    return sprite[sprite_key];
 }
 
 unsigned char DungeonGenerator::wallSprite(unsigned int x, unsigned int y) {

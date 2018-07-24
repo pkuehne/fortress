@@ -13,8 +13,8 @@ void GameOverWindow::registerWidgets() {
 
 void GameOverWindow::setup() {
     setTitle("GAME OVER");
-    setHeight(13);
-    setWidth(5);
+    setHeight(5);
+    setWidth(13);
 
     setEscapeBehaviour(Window::EscapeBehaviour::QuitGame);
 }

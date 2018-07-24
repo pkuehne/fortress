@@ -4,8 +4,13 @@
 #include "generator_interface.h"
 #include <vector>
 
+class Location;
+
 class DungeonGenerator : public GeneratorInterface {
 public:
+    DungeonGenerator() = default;
+    virtual ~DungeonGenerator() = default;
+
     bool generate();
     void reset();
     unsigned int& numberOfRooms() { return m_roomTarget; }
@@ -29,6 +34,7 @@ private:
 
 private:
     void createEntitiesFromMap();
+    void createEntity(const Location& location);
     void connectStairs();
     bool generateRoom();
     bool generateLevel();
@@ -37,6 +43,7 @@ private:
     void placeDownStair();
     void placeOrcs();
     void placeItems();
+    void placeItem(const Location& location);
     unsigned char wallSprite(unsigned int x, unsigned int y);
     bool validateRoom(unsigned int width, unsigned int height,
                       unsigned int left, unsigned int top);
