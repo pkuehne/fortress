@@ -1,0 +1,79 @@
+#pragma once
+#include <functional>
+
+/// @brief An abstract representation of a room with utility functions
+class Room {
+public:
+    Room() = default;
+    Room(unsigned int x, unsigned int y, unsigned int width,
+         unsigned int height)
+        : m_x(x), m_y(y), m_width(width), m_height(height) {}
+    ~Room() = default;
+
+    unsigned int getX() const { return m_x; }
+    unsigned int getY() const { return m_y; }
+    unsigned int getWidth() const { return m_width; }
+    unsigned int getHeight() const { return m_height; }
+    unsigned int getInnerWidth() const { return m_width < 2 ? 0 : m_width - 2; }
+    unsigned int getInnerHeight() const {
+        return m_height < 2 ? 0 : m_height - 2;
+    }
+    unsigned int getMidX() const { return m_x + m_width / 2; }
+    unsigned int getMidY() const { return m_y + m_height / 2; }
+
+    unsigned int getLeft() const { return m_x; }
+    unsigned int getRight() const {
+        return m_width < 1 ? 0 : m_x + m_width - 1;
+    }
+    unsigned int getTop() const { return m_y; }
+    unsigned int getBottom() const {
+        return m_height < 1 ? 0 : m_y + m_height - 1;
+    }
+
+    bool isInRoom(unsigned int x, unsigned int y) {
+        return x >= getLeft() && x <= getRight() && y >= getTop() &&
+               y <= getBottom();
+    }
+
+    bool isInterior(unsigned int x, unsigned int y) {
+        return x > getLeft() && x < getRight() && y > getTop() &&
+               y < getBottom();
+    }
+
+    bool isWall(unsigned int x, unsigned int y) {
+        return isInRoom(x, y) && !isInterior(x, y);
+    }
+
+    bool isTopLeftCorner(unsigned int x, unsigned int y) {
+        return x == getLeft() && y == getTop();
+    }
+    bool isTopRightCorner(unsigned int x, unsigned int y) {
+        return x == getRight() && y == getTop();
+    }
+    bool isBottomLeftCorner(unsigned int x, unsigned int y) {
+        return x == getLeft() && y == getBottom();
+    }
+    bool isBottomRightCorner(unsigned int x, unsigned int y) {
+        return x == getRight() && y == getBottom();
+    }
+
+    bool isCorner(unsigned int x, unsigned int y) {
+        return isTopRightCorner(x, y) || isTopLeftCorner(x, y) ||
+               isBottomRightCorner(x, y) || isBottomLeftCorner(x, y);
+    }
+
+    /// @brief checks whether this room intersects another room
+    /// @param[in] other The other room to check against
+    bool intersect(const Room& other);
+
+    /// @brief Execute callback function for each wall of the room
+    /// @param[in] callback The callback to execute
+    void
+    walkWalls(std::function<void(unsigned int x, unsigned int y)> callback);
+
+private:
+    unsigned int m_x = 0;
+    unsigned int m_y = 0;
+    unsigned int m_width = 0;
+    unsigned int m_height = 0;
+};
