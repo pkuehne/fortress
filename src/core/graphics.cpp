@@ -10,6 +10,75 @@
 
 static Graphics* g_graphics = 0;
 
+/// @brief Converts GLFW key code to our enum
+/// @param[in,out] key The key code to convert
+void overrideSpecialKey(int& key) {
+    if (key == GLFW_KEY_ESCAPE) {
+        key = KEY_ESC;
+    } else if (key == GLFW_KEY_TAB) {
+        key = KEY_TAB;
+    } else if (key == GLFW_KEY_ENTER) {
+        key = KEY_ENTER;
+    } else if (key == GLFW_KEY_UP) {
+        key = KEY_UP;
+    } else if (key == GLFW_KEY_DOWN) {
+        key = KEY_DOWN;
+    } else if (key == GLFW_KEY_LEFT) {
+        key = KEY_LEFT;
+    } else if (key == GLFW_KEY_RIGHT) {
+        key = KEY_RIGHT;
+    } else if (key == GLFW_KEY_BACKSPACE) {
+        key = KEY_BACKSPACE;
+    }
+}
+
+void overrideNumRowKey(int& key) {
+    if (key == 49) {
+        key = '!'; // Shift 1
+    } else if (key == 50) {
+        key = '"'; // Shift 2
+    } else if (key == 51) {
+        key = '@'; // Shift 3
+    } else if (key == 52) {
+        key = '$'; // Shift 4
+    } else if (key == 53) {
+        key = '%'; // Shift 5
+    } else if (key == 54) {
+        key = '^'; // Shift 6
+    } else if (key == 55) {
+        key = '&'; // Shift 7
+    } else if (key == 56) {
+        key = '*'; // Shift 8
+    } else if (key == 57) {
+        key = '('; // Shift 9
+    } else if (key == 48) {
+        key = ')'; // Shift 0
+    }
+}
+
+void overrideSymbolKey(int& key) {
+    if (key == 45) {
+        key = '_'; // Shift -
+    } else if (key == 61) {
+        key = '+'; // Shift =
+    } else if (key == 91) {
+        key = '{'; // Shift [
+    } else if (key == 93) {
+        key = '}'; // Shift ]
+    }
+}
+
+void convertKey(int& key, int mods) {
+    if (mods & GLFW_MOD_SHIFT) {
+        overrideNumRowKey(key);
+        overrideSymbolKey(key);
+    }
+    if (key > 64 && key < 91 && !(mods & GLFW_MOD_SHIFT)) {
+        key += 32;
+    }
+    overrideSpecialKey(key);
+}
+
 void resizeWindowCallBack(GLFWwindow*, int width, int height) {
     g_graphics->callResizeFunc(width, height);
 }
@@ -30,54 +99,11 @@ void Graphics::callResizeFunc(int width, int height) {
 void Graphics::callKeyboardFunc(int key, int scancode, int action, int mods) {
     // std::cout << "Key: " << key << " scancode: " << scancode << " action: "
     // << action << " mods " << mods << std::endl;
-    if (key == 340)
+    if (key == 340) {
         return; // Don't pass on shift key presses
-    if (key == 49 && (mods & GLFW_MOD_SHIFT))
-        key = '!'; // Shift 1
-    if (key == 50 && (mods & GLFW_MOD_SHIFT))
-        key = '"'; // Shift 2
-    if (key == 51 && (mods & GLFW_MOD_SHIFT))
-        key = '@'; // Shift 3
-    if (key == 52 && (mods & GLFW_MOD_SHIFT))
-        key = '$'; // Shift 4
-    if (key == 53 && (mods & GLFW_MOD_SHIFT))
-        key = '%'; // Shift 5
-    if (key == 54 && (mods & GLFW_MOD_SHIFT))
-        key = '^'; // Shift 6
-    if (key == 55 && (mods & GLFW_MOD_SHIFT))
-        key = '&'; // Shift 7
-    if (key == 56 && (mods & GLFW_MOD_SHIFT))
-        key = '*'; // Shift 8
-    if (key == 57 && (mods & GLFW_MOD_SHIFT))
-        key = '('; // Shift 9
-    if (key == 48 && (mods & GLFW_MOD_SHIFT))
-        key = ')'; // Shift 0
-    if (key == 45 && (mods & GLFW_MOD_SHIFT))
-        key = '_'; // Shift -
-    if (key == 61 && (mods & GLFW_MOD_SHIFT))
-        key = '+'; // Shift =
-    if (key == 91 && (mods & GLFW_MOD_SHIFT))
-        key = '{'; // Shift [
-    if (key == 93 && (mods & GLFW_MOD_SHIFT))
-        key = '}'; // Shift ]
-    if (key > 64 && key < 91 && !(mods & GLFW_MOD_SHIFT))
-        key += 32;
-    if (key == GLFW_KEY_ESCAPE)
-        key = KEY_ESC;
-    if (key == GLFW_KEY_TAB)
-        key = KEY_TAB;
-    if (key == GLFW_KEY_ENTER)
-        key = KEY_ENTER;
-    if (key == GLFW_KEY_UP)
-        key = KEY_UP;
-    if (key == GLFW_KEY_DOWN)
-        key = KEY_DOWN;
-    if (key == GLFW_KEY_LEFT)
-        key = KEY_LEFT;
-    if (key == GLFW_KEY_RIGHT)
-        key = KEY_RIGHT;
-    if (key == GLFW_KEY_BACKSPACE)
-        key = KEY_BACKSPACE;
+    }
+
+    convertKey(key, mods);
 
     if (action == GLFW_PRESS || action == GLFW_REPEAT) {
         if (m_keyDownFunc)

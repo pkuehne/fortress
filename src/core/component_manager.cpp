@@ -1,1 +1,18 @@
 #include "component_manager.h"
+
+void ComponentManager::add(EntityId entity, ComponentBase* component) {
+    if (component == nullptr) {
+        LOG(WARNING) << "Can't add a nullptr" << std::endl;
+        return;
+    }
+    ComponentHolder& holder = m_components[entity];
+    auto iter = holder.find(typeid(*component).name());
+    if (iter == holder.end()) {
+        holder[typeid(*component).name()] = component;
+    } else {
+        LOG(WARNING) << "Tried to add existing component "
+                     << typeid(*component).name() << " to Entity " << entity
+                     << std::endl;
+        return;
+    }
+}
