@@ -382,6 +382,40 @@ TEST_F(Room_Intersect, NoOverlap) {
     EXPECT_FALSE(B.intersect(A));
 }
 
+class Room_IntersectWithin : public ::testing::Test {};
+
+// BBB
+// B B
+// BBB AAA
+//     A A
+//     AAA
+TEST_F(Room_IntersectWithin, NoOverlap) {
+    // Given
+    Room A(1, 1, 5, 5);
+    Room B(10, 10, 5, 5);
+
+    // Then
+    EXPECT_FALSE(A.intersectWithin(B, 2));
+    EXPECT_FALSE(B.intersectWithin(A, 2));
+}
+
+// EEEEE
+// EBBBE
+// EB BE
+// EBBBE
+// EEEEAAA
+//     A A
+//     AAA
+TEST_F(Room_IntersectWithin, CornerOverlapInExclusion) {
+    // Given
+    Room A(1, 1, 3, 3);
+    Room B(4, 4, 5, 5);
+
+    // Then
+    EXPECT_TRUE(A.intersectWithin(B, 1));
+    EXPECT_TRUE(B.intersectWithin(A, 1));
+}
+
 class Room_WalkWalls : public ::testing::Test {};
 
 // WWW
@@ -401,10 +435,64 @@ TEST_F(Room_WalkWalls, walksAllWalls) {
             corners++;
         }
         walls++;
-        std::cout << "(" << x << ", " << y << ")" << std::endl;
     });
 
     // Then
     EXPECT_EQ(8, walls);
     EXPECT_EQ(4, corners);
+}
+
+class Room_WalkWithin : public ::testing::Test {};
+
+// EEEEE
+// EWWWE
+// EWRWE
+// EWWWE
+// EEEEE
+// = 8 Walls
+TEST_F(Room_WalkWithin, walksAllCells) {
+    // Given
+    Room room(1, 1, 3, 3);
+    unsigned int count = 0;
+
+    // When
+    room.walkWithin([&](unsigned int x, unsigned int y) { count++; }, 1);
+
+    // Then
+    EXPECT_EQ(25, count);
+}
+
+// WWWE
+// WRWE
+// WWWE
+// EEEE
+// = 8 Walls
+TEST_F(Room_WalkWithin, ignoresExclusionZoneOutsideMap) {
+    // Given
+    Room room(0, 0, 3, 3);
+    unsigned int count = 0;
+
+    // When
+    room.walkWithin([&](unsigned int x, unsigned int y) { count++; }, 1);
+
+    // Then
+    EXPECT_EQ(16, count);
+}
+
+class Room_isValid : public ::testing::Test {};
+
+TEST_F(Room_isValid, isTrueIfTheRoomFits) {
+    // Given
+    Room room(1, 1, 5, 5);
+
+    // Then
+    EXPECT_TRUE(room.isValid(10, 10));
+}
+
+TEST_F(Room_isValid, isFalseIfRoomIsTooLarge) {
+    // Given
+    Room room(1, 1, 10, 10);
+
+    // Then
+    EXPECT_FALSE(room.isValid(5, 5));
 }

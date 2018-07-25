@@ -31,9 +31,9 @@ void Camera::renderSprites() {
         for (unsigned int xx = 0; xx < getWidth(); xx++) {
             unsigned int tileX = xx + m_mapOffsetX;
             Location loc(tileX, tileY, tileZ, m_area);
-            if (!m_state->isValidTile(loc))
+            if (!m_state->isValidTile(loc)) {
                 continue;
-
+            }
             Tile& l_tile = m_state->tile(loc);
             std::map<unsigned int, std::vector<const SpriteComponent*>>
                 l_sprites;

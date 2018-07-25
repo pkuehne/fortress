@@ -165,11 +165,6 @@ void DungeonGenerator::connectStairs() {
 
 bool DungeonGenerator::validateRoom(unsigned int width, unsigned int height,
                                     unsigned int left, unsigned int top) {
-    if (left + width >= m_mapWidth || left < 1 || top + height >= m_mapHeight ||
-        top < 1) {
-        return false;
-    }
-
     for (unsigned int yy = top - 2; yy <= top + height + 1; yy++) {
         for (unsigned int xx = left - 2; xx <= left + width + 1; xx++) {
             if (getByCoordinate(xx, yy) != EMPTY)
@@ -185,38 +180,26 @@ bool DungeonGenerator::generateRoom() {
     unsigned int left = Utility::randBetween(2, (m_mapWidth - width - 2));
     unsigned int top = Utility::randBetween(2, (m_mapHeight - height - 2));
 
-    if (!validateRoom(width, height, left, top)) {
-        return false;
+    Room room(left, top, width, height);
+    for (auto r : m_rooms) {
+        if (r.intersectWithin(room, 2)) {
+            return false;
+        }
     }
+    m_rooms.push_back(room);
 
-    Room l_room(left, top, width, height);
-    m_rooms.push_back(l_room);
-
-    auto mapSetter = [=](unsigned int x, unsigned int y, Room& room) {
-        getByCoordinate(x, y) = FLOOR; // By default
-
-        // Check whether this should be something else
-        if (y < room.getY() || y >= room.getY() + room.getHeight() ||
-            x < room.getX() || x >= room.getX() + room.getWidth()) {
+    auto updateMap = [&](unsigned int x, unsigned int y) {
+        if (room.isCorner(x, y)) {
+            getByCoordinate(x, y) = CORNER;
+        } else if (room.isWall(x, y)) {
+            getByCoordinate(x, y) = WALL;
+        } else if (room.isInterior(x, y)) {
+            getByCoordinate(x, y) = FLOOR;
+        } else {
             getByCoordinate(x, y) = RESTRICTED;
-        } else if (y == room.getY() ||
-                   y == room.getY() + room.getHeight() - 1 ||
-                   x == room.getX() || x == room.getX() + room.getWidth() - 1) {
-            getByCoordinate(x, y) = WALL; // It's a wall
-            if ((y <= room.getY() + 1 ||
-                 y >= room.getY() + room.getHeight() - 2) &&
-                (x <= room.getX() + 1 ||
-                 x >= room.getX() + room.getWidth() - 2)) {
-                getByCoordinate(x, y) = CORNER; // Wait, actually a corner
-            }
         }
     };
-
-    for (unsigned int yy = top - 2; yy <= top + height + 1; yy++) {
-        for (unsigned int xx = left - 2; xx <= left + width + 1; xx++) {
-            mapSetter(xx, yy, l_room);
-        }
-    }
+    room.walkWithin(updateMap, 2);
 
     return true;
 }

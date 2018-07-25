@@ -1,6 +1,8 @@
 #pragma once
 #include <functional>
 
+typedef std::function<void(unsigned int x, unsigned int y)> WalkCallback;
+
 /// @brief An abstract representation of a room with utility functions
 class Room {
 public:
@@ -30,15 +32,20 @@ public:
         return m_height < 1 ? 0 : m_y + m_height - 1;
     }
 
-    bool isInRoom(unsigned int x, unsigned int y) {
-        return x >= getLeft() && x <= getRight() && y >= getTop() &&
-               y <= getBottom();
-    }
+    /// @brief Validates that the room fits onto the map
+    /// @param[in] mapWidth The width of the map to check against
+    /// @param[in] mapHeight The height of the map to check against
+    bool isValid(unsigned int mapWidth, unsigned int mapHeight);
 
-    bool isInterior(unsigned int x, unsigned int y) {
-        return x > getLeft() && x < getRight() && y > getTop() &&
-               y < getBottom();
-    }
+    /// @brief Is the selected point part of the room as a whole?
+    /// @param[in] x The X coordinate
+    /// @param[in] x The y coordinate
+    bool isInRoom(unsigned int x, unsigned int y);
+
+    /// @brief Is the selected point inside the walls of this room?
+    /// @param[in] x The X coordinate
+    /// @param[in] x The y coordinate
+    bool isInterior(unsigned int x, unsigned int y);
 
     bool isWall(unsigned int x, unsigned int y) {
         return isInRoom(x, y) && !isInterior(x, y);
@@ -66,10 +73,20 @@ public:
     /// @param[in] other The other room to check against
     bool intersect(const Room& other);
 
+    /// @brief checks whether this room intersects another room
+    /// within a given number of tiles
+    /// @param[in] other The other room to check against
+    /// @param[in] distance The 'radius' to extend
+    bool intersectWithin(const Room& other, unsigned int distance);
+
     /// @brief Execute callback function for each wall of the room
     /// @param[in] callback The callback to execute
-    void
-    walkWalls(std::function<void(unsigned int x, unsigned int y)> callback);
+    void walkWalls(WalkCallback callback);
+
+    /// @brief Execute callback function for every cell within distance
+    /// @param[in] callback The callback to execute
+    /// @param[in] distance The distance around the room
+    void walkWithin(WalkCallback callback, unsigned int distance);
 
 private:
     unsigned int m_x = 0;
