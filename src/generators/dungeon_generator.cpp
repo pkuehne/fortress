@@ -189,28 +189,24 @@ bool DungeonGenerator::generateRoom() {
         return false;
     }
 
-    Room l_room;
-    l_room.x = left;
-    l_room.y = top;
-    l_room.width = width;
-    l_room.height = height;
-    l_room.midX = left + (width / 2);
-    l_room.midY = top + (height / 2);
-    l_room.index = CoordToIndex(l_room.midX, l_room.midY);
+    Room l_room(left, top, width, height);
     m_rooms.push_back(l_room);
 
     auto mapSetter = [=](unsigned int x, unsigned int y, Room& room) {
         getByCoordinate(x, y) = FLOOR; // By default
 
         // Check whether this should be something else
-        if (y < room.y || y >= room.y + room.height || x < room.x ||
-            x >= room.x + room.width) {
+        if (y < room.getY() || y >= room.getY() + room.getHeight() ||
+            x < room.getX() || x >= room.getX() + room.getWidth()) {
             getByCoordinate(x, y) = RESTRICTED;
-        } else if (y == room.y || y == room.y + room.height - 1 ||
-                   x == room.x || x == room.x + room.width - 1) {
+        } else if (y == room.getY() ||
+                   y == room.getY() + room.getHeight() - 1 ||
+                   x == room.getX() || x == room.getX() + room.getWidth() - 1) {
             getByCoordinate(x, y) = WALL; // It's a wall
-            if ((y <= room.y + 1 || y >= room.y + room.height - 2) &&
-                (x <= room.x + 1 || x >= room.x + room.width - 2)) {
+            if ((y <= room.getY() + 1 ||
+                 y >= room.getY() + room.getHeight() - 2) &&
+                (x <= room.getX() + 1 ||
+                 x >= room.getX() + room.getWidth() - 2)) {
                 getByCoordinate(x, y) = CORNER; // Wait, actually a corner
             }
         }
@@ -234,8 +230,8 @@ void DungeonGenerator::connectRooms(Room& start, Room& end) {
     algo.setNumNeighbours(4);
 
     PathVector l_path;
-    Location startLoc(start.midX, start.midY, 0);
-    Location endLoc(end.midX, end.midY, 0);
+    Location startLoc(start.getMidX(), start.getMidY(), 0);
+    Location endLoc(end.getMidX(), end.getMidY(), 0);
     algo.findPath(startLoc, endLoc, l_path);
     // std::cout << "Found a " << l_path.size() << " tile corridor from "
     //    << startLoc << " to " << endLoc
@@ -272,17 +268,19 @@ void DungeonGenerator::connectRooms(Room& start, Room& end) {
 
 void DungeonGenerator::placeUpStair() {
     m_startRoom = Utility::randBetween(0, m_rooms.size() - 1);
-    getByCoordinate(m_rooms[m_startRoom].midX, m_rooms[m_startRoom].midY) = UP;
+    getByCoordinate(m_rooms[m_startRoom].getMidX(),
+                    m_rooms[m_startRoom].getMidY()) = UP;
 }
 
 void DungeonGenerator::placeDownStair() {
-    if (m_rooms.size() < 2)
+    if (m_rooms.size() < 2) {
         return; // No point
+    }
     unsigned int room = m_startRoom;
     while (room == m_startRoom) {
         room = Utility::randBetween(0, m_rooms.size() - 1);
     }
-    getByCoordinate(m_rooms[room].midX, m_rooms[room].midY) = DOWN;
+    getByCoordinate(m_rooms[room].getMidX(), m_rooms[room].getMidY()) = DOWN;
 }
 
 void DungeonGenerator::placeOrcs() {
@@ -297,10 +295,10 @@ void DungeonGenerator::placeOrcs() {
                 continue;
             }
             unsigned int x, y;
-            x = m_rooms[room].x +
-                (Utility::randBetween(0, m_rooms[room].width - 2)) + 1;
-            y = m_rooms[room].y +
-                (Utility::randBetween(0, m_rooms[room].height - 2)) + 1;
+            x = m_rooms[room].getX() +
+                (Utility::randBetween(0, m_rooms[room].getWidth() - 2)) + 1;
+            y = m_rooms[room].getY() +
+                (Utility::randBetween(0, m_rooms[room].getHeight() - 2)) + 1;
             unsigned char& tile = getByCoordinate(x, y);
             if (tile == FLOOR) {
                 tile = ORC;
@@ -333,10 +331,10 @@ void DungeonGenerator::placeItems() {
         unsigned int room = Utility::randBetween(0, m_rooms.size() - 1);
         unsigned int x, y;
         do {
-            x = m_rooms[room].x +
-                (Utility::randBetween(0, m_rooms[room].width - 2)) + 1;
-            y = m_rooms[room].y +
-                (Utility::randBetween(0, m_rooms[room].height - 2)) + 1;
+            x = m_rooms[room].getX() +
+                (Utility::randBetween(0, m_rooms[room].getWidth() - 2)) + 1;
+            y = m_rooms[room].getY() +
+                (Utility::randBetween(0, m_rooms[room].getHeight() - 2)) + 1;
         } while (getByCoordinate(x, y) != FLOOR);
 
         Location location;
