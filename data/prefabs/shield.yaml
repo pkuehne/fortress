@@ -10,6 +10,7 @@ background-color:
   - 0
   - 0
 droppable: true
+collidable: false
 wieldable:
   position: 2
   damage: 0

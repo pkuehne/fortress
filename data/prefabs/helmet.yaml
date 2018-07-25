@@ -10,5 +10,6 @@ background-color:
   - 0
   - 0
 droppable: true
+collidable: false
 wearable:
   position: 3
