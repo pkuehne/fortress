@@ -13,3 +13,4 @@ health: 4
 smart:
   fsm: dog
   target: "Forester"
+faction: "Human"

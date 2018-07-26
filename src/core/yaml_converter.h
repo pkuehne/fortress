@@ -8,6 +8,7 @@
 #include "../components/equipment_component.h"
 #include "../components/graphics_effect_component.h"
 #include "../components/health_component.h"
+#include "../components/identity_component.h"
 #include "../components/npc_component.h"
 #include "../components/openable_component.h"
 #include "../components/player_component.h"
@@ -465,6 +466,24 @@ template <> struct convert<WieldableComponent> {
         rhs.baseDefence = node["baseDefence"].as<int>();
         rhs.position =
             static_cast<WieldablePosition>(node["position"].as<int>());
+        return true;
+    }
+};
+
+// IdentityComponent
+template <> struct convert<IdentityComponent> {
+    static Node encode(const IdentityComponent& rhs) {
+        Node node;
+        node["faction"] = rhs.faction;
+        return node;
+    }
+
+    static bool decode(const Node& node, IdentityComponent& rhs) {
+        if (!node.IsMap() || node.size() != 1) {
+            return false;
+        }
+
+        rhs.faction = node["faction"].as<int>();
         return true;
     }
 };

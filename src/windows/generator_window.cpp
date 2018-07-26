@@ -120,24 +120,24 @@ void GeneratorWindow::redraw() {
 void GeneratorWindow::generateFactions() {
     GameState* state = getEngine()->state();
 
-    Faction herbivores("Herbivores");
+    Faction herbivores("Herbivore");
     herbivores.setDefaultRelationship(-40);
-    herbivores.setRelationship("Carnivores", -100);
+    herbivores.setRelationship("Carnivore", -100);
     state->world().addFaction(herbivores);
 
-    Faction carnivores("Carnivores");
+    Faction carnivores("Carnivore");
     carnivores.setDefaultRelationship(-40);
     state->world().addFaction(carnivores);
 
-    Faction orcs("Orcs");
+    Faction orcs("Orc");
     orcs.setDefaultRelationship(-100);
     state->world().addFaction(orcs);
 
-    Faction humans("Humans");
+    Faction humans("Human");
     humans.setDefaultRelationship(0);
-    humans.setRelationship("Herbivores", 20);
-    humans.setRelationship("Carnivores", -60);
-    humans.setRelationship("Orcs", -100);
+    humans.setRelationship("Herbivore", 20);
+    humans.setRelationship("Carnivore", -60);
+    humans.setRelationship("Orc", -100);
     state->world().addFaction(humans);
 }
 
