@@ -9,7 +9,7 @@ public:
 
     /// @brief Constructs a new faction with the given name
     /// @param[in] name The name of the faction
-    Faction(const std::string& name);
+    explicit Faction(const std::string& name);
 
     /// @brief Provides the name of the faction
     const std::string& getName() const { return m_name; }

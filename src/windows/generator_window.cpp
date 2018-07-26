@@ -139,8 +139,6 @@ void GeneratorWindow::generateFactions() {
     humans.setRelationship("Carnivores", -60);
     humans.setRelationship("Orcs", -100);
     state->world().addFaction(humans);
-
-    assert(state->world().getFactions().size() == 4);
 }
 
 void GeneratorWindow::startGenerating() {
