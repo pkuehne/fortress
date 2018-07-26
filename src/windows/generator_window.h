@@ -26,6 +26,7 @@ public:
     }
 
 private:
+    void generateFactions();
     void startGenerating();
     void startPlaying();
 

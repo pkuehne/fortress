@@ -7,6 +7,7 @@
 #include "map_manager.h"
 #include "prefab_builder.h"
 #include "quest.h"
+#include "world_info.h"
 
 class Tile;
 enum class MessageType { INFO = 0, GOOD = 1, WARN = 2, CRIT = 3 };
@@ -77,6 +78,9 @@ public:
 
     std::vector<Quest*>& getQuests() { return m_quests; }
 
+    /// @brief Provides access to the world information
+    WorldInfo& world() { return m_world; }
+
 private:
     bool m_playerTurn = true;
     tick_t m_turn = 0;
@@ -88,4 +92,5 @@ private:
     std::vector<Message> m_messages;
     Debug m_debug;
     std::vector<Quest*> m_quests;
+    WorldInfo m_world;
 };

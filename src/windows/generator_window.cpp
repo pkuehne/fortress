@@ -117,7 +117,35 @@ void GeneratorWindow::redraw() {
     }
 }
 
+void GeneratorWindow::generateFactions() {
+    GameState* state = getEngine()->state();
+
+    Faction herbivores("Herbivores");
+    herbivores.setDefaultRelationship(-40);
+    herbivores.setRelationship("Carnivores", -100);
+    state->world().addFaction(herbivores);
+
+    Faction carnivores("Carnivores");
+    carnivores.setDefaultRelationship(-40);
+    state->world().addFaction(carnivores);
+
+    Faction orcs("Orcs");
+    orcs.setDefaultRelationship(-100);
+    state->world().addFaction(orcs);
+
+    Faction humans("Humans");
+    humans.setDefaultRelationship(0);
+    humans.setRelationship("Herbivores", 20);
+    humans.setRelationship("Carnivores", -60);
+    humans.setRelationship("Orcs", -100);
+    state->world().addFaction(humans);
+
+    assert(state->world().getFactions().size() == 4);
+}
+
 void GeneratorWindow::startGenerating() {
+    generateFactions();
+
     m_progress = 1;
     m_status = PROGRESS;
     unsigned int l_levelWidth =
