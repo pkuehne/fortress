@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../world/world_info.h"
 #include "color.h"
 #include "component_manager.h"
 #include "entity_manager.h"
@@ -7,7 +8,6 @@
 #include "map_manager.h"
 #include "prefab_builder.h"
 #include "quest.h"
-#include "world_info.h"
 
 class Tile;
 enum class MessageType { INFO = 0, GOOD = 1, WARN = 2, CRIT = 3 };

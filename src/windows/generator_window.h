@@ -26,7 +26,7 @@ public:
     }
 
 private:
-    void generateFactions();
+    void generateGroupings();
     void startGenerating();
     void startPlaying();
 

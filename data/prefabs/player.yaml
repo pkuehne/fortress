@@ -15,4 +15,5 @@ equipment:
   leftHand: "shield"
   head: "helmet"
 player: true
-faction: "Human"
+groupings: 
+  - "Human"

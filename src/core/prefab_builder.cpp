@@ -8,8 +8,8 @@
 #include "../components/description_component.h"
 #include "../components/droppable_component.h"
 #include "../components/equipment_component.h"
+#include "../components/grouping_component.h"
 #include "../components/health_component.h"
-#include "../components/identity_component.h"
 #include "../components/npc_component.h"
 #include "../components/openable_component.h"
 #include "../components/player_component.h"
@@ -154,9 +154,12 @@ EntityId PrefabBuilder::create(const std::string& name,
         m_components->make<PlayerComponent>(entity);
     }
 
-    if (node["smart"].IsDefined() || node["player"].IsDefined()) {
-        auto l_identity = m_components->make<IdentityComponent>(entity);
-        l_identity->faction = node["faction"].as<std::string>("");
+    if (node["groupings"].IsDefined()) {
+        auto l_grouping = m_components->make<GroupingComponent>(entity);
+        for (YAML::const_iterator iter = node["groupings"].begin();
+             iter != node["groupings"].end(); ++iter) {
+            l_grouping->groupings.push_back(iter->second.as<std::string>(""));
+        }
     }
 
     return entity;

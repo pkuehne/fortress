@@ -15,7 +15,7 @@ void encodeEntity(GameState* state, YAML::Node& node, EntityId entity) {
     auto* connector = state->components()->get<ConnectorComponent>(entity);
     auto* wear = state->components()->get<WearableComponent>(entity);
     auto* wield = state->components()->get<WieldableComponent>(entity);
-    auto* identity = state->components()->get<IdentityComponent>(entity);
+    auto* grouping = state->components()->get<GroupingComponent>(entity);
 
     if (collide) {
         node[entity]["collide"] = *collide;
@@ -59,8 +59,8 @@ void encodeEntity(GameState* state, YAML::Node& node, EntityId entity) {
     if (wield) {
         node[entity]["wield"] = *wield;
     }
-    if (identity) {
-        node[entity]["identity"] = *identity;
+    if (grouping) {
+        node[entity]["grouping"] = *grouping;
     }
 
     node[entity]["location"] = state->entityManager()->getLocation(entity);
@@ -92,5 +92,5 @@ void decodeEntity(GameState* state, const YAML::Node& node, EntityId entity) {
     decodeComponent<ConnectorComponent>(state, node, entity, "connector");
     decodeComponent<WearableComponent>(state, node, entity, "wear");
     decodeComponent<WieldableComponent>(state, node, entity, "wield");
-    decodeComponent<IdentityComponent>(state, node, entity, "identity");
+    decodeComponent<GroupingComponent>(state, node, entity, "grouping");
 }

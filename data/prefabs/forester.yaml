@@ -16,4 +16,5 @@ equipment:
 smart:
   fsm: human
   target: "Tree"
-faction: "Human"
+groupings:
+  - "Human"

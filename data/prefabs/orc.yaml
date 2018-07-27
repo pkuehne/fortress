@@ -17,4 +17,5 @@ equipment:
 smart:
   fsm: human
   target: "Player"
-faction: "Orc"
+groupings:
+  - "Orc"

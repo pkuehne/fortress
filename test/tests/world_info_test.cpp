@@ -1,18 +1,18 @@
-#include "../../src/core/world_info.h"
+#include "../../src/world/world_info.h"
 #include <gtest/gtest.h>
 
 using namespace ::testing;
 
-class WorldInfoTest_Faction : public ::testing::Test {};
+class WorldInfoTest_Grouping : public ::testing::Test {};
 
-TEST_F(WorldInfoTest_Faction, initializedWithName) {
+TEST_F(WorldInfoTest_Grouping, initializedWithName) {
     // Given
     WorldInfo info;
 
     // When
-    Faction faction("bar");
-    info.addFaction(faction);
+    Grouping grouping("bar");
+    info.addGrouping(grouping);
 
     // Then
-    EXPECT_EQ(1, info.getFactions().size());
+    EXPECT_EQ(1, info.getGroupings().size());
 }

@@ -1,4 +1,4 @@
-#include "world_info.h"
+#include "grouping.h"
 
 namespace {
 void clampValue(int& value) {
@@ -10,16 +10,16 @@ void clampValue(int& value) {
 }
 } // namespace
 
-Faction::Faction(const std::string& name) : m_name(name) {
+Grouping::Grouping(const std::string& name) : m_name(name) {
     //
 }
 
-void Faction::setRelationship(const std::string& other, int relationship) {
+void Grouping::setRelationship(const std::string& other, int relationship) {
     clampValue(relationship);
     m_relationships[other] = relationship;
 }
 
-int Faction::getRelationship(const std::string& other) const {
+int Grouping::getRelationship(const std::string& other) const {
     auto iter = m_relationships.find(other);
     if (iter == m_relationships.end()) {
         return m_defaultRelationship;
@@ -27,7 +27,7 @@ int Faction::getRelationship(const std::string& other) const {
     return iter->second;
 }
 
-void Faction::setDefaultRelationship(int relationship) {
+void Grouping::setDefaultRelationship(int relationship) {
     clampValue(relationship);
     m_defaultRelationship = relationship;
 }

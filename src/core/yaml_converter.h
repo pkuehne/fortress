@@ -7,8 +7,8 @@
 #include "../components/droppable_component.h"
 #include "../components/equipment_component.h"
 #include "../components/graphics_effect_component.h"
+#include "../components/grouping_component.h"
 #include "../components/health_component.h"
-#include "../components/identity_component.h"
 #include "../components/npc_component.h"
 #include "../components/openable_component.h"
 #include "../components/player_component.h"
@@ -470,20 +470,20 @@ template <> struct convert<WieldableComponent> {
     }
 };
 
-// IdentityComponent
-template <> struct convert<IdentityComponent> {
-    static Node encode(const IdentityComponent& rhs) {
+// GroupingComponent
+template <> struct convert<GroupingComponent> {
+    static Node encode(const GroupingComponent& rhs) {
         Node node;
-        node["faction"] = rhs.faction;
+        node["groupings"] = rhs.groupings;
         return node;
     }
 
-    static bool decode(const Node& node, IdentityComponent& rhs) {
-        if (!node.IsMap() || node.size() != 1) {
+    static bool decode(const Node& node, GroupingComponent& rhs) {
+        if (!node.IsSequence()) {
             return false;
         }
 
-        rhs.faction = node["faction"].as<int>();
+        rhs.groupings = node["groupings"].as<std::vector<std::string>>();
         return true;
     }
 };
