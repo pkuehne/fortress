@@ -2,11 +2,17 @@
 #define GRAPHICS_INTERFACE_H
 
 #include "color.h"
+#include <functional>
 
-typedef void (*KeyboardFuncPtr)(unsigned char key, int x, int y);
-typedef void (*DisplayFuncPtr)(void);
-typedef void (*MouseFuncPtr)(int button, int state, int x, int y);
-typedef void (*ResizeFuncPtr)(int width, int height);
+typedef std::function<void(unsigned char key, int x, int y)> KeyboardFuncPtr;
+typedef std::function<void(void)> DisplayFuncPtr;
+typedef std::function<void(int button, int state, int x, int y)> MouseFuncPtr;
+typedef std::function<void(int width, int height)> ResizeFuncPtr;
+
+// typedef void (*KeyboardFuncPtr)(unsigned char key, int x, int y);
+// typedef void (*DisplayFuncPtr)(void);
+// typedef void (*MouseFuncPtr)(int button, int state, int x, int y);
+// typedef void (*ResizeFuncPtr)(int width, int height);
 
 class GraphicsInterface {
 public:

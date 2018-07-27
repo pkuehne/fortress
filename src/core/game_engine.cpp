@@ -7,51 +7,23 @@
 #include "window_manager.h"
 #include <string>
 
-GameEngine* g_engine = 0;
-
-static void keyDown(unsigned char key, int x, int y) {
-    g_engine->getWindows()->getActive()->keyDown(key);
-}
-
-static void keyUp(unsigned char key, int x, int y) {
-    g_engine->getWindows()->getActive()->keyUp(key);
-}
-
-static void display(void) { g_engine->tick(); }
-
-static void mouseClick(int button, int state, int x, int y) {
-    if (state) {
-        g_engine->getWindows()->getActive()->mouseUp(x, y, button);
-    } else {
-        g_engine->getWindows()->getActive()->mouseDown(x, y, button);
-    }
-}
-
-static void resize(int width, int height) {
-    g_engine->getGraphics()->updateScreenSize(width, height);
-    g_engine->getWindows()->resize();
-}
-
 GameEngine::GameEngine(GraphicsInterface* a_graphics)
-    : m_tick(0), m_playerTurn(true), m_turn(1), m_eventManager(0),
-      m_windowManager(0), m_state(0), m_graphics(a_graphics) {
-    g_engine = this;
-}
-
-GameEngine::~GameEngine() {}
+    : m_graphics(a_graphics) {}
 
 void GameEngine::initialise() {
     // Start us off on level 1
     m_depth = 1;
 
     // Create if not exist
-    if (!m_windowManager)
+    if (!m_windowManager) {
         m_windowManager = new WindowManager();
-    if (!m_eventManager)
+    }
+    if (!m_eventManager) {
         m_eventManager = new EventManager();
-    if (!m_state)
+    }
+    if (!m_state) {
         m_state = new GameState();
-
+    }
     // Initialise Managers
     m_windowManager->initialise(this);
 
@@ -67,11 +39,24 @@ void GameEngine::initialise() {
         m_eventManager->registerHandler(m_systems[ii]);
     }
 
-    m_graphics->setKeyDownFunc(keyDown);
-    m_graphics->setKeyUpFunc(keyUp);
-    m_graphics->setDisplayFunc(display);
-    m_graphics->setMouseFunc(mouseClick);
-    m_graphics->setResizeFunc(resize);
+    m_graphics->setKeyDownFunc([&](unsigned char key, int x, int y) {
+        getWindows()->getActive()->keyDown(key);
+    });
+    m_graphics->setKeyUpFunc([&](unsigned char key, int x, int y) {
+        getWindows()->getActive()->keyUp(key);
+    });
+    m_graphics->setDisplayFunc([&]() { tick(); });
+    m_graphics->setMouseFunc([&](int button, int state, int x, int y) {
+        if (state) {
+            getWindows()->getActive()->mouseUp(x, y, button);
+        } else {
+            getWindows()->getActive()->mouseDown(x, y, button);
+        }
+    });
+    m_graphics->setResizeFunc([&](int width, int height) {
+        getGraphics()->updateScreenSize(width, height);
+        getWindows()->resize();
+    });
 
     m_state->addMessage(MessageType::INFO, "You find yourself in a forest.");
     m_state->addMessage(MessageType::INFO,

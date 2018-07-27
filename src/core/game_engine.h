@@ -15,7 +15,7 @@
 class GameEngine {
 public:
     explicit GameEngine(GraphicsInterface* a_graphics);
-    ~GameEngine();
+    ~GameEngine() = default;
 
     void initialise(void);
     void tick(void);
@@ -47,17 +47,17 @@ public:
     virtual GameState* state() { return m_state; }
 
 private:
-    unsigned long long m_tick;
-    bool m_playerTurn;
-    unsigned int m_turn;
+    unsigned long long m_tick = 0;
+    bool m_playerTurn = true;
+    unsigned int m_turn = 1;
 
-    EventManagerInterface* m_eventManager;
-    WindowManager* m_windowManager;
-    GameState* m_state;
+    EventManagerInterface* m_eventManager = nullptr;
+    WindowManager* m_windowManager = nullptr;
+    GameState* m_state = nullptr;
 
     std::vector<GameSystemInterface*> m_systems;
 
-    GraphicsInterface* m_graphics;
+    GraphicsInterface* m_graphics = nullptr;
 
     std::vector<Message> m_messages;
     unsigned int m_depth = 0;
