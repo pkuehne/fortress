@@ -30,6 +30,5 @@ void GroupingManager::setRelationship(Grouping& from, Grouping& to,
 
 void GroupingManager::setRelationship(const std::string& from,
                                       const std::string& to, int relationship) {
-
     getGrouping(from).setRelationship(to, relationship);
 }

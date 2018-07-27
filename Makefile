@@ -1,4 +1,4 @@
-.PHONY: all clean build test coverage run shuffle test lint validate
+.PHONY: all clean build test coverage run shuffle test lint validate analysis
 
 LOG_DIR=artifacts/logs/
 
@@ -49,7 +49,13 @@ docs:
 	cp -r doxygen/html/* /var/www/html/fortress/
 
 lint:
+	@cpplint --recursive src
+
+check:
 	@cppcheck src/ --enable=style,information,warning --error-exitcode=1 -DMAJOR=1 --inline-suppr 2>lint-errors.txt || cat lint-errors.txt
 
-validate: build test lint
+analysis: lint check
+	@echo "Analysis succeeded!"
+
+validate: build test analysis
 	@echo "Validation succeeded!"

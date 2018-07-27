@@ -15,7 +15,10 @@ RUN apt install -qq -y \
     libsoil-dev \
     libyaml-cpp-dev \
     software-properties-common \
+    python-pip \
     > /dev/null
+
+RUN pip install cpplint
 
 # Build gmock and install
 WORKDIR /usr/src/gmock
