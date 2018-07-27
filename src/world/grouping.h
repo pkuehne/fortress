@@ -9,7 +9,7 @@
 /// including families, kingdoms, warbands, hordes, etc.
 class Grouping {
 public:
-    Grouping() = default;
+    Grouping() = delete;
     ~Grouping() = default;
 
     /// @brief Constructs a new grouping with the given name
@@ -44,12 +44,14 @@ public:
 
     /// @brief Provides access to the list of members
     /// @returns The list of members
-    const std::set<EntityId>& getMembers() { return m_members; }
+    const std::set<EntityId>& getMembers() const { return m_members; }
 
     /// @brief Checks whether a given Entity is a member of the group
     /// @param[in] id The entity to find
     /// @returns True if the entity is a member of the group, false otherwise
-    bool hasMember(EntityId id);
+    bool hasMember(EntityId id) const;
+
+    bool operator<(const Grouping& rhs) const;
 
 private:
     std::string m_name;

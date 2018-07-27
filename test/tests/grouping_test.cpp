@@ -159,3 +159,17 @@ TEST_F(GroupingTest_Membership, hasMemberReturnsFalseForMemberNotInGroup) {
     // Then
     EXPECT_FALSE(grouping.hasMember(9999));
 }
+
+class GroupingTest_OperatorLessThan : public ::testing::Test {};
+
+TEST_F(GroupingTest_OperatorLessThan, comparesOnName) {
+    // Given
+    Grouping a("A");
+    Grouping b("B");
+    Grouping z("Z");
+
+    // Then
+    EXPECT_LT(a, b);
+    EXPECT_LT(b, z);
+    EXPECT_LT(a, z);
+}

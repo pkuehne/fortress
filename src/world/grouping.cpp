@@ -36,6 +36,10 @@ void Grouping::addMember(EntityId id) { m_members.insert(id); }
 
 void Grouping::removeMember(EntityId id) { m_members.erase(id); }
 
-bool Grouping::hasMember(EntityId id) {
+bool Grouping::hasMember(EntityId id) const {
     return m_members.find(id) != m_members.end();
+}
+
+bool Grouping::operator<(const Grouping& rhs) const {
+    return this->getName() < rhs.getName();
 }
