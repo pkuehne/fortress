@@ -118,27 +118,27 @@ void GeneratorWindow::redraw() {
 }
 
 void GeneratorWindow::generateGroupings() {
-    GameState* state = getEngine()->state();
+    // GameState* state = getEngine()->state();
 
-    Grouping herbivores("Herbivore");
-    herbivores.setDefaultRelationship(-40);
-    herbivores.setRelationship("Carnivore", -100);
-    state->world().addGrouping(herbivores);
+    // Grouping herbivores("Herbivore");
+    // herbivores.setDefaultRelationship(-40);
+    // herbivores.setRelationship("Carnivore", -100);
+    // state->world().addGrouping(herbivores);
 
-    Grouping carnivores("Carnivore");
-    carnivores.setDefaultRelationship(-40);
-    state->world().addGrouping(carnivores);
+    // Grouping carnivores("Carnivore");
+    // carnivores.setDefaultRelationship(-40);
+    // state->world().addGrouping(carnivores);
 
-    Grouping orcs("Orc");
-    orcs.setDefaultRelationship(-100);
-    state->world().addGrouping(orcs);
+    // Grouping orcs("Orc");
+    // orcs.setDefaultRelationship(-100);
+    // state->world().addGrouping(orcs);
 
-    Grouping humans("Human");
-    humans.setDefaultRelationship(0);
-    humans.setRelationship("Herbivore", 20);
-    humans.setRelationship("Carnivore", -60);
-    humans.setRelationship("Orc", -100);
-    state->world().addGrouping(humans);
+    // Grouping humans("Human");
+    // humans.setDefaultRelationship(0);
+    // humans.setRelationship("Herbivore", 20);
+    // humans.setRelationship("Carnivore", -60);
+    // humans.setRelationship("Orc", -100);
+    // state->world().addGrouping(humans);
 }
 
 void GeneratorWindow::startGenerating() {

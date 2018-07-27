@@ -1,6 +1,5 @@
 #pragma once
 
-#include "../world/world_info.h"
 #include "color.h"
 #include "component_manager.h"
 #include "entity_manager.h"
@@ -10,6 +9,8 @@
 #include "quest.h"
 
 class Tile;
+class WorldInfo;
+
 enum class MessageType { INFO = 0, GOOD = 1, WARN = 2, CRIT = 3 };
 
 typedef struct {
@@ -42,7 +43,7 @@ public:
     GameState(MapManager* map = new MapManager(),
               EntityManager* entities = new EntityManager(),
               ComponentManager* components = new ComponentManager());
-    virtual ~GameState() {}
+    virtual ~GameState();
 
     bool isPlayerTurn() { return m_playerTurn; }
     void nextTurn() {
@@ -79,7 +80,7 @@ public:
     std::vector<Quest*>& getQuests() { return m_quests; }
 
     /// @brief Provides access to the world information
-    WorldInfo& world() { return m_world; }
+    WorldInfo& world();
 
 private:
     bool m_playerTurn = true;
@@ -92,5 +93,5 @@ private:
     std::vector<Message> m_messages;
     Debug m_debug;
     std::vector<Quest*> m_quests;
-    WorldInfo m_world;
+    std::unique_ptr<WorldInfo> m_world;
 };

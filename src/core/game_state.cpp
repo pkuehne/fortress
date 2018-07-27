@@ -1,4 +1,5 @@
 #include "game_state.h"
+#include "../world/world_info.h"
 #include "entity_manager.h"
 #include "file_saver.h"
 #include "map_manager.h"
@@ -8,11 +9,15 @@
 GameState::GameState(MapManager* map, EntityManager* entities,
                      ComponentManager* components)
     : m_map(map), m_entities(entities), m_components(components),
-      m_prefabs(entities, components) {
+      m_prefabs(entities, components), m_world(std::make_unique<WorldInfo>()) {
     if (m_map == nullptr || m_entities == nullptr || m_components == nullptr) {
         LOG(ERROR) << "Game State initialised with nullptr" << std::endl;
         throw std::logic_error("Input parameter cannot be nullptr");
     }
+}
+
+GameState::~GameState() {
+    //
 }
 
 Tile& GameState::tile(const Location& location) {
@@ -66,3 +71,5 @@ void GameState::addMessage(const MessageType& severity,
 }
 
 std::vector<Message>& GameState::getMessages() { return m_messages; }
+
+WorldInfo& GameState::world() { return *m_world; }
