@@ -158,7 +158,7 @@ EntityId PrefabBuilder::create(const std::string& name,
         auto l_grouping = m_components->make<GroupingComponent>(entity);
         for (YAML::const_iterator iter = node["groupings"].begin();
              iter != node["groupings"].end(); ++iter) {
-            l_grouping->groupings.push_back(iter->second.as<std::string>(""));
+            l_grouping->groupings.push_back(iter->as<std::string>(""));
         }
     }
 

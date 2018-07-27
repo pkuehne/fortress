@@ -31,3 +31,11 @@ void Grouping::setDefaultRelationship(int relationship) {
     clampValue(relationship);
     m_defaultRelationship = relationship;
 }
+
+void Grouping::addMember(EntityId id) { m_members.insert(id); }
+
+void Grouping::removeMember(EntityId id) { m_members.erase(id); }
+
+bool Grouping::hasMember(EntityId id) {
+    return m_members.find(id) != m_members.end();
+}

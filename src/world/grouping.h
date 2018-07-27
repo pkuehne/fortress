@@ -1,7 +1,12 @@
 #pragma once
 
+#include "../core/entity.h"
 #include <map>
+#include <set>
 
+/// @brief A generalised grouping of entities
+/// @details Every association of entities can be represented by a Grouping,
+/// including families, kingdoms, warbands, hordes, etc.
 class Grouping {
 public:
     Grouping() = default;
@@ -29,8 +34,26 @@ public:
     /// @param[in] relationship The default to apply
     void setDefaultRelationship(int relationship);
 
+    /// @brief Add a new member to the group
+    /// @param[in] id The entity to add
+    void addMember(EntityId id);
+
+    /// @brief Removes a member from the group
+    /// @param[in] id The entity to remove
+    void removeMember(EntityId id);
+
+    /// @brief Provides access to the list of members
+    /// @returns The list of members
+    const std::set<EntityId>& getMembers() { return m_members; }
+
+    /// @brief Checks whether a given Entity is a member of the group
+    /// @param[in] id The entity to find
+    /// @returns True if the entity is a member of the group, false otherwise
+    bool hasMember(EntityId id);
+
 private:
     std::string m_name;
     std::map<std::string, int> m_relationships;
     int m_defaultRelationship = 0;
+    std::set<EntityId> m_members;
 };

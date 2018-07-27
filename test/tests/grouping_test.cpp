@@ -105,3 +105,57 @@ TEST_F(GroupingTest_Relationship, clampsDefaultRelationshipToMinus100) {
     // Then
     EXPECT_EQ(-100, grouping.getRelationship("bar"));
 }
+
+class GroupingTest_Membership : public ::testing::Test {
+public:
+    GroupingTest_Membership() : grouping(Grouping("foo")) {}
+    void SetUp() { grouping.addMember(id); }
+
+protected:
+    EntityId id = 1234;
+    Grouping grouping;
+};
+
+TEST_F(GroupingTest_Membership, addMemberIncludesItInGroup) {
+    // Then
+    ASSERT_EQ(1, grouping.getMembers().size());
+    EXPECT_NE(grouping.getMembers().end(), grouping.getMembers().find(id));
+}
+
+TEST_F(GroupingTest_Membership, addingSameMemberAgainHasNoEffect) {
+    // When
+    grouping.addMember(id);
+
+    // Then
+    ASSERT_EQ(1, grouping.getMembers().size());
+    EXPECT_NE(grouping.getMembers().end(), grouping.getMembers().find(id));
+}
+
+TEST_F(GroupingTest_Membership, removeMemberRemovesFromList) {
+    // When
+    grouping.removeMember(id);
+
+    // Then
+    ASSERT_EQ(0, grouping.getMembers().size());
+    EXPECT_EQ(grouping.getMembers().end(), grouping.getMembers().find(id));
+}
+
+TEST_F(GroupingTest_Membership, removingNonExistentMemberHasNoEffect) {
+    // When
+    grouping.removeMember(id);
+    grouping.removeMember(id);
+
+    // Then
+    ASSERT_EQ(0, grouping.getMembers().size());
+    EXPECT_EQ(grouping.getMembers().end(), grouping.getMembers().find(id));
+}
+
+TEST_F(GroupingTest_Membership, hasMemberReturnsTrueForMemberInGroup) {
+    // Then
+    EXPECT_TRUE(grouping.hasMember(id));
+}
+
+TEST_F(GroupingTest_Membership, hasMemberReturnsFalseForMemberNotInGroup) {
+    // Then
+    EXPECT_FALSE(grouping.hasMember(9999));
+}
