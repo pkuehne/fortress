@@ -14,6 +14,9 @@ GameState::GameState(MapManager* map, EntityManager* entities,
         LOG(ERROR) << "Game State initialised with nullptr" << std::endl;
         throw std::logic_error("Input parameter cannot be nullptr");
     }
+
+    std::string path = "./data/prefabs/";
+    m_prefabs.loadPrefabsFromDirectory(path);
 }
 
 GameState::~GameState() {

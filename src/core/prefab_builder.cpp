@@ -18,35 +18,40 @@
 #include "../components/wieldable_component.h"
 #include "yaml_converter.h"
 #include <experimental/filesystem>
+#include <glog/logging.h>
 #include <iostream>
 #include <yaml-cpp/yaml.h>
 
 PrefabBuilder::PrefabBuilder(EntityManager* e, ComponentManager* c)
-    : m_entities(e), m_components(c) {
-    namespace fs = std::experimental::filesystem;
+    : m_entities(e), m_components(c) {}
 
-    std::string path = "./data/prefabs/";
-    for (auto& filename : fs::directory_iterator(path)) {
+void PrefabBuilder::loadPrefabsFromDirectory(const std::string& directory) {
+    namespace fs = std::experimental::filesystem;
+    for (auto& filename : fs::directory_iterator(directory)) {
         YAML::Node node = YAML::LoadFile(filename.path().relative_path());
-        m_prefabs[filename.path().stem()] = node;
+        addPrefab(filename.path().stem(), node);
     }
 }
 
+void PrefabBuilder::addPrefab(const std::string& name, const YAML::Node& node) {
+    m_prefabs[name] = node;
+}
+
 EntityId PrefabBuilder::create(const std::string& name,
-                               const Location& location) {
+                               const Location& location) const {
     if (name.empty()) {
         return 0;
     }
+    auto iter = m_prefabs.find(name);
     if (m_prefabs.find(name) == m_prefabs.end()) {
         LOG(WARNING) << "Invalid prefab '" << name << "' requested"
                      << std::endl;
         return 0;
     }
 
-    YAML::Node& node = m_prefabs[name];
+    const YAML::Node& node = iter->second;
 
     EntityId entity = m_entities->createEntity(location);
-    Location invalidLoc;
 
     // Description Component
     auto l_description = m_components->make<DescriptionComponent>(entity);
@@ -113,6 +118,8 @@ EntityId PrefabBuilder::create(const std::string& name,
 
     // Equipment Component
     if (node["equipment"].IsDefined()) {
+        Location invalidLoc;
+
         auto l_equipment = m_components->make<EquipmentComponent>(entity);
         l_equipment->maxCarryVolume = node["equipment"]["maxVolume"].as<int>(0);
         l_equipment->maxCarryWeight = node["equipment"]["maxWeight"].as<int>(0);
