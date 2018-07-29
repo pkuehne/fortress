@@ -6,6 +6,7 @@
 #include "../components/npc_component.h"
 #include "../core/game_engine.h"
 #include <cmath>
+#include <glog/logging.h>
 #include <iostream>
 
 int getPathCost(const Location& location, void* customData);

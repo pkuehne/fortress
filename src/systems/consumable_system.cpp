@@ -1,6 +1,7 @@
 #include "consumable_system.h"
 #include "../components/consumable_component.h"
 #include "../components/health_component.h"
+#include <glog/logging.h>
 
 void updateHealth(ConsumableComponent* consumable, HealthComponent* health) {
     if (!health) {

@@ -3,8 +3,8 @@
 #include "frame.h"
 #include "listbox.h"
 #include "text_entry.h"
-
 #include <dirent.h>
+#include <glog/logging.h>
 #include <iostream>
 
 const char CONSOLE_DIR[] = "./scripts/console";

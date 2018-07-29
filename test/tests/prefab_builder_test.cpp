@@ -1,3 +1,5 @@
+#include "../../src/components/collider_component.h"
+#include "../../src/components/description_component.h"
 #include "../../src/core/location.h"
 #include "../../src/core/prefab_builder.h"
 #include "../mocks/component_manager_mock.h"
@@ -38,7 +40,9 @@ TEST_F(PrefabBuilder_addPrefab, addingTheSamePrefabTwiceHasNoEffect) {
 class PrefabBuilder_create : public ::testing::Test {
 public:
     PrefabBuilder_create()
-        : entities(), components(), builder(&entities, &components), node() {}
+        : entities(), components(), builder(&entities, &components), node() {
+        node["collidable"] = false;
+    }
 
 protected:
     EntityManagerMock entities;
@@ -72,10 +76,10 @@ TEST_F(PrefabBuilder_create, ReturnsZeroIfPrefabNotFound) {
     EXPECT_EQ(0, id);
 }
 
-TEST_F(PrefabBuilder_create, DISABLED_CreatesADescriptionComponent) {
+TEST_F(PrefabBuilder_create, retunsANewlyCreatedEntity) {
     // Given
     std::string name("Foo");
-    node["name"] = "bar"; // Make this a map
+    node = YAML::Load("{name: Foo, description: Bar}");
     builder.addPrefab(name, node);
     EntityId newId = 1234;
     EXPECT_CALL(entities, createEntity(_)).WillOnce(Return(newId));
@@ -85,4 +89,39 @@ TEST_F(PrefabBuilder_create, DISABLED_CreatesADescriptionComponent) {
 
     // Then
     EXPECT_EQ(newId, id);
+}
+
+TEST_F(PrefabBuilder_create, CreatesDescriptionComponent) {
+    // Given
+    std::string name("Foo");
+    builder.addPrefab(name, node);
+    EntityId newId = 1234;
+    ComponentBase* ptr = nullptr;
+
+    EXPECT_CALL(entities, createEntity(_)).WillOnce(Return(newId));
+    EXPECT_CALL(components, add(Eq(newId), _)).WillOnce(SaveArg<1>(&ptr));
+
+    // When
+    builder.create(name, location);
+
+    // Then
+    ASSERT_NE(nullptr, dynamic_cast<DescriptionComponent*>(ptr));
+}
+
+TEST_F(PrefabBuilder_create, CreatesCollidableComponentByDefault) {
+    // Given
+    std::string name("Foo");
+    node.reset();
+    builder.addPrefab(name, node);
+    EntityId newId = 1234;
+    ComponentBase* ptr = nullptr;
+
+    EXPECT_CALL(entities, createEntity(_)).WillOnce(Return(newId));
+    EXPECT_CALL(components, add(Eq(newId), _)).WillRepeatedly(SaveArg<1>(&ptr));
+
+    // When
+    builder.create(name, location);
+
+    // Then
+    ASSERT_NE(nullptr, dynamic_cast<ColliderComponent*>(ptr));
 }

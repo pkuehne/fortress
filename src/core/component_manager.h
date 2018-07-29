@@ -1,9 +1,7 @@
-#ifndef __COMPONENT_MANAGER_H__
-#define __COMPONENT_MANAGER_H__
+#pragma once
 
 #include "../components/component_base.h"
 #include "../core/entity.h"
-#include <glog/logging.h>
 #include <map>
 #include <typeinfo>
 
@@ -11,6 +9,9 @@ typedef std::map<std::string, ComponentBase*> ComponentHolder;
 
 class ComponentManager {
 public:
+    ComponentManager() = default;
+    virtual ~ComponentManager() = default;
+
     template <class T> T* make(EntityId entity) {
         T* component = new T();
         this->add(entity, component);
@@ -46,10 +47,8 @@ public:
     ComponentHolder& getAll(EntityId id) { return m_components[id]; }
 
 private:
-    void add(EntityId entity, ComponentBase* component);
+    virtual void add(EntityId entity, ComponentBase* component);
 
 private:
     std::map<EntityId, ComponentHolder> m_components;
 };
-
-#endif

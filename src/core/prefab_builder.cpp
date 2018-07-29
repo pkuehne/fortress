@@ -49,8 +49,7 @@ EntityId PrefabBuilder::create(const std::string& name,
         return 0;
     }
 
-    const YAML::Node& node = iter->second;
-
+    YAML::Node node = iter->second;
     EntityId entity = m_entities->createEntity(location);
 
     // Description Component
@@ -60,11 +59,12 @@ EntityId PrefabBuilder::create(const std::string& name,
         node["description"].as<std::string>("It's hard to describe");
 
     // Sprite
-    auto l_sprite = m_components->make<SpriteComponent>(entity);
-    l_sprite->fgColor = node["foreground-color"].as<Color>(Color(WHITE));
-    l_sprite->bgColor = node["background-color"].as<Color>(Color(BLACK));
-    l_sprite->sprite = node["symbol"].as<unsigned int>('?');
-
+    if (node["symbol"].IsDefined()) {
+        auto l_sprite = m_components->make<SpriteComponent>(entity);
+        l_sprite->fgColor = node["foreground-color"].as<Color>(Color(WHITE));
+        l_sprite->bgColor = node["background-color"].as<Color>(Color(BLACK));
+        l_sprite->sprite = node["symbol"].as<unsigned int>('?');
+    }
     // Collider Component
     if (node["collidable"].as<bool>(true)) {
         m_components->make<ColliderComponent>(entity);

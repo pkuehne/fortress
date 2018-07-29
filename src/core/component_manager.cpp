@@ -1,4 +1,5 @@
 #include "component_manager.h"
+#include <glog/logging.h>
 
 void ComponentManager::add(EntityId entity, ComponentBase* component) {
     if (component == nullptr) {
