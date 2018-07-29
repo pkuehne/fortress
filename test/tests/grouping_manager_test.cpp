@@ -108,3 +108,82 @@ TEST_F(GroupingManager_setRelationship, setsTheRelationshipOneWayByName) {
     EXPECT_EQ(relationship, manager.getGrouping("A").getRelationship("B"));
     EXPECT_NE(relationship, manager.getGrouping("B").getRelationship("A"));
 }
+
+class GroupingManager_AddEntityToGrouping : public ::testing::Test {};
+
+TEST_F(GroupingManager_AddEntityToGrouping, throwsIfGroupingNameNotValid) {
+    // Given
+    GroupingManager manager;
+    std::string name("Foo");
+    manager.createNewGrouping(name);
+
+    // When
+    EXPECT_THROW(manager.addEntityToGrouping(123, "Bar"), std::string);
+}
+
+TEST_F(GroupingManager_AddEntityToGrouping, addsMemberToGrouping) {
+    // Given
+    GroupingManager manager;
+    std::string name("Foo");
+    manager.createNewGrouping(name);
+    EntityId id = 1234;
+
+    // When
+    ASSERT_NO_THROW(manager.addEntityToGrouping(id, name));
+
+    // Then
+    EXPECT_EQ(1, manager.getGrouping(name).getMembers().size());
+    EXPECT_TRUE(manager.getGrouping(name).hasMember(id));
+}
+
+TEST_F(GroupingManager_AddEntityToGrouping,
+       addsMemberToParentGroupingThrowsIfParentIsInvalid) {
+    // Given
+    GroupingManager manager;
+    std::string name("Foo");
+    std::string parent("Bar");
+    manager.createNewGrouping(name);
+    manager.getGrouping(name).setParentGrouping(parent);
+    EntityId id = 1234;
+
+    // When
+    ASSERT_THROW(manager.addEntityToGrouping(id, name), std::string);
+}
+
+TEST_F(GroupingManager_AddEntityToGrouping, addsMemberToParentGroupingAsWell) {
+    // Given
+    GroupingManager manager;
+    std::string name("Foo");
+    std::string parent("Bar");
+    manager.createNewGrouping(name);
+    manager.createNewGrouping(parent);
+    manager.getGrouping(name).setParentGrouping(parent);
+    EntityId id = 1234;
+
+    // When
+    ASSERT_NO_THROW(manager.addEntityToGrouping(id, name));
+
+    // Then
+    EXPECT_TRUE(manager.getGrouping(name).hasMember(id));
+    EXPECT_TRUE(manager.getGrouping(parent).hasMember(id));
+}
+
+class GroupingManager_RemoveEntityFromAllGroupings : public ::testing::Test {};
+
+TEST_F(GroupingManager_RemoveEntityFromAllGroupings, removesEntityFromAll) {
+    // Given
+    GroupingManager manager;
+    EntityId id = 1234;
+
+    std::string one("Foo");
+    std::string two("Bar");
+    manager.createNewGrouping(one).addMember(id);
+    manager.createNewGrouping(two).addMember(id);
+
+    // When
+    manager.removeEntityFromAllGroupings(id);
+
+    // Then
+    EXPECT_FALSE(manager.getGrouping(one).hasMember(id));
+    EXPECT_FALSE(manager.getGrouping(two).hasMember(id));
+}

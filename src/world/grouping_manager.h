@@ -36,6 +36,15 @@ public:
     void setRelationship(const std::string& from, const std::string& to,
                          int relationship);
 
+    /// @brief Add an entity to a group
+    /// @param[in] entity The entity to add
+    /// @param[in] name The grouping to add the entity to
+    void addEntityToGrouping(EntityId entity, const std::string& name);
+
+    /// @brief Removes the given entity from all groupings
+    /// @param[in] id The id of the entity to remove
+    void removeEntityFromAllGroupings(EntityId id);
+
 private:
     GroupingContainer m_groupings;
 };

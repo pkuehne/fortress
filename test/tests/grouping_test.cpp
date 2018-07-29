@@ -173,3 +173,31 @@ TEST_F(GroupingTest_OperatorLessThan, comparesOnName) {
     EXPECT_LT(b, z);
     EXPECT_LT(a, z);
 }
+
+class GroupingTest_Parent : public ::testing::Test {};
+
+TEST_F(GroupingTest_Parent, getSetParent) {
+    // Given
+    std::string parent("parent");
+    Grouping grouping("Foo");
+
+    // When
+    grouping.setParentGrouping(parent);
+
+    // Then
+    EXPECT_EQ(parent, grouping.getParentGrouping());
+}
+
+TEST_F(GroupingTest_Parent, emptyParentClearsIt) {
+    // Given
+    std::string parent("parent");
+    std::string empty("");
+    Grouping grouping("Foo");
+
+    // When
+    grouping.setParentGrouping(parent);
+    grouping.setParentGrouping(empty);
+
+    // Then
+    EXPECT_EQ(empty, grouping.getParentGrouping());
+}

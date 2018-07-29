@@ -51,6 +51,14 @@ public:
     /// @returns True if the entity is a member of the group, false otherwise
     bool hasMember(EntityId id) const;
 
+    /// @brief Sets the parent for this Grouping
+    /// @param[in] parent The name of the parent Grouping
+    void setParentGrouping(const std::string& parent) { m_parent = parent; }
+
+    /// @brief Gets the parent for this Grouping
+    /// @returns The name of the parent Grouping
+    const std::string& getParentGrouping() { return m_parent; }
+
     bool operator<(const Grouping& rhs) const;
 
 private:
@@ -58,4 +66,5 @@ private:
     std::map<std::string, int> m_relationships;
     int m_defaultRelationship = 0;
     std::set<EntityId> m_members;
+    std::string m_parent;
 };

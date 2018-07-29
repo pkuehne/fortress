@@ -32,3 +32,19 @@ void GroupingManager::setRelationship(const std::string& from,
                                       const std::string& to, int relationship) {
     getGrouping(from).setRelationship(to, relationship);
 }
+
+void GroupingManager::addEntityToGrouping(EntityId entity,
+                                          const std::string& name) {
+    Grouping& grouping = getGrouping(name);
+    grouping.addMember(entity);
+    if (!grouping.getParentGrouping().empty()) {
+        Grouping& parent = getGrouping(grouping.getParentGrouping());
+        parent.addMember(entity);
+    }
+}
+
+void GroupingManager::removeEntityFromAllGroupings(EntityId id) {
+    for (auto& iter : m_groupings) {
+        iter.second.removeMember(id);
+    }
+}
