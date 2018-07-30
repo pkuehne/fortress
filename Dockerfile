@@ -7,7 +7,7 @@ RUN apt -qq update
 RUN apt install -qq -y \
     cmake \
     cppcheck \
-    google-mock \
+    git \
     libboost-all-dev \
     libglfw3-dev \
     libgoogle-glog-dev \
@@ -21,10 +21,11 @@ RUN apt install -qq -y \
 RUN pip install cpplint
 
 # Build gmock and install
-WORKDIR /usr/src/gmock
+RUN git clone https://github.com/google/googletest.git usr/src/googletest
+WORKDIR /usr/src/googletest
 RUN cmake .
 RUN make gmock
-RUN cp libgmock.a /usr/local/lib
+RUN make install
 
 # Set up source files
 COPY . /fortress
