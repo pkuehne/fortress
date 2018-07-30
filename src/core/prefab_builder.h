@@ -32,6 +32,21 @@ public:
     /// @param[in] node The top-level YAML node that holds all the prefabs data
     void addPrefab(const std::string& name, const YAML::Node& node);
 
+    void addDescriptionComponent(YAML::Node& node, EntityId entity) const;
+    void addSpriteComponent(YAML::Node& node, EntityId entity) const;
+    void addColliderComponent(YAML::Node& node, EntityId entity) const;
+    void addHealthComponent(YAML::Node& node, EntityId entity) const;
+    void addConsumableComponent(YAML::Node& node, EntityId entity) const;
+    void addDroppableComponent(YAML::Node& node, EntityId entity) const;
+    void addOpenableComponent(YAML::Node& node, EntityId entity) const;
+    void addWearableComponent(YAML::Node& node, EntityId entity) const;
+    void addWieldableComponent(YAML::Node& node, EntityId entity) const;
+    void addEquipmentComponent(YAML::Node& node, EntityId entity) const;
+    void addConnectorComponent(YAML::Node& node, EntityId entity) const;
+    void addNpcComponent(YAML::Node& node, EntityId entity) const;
+    void addPlayerComponent(YAML::Node& node, EntityId entity) const;
+    void addGroupingComponent(YAML::Node& node, EntityId entity) const;
+
     unsigned int countPrefabs() const { return m_prefabs.size(); }
 
 private:

@@ -6,6 +6,7 @@
 
 typedef std::map<std::string, Grouping> GroupingContainer;
 
+/// @brief Holds Groupings and provides utility methods
 class GroupingManager {
 public:
     GroupingManager() = default;

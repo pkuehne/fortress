@@ -1,6 +1,17 @@
 #include "../../src/components/collider_component.h"
+#include "../../src/components/connector_component.h"
+#include "../../src/components/consumable_component.h"
 #include "../../src/components/description_component.h"
+#include "../../src/components/droppable_component.h"
+#include "../../src/components/equipment_component.h"
 #include "../../src/components/grouping_component.h"
+#include "../../src/components/health_component.h"
+#include "../../src/components/npc_component.h"
+#include "../../src/components/openable_component.h"
+#include "../../src/components/player_component.h"
+#include "../../src/components/sprite_component.h"
+#include "../../src/components/wearable_component.h"
+#include "../../src/components/wieldable_component.h"
 #include "../../src/core/location.h"
 #include "../../src/core/prefab_builder.h"
 #include "../mocks/component_manager_mock.h"
@@ -94,6 +105,7 @@ TEST_F(PrefabBuilder_create, retunsANewlyCreatedEntity) {
     builder.addPrefab(name, node);
     EntityId newId = 1234;
     EXPECT_CALL(entities, createEntity(_)).WillOnce(Return(newId));
+    EXPECT_CALL(components, add(Eq(newId), _)).Times(2);
 
     // When
     EntityId id = builder.create(name, location);
@@ -136,12 +148,216 @@ TEST_F(PrefabBuilder_create, CreatesCollidableComponentByDefault) {
     builder.create(name, location);
 }
 
+TEST_F(PrefabBuilder_create, CreatesSpriteComponent) {
+    // Given
+    std::string name("Foo");
+    node["symbol"] = 12;
+    builder.addPrefab(name, node);
+    EntityId newId = 1234;
+
+    EXPECT_CALL(entities, createEntity(_)).WillOnce(Return(newId));
+    EXPECT_CALL(components, add(Eq(newId), WhenDynamicCastTo<SpriteComponent*>(
+                                               Ne(nullptr))));
+    EXPECT_CALL(
+        components,
+        add(Eq(newId), WhenDynamicCastTo<DescriptionComponent*>(Ne(nullptr))));
+
+    // When
+    builder.create(name, location);
+}
+
+TEST_F(PrefabBuilder_create, CreatesHealthComponent) {
+    // Given
+    std::string name("Foo");
+    node["health"] = 12;
+    builder.addPrefab(name, node);
+    EntityId newId = 1234;
+
+    EXPECT_CALL(entities, createEntity(_)).WillOnce(Return(newId));
+    EXPECT_CALL(components, add(Eq(newId), WhenDynamicCastTo<HealthComponent*>(
+                                               Ne(nullptr))));
+    EXPECT_CALL(
+        components,
+        add(Eq(newId), WhenDynamicCastTo<DescriptionComponent*>(Ne(nullptr))));
+
+    // When
+    builder.create(name, location);
+}
+
+TEST_F(PrefabBuilder_create, CreatesConsumableComponent) {
+    // Given
+    std::string name("Foo");
+    node["consumable"]["effect"] = 123;
+    builder.addPrefab(name, node);
+    EntityId newId = 1234;
+
+    EXPECT_CALL(entities, createEntity(_)).WillOnce(Return(newId));
+    EXPECT_CALL(
+        components,
+        add(Eq(newId), WhenDynamicCastTo<ConsumableComponent*>(Ne(nullptr))));
+    EXPECT_CALL(
+        components,
+        add(Eq(newId), WhenDynamicCastTo<DescriptionComponent*>(Ne(nullptr))));
+
+    // When
+    builder.create(name, location);
+}
+
+TEST_F(PrefabBuilder_create, CreatesDroppableComponent) {
+    // Given
+    std::string name("Foo");
+    node["droppable"] = true;
+    builder.addPrefab(name, node);
+    EntityId newId = 1234;
+
+    EXPECT_CALL(entities, createEntity(_)).WillOnce(Return(newId));
+    EXPECT_CALL(
+        components,
+        add(Eq(newId), WhenDynamicCastTo<DroppableComponent*>(Ne(nullptr))));
+    EXPECT_CALL(
+        components,
+        add(Eq(newId), WhenDynamicCastTo<DescriptionComponent*>(Ne(nullptr))));
+
+    // When
+    builder.create(name, location);
+}
+
+TEST_F(PrefabBuilder_create, CreatesOpenableComponent) {
+    // Given
+    std::string name("Foo");
+    node["openable"]["open"] = true;
+    builder.addPrefab(name, node);
+    EntityId newId = 1234;
+
+    EXPECT_CALL(entities, createEntity(_)).WillOnce(Return(newId));
+    EXPECT_CALL(
+        components,
+        add(Eq(newId), WhenDynamicCastTo<OpenableComponent*>(Ne(nullptr))));
+    EXPECT_CALL(
+        components,
+        add(Eq(newId), WhenDynamicCastTo<DescriptionComponent*>(Ne(nullptr))));
+
+    // When
+    builder.create(name, location);
+}
+
+TEST_F(PrefabBuilder_create, CreatesWieldableComponent) {
+    // Given
+    std::string name("Foo");
+    node["wieldable"]["damage"] = 0;
+    builder.addPrefab(name, node);
+    EntityId newId = 1234;
+
+    EXPECT_CALL(entities, createEntity(_)).WillOnce(Return(newId));
+    EXPECT_CALL(
+        components,
+        add(Eq(newId), WhenDynamicCastTo<WieldableComponent*>(Ne(nullptr))));
+    EXPECT_CALL(
+        components,
+        add(Eq(newId), WhenDynamicCastTo<DescriptionComponent*>(Ne(nullptr))));
+
+    // When
+    builder.create(name, location);
+}
+
+TEST_F(PrefabBuilder_create, CreatesWearableComponent) {
+    // Given
+    std::string name("Foo");
+    node["wearable"]["position"] = 0;
+    builder.addPrefab(name, node);
+    EntityId newId = 1234;
+
+    EXPECT_CALL(entities, createEntity(_)).WillOnce(Return(newId));
+    EXPECT_CALL(
+        components,
+        add(Eq(newId), WhenDynamicCastTo<WearableComponent*>(Ne(nullptr))));
+    EXPECT_CALL(
+        components,
+        add(Eq(newId), WhenDynamicCastTo<DescriptionComponent*>(Ne(nullptr))));
+
+    // When
+    builder.create(name, location);
+}
+
+TEST_F(PrefabBuilder_create, CreatesEquipmentComponent) {
+    // Given
+    std::string name("Foo");
+    node["equipment"]["maxWeight"] = 0;
+    builder.addPrefab(name, node);
+    EntityId newId = 1234;
+
+    EXPECT_CALL(entities, createEntity(_)).WillOnce(Return(newId));
+    EXPECT_CALL(
+        components,
+        add(Eq(newId), WhenDynamicCastTo<EquipmentComponent*>(Ne(nullptr))));
+    EXPECT_CALL(
+        components,
+        add(Eq(newId), WhenDynamicCastTo<DescriptionComponent*>(Ne(nullptr))));
+
+    // When
+    builder.create(name, location);
+}
+
+TEST_F(PrefabBuilder_create, CreatesConnectorComponent) {
+    // Given
+    std::string name("Foo");
+    node["connector"] = true;
+    builder.addPrefab(name, node);
+    EntityId newId = 1234;
+
+    EXPECT_CALL(entities, createEntity(_)).WillOnce(Return(newId));
+    EXPECT_CALL(
+        components,
+        add(Eq(newId), WhenDynamicCastTo<ConnectorComponent*>(Ne(nullptr))));
+    EXPECT_CALL(
+        components,
+        add(Eq(newId), WhenDynamicCastTo<DescriptionComponent*>(Ne(nullptr))));
+
+    // When
+    builder.create(name, location);
+}
+
+TEST_F(PrefabBuilder_create, CreatesNpcComponent) {
+    // Given
+    std::string name("Foo");
+    node["smart"]["fsm"] = "test";
+    builder.addPrefab(name, node);
+    EntityId newId = 1234;
+
+    EXPECT_CALL(entities, createEntity(_)).WillOnce(Return(newId));
+    EXPECT_CALL(components,
+                add(Eq(newId), WhenDynamicCastTo<NpcComponent*>(Ne(nullptr))));
+    EXPECT_CALL(
+        components,
+        add(Eq(newId), WhenDynamicCastTo<DescriptionComponent*>(Ne(nullptr))));
+
+    // When
+    builder.create(name, location);
+}
+
+TEST_F(PrefabBuilder_create, CreatesPlayerComponent) {
+    // Given
+    std::string name("Foo");
+    node["player"] = true;
+    builder.addPrefab(name, node);
+    EntityId newId = 1234;
+
+    EXPECT_CALL(entities, createEntity(_)).WillOnce(Return(newId));
+    EXPECT_CALL(components, add(Eq(newId), WhenDynamicCastTo<PlayerComponent*>(
+                                               Ne(nullptr))));
+    EXPECT_CALL(
+        components,
+        add(Eq(newId), WhenDynamicCastTo<DescriptionComponent*>(Ne(nullptr))));
+
+    // When
+    builder.create(name, location);
+}
+
 TEST_F(PrefabBuilder_create, addsEntityToAllSpecifiedGroups) {
     // Given
     std::string name("Foo");
     builder.addPrefab(name, node);
     EntityId newId = 1234;
-    // ComponentBase* ptr = nullptr;
     GroupingManagerMock groupings;
 
     std::string group1("Group1");
