@@ -1,4 +1,5 @@
 #include "interaction_window.h"
+#include "dialog_window.h"
 #include "frame.h"
 #include "inspection_window.h"
 #include "label.h"
@@ -64,6 +65,14 @@ void InteractionWindow::registerWidgets() {
     createWidget<Label>("txtTalk", descriptionWidth, 3)
         ->setText("talk")
         ->setCommandChar(1)
+        ->setCommandCharCallback([&](Label* l) {
+            // ListBox* lstEntities = this->getWidget<ListBox>("lstEntities");
+            // EntityId entity = m_entities[lstEntities->getSelection()];
+
+            // auto inspectionArgs = std::make_shared<InspectionWindowArgs>();
+            // inspectionArgs->entity = entity;
+            getEngine()->getWindows()->createWindow<DialogWindow>();
+        })
         ->setSensitive(false);
     createWidget<Label>("txtDrop", descriptionWidth, 4)
         ->setText("pickup")
@@ -94,6 +103,8 @@ void InteractionWindow::registerWidgets() {
             getEngine()->state()->components()->get<OpenableComponent>(entity);
         store.drop =
             getEngine()->state()->components()->get<DroppableComponent>(entity);
+        store.npc =
+            getEngine()->state()->components()->get<NpcComponent>(entity);
 
         ListBoxItem item;
         item.setText(store.desc ? store.desc->title : "<Unknown>");
@@ -109,12 +120,14 @@ void InteractionWindow::updateScreen() {
     Label* txtInspect = getWidget<Label>("txtInspect");
     Label* txtOpen = getWidget<Label>("txtOpen");
     Label* txtDrop = getWidget<Label>("txtDrop");
+    Label* txtTalk = getWidget<Label>("txtTalk");
 
     ComponentStore& store = m_components[lstEntities->getSelection()];
 
     txtInspect->setSensitive(store.desc != nullptr);
     txtOpen->setSensitive(store.open != nullptr);
     txtDrop->setSensitive(store.drop != nullptr);
+    txtTalk->setSensitive(store.npc != nullptr);
 
     if (store.desc) {
         setTitle(store.desc->title);

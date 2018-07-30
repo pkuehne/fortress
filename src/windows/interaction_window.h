@@ -2,6 +2,7 @@
 
 #include "../components/description_component.h"
 #include "../components/droppable_component.h"
+#include "../components/npc_component.h"
 #include "../components/openable_component.h"
 #include "window.h"
 
@@ -15,6 +16,7 @@ typedef struct {
     DescriptionComponent* desc;
     OpenableComponent* open;
     DroppableComponent* drop;
+    NpcComponent* npc;
 } ComponentStore;
 
 class InteractionWindow : public Window {
