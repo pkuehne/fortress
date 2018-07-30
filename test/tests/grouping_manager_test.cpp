@@ -56,6 +56,8 @@ TEST_F(GroupingManager_getGrouping, returnsExistingGrouping) {
 
     // When
     Grouping val = manager.getGrouping(name);
+
+    // Then
     EXPECT_EQ(name, val.getName());
 }
 
@@ -65,12 +67,36 @@ TEST_F(GroupingManager_getGrouping, throwsIfGroupingDoesntExist) {
     std::string name("Foo");
 
     // When
-    try {
-        manager.getGrouping(name);
-        FAIL() << "manager did not throw";
-    } catch (std::string err) {
-        ASSERT_FALSE(err.empty());
-    }
+    EXPECT_THROW(manager.getGrouping(name), std::string);
+}
+
+class GroupingManager_getOrCreateGrouping : public ::testing::Test {};
+
+TEST_F(GroupingManager_getOrCreateGrouping, returnsExistingGrouping) {
+    // Given
+    GroupingManager manager;
+    std::string name("Foo");
+    EntityId id = 1234;
+    manager.createNewGrouping(name).addMember(id);
+
+    // When
+    Grouping& val = manager.getOrCreateGrouping(name);
+
+    // Then
+    EXPECT_EQ(name, val.getName());
+    EXPECT_TRUE(val.hasMember(id));
+}
+
+TEST_F(GroupingManager_getOrCreateGrouping, addsGroupIfItDoesntExist) {
+    // Given
+    GroupingManager manager;
+    std::string name("Foo");
+
+    // When
+    ASSERT_NO_THROW(manager.getOrCreateGrouping(name));
+
+    // Then
+    EXPECT_EQ(name, manager.getGrouping(name).getName());
 }
 
 class GroupingManager_setRelationship : public ::testing::Test {
@@ -111,14 +137,19 @@ TEST_F(GroupingManager_setRelationship, setsTheRelationshipOneWayByName) {
 
 class GroupingManager_AddEntityToGrouping : public ::testing::Test {};
 
-TEST_F(GroupingManager_AddEntityToGrouping, throwsIfGroupingNameNotValid) {
+TEST_F(GroupingManager_AddEntityToGrouping, addsGroupIfItDoesntExist) {
     // Given
     GroupingManager manager;
     std::string name("Foo");
-    manager.createNewGrouping(name);
+    manager.createNewGrouping("Bar");
+    EntityId id = 1234;
 
     // When
-    EXPECT_THROW(manager.addEntityToGrouping(123, "Bar"), std::string);
+    ASSERT_NO_THROW(manager.addEntityToGrouping(id, name));
+
+    // Then
+    EXPECT_NO_THROW(manager.getGrouping(name));
+    EXPECT_TRUE(manager.getGrouping(name).hasMember(id));
 }
 
 TEST_F(GroupingManager_AddEntityToGrouping, addsMemberToGrouping) {

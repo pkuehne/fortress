@@ -22,6 +22,14 @@ Grouping& GroupingManager::getGrouping(const std::string& name) {
     return iter->second;
 }
 
+Grouping& GroupingManager::getOrCreateGrouping(const std::string& name) {
+    auto iter = m_groupings.find(name);
+    if (iter == m_groupings.end()) {
+        return createNewGrouping(name);
+    }
+    return iter->second;
+}
+
 /// Effectively sets the relation between A -> B, but not B -> A
 void GroupingManager::setRelationship(Grouping& from, Grouping& to,
                                       int relationship) {
@@ -35,7 +43,7 @@ void GroupingManager::setRelationship(const std::string& from,
 
 void GroupingManager::addEntityToGrouping(EntityId entity,
                                           const std::string& name) {
-    Grouping& grouping = getGrouping(name);
+    Grouping& grouping = getOrCreateGrouping(name);
     grouping.addMember(entity);
     if (!grouping.getParentGrouping().empty()) {
         Grouping& parent = getGrouping(grouping.getParentGrouping());

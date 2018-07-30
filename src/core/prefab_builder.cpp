@@ -16,14 +16,17 @@
 #include "../components/sprite_component.h"
 #include "../components/wearable_component.h"
 #include "../components/wieldable_component.h"
+#include "../world/grouping_manager.h"
+#include "../world/world_info.h"
 #include "yaml_converter.h"
 #include <experimental/filesystem>
 #include <glog/logging.h>
 #include <iostream>
 #include <yaml-cpp/yaml.h>
 
-PrefabBuilder::PrefabBuilder(EntityManager* e, ComponentManager* c)
-    : m_entities(e), m_components(c) {}
+PrefabBuilder::PrefabBuilder(EntityManager* e, ComponentManager* c,
+                             std::shared_ptr<WorldInfo> w)
+    : m_entities(e), m_components(c), m_world(w) {}
 
 void PrefabBuilder::loadPrefabsFromDirectory(const std::string& directory) {
     namespace fs = std::experimental::filesystem;
@@ -165,7 +168,10 @@ EntityId PrefabBuilder::create(const std::string& name,
         auto l_grouping = m_components->make<GroupingComponent>(entity);
         for (YAML::const_iterator iter = node["groupings"].begin();
              iter != node["groupings"].end(); ++iter) {
-            l_grouping->groupings.push_back(iter->as<std::string>(""));
+            std::string group(iter->as<std::string>());
+
+            m_world->getGroupings().addEntityToGrouping(entity, group);
+            l_grouping->groupings.push_back(group);
         }
     }
 

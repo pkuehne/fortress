@@ -9,10 +9,12 @@ class GameState;
 class Location;
 class EntityManager;
 class ComponentManager;
+class WorldInfo;
 
 class PrefabBuilder {
 public:
-    PrefabBuilder(EntityManager* e, ComponentManager* c);
+    PrefabBuilder(EntityManager* e, ComponentManager* c,
+                  std::shared_ptr<WorldInfo> w);
 
     /// @brief Construct a new entity in the given location from the given
     /// prefab
@@ -35,5 +37,6 @@ public:
 private:
     EntityManager* m_entities = nullptr;
     ComponentManager* m_components = nullptr;
+    std::shared_ptr<WorldInfo> m_world;
     std::map<std::string, YAML::Node> m_prefabs;
 };

@@ -12,7 +12,7 @@ public:
     virtual ~WorldInfo();
 
     /// @brief Get the grouping manager in the world
-    GroupingManager& getGroupings() { return *m_groupings; }
+    virtual GroupingManager& getGroupings() { return *m_groupings; }
 
 private:
     std::unique_ptr<GroupingManager> m_groupings;

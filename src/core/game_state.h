@@ -88,10 +88,10 @@ private:
     MapManager* m_map = nullptr;
     EntityManager* m_entities = nullptr;
     ComponentManager* m_components = nullptr;
+    std::shared_ptr<WorldInfo> m_world;
     PrefabBuilder m_prefabs;
 
     std::vector<Message> m_messages;
     Debug m_debug;
     std::vector<Quest*> m_quests;
-    std::unique_ptr<WorldInfo> m_world;
 };

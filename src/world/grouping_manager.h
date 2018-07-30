@@ -14,9 +14,15 @@ public:
     /// @brief Return all Groupings in the world
     GroupingContainer& getGroupings();
 
-    /// @brief get a reference to a specific grouping
+    /// @brief Get a reference to a specific grouping
     /// @param[in] name The grouping to get
+    /// @returns The grouping
     Grouping& getGrouping(const std::string& name);
+
+    /// @brief Get a grouping  and create it if it doesn't exist
+    /// @param[in] name The name of the grouping to get
+    /// @returns The grouping
+    Grouping& getOrCreateGrouping(const std::string& name);
 
     /// @brief Add a new empty Grouping
     /// @param[in] name The name for the Grouping
@@ -39,7 +45,7 @@ public:
     /// @brief Add an entity to a group
     /// @param[in] entity The entity to add
     /// @param[in] name The grouping to add the entity to
-    void addEntityToGrouping(EntityId entity, const std::string& name);
+    virtual void addEntityToGrouping(EntityId entity, const std::string& name);
 
     /// @brief Removes the given entity from all groupings
     /// @param[in] id The id of the entity to remove
