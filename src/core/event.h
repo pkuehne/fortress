@@ -21,6 +21,7 @@ typedef enum {
     EVENT_CONSUME_ITEM,
     EVENT_OPEN_ENTITY,
     EVENT_CLOSE_ENTITY,
+    EVENT_START_CONVERSATION,
     EVENT_MAX
 } EventType;
 
@@ -121,4 +122,11 @@ class CloseEntityEvent : public Event {
 public:
     CloseEntityEvent() : Event(EVENT_CLOSE_ENTITY) {}
     EntityId entity = 0;
+};
+
+class StartConversationEvent : public Event {
+public:
+    StartConversationEvent() : Event(EVENT_CLOSE_ENTITY) {}
+    EntityId initiatedBy = 0;
+    EntityId target = 0;
 };

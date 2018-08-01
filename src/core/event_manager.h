@@ -4,10 +4,11 @@
 #include "event.h"
 #include "event_manager_interface.h"
 #include "game_system_interface.h"
+#include <memory>
 #include <queue>
 #include <vector>
 
-typedef std::queue<Event*> EventQueue;
+typedef std::queue<std::shared_ptr<Event>> EventQueue;
 typedef std::vector<GameSystemInterface*> Handlers;
 typedef Handlers::iterator HandlersIter;
 
@@ -17,7 +18,9 @@ public:
         m_handlers.push_back(system);
     }
 
-    void raiseEvent(Event* event) { m_events.push(event); }
+    void raiseEvent(Event* event) {
+        m_events.push(std::shared_ptr<Event>(event));
+    }
 
     void processEvents();
 

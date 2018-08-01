@@ -1,6 +1,7 @@
 #include "game_system_base.h"
 
-void GameSystemBase::handleEvent(const Event* event) {
+void GameSystemBase::handleEvent(std::shared_ptr<Event> i_event) {
+    Event* event = i_event.get();
     switch (event->getType()) {
         case EVENT_ADD_ENTITY: {
             handleAddEntityEvent(dynamic_cast<const AddEntityEvent*>(event));
@@ -51,6 +52,11 @@ void GameSystemBase::handleEvent(const Event* event) {
         }
         case EVENT_MOVE_ENTITY: {
             handleMoveEntityEvent(dynamic_cast<const MoveEntityEvent*>(event));
+            break;
+        }
+        case EVENT_START_CONVERSATION: {
+            handleStartConversationEvent(
+                dynamic_cast<const StartConversationEvent*>(event));
             break;
         }
         default:

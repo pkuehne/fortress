@@ -4,6 +4,7 @@
 #include "event.h"
 #include "game_engine.h"
 #include "game_system_interface.h"
+#include <memory>
 #include <vector>
 
 class GameSystemBase : public GameSystemInterface {
@@ -13,7 +14,7 @@ public:
 
     virtual void initialise(GameEngine* engine) { m_engine = engine; }
     virtual GameEngine* getEngine() { return m_engine; }
-    virtual void handleEvent(const Event* event);
+    virtual void handleEvent(std::shared_ptr<Event> event);
     virtual void update() {}
 
     virtual void handleAddEntityEvent(const AddEntityEvent* event) {}
@@ -28,6 +29,8 @@ public:
     virtual void handleEquipItemEvent(const EquipItemEvent* event) {}
     virtual void handleUnequipItemEvent(const UnequipItemEvent* event) {}
     virtual void handleMoveEntityEvent(const MoveEntityEvent* event) {}
+    virtual void
+    handleStartConversationEvent(const StartConversationEvent* event) {}
 
 protected:
     GameEngine* m_engine;

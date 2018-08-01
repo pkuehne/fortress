@@ -3,7 +3,7 @@
 
 void EventManager::processEvents() {
     while (!m_events.empty()) {
-        Event* l_event = m_events.front();
+        auto l_event = m_events.front();
         m_events.pop();
 
         // std::cout << *l_event << std::endl;
@@ -12,6 +12,5 @@ void EventManager::processEvents() {
              ++iter) {
             (*iter)->handleEvent(l_event);
         }
-        delete l_event;
     }
 }
