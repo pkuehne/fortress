@@ -1,8 +1,8 @@
 #include "splash_window.h"
 #include "../core/game_engine.h"
 #include "../core/graphics.h"
-#include "icon.h"
-#include "label.h"
+#include "../widgets/icon.h"
+#include "../widgets/label.h"
 #include "main_window.h"
 #include <sstream>
 

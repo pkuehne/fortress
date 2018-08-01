@@ -1,9 +1,9 @@
 #include "interaction_window.h"
+#include "../widgets/frame.h"
+#include "../widgets/label.h"
+#include "../widgets/listbox.h"
 #include "dialog_window.h"
-#include "frame.h"
 #include "inspection_window.h"
-#include "label.h"
-#include "listbox.h"
 
 void InteractionWindow::setup() {
     setTitle("Interact");

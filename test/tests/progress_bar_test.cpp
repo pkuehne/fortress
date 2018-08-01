@@ -1,4 +1,4 @@
-#include "../../src/windows/progress_bar.h"
+#include "../../src/widgets/progress_bar.h"
 #include "../mocks/graphics_mock.h"
 #include <gtest/gtest.h>
 

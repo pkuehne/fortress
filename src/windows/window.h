@@ -2,7 +2,7 @@
 #define __WINDOW_H__
 
 #include "../core/game_engine.h"
-#include "widget.h"
+#include "../widgets/widget.h"
 
 #include <map>
 

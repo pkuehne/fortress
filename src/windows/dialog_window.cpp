@@ -1,8 +1,8 @@
 #include "dialog_window.h"
 #include "../core/game_engine.h"
-#include "frame.h"
-#include "label.h"
-#include "listbox.h"
+#include "../widgets/frame.h"
+#include "../widgets/label.h"
+#include "../widgets/listbox.h"
 
 void DialogWindow::setup() {
     setTitle("Dialog");

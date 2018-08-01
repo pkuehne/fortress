@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../src/windows/widget.h"
+#include "../../src/widgets/widget.h"
 #include <gmock/gmock.h>
 
 class WidgetMock : public Widget {

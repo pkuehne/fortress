@@ -2,8 +2,8 @@
 #include "../core/game_state.h"
 #include "../core/quest.h"
 #include "../core/window_manager.h"
-#include "label.h"
-#include "listbox.h"
+#include "../widgets/label.h"
+#include "../widgets/listbox.h"
 
 #include <iostream>
 

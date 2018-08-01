@@ -1,5 +1,5 @@
 #include "../../src/core/utility.h"
-#include "../../src/windows/text_entry.h"
+#include "../../src/widgets/text_entry.h"
 
 #include "../mocks/graphics_mock.h"
 #include <gtest/gtest.h>

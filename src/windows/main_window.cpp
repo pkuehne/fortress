@@ -1,8 +1,8 @@
 #include "main_window.h"
 #include "../core/file_loader.h"
 #include "../core/game_engine.h"
+#include "../widgets/label.h"
 #include "generator_window.h"
-#include "label.h"
 #include "load_window.h"
 
 void MainWindow::setup() {

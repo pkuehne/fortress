@@ -1,11 +1,11 @@
 #include "save_window.h"
 #include "../core/file_saver.h"
-#include "frame.h"
-#include "label.h"
-#include "listbox.h"
-#include "progress_bar.h"
-#include "tab.h"
-#include "text_entry.h"
+#include "../widgets/frame.h"
+#include "../widgets/label.h"
+#include "../widgets/listbox.h"
+#include "../widgets/progress_bar.h"
+#include "../widgets/tab.h"
+#include "../widgets/text_entry.h"
 #include <experimental/filesystem>
 #include <iostream>
 #include <thread>

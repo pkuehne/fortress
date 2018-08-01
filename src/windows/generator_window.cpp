@@ -3,9 +3,9 @@
 #include "../core/game_engine.h"
 #include "../generators/dungeon_generator.h"
 #include "../generators/rural_generator.h"
-#include "label.h"
+#include "../widgets/label.h"
+#include "../widgets/numeric_entry.h"
 #include "map_window.h"
-#include "numeric_entry.h"
 #include <glog/logging.h>
 #include <sstream>
 

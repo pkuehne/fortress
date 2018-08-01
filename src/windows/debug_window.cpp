@@ -1,8 +1,8 @@
 #include "debug_window.h"
 #include "../core/game_engine.h"
-#include "frame.h"
-#include "listbox.h"
-#include "text_entry.h"
+#include "../widgets/frame.h"
+#include "../widgets/listbox.h"
+#include "../widgets/text_entry.h"
 #include <dirent.h>
 #include <glog/logging.h>
 #include <iostream>

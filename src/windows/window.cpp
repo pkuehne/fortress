@@ -1,6 +1,6 @@
 #include "window.h"
 #include "../core/game_engine.h"
-#include "frame.h"
+#include "../widgets/frame.h"
 #include <iostream>
 
 void Window::initialise(GameEngine* a_engine) {

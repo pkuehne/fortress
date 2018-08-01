@@ -1,7 +1,7 @@
 #include "inspection_window.h"
 #include "../components/description_component.h"
 #include "../core/game_engine.h"
-#include "text_block.h"
+#include "../widgets/text_block.h"
 
 void InspectionWindow::setup() {
     setTitle("Details");
@@ -16,8 +16,7 @@ void InspectionWindow::registerWidgets() {
 
     EntityId l_entity = m_arguments->entity;
     DescriptionComponent* l_description =
-        getEngine()->state()->components()->get<DescriptionComponent>(
-            l_entity);
+        getEngine()->state()->components()->get<DescriptionComponent>(l_entity);
     if (!l_description) {
         block->setText("There are no words...");
         return;

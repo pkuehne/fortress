@@ -1,4 +1,4 @@
-#include "../../src/windows/text_block.h"
+#include "../../src/widgets/text_block.h"
 #include <gtest/gtest.h>
 
 TEST(TextBlock, fitsAllTextOnOneLineWhenTextSizeLessThanWidth) {

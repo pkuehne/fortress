@@ -1,6 +1,6 @@
 #include "escape_window.h"
 #include "../core/game_engine.h"
-#include "label.h"
+#include "../widgets/label.h"
 #include "save_window.h"
 
 void EscapeWindow::setup() {

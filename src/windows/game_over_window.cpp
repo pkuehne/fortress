@@ -1,6 +1,6 @@
 #include "game_over_window.h"
 #include "../core/game_engine.h"
-#include "label.h"
+#include "../widgets/label.h"
 
 void GameOverWindow::registerWidgets() {
     Label* l = createWidget<Label>("lblResult", 2, 2);

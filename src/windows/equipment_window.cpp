@@ -4,10 +4,10 @@
 #include "../components/wearable_component.h"
 #include "../components/wieldable_component.h"
 #include "../core/game_engine.h"
+#include "../widgets/label.h"
+#include "../widgets/listbox.h"
+#include "../widgets/tab.h"
 #include "inspection_window.h"
-#include "label.h"
-#include "listbox.h"
-#include "tab.h"
 
 namespace {
 const char* nameOrNothing(EntityId item, GameEngine* engine) {

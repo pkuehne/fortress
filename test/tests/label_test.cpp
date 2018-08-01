@@ -1,5 +1,5 @@
 #include "../../src/core/utility.h"
-#include "../../src/windows/label.h"
+#include "../../src/widgets/label.h"
 #include <gtest/gtest.h>
 
 using namespace ::testing;

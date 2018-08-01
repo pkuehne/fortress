@@ -1,4 +1,4 @@
-#include "../../src/windows/icon.h"
+#include "../../src/widgets/icon.h"
 #include "../mocks/graphics_mock.h"
 #include <gtest/gtest.h>
 

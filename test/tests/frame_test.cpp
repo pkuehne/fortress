@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "../../src/windows/frame.h"
+#include "../../src/widgets/frame.h"
 #include "../mocks/widget_mock.h"
 
 using namespace ::testing;

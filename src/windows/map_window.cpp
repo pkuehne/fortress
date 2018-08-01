@@ -6,6 +6,11 @@
 #include "../components/npc_component.h"
 #include "../core/event.h"
 #include "../core/game_engine.h"
+#include "../widgets/camera.h"
+#include "../widgets/frame.h"
+#include "../widgets/label.h"
+#include "../widgets/listbox.h"
+#include "../widgets/progress_bar.h"
 #include "debug_window.h"
 #include "equipment_window.h"
 #include "escape_window.h"
@@ -13,12 +18,6 @@
 #include "interaction_window.h"
 #include "quest_window.h"
 #include "window.h"
-
-#include "camera.h"
-#include "frame.h"
-#include "label.h"
-#include "listbox.h"
-#include "progress_bar.h"
 
 void MapWindow::setup() {
     setTitle("Map");
