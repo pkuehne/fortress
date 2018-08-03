@@ -56,7 +56,7 @@ void GameSystemBase::handleEvent(std::shared_ptr<Event> i_event) {
         }
         case EVENT_START_CONVERSATION: {
             handleStartConversationEvent(
-                dynamic_cast<const StartConversationEvent*>(event));
+                std::dynamic_pointer_cast<StartConversationEvent>(i_event));
             break;
         }
         default:

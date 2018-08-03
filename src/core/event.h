@@ -126,7 +126,7 @@ public:
 
 class StartConversationEvent : public Event {
 public:
-    StartConversationEvent() : Event(EVENT_CLOSE_ENTITY) {}
+    StartConversationEvent() : Event(EVENT_START_CONVERSATION) {}
     EntityId initiatedBy = 0;
     EntityId target = 0;
 };

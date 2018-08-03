@@ -19,7 +19,7 @@ void GameEngine::initialise() {
         m_windowManager = new WindowManager();
     }
     if (!m_eventManager) {
-        m_eventManager = new EventManager();
+        m_eventManager = std::make_shared<EventManager>();
     }
     if (!m_state) {
         m_state = new GameState();
@@ -95,3 +95,5 @@ void GameEngine::swapTurn() {
     l_algo.initialise(this);
     l_algo.calculateFov();
 }
+
+void GameEngine::raiseEvent(Event* event) { m_eventManager->raiseEvent(event); }

@@ -9,8 +9,11 @@
 #include "location.h"
 
 #include <cstdlib>
+#include <memory>
 #include <string>
 #include <vector>
+
+class EventManager;
 
 class GameEngine {
 public:
@@ -26,7 +29,7 @@ public:
     unsigned int getTurn() { return m_turn; }
     void setTurn(unsigned int turn) { m_turn = turn; }
 
-    virtual void raiseEvent(Event* event) { m_eventManager->raiseEvent(event); }
+    virtual void raiseEvent(Event* event);
 
     unsigned long long getTick() { return m_tick; }
 
@@ -35,9 +38,6 @@ public:
     void setWindowManager(WindowManager* a_manager) {
         m_windowManager = a_manager;
     }
-    void setEventManager(EventManagerInterface* a_manager) {
-        m_eventManager = a_manager;
-    }
     WindowManager* getWindows() { return m_windowManager; }
 
     void addSystem(GameSystemInterface* a_system) {
@@ -45,13 +45,14 @@ public:
     }
 
     virtual GameState* state() { return m_state; }
+    virtual std::shared_ptr<EventManager> events() { return m_eventManager; }
 
 private:
     unsigned long long m_tick = 0;
     bool m_playerTurn = true;
     unsigned int m_turn = 1;
 
-    EventManagerInterface* m_eventManager = nullptr;
+    std::shared_ptr<EventManager> m_eventManager;
     WindowManager* m_windowManager = nullptr;
     GameState* m_state = nullptr;
 

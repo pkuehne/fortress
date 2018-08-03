@@ -2,6 +2,7 @@
 #include "core/graphics.h"
 #include "systems/combat_system.h"
 #include "systems/consumable_system.h"
+#include "systems/dialog_system.h"
 #include "systems/equipment_system.h"
 #include "systems/graphics_effect_system.h"
 #include "systems/health_system.h"
@@ -56,6 +57,7 @@ int main(int argc, char** argv) {
         l_engine->addSystem(new GraphicsEffectSystem());
         l_engine->addSystem(new HealthSystem());
         l_engine->addSystem(new InteractionSystem());
+        l_engine->addSystem(new DialogSystem());
         l_engine->initialise();
         l_graphics->spin();
     } catch (char const* err) {

@@ -29,8 +29,8 @@ public:
     virtual void handleEquipItemEvent(const EquipItemEvent* event) {}
     virtual void handleUnequipItemEvent(const UnequipItemEvent* event) {}
     virtual void handleMoveEntityEvent(const MoveEntityEvent* event) {}
-    virtual void
-    handleStartConversationEvent(const StartConversationEvent* event) {}
+    virtual void handleStartConversationEvent(
+        std::shared_ptr<StartConversationEvent> event) {}
 
 protected:
     GameEngine* m_engine;

@@ -12,17 +12,26 @@ typedef std::queue<std::shared_ptr<Event>> EventQueue;
 typedef std::vector<GameSystemInterface*> Handlers;
 typedef Handlers::iterator HandlersIter;
 
+/// @brief Manages events in the game and distributes them
+/// to the Systems
 class EventManager : public EventManagerInterface {
 public:
-    void registerHandler(GameSystemInterface* system) {
-        m_handlers.push_back(system);
-    }
+    EventManager() = default;
+    virtual ~EventManager() = default;
 
-    void raiseEvent(Event* event) {
-        m_events.push(std::shared_ptr<Event>(event));
-    }
+    /// @brief Register a new system to listen to events
+    /// @param[in] system The Game System to register
+    void registerHandler(GameSystemInterface* system);
 
+    /// @brief Puts an event into the queue for distribution
+    /// @param[in] event The event to store
+    void raiseEvent(Event* event);
+
+    /// @brief Notify the listeners of any new events
     void processEvents();
+
+    void raiseStartConversationEvent(EntityId from, EntityId to);
+    void raisePickupEqupmentEvent(EntityId equipment, EntityId entity);
 
 private:
     EventQueue m_events;
