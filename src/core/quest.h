@@ -8,7 +8,7 @@ class GameState;
 class Quest {
 public:
     explicit Quest(EntityId owner) : m_owner(owner){};
-    virtual ~Quest() {}
+    virtual ~Quest() = default;
 
     virtual bool& isCompleted() { return m_completed; }
     virtual bool& isFailed() { return m_failed; }
@@ -32,5 +32,5 @@ public:
     virtual void update(GameState& state);
 
 private:
-    EntityId m_target;
+    EntityId m_target = 0;
 };

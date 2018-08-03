@@ -52,7 +52,7 @@ lint:
 	@cpplint --recursive src
 
 check:
-	@cppcheck src/ --enable=style,information,warning --error-exitcode=1 -DMAJOR=1 --inline-suppr 2>lint-errors.txt || cat lint-errors.txt
+	@cppcheck src/ --enable=style,information,warning --error-exitcode=1 -DMAJOR=1 --inline-suppr 2>lint-errors.txt
 
 analysis: lint check
 	@echo "Analysis succeeded!"

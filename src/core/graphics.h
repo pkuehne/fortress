@@ -76,5 +76,3 @@ private:
 };
 
 void start_graphics();
-
-typedef enum { ICON_BRICK = 247, ICON_MAX = 12 * 48 } ICON_TYPE;
