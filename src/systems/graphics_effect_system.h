@@ -1,5 +1,4 @@
-#ifndef GRAPHICS_EFFECT_SYSTEM_H
-#define GRAPHICS_EFFECT_SYSTEM_H
+#pragma once
 
 #include "../components/graphics_effect_component.h"
 #include "../components/sprite_component.h"
@@ -15,4 +14,3 @@ private:
     void changeColor(GraphicsEffectComponent* effect, SpriteComponent* sprite);
 };
 
-#endif

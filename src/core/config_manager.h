@@ -1,5 +1,4 @@
-#ifndef CONFIG_MANAGER_H
-#define CONFIG_MANAGER_H
+#pragma once
 
 #include <string>
 
@@ -17,5 +16,3 @@ public:
     int fontset_rows;
     int fontset_cols;
 };
-
-#endif

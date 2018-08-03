@@ -1,5 +1,4 @@
-#ifndef __MAP_WINDOW_H__
-#define __MAP_WINDOW_H__
+#pragma once
 
 #include "window.h"
 #include <ctime>
@@ -27,5 +26,3 @@ private:
 
     char m_action = 0;
 };
-
-#endif

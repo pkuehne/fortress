@@ -1,5 +1,4 @@
-#ifndef __SPLASH_WINDOW_H__
-#define __SPLASH_WINDOW_H__
+#pragma once
 
 #include "window.h"
 
@@ -9,5 +8,3 @@ public:
     virtual void registerWidgets();
     virtual void keyPress(unsigned char key);
 };
-
-#endif

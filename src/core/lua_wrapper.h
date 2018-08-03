@@ -1,5 +1,4 @@
-#ifndef __LUA_WRAPPER_H__
-#define __LUA_WRAPPER_H__
+#pragma once
 
 #include "game_state.h"
 #include <lua5.3/lauxlib.h>
@@ -22,4 +21,3 @@ private:
     lua_State* m_runtime;
 };
 
-#endif

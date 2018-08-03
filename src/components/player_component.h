@@ -1,8 +1,6 @@
-#ifndef PLAYER_COMPONENT_H
-#define PLAYER_COMPONENT_H
+#pragma once
 
 #include "component_base.h"
 
 struct PlayerComponent : public ComponentBase {};
 
-#endif

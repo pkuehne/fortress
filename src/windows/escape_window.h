@@ -1,5 +1,4 @@
-#ifndef ESCAPE_WINDOW_H
-#define ESCAPE_WINDOW_H
+#pragma once
 
 #include "window.h"
 
@@ -9,4 +8,3 @@ public:
     void registerWidgets();
 };
 
-#endif

@@ -1,5 +1,4 @@
-#ifndef __EVENT_MANAGER_H__
-#define __EVENT_MANAGER_H__
+#pragma once
 
 #include "event.h"
 #include "event_manager_interface.h"
@@ -38,5 +37,3 @@ private:
     EventQueue m_events;
     Handlers m_handlers;
 };
-
-#endif

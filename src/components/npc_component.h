@@ -1,5 +1,4 @@
-#ifndef NPC_COMPONENT_H
-#define NPC_COMPONENT_H
+#pragma once
 
 #include "../core/entity.h"
 #include "../core/location.h"
@@ -16,5 +15,3 @@ struct NpcComponent : ComponentBase {
     std::string stateMachine = "";
     unsigned int losDistance = 15;
 };
-
-#endif

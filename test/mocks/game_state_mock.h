@@ -1,5 +1,5 @@
-#ifndef __GAME_STATE_MOCK_H__
-#define __GAME_STATE_MOCK_H__
+#pragma once
+
 
 #include "../../src/core/game_state.h"
 #include <gmock/gmock.h>
@@ -13,4 +13,4 @@ public:
     MOCK_METHOD1(tile, Tile&(const Location&));
 };
 
-#endif
+

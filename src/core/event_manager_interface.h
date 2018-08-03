@@ -1,5 +1,4 @@
-#ifndef EVENT_MANAGER_INTERFACE_H
-#define EVENT_MANAGER_INTERFACE_H
+#pragma once
 
 #include "event.h"
 #include <memory>
@@ -14,5 +13,3 @@ public:
     virtual void raiseEvent(std::shared_ptr<Event> event) = 0;
     virtual void processEvents() = 0;
 };
-
-#endif

@@ -1,5 +1,4 @@
-#ifndef __LOCATION_H__
-#define __LOCATION_H__
+#pragma once
 
 #include <climits>
 #include <ostream>
@@ -27,4 +26,3 @@ public:
 
 std::ostream& operator<<(std::ostream& out, const Location& loc);
 
-#endif

@@ -1,5 +1,4 @@
-#ifndef WEARABLE_COMPONENT
-#define WEARABLE_COMPONENT
+#pragma once
 
 #include "component_base.h"
 
@@ -20,4 +19,3 @@ struct WearableComponent : public ComponentBase {
     int warmth;
 };
 
-#endif

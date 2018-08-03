@@ -1,5 +1,4 @@
-#ifndef GAME_SYSTEM_INTERFACE_H
-#define GAME_SYSTEM_INTERFACE_H
+#pragma once
 
 #include "event.h"
 #include <memory>
@@ -18,4 +17,3 @@ public:
         std::shared_ptr<StartConversationEvent> event) = 0;
 };
 
-#endif

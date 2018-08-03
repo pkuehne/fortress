@@ -1,5 +1,4 @@
-#ifndef __DEBUG_WINDOW_H__
-#define __DEBUG_WINDOW_H__
+#pragma once
 
 #include "../core/lua_wrapper.h"
 #include "../core/utility.h"
@@ -31,4 +30,3 @@ private:
     LuaWrapper m_lua;
 };
 
-#endif

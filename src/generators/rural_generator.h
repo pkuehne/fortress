@@ -1,5 +1,4 @@
-#ifndef RURAL_GENERATOR
-#define RURAL_GENERATOR
+#pragma once
 
 #include "../core/entity.h"
 #include "generator_interface.h"
@@ -22,5 +21,3 @@ private:
 private:
     std::vector<EntityId> m_areaLinks;
 };
-
-#endif

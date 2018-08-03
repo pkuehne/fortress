@@ -1,5 +1,4 @@
-#ifndef GENERATOR_INTERFACE_H
-#define GENERATOR_INTERFACE_H
+#pragma once
 
 #include <cstring>
 
@@ -58,4 +57,3 @@ protected:
     GameEngine* m_engine = nullptr;
 };
 
-#endif

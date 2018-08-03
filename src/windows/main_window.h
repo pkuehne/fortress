@@ -1,5 +1,4 @@
-#ifndef MAIN_WINDOW
-#define MAIN_WINDOW
+#pragma once
 
 #include "main_window.h"
 #include "window.h"
@@ -9,5 +8,3 @@ public:
     virtual void setup();
     virtual void registerWidgets();
 };
-
-#endif

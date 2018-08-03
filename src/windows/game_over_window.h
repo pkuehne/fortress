@@ -1,5 +1,4 @@
-#ifndef GAME_OVER_WINDOW_H
-#define GAME_OVER_WINDOW_H
+#pragma once
 
 #include "window.h"
 
@@ -18,5 +17,3 @@ public:
 private:
     std::shared_ptr<GameOverWindowArgs> m_arguments;
 };
-
-#endif

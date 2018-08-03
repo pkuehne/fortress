@@ -1,5 +1,4 @@
-#ifndef ALGORITHM_H
-#define ALGORITHM_H
+#pragma once
 
 #include "../core/location.h"
 #include "../core/utility.h"
@@ -55,4 +54,3 @@ private:
     unsigned int m_numNeighbours = 0;
 };
 
-#endif

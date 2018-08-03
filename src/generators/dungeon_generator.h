@@ -1,5 +1,4 @@
-#ifndef GENERATOR_H
-#define GENERATOR_H
+#pragma once
 
 #include "generator_interface.h"
 #include "room.h"
@@ -53,5 +52,3 @@ private:
     std::vector<Room> m_rooms;
     bool m_createBoss = false;
 };
-
-#endif

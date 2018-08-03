@@ -1,5 +1,4 @@
-#ifndef EQUIPMENT_WINDOW
-#define EQUIPMENT_WINDOW
+#pragma once
 
 #include "../core/entity.h"
 #include "window.h"
@@ -21,5 +20,3 @@ private:
     EntityId m_selectedItem = 0;
     std::vector<EntityId> m_rucksackEntities;
 };
-
-#endif

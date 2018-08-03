@@ -1,5 +1,5 @@
-#ifndef __GAME_ENGINE_MOCK_H__
-#define __GAME_ENGINE_MOCK_H__
+#pragma once
+
 
 #include "../../src/core/game_engine.h"
 #include <gmock/gmock.h>
@@ -15,4 +15,4 @@ public:
     MOCK_METHOD0(getWindows, WindowManager*());
 };
 
-#endif
+

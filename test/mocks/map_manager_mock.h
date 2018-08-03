@@ -1,5 +1,5 @@
-#ifndef __MAP_MANAGER_MOCK__
-#define __MAP_MANAGER_MOCK__
+#pragma once
+
 
 #include "../../src/core/map_manager.h"
 #include <gmock/gmock.h>
@@ -13,4 +13,3 @@ public:
     MOCK_METHOD0(getMapDepth, unsigned int());
 };
 
-#endif

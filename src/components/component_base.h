@@ -1,8 +1,6 @@
-#ifndef COMPONENT_BASE
-#define COMPONENT_BASE
+#pragma once
 
 struct ComponentBase {
     virtual ~ComponentBase() {}
 };
 
-#endif

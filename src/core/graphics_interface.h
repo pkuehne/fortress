@@ -1,5 +1,4 @@
-#ifndef GRAPHICS_INTERFACE_H
-#define GRAPHICS_INTERFACE_H
+#pragma once
 
 #include "color.h"
 #include <functional>
@@ -52,5 +51,3 @@ public:
 
 private:
 };
-
-#endif

@@ -1,5 +1,4 @@
-#ifndef NPC_SYSTEM_H
-#define NPC_SYSTEM_H
+#pragma once
 
 #include "../components/npc_component.h"
 #include "../core/game_system_base.h"
@@ -39,4 +38,3 @@ private:
     std::map<std::string, StateMachine> m_stateMachines;
 };
 
-#endif

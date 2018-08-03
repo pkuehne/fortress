@@ -1,5 +1,4 @@
-#ifndef GAME_SYSTEM_BASE_H
-#define GAME_SYSTEM_BASE_H
+#pragma once
 
 #include "event.h"
 #include "game_engine.h"
@@ -36,4 +35,3 @@ protected:
     GameEngine* m_engine;
 };
 
-#endif

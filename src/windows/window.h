@@ -1,5 +1,4 @@
-#ifndef __WINDOW_H__
-#define __WINDOW_H__
+#pragma once
 
 #include "../core/game_engine.h"
 #include "../widgets/widget.h"
@@ -120,5 +119,3 @@ private:
     std::map<std::string, Widget*> m_widgets;
     Widget* m_baseWidget = nullptr;
 };
-
-#endif

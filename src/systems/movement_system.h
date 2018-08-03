@@ -1,5 +1,4 @@
-#ifndef __MOVEMENT_SYSTEM_H__
-#define __MOVEMENT_SYSTEM_H__
+#pragma once
 
 #include "../core/game_system_base.h"
 
@@ -11,4 +10,3 @@ public:
 private:
 };
 
-#endif

@@ -1,5 +1,4 @@
-#ifndef __QUEST_H__
-#define __QUEST_H__
+#pragma once
 
 #include "entity.h"
 #include <string>
@@ -35,5 +34,3 @@ public:
 private:
     EntityId m_target;
 };
-
-#endif

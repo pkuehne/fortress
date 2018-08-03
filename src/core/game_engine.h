@@ -1,5 +1,4 @@
-#ifndef __GAMEENGINE_H__
-#define __GAMEENGINE_H__
+#pragma once
 
 #include "../core/game_state.h"
 #include "../core/window_manager.h"
@@ -66,5 +65,3 @@ private:
     unsigned int m_depth = 0;
     unsigned int m_area = 0;
 };
-
-#endif

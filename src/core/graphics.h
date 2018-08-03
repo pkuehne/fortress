@@ -1,5 +1,4 @@
-#ifndef GRAPHICS_H
-#define GRAPHICS_H
+#pragma once
 
 #include "color.h"
 #include "config_manager.h"
@@ -79,5 +78,3 @@ private:
 void start_graphics();
 
 typedef enum { ICON_BRICK = 247, ICON_MAX = 12 * 48 } ICON_TYPE;
-
-#endif

@@ -1,5 +1,4 @@
-#ifndef MAP_MANAGER_H
-#define MAP_MANAGER_H
+#pragma once
 
 #include "area_info.h"
 #include "entity.h"
@@ -48,5 +47,3 @@ private:
     unsigned int m_maxAreaId = 0;
     AreaMap m_areas;
 };
-
-#endif

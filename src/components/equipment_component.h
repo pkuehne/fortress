@@ -1,5 +1,4 @@
-#ifndef EQUIPMENT_COMPONENT_H
-#define EQUIPMENT_COMPONENT_H
+#pragma once
 
 #include "../core/entity.h"
 #include "component_base.h"
@@ -22,4 +21,3 @@ struct EquipmentComponent : public ComponentBase {
     int maxCarryVolume = 0;
 };
 
-#endif

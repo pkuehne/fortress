@@ -1,5 +1,4 @@
-#ifndef __WINDOW_MANAGER_H__
-#define __WINDOW_MANAGER_H__
+#pragma once
 
 #include <memory>
 #include <vector>
@@ -38,5 +37,3 @@ private:
     std::shared_ptr<Window> m_nextWindow = nullptr;
     NextWindowAction m_nextAction = NextWindowAction::None;
 };
-
-#endif

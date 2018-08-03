@@ -1,5 +1,4 @@
-#ifndef FOV_ALGORITHM
-#define FOV_ALGORITHM
+#pragma once
 
 #include "../core/game_engine.h"
 
@@ -39,4 +38,3 @@ private:
     GameEngine* m_engine = nullptr;
 };
 
-#endif

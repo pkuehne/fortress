@@ -1,5 +1,4 @@
-#ifndef WIELDABLE_COMPONENT
-#define WIELDABLE_COMPONENT
+#pragma once
 
 #include "component_base.h"
 
@@ -16,4 +15,3 @@ struct WieldableComponent : public ComponentBase {
     WieldablePosition position;
 };
 
-#endif

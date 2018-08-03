@@ -1,5 +1,4 @@
-#ifndef LOS_ALGORITHM
-#define LOS_ALGORITHM
+#pragma once
 
 class Location;
 class GameEngine;
@@ -17,5 +16,3 @@ private:
 private:
     GameEngine* m_engine = nullptr;
 };
-
-#endif

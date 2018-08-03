@@ -1,5 +1,4 @@
-#ifndef GENERATOR_WINDOW
-#define GENERATOR_WINDOW
+#pragma once
 
 #include "../generators/generator_interface.h"
 #include "window.h"
@@ -39,5 +38,3 @@ private:
 
     std::shared_ptr<GeneratorWindowArgs> m_arguments;
 };
-
-#endif

@@ -1,5 +1,4 @@
-#ifndef DESCRIPTION_COMPONENT_H
-#define DESCRIPTION_COMPONENT_H
+#pragma once
 
 #include "component_base.h"
 #include <string>
@@ -9,4 +8,3 @@ struct DescriptionComponent : public ComponentBase {
     std::string text;
 };
 
-#endif

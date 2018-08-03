@@ -1,5 +1,5 @@
-#ifndef __GRAPHICS_MOCK_H__
-#define __GRAPHICS_MOCK_H__
+#pragma once
+
 
 #include "../../src/core/graphics.h"
 #include <gmock/gmock.h>
@@ -13,4 +13,4 @@ public:
     MOCK_METHOD4(drawBorder, void(int y, int x, int height, int width));
 };
 
-#endif
+

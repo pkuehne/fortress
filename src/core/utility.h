@@ -1,5 +1,4 @@
-#ifndef UTILITY_H
-#define UTILITY_H
+#pragma once
 
 enum class Direction {
     None = 0,
@@ -29,5 +28,3 @@ namespace Utility {
 unsigned int randBetween(unsigned int start, unsigned int end);
 bool randChance(unsigned int percentage);
 } // namespace Utility
-
-#endif

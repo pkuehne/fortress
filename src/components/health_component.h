@@ -1,5 +1,4 @@
-#ifndef HEALTH_COMPONENT_H
-#define HEALTH_COMPONENT_H
+#pragma once
 
 #include "component_base.h"
 
@@ -15,4 +14,3 @@ struct HealthComponent : public ComponentBase {
     unsigned int hungerStep = 0;
 };
 
-#endif

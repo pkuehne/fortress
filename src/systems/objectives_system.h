@@ -1,5 +1,4 @@
-#ifndef OBJECTIVES_SYSTEM_H
-#define OBJECTIVES_SYSTEM_H
+#pragma once
 
 #include "../core/game_system_base.h"
 
@@ -13,5 +12,3 @@ public:
 private:
     EntityId m_boss = 0;
 };
-
-#endif
