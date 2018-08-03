@@ -52,9 +52,9 @@ public:
     }
     tick_t turn() { return m_turn; }
 
-    MapManager* map();
-    EntityManager* entityManager();
-    ComponentManager* components();
+    virtual MapManager* map();
+    virtual EntityManager* entityManager();
+    virtual ComponentManager* components();
 
     Debug& debug() { return m_debug; }
 
@@ -68,7 +68,7 @@ public:
     Location location(EntityId entity);
     Location location(const Location&, Direction direction);
 
-    EntityId player();
+    virtual EntityId player();
     EntityId createEntity(Location&);
 
     PrefabBuilder& prefabs() { return m_prefabs; }

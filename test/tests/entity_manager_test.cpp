@@ -62,7 +62,6 @@ TEST_F(EntityManager_addEntity, setsLocation) {
 class EntityManager_destroyEntity : public ::testing::Test {
 public:
     void SetUp() {
-        EXPECT_CALL(state, components()).WillRepeatedly(Return(&components));
         EXPECT_CALL(mock, state()).WillRepeatedly(Return(&state));
         manager.initialise(&mock);
         manager.addEntity(entity, location);
