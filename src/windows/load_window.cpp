@@ -48,7 +48,7 @@ void LoadWindow::registerWidgets() {
         ->setCommandChar(1)
         ->setIgnoreCommandCharCase(true)
         ->setCommandCharCallback([=](Label* l) {
-            MapWindow* l_win = new MapWindow();
+            auto l_win = std::make_shared<MapWindow>();
             l_win->initialise(getEngine());
             getEngine()->getWindows()->replaceAllWindows(l_win);
         })

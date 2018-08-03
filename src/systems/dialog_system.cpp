@@ -3,5 +3,5 @@
 
 void DialogSystem::handleStartConversationEvent(
     std::shared_ptr<StartConversationEvent> event) {
-    getEngine()->getWindows()->registerWindow(new DialogWindow());
+    getEngine()->getWindows()->registerWindow(std::make_shared<DialogWindow>());
 }

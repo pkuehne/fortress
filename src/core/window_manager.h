@@ -16,27 +16,29 @@ public:
     virtual ~WindowManager() = default;
 
     virtual void initialise(GameEngine* engine);
-    virtual void pushWindow(Window* win);
+    virtual void pushWindow(std::shared_ptr<Window> win);
+    virtual void removeWindow(std::shared_ptr<Window> win);
+
     virtual void popWindow();
     // void replaceWindow(Window* win);
-    virtual void replaceAllWindows(Window* win);
-    virtual Window* getActive();
+    virtual void replaceAllWindows(std::shared_ptr<Window> win);
+    virtual std::shared_ptr<Window> getActive();
     virtual void resize();
     virtual void nextTick();
     virtual void nextTurn();
 
-    virtual void registerWindow(Window* win);
+    virtual void registerWindow(std::shared_ptr<Window> win);
 
-    template <typename T> T* createWindow() {
-        T* win = new T();
+    template <typename T> std::shared_ptr<T> createWindow() {
+        auto win = std::make_shared<T>();
         win->initialise(m_engine);
         pushWindow(win);
         return win;
     }
 
     template <typename T, typename A>
-    T* createWindow(std::shared_ptr<A>& arguments) {
-        T* win = new T();
+    std::shared_ptr<T> createWindow(std::shared_ptr<A>& arguments) {
+        auto win = std::make_shared<T>();
         win->setArguments(arguments);
         win->initialise(m_engine);
         pushWindow(win);
@@ -48,8 +50,8 @@ private:
 
 private:
     GameEngine* m_engine = nullptr;
-    std::vector<Window*> m_windows;
-    Window* m_nextWindow = nullptr;
+    std::vector<std::shared_ptr<Window>> m_windows;
+    std::shared_ptr<Window> m_nextWindow = nullptr;
     NextWindowAction m_nextAction = NextWindowAction::None;
 };
 

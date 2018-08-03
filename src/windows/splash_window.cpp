@@ -155,7 +155,7 @@ void SplashWindow::registerWidgets() {
 }
 
 void SplashWindow::keyPress(unsigned char key) {
-    MainWindow* l_win = new MainWindow();
+    auto l_win = std::make_shared<MainWindow>();
     l_win->initialise(getEngine());
 
     getEngine()->getWindows()->replaceAllWindows(l_win);

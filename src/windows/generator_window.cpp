@@ -204,7 +204,7 @@ void GeneratorWindow::startGenerating() {
 }
 
 void GeneratorWindow::startPlaying() {
-    MapWindow* l_win = new MapWindow();
+    auto l_win = std::make_shared<MapWindow>();
     l_win->initialise(getEngine());
     getEngine()->getWindows()->replaceAllWindows(l_win);
 }

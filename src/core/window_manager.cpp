@@ -4,9 +4,8 @@
 #include <cassert>
 #include <glog/logging.h>
 
-void removeWindow(Window* win) {
+void WindowManager::removeWindow(std::shared_ptr<Window> win) {
     win->destroy();
-    delete win;
 }
 
 void WindowManager::initialise(GameEngine* engine) {
@@ -15,12 +14,12 @@ void WindowManager::initialise(GameEngine* engine) {
     createWindow<SplashWindow>();
 }
 
-void WindowManager::registerWindow(Window* win) {
+void WindowManager::registerWindow(std::shared_ptr<Window> win) {
     win->initialise(m_engine);
     pushWindow(win);
 }
 
-void WindowManager::pushWindow(Window* win) {
+void WindowManager::pushWindow(std::shared_ptr<Window> win) {
     m_windows.push_back(win);
 
     win->setup();
@@ -42,14 +41,15 @@ void WindowManager::popWindow() {
 //     m_nextAction = NextWindowAction::Replace;
 // }
 
-void WindowManager::replaceAllWindows(Window* win) {
+void WindowManager::replaceAllWindows(std::shared_ptr<Window> win) {
     m_nextWindow = win;
     m_nextAction = NextWindowAction::ReplaceAll;
 }
 
-Window* WindowManager::getActive() {
-    if (m_windows.size() == 0)
-        return NULL;
+std::shared_ptr<Window> WindowManager::getActive() {
+    if (m_windows.size() == 0) {
+        throw std::string("There are no active windows!");
+    }
     return m_windows.back();
 }
 
@@ -91,7 +91,7 @@ void WindowManager::manageNextWindow() {
             break;
         }
         case NextWindowAction::ReplaceAll: {
-            for (Window* win : m_windows) {
+            for (auto win : m_windows) {
                 removeWindow(win);
             }
             m_windows.clear();

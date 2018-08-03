@@ -5,5 +5,5 @@
 
 class WindowManagerMock : public WindowManager {
 public:
-    MOCK_METHOD1(registerWindow, void(Window*));
+    MOCK_METHOD1(registerWindow, void(std::shared_ptr<Window>));
 };
