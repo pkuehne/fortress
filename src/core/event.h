@@ -86,7 +86,8 @@ public:
 
 class PickupEquipmentEvent : public Event {
 public:
-    PickupEquipmentEvent() : Event(EVENT_PICKUP_EQUIPMENT) {}
+    PickupEquipmentEvent(EntityId entity, EntityId item)
+        : Event(EVENT_PICKUP_EQUIPMENT), entity(entity), item(item) {}
     EntityId entity = 0;
     EntityId item = 0;
 };
@@ -126,7 +127,9 @@ public:
 
 class StartConversationEvent : public Event {
 public:
-    StartConversationEvent() : Event(EVENT_START_CONVERSATION) {}
+    StartConversationEvent(EntityId iniator, EntityId target)
+        : Event(EVENT_START_CONVERSATION), initiatedBy(iniator),
+          target(target) {}
     EntityId initiatedBy = 0;
     EntityId target = 0;
 };

@@ -27,11 +27,12 @@ public:
     /// @param[in] event The event to store
     void raiseEvent(Event* event);
 
+    /// @brief Puts an event into the queue for distribution
+    /// @param[in] event The event to store
+    void raiseEvent(std::shared_ptr<Event> event);
+
     /// @brief Notify the listeners of any new events
     void processEvents();
-
-    void raiseStartConversationEvent(EntityId from, EntityId to);
-    void raisePickupEqupmentEvent(EntityId equipment, EntityId entity);
 
 private:
     EventQueue m_events;

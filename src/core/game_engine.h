@@ -30,6 +30,7 @@ public:
     void setTurn(unsigned int turn) { m_turn = turn; }
 
     virtual void raiseEvent(Event* event);
+    virtual void raiseEvent(std::shared_ptr<Event> event);
 
     unsigned long long getTick() { return m_tick; }
 
@@ -38,7 +39,8 @@ public:
     void setWindowManager(WindowManager* a_manager) {
         m_windowManager = a_manager;
     }
-    WindowManager* getWindows() { return m_windowManager; }
+
+    virtual WindowManager* getWindows() { return m_windowManager; }
 
     void addSystem(GameSystemInterface* a_system) {
         m_systems.push_back(a_system);

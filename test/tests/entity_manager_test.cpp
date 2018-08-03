@@ -17,7 +17,7 @@ TEST_F(EntityManager_createEntity, raisedAddEntityEvent) {
     manager.initialise(&mock);
 
     // Then
-    EXPECT_CALL(mock, raiseEvent(_));
+    EXPECT_CALL(mock, raiseEvent(Matcher<Event*>(_)));
 
     // When
     manager.createEntity(location);
@@ -89,7 +89,7 @@ TEST_F(EntityManager_destroyEntity, addsEntityforAllList) {
 
 TEST_F(EntityManager_destroyEntity, raisesDeleteEvent) {
     // Given
-    EXPECT_CALL(mock, raiseEvent(_));
+    EXPECT_CALL(mock, raiseEvent(Matcher<Event*>(_)));
 
     // When
     manager.destroyEntity(entity);
@@ -118,7 +118,7 @@ TEST_F(EntityManager_getsetLocation, raisedAddEntityEvent) {
 
 TEST_F(EntityManager_getsetLocation, setDoesNothingForZeroEntity) {
     // Given
-    Location location(1,2,3);
+    Location location(1, 2, 3);
     EntityId entity = 0;
 
     EntityManager manager;

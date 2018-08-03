@@ -15,6 +15,11 @@ void WindowManager::initialise(GameEngine* engine) {
     createWindow<SplashWindow>();
 }
 
+void WindowManager::registerWindow(Window* win) {
+    win->initialise(m_engine);
+    pushWindow(win);
+}
+
 void WindowManager::pushWindow(Window* win) {
     m_windows.push_back(win);
 

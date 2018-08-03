@@ -97,3 +97,6 @@ void GameEngine::swapTurn() {
 }
 
 void GameEngine::raiseEvent(Event* event) { m_eventManager->raiseEvent(event); }
+void GameEngine::raiseEvent(std::shared_ptr<Event> event) {
+    m_eventManager->raiseEvent(event);
+}

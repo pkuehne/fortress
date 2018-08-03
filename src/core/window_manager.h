@@ -12,17 +12,20 @@ public:
     enum class NextWindowAction { None, Replace, ReplaceAll };
 
 public:
-    WindowManager() {}
-    void initialise(GameEngine* engine);
-    void pushWindow(Window* win);
-    void popWindow();
+    WindowManager() = default;
+    virtual ~WindowManager() = default;
+
+    virtual void initialise(GameEngine* engine);
+    virtual void pushWindow(Window* win);
+    virtual void popWindow();
     // void replaceWindow(Window* win);
-    void replaceAllWindows(Window* win);
-    Window* getActive();
-    void redraw();
-    void resize();
-    void nextTick();
-    void nextTurn();
+    virtual void replaceAllWindows(Window* win);
+    virtual Window* getActive();
+    virtual void resize();
+    virtual void nextTick();
+    virtual void nextTurn();
+
+    virtual void registerWindow(Window* win);
 
     template <typename T> T* createWindow() {
         T* win = new T();
@@ -41,7 +44,7 @@ public:
     }
 
 private:
-    void manageNextWindow();
+    virtual void manageNextWindow();
 
 private:
     GameEngine* m_engine = nullptr;

@@ -11,6 +11,8 @@ public:
     MOCK_METHOD0(initialise, void());
     MOCK_METHOD0(isPlayerTurn, bool());
     MOCK_METHOD1(raiseEvent, void(Event* event));
+    MOCK_METHOD1(raiseEvent, void(std::shared_ptr<Event> event));
+    MOCK_METHOD0(getWindows, WindowManager*());
 };
 
 #endif
