@@ -39,8 +39,9 @@ void InteractionWindow::registerWidgets() {
 
             auto inspectionArgs = std::make_shared<InspectionWindowArgs>();
             inspectionArgs->entity = entity;
-            getEngine()->getWindows()->createWindow<InspectionWindow>(
-                inspectionArgs);
+            auto win = std::make_shared<InspectionWindow>();
+            win->setArguments(inspectionArgs);
+            getEngine()->getWindows()->registerWindow(win);
         })
         ->setSensitive(false);
     createWidget<Label>("txtOpen", descriptionWidth, 2)

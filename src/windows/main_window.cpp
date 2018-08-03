@@ -14,15 +14,16 @@ void MainWindow::registerWidgets() {
     Label::CommandCharCB quickstart = [=](Label* l) {
         auto args = std::make_shared<GeneratorWindowArgs>();
         args->hideWindow = true;
-        getEngine()->getWindows()->createWindow<GeneratorWindow>(args);
+        auto win = std::make_shared<GeneratorWindow>();
+        win->setArguments(args);
+        getEngine()->getWindows()->registerWindow(win);
     };
     Label::CommandCharCB create = [](Label* l) {
         auto args = std::make_shared<GeneratorWindowArgs>();
         args->hideWindow = false;
-        l->getWindow()
-            ->getEngine()
-            ->getWindows()
-            ->createWindow<GeneratorWindow>(args);
+        auto win = std::make_shared<GeneratorWindow>();
+        win->setArguments(args);
+        l->getWindow()->getEngine()->getWindows()->registerWindow(win);
     };
 
     this->createWidget<Label>("lblQuickstart", 1, 15)
@@ -46,7 +47,8 @@ void MainWindow::registerWidgets() {
         ->setCommandChar(1)
         ->setIgnoreCommandCharCase(true)
         ->setCommandCharCallback([=](Label* l) {
-            getEngine()->getWindows()->createWindow<LoadWindow>();
+            getEngine()->getWindows()->registerWindow(
+                std::make_shared<LoadWindow>());
         })
         ->setVerticalAlign(Widget::VerticalAlign::Bottom)
         ->setHorizontalAlign(Widget::HorizontalAlign::Centre);

@@ -61,20 +61,16 @@ void MapWindow::registerWidgets() {
         ->setText("View Equipment")
         ->setCommandChar(6)
         ->setCommandCharCallback([](Label* l) {
-            l->getWindow()
-                ->getEngine()
-                ->getWindows()
-                ->createWindow<EquipmentWindow>();
+            l->getWindow()->getEngine()->getWindows()->registerWindow(
+                std::make_shared<EquipmentWindow>());
         })
         ->setVerticalAlign(Widget::VerticalAlign::Bottom);
     createWidget<Label>("lblQuests", 1, 3, sidebar)
         ->setText("View Quests")
         ->setCommandChar(6)
         ->setCommandCharCallback([](Label* l) {
-            l->getWindow()
-                ->getEngine()
-                ->getWindows()
-                ->createWindow<QuestWindow>();
+            l->getWindow()->getEngine()->getWindows()->registerWindow(
+                std::make_shared<QuestWindow>());
         })
         ->setVerticalAlign(Widget::VerticalAlign::Bottom);
 
@@ -174,8 +170,9 @@ void MapWindow::keyPress(unsigned char key) {
             if (l_entities.size() > 0) {
                 auto interactArgs = std::make_shared<InteractionWindowArgs>();
                 interactArgs->entities = l_entities;
-                getEngine()->getWindows()->createWindow<InteractionWindow>(
-                    interactArgs);
+                auto win = std::make_shared<InteractionWindow>();
+                win->setArguments(interactArgs);
+                getEngine()->getWindows()->registerWindow(win);
             }
         }
         if (m_action != 'i')
@@ -183,7 +180,8 @@ void MapWindow::keyPress(unsigned char key) {
         m_action = 'm';
     }
     if (key == KEY_ESC) {
-        getEngine()->getWindows()->createWindow<EscapeWindow>();
+        getEngine()->getWindows()->registerWindow(
+            std::make_shared<EscapeWindow>());
     }
     if (key == '[') {
         unsigned int height = getEngine()->getGraphics()->getTileHeight();
@@ -198,7 +196,8 @@ void MapWindow::keyPress(unsigned char key) {
         getEngine()->getWindows()->resize();
     }
     if (key == '`') {
-        getEngine()->getWindows()->createWindow<DebugWindow>();
+        getEngine()->getWindows()->registerWindow(
+            std::make_shared<DebugWindow>());
     }
 
     // std::cout << "Key: " << key << std::endl;

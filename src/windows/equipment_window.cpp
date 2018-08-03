@@ -180,13 +180,13 @@ void EquipmentWindow::registerWidgets() {
     createWidget<Label>("lblInspect", 0, 2, actions)
         ->setText("inspect")
         ->setCommandChar(1)
-        ->setCommandCharCallback([](Label* l) {
-            EquipmentWindow* win =
-                dynamic_cast<EquipmentWindow*>(l->getWindow());
-            GameEngine* engine = win->getEngine();
+        ->setCommandCharCallback([&](Label* l) {
+            GameEngine* engine = getEngine();
             auto args = std::make_shared<InspectionWindowArgs>();
-            args->entity = win->getSelectedItem();
-            engine->getWindows()->createWindow<InspectionWindow>(args);
+            args->entity = getSelectedItem();
+            auto win = std::make_shared<InspectionWindow>();
+            win->setArguments(args);
+            engine->getWindows()->registerWindow(win);
         })
         ->setVerticalAlign(Widget::VerticalAlign::Bottom)
         ->setVisible(false);

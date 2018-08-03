@@ -6,7 +6,9 @@
 void ObjectivesSystem::showGameOverWindow(bool gameWon) {
     auto gameOverArgs = std::make_shared<GameOverWindowArgs>();
     gameOverArgs->win = gameWon;
-    getEngine()->getWindows()->createWindow<GameOverWindow>(gameOverArgs);
+    auto win = std::make_shared<GameOverWindow>();
+    win->setArguments(gameOverArgs);
+    getEngine()->getWindows()->registerWindow(win);
 }
 
 void ObjectivesSystem::handleAddEntityEvent(const AddEntityEvent* event) {

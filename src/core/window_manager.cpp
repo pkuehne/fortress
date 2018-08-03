@@ -11,7 +11,7 @@ void WindowManager::removeWindow(std::shared_ptr<Window> win) {
 void WindowManager::initialise(GameEngine* engine) {
     m_engine = engine;
 
-    createWindow<SplashWindow>();
+    registerWindow(std::make_shared<SplashWindow>());
 }
 
 void WindowManager::registerWindow(std::shared_ptr<Window> win) {

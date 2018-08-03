@@ -18,10 +18,8 @@ void EscapeWindow::registerWidgets() {
         ->setText("Save Game")
         ->setCommandChar(1)
         ->setCommandCharCallback([&](Label* l) {
-            l->getWindow()
-                ->getEngine()
-                ->getWindows()
-                ->createWindow<SaveWindow>();
+            l->getWindow()->getEngine()->getWindows()->registerWindow(
+                std::make_shared<SaveWindow>());
         })
         ->setIgnoreCommandCharCase(true)
         ->setVerticalAlign(Widget::VerticalAlign::Top)

@@ -29,22 +29,6 @@ public:
 
     virtual void registerWindow(std::shared_ptr<Window> win);
 
-    template <typename T> std::shared_ptr<T> createWindow() {
-        auto win = std::make_shared<T>();
-        win->initialise(m_engine);
-        pushWindow(win);
-        return win;
-    }
-
-    template <typename T, typename A>
-    std::shared_ptr<T> createWindow(std::shared_ptr<A>& arguments) {
-        auto win = std::make_shared<T>();
-        win->setArguments(arguments);
-        win->initialise(m_engine);
-        pushWindow(win);
-        return win;
-    }
-
 private:
     virtual void manageNextWindow();
 
