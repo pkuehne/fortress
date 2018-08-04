@@ -2,10 +2,11 @@
 #include <glog/logging.h>
 
 void ComponentManager::add(EntityId entity, ComponentBase* component) {
-    if (component == nullptr) {
-        LOG(WARNING) << "Can't add a nullptr" << std::endl;
-        return;
-    }
+    // if (component == nullptr) {
+    //     LOG(WARNING) << "Can't add a nullptr" << std::endl;
+    //     throw std::string("Tried to add nullptr component");
+    // }
+
     ComponentHolder& holder = m_components[entity];
     auto iter = holder.find(typeid(*component).name());
     if (iter == holder.end()) {
