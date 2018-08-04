@@ -37,6 +37,9 @@ private:
     bool validateRoom(unsigned int width, unsigned int height,
                       unsigned int left, unsigned int top);
 
+    void createStair(const Location& location, unsigned int& stair, bool down);
+    void createOrc(const Location& location);
+
 private:
     unsigned int m_roomTarget = 1;
     unsigned int m_startRoom = 0;

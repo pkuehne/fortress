@@ -73,24 +73,26 @@ bool DungeonGenerator::generateLevel() {
     return true;
 }
 
+void DungeonGenerator::createStair(const Location& location,
+                                   unsigned int& stair, bool down) {
+    auto state = m_engine->state();
+    stair = state->prefabs().create("stair", location);
+    state->components()->get<SpriteComponent>(stair)->sprite =
+        (30 + (down ? 1 : 0));
+}
+
+void DungeonGenerator::createOrc(const Location& location) {
+    auto state = m_engine->state();
+    if (m_createBoss && m_level == m_maxDepth - 1) {
+        state->prefabs().create("troll", location);
+        m_createBoss = false;
+    } else {
+        state->prefabs().create("orc", location);
+    }
+}
+
 void DungeonGenerator::createEntity(const Location& location) {
     auto state = m_engine->state();
-
-    auto createStair = [=](const Location& location, unsigned int& stair,
-                           bool down) {
-        stair = state->prefabs().create("stair", location);
-        state->components()->get<SpriteComponent>(stair)->sprite =
-            (30 + (down ? 1 : 0));
-    };
-    auto createOrc = [=](const Location& location) {
-        if (m_createBoss && m_level == m_maxDepth - 1) {
-            state->prefabs().create("troll", location);
-            m_createBoss = false;
-        } else {
-            state->prefabs().create("orc", location);
-        }
-    };
-
     Tile& tile = state->tile(location);
     tile.setFloorMaterial(FloorMaterial::Rock);
 

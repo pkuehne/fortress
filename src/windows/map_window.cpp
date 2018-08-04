@@ -119,6 +119,35 @@ void MapWindow::registerWidgets() {
         ->setHeightStretchMargin(0)
         ->setWidthStretchMargin(m_sidebarWidth);
 
+    createWidget<Label>("lblTileSizeIncr", 0, 0)
+        ->setText("]")
+        ->setCommandChar(1)
+        ->setCommandCharCallback([&](Label* l) {
+            unsigned int height = getEngine()->getGraphics()->getTileHeight();
+            unsigned int width = getEngine()->getGraphics()->getTileWidth();
+            getEngine()->getGraphics()->updateTileSize(width + 1, height + 1);
+            getEngine()->getWindows()->resize();
+        })
+        ->setVisible(false);
+    createWidget<Label>("lblTileSizeDecr", 0, 0)
+        ->setText("[")
+        ->setCommandChar(1)
+        ->setCommandCharCallback([&](Label* l) {
+            unsigned int height = getEngine()->getGraphics()->getTileHeight();
+            unsigned int width = getEngine()->getGraphics()->getTileWidth();
+            getEngine()->getGraphics()->updateTileSize(width - 1, height - 1);
+            getEngine()->getWindows()->resize();
+        })
+        ->setVisible(false);
+    createWidget<Label>("lblDebugWindow", 0, 0)
+        ->setText("`")
+        ->setCommandChar(1)
+        ->setCommandCharCallback([&](Label* l) {
+            getEngine()->getWindows()->registerWindow(
+                std::make_shared<DebugWindow>());
+        })
+        ->setVisible(false);
+
     getEngine()->swapTurn();
 }
 
@@ -128,33 +157,32 @@ void MapWindow::setAction(char action, unsigned int yPos) {
     resize();
 }
 
+void updateLocation(unsigned char key, Location& location) {
+    if (key == 'w') {
+        location.y--;
+    } else if (key == 'a') {
+        location.x--;
+    } else if (key == 's') {
+        location.y++;
+    } else if (key == 'd') {
+        location.x++;
+    }
+}
+
 void MapWindow::keyPress(unsigned char key) {
     EntityId playerId = getEngine()->state()->player();
     if (key == 'w' || key == 'a' || key == 's' || key == 'd') {
         Location oldLocation = getEngine()->state()->location(playerId);
         Location newLocation = oldLocation;
-        switch (key) {
-            case 'w':
-                newLocation.y--;
-                break;
-            case 'a':
-                newLocation.x--;
-                break;
-            case 's':
-                newLocation.y++;
-                break;
-            case 'd':
-                newLocation.x++;
-                break;
-        }
+        updateLocation(key, newLocation);
 
         if (m_action == 'm') {
             MoveEntityEvent* l_event = new MoveEntityEvent;
             l_event->entity = playerId;
             l_event->newLocation = newLocation;
             getEngine()->raiseEvent(l_event);
-        }
-        if (m_action == 'k') {
+            getEngine()->swapTurn();
+        } else if (m_action == 'k') {
             EntityHolder l_entities =
                 getEngine()->state()->map()->findEntitiesAt(newLocation);
             for (EntityId entity : l_entities) {
@@ -163,8 +191,8 @@ void MapWindow::keyPress(unsigned char key) {
                 l_event->defender = entity;
                 getEngine()->raiseEvent(l_event);
             }
-        }
-        if (m_action == 'i') {
+            getEngine()->swapTurn();
+        } else if (m_action == 'i') {
             EntityHolder l_entities =
                 getEngine()->state()->map()->findEntitiesAt(newLocation);
             if (l_entities.size() > 0) {
@@ -175,31 +203,11 @@ void MapWindow::keyPress(unsigned char key) {
                 getEngine()->getWindows()->registerWindow(win);
             }
         }
-        if (m_action != 'i')
-            getEngine()->swapTurn();
         m_action = 'm';
-    }
-    if (key == KEY_ESC) {
+    } else if (key == KEY_ESC) {
         getEngine()->getWindows()->registerWindow(
             std::make_shared<EscapeWindow>());
     }
-    if (key == '[') {
-        unsigned int height = getEngine()->getGraphics()->getTileHeight();
-        unsigned int width = getEngine()->getGraphics()->getTileWidth();
-        getEngine()->getGraphics()->updateTileSize(width - 1, height - 1);
-        getEngine()->getWindows()->resize();
-    }
-    if (key == ']') {
-        unsigned int height = getEngine()->getGraphics()->getTileHeight();
-        unsigned int width = getEngine()->getGraphics()->getTileWidth();
-        getEngine()->getGraphics()->updateTileSize(width + 1, height + 1);
-        getEngine()->getWindows()->resize();
-    }
-    if (key == '`') {
-        getEngine()->getWindows()->registerWindow(
-            std::make_shared<DebugWindow>());
-    }
-
     // std::cout << "Key: " << key << std::endl;
 }
 
