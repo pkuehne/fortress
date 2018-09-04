@@ -29,17 +29,16 @@ void LoadWindow::registerWidgets() {
         })
         ->setHeight(8);
 
-    createWidget<Label>("lblProgress", 1, 2)
-        ->setText("Progress: ")
+    createWidget<Label>("lblStatus", 1, 1)
+        ->setText("")
         ->setHorizontalAlign(Widget::HorizontalAlign::Left)
         ->setVerticalAlign(Widget::VerticalAlign::Bottom);
     createWidget<ProgressBar>("pgbProgress", 11, 2)
         ->setWidth(getWidth() - 14)
         ->setHorizontalAlign(Widget::HorizontalAlign::Left)
         ->setVerticalAlign(Widget::VerticalAlign::Bottom);
-
-    createWidget<Label>("lblStatus", 1, 1)
-        ->setText("")
+    createWidget<Label>("lblProgress", 1, 2)
+        ->setText("Progress: ")
         ->setHorizontalAlign(Widget::HorizontalAlign::Left)
         ->setVerticalAlign(Widget::VerticalAlign::Bottom);
 

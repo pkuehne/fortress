@@ -82,3 +82,70 @@ TEST_F(DialogSystemTest, setsInConversationWithToTargetIfNotPlayer) {
         target,
         state.components()->get<PlayerComponent>(player)->inConversationWith);
 }
+
+TEST_F(DialogSystemTest, doesNotUpdateConversationTargetIfAlreadySet) {
+    // Given
+    EntityId target = 4321;
+    EntityId current = 5555;
+
+    EXPECT_CALL(windowManager, registerWindow(_)).Times(0);
+    state.components()->get<PlayerComponent>(player)->inConversationWith =
+        current;
+
+    // When
+    system.handleStartConversationEvent(
+        std::make_shared<StartConversationEvent>(player, target));
+
+    // Then
+    EXPECT_EQ(
+        current,
+        state.components()->get<PlayerComponent>(player)->inConversationWith);
+}
+
+class DialogSystemTest_generateDialog : public ::testing::Test {
+public:
+    void SetUp() {
+        comp = state.components()->make<PlayerComponent>(player);
+
+        EXPECT_CALL(engine, state()).WillRepeatedly(Return(&state));
+
+        system.initialise(&engine);
+    }
+    GameEngineMock engine;
+    GameStateMock state;
+    ComponentManager componentManager;
+    DialogSystem system;
+    EntityId player = 1234;
+    PlayerComponent* comp = nullptr;
+};
+
+TEST_F(DialogSystemTest_generateDialog, setsTheDialogText) {
+    // Given
+
+    // When
+    system.generateDialog(comp);
+
+    // Then
+    EXPECT_NE(std::string(""), comp->dialogText);
+}
+
+TEST_F(DialogSystemTest_generateDialog, setsTheDialogOptions) {
+    // Given
+
+    // When
+    system.generateDialog(comp);
+
+    // Then
+    EXPECT_NE(0, comp->dialogOptions.size());
+}
+
+TEST_F(DialogSystemTest_generateDialog, resetsTheDialogChoice) {
+    // Given
+    comp->dialogChoice = 1;
+
+    // When
+    system.generateDialog(comp);
+
+    // Then
+    EXPECT_EQ(0, comp->dialogChoice);
+}
