@@ -64,6 +64,11 @@ void GameSystemBase::handleEvent(std::shared_ptr<Event> i_event) {
                 std::dynamic_pointer_cast<ChooseDialogOptionEvent>(i_event));
             break;
         }
+        case EVENT_END_CONVERSATION: {
+            handleEndConversationEvent(
+                std::dynamic_pointer_cast<EndConversationEvent>(i_event));
+            break;
+        }
         default:
             break;
     }

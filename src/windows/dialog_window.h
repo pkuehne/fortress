@@ -7,4 +7,5 @@ public:
     void setup();
     void registerWidgets();
     void nextTurn();
+    void destroy();
 };

@@ -11,6 +11,8 @@ public:
         std::shared_ptr<StartConversationEvent> event) override;
     void handleChooseDialogOptionEvent(
         std::shared_ptr<ChooseDialogOptionEvent> event) override;
+    void handleEndConversationEvent(
+        std::shared_ptr<EndConversationEvent> event) override;
 
     void generateDialog(PlayerComponent* player);
 };

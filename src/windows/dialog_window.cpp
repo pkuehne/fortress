@@ -54,3 +54,7 @@ void DialogWindow::nextTurn() {
     }
     lblResponse->setText(player->dialogText);
 }
+
+void DialogWindow::destroy() {
+    getEngine()->raiseEvent(std::make_shared<EndConversationEvent>());
+}

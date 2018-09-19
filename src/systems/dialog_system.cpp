@@ -42,8 +42,18 @@ void DialogSystem::handleChooseDialogOptionEvent(
     getEngine()->swapTurn();
 }
 
+void DialogSystem::handleEndConversationEvent(
+    std::shared_ptr<EndConversationEvent> event) {
+    auto state = getEngine()->state();
+    auto playerId = state->player();
+    auto player = state->components()->get<PlayerComponent>(playerId);
+
+    player->inConversationWith = 0;
+}
+
 void DialogSystem::generateDialog(PlayerComponent* player) {
     player->dialogText = "Hello there! What can I do for you?";
+    player->dialogOptions.clear();
     player->dialogOptions.push_back("What's your name?");
     player->dialogOptions.push_back("Are you human?");
 }

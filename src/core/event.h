@@ -23,6 +23,7 @@ typedef enum {
     EVENT_CLOSE_ENTITY,
     EVENT_START_CONVERSATION,
     EVENT_CHOOSE_DIALOG_OPTION,
+    EVENT_END_CONVERSATION,
     EVENT_MAX
 } EventType;
 
@@ -140,4 +141,9 @@ public:
     ChooseDialogOptionEvent(unsigned int option)
         : Event(EVENT_CHOOSE_DIALOG_OPTION), option(option) {}
     unsigned int option = 0;
+};
+
+class EndConversationEvent : public Event {
+public:
+    EndConversationEvent() : Event(EVENT_END_CONVERSATION) {}
 };

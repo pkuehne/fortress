@@ -102,6 +102,18 @@ TEST_F(DialogSystemTest, doesNotUpdateConversationTargetIfAlreadySet) {
         state.components()->get<PlayerComponent>(player)->inConversationWith);
 }
 
+TEST_F(DialogSystemTest, unsetsInConversationWithWhenConversationEnds) {
+    // Given
+
+    // When
+    system.handleEndConversationEvent(std::make_shared<EndConversationEvent>());
+
+    // Then
+    EXPECT_EQ(
+        0,
+        state.components()->get<PlayerComponent>(player)->inConversationWith);
+}
+
 class DialogSystemTest_generateDialog : public ::testing::Test {
 public:
     void SetUp() {
@@ -137,4 +149,16 @@ TEST_F(DialogSystemTest_generateDialog, setsTheDialogOptions) {
 
     // Then
     EXPECT_NE(0, comp->dialogOptions.size());
+}
+
+TEST_F(DialogSystemTest_generateDialog, clearsPreviousOptions) {
+    // Given
+    comp->dialogOptions.push_back("A");
+    comp->dialogOptions.push_back("B");
+
+    // When
+    system.generateDialog(comp);
+
+    // Then
+    EXPECT_NE("A", comp->dialogOptions[0]);
 }

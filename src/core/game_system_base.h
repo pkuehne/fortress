@@ -32,6 +32,8 @@ public:
         std::shared_ptr<StartConversationEvent> event) {}
     virtual void handleChooseDialogOptionEvent(
         std::shared_ptr<ChooseDialogOptionEvent> event) {}
+    virtual void
+    handleEndConversationEvent(std::shared_ptr<EndConversationEvent> event) {}
 
 protected:
     GameEngine* m_engine;
