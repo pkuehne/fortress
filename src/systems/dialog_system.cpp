@@ -27,9 +27,23 @@ void DialogSystem::handleStartConversationEvent(
     getEngine()->getWindows()->registerWindow(std::make_shared<DialogWindow>());
 }
 
+void DialogSystem::handleChooseDialogOptionEvent(
+    std::shared_ptr<ChooseDialogOptionEvent> event) {
+    auto state = getEngine()->state();
+    auto playerId = state->player();
+    auto player = state->components()->get<PlayerComponent>(playerId);
+
+    if (event->option == 1) {
+        player->dialogText = "I don't know you well enough to say.";
+    }
+    if (event->option == 2) {
+        player->dialogText = "Do I look human to you?";
+    }
+    getEngine()->swapTurn();
+}
+
 void DialogSystem::generateDialog(PlayerComponent* player) {
     player->dialogText = "Hello there! What can I do for you?";
     player->dialogOptions.push_back("What's your name?");
     player->dialogOptions.push_back("Are you human?");
-    player->dialogChoice = 0;
 }

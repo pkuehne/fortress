@@ -1,4 +1,5 @@
 #include "dialog_window.h"
+#include "../components/player_component.h"
 #include "../core/game_engine.h"
 #include "../widgets/frame.h"
 #include "../widgets/label.h"
@@ -30,21 +31,26 @@ void DialogWindow::registerWidgets() {
         ->setVerticalAlign(Widget::VerticalAlign::Bottom);
     lstQuestions->setItemSelectedCallback([=](ListBox* l) {
         ListBoxItem item = l->getSelectedItem();
-        if (item.getValue() == 1) {
-            getWidget<Label>("lblResponse")->setText("What do you care?");
-        } else if (item.getValue() == 2) {
-            getWidget<Label>("lblResponse")->setText("I ain't telling you");
-        } else {
-            getWidget<Label>("lblResponse")->setText("You wot, mate?");
-        }
+        getEngine()->raiseEvent(
+            std::make_shared<ChooseDialogOptionEvent>(item.getValue()));
+        getEngine()->swapTurn();
     });
-    lstQuestions->clearItems();
 
-    ListBoxItem item;
-    item.setValue(1);
-    item.setText("What's your name?");
-    lstQuestions->addItem(item);
-    item.setValue(2);
-    item.setText("What groups are you a member of?");
-    lstQuestions->addItem(item);
+    this->nextTurn();
+}
+
+void DialogWindow::nextTurn() {
+    auto lstQuestions = getWidget<ListBox>("lstQuestions");
+    auto lblResponse = getWidget<Label>("lblResponse");
+    auto state = getEngine()->state();
+    auto player = state->components()->get<PlayerComponent>(state->player());
+
+    lstQuestions->clearItems();
+    for (unsigned int ii = 0; ii < player->dialogOptions.size(); ii++) {
+        ListBoxItem item;
+        item.setValue(ii + 1);
+        item.setText(player->dialogOptions[ii]);
+        lstQuestions->addItem(item);
+    }
+    lblResponse->setText(player->dialogText);
 }

@@ -138,14 +138,3 @@ TEST_F(DialogSystemTest_generateDialog, setsTheDialogOptions) {
     // Then
     EXPECT_NE(0, comp->dialogOptions.size());
 }
-
-TEST_F(DialogSystemTest_generateDialog, resetsTheDialogChoice) {
-    // Given
-    comp->dialogChoice = 1;
-
-    // When
-    system.generateDialog(comp);
-
-    // Then
-    EXPECT_EQ(0, comp->dialogChoice);
-}

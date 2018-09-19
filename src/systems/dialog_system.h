@@ -9,6 +9,8 @@ class DialogSystem : public GameSystemBase {
 public:
     void handleStartConversationEvent(
         std::shared_ptr<StartConversationEvent> event) override;
+    void handleChooseDialogOptionEvent(
+        std::shared_ptr<ChooseDialogOptionEvent> event) override;
 
     void generateDialog(PlayerComponent* player);
 };

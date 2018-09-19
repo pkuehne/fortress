@@ -30,8 +30,9 @@ public:
     virtual void handleMoveEntityEvent(const MoveEntityEvent* event) {}
     virtual void handleStartConversationEvent(
         std::shared_ptr<StartConversationEvent> event) {}
+    virtual void handleChooseDialogOptionEvent(
+        std::shared_ptr<ChooseDialogOptionEvent> event) {}
 
 protected:
     GameEngine* m_engine;
 };
-

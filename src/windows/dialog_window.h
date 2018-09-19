@@ -6,4 +6,5 @@ class DialogWindow : public Window {
 public:
     void setup();
     void registerWidgets();
+    void nextTurn();
 };
