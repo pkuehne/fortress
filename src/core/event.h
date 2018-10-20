@@ -138,7 +138,7 @@ public:
 
 class ChooseDialogOptionEvent : public Event {
 public:
-    ChooseDialogOptionEvent(unsigned int option)
+    explicit ChooseDialogOptionEvent(unsigned int option)
         : Event(EVENT_CHOOSE_DIALOG_OPTION), option(option) {}
     unsigned int option = 0;
 };
