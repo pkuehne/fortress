@@ -7,6 +7,10 @@
 #include "window_manager.h"
 #include <string>
 
+void testFunc(std::shared_ptr<AddEntityEvent> event) {
+    std::cout << "Func: Entity Added: " << event->entity << std::endl;
+}
+
 GameEngine::GameEngine(GraphicsInterface* a_graphics)
     : m_graphics(a_graphics) {}
 
@@ -24,6 +28,16 @@ void GameEngine::initialise() {
     if (!m_state) {
         m_state = new GameState();
     }
+
+    // Test code
+    m_eventManager->subscribe<AddEntityEvent>(testFunc);
+    m_eventManager->subscribe<AddEntityEvent>(
+        [](std::shared_ptr<AddEntityEvent> event) {
+            std::cout << "Lambda: Entity Added: " << event->entity << std::endl;
+        });
+
+    m_eventManager->raise(std::make_shared<AddEntityEvent>(12345));
+
     // Initialise Managers
     m_windowManager->initialise(this);
 

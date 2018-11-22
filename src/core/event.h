@@ -39,7 +39,8 @@ protected:
 
 class AddEntityEvent : public Event {
 public:
-    AddEntityEvent() : Event(EVENT_ADD_ENTITY) {}
+    explicit AddEntityEvent(EntityId e = 0)
+        : Event(EVENT_ADD_ENTITY), entity(e) {}
     EntityId entity = 0;
 };
 
