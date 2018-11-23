@@ -7,12 +7,13 @@ class PlayerComponent;
 
 class DialogSystem : public GameSystemBase {
 public:
-    void handleStartConversationEvent(
-        std::shared_ptr<StartConversationEvent> event) override;
+    void registerHandlers();
+    void
+    handleStartConversationEvent(std::shared_ptr<StartConversationEvent> event);
     void handleChooseDialogOptionEvent(
-        std::shared_ptr<ChooseDialogOptionEvent> event) override;
-    void handleEndConversationEvent(
-        std::shared_ptr<EndConversationEvent> event) override;
+        std::shared_ptr<ChooseDialogOptionEvent> event);
+    void
+    handleEndConversationEvent(std::shared_ptr<EndConversationEvent> event);
 
     void generateDialog(PlayerComponent* player);
 };

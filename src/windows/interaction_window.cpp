@@ -69,7 +69,7 @@ void InteractionWindow::registerWidgets() {
             ListBox* lstEntities = this->getWidget<ListBox>("lstEntities");
             EntityId entity = m_entities[lstEntities->getSelection()];
             EntityId playerId = getEngine()->state()->player();
-            getEngine()->raiseEvent(
+            getEngine()->events()->raise(
                 std::make_shared<StartConversationEvent>(playerId, entity));
         })
         ->setSensitive(false);

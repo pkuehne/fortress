@@ -2,6 +2,21 @@
 #include "../components/player_component.h"
 #include "../windows/dialog_window.h"
 
+void DialogSystem::registerHandlers() {
+    getEngine()->events()->subscribe<StartConversationEvent>(
+        [=](std::shared_ptr<StartConversationEvent> event) {
+            handleStartConversationEvent(event);
+        });
+    getEngine()->events()->subscribe<ChooseDialogOptionEvent>(
+        [=](std::shared_ptr<ChooseDialogOptionEvent> event) {
+            handleChooseDialogOptionEvent(event);
+        });
+    getEngine()->events()->subscribe<EndConversationEvent>(
+        [=](std::shared_ptr<EndConversationEvent> event) {
+            handleEndConversationEvent(event);
+        });
+}
+
 void DialogSystem::handleStartConversationEvent(
     std::shared_ptr<StartConversationEvent> event) {
     auto state = getEngine()->state();

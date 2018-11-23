@@ -121,21 +121,19 @@ public:
 
 class StartConversationEvent : public Event {
 public:
-    StartConversationEvent(EntityId iniator, EntityId target)
-        : Event(EVENT_START_CONVERSATION), initiatedBy(iniator),
-          target(target) {}
+    StartConversationEvent(EntityId i, EntityId t)
+        : initiatedBy(i), target(t) {}
     EntityId initiatedBy = 0;
     EntityId target = 0;
 };
 
 class ChooseDialogOptionEvent : public Event {
 public:
-    explicit ChooseDialogOptionEvent(unsigned int option)
-        : Event(EVENT_CHOOSE_DIALOG_OPTION), option(option) {}
+    explicit ChooseDialogOptionEvent(unsigned int o) : option(o) {}
     unsigned int option = 0;
 };
 
 class EndConversationEvent : public Event {
 public:
-    EndConversationEvent() : Event(EVENT_END_CONVERSATION) {}
+    EndConversationEvent() {}
 };
