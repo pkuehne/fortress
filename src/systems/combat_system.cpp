@@ -9,8 +9,11 @@
 #include <iostream>
 #include <sstream>
 
-void CombatSystem::handleAttackEntityEvent(const AttackEntityEvent* event) {
-    handleAttack(event->attacker, event->defender);
+void CombatSystem::registerHandlers() {
+    getEngine()->events()->subscribe<AttackEntityEvent>(
+        [=](std::shared_ptr<AttackEntityEvent> event) {
+            handleAttack(event->attacker, event->defender);
+        });
 }
 
 void CombatSystem::handleAttack(EntityId attacker, EntityId defender) {

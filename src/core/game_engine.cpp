@@ -7,10 +7,6 @@
 #include "window_manager.h"
 #include <string>
 
-void testFunc(std::shared_ptr<AddEntityEvent> event) {
-    std::cout << "Func: Entity Added: " << event->entity << std::endl;
-}
-
 GameEngine::GameEngine(GraphicsInterface* a_graphics)
     : m_graphics(a_graphics), m_eventManager(std::make_shared<EventManager>()) {
 }

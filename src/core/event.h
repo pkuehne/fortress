@@ -39,14 +39,13 @@ protected:
 
 class AddEntityEvent : public Event {
 public:
-    explicit AddEntityEvent(EntityId e = 0)
-        : Event(EVENT_ADD_ENTITY), entity(e) {}
+    explicit AddEntityEvent(EntityId e) : entity(e) {}
     EntityId entity = 0;
 };
 
 class RemoveEntityEvent : public Event {
 public:
-    RemoveEntityEvent() : Event(EVENT_REMOVE_ENTITY) {}
+    RemoveEntityEvent(EntityId e) : entity(e) {}
     EntityId entity = 0;
 };
 
@@ -59,7 +58,8 @@ public:
 
 class ChangeLocationEvent : public Event {
 public:
-    ChangeLocationEvent() : Event(EVENT_CHANGE_LOCATION) {}
+    ChangeLocationEvent(EntityId e, Location o, Location n)
+        : entity(e), oldLocation(o), newLocation(n) {}
     EntityId entity = 0;
     Location oldLocation;
     Location newLocation;
@@ -67,17 +67,9 @@ public:
 
 class AttackEntityEvent : public Event {
 public:
-    AttackEntityEvent() : Event(EVENT_ATTACK_ENTITY) {}
+    AttackEntityEvent(EntityId a, EntityId d) : attacker(a), defender(d) {}
     EntityId attacker = 0;
     EntityId defender = 0;
-    EntityId weapon = 0;
-};
-
-// Deprecated
-class ChangeLevelEvent : public Event {
-public:
-    ChangeLevelEvent() : Event(EVENT_CHANGE_LEVEL) {}
-    unsigned int level = 0;
 };
 
 class DropEquipmentEvent : public Event {

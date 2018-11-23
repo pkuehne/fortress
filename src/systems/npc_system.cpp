@@ -89,10 +89,7 @@ void NpcSystem::createHumanStateMachine() {
     AttackingNotPossible.endState = "Seeking";
     AttackingState.transitions.push_back(AttackingNotPossible);
     AttackingState.onUpdate = [](GameEngine* g, EntityId e, NpcComponent* n) {
-        AttackEntityEvent* l_event = new AttackEntityEvent;
-        l_event->attacker = e;
-        l_event->defender = n->target;
-        g->raiseEvent(l_event);
+        g->events()->raise(std::make_shared<AttackEntityEvent>(e, n->target));
     };
     AttackingState.onLeave = [](GameEngine* g, EntityId e, NpcComponent* n) {
         n->target = 0;

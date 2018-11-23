@@ -63,9 +63,6 @@ void MovementSystem::handleMoveEntityEvent(
 
     getEngine()->state()->entityManager()->setLocation(event->entity,
                                                        l_newLocation);
-    ChangeLocationEvent* changeEvent = new ChangeLocationEvent();
-    changeEvent->entity = event->entity;
-    changeEvent->oldLocation = l_oldLocation;
-    changeEvent->newLocation = l_newLocation;
-    getEngine()->raiseEvent(changeEvent);
+    getEngine()->events()->raise(std::make_shared<ChangeLocationEvent>(
+        event->entity, l_oldLocation, l_newLocation));
 }

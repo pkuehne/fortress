@@ -32,9 +32,6 @@ void EntityManager::addEntity(EntityId id, const Location& location) {
         m_engine->state()->tile(location).addEntity(id);
     }
 
-    // AddEntityEvent* l_event = new AddEntityEvent;
-    // l_event->entity = id;
-    // m_engine->raiseEvent(l_event);
     m_engine->events()->raise(std::make_shared<AddEntityEvent>(id));
 }
 
@@ -50,9 +47,7 @@ void EntityManager::destroyEntity(EntityId id) {
     m_allEntities.erase(id);
 
     // Raise event for removal
-    RemoveEntityEvent* l_event = new RemoveEntityEvent();
-    l_event->entity = id;
-    m_engine->raiseEvent(l_event);
+    m_engine->events()->raise(std::make_shared<RemoveEntityEvent>(id));
 }
 
 void EntityManager::setLocation(EntityId entity, const Location& location) {

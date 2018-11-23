@@ -185,10 +185,8 @@ void MapWindow::keyPress(unsigned char key) {
             EntityHolder l_entities =
                 getEngine()->state()->map()->findEntitiesAt(newLocation);
             for (EntityId entity : l_entities) {
-                AttackEntityEvent* l_event = new AttackEntityEvent;
-                l_event->attacker = playerId;
-                l_event->defender = entity;
-                getEngine()->raiseEvent(l_event);
+                getEngine()->events()->raise(
+                    std::make_shared<AttackEntityEvent>(playerId, entity));
             }
             getEngine()->swapTurn();
         } else if (m_action == 'i') {
