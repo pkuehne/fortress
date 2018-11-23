@@ -6,35 +6,9 @@
 #include <iostream>
 #include <map>
 
-typedef enum {
-    EVENT_INVALID = 0,
-    EVENT_ADD_ENTITY,
-    EVENT_REMOVE_ENTITY,
-    EVENT_MOVE_ENTITY,
-    EVENT_CHANGE_LOCATION,
-    EVENT_ATTACK_ENTITY,
-    EVENT_CHANGE_LEVEL,
-    EVENT_DROP_EQUIPMENT,
-    EVENT_PICKUP_EQUIPMENT,
-    EVENT_EQUIP_ITEM,
-    EVENT_UNEQUIP_ITEM,
-    EVENT_CONSUME_ITEM,
-    EVENT_OPEN_ENTITY,
-    EVENT_CLOSE_ENTITY,
-    EVENT_START_CONVERSATION,
-    EVENT_CHOOSE_DIALOG_OPTION,
-    EVENT_END_CONVERSATION,
-    EVENT_MAX
-} EventType;
-
 class Event {
 public:
-    explicit Event(EventType type = EVENT_INVALID) : m_type(type) {}
-    virtual ~Event() {}
-    EventType getType() const { return m_type; }
-
-protected:
-    EventType m_type = EVENT_INVALID;
+    virtual ~Event() = default;
 };
 
 class AddEntityEvent : public Event {

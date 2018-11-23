@@ -35,7 +35,6 @@ void GameEngine::initialise() {
     // Initialise Systems
     for (unsigned int ii = 0; ii < m_systems.size(); ii++) {
         m_systems[ii]->initialise(this);
-        m_eventManager->registerHandler(m_systems[ii]);
     }
 
     m_graphics->setKeyDownFunc([&](unsigned char key, int x, int y) {
@@ -93,9 +92,4 @@ void GameEngine::swapTurn() {
     FovAlgorithm l_algo;
     l_algo.initialise(this);
     l_algo.calculateFov();
-}
-
-void GameEngine::raiseEvent(Event* event) { m_eventManager->raiseEvent(event); }
-void GameEngine::raiseEvent(std::shared_ptr<Event> event) {
-    m_eventManager->raiseEvent(event);
 }

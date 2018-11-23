@@ -3,6 +3,13 @@
 #include "../components/health_component.h"
 #include <glog/logging.h>
 
+void ConsumableSystem::registerHandlers() {
+    getEngine()->events()->subscribe<ConsumeItemEvent>(
+        [=](std::shared_ptr<ConsumeItemEvent> event) {
+            handleConsumeItemEvent(event);
+        });
+}
+
 void updateHealth(ConsumableComponent* consumable, HealthComponent* health) {
     if (!health) {
         return;
@@ -21,7 +28,8 @@ void updateHealth(ConsumableComponent* consumable, HealthComponent* health) {
     }
 }
 
-void ConsumableSystem::handleConsumeItemEvent(const ConsumeItemEvent* event) {
+void ConsumableSystem::handleConsumeItemEvent(
+    std::shared_ptr<ConsumeItemEvent> event) {
     ConsumableComponent* consumable =
         getEngine()->state()->components()->get<ConsumableComponent>(
             event->item);

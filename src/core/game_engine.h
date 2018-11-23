@@ -28,9 +28,6 @@ public:
     unsigned int getTurn() { return m_turn; }
     void setTurn(unsigned int turn) { m_turn = turn; }
 
-    virtual void raiseEvent(Event* event);
-    virtual void raiseEvent(std::shared_ptr<Event> event);
-
     unsigned long long getTick() { return m_tick; }
 
     GraphicsInterface* getGraphics() { return m_graphics; }

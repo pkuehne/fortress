@@ -2,6 +2,9 @@
 #include "../core/utility.h"
 
 class ConsumableSystem : public GameSystemBase {
+public:
+    void registerHandlers();
+
 private:
-    void handleConsumeItemEvent(const ConsumeItemEvent* event) override;
+    void handleConsumeItemEvent(std::shared_ptr<ConsumeItemEvent> event);
 };
