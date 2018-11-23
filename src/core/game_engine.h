@@ -49,6 +49,7 @@ public:
     virtual std::shared_ptr<EventManager> events() { return m_eventManager; }
 
 private:
+    GraphicsInterface* m_graphics = nullptr;
     unsigned long long m_tick = 0;
     bool m_playerTurn = true;
     unsigned int m_turn = 1;
@@ -58,8 +59,6 @@ private:
     GameState* m_state = nullptr;
 
     std::vector<GameSystemInterface*> m_systems;
-
-    GraphicsInterface* m_graphics = nullptr;
 
     std::vector<Message> m_messages;
     unsigned int m_depth = 0;

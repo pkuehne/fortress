@@ -1,4 +1,5 @@
 #include "../../src/core/entity_manager.h"
+#include "../../src/core/event_manager.h"
 #include "../mocks/component_manager_mock.h"
 #include "../mocks/game_engine_mock.h"
 #include "../mocks/game_state_mock.h"
@@ -16,11 +17,11 @@ TEST_F(EntityManager_createEntity, raisedAddEntityEvent) {
     GameEngineMock mock;
     manager.initialise(&mock);
 
-    // Then
-    EXPECT_CALL(mock, raiseEvent(Matcher<Event*>(_)));
-
     // When
     manager.createEntity(location);
+
+    // Then
+    EXPECT_EQ(1, mock.events()->getEventQueueSize());
 }
 
 class EntityManager_addEntity : public ::testing::Test {

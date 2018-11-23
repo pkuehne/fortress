@@ -1,4 +1,5 @@
 #include "entity_manager.h"
+#include "event_manager.h"
 #include "game_engine.h"
 #include "location.h"
 #include <climits>
@@ -31,9 +32,10 @@ void EntityManager::addEntity(EntityId id, const Location& location) {
         m_engine->state()->tile(location).addEntity(id);
     }
 
-    AddEntityEvent* l_event = new AddEntityEvent;
-    l_event->entity = id;
-    m_engine->raiseEvent(l_event);
+    // AddEntityEvent* l_event = new AddEntityEvent;
+    // l_event->entity = id;
+    // m_engine->raiseEvent(l_event);
+    m_engine->events()->raise(std::make_shared<AddEntityEvent>(id));
 }
 
 void EntityManager::destroyEntity(EntityId id) {

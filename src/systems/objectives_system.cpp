@@ -1,7 +1,21 @@
 #include "objectives_system.h"
 #include "../components/description_component.h"
+#include "../core/event_manager.h"
 #include "../core/quest.h"
 #include "../windows/game_over_window.h"
+
+void ObjectivesSystem::registerHandlers() {
+    // eventManager->subscribe(
+    //     std::bind(&ObjectivesSystem::handleAddEntityEvent, this));
+    getEngine()->events()->subscribe<AddEntityEvent>(
+        [=](std::shared_ptr<AddEntityEvent> event) {
+            handleAddEntityEvent(event);
+        });
+    getEngine()->events()->subscribe<RemoveEntityEvent>(
+        [=](std::shared_ptr<RemoveEntityEvent> event) {
+            handleRemoveEntityEvent(event);
+        });
+}
 
 void ObjectivesSystem::showGameOverWindow(bool gameWon) {
     auto gameOverArgs = std::make_shared<GameOverWindowArgs>();
@@ -11,7 +25,8 @@ void ObjectivesSystem::showGameOverWindow(bool gameWon) {
     getEngine()->getWindows()->registerWindow(win);
 }
 
-void ObjectivesSystem::handleAddEntityEvent(const AddEntityEvent* event) {
+void ObjectivesSystem::handleAddEntityEvent(
+    std::shared_ptr<AddEntityEvent> event) {
     DescriptionComponent* l_desc =
         getEngine()->state()->components()->get<DescriptionComponent>(
             event->entity);
@@ -24,7 +39,8 @@ void ObjectivesSystem::handleAddEntityEvent(const AddEntityEvent* event) {
     }
 }
 
-void ObjectivesSystem::handleRemoveEntityEvent(const RemoveEntityEvent* event) {
+void ObjectivesSystem::handleRemoveEntityEvent(
+    std::shared_ptr<RemoveEntityEvent> event) {
     if (event->entity == getEngine()->state()->player()) {
         showGameOverWindow(false);
         return;

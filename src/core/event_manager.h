@@ -60,9 +60,7 @@ public:
     void processEvents();
 
     template <typename EventType> void raise(std::shared_ptr<EventType> event) {
-        for (auto& handler : m_handlerList[typeid(EventType).hash_code()]) {
-            handler->invokeWith(event);
-        }
+        m_eventList.push(std::make_pair(typeid(EventType).hash_code(), event));
     }
 
     template <class FuncType, class EventType> void subscribe(FuncType func) {
@@ -77,8 +75,11 @@ public:
             std::move(handler));
     }
 
+    unsigned int getEventQueueSize() { return m_eventList.size(); }
+
 private:
     EventQueue m_events;
     Handlers m_handlers;
     std::map<size_t, std::vector<std::unique_ptr<BaseHandler>>> m_handlerList;
+    std::queue<std::pair<size_t, std::shared_ptr<Event>>> m_eventList;
 };

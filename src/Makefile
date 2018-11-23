@@ -17,7 +17,7 @@ BUILD_NUM?=\"dev-build\"
 DEFINES=-DMAJOR=$(MAJOR_VER) -DMINOR=$(MINOR_VER) -DPATCH=$(PATCH_VER) -DBUILD=$(BUILD_NUM)
 INC_DIRS += -I. -I/usr/include/ $(addprefix -I, $(MODULES))
 
-CXX?=clang
+CXX?=g++
 WARNINGS=-Wall -Werror -pedantic
 STANDARD=-std=c++14
 DEBUG_INFO=-g

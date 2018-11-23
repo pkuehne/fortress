@@ -12,7 +12,8 @@ void testFunc(std::shared_ptr<AddEntityEvent> event) {
 }
 
 GameEngine::GameEngine(GraphicsInterface* a_graphics)
-    : m_graphics(a_graphics) {}
+    : m_graphics(a_graphics), m_eventManager(std::make_shared<EventManager>()) {
+}
 
 void GameEngine::initialise() {
     // Start us off on level 1
@@ -22,21 +23,9 @@ void GameEngine::initialise() {
     if (!m_windowManager) {
         m_windowManager = new WindowManager();
     }
-    if (!m_eventManager) {
-        m_eventManager = std::make_shared<EventManager>();
-    }
     if (!m_state) {
         m_state = new GameState();
     }
-
-    // Test code
-    m_eventManager->subscribe<AddEntityEvent>(testFunc);
-    m_eventManager->subscribe<AddEntityEvent>(
-        [](std::shared_ptr<AddEntityEvent> event) {
-            std::cout << "Lambda: Entity Added: " << event->entity << std::endl;
-        });
-
-    m_eventManager->raise(std::make_shared<AddEntityEvent>(12345));
 
     // Initialise Managers
     m_windowManager->initialise(this);

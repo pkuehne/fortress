@@ -11,7 +11,11 @@ public:
     GameSystemBase() : m_engine(0) {}
     virtual ~GameSystemBase() {}
 
-    virtual void initialise(GameEngine* engine) { m_engine = engine; }
+    virtual void initialise(GameEngine* engine) {
+        m_engine = engine;
+        registerHandlers();
+    }
+    virtual void registerHandlers() {}
     virtual GameEngine* getEngine() { return m_engine; }
     virtual void handleEvent(std::shared_ptr<Event> event);
     virtual void update() {}
