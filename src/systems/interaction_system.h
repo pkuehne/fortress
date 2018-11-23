@@ -3,7 +3,10 @@
 #include "../core/game_system_base.h"
 
 class InteractionSystem : public GameSystemBase {
+public:
+    void registerHandlers();
+
 private:
-    void handleOpenEntityEvent(const OpenEntityEvent* event) override;
-    void handleCloseEntityEvent(const CloseEntityEvent* event) override;
+    void handleOpenEntityEvent(std::shared_ptr<OpenEntityEvent> event);
+    void handleCloseEntityEvent(std::shared_ptr<CloseEntityEvent> event);
 };

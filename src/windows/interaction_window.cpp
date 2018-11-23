@@ -53,13 +53,11 @@ void InteractionWindow::registerWidgets() {
             ComponentStore& store = m_components[lstEntities->getSelection()];
 
             if (store.open->open) {
-                auto event = new CloseEntityEvent;
-                event->entity = entity;
-                getEngine()->raiseEvent(event);
+                getEngine()->events()->raise(
+                    std::make_shared<CloseEntityEvent>(entity));
             } else {
-                auto event = new OpenEntityEvent;
-                event->entity = entity;
-                getEngine()->raiseEvent(event);
+                getEngine()->events()->raise(
+                    std::make_shared<OpenEntityEvent>(entity));
             }
             getEngine()->swapTurn();
         })

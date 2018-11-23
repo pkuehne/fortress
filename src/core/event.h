@@ -109,13 +109,13 @@ public:
 
 class OpenEntityEvent : public Event {
 public:
-    OpenEntityEvent() : Event(EVENT_OPEN_ENTITY) {}
+    OpenEntityEvent(EntityId e) : entity(e) {}
     EntityId entity = 0;
 };
 
 class CloseEntityEvent : public Event {
 public:
-    CloseEntityEvent() : Event(EVENT_CLOSE_ENTITY) {}
+    CloseEntityEvent(EntityId e) : entity(e) {}
     EntityId entity = 0;
 };
 
