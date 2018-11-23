@@ -1,6 +1,5 @@
 #include "objectives_system.h"
 #include "../components/description_component.h"
-#include "../core/event_manager.h"
 #include "../core/quest.h"
 #include "../windows/game_over_window.h"
 

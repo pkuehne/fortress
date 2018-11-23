@@ -4,9 +4,9 @@
 
 class MovementSystem : public GameSystemBase {
 public:
+    void registerHandlers();
     virtual ~MovementSystem() {}
-    void handleMoveEntityEvent(const MoveEntityEvent* event);
+    void handleMoveEntityEvent(std::shared_ptr<MoveEntityEvent> event);
 
 private:
 };
-

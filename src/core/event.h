@@ -29,7 +29,7 @@ typedef enum {
 
 class Event {
 public:
-    explicit Event(EventType type) : m_type(type) {}
+    explicit Event(EventType type = EVENT_INVALID) : m_type(type) {}
     virtual ~Event() {}
     EventType getType() const { return m_type; }
 
@@ -52,7 +52,7 @@ public:
 
 class MoveEntityEvent : public Event {
 public:
-    MoveEntityEvent() : Event(EVENT_MOVE_ENTITY) {}
+    MoveEntityEvent(EntityId e, Location l) : entity(e), newLocation(l) {}
     EntityId entity = 0;
     Location newLocation;
 };

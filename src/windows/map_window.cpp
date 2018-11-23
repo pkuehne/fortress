@@ -177,10 +177,9 @@ void MapWindow::keyPress(unsigned char key) {
         updateLocation(key, newLocation);
 
         if (m_action == 'm') {
-            MoveEntityEvent* l_event = new MoveEntityEvent;
-            l_event->entity = playerId;
-            l_event->newLocation = newLocation;
-            getEngine()->raiseEvent(l_event);
+            getEngine()->events()->raise(
+                std::make_shared<MoveEntityEvent>(playerId, newLocation));
+
             getEngine()->swapTurn();
         } else if (m_action == 'k') {
             EntityHolder l_entities =

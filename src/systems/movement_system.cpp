@@ -1,14 +1,22 @@
 #include "movement_system.h"
 #include "../components/collider_component.h"
-#include "../components/graphics_effect_component.h"
 #include "../components/connector_component.h"
+#include "../components/graphics_effect_component.h"
 #include "../core/entity.h"
 #include "../core/event.h"
 #include "../core/game_engine.h"
 #include "../windows/game_over_window.h"
 #include <iostream>
 
-void MovementSystem::handleMoveEntityEvent(const MoveEntityEvent* event) {
+void MovementSystem::registerHandlers() {
+    getEngine()->events()->subscribe<MoveEntityEvent>(
+        [=](std::shared_ptr<MoveEntityEvent> event) {
+            handleMoveEntityEvent(event);
+        });
+}
+
+void MovementSystem::handleMoveEntityEvent(
+    std::shared_ptr<MoveEntityEvent> event) {
     EntityId l_entity = event->entity;
     Location l_oldLocation = m_engine->state()->location(l_entity);
     Location l_newLocation = event->newLocation;
@@ -34,7 +42,8 @@ void MovementSystem::handleMoveEntityEvent(const MoveEntityEvent* event) {
                 blocked = true;
             }
             ConnectorComponent* l_stair =
-                m_engine->state()->components()->get<ConnectorComponent>(l_target);
+                m_engine->state()->components()->get<ConnectorComponent>(
+                    l_target);
             if (l_stair && l_stair->target &&
                 l_entity == m_engine->state()->player()) {
                 l_newLocation = m_engine->state()->location(l_stair->target);

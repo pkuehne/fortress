@@ -2,7 +2,7 @@
 
 #include "../core/game_state.h"
 #include "../core/window_manager.h"
-#include "event_manager_interface.h"
+#include "event_manager.h"
 #include "game_system_interface.h"
 #include "graphics_interface.h"
 #include "location.h"
@@ -12,7 +12,7 @@
 #include <string>
 #include <vector>
 
-class EventManager;
+// class EventManager;
 
 class GameEngine {
 public:

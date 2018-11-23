@@ -73,10 +73,8 @@ void NpcSystem::createHumanStateMachine() {
     MovingState.onUpdate = [](GameEngine* g, EntityId e, NpcComponent* n) {
         setPathToTarget(g, e, n->target, n);
         if (!n->path.empty()) {
-            MoveEntityEvent* l_event = new MoveEntityEvent();
-            l_event->entity = e;
-            l_event->newLocation = n->path[0];
-            g->raiseEvent(l_event);
+            g->events()->raise(
+                std::make_shared<MoveEntityEvent>(e, n->path[0]));
             n->path.erase(n->path.begin());
         }
     };
@@ -156,10 +154,8 @@ void NpcSystem::createDogStateMachine() {
     MovingState.onUpdate = [](GameEngine* g, EntityId e, NpcComponent* n) {
         setPathToTarget(g, e, n->target, n);
         if (!n->path.empty()) {
-            MoveEntityEvent* l_event = new MoveEntityEvent();
-            l_event->entity = e;
-            l_event->newLocation = n->path[0];
-            g->raiseEvent(l_event);
+            g->events()->raise(
+                std::make_shared<MoveEntityEvent>(e, n->path[0]));
             n->path.erase(n->path.begin());
         }
     };
