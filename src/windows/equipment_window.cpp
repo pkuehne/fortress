@@ -166,12 +166,10 @@ void EquipmentWindow::registerWidgets() {
             EquipmentWindow* win =
                 dynamic_cast<EquipmentWindow*>(l->getWindow());
             GameEngine* engine = win->getEngine();
-
-            ConsumeItemEvent* event = new ConsumeItemEvent();
-            event->entity = getState()->player();
-            event->item = getSelectedItem();
+            engine->events()->raise(std::make_shared<ConsumeItemEvent>(
+                engine->state()->player(), getSelectedItem()));
             setSelectedItem(0);
-            getEngine()->raiseEvent(event);
+
             engine->swapTurn();
         })
         ->setVerticalAlign(Widget::VerticalAlign::Bottom)
@@ -198,11 +196,9 @@ void EquipmentWindow::registerWidgets() {
             EquipmentWindow* win =
                 dynamic_cast<EquipmentWindow*>(l->getWindow());
             GameEngine* engine = win->getEngine();
-            UnequipItemEvent* event = new UnequipItemEvent();
-            event->entity = engine->state()->player();
-            event->item = win->getSelectedItem();
+            engine->events()->raise(std::make_shared<UnequipItemEvent>(
+                engine->state()->player(), win->getSelectedItem()));
             win->setSelectedItem(0);
-            engine->raiseEvent(event);
             engine->swapTurn();
         })
         ->setVerticalAlign(Widget::VerticalAlign::Bottom)
@@ -215,11 +211,9 @@ void EquipmentWindow::registerWidgets() {
             EquipmentWindow* win =
                 dynamic_cast<EquipmentWindow*>(l->getWindow());
             GameEngine* engine = win->getEngine();
-            EquipItemEvent* event = new EquipItemEvent();
-            event->entity = engine->state()->player();
-            event->item = win->getSelectedItem();
+            engine->events()->raise(std::make_shared<EquipItemEvent>(
+                engine->state()->player(), win->getSelectedItem()));
             win->setSelectedItem(0);
-            engine->raiseEvent(event);
             engine->swapTurn();
         })
         ->setVerticalAlign(Widget::VerticalAlign::Bottom)
@@ -232,11 +226,9 @@ void EquipmentWindow::registerWidgets() {
             EquipmentWindow* win =
                 dynamic_cast<EquipmentWindow*>(l->getWindow());
             GameEngine* engine = win->getEngine();
-            DropEquipmentEvent* event = new DropEquipmentEvent();
-            event->entity = engine->state()->player();
-            event->item = win->getSelectedItem();
+            engine->events()->raise(std::make_shared<DropEquipmentEvent>(
+                engine->state()->player(), win->getSelectedItem()));
             win->setSelectedItem(0);
-            engine->raiseEvent(event);
             engine->swapTurn();
         })
         ->setVerticalAlign(Widget::VerticalAlign::Bottom)

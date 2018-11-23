@@ -69,8 +69,31 @@ bool equipItem(EntityId item, WieldableComponent* wieldable,
     return false;
 }
 
+void EquipmentSystem::registerHandlers() {
+    getEngine()->events()->subscribe<DropEquipmentEvent>(
+        [=](std::shared_ptr<DropEquipmentEvent> event) {
+            handleDropEquipmentEvent(event);
+        });
+    getEngine()->events()->subscribe<PickupEquipmentEvent>(
+        [=](std::shared_ptr<PickupEquipmentEvent> event) {
+            handlePickupEquipmentEvent(event);
+        });
+    getEngine()->events()->subscribe<EquipItemEvent>(
+        [=](std::shared_ptr<EquipItemEvent> event) {
+            handleEquipItemEvent(event);
+        });
+    getEngine()->events()->subscribe<UnequipItemEvent>(
+        [=](std::shared_ptr<UnequipItemEvent> event) {
+            handleUnequipItemEvent(event);
+        });
+    getEngine()->events()->subscribe<ConsumeItemEvent>(
+        [=](std::shared_ptr<ConsumeItemEvent> event) {
+            handleConsumeItemEvent(event);
+        });
+}
+
 void EquipmentSystem::handleDropEquipmentEvent(
-    const DropEquipmentEvent* event) {
+    std::shared_ptr<DropEquipmentEvent> event) {
     EquipmentComponent* equipment =
         getEngine()->state()->components()->get<EquipmentComponent>(
             event->entity);
@@ -90,7 +113,7 @@ void EquipmentSystem::handleDropEquipmentEvent(
 }
 
 void EquipmentSystem::handlePickupEquipmentEvent(
-    const PickupEquipmentEvent* event) {
+    std::shared_ptr<PickupEquipmentEvent> event) {
     EquipmentComponent* equipment =
         getEngine()->state()->components()->get<EquipmentComponent>(
             event->entity);
@@ -101,7 +124,8 @@ void EquipmentSystem::handlePickupEquipmentEvent(
     equipment->carriedEquipment.push_back(event->item);
 }
 
-void EquipmentSystem::handleEquipItemEvent(const EquipItemEvent* event) {
+void EquipmentSystem::handleEquipItemEvent(
+    std::shared_ptr<EquipItemEvent> event) {
     EquipmentComponent* equipment =
         getEngine()->state()->components()->get<EquipmentComponent>(
             event->entity);
@@ -123,7 +147,8 @@ void EquipmentSystem::handleEquipItemEvent(const EquipItemEvent* event) {
     }
 }
 
-void EquipmentSystem::handleUnequipItemEvent(const UnequipItemEvent* event) {
+void EquipmentSystem::handleUnequipItemEvent(
+    std::shared_ptr<UnequipItemEvent> event) {
     EquipmentComponent* equipment =
         getEngine()->state()->components()->get<EquipmentComponent>(
             event->entity);
@@ -131,7 +156,8 @@ void EquipmentSystem::handleUnequipItemEvent(const UnequipItemEvent* event) {
     equipment->carriedEquipment.push_back(event->item);
 }
 
-void EquipmentSystem::handleConsumeItemEvent(const ConsumeItemEvent* event) {
+void EquipmentSystem::handleConsumeItemEvent(
+    std::shared_ptr<ConsumeItemEvent> event) {
     EquipmentComponent* equipment =
         getEngine()->state()->components()->get<EquipmentComponent>(
             event->entity);

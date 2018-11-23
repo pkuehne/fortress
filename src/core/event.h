@@ -74,36 +74,35 @@ public:
 
 class DropEquipmentEvent : public Event {
 public:
-    DropEquipmentEvent() : Event(EVENT_DROP_EQUIPMENT) {}
+    DropEquipmentEvent(EntityId e, EntityId i) : entity(e), item(i) {}
     EntityId entity = 0;
     EntityId item = 0;
 };
 
 class PickupEquipmentEvent : public Event {
 public:
-    PickupEquipmentEvent(EntityId entity, EntityId item)
-        : Event(EVENT_PICKUP_EQUIPMENT), entity(entity), item(item) {}
+    PickupEquipmentEvent(EntityId e, EntityId i) : entity(e), item(i) {}
     EntityId entity = 0;
     EntityId item = 0;
 };
 
 class EquipItemEvent : public Event {
 public:
-    EquipItemEvent() : Event(EVENT_EQUIP_ITEM) {}
+    EquipItemEvent(EntityId e, EntityId i) : entity(e), item(i) {}
     EntityId entity = 0;
     EntityId item = 0;
 };
 
 class UnequipItemEvent : public Event {
 public:
-    UnequipItemEvent() : Event(EVENT_UNEQUIP_ITEM) {}
+    UnequipItemEvent(EntityId e, EntityId i) : entity(e), item(i) {}
     EntityId entity = 0;
     EntityId item = 0;
 };
 
 class ConsumeItemEvent : public Event {
 public:
-    ConsumeItemEvent() : Event(EVENT_CONSUME_ITEM) {}
+    ConsumeItemEvent(EntityId e, EntityId i) : entity(e), item(i) {}
     EntityId entity = 0;
     EntityId item = 0;
 };
