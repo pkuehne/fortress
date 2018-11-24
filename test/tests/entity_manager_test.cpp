@@ -89,12 +89,13 @@ TEST_F(EntityManager_destroyEntity, addsEntityforAllList) {
 
 TEST_F(EntityManager_destroyEntity, raisesDeleteEvent) {
     // Given
-    EXPECT_CALL(mock, raiseEvent(Matcher<Event*>(_)));
+    EXPECT_EQ(1, mock.events()->getEventQueueSize());
 
     // When
     manager.destroyEntity(entity);
 
     // Then
+    EXPECT_EQ(2, mock.events()->getEventQueueSize());
 }
 
 class EntityManager_getsetLocation : public ::testing::Test {};

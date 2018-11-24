@@ -14,17 +14,17 @@ public:
     void invokeWith(const std::shared_ptr<Event>& event) { invoke(event); }
 
 private:
-    virtual void invoke(const std::shared_ptr<Event> event) = 0;
+    virtual void invoke(const std::shared_ptr<Event>& event) = 0;
 };
 
 template <class EventType> class Handler : public BaseHandler {
 public:
     explicit Handler(
-        const std::function<void(std::shared_ptr<EventType> event)> func)
+        const std::function<void(std::shared_ptr<EventType> event)>& func)
         : m_func(func) {}
 
 private:
-    void invoke(const std::shared_ptr<Event> event) {
+    void invoke(const std::shared_ptr<Event>& event) {
         m_func(std::dynamic_pointer_cast<EventType>(event));
     }
 

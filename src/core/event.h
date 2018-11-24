@@ -19,7 +19,7 @@ public:
 
 class RemoveEntityEvent : public Event {
 public:
-    RemoveEntityEvent(EntityId e) : entity(e) {}
+    explicit RemoveEntityEvent(EntityId e) : entity(e) {}
     EntityId entity = 0;
 };
 
@@ -83,13 +83,13 @@ public:
 
 class OpenEntityEvent : public Event {
 public:
-    OpenEntityEvent(EntityId e) : entity(e) {}
+    explicit OpenEntityEvent(EntityId e) : entity(e) {}
     EntityId entity = 0;
 };
 
 class CloseEntityEvent : public Event {
 public:
-    CloseEntityEvent(EntityId e) : entity(e) {}
+    explicit CloseEntityEvent(EntityId e) : entity(e) {}
     EntityId entity = 0;
 };
 
