@@ -58,6 +58,4 @@ private:
     std::vector<GameSystemInterface*> m_systems;
 
     std::vector<Message> m_messages;
-    unsigned int m_depth = 0;
-    unsigned int m_area = 0;
 };

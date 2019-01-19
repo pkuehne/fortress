@@ -12,9 +12,6 @@ GameEngine::GameEngine(GraphicsInterface* a_graphics)
 }
 
 void GameEngine::initialise() {
-    // Start us off on level 1
-    m_depth = 1;
-
     // Create if not exist
     if (!m_windowManager) {
         m_windowManager = new WindowManager();
