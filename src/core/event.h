@@ -119,3 +119,8 @@ public:
     EntityId entity;
     std::string prefab;
 };
+
+class CreateMapWindowEvent : public Event {
+public:
+    CreateMapWindowEvent() {}
+};
