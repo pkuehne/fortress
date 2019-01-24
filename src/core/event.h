@@ -111,3 +111,11 @@ class EndConversationEvent : public Event {
 public:
     EndConversationEvent() {}
 };
+
+class InstantiatePrefabEvent : public Event {
+public:
+    InstantiatePrefabEvent(EntityId e, const std::string& p)
+        : entity(e), prefab(p) {}
+    EntityId entity;
+    std::string prefab;
+};

@@ -10,6 +10,7 @@
 #include "systems/movement_system.h"
 #include "systems/npc_system.h"
 #include "systems/objectives_system.h"
+#include "systems/prefab_system.h"
 #include <cstdlib>
 #include <execinfo.h>
 #include <glog/logging.h>
@@ -58,6 +59,7 @@ int main(int argc, char** argv) {
         l_engine->addSystem(new HealthSystem());
         l_engine->addSystem(new InteractionSystem());
         l_engine->addSystem(new DialogSystem());
+        l_engine->addSystem(new PrefabSystem());
         l_engine->initialise();
         l_graphics->spin();
     } catch (char const* err) {

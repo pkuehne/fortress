@@ -210,6 +210,9 @@ void MapWindow::keyPress(unsigned char key) {
 
 void MapWindow::nextTurn() {
     EntityId player = getEngine()->state()->player();
+    if (!player) {
+        return;
+    }
     HealthComponent* l_health =
         getEngine()->state()->components()->get<HealthComponent>(player);
     if (!l_health) {

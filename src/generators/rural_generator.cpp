@@ -73,7 +73,9 @@ void RuralGenerator::createEntitiesFromMap() {
     location.y = m_mapHeight / 2;
     location.z = 0;
     location.area = m_area;
-    m_engine->state()->prefabs().create("player", location);
+    m_engine->events()->raise(std::make_shared<InstantiatePrefabEvent>(
+        state->createEntity(location), "player"));
+    // m_engine->state()->prefabs().create("player", location);
 }
 
 void RuralGenerator::reset() { GeneratorInterface::reset(); }
