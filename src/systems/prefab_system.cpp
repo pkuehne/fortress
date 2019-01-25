@@ -32,6 +32,9 @@ void PrefabSystem::registerHandlers() {
             addNpcComponent(node, entity);
             addPlayerComponent(node, entity);
             addGroupingComponent(node, entity);
+
+            getEngine()->events()->raise(std::make_shared<PrefabCreatedEvent>(
+                event->entity, event->prefab));
         });
 
     std::string path = "./data/prefabs/";

@@ -120,6 +120,14 @@ public:
     std::string prefab;
 };
 
+class PrefabCreatedEvent : public Event {
+public:
+    PrefabCreatedEvent(EntityId e, const std::string& p)
+        : entity(e), prefab(p) {}
+    EntityId entity;
+    std::string prefab;
+};
+
 class CreateMapWindowEvent : public Event {
 public:
     CreateMapWindowEvent() {}

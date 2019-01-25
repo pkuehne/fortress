@@ -4,10 +4,11 @@
 #include "../windows/game_over_window.h"
 
 void ObjectivesSystem::registerHandlers() {
-    // eventManager->subscribe(
-    //     std::bind(&ObjectivesSystem::handleAddEntityEvent, this));
-    getEngine()->events()->subscribe<AddEntityEvent>(
-        [=](std::shared_ptr<AddEntityEvent> event) {
+    // getEngine()->events()->subscribe(std::bind(
+    //     &ObjectivesSystem::handleAddEntityEvent, this,
+    //     std::placeholders::_1));
+    getEngine()->events()->subscribe<PrefabCreatedEvent>(
+        [=](std::shared_ptr<PrefabCreatedEvent> event) {
             handleAddEntityEvent(event);
         });
     getEngine()->events()->subscribe<RemoveEntityEvent>(
@@ -25,7 +26,7 @@ void ObjectivesSystem::showGameOverWindow(bool gameWon) {
 }
 
 void ObjectivesSystem::handleAddEntityEvent(
-    std::shared_ptr<AddEntityEvent> event) {
+    std::shared_ptr<PrefabCreatedEvent> event) {
     DescriptionComponent* l_desc =
         getEngine()->state()->components()->get<DescriptionComponent>(
             event->entity);

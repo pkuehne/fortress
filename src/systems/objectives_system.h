@@ -5,7 +5,7 @@
 class ObjectivesSystem : public GameSystemBase {
 public:
     void registerHandlers();
-    void handleAddEntityEvent(std::shared_ptr<AddEntityEvent> event);
+    void handleAddEntityEvent(std::shared_ptr<PrefabCreatedEvent> event);
     void handleRemoveEntityEvent(std::shared_ptr<RemoveEntityEvent> event);
     bool updateQuests();
     void showGameOverWindow(bool gameWon);
