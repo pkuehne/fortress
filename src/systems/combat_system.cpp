@@ -106,8 +106,7 @@ void CombatSystem::updateLog(const EntityId& attacker, const EntityId& target,
     str << " and causes " << damage << " damage!";
 
     if (attacker == m_engine->state()->player()) {
-        events()->raise<AddLogMessageEvent>(
-            std::make_shared<AddLogMessageEvent>(str.str()));
+        events()->raise(std::make_shared<AddLogMessageEvent>(str.str()));
     } else {
         events()->raise(
             std::make_shared<AddLogMessageEvent>(str.str(), "warning"));

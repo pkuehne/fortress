@@ -26,9 +26,8 @@ void LogMessageSystem::registerHandlers() {
                     "You find yourself in a forest."));
                 events()->raise(std::make_shared<AddLogMessageEvent>(
                     "Stairs will lead you into the dungeons."));
-                events()->raise<AddLogMessageEvent>(
-                    std::make_shared<AddLogMessageEvent>(
-                        "Beware the troll, living in the depths", "warning"));
+                events()->raise(std::make_shared<AddLogMessageEvent>(
+                    "Beware the troll, living in the depths", "warning"));
             }
         });
 }
