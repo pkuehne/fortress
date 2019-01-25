@@ -132,3 +132,11 @@ class CreateMapWindowEvent : public Event {
 public:
     CreateMapWindowEvent() {}
 };
+
+class AddLogMessageEvent : public Event {
+public:
+    AddLogMessageEvent(const std::string& m, const std::string& c = "info")
+        : message(m), category(c) {}
+    std::string message;
+    std::string category;
+};

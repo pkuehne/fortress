@@ -56,6 +56,4 @@ private:
     GameState* m_state = nullptr;
 
     std::vector<GameSystemInterface*> m_systems;
-
-    std::vector<Message> m_messages;
 };

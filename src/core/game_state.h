@@ -11,26 +11,6 @@
 class Tile;
 class WorldInfo;
 
-enum class MessageType { INFO = 0, GOOD = 1, WARN = 2, CRIT = 3 };
-
-typedef struct {
-    MessageType severity;
-    std::string message;
-    Color getColor() {
-        switch (severity) {
-            case MessageType::INFO:
-                return Color(WHITE);
-            case MessageType::GOOD:
-                return Color(GREEN);
-            case MessageType::WARN:
-                return Color(YELLOW);
-            case MessageType::CRIT:
-            default:
-                return Color(RED);
-        }
-    }
-} Message;
-
 struct Debug {
     bool showNpcPaths = false;
     bool revealAllTiles = false;
@@ -71,10 +51,6 @@ public:
     virtual EntityId player();
     EntityId createEntity(const Location&);
 
-    void addMessage(const Message& message);
-    void addMessage(const MessageType&, const std::string& message);
-    std::vector<Message>& getMessages();
-
     std::vector<Quest*>& getQuests() { return m_quests; }
 
     /// @brief Provides access to the world information
@@ -88,7 +64,6 @@ private:
     ComponentManager* m_components = nullptr;
     std::shared_ptr<WorldInfo> m_world;
 
-    std::vector<Message> m_messages;
     Debug m_debug;
     std::vector<Quest*> m_quests;
 };

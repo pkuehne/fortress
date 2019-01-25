@@ -53,12 +53,6 @@ void GameEngine::initialise() {
         getWindows()->resize();
     });
 
-    m_state->addMessage(MessageType::INFO, "You find yourself in a forest.");
-    m_state->addMessage(MessageType::INFO,
-                        "Stairs will lead you into the dungeons.");
-    m_state->addMessage(MessageType::WARN,
-                        "Beware the Troll living in the depths!");
-
     swapTurn();
 }
 
@@ -74,8 +68,9 @@ void GameEngine::tick() {
 
     getWindows()->nextTick();
 
-    if (!m_playerTurn)
+    if (!m_playerTurn) {
         swapTurn();
+    }
     return;
 }
 

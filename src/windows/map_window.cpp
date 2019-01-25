@@ -3,6 +3,7 @@
 #include "../components/droppable_component.h"
 #include "../components/graphics_effect_component.h"
 #include "../components/health_component.h"
+#include "../components/logmessage_component.h"
 #include "../components/npc_component.h"
 #include "../core/event.h"
 #include "../core/game_engine.h"
@@ -222,14 +223,17 @@ void MapWindow::nextTurn() {
     getWidget<ProgressBar>("pgbHunger")->setValue(l_health->hunger);
     getWidget<ProgressBar>("pgbThirst")->setValue(l_health->thirst);
 
-    std::vector<Message>& l_messages = getEngine()->state()->getMessages();
+    auto l_messages = getEngine()
+                          ->state()
+                          ->components()
+                          ->get<LogMessageComponent>(player)
+                          ->messages;
     ListBox* list = getWidget<ListBox>("lstMessages");
-
     list->clearItems();
     for (auto message : l_messages) {
         ListBoxItem item;
         item.setText(message.message);
-        item.setColor(message.getColor());
+        item.setColor(Color(WHITE));
         list->addItem(item);
     }
     list->scrollToBottom();
