@@ -5,8 +5,8 @@
 #include "entity_manager.h"
 #include "location.h"
 #include "map_manager.h"
-#include "prefab_builder.h"
 #include "quest.h"
+#include <memory>
 
 class Tile;
 class WorldInfo;
@@ -71,8 +71,6 @@ public:
     virtual EntityId player();
     EntityId createEntity(const Location&);
 
-    PrefabBuilder& prefabs() { return m_prefabs; }
-
     void addMessage(const Message& message);
     void addMessage(const MessageType&, const std::string& message);
     std::vector<Message>& getMessages();
@@ -89,7 +87,6 @@ private:
     EntityManager* m_entities = nullptr;
     ComponentManager* m_components = nullptr;
     std::shared_ptr<WorldInfo> m_world;
-    PrefabBuilder m_prefabs;
 
     std::vector<Message> m_messages;
     Debug m_debug;

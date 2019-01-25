@@ -5,7 +5,6 @@
 #include "../components/health_component.h"
 #include "../components/sprite_component.h"
 #include "../components/wieldable_component.h"
-#include "../core/prefab_builder.h"
 #include <iostream>
 #include <sstream>
 
@@ -54,8 +53,10 @@ void CombatSystem::killEntity(EntityId id) {
     const Location location = state->location(id);
 
     // Create the corpse
-    EntityId corpse = state->prefabs().create("corpse", location);
-    state->components()->get<SpriteComponent>(corpse)->sprite =
+    EntityId corpse = state->createEntity(location);
+    m_engine->events()->raise(
+        std::make_shared<InstantiatePrefabEvent>(corpse, "corpse"));
+    state->components()->make<SpriteComponent>(corpse)->sprite =
         state->components()->get<SpriteComponent>(id)->sprite;
 
     // Drop the equipment

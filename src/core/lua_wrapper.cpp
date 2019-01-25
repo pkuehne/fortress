@@ -1,6 +1,5 @@
 #include "lua_wrapper.h"
 #include "game_state.h"
-#include "prefab_builder.h"
 #include <glog/logging.h>
 #include <iostream>
 #include <sstream>
@@ -95,7 +94,7 @@ int createOrc(lua_State* runtime) {
     Location location = state->location(state->player());
     location.x += x;
     location.y += y;
-    state->prefabs().create("orc", location);
+    // state->prefabs().create("orc", location);
 
     return 0;
 }

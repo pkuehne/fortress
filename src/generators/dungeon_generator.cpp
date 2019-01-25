@@ -3,7 +3,6 @@
 #include "../components/connector_component.h"
 #include "../components/sprite_component.h"
 #include "../core/game_engine.h"
-#include "../core/prefab_builder.h"
 #include <cstdlib>
 #include <ctime>
 #include <fstream>
@@ -83,19 +82,17 @@ bool DungeonGenerator::generateLevel() {
 
 void DungeonGenerator::createStair(const Location& location,
                                    unsigned int& stair, bool down) {
-    auto state = m_engine->state();
-    stair = state->prefabs().create("stair", location);
+    stair = createPrefab("stair", location);
     // state->components()->get<SpriteComponent>(stair)->sprite =
     //     (30 + (down ? 1 : 0));
 }
 
 void DungeonGenerator::createOrc(const Location& location) {
-    auto state = m_engine->state();
     if (m_createBoss && m_level == m_maxDepth - 1) {
-        state->prefabs().create("troll", location);
+        createPrefab("troll", location);
         m_createBoss = false;
     } else {
-        state->prefabs().create("orc", location);
+        createPrefab("orc", location);
     }
 }
 
@@ -122,7 +119,7 @@ void DungeonGenerator::createEntity(const Location& location) {
             createOrc(location);
             break;
         case DOOR:
-            state->prefabs().create("door", location);
+            createPrefab("door", location);
             break;
         case EMPTY:
         case FLOOR:
@@ -131,7 +128,7 @@ void DungeonGenerator::createEntity(const Location& location) {
         default:
             LOG(WARNING) << "Creating marker prefab at " << location
                          << std::endl;
-            state->prefabs().create("marker", location);
+            createPrefab("marker", location);
             break;
     }
 }

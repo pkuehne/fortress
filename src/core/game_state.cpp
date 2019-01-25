@@ -9,15 +9,11 @@
 GameState::GameState(MapManager* map, EntityManager* entities,
                      ComponentManager* components)
     : m_map(map), m_entities(entities), m_components(components),
-      m_world(std::make_shared<WorldInfo>()),
-      m_prefabs(m_entities, m_components, m_world) {
+      m_world(std::make_shared<WorldInfo>()) {
     if (m_map == nullptr || m_entities == nullptr || m_components == nullptr) {
         LOG(ERROR) << "Game State initialised with nullptr" << std::endl;
         throw std::logic_error("Input parameter cannot be nullptr");
     }
-
-    std::string path = "./data/prefabs/";
-    m_prefabs.loadPrefabsFromDirectory(path);
 }
 
 GameState::~GameState() {
