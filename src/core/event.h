@@ -116,7 +116,7 @@ class InstantiatePrefabEvent : public Event {
 public:
     InstantiatePrefabEvent(EntityId e, const std::string& p)
         : entity(e), prefab(p) {}
-    EntityId entity;
+    EntityId entity = 0;
     std::string prefab;
 };
 
@@ -124,7 +124,7 @@ class PrefabCreatedEvent : public Event {
 public:
     PrefabCreatedEvent(EntityId e, const std::string& p)
         : entity(e), prefab(p) {}
-    EntityId entity;
+    EntityId entity = 0;
     std::string prefab;
 };
 
