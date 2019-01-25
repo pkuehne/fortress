@@ -193,8 +193,14 @@ void GeneratorWindow::startGenerating() {
         getEngine()
             ->state()
             ->components()
-            ->get<ConnectorComponent>(stair)
+            ->make<ConnectorComponent>(stair)
             ->target = l_generator.upStairLink();
+
+        // getEngine()
+        //     ->state()
+        //     ->components()
+        //     ->get<ConnectorComponent>(stair)
+        //     ->target = l_generator.upStairLink();
     }
     LOG(INFO) << "Placed " << getEngine()->state()->entityManager()->getMaxId()
               << " entities!" << std::endl;
@@ -204,8 +210,5 @@ void GeneratorWindow::startGenerating() {
 }
 
 void GeneratorWindow::startPlaying() {
-    // auto l_win = std::make_shared<MapWindow>();
-    // l_win->initialise(getEngine());
-    // getEngine()->getWindows()->replaceAllWindows(l_win);
     getEngine()->events()->raise(std::make_shared<CreateMapWindowEvent>());
 }

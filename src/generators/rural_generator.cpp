@@ -1,5 +1,4 @@
 #include "rural_generator.h"
-#include "../components/sprite_component.h"
 #include "../core/game_engine.h"
 #include "../core/prefab_builder.h"
 #include "../core/utility.h"
@@ -14,6 +13,14 @@ const unsigned char LINK = '>';
 const unsigned char HUMAN = 'H';
 const unsigned char APPLE = 'A';
 const unsigned char DOG = 'D';
+
+EntityId RuralGenerator::createPrefab(const std::string& type,
+                                      Location& location) {
+    EntityId entity = m_engine->state()->createEntity(location);
+    m_engine->events()->raise(
+        std::make_shared<InstantiatePrefabEvent>(entity, type));
+    return entity;
+}
 
 bool RuralGenerator::generate() {
     reset();
@@ -46,23 +53,20 @@ void RuralGenerator::createEntitiesFromMap() {
                 case EMPTY:
                     break;
                 case TREE:
-                    state->prefabs().create("tree", location);
+                    createPrefab("tree", location);
                     break;
                 case LINK:
-                    l_entity = state->prefabs().create("stair", location);
-                    state->components()
-                        ->get<SpriteComponent>(l_entity)
-                        ->sprite = 31;
+                    l_entity = createPrefab("stair", location);
                     m_areaLinks.push_back(l_entity);
                     break;
                 case HUMAN:
-                    state->prefabs().create("forester", location);
+                    createPrefab("forester", location);
                     break;
                 case DOG:
-                    state->prefabs().create("dog", location);
+                    createPrefab("dog", location);
                     break;
                 case APPLE:
-                    state->prefabs().create("apple", location);
+                    createPrefab("apple", location);
                     break;
                 default:
                     break;
@@ -73,9 +77,7 @@ void RuralGenerator::createEntitiesFromMap() {
     location.y = m_mapHeight / 2;
     location.z = 0;
     location.area = m_area;
-    m_engine->events()->raise(std::make_shared<InstantiatePrefabEvent>(
-        state->createEntity(location), "player"));
-    // m_engine->state()->prefabs().create("player", location);
+    createPrefab("player", location);
 }
 
 void RuralGenerator::reset() { GeneratorInterface::reset(); }

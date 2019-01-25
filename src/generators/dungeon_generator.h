@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../core/entity.h"
 #include "generator_interface.h"
 #include "room.h"
 #include <vector>
@@ -23,6 +24,7 @@ public:
 
 private:
     void createEntitiesFromMap();
+    EntityId createPrefab(const std::string& type, const Location& location);
     void createEntity(const Location& location);
     void connectStairs();
     bool generateRoom();

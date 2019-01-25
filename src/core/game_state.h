@@ -69,7 +69,7 @@ public:
     Location location(const Location&, Direction direction);
 
     virtual EntityId player();
-    EntityId createEntity(Location&);
+    EntityId createEntity(const Location&);
 
     PrefabBuilder& prefabs() { return m_prefabs; }
 

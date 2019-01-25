@@ -28,6 +28,14 @@ const char ORC = 'O';
 const char UP = '<';
 const char DOWN = '>';
 
+EntityId DungeonGenerator::createPrefab(const std::string& type,
+                                        const Location& location) {
+    EntityId entity = m_engine->state()->createEntity(location);
+    m_engine->events()->raise(
+        std::make_shared<InstantiatePrefabEvent>(entity, type));
+    return entity;
+}
+
 void DungeonGenerator::reset() {
     GeneratorInterface::reset();
 
@@ -77,8 +85,8 @@ void DungeonGenerator::createStair(const Location& location,
                                    unsigned int& stair, bool down) {
     auto state = m_engine->state();
     stair = state->prefabs().create("stair", location);
-    state->components()->get<SpriteComponent>(stair)->sprite =
-        (30 + (down ? 1 : 0));
+    // state->components()->get<SpriteComponent>(stair)->sprite =
+    //     (30 + (down ? 1 : 0));
 }
 
 void DungeonGenerator::createOrc(const Location& location) {
@@ -143,23 +151,23 @@ void DungeonGenerator::createEntitiesFromMap() {
 }
 
 void DungeonGenerator::connectStairs() {
-    auto state = m_engine->state();
+    auto components = m_engine->state()->components();
 
     if (m_level == 0) {
-        state->components()->get<ConnectorComponent>(m_upStair)->target =
+        components->make<ConnectorComponent>(m_upStair)->target =
             m_upStairTarget;
         m_upStairLink = m_upStair;
     } else {
-        state->components()->get<ConnectorComponent>(m_upStair)->target =
+        components->make<ConnectorComponent>(m_upStair)->target =
             m_prevDownStair;
     }
     if (m_level == m_maxDepth - 1 && m_downStairTarget) {
-        state->components()->get<ConnectorComponent>(m_downStair)->target =
+        components->make<ConnectorComponent>(m_downStair)->target =
             m_downStairTarget;
         m_downStairLink = m_downStair;
     }
     if (m_level > 0 && m_prevDownStair > 0) {
-        state->components()->get<ConnectorComponent>(m_prevDownStair)->target =
+        components->make<ConnectorComponent>(m_prevDownStair)->target =
             m_upStair;
     }
     m_prevDownStair = m_downStair;
@@ -295,13 +303,13 @@ void DungeonGenerator::placeOrcs() {
 void DungeonGenerator::placeItem(const Location& location) {
     unsigned int type = Utility::randBetween(0, 100);
     if (type < 70) { // Potion
-        m_engine->state()->prefabs().create("potion", location);
+        createPrefab("potion", location);
     } else if (type < 80) {
-        m_engine->state()->prefabs().create("sword", location);
+        createPrefab("sword", location);
     } else if (type < 90) {
-        m_engine->state()->prefabs().create("shield", location);
+        createPrefab("shield", location);
     } else if (type < 100) {
-        m_engine->state()->prefabs().create("helmet", location);
+        createPrefab("helmet", location);
     }
 }
 

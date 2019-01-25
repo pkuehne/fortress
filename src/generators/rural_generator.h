@@ -2,7 +2,10 @@
 
 #include "../core/entity.h"
 #include "generator_interface.h"
+#include <string>
 #include <vector>
+
+class Location;
 
 class RuralGenerator : public GeneratorInterface {
 public:
@@ -10,6 +13,7 @@ public:
     void reset();
     void createEntitiesFromMap();
     std::vector<EntityId>& getAreaLinks() { return m_areaLinks; }
+    EntityId createPrefab(const std::string& type, Location& location);
 
 private:
     void placeWoods();

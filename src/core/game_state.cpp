@@ -54,7 +54,7 @@ const EntityHolder& GameState::entitiesInArea(unsigned int area) {
 
 EntityId GameState::player() { return m_entities->getPlayer(); }
 
-EntityId GameState::createEntity(Location& location) {
+EntityId GameState::createEntity(const Location& location) {
     return m_entities->createEntity(location);
 }
 
