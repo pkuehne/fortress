@@ -34,17 +34,13 @@ Location GameState::location(const Location& location, Direction direction) {
 
 MapManager* GameState::map() { return m_map; }
 
-EntityManager* GameState::entityManager() { return m_entities; }
-
-ComponentManager* GameState::components() { return m_components; }
-
 const EntityHolder& GameState::entities() { return m_entities->all(); }
 
 const EntityHolder& GameState::entities(const Location& loc) {
     return m_map->getTile(loc).entities();
 }
 
-const EntityHolder& GameState::entitiesInArea(unsigned int area) {
+const EntityHolder& GameState::entities(unsigned int area) {
     return m_entities->get(area);
 }
 

@@ -4,6 +4,8 @@ void GameSystemBase::initialise(GameEngine* engine) {
     m_engine = engine;
     m_state = engine->state();
     m_events = engine->events();
+    m_components = engine->state()->components();
+    m_entities = engine->state()->entityManager();
     registerHandlers();
 }
 

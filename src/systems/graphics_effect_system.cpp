@@ -2,15 +2,13 @@
 #include <glog/logging.h>
 
 void GraphicsEffectSystem::onTick() {
-    for (EntityId l_entity : getEngine()->state()->entities()) {
+    for (EntityId l_entity : entities()->all()) {
         GraphicsEffectComponent* effect =
-            getEngine()->state()->components()->get<GraphicsEffectComponent>(
-                l_entity);
+            components()->get<GraphicsEffectComponent>(l_entity);
         if (!effect)
             continue;
 
-        SpriteComponent* sprite =
-            getEngine()->state()->components()->get<SpriteComponent>(l_entity);
+        SpriteComponent* sprite = components()->get<SpriteComponent>(l_entity);
         if (!sprite) {
             LOG(WARNING) << "GraphicsEffect without a sprite is pointless: "
                          << l_entity << std::endl;
@@ -24,10 +22,9 @@ void GraphicsEffectSystem::onTick() {
         if (effect->duration && effect->ticks > effect->duration) {
             sprite->fgColor = effect->org_color;
             sprite->sprite = effect->org_tile;
-            getEngine()->state()->components()->remove<GraphicsEffectComponent>(
-                l_entity);
+            components()->remove<GraphicsEffectComponent>(l_entity);
             if (effect->removeEntity) {
-                getEngine()->state()->entityManager()->destroyEntity(l_entity);
+                entities()->destroyEntity(l_entity);
             }
             continue;
         }

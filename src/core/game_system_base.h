@@ -19,6 +19,10 @@ public:
 
 protected:
     GameState* state() const { return m_state; }
+    std::shared_ptr<ComponentManager> components() const {
+        return m_components;
+    }
+    std::shared_ptr<EntityManager> entities() const { return m_entities; }
     std::shared_ptr<EventManager> events() const { return m_events; }
     virtual EntityId instantiatePrefab(const std::string& type,
                                        Location& loc) const;
@@ -30,4 +34,6 @@ protected:
 private:
     GameState* m_state = nullptr;
     std::shared_ptr<EventManager> m_events = nullptr;
+    std::shared_ptr<ComponentManager> m_components = nullptr;
+    std::shared_ptr<EntityManager> m_entities = nullptr;
 };

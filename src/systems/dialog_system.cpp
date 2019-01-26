@@ -3,15 +3,15 @@
 #include "../windows/dialog_window.h"
 
 void DialogSystem::registerHandlers() {
-    getEngine()->events()->subscribe<StartConversationEvent>(
+    events()->subscribe<StartConversationEvent>(
         [=](std::shared_ptr<StartConversationEvent> event) {
             handleStartConversationEvent(event);
         });
-    getEngine()->events()->subscribe<ChooseDialogOptionEvent>(
+    events()->subscribe<ChooseDialogOptionEvent>(
         [=](std::shared_ptr<ChooseDialogOptionEvent> event) {
             handleChooseDialogOptionEvent(event);
         });
-    getEngine()->events()->subscribe<EndConversationEvent>(
+    events()->subscribe<EndConversationEvent>(
         [=](std::shared_ptr<EndConversationEvent> event) {
             handleEndConversationEvent(event);
         });
@@ -19,10 +19,9 @@ void DialogSystem::registerHandlers() {
 
 void DialogSystem::handleStartConversationEvent(
     std::shared_ptr<StartConversationEvent> event) {
-    auto state = getEngine()->state();
 
-    auto playerId = state->player();
-    auto player = state->components()->get<PlayerComponent>(playerId);
+    auto playerId = state()->player();
+    auto player = components()->get<PlayerComponent>(playerId);
     if (player == nullptr) {
         throw std::string("Player has no PlayerComponent");
     }
@@ -44,9 +43,8 @@ void DialogSystem::handleStartConversationEvent(
 
 void DialogSystem::handleChooseDialogOptionEvent(
     std::shared_ptr<ChooseDialogOptionEvent> event) {
-    auto state = getEngine()->state();
-    auto playerId = state->player();
-    auto player = state->components()->get<PlayerComponent>(playerId);
+    auto playerId = state()->player();
+    auto player = components()->get<PlayerComponent>(playerId);
 
     if (event->option == 1) {
         player->dialogText = "I don't know you well enough to say.";
@@ -59,9 +57,8 @@ void DialogSystem::handleChooseDialogOptionEvent(
 
 void DialogSystem::handleEndConversationEvent(
     std::shared_ptr<EndConversationEvent> event) {
-    auto state = getEngine()->state();
-    auto playerId = state->player();
-    auto player = state->components()->get<PlayerComponent>(playerId);
+    auto playerId = state()->player();
+    auto player = components()->get<PlayerComponent>(playerId);
 
     player->inConversationWith = 0;
 }

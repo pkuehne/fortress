@@ -4,7 +4,7 @@
 #include <glog/logging.h>
 
 void ConsumableSystem::registerHandlers() {
-    getEngine()->events()->subscribe<ConsumeItemEvent>(
+    events()->subscribe<ConsumeItemEvent>(
         [=](std::shared_ptr<ConsumeItemEvent> event) {
             handleConsumeItemEvent(event);
         });
@@ -31,10 +31,8 @@ void updateHealth(ConsumableComponent* consumable, HealthComponent* health) {
 void ConsumableSystem::handleConsumeItemEvent(
     std::shared_ptr<ConsumeItemEvent> event) {
     ConsumableComponent* consumable =
-        getEngine()->state()->components()->get<ConsumableComponent>(
-            event->item);
-    HealthComponent* health =
-        getEngine()->state()->components()->get<HealthComponent>(event->entity);
+        components()->get<ConsumableComponent>(event->item);
+    HealthComponent* health = components()->get<HealthComponent>(event->entity);
 
     // Validate
     if (!consumable) {
@@ -46,5 +44,5 @@ void ConsumableSystem::handleConsumeItemEvent(
     // Check whether this has a health impact
     updateHealth(consumable, health);
 
-    getEngine()->state()->entityManager()->destroyEntity(event->item);
+    entities()->destroyEntity(event->item);
 }

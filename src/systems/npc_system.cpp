@@ -186,10 +186,8 @@ bool canAttackTarget(GameEngine* engine, EntityId entity, NpcComponent* npc) {
 }
 
 void NpcSystem::onTurn() {
-    const EntityHolder& entities = getEngine()->state()->entities();
-    for (EntityId entity : entities) {
-        NpcComponent* npc =
-            getEngine()->state()->components()->get<NpcComponent>(entity);
+    for (EntityId entity : entities()->all()) {
+        NpcComponent* npc = components()->get<NpcComponent>(entity);
         if (npc == 0)
             continue;
 

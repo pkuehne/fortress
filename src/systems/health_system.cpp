@@ -3,9 +3,8 @@
 #include <glog/logging.h>
 
 void HealthSystem::onTurn() {
-    for (EntityId entity : getEngine()->state()->entities()) {
-        HealthComponent* health =
-            getEngine()->state()->components()->get<HealthComponent>(entity);
+    for (EntityId entity : entities()->all()) {
+        HealthComponent* health = components()->get<HealthComponent>(entity);
         if (health == nullptr)
             continue;
 

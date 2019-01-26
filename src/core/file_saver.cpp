@@ -40,8 +40,7 @@ void FileSaver::encodeArea(YAML::Node& node, unsigned int area) {
 }
 
 void FileSaver::encodeEntities(YAML::Node& node, unsigned int area) {
-    EntityManager* entities = m_state->entityManager();
-    for (auto entity : entities->get(area)) {
+    for (auto entity : m_state->entities(area)) {
         updateStatus(std::string("Saving Entity " + std::to_string(entity)));
         encodeEntity(m_state, node, entity);
     }

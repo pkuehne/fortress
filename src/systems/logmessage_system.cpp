@@ -6,16 +6,12 @@ void LogMessageSystem::registerHandlers() {
     events()->subscribe<AddLogMessageEvent>(
         [=](std::shared_ptr<AddLogMessageEvent> event) {
             EntityId player = state()->player();
-            auto messages =
-                state()->components()->get<LogMessageComponent>(player);
+            auto messages = components()->get<LogMessageComponent>(player);
             if (!messages) {
-                messages =
-                    state()->components()->make<LogMessageComponent>(player);
+                messages = components()->make<LogMessageComponent>(player);
             }
             messages->messages.push_back(
                 LogMessageComponent::Message(event->message, event->category));
-            // std::cout << event->category << ": " << event->message <<
-            // std::endl;
         });
 
     events()->subscribe<PrefabCreatedEvent>(

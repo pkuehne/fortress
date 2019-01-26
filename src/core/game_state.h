@@ -33,8 +33,12 @@ public:
     tick_t turn() { return m_turn; }
 
     virtual MapManager* map();
-    virtual EntityManager* entityManager();
-    virtual ComponentManager* components();
+    virtual std::shared_ptr<EntityManager> entityManager() {
+        return m_entities;
+    }
+    virtual std::shared_ptr<ComponentManager> components() {
+        return m_components;
+    }
 
     Debug& debug() { return m_debug; }
 
@@ -43,7 +47,7 @@ public:
 
     virtual const EntityHolder& entities();
     virtual const EntityHolder& entities(const Location& loc);
-    virtual const EntityHolder& entitiesInArea(unsigned int area);
+    virtual const EntityHolder& entities(unsigned int area);
 
     Location location(EntityId entity);
     Location location(const Location&, Direction direction);
@@ -60,9 +64,9 @@ private:
     bool m_playerTurn = true;
     tick_t m_turn = 0;
     MapManager* m_map = nullptr;
-    EntityManager* m_entities = nullptr;
-    ComponentManager* m_components = nullptr;
-    std::shared_ptr<WorldInfo> m_world;
+    std::shared_ptr<EntityManager> m_entities = nullptr;
+    std::shared_ptr<ComponentManager> m_components = nullptr;
+    std::shared_ptr<WorldInfo> m_world = nullptr;
 
     Debug m_debug;
     std::vector<Quest*> m_quests;

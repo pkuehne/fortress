@@ -9,7 +9,7 @@
 #include <iostream>
 
 void MovementSystem::registerHandlers() {
-    getEngine()->events()->subscribe<MoveEntityEvent>(
+    events()->subscribe<MoveEntityEvent>(
         [=](std::shared_ptr<MoveEntityEvent> event) {
             handleMoveEntityEvent(event);
         });
@@ -18,13 +18,12 @@ void MovementSystem::registerHandlers() {
 void MovementSystem::handleMoveEntityEvent(
     std::shared_ptr<MoveEntityEvent> event) {
     EntityId l_entity = event->entity;
-    Location l_oldLocation = m_engine->state()->location(l_entity);
+    Location l_oldLocation = state()->location(l_entity);
     Location l_newLocation = event->newLocation;
 
-    if (!m_engine->state()->isValidTile(l_newLocation)) {
+    if (!state()->isValidTile(l_newLocation)) {
         GraphicsEffectComponent* effect =
-            getEngine()->state()->components()->make<GraphicsEffectComponent>(
-                l_entity);
+            components()->make<GraphicsEffectComponent>(l_entity);
         effect->type = EFFECT_BLINK_FAST;
         effect->duration = 10;
         return; // Don't update position if it's not valid
@@ -32,37 +31,30 @@ void MovementSystem::handleMoveEntityEvent(
 
     // Check if we're running into a collidable or stairs, etc
     {
-        Tile& tile = m_engine->state()->tile(l_newLocation);
+        Tile& tile = state()->tile(l_newLocation);
         const EntityHolder& l_targets = tile.entities();
 
         bool blocked = tile.blocked();
         for (EntityId l_target : l_targets) {
-            if (m_engine->state()->components()->get<ColliderComponent>(
-                    l_target)) {
+            if (components()->get<ColliderComponent>(l_target)) {
                 blocked = true;
             }
             ConnectorComponent* l_stair =
-                m_engine->state()->components()->get<ConnectorComponent>(
-                    l_target);
-            if (l_stair && l_stair->target &&
-                l_entity == m_engine->state()->player()) {
-                l_newLocation = m_engine->state()->location(l_stair->target);
+                components()->get<ConnectorComponent>(l_target);
+            if (l_stair && l_stair->target && l_entity == state()->player()) {
+                l_newLocation = state()->location(l_stair->target);
             }
         }
         if (blocked) {
             GraphicsEffectComponent* effect =
-                getEngine()
-                    ->state()
-                    ->components()
-                    ->make<GraphicsEffectComponent>(l_entity);
+                components()->make<GraphicsEffectComponent>(l_entity);
             effect->type = EFFECT_BLINK_FAST;
             effect->duration = 10;
             return; // Don't update position if it's a collidable
         }
     }
 
-    getEngine()->state()->entityManager()->setLocation(event->entity,
-                                                       l_newLocation);
-    getEngine()->events()->raise(std::make_shared<ChangeLocationEvent>(
+    entities()->setLocation(event->entity, l_newLocation);
+    events()->raise(std::make_shared<ChangeLocationEvent>(
         event->entity, l_oldLocation, l_newLocation));
 }

@@ -75,7 +75,7 @@ void Camera::renderSprites() {
 void Camera::renderNpcPaths() {
     Location l_playerLoc = m_state->location(m_state->player());
 
-    for (EntityId entity : m_state->entitiesInArea(l_playerLoc.area)) {
+    for (EntityId entity : m_state->entities(l_playerLoc.area)) {
         Location loc = m_state->location(entity);
         int x = loc.x;
         int y = loc.y;

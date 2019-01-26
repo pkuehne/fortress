@@ -9,26 +9,24 @@
 #include <sstream>
 
 void CombatSystem::registerHandlers() {
-    getEngine()->events()->subscribe<AttackEntityEvent>(
+    events()->subscribe<AttackEntityEvent>(
         [=](std::shared_ptr<AttackEntityEvent> event) {
             handleAttack(event->attacker, event->defender);
         });
 }
 
 void CombatSystem::handleAttack(EntityId attacker, EntityId defender) {
-    GameState* state = m_engine->state();
     EquipmentComponent* l_attackerEquipment =
-        state->components()->get<EquipmentComponent>(attacker);
+        components()->get<EquipmentComponent>(attacker);
     unsigned int damage = 1;
     if (l_attackerEquipment && l_attackerEquipment->rightHandWieldable != 0) {
         EntityId l_weapon = l_attackerEquipment->rightHandWieldable;
         WieldableComponent* l_wield =
-            m_engine->state()->components()->get<WieldableComponent>(l_weapon);
+            components()->get<WieldableComponent>(l_weapon);
         damage = l_wield->baseDamage;
     }
 
-    HealthComponent* l_health =
-        m_engine->state()->components()->get<HealthComponent>(defender);
+    HealthComponent* l_health = components()->get<HealthComponent>(defender);
     if (!l_health) {
         // Invincible?
         return;
@@ -36,7 +34,7 @@ void CombatSystem::handleAttack(EntityId attacker, EntityId defender) {
     updateLog(attacker, defender, damage);
 
     GraphicsEffectComponent* effect =
-        state->components()->make<GraphicsEffectComponent>(defender);
+        components()->make<GraphicsEffectComponent>(defender);
     effect->type = EFFECT_CHANGE_COLOR;
     effect->duration = 15;
     effect->new_color = Color(RED);
@@ -49,19 +47,16 @@ void CombatSystem::handleAttack(EntityId attacker, EntityId defender) {
 }
 
 void CombatSystem::killEntity(EntityId id) {
-    GameState* state = m_engine->state();
-    const Location location = state->location(id);
+    const Location location = state()->location(id);
 
     // Create the corpse
-    EntityId corpse = state->createEntity(location);
-    m_engine->events()->raise(
-        std::make_shared<InstantiatePrefabEvent>(corpse, "corpse"));
-    state->components()->make<SpriteComponent>(corpse)->sprite =
-        state->components()->get<SpriteComponent>(id)->sprite;
+    EntityId corpse = state()->createEntity(location);
+    events()->raise(std::make_shared<InstantiatePrefabEvent>(corpse, "corpse"));
+    components()->make<SpriteComponent>(corpse)->sprite =
+        components()->get<SpriteComponent>(id)->sprite;
 
     // Drop the equipment
-    EquipmentComponent* equipment =
-        state->components()->get<EquipmentComponent>(id);
+    EquipmentComponent* equipment = components()->get<EquipmentComponent>(id);
     if (equipment) {
         equipment->carriedEquipment.push_back(equipment->headWearable);
         equipment->carriedEquipment.push_back(equipment->faceWearable);
@@ -75,19 +70,19 @@ void CombatSystem::killEntity(EntityId id) {
         equipment->carriedEquipment.push_back(equipment->armsWearable);
 
         for (auto entity : equipment->carriedEquipment) {
-            state->entityManager()->setLocation(entity, location);
+            entities()->setLocation(entity, location);
         }
     }
-    state->entityManager()->destroyEntity(id);
+    entities()->destroyEntity(id);
 }
 
 void CombatSystem::updateLog(const EntityId& attacker, const EntityId& target,
                              int damage) {
     std::stringstream str;
     DescriptionComponent* l_attackerDesc =
-        m_engine->state()->components()->get<DescriptionComponent>(attacker);
+        components()->get<DescriptionComponent>(attacker);
     DescriptionComponent* l_targetDesc =
-        m_engine->state()->components()->get<DescriptionComponent>(target);
+        components()->get<DescriptionComponent>(target);
 
     if (l_attackerDesc != 0) {
         str << "The " << l_attackerDesc->title;
@@ -105,7 +100,7 @@ void CombatSystem::updateLog(const EntityId& attacker, const EntityId& target,
 
     str << " and causes " << damage << " damage!";
 
-    if (attacker == m_engine->state()->player()) {
+    if (attacker == state()->player()) {
         events()->raise(std::make_shared<AddLogMessageEvent>(str.str()));
     } else {
         events()->raise(

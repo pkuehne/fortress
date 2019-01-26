@@ -70,23 +70,23 @@ bool equipItem(EntityId item, WieldableComponent* wieldable,
 }
 
 void EquipmentSystem::registerHandlers() {
-    getEngine()->events()->subscribe<DropEquipmentEvent>(
+    events()->subscribe<DropEquipmentEvent>(
         [=](std::shared_ptr<DropEquipmentEvent> event) {
             handleDropEquipmentEvent(event);
         });
-    getEngine()->events()->subscribe<PickupEquipmentEvent>(
+    events()->subscribe<PickupEquipmentEvent>(
         [=](std::shared_ptr<PickupEquipmentEvent> event) {
             handlePickupEquipmentEvent(event);
         });
-    getEngine()->events()->subscribe<EquipItemEvent>(
+    events()->subscribe<EquipItemEvent>(
         [=](std::shared_ptr<EquipItemEvent> event) {
             handleEquipItemEvent(event);
         });
-    getEngine()->events()->subscribe<UnequipItemEvent>(
+    events()->subscribe<UnequipItemEvent>(
         [=](std::shared_ptr<UnequipItemEvent> event) {
             handleUnequipItemEvent(event);
         });
-    getEngine()->events()->subscribe<ConsumeItemEvent>(
+    events()->subscribe<ConsumeItemEvent>(
         [=](std::shared_ptr<ConsumeItemEvent> event) {
             handleConsumeItemEvent(event);
         });
@@ -95,8 +95,7 @@ void EquipmentSystem::registerHandlers() {
 void EquipmentSystem::handleDropEquipmentEvent(
     std::shared_ptr<DropEquipmentEvent> event) {
     EquipmentComponent* equipment =
-        getEngine()->state()->components()->get<EquipmentComponent>(
-            event->entity);
+        components()->get<EquipmentComponent>(event->entity);
 
     unequipItem(event->item, equipment);
 
@@ -108,18 +107,17 @@ void EquipmentSystem::handleDropEquipmentEvent(
         }
     }
 
-    Location location = getEngine()->state()->location(event->entity);
-    getEngine()->state()->entityManager()->setLocation(event->item, location);
+    Location location = state()->location(event->entity);
+    entities()->setLocation(event->item, location);
 }
 
 void EquipmentSystem::handlePickupEquipmentEvent(
     std::shared_ptr<PickupEquipmentEvent> event) {
     EquipmentComponent* equipment =
-        getEngine()->state()->components()->get<EquipmentComponent>(
-            event->entity);
+        components()->get<EquipmentComponent>(event->entity);
 
     Location invalid;
-    getEngine()->state()->entityManager()->setLocation(event->item, invalid);
+    entities()->setLocation(event->item, invalid);
 
     equipment->carriedEquipment.push_back(event->item);
 }
@@ -127,13 +125,11 @@ void EquipmentSystem::handlePickupEquipmentEvent(
 void EquipmentSystem::handleEquipItemEvent(
     std::shared_ptr<EquipItemEvent> event) {
     EquipmentComponent* equipment =
-        getEngine()->state()->components()->get<EquipmentComponent>(
-            event->entity);
+        components()->get<EquipmentComponent>(event->entity);
     WearableComponent* wearable =
-        getEngine()->state()->components()->get<WearableComponent>(event->item);
+        components()->get<WearableComponent>(event->item);
     WieldableComponent* wieldable =
-        getEngine()->state()->components()->get<WieldableComponent>(
-            event->item);
+        components()->get<WieldableComponent>(event->item);
 
     if (equipItem(event->item, wieldable, wearable, equipment)) {
         std::vector<EntityId>::iterator it =
@@ -150,8 +146,7 @@ void EquipmentSystem::handleEquipItemEvent(
 void EquipmentSystem::handleUnequipItemEvent(
     std::shared_ptr<UnequipItemEvent> event) {
     EquipmentComponent* equipment =
-        getEngine()->state()->components()->get<EquipmentComponent>(
-            event->entity);
+        components()->get<EquipmentComponent>(event->entity);
     unequipItem(event->item, equipment);
     equipment->carriedEquipment.push_back(event->item);
 }
@@ -159,8 +154,7 @@ void EquipmentSystem::handleUnequipItemEvent(
 void EquipmentSystem::handleConsumeItemEvent(
     std::shared_ptr<ConsumeItemEvent> event) {
     EquipmentComponent* equipment =
-        getEngine()->state()->components()->get<EquipmentComponent>(
-            event->entity);
+        components()->get<EquipmentComponent>(event->entity);
     std::vector<EntityId>::iterator it = equipment->carriedEquipment.begin();
     for (; it != equipment->carriedEquipment.end(); ++it) {
         if (*it == event->item) {
