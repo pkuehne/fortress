@@ -2,9 +2,7 @@
 #include "../components/health_component.h"
 #include <glog/logging.h>
 
-void HealthSystem::update() {
-    if (getEngine()->isPlayerTurn())
-        return;
+void HealthSystem::onTurn() {
     for (EntityId entity : getEngine()->state()->entities()) {
         HealthComponent* health =
             getEngine()->state()->components()->get<HealthComponent>(entity);

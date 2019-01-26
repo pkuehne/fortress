@@ -29,7 +29,7 @@ typedef std::map<std::string, State> StateMachine;
 class NpcSystem : public GameSystemBase {
 public:
     NpcSystem();
-    virtual void update();
+    virtual void onTurn();
 
 private:
     void createHumanStateMachine();
@@ -37,4 +37,3 @@ private:
 
     std::map<std::string, StateMachine> m_stateMachines;
 };
-

@@ -14,7 +14,8 @@ public:
 
     virtual void initialise(GameEngine* engine);
     virtual void registerHandlers() {}
-    virtual void update() {}
+    virtual void onTick() {}
+    virtual void onTurn() {}
 
 protected:
     GameState* state() const { return m_state; }

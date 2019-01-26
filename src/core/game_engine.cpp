@@ -63,7 +63,7 @@ void GameEngine::tick() {
 
     // Update Systems
     for (unsigned int ii = 0; ii < m_systems.size(); ii++) {
-        m_systems[ii]->update();
+        m_systems[ii]->onTick();
     }
 
     getWindows()->nextTick();
@@ -80,6 +80,11 @@ void GameEngine::swapTurn() {
 
     m_state->nextTurn();
     getWindows()->nextTurn();
+
+    // Update Systems
+    for (unsigned int ii = 0; ii < m_systems.size(); ii++) {
+        m_systems[ii]->onTurn();
+    }
 
     FovAlgorithm l_algo;
     l_algo.initialise(this);

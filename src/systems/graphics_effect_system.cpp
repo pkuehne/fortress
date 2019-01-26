@@ -1,7 +1,7 @@
 #include "graphics_effect_system.h"
 #include <glog/logging.h>
 
-void GraphicsEffectSystem::update() {
+void GraphicsEffectSystem::onTick() {
     for (EntityId l_entity : getEngine()->state()->entities()) {
         GraphicsEffectComponent* effect =
             getEngine()->state()->components()->get<GraphicsEffectComponent>(

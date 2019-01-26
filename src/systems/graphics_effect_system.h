@@ -7,10 +7,9 @@
 class GraphicsEffectSystem : public GameSystemBase {
 public:
     virtual ~GraphicsEffectSystem() {}
-    virtual void update();
+    virtual void onTick();
 
 private:
     void blinkEffect(GraphicsEffectComponent* effect, SpriteComponent* sprite);
     void changeColor(GraphicsEffectComponent* effect, SpriteComponent* sprite);
 };
-
