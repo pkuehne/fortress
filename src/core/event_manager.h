@@ -2,6 +2,7 @@
 
 #include "event.h"
 #include "game_system_interface.h"
+#include <map>
 #include <memory>
 #include <queue>
 #include <vector>

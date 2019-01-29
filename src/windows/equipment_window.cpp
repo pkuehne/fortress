@@ -179,12 +179,8 @@ void EquipmentWindow::registerWidgets() {
         ->setText("inspect")
         ->setCommandChar(1)
         ->setCommandCharCallback([&](Label* l) {
-            GameEngine* engine = getEngine();
-            auto args = std::make_shared<InspectionWindowArgs>();
-            args->entity = getSelectedItem();
-            auto win = std::make_shared<InspectionWindow>();
-            win->setArguments(args);
-            engine->getWindows()->registerWindow(win);
+            getEngine()->events()->raise(std::make_shared<RegisterWindowEvent>(
+                std::make_shared<InspectionWindow>(getSelectedItem())));
         })
         ->setVerticalAlign(Widget::VerticalAlign::Bottom)
         ->setVisible(false);

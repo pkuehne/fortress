@@ -47,6 +47,10 @@ void CombatSystem::handleAttack(EntityId attacker, EntityId defender) {
 }
 
 void CombatSystem::killEntity(EntityId id) {
+    if (id == state()->player()) {
+        events()->raise(std::make_shared<RemoveEntityEvent>(id));
+        return;
+    }
     const Location location = state()->location(id);
 
     // Create the corpse

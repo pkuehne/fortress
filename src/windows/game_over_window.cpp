@@ -4,7 +4,7 @@
 
 void GameOverWindow::registerWidgets() {
     Label* l = createWidget<Label>("lblResult", 2, 2);
-    if (m_arguments->win) {
+    if (m_win) {
         l->setText("You Win!");
     } else {
         l->setText("You Lose!");

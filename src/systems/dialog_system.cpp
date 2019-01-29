@@ -38,7 +38,8 @@ void DialogSystem::handleStartConversationEvent(
     generateDialog(player);
 
     // Show the dialog window
-    getEngine()->getWindows()->registerWindow(std::make_shared<DialogWindow>());
+    events()->raise(std::make_shared<RegisterWindowEvent>(
+        std::make_shared<DialogWindow>()));
 }
 
 void DialogSystem::handleChooseDialogOptionEvent(

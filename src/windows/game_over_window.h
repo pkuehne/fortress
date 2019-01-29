@@ -2,18 +2,12 @@
 
 #include "window.h"
 
-typedef struct {
-    bool win;
-} GameOverWindowArgs;
-
 class GameOverWindow : public Window {
 public:
+    GameOverWindow(bool win) : m_win(win){};
     void setup();
     void registerWidgets();
-    void setArguments(std::shared_ptr<GameOverWindowArgs>& args) {
-        m_arguments = args;
-    }
 
 private:
-    std::shared_ptr<GameOverWindowArgs> m_arguments;
+    bool m_win;
 };

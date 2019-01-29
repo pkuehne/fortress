@@ -13,7 +13,7 @@ typedef struct {
 
 class GeneratorWindow : public Window {
 public:
-    GeneratorWindow() {}
+    GeneratorWindow(bool hideWindow) : m_hideWindow(hideWindow) {}
     ~GeneratorWindow() {}
     virtual void setup();
     virtual void registerWidgets();
@@ -37,4 +37,5 @@ private:
     unsigned int m_progress = 0;
 
     std::shared_ptr<GeneratorWindowArgs> m_arguments;
+    bool m_hideWindow;
 };

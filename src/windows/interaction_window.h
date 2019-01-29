@@ -9,10 +9,6 @@
 class ListBox;
 
 typedef struct {
-    EntityHolder entities;
-} InteractionWindowArgs;
-
-typedef struct {
     DescriptionComponent* desc;
     OpenableComponent* open;
     DroppableComponent* drop;
@@ -21,9 +17,7 @@ typedef struct {
 
 class InteractionWindow : public Window {
 public:
-    void setArguments(std::shared_ptr<InteractionWindowArgs> args) {
-        m_arguments = args;
-    }
+    InteractionWindow(EntityHolder& entities) : m_inputEntities(entities) {}
     void setup();
     void registerWidgets();
     void nextTurn();
@@ -33,7 +27,7 @@ private:
     void updateScreen();
 
 private:
-    std::shared_ptr<InteractionWindowArgs> m_arguments;
     std::vector<EntityId> m_entities;
     std::vector<ComponentStore> m_components;
+    EntityHolder m_inputEntities;
 };

@@ -14,9 +14,8 @@ void InspectionWindow::registerWidgets() {
     TextBlock* block = createWidget<TextBlock>("txtDescription", 1, 1);
     block->setWidth(l_windowWidth);
 
-    EntityId l_entity = m_arguments->entity;
     DescriptionComponent* l_description =
-        getEngine()->state()->components()->get<DescriptionComponent>(l_entity);
+        getEngine()->state()->components()->get<DescriptionComponent>(m_entity);
     if (!l_description) {
         block->setText("There are no words...");
         return;

@@ -4,7 +4,9 @@
 #include "location.h"
 #include "utility.h"
 #include <iostream>
-#include <map>
+#include <memory>
+
+class Window;
 
 class Event {
 public:
@@ -128,15 +130,21 @@ public:
     std::string prefab;
 };
 
-class CreateMapWindowEvent : public Event {
-public:
-    CreateMapWindowEvent() {}
-};
-
 class AddLogMessageEvent : public Event {
 public:
     AddLogMessageEvent(const std::string& m, const std::string& c = "info")
         : message(m), category(c) {}
     std::string message;
     std::string category;
+};
+
+class RegisterWindowEvent : public Event {
+public:
+    enum class WindowAction { None, Add, Replace, ReplaceAll };
+
+    RegisterWindowEvent(std::shared_ptr<Window> w,
+                        WindowAction a = WindowAction::Add)
+        : window(w), action(a) {}
+    std::shared_ptr<Window> window = nullptr;
+    WindowAction action = WindowAction::None;
 };

@@ -1,5 +1,6 @@
 #include "game_engine.h"
 #include "../algos/fov_algorithm.h"
+#include "../windows/splash_window.h"
 #include "../windows/window.h"
 #include "entity_manager.h"
 #include "event_manager.h"
@@ -52,6 +53,9 @@ void GameEngine::initialise() {
         getGraphics()->updateScreenSize(width, height);
         getWindows()->resize();
     });
+
+    m_eventManager->raise(std::make_shared<RegisterWindowEvent>(
+        std::make_shared<SplashWindow>()));
 
     swapTurn();
 }

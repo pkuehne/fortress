@@ -36,12 +36,8 @@ void InteractionWindow::registerWidgets() {
         ->setCommandCharCallback([&](Label* l) {
             ListBox* lstEntities = this->getWidget<ListBox>("lstEntities");
             EntityId entity = m_entities[lstEntities->getSelection()];
-
-            auto inspectionArgs = std::make_shared<InspectionWindowArgs>();
-            inspectionArgs->entity = entity;
-            auto win = std::make_shared<InspectionWindow>();
-            win->setArguments(inspectionArgs);
-            getEngine()->getWindows()->registerWindow(win);
+            getEngine()->events()->raise(std::make_shared<RegisterWindowEvent>(
+                std::make_shared<InspectionWindow>(entity)));
         })
         ->setSensitive(false);
     createWidget<Label>("txtOpen", descriptionWidth, 2)
@@ -90,7 +86,7 @@ void InteractionWindow::registerWidgets() {
     setWidth(descriptionWidth + commandWidth);
 
     lstEntities->clearItems();
-    for (EntityId entity : m_arguments->entities) {
+    for (EntityId entity : m_inputEntities) {
         ComponentStore store;
         store.desc =
             getEngine()->state()->components()->get<DescriptionComponent>(

@@ -61,17 +61,17 @@ void MapWindow::registerWidgets() {
     createWidget<Label>("lblEquipment", 1, 2, sidebar)
         ->setText("View Equipment")
         ->setCommandChar(6)
-        ->setCommandCharCallback([](Label* l) {
-            l->getWindow()->getEngine()->getWindows()->registerWindow(
-                std::make_shared<EquipmentWindow>());
+        ->setCommandCharCallback([=](Label* l) {
+            getEngine()->events()->raise(std::make_shared<RegisterWindowEvent>(
+                std::make_shared<EquipmentWindow>()));
         })
         ->setVerticalAlign(Widget::VerticalAlign::Bottom);
     createWidget<Label>("lblQuests", 1, 3, sidebar)
         ->setText("View Quests")
         ->setCommandChar(6)
-        ->setCommandCharCallback([](Label* l) {
-            l->getWindow()->getEngine()->getWindows()->registerWindow(
-                std::make_shared<QuestWindow>());
+        ->setCommandCharCallback([=](Label* l) {
+            getEngine()->events()->raise(std::make_shared<RegisterWindowEvent>(
+                std::make_shared<QuestWindow>()));
         })
         ->setVerticalAlign(Widget::VerticalAlign::Bottom);
 
@@ -144,8 +144,8 @@ void MapWindow::registerWidgets() {
         ->setText("`")
         ->setCommandChar(1)
         ->setCommandCharCallback([&](Label* l) {
-            getEngine()->getWindows()->registerWindow(
-                std::make_shared<DebugWindow>());
+            getEngine()->events()->raise(std::make_shared<RegisterWindowEvent>(
+                std::make_shared<DebugWindow>()));
         })
         ->setVisible(false);
 
@@ -194,17 +194,15 @@ void MapWindow::keyPress(unsigned char key) {
             EntityHolder l_entities =
                 getEngine()->state()->map()->findEntitiesAt(newLocation);
             if (l_entities.size() > 0) {
-                auto interactArgs = std::make_shared<InteractionWindowArgs>();
-                interactArgs->entities = l_entities;
-                auto win = std::make_shared<InteractionWindow>();
-                win->setArguments(interactArgs);
-                getEngine()->getWindows()->registerWindow(win);
+                getEngine()->events()->raise(
+                    std::make_shared<RegisterWindowEvent>(
+                        std::make_shared<InteractionWindow>(l_entities)));
             }
         }
         m_action = 'm';
     } else if (key == KEY_ESC) {
-        getEngine()->getWindows()->registerWindow(
-            std::make_shared<EscapeWindow>());
+        getEngine()->events()->raise(std::make_shared<RegisterWindowEvent>(
+            std::make_shared<EscapeWindow>()));
     }
     // std::cout << "Key: " << key << std::endl;
 }
@@ -223,14 +221,14 @@ void MapWindow::nextTurn() {
     getWidget<ProgressBar>("pgbHunger")->setValue(l_health->hunger);
     getWidget<ProgressBar>("pgbThirst")->setValue(l_health->thirst);
 
-    auto l_messages = getEngine()
-                          ->state()
-                          ->components()
-                          ->get<LogMessageComponent>(player)
-                          ->messages;
+    auto l_messages =
+        getEngine()->state()->components()->get<LogMessageComponent>(player);
+    if (!l_messages) {
+        return;
+    }
     ListBox* list = getWidget<ListBox>("lstMessages");
     list->clearItems();
-    for (auto message : l_messages) {
+    for (auto message : l_messages->messages) {
         ListBoxItem item;
         item.setText(message.message);
         item.setColor(Color(WHITE));

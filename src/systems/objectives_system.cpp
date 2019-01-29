@@ -18,11 +18,8 @@ void ObjectivesSystem::registerHandlers() {
 }
 
 void ObjectivesSystem::showGameOverWindow(bool gameWon) {
-    auto gameOverArgs = std::make_shared<GameOverWindowArgs>();
-    gameOverArgs->win = gameWon;
-    auto win = std::make_shared<GameOverWindow>();
-    win->setArguments(gameOverArgs);
-    getEngine()->getWindows()->registerWindow(win);
+    getEngine()->events()->raise(std::make_shared<RegisterWindowEvent>(
+        std::make_shared<GameOverWindow>(gameWon)));
 }
 
 void ObjectivesSystem::handleAddEntityEvent(

@@ -110,7 +110,7 @@ void GeneratorWindow::registerWidgets() {
 }
 
 void GeneratorWindow::redraw() {
-    if (m_arguments->hideWindow && m_status == WAITING) {
+    if (m_hideWindow && m_status == WAITING) {
         startGenerating();
         startPlaying();
         return;
@@ -210,5 +210,7 @@ void GeneratorWindow::startGenerating() {
 }
 
 void GeneratorWindow::startPlaying() {
-    getEngine()->events()->raise(std::make_shared<CreateMapWindowEvent>());
+    getEngine()->events()->raise(std::make_shared<RegisterWindowEvent>(
+        std::make_shared<MapWindow>(),
+        RegisterWindowEvent::WindowAction::Replace));
 }
