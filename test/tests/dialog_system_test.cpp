@@ -28,17 +28,17 @@ public:
     EntityId player = 1234;
 };
 
-TEST_F(DialogSystemTest, createsDialogWindow) {
-    // Given
-    EntityId target = 4321;
-    EXPECT_CALL(windowManager, registerWindow(_));
+// TEST_F(DialogSystemTest, createsDialogWindow) {
+//     // Given
+//     EntityId target = 4321;
+//     EXPECT_CALL(windowManager, registerWindow(_));
 
-    // When
-    system.handleStartConversationEvent(
-        std::make_shared<StartConversationEvent>(player, target));
+//     // When
+//     system.handleStartConversationEvent(
+//         std::make_shared<StartConversationEvent>(player, target));
 
-    // Then
-}
+//     // Then
+// }
 
 TEST_F(DialogSystemTest, throwsIfNoPlayerSet) {
     // Given
@@ -53,35 +53,35 @@ TEST_F(DialogSystemTest, throwsIfNoPlayerSet) {
     // Then
 }
 
-TEST_F(DialogSystemTest, setsInConversationWithToInitiatorIfNotPlayer) {
-    // Given
-    EntityId target = 4321;
-    EXPECT_CALL(windowManager, registerWindow(_));
+// TEST_F(DialogSystemTest, setsInConversationWithToInitiatorIfNotPlayer) {
+//     // Given
+//     EntityId target = 4321;
+//     EXPECT_CALL(windowManager, registerWindow(_));
 
-    // When
-    system.handleStartConversationEvent(
-        std::make_shared<StartConversationEvent>(target, player));
+//     // When
+//     system.handleStartConversationEvent(
+//         std::make_shared<StartConversationEvent>(target, player));
 
-    // Then
-    EXPECT_EQ(
-        target,
-        state.components()->get<PlayerComponent>(player)->inConversationWith);
-}
+//     // Then
+//     EXPECT_EQ(
+//         target,
+//         state.components()->get<PlayerComponent>(player)->inConversationWith);
+// }
 
-TEST_F(DialogSystemTest, setsInConversationWithToTargetIfNotPlayer) {
-    // Given
-    EntityId target = 4321;
-    EXPECT_CALL(windowManager, registerWindow(_));
+// TEST_F(DialogSystemTest, setsInConversationWithToTargetIfNotPlayer) {
+//     // Given
+//     EntityId target = 4321;
+//     EXPECT_CALL(windowManager, registerWindow(_));
 
-    // When
-    system.handleStartConversationEvent(
-        std::make_shared<StartConversationEvent>(player, target));
+//     // When
+//     system.handleStartConversationEvent(
+//         std::make_shared<StartConversationEvent>(player, target));
 
-    // Then
-    EXPECT_EQ(
-        target,
-        state.components()->get<PlayerComponent>(player)->inConversationWith);
-}
+//     // Then
+//     EXPECT_EQ(
+//         target,
+//         state.components()->get<PlayerComponent>(player)->inConversationWith);
+// }
 
 TEST_F(DialogSystemTest, doesNotUpdateConversationTargetIfAlreadySet) {
     // Given

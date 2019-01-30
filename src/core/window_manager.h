@@ -7,7 +7,6 @@ class GameEngine;
 class Window;
 
 class WindowManager {
-
 public:
     WindowManager() = default;
     virtual ~WindowManager() = default;

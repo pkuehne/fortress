@@ -13,8 +13,7 @@ typedef struct {
 
 class GeneratorWindow : public Window {
 public:
-    GeneratorWindow(bool hideWindow) : m_hideWindow(hideWindow) {}
-    ~GeneratorWindow() {}
+    explicit GeneratorWindow(bool hideWindow) : m_hideWindow(hideWindow) {}
     virtual void setup();
     virtual void registerWidgets();
 

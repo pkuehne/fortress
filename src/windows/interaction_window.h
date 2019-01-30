@@ -17,7 +17,8 @@ typedef struct {
 
 class InteractionWindow : public Window {
 public:
-    InteractionWindow(EntityHolder& entities) : m_inputEntities(entities) {}
+    explicit InteractionWindow(EntityHolder& entities)
+        : m_inputEntities(entities) {}
     void setup();
     void registerWidgets();
     void nextTurn();

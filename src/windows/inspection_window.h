@@ -4,7 +4,7 @@
 
 class InspectionWindow : public Window {
 public:
-    InspectionWindow(EntityId entity) : m_entity(entity) {}
+    explicit InspectionWindow(EntityId entity) : m_entity(entity) {}
     void setup();
     void registerWidgets();
 

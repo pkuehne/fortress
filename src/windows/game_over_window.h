@@ -4,7 +4,7 @@
 
 class GameOverWindow : public Window {
 public:
-    GameOverWindow(bool win) : m_win(win){};
+    explicit GameOverWindow(bool win) : m_win(win){};
     void setup();
     void registerWidgets();
 
