@@ -4,6 +4,7 @@
 #include "systems/consumable_system.h"
 #include "systems/dialog_system.h"
 #include "systems/equipment_system.h"
+#include "systems/experience_system.h"
 #include "systems/graphics_effect_system.h"
 #include "systems/health_system.h"
 #include "systems/interaction_system.h"
@@ -62,6 +63,7 @@ int main(int argc, char** argv) {
         l_engine->addSystem(new InteractionSystem());
         l_engine->addSystem(new DialogSystem());
         l_engine->addSystem(new PrefabSystem());
+        l_engine->addSystem(new ExperienceSystem());
         l_engine->addSystem(new LogMessageSystem());
         l_engine->addSystem(new WindowSystem());
         l_engine->initialise();

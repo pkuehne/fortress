@@ -31,6 +31,7 @@ private:
     void addConnectorComponent(YAML::Node& node, EntityId entity) const;
     void addNpcComponent(YAML::Node& node, EntityId entity) const;
     void addPlayerComponent(YAML::Node& node, EntityId entity) const;
+    void addExperienceComponent(YAML::Node& node, EntityId entity) const;
     void addGroupingComponent(YAML::Node& node, EntityId entity) const;
 
 private:

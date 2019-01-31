@@ -148,3 +148,11 @@ public:
     std::shared_ptr<Window> window = nullptr;
     WindowAction action = WindowAction::None;
 };
+
+class UpdateExperienceEvent : public Event {
+public:
+    UpdateExperienceEvent(EntityId e, unsigned int x)
+        : entity(e), experience(x) {}
+    EntityId entity;
+    unsigned int experience;
+};

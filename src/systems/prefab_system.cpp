@@ -1,4 +1,5 @@
 #include "prefab_system.h"
+#include "../components/experience_component.h"
 #include "../core/yaml_converter.h"
 #include <experimental/filesystem>
 #include <glog/logging.h>
@@ -31,6 +32,7 @@ void PrefabSystem::registerHandlers() {
             addConnectorComponent(node, entity);
             addNpcComponent(node, entity);
             addPlayerComponent(node, entity);
+            addExperienceComponent(node, entity);
             addGroupingComponent(node, entity);
 
             getEngine()->events()->raise(std::make_shared<PrefabCreatedEvent>(
@@ -193,6 +195,14 @@ void PrefabSystem::addPlayerComponent(YAML::Node& node, EntityId entity) const {
         return;
     }
     components()->make<PlayerComponent>(entity);
+}
+
+void PrefabSystem::addExperienceComponent(YAML::Node& node,
+                                          EntityId entity) const {
+    if (!node["experience"].IsDefined()) {
+        return;
+    }
+    components()->make<ExperienceComponent>(entity);
 }
 
 void PrefabSystem::addGroupingComponent(YAML::Node& node,

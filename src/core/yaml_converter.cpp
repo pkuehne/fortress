@@ -1,4 +1,5 @@
 #include "yaml_converter.h"
+#include "../components/experience_component.h"
 
 template <typename T>
 void loadComponent(const std::string& name, GameState* state, YAML::Node& node,
@@ -25,6 +26,7 @@ void encodeEntity(GameState* state, YAML::Node& node, EntityId entity) {
     loadComponent<WearableComponent>("wear", state, node, entity);
     loadComponent<WieldableComponent>("wield", state, node, entity);
     loadComponent<GroupingComponent>("grouping", state, node, entity);
+    loadComponent<ExperienceComponent>("experience", state, node, entity);
 
     node[entity]["location"] = state->entityManager()->getLocation(entity);
 }
@@ -56,4 +58,5 @@ void decodeEntity(GameState* state, const YAML::Node& node, EntityId entity) {
     decodeComponent<WearableComponent>(state, node, entity, "wear");
     decodeComponent<WieldableComponent>(state, node, entity, "wield");
     decodeComponent<GroupingComponent>(state, node, entity, "grouping");
+    decodeComponent<ExperienceComponent>(state, node, entity, "experience");
 }

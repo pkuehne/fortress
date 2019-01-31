@@ -1,6 +1,7 @@
 #include "combat_system.h"
 #include "../components/description_component.h"
 #include "../components/equipment_component.h"
+#include "../components/experience_component.h"
 #include "../components/graphics_effect_component.h"
 #include "../components/health_component.h"
 #include "../components/sprite_component.h"
@@ -41,8 +42,10 @@ void CombatSystem::handleAttack(EntityId attacker, EntityId defender) {
 
     if (damage < l_health->health) {
         l_health->health -= damage;
+        events()->raise(std::make_shared<UpdateExperienceEvent>(attacker, 100));
     } else {
         killEntity(defender);
+        events()->raise(std::make_shared<UpdateExperienceEvent>(attacker, 500));
     }
 }
 
