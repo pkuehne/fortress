@@ -179,7 +179,7 @@ void EquipmentWindow::registerWidgets() {
         ->setText("inspect")
         ->setCommandChar(1)
         ->setCommandCharCallback([&](Label* l) {
-            getEngine()->events()->raise(std::make_shared<RegisterWindowEvent>(
+            events()->raise(std::make_shared<RegisterWindowEvent>(
                 std::make_shared<InspectionWindow>(getSelectedItem())));
         })
         ->setVerticalAlign(Widget::VerticalAlign::Bottom)
@@ -188,14 +188,13 @@ void EquipmentWindow::registerWidgets() {
     createWidget<Label>("lblUnequip", 0, 1, actions)
         ->setText("unequip")
         ->setCommandChar(1)
-        ->setCommandCharCallback([](Label* l) {
+        ->setCommandCharCallback([&](Label* l) {
             EquipmentWindow* win =
                 dynamic_cast<EquipmentWindow*>(l->getWindow());
-            GameEngine* engine = win->getEngine();
-            engine->events()->raise(std::make_shared<UnequipItemEvent>(
-                engine->state()->player(), win->getSelectedItem()));
+            events()->raise(std::make_shared<UnequipItemEvent>(
+                getEngine()->state()->player(), win->getSelectedItem()));
             win->setSelectedItem(0);
-            engine->swapTurn();
+            getEngine()->swapTurn();
         })
         ->setVerticalAlign(Widget::VerticalAlign::Bottom)
         ->setVisible(false);
@@ -203,14 +202,13 @@ void EquipmentWindow::registerWidgets() {
     createWidget<Label>("lblEquip", 0, 1, actions)
         ->setText("equip")
         ->setCommandChar(1)
-        ->setCommandCharCallback([](Label* l) {
+        ->setCommandCharCallback([&](Label* l) {
             EquipmentWindow* win =
                 dynamic_cast<EquipmentWindow*>(l->getWindow());
-            GameEngine* engine = win->getEngine();
-            engine->events()->raise(std::make_shared<EquipItemEvent>(
-                engine->state()->player(), win->getSelectedItem()));
+            events()->raise(std::make_shared<EquipItemEvent>(
+                getEngine()->state()->player(), win->getSelectedItem()));
             win->setSelectedItem(0);
-            engine->swapTurn();
+            getEngine()->swapTurn();
         })
         ->setVerticalAlign(Widget::VerticalAlign::Bottom)
         ->setVisible(false);
@@ -218,14 +216,13 @@ void EquipmentWindow::registerWidgets() {
     createWidget<Label>("lblDrop", 0, 0, actions)
         ->setText("drop")
         ->setCommandChar(1)
-        ->setCommandCharCallback([](Label* l) {
+        ->setCommandCharCallback([&](Label* l) {
             EquipmentWindow* win =
                 dynamic_cast<EquipmentWindow*>(l->getWindow());
-            GameEngine* engine = win->getEngine();
-            engine->events()->raise(std::make_shared<DropEquipmentEvent>(
-                engine->state()->player(), win->getSelectedItem()));
+            events()->raise(std::make_shared<DropEquipmentEvent>(
+                getEngine()->state()->player(), win->getSelectedItem()));
             win->setSelectedItem(0);
-            engine->swapTurn();
+            getEngine()->swapTurn();
         })
         ->setVerticalAlign(Widget::VerticalAlign::Bottom)
         ->setVisible(false);
@@ -267,7 +264,7 @@ void EquipmentWindow::nextTurn() { updateItemNames(); }
 void EquipmentWindow::updateItemNames() {
     EntityId player = getState()->player();
     EquipmentComponent* equipment =
-        getState()->components()->get<EquipmentComponent>(player);
+        components()->get<EquipmentComponent>(player);
 
     getWidget<Label>("lblRightItem")
         ->setText(nameOrNothing(equipment->rightHandWieldable, getEngine()));
@@ -291,8 +288,7 @@ void EquipmentWindow::updateItemNames() {
     ListBox* list = getWidget<ListBox>("lstRucksack");
     list->clearItems();
 
-    EquipmentComponent* carried =
-        getEngine()->state()->components()->get<EquipmentComponent>(player);
+    EquipmentComponent* carried = components()->get<EquipmentComponent>(player);
     for (unsigned int ii = 0; ii < carried->carriedEquipment.size(); ii++) {
         ListBoxItem item;
         item.setText(nameOrNothing(carried->carriedEquipment[ii], getEngine()));

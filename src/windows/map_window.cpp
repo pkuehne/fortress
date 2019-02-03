@@ -56,21 +56,21 @@ void MapWindow::registerWidgets() {
         ->setText("Skip Turn (.)")
         ->setCommandChar(12)
         ->setCommandCharCallback(
-            [](Label* l) { l->getWindow()->getEngine()->swapTurn(); })
+            [&](Label* l) { l->getWindow()->getEngine()->swapTurn(); })
         ->setVerticalAlign(Widget::VerticalAlign::Bottom);
     createWidget<Label>("lblEquipment", 1, 2, sidebar)
         ->setText("View Equipment")
         ->setCommandChar(6)
-        ->setCommandCharCallback([=](Label* l) {
-            getEngine()->events()->raise(std::make_shared<RegisterWindowEvent>(
+        ->setCommandCharCallback([&](Label* l) {
+            events()->raise(std::make_shared<RegisterWindowEvent>(
                 std::make_shared<EquipmentWindow>()));
         })
         ->setVerticalAlign(Widget::VerticalAlign::Bottom);
     createWidget<Label>("lblQuests", 1, 3, sidebar)
         ->setText("View Quests")
         ->setCommandChar(6)
-        ->setCommandCharCallback([=](Label* l) {
-            getEngine()->events()->raise(std::make_shared<RegisterWindowEvent>(
+        ->setCommandCharCallback([&](Label* l) {
+            events()->raise(std::make_shared<RegisterWindowEvent>(
                 std::make_shared<QuestWindow>()));
         })
         ->setVerticalAlign(Widget::VerticalAlign::Bottom);
@@ -144,7 +144,7 @@ void MapWindow::registerWidgets() {
         ->setText("`")
         ->setCommandChar(1)
         ->setCommandCharCallback([&](Label* l) {
-            getEngine()->events()->raise(std::make_shared<RegisterWindowEvent>(
+            events()->raise(std::make_shared<RegisterWindowEvent>(
                 std::make_shared<DebugWindow>()));
         })
         ->setVisible(false);
@@ -178,30 +178,27 @@ void MapWindow::keyPress(unsigned char key) {
         updateLocation(key, newLocation);
 
         if (m_action == 'm') {
-            getEngine()->events()->raise(
+            events()->raise(
                 std::make_shared<MoveEntityEvent>(playerId, newLocation));
 
             getEngine()->swapTurn();
         } else if (m_action == 'k') {
-            EntityHolder l_entities =
-                getEngine()->state()->map()->findEntitiesAt(newLocation);
+            EntityHolder l_entities = map()->findEntitiesAt(newLocation);
             for (EntityId entity : l_entities) {
-                getEngine()->events()->raise(
+                events()->raise(
                     std::make_shared<AttackEntityEvent>(playerId, entity));
             }
             getEngine()->swapTurn();
         } else if (m_action == 'i') {
-            EntityHolder l_entities =
-                getEngine()->state()->map()->findEntitiesAt(newLocation);
+            EntityHolder l_entities = map()->findEntitiesAt(newLocation);
             if (l_entities.size() > 0) {
-                getEngine()->events()->raise(
-                    std::make_shared<RegisterWindowEvent>(
-                        std::make_shared<InteractionWindow>(l_entities)));
+                events()->raise(std::make_shared<RegisterWindowEvent>(
+                    std::make_shared<InteractionWindow>(l_entities)));
             }
         }
         m_action = 'm';
     } else if (key == KEY_ESC) {
-        getEngine()->events()->raise(std::make_shared<RegisterWindowEvent>(
+        events()->raise(std::make_shared<RegisterWindowEvent>(
             std::make_shared<EscapeWindow>()));
     }
     // std::cout << "Key: " << key << std::endl;
@@ -212,8 +209,7 @@ void MapWindow::nextTurn() {
     if (!player) {
         return;
     }
-    HealthComponent* l_health =
-        getEngine()->state()->components()->get<HealthComponent>(player);
+    HealthComponent* l_health = components()->get<HealthComponent>(player);
     if (!l_health) {
         throw std::string("Player must have a health component!");
     }
@@ -221,8 +217,7 @@ void MapWindow::nextTurn() {
     getWidget<ProgressBar>("pgbHunger")->setValue(l_health->hunger);
     getWidget<ProgressBar>("pgbThirst")->setValue(l_health->thirst);
 
-    auto l_messages =
-        getEngine()->state()->components()->get<LogMessageComponent>(player);
+    auto l_messages = components()->get<LogMessageComponent>(player);
     if (!l_messages) {
         return;
     }

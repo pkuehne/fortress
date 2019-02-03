@@ -155,8 +155,7 @@ void GeneratorWindow::startGenerating() {
     unsigned int l_levelDepth =
         getWidget<NumericEntry>("numDepth")->getNumber();
 
-    unsigned int startArea =
-        getEngine()->state()->map()->createArea(l_levelWidth, l_levelHeight, 1);
+    unsigned int startArea = map()->createArea(l_levelWidth, l_levelHeight, 1);
 
     RuralGenerator rural;
     rural.initialise(getEngine());
@@ -168,8 +167,8 @@ void GeneratorWindow::startGenerating() {
     for (EntityId stair : rural.getAreaLinks()) {
         int retries = 0;
         bool success = false;
-        unsigned int area = getEngine()->state()->map()->createArea(
-            l_levelWidth, l_levelHeight, l_levelDepth);
+        unsigned int area =
+            map()->createArea(l_levelWidth, l_levelHeight, l_levelDepth);
 
         LOG(INFO) << "Generating area: " << area << std::endl;
         DungeonGenerator l_generator;
@@ -190,11 +189,8 @@ void GeneratorWindow::startGenerating() {
         if (!success) {
             LOG(ERROR) << "Failed to generate a valid map" << std::endl;
         }
-        getEngine()
-            ->state()
-            ->components()
-            ->make<ConnectorComponent>(stair)
-            ->target = l_generator.upStairLink();
+        components()->make<ConnectorComponent>(stair)->target =
+            l_generator.upStairLink();
 
         // getEngine()
         //     ->state()
@@ -202,15 +198,15 @@ void GeneratorWindow::startGenerating() {
         //     ->get<ConnectorComponent>(stair)
         //     ->target = l_generator.upStairLink();
     }
-    LOG(INFO) << "Placed " << getEngine()->state()->entityManager()->getMaxId()
-              << " entities!" << std::endl;
+    LOG(INFO) << "Placed " << entities()->getMaxId() << " entities!"
+              << std::endl;
 
     m_status = COMPLETED;
     getWidget<Label>("lblPlay")->setSensitive(true);
 }
 
 void GeneratorWindow::startPlaying() {
-    getEngine()->events()->raise(std::make_shared<RegisterWindowEvent>(
+    events()->raise(std::make_shared<RegisterWindowEvent>(
         std::make_shared<MapWindow>(),
         RegisterWindowEvent::WindowAction::Replace));
 }

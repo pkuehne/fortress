@@ -17,12 +17,24 @@ public:
 public:
     static const int MAX_BUTTONS = 5;
 
-    Window() {}
+    Window() = default;
     virtual ~Window() {
         for (auto w : m_widgets) {
             delete w.second;
         }
     }
+
+    void initialise(GameEngine* a_engine, std::shared_ptr<EventManager> events,
+                    std::shared_ptr<ComponentManager> components,
+                    std::shared_ptr<EntityManager> entities,
+                    std::shared_ptr<MapManager> map);
+    std::shared_ptr<ComponentManager> components() const {
+        return m_components;
+    }
+    std::shared_ptr<EntityManager> entities() const { return m_entities; }
+    std::shared_ptr<EventManager> events() const { return m_events; }
+    std::shared_ptr<MapManager> map() const { return m_map; }
+
     virtual void destroy(void);
     virtual int getXOffset() { return m_xOffset; }
     virtual int getYOffset() { return m_yOffset; }
@@ -32,8 +44,7 @@ public:
     virtual void nextTurn() {}
 
     virtual void keyDown(unsigned char key);
-    virtual void keyUp(unsigned char key) { ascii_keys[key] = false; }
-    virtual bool getKey(unsigned char key) { return ascii_keys[key]; }
+    virtual void keyUp(unsigned char key) {}
     virtual void mouseDown(int x, int y, int button);
     virtual void mouseUp(int x, int y, int button);
 
@@ -73,7 +84,6 @@ public:
         }
         return widget;
     }
-    void initialise(GameEngine* a_engine);
 
     void setFullscreen(bool fullscreen = true);
     void setTitle(const std::string& title);
@@ -89,7 +99,6 @@ public:
 
     virtual GameEngine* getEngine() { return m_engine; }
     virtual GameState* getState() { return m_state; }
-    virtual WindowManager* getManager() { return m_manager; }
 
     // Overrideable methods
     virtual void keyPress(unsigned char key) { /* Overrideable */
@@ -102,13 +111,14 @@ private:
     void setDimensions(int x, int y, int width, int height);
 
 private:
-    bool ascii_keys[256] = {0};
-    bool special_keys[256] = {0};
     int m_buttons[MAX_BUTTONS] = {0};
     GameEngine* m_engine = nullptr;
     GraphicsInterface* m_graphics = nullptr;
     GameState* m_state = nullptr;
-    WindowManager* m_manager = nullptr;
+    std::shared_ptr<EventManager> m_events = nullptr;
+    std::shared_ptr<ComponentManager> m_components = nullptr;
+    std::shared_ptr<EntityManager> m_entities = nullptr;
+    std::shared_ptr<MapManager> m_map = nullptr;
     int m_xOffset = 0;
     int m_yOffset = 0;
     int m_width = 0;

@@ -15,7 +15,7 @@ void InspectionWindow::registerWidgets() {
     block->setWidth(l_windowWidth);
 
     DescriptionComponent* l_description =
-        getEngine()->state()->components()->get<DescriptionComponent>(m_entity);
+        components()->get<DescriptionComponent>(m_entity);
     if (!l_description) {
         block->setText("There are no words...");
         return;

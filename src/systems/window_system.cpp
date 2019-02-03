@@ -4,7 +4,9 @@
 void WindowSystem::registerHandlers() {
     events()->subscribe<RegisterWindowEvent>(
         [=](std::shared_ptr<RegisterWindowEvent> event) {
-            event->window->initialise(getEngine());
+            event->window->initialise(getEngine(), events(), components(),
+                                      entities(), map());
+
             auto manager = getEngine()->getWindows();
             switch (event->action) {
                 case RegisterWindowEvent::WindowAction::Add:

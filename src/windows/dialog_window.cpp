@@ -31,7 +31,7 @@ void DialogWindow::registerWidgets() {
         ->setVerticalAlign(Widget::VerticalAlign::Bottom);
     lstQuestions->setItemSelectedCallback([=](ListBox* l) {
         ListBoxItem item = l->getSelectedItem();
-        getEngine()->events()->raise(
+        events()->raise(
             std::make_shared<ChooseDialogOptionEvent>(item.getValue()));
         getEngine()->swapTurn();
     });
@@ -43,7 +43,7 @@ void DialogWindow::nextTurn() {
     auto lstQuestions = getWidget<ListBox>("lstQuestions");
     auto lblResponse = getWidget<Label>("lblResponse");
     auto state = getEngine()->state();
-    auto player = state->components()->get<PlayerComponent>(state->player());
+    auto player = components()->get<PlayerComponent>(state->player());
 
     lstQuestions->clearItems();
     for (unsigned int ii = 0; ii < player->dialogOptions.size(); ii++) {
@@ -56,5 +56,5 @@ void DialogWindow::nextTurn() {
 }
 
 void DialogWindow::destroy() {
-    getEngine()->events()->raise(std::make_shared<EndConversationEvent>());
+    events()->raise(std::make_shared<EndConversationEvent>());
 }

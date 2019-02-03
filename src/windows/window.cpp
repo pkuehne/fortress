@@ -3,11 +3,18 @@
 #include "../widgets/frame.h"
 #include <iostream>
 
-void Window::initialise(GameEngine* a_engine) {
+void Window::initialise(GameEngine* a_engine,
+                        std::shared_ptr<EventManager> events,
+                        std::shared_ptr<ComponentManager> components,
+                        std::shared_ptr<EntityManager> entities,
+                        std::shared_ptr<MapManager> map) {
     m_engine = a_engine;
     m_graphics = m_engine->getGraphics();
     m_state = m_engine->state();
-    m_manager = m_engine->getWindows();
+    m_events = events;
+    m_components = components;
+    m_entities = entities;
+    m_map = map;
     m_baseWidget = createWidget<Frame>("frmBase", 0, 0)->setBorder(true);
 }
 
@@ -61,8 +68,6 @@ void Window::mouseUp(int x, int y, int button) {
 }
 
 void Window::keyDown(unsigned char key) {
-    ascii_keys[key] = true;
-
     if (m_onEscape != EscapeBehaviour::None && key == KEY_ESC) {
         if (m_onEscape == EscapeBehaviour::CloseWindow) {
             getEngine()->getWindows()->popWindow();
