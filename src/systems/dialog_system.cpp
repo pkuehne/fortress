@@ -53,7 +53,7 @@ void DialogSystem::handleChooseDialogOptionEvent(
     if (event->option == 2) {
         player->dialogText = "Do I look human to you?";
     }
-    getEngine()->swapTurn();
+    events()->raise(std::make_shared<EndTurnEvent>());
 }
 
 void DialogSystem::handleEndConversationEvent(

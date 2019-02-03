@@ -173,3 +173,8 @@ class QuitEvent : public Event {
 public:
     QuitEvent() = default;
 };
+
+class EndTurnEvent : public Event {
+public:
+    EndTurnEvent() = default;
+};

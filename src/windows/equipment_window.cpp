@@ -170,7 +170,7 @@ void EquipmentWindow::registerWidgets() {
                 engine->state()->player(), getSelectedItem()));
             setSelectedItem(0);
 
-            engine->swapTurn();
+            events()->raise(std::make_shared<EndTurnEvent>());
         })
         ->setVerticalAlign(Widget::VerticalAlign::Bottom)
         ->setVisible(false);
@@ -194,7 +194,7 @@ void EquipmentWindow::registerWidgets() {
             events()->raise(std::make_shared<UnequipItemEvent>(
                 getEngine()->state()->player(), win->getSelectedItem()));
             win->setSelectedItem(0);
-            getEngine()->swapTurn();
+            events()->raise(std::make_shared<EndTurnEvent>());
         })
         ->setVerticalAlign(Widget::VerticalAlign::Bottom)
         ->setVisible(false);
@@ -208,7 +208,7 @@ void EquipmentWindow::registerWidgets() {
             events()->raise(std::make_shared<EquipItemEvent>(
                 getEngine()->state()->player(), win->getSelectedItem()));
             win->setSelectedItem(0);
-            getEngine()->swapTurn();
+            events()->raise(std::make_shared<EndTurnEvent>());
         })
         ->setVerticalAlign(Widget::VerticalAlign::Bottom)
         ->setVisible(false);
@@ -222,7 +222,7 @@ void EquipmentWindow::registerWidgets() {
             events()->raise(std::make_shared<DropEquipmentEvent>(
                 getEngine()->state()->player(), win->getSelectedItem()));
             win->setSelectedItem(0);
-            getEngine()->swapTurn();
+            events()->raise(std::make_shared<EndTurnEvent>());
         })
         ->setVerticalAlign(Widget::VerticalAlign::Bottom)
         ->setVisible(false);

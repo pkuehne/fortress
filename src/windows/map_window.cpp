@@ -55,8 +55,9 @@ void MapWindow::registerWidgets() {
     createWidget<Label>("lblSkipTurn", 1, 0, sidebar)
         ->setText("Skip Turn (.)")
         ->setCommandChar(12)
-        ->setCommandCharCallback(
-            [&](Label* l) { l->getWindow()->getEngine()->swapTurn(); })
+        ->setCommandCharCallback([&](Label* l) {
+            events()->raise(std::make_shared<EndTurnEvent>());
+        })
         ->setVerticalAlign(Widget::VerticalAlign::Bottom);
     createWidget<Label>("lblEquipment", 1, 2, sidebar)
         ->setText("View Equipment")
@@ -149,7 +150,7 @@ void MapWindow::registerWidgets() {
         })
         ->setVisible(false);
 
-    getEngine()->swapTurn();
+    events()->raise(std::make_shared<EndTurnEvent>());
 }
 
 void MapWindow::setAction(char action, unsigned int yPos) {
@@ -181,14 +182,14 @@ void MapWindow::keyPress(unsigned char key) {
             events()->raise(
                 std::make_shared<MoveEntityEvent>(playerId, newLocation));
 
-            getEngine()->swapTurn();
+            events()->raise(std::make_shared<EndTurnEvent>());
         } else if (m_action == 'k') {
             EntityHolder l_entities = map()->findEntitiesAt(newLocation);
             for (EntityId entity : l_entities) {
                 events()->raise(
                     std::make_shared<AttackEntityEvent>(playerId, entity));
             }
-            getEngine()->swapTurn();
+            events()->raise(std::make_shared<EndTurnEvent>());
         } else if (m_action == 'i') {
             EntityHolder l_entities = map()->findEntitiesAt(newLocation);
             if (l_entities.size() > 0) {

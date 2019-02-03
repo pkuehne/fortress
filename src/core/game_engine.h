@@ -23,7 +23,6 @@ public:
     void tick(void);
 
     virtual bool isPlayerTurn() { return m_playerTurn; }
-    void swapTurn();
     unsigned int getTurn() { return m_turn; }
     void setTurn(unsigned int turn) { m_turn = turn; }
 
@@ -41,6 +40,9 @@ public:
 
     virtual GameState* state() { return m_state; }
     virtual std::shared_ptr<EventManager> events() { return m_eventManager; }
+
+private:
+    void swapTurn();
 
 private:
     GraphicsInterface* m_graphics = nullptr;

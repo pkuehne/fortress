@@ -33,7 +33,7 @@ void DialogWindow::registerWidgets() {
         ListBoxItem item = l->getSelectedItem();
         events()->raise(
             std::make_shared<ChooseDialogOptionEvent>(item.getValue()));
-        getEngine()->swapTurn();
+        events()->raise(std::make_shared<EndTurnEvent>());
     });
 
     this->nextTurn();

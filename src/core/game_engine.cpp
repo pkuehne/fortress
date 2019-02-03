@@ -25,6 +25,9 @@ void GameEngine::initialise() {
     m_eventManager->subscribe<QuitEvent>(
         [&](auto event) { m_graphics->terminate(); });
 
+    m_eventManager->subscribe<EndTurnEvent>(
+        [&](auto event) { this->swapTurn(); });
+
     // Initialise Managers
     m_windowManager->initialise(this);
 
@@ -62,7 +65,7 @@ void GameEngine::initialise() {
     m_eventManager->raise(std::make_shared<RegisterWindowEvent>(
         std::make_shared<SplashWindow>()));
 
-    swapTurn();
+    events()->raise(std::make_shared<EndTurnEvent>());
 }
 
 void GameEngine::tick() {

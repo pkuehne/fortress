@@ -55,7 +55,7 @@ void InteractionWindow::registerWidgets() {
                 getEngine()->events()->raise(
                     std::make_shared<OpenEntityEvent>(entity));
             }
-            getEngine()->swapTurn();
+            events()->raise(std::make_shared<EndTurnEvent>());
         })
         ->setSensitive(false);
     createWidget<Label>("txtTalk", descriptionWidth, 3)
@@ -78,7 +78,7 @@ void InteractionWindow::registerWidgets() {
             EntityId playerId = getEngine()->state()->player();
             getEngine()->events()->raise(
                 std::make_shared<PickupEquipmentEvent>(playerId, entity));
-            getEngine()->swapTurn();
+            events()->raise(std::make_shared<EndTurnEvent>());
         })
         ->setSensitive(false);
 
