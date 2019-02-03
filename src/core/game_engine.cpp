@@ -22,6 +22,9 @@ void GameEngine::initialise() {
         m_state = new GameState();
     }
 
+    m_eventManager->subscribe<QuitEvent>(
+        [&](auto event) { m_graphics->terminate(); });
+
     // Initialise Managers
     m_windowManager->initialise(this);
 

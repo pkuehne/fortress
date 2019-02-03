@@ -73,7 +73,7 @@ void Window::keyDown(unsigned char key) {
             events()->raise(std::make_shared<CloseWindowEvent>());
         }
         if (m_onEscape == EscapeBehaviour::QuitGame) {
-            getEngine()->quit();
+            events()->raise(std::make_shared<QuitEvent>());
         }
         return;
     }

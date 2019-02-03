@@ -168,3 +168,8 @@ public:
     EntityId entity;
     unsigned int level;
 };
+
+class QuitEvent : public Event {
+public:
+    QuitEvent() = default;
+};

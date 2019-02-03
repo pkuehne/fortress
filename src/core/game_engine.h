@@ -3,7 +3,6 @@
 #include "../core/game_state.h"
 #include "../core/window_manager.h"
 #include "event_manager.h"
-// #include "game_system_interface.h"
 #include "graphics_interface.h"
 #include "location.h"
 
@@ -23,7 +22,6 @@ public:
     void initialise(void);
     void tick(void);
 
-    void quit() { m_graphics->terminate(); }
     virtual bool isPlayerTurn() { return m_playerTurn; }
     void swapTurn();
     unsigned int getTurn() { return m_turn; }
@@ -39,9 +37,7 @@ public:
 
     virtual WindowManager* getWindows() { return m_windowManager; }
 
-    void addSystem(GameSystemBase* a_system) {
-        m_systems.push_back(a_system);
-    }
+    void addSystem(GameSystemBase* a_system) { m_systems.push_back(a_system); }
 
     virtual GameState* state() { return m_state; }
     virtual std::shared_ptr<EventManager> events() { return m_eventManager; }
