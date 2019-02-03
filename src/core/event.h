@@ -149,6 +149,11 @@ public:
     WindowAction action = WindowAction::None;
 };
 
+class CloseWindowEvent : public Event {
+public:
+    CloseWindowEvent() = default;
+};
+
 class UpdateExperienceEvent : public Event {
 public:
     UpdateExperienceEvent(EntityId e, unsigned int x)

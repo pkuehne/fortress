@@ -2,25 +2,30 @@
 #include "../windows/map_window.h"
 
 void WindowSystem::registerHandlers() {
-    events()->subscribe<RegisterWindowEvent>(
-        [=](std::shared_ptr<RegisterWindowEvent> event) {
-            event->window->initialise(getEngine(), events(), components(),
-                                      entities(), map());
+    auto registerHandler = [=](std::shared_ptr<RegisterWindowEvent> event) {
+        event->window->initialise(getEngine(), events(), components(),
+                                  entities(), map());
 
-            auto manager = getEngine()->getWindows();
-            switch (event->action) {
-                case RegisterWindowEvent::WindowAction::Add:
-                    manager->pushWindow(event->window);
-                    break;
-                case RegisterWindowEvent::WindowAction::Replace:
-                    manager->popWindow();
-                    manager->pushWindow(event->window);
-                    break;
-                case RegisterWindowEvent::WindowAction::ReplaceAll:
-                    manager->popAllWindows();
-                    manager->pushWindow(event->window);
-                default:
-                    break;
-            }
-        });
+        auto manager = getEngine()->getWindows();
+        switch (event->action) {
+            case RegisterWindowEvent::WindowAction::Add:
+                manager->pushWindow(event->window);
+                break;
+            case RegisterWindowEvent::WindowAction::Replace:
+                manager->popWindow();
+                manager->pushWindow(event->window);
+                break;
+            case RegisterWindowEvent::WindowAction::ReplaceAll:
+                manager->popAllWindows();
+                manager->pushWindow(event->window);
+            default:
+                break;
+        }
+    };
+    auto closeHandler = [&](std::shared_ptr<CloseWindowEvent> event) {
+        getEngine()->getWindows()->popWindow();
+    };
+
+    events()->subscribe<RegisterWindowEvent>(registerHandler);
+    events()->subscribe<CloseWindowEvent>(closeHandler);
 }

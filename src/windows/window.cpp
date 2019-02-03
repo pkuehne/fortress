@@ -70,7 +70,7 @@ void Window::mouseUp(int x, int y, int button) {
 void Window::keyDown(unsigned char key) {
     if (m_onEscape != EscapeBehaviour::None && key == KEY_ESC) {
         if (m_onEscape == EscapeBehaviour::CloseWindow) {
-            getEngine()->getWindows()->popWindow();
+            events()->raise(std::make_shared<CloseWindowEvent>());
         }
         if (m_onEscape == EscapeBehaviour::QuitGame) {
             getEngine()->quit();
