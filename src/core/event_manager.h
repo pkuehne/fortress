@@ -37,6 +37,9 @@ typedef std::queue<std::shared_ptr<Event>> EventQueue;
 typedef std::vector<GameSystemInterface*> Handlers;
 typedef Handlers::iterator HandlersIter;
 
+template <typename T>
+using HandlerFunc = std::function<void(std::shared_ptr<T>)>;
+
 /// @brief Manages events in the game and distributes them
 /// to the Systems
 class EventManager {
@@ -55,8 +58,7 @@ public:
         subscribe(std::function<void(std::shared_ptr<EventType>)>(func));
     }
 
-    template <class EventType>
-    void subscribe(std::function<void(std::shared_ptr<EventType>)> func) {
+    template <class EventType> void subscribe(HandlerFunc<EventType> func) {
         std::unique_ptr<BaseHandler> handler =
             std::make_unique<Handler<EventType>>(func);
         m_handlerList[typeid(EventType).hash_code()].push_back(

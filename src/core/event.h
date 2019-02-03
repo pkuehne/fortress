@@ -156,3 +156,10 @@ public:
     EntityId entity;
     unsigned int experience;
 };
+
+class LevelUpEvent : public Event {
+public:
+    LevelUpEvent(EntityId e, unsigned int l) : entity(e), level(l) {}
+    EntityId entity;
+    unsigned int level;
+};
