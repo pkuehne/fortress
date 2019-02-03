@@ -4,6 +4,7 @@
 #include "../windows/window.h"
 #include "entity_manager.h"
 #include "event_manager.h"
+#include "game_system_base.h"
 #include "map_manager.h"
 #include "window_manager.h"
 #include <string>
@@ -32,7 +33,8 @@ void GameEngine::initialise() {
 
     // Initialise Systems
     for (unsigned int ii = 0; ii < m_systems.size(); ii++) {
-        m_systems[ii]->initialise(this);
+        m_systems[ii]->initialise(this, m_eventManager, state()->components(),
+                                  state()->entityManager(), state()->map());
     }
 
     m_graphics->setKeyDownFunc([&](unsigned char key, int x, int y) {

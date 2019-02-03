@@ -1,7 +1,6 @@
 #pragma once
 
 #include "event.h"
-#include "game_system_interface.h"
 #include <map>
 #include <memory>
 #include <queue>
@@ -34,8 +33,6 @@ private:
 };
 
 typedef std::queue<std::shared_ptr<Event>> EventQueue;
-typedef std::vector<GameSystemInterface*> Handlers;
-typedef Handlers::iterator HandlersIter;
 
 template <typename T>
 using HandlerFunc = std::function<void(std::shared_ptr<T>)>;
@@ -69,7 +66,6 @@ public:
 
 private:
     EventQueue m_events;
-    Handlers m_handlers;
     std::map<size_t, std::vector<std::unique_ptr<BaseHandler>>> m_handlerList;
     std::queue<std::pair<size_t, std::shared_ptr<Event>>> m_eventList;
 };

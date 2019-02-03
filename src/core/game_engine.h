@@ -3,7 +3,7 @@
 #include "../core/game_state.h"
 #include "../core/window_manager.h"
 #include "event_manager.h"
-#include "game_system_interface.h"
+// #include "game_system_interface.h"
 #include "graphics_interface.h"
 #include "location.h"
 
@@ -13,6 +13,7 @@
 #include <vector>
 
 // class EventManager;
+class GameSystemBase;
 
 class GameEngine {
 public:
@@ -38,7 +39,7 @@ public:
 
     virtual WindowManager* getWindows() { return m_windowManager; }
 
-    void addSystem(GameSystemInterface* a_system) {
+    void addSystem(GameSystemBase* a_system) {
         m_systems.push_back(a_system);
     }
 
@@ -55,5 +56,5 @@ private:
     WindowManager* m_windowManager = nullptr;
     GameState* m_state = nullptr;
 
-    std::vector<GameSystemInterface*> m_systems;
+    std::vector<GameSystemBase*> m_systems;
 };

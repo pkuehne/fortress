@@ -1,11 +1,16 @@
 #include "game_system_base.h"
 
-void GameSystemBase::initialise(GameEngine* engine) {
+void GameSystemBase::initialise(GameEngine* engine,
+                                std::shared_ptr<EventManager> events,
+                                std::shared_ptr<ComponentManager> components,
+                                std::shared_ptr<EntityManager> entities,
+                                std::shared_ptr<MapManager> map) {
     m_engine = engine;
     m_state = engine->state();
-    m_events = engine->events();
-    m_components = engine->state()->components();
-    m_entities = engine->state()->entityManager();
+    m_events = events;
+    m_components = components;
+    m_entities = entities;
+    m_map = map;
     registerHandlers();
 }
 

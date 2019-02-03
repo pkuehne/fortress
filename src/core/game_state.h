@@ -32,7 +32,7 @@ public:
     }
     tick_t turn() { return m_turn; }
 
-    virtual MapManager* map();
+    virtual std::shared_ptr<MapManager> map() { return m_map; }
     virtual std::shared_ptr<EntityManager> entityManager() {
         return m_entities;
     }
@@ -63,7 +63,7 @@ public:
 private:
     bool m_playerTurn = true;
     tick_t m_turn = 0;
-    MapManager* m_map = nullptr;
+    std::shared_ptr<MapManager> m_map = nullptr;
     std::shared_ptr<EntityManager> m_entities = nullptr;
     std::shared_ptr<ComponentManager> m_components = nullptr;
     std::shared_ptr<WorldInfo> m_world = nullptr;

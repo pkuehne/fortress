@@ -32,8 +32,6 @@ Location GameState::location(const Location& location, Direction direction) {
     return m_map->location(location, direction);
 }
 
-MapManager* GameState::map() { return m_map; }
-
 const EntityHolder& GameState::entities() { return m_entities->all(); }
 
 const EntityHolder& GameState::entities(const Location& loc) {

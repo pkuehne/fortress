@@ -21,8 +21,7 @@ void FileSaver::saveState(const std::string& filename) {
 }
 
 void FileSaver::encodeMap(YAML::Node& node) {
-    MapManager* map = m_state->map();
-    for (auto iter : map->getAreas()) {
+    for (auto iter : m_state->map()->getAreas()) {
         node[iter.first] = iter.second;
         encodeArea(node, iter.first);
     }
