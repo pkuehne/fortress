@@ -20,7 +20,7 @@ void DialogSystem::registerHandlers() {
 void DialogSystem::handleStartConversationEvent(
     std::shared_ptr<StartConversationEvent> event) {
 
-    auto playerId = state()->player();
+    auto playerId = entities()->getPlayer();
     auto player = components()->get<PlayerComponent>(playerId);
     if (player == nullptr) {
         throw std::string("Player has no PlayerComponent");
@@ -44,7 +44,7 @@ void DialogSystem::handleStartConversationEvent(
 
 void DialogSystem::handleChooseDialogOptionEvent(
     std::shared_ptr<ChooseDialogOptionEvent> event) {
-    auto playerId = state()->player();
+    auto playerId = entities()->getPlayer();
     auto player = components()->get<PlayerComponent>(playerId);
 
     if (event->option == 1) {
@@ -58,7 +58,7 @@ void DialogSystem::handleChooseDialogOptionEvent(
 
 void DialogSystem::handleEndConversationEvent(
     std::shared_ptr<EndConversationEvent> event) {
-    auto playerId = state()->player();
+    auto playerId = entities()->getPlayer();
     auto player = components()->get<PlayerComponent>(playerId);
 
     player->inConversationWith = 0;

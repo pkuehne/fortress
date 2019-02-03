@@ -52,7 +52,6 @@ public:
     Location location(EntityId entity);
     Location location(const Location&, Direction direction);
 
-    virtual EntityId player();
     EntityId createEntity(const Location&);
 
     std::vector<Quest*>& getQuests() { return m_quests; }

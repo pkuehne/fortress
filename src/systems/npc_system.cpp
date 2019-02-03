@@ -219,7 +219,7 @@ int getPathCost(const Location& location, void* customData) {
     Tile& tile = l_engine->state()->tile(location);
 
     for (EntityId entity : tile.entities()) {
-        if (entity == l_engine->state()->player())
+        if (entity == l_engine->state()->entityManager()->getPlayer())
             continue;
         if (l_engine->state()->components()->get<ColliderComponent>(entity))
             return 99;

@@ -20,7 +20,7 @@ EntityId GameSystemBase::instantiatePrefab(const std::string& type,
         return 0;
     }
 
-    EntityId entity = state()->createEntity(location);
+    EntityId entity = entities()->createEntity(location);
     events()->raise(std::make_shared<InstantiatePrefabEvent>(entity, type));
     return entity;
 }

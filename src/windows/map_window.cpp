@@ -172,7 +172,7 @@ void updateLocation(unsigned char key, Location& location) {
 }
 
 void MapWindow::keyPress(unsigned char key) {
-    EntityId playerId = getEngine()->state()->player();
+    EntityId playerId = entities()->getPlayer();
     if (key == 'w' || key == 'a' || key == 's' || key == 'd') {
         Location oldLocation = getEngine()->state()->location(playerId);
         Location newLocation = oldLocation;
@@ -206,7 +206,7 @@ void MapWindow::keyPress(unsigned char key) {
 }
 
 void MapWindow::nextTurn() {
-    EntityId player = getEngine()->state()->player();
+    EntityId player = entities()->getPlayer();
     if (!player) {
         return;
     }

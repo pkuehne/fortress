@@ -42,8 +42,7 @@ void DialogWindow::registerWidgets() {
 void DialogWindow::nextTurn() {
     auto lstQuestions = getWidget<ListBox>("lstQuestions");
     auto lblResponse = getWidget<Label>("lblResponse");
-    auto state = getEngine()->state();
-    auto player = components()->get<PlayerComponent>(state->player());
+    auto player = components()->get<PlayerComponent>(entities()->getPlayer());
 
     lstQuestions->clearItems();
     for (unsigned int ii = 0; ii < player->dialogOptions.size(); ii++) {

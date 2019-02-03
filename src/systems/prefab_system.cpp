@@ -35,7 +35,7 @@ void PrefabSystem::registerHandlers() {
             addExperienceComponent(node, entity);
             addGroupingComponent(node, entity);
 
-            getEngine()->events()->raise(std::make_shared<PrefabCreatedEvent>(
+            events()->raise(std::make_shared<PrefabCreatedEvent>(
                 event->entity, event->prefab));
         });
 

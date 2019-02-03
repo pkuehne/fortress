@@ -3,6 +3,8 @@
 #include "../core/entity.h"
 #include "window.h"
 
+class Label;
+
 class EquipmentWindow : public Window {
 public:
     EquipmentWindow() {}
@@ -15,6 +17,9 @@ public:
     EntityId getSelectedItem() { return m_selectedItem; }
     bool itemSelected() { return m_selectedItem != 0; }
     void updateItemNames();
+
+private:
+    void selectItem(Label* l);
 
 private:
     EntityId m_selectedItem = 0;

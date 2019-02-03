@@ -5,7 +5,7 @@
 void LogMessageSystem::registerHandlers() {
     events()->subscribe<AddLogMessageEvent>(
         [=](std::shared_ptr<AddLogMessageEvent> event) {
-            EntityId player = state()->player();
+            EntityId player = entities()->getPlayer();
             auto messages = components()->get<LogMessageComponent>(player);
             if (!messages) {
                 messages = components()->make<LogMessageComponent>(player);

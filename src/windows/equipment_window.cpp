@@ -19,12 +19,12 @@ const char* nameOrNothing(EntityId item, GameEngine* engine) {
         return "?Something?";
     return description->title.c_str();
 }
+} // namespace
 
-void selectItem(Label* l) {
-    EntityId player = l->getWindow()->getState()->player();
+void EquipmentWindow::selectItem(Label* l) {
+    EntityId player = entities()->getPlayer();
     EquipmentComponent* equipment =
-        l->getWindow()->getState()->components()->get<EquipmentComponent>(
-            player);
+        components()->get<EquipmentComponent>(player);
     EquipmentWindow* win = dynamic_cast<EquipmentWindow*>(l->getWindow());
 
     if (l->getName() == "lblRight")
@@ -52,8 +52,6 @@ void selectItem(Label* l) {
     }
     win->updateItemNames();
 }
-
-} // namespace
 
 void EquipmentWindow::setup() {
     int width = 45;
@@ -90,6 +88,7 @@ void EquipmentWindow::registerWidgets() {
     createWidget<Label>("lblWielding", 0, 0, equipment)->setText("Wielding");
     createWidget<Label>("lblWearing", 0, 4, equipment)->setText("Wearing");
 
+    auto selectItem = [&](Label* l) { this->selectItem(l); };
     createWidget<Label>("lblRight", 2, 1, equipment)
         ->setText("Right:")
         ->setCommandChar(1)
@@ -163,11 +162,8 @@ void EquipmentWindow::registerWidgets() {
         ->setText("consume")
         ->setCommandChar(1)
         ->setCommandCharCallback([&](Label* l) {
-            EquipmentWindow* win =
-                dynamic_cast<EquipmentWindow*>(l->getWindow());
-            GameEngine* engine = win->getEngine();
-            engine->events()->raise(std::make_shared<ConsumeItemEvent>(
-                engine->state()->player(), getSelectedItem()));
+            events()->raise(std::make_shared<ConsumeItemEvent>(
+                entities()->getPlayer(), getSelectedItem()));
             setSelectedItem(0);
 
             events()->raise(std::make_shared<EndTurnEvent>());
@@ -192,7 +188,7 @@ void EquipmentWindow::registerWidgets() {
             EquipmentWindow* win =
                 dynamic_cast<EquipmentWindow*>(l->getWindow());
             events()->raise(std::make_shared<UnequipItemEvent>(
-                getEngine()->state()->player(), win->getSelectedItem()));
+                entities()->getPlayer(), win->getSelectedItem()));
             win->setSelectedItem(0);
             events()->raise(std::make_shared<EndTurnEvent>());
         })
@@ -206,7 +202,7 @@ void EquipmentWindow::registerWidgets() {
             EquipmentWindow* win =
                 dynamic_cast<EquipmentWindow*>(l->getWindow());
             events()->raise(std::make_shared<EquipItemEvent>(
-                getEngine()->state()->player(), win->getSelectedItem()));
+                entities()->getPlayer(), win->getSelectedItem()));
             win->setSelectedItem(0);
             events()->raise(std::make_shared<EndTurnEvent>());
         })
@@ -220,7 +216,7 @@ void EquipmentWindow::registerWidgets() {
             EquipmentWindow* win =
                 dynamic_cast<EquipmentWindow*>(l->getWindow());
             events()->raise(std::make_shared<DropEquipmentEvent>(
-                getEngine()->state()->player(), win->getSelectedItem()));
+                entities()->getPlayer(), win->getSelectedItem()));
             win->setSelectedItem(0);
             events()->raise(std::make_shared<EndTurnEvent>());
         })
@@ -262,7 +258,7 @@ void EquipmentWindow::setSelectedItem(EntityId item) {
 void EquipmentWindow::nextTurn() { updateItemNames(); }
 
 void EquipmentWindow::updateItemNames() {
-    EntityId player = getState()->player();
+    EntityId player = entities()->getPlayer();
     EquipmentComponent* equipment =
         components()->get<EquipmentComponent>(player);
 

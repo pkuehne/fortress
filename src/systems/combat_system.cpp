@@ -50,7 +50,7 @@ void CombatSystem::handleAttack(EntityId attacker, EntityId defender) {
 }
 
 void CombatSystem::killEntity(EntityId id) {
-    if (id == state()->player()) {
+    if (id == entities()->getPlayer()) {
         events()->raise(std::make_shared<RemoveEntityEvent>(id));
         return;
     }
@@ -107,7 +107,7 @@ void CombatSystem::updateLog(const EntityId& attacker, const EntityId& target,
 
     str << " and causes " << damage << " damage!";
 
-    if (attacker == state()->player()) {
+    if (attacker == entities()->getPlayer()) {
         events()->raise(std::make_shared<AddLogMessageEvent>(str.str()));
     } else {
         events()->raise(

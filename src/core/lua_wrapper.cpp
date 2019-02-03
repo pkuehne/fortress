@@ -89,9 +89,9 @@ int createOrc(lua_State* runtime) {
     }
     y = lua_tonumber(runtime, 2);
 
-    GameState* state = getState(runtime);
+    // GameState* state = getState(runtime);
 
-    Location location = state->location(state->player());
+    Location location; // = state->location(state->player());
     location.x += x;
     location.y += y;
     // state->prefabs().create("orc", location);
@@ -100,8 +100,8 @@ int createOrc(lua_State* runtime) {
 }
 
 int playerLocation(lua_State* runtime) {
-    GameState* state = getState(runtime);
-    Location location = state->location(state->player());
+    // GameState* state = getState(runtime);
+    Location location; // = state->location(state->player());
 
     std::stringstream output;
     output << location;

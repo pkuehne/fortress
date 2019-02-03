@@ -28,7 +28,8 @@ void ObjectivesSystem::handleAddEntityEvent(
         components()->get<DescriptionComponent>(event->entity);
     if (l_desc && l_desc->title == "Troll") {
         m_boss = event->entity;
-        KillQuest* quest = new KillQuest(state()->player(), event->entity);
+        KillQuest* quest =
+            new KillQuest(entities()->getPlayer(), event->entity);
         quest->title() = "Kill the Troll";
         state()->getQuests().push_back(quest);
     }
@@ -36,7 +37,7 @@ void ObjectivesSystem::handleAddEntityEvent(
 
 void ObjectivesSystem::handleRemoveEntityEvent(
     std::shared_ptr<RemoveEntityEvent> event) {
-    if (event->entity == state()->player()) {
+    if (event->entity == entities()->getPlayer()) {
         showGameOverWindow(false);
         return;
     }

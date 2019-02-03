@@ -6,7 +6,7 @@
 #include <iostream>
 
 void FovAlgorithm::calculateFov() {
-    EntityId player = m_engine->state()->player();
+    EntityId player = m_entities->getPlayer();
     Location playerLoc = m_engine->state()->location(player);
 
     if (player == 0)

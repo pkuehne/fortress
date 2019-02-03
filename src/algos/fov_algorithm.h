@@ -22,11 +22,17 @@ private:
     std::vector<Shadow> m_shadows;
 };
 
+class EntityManager;
+
 class FovAlgorithm {
 public:
     FovAlgorithm() {}
     ~FovAlgorithm() {}
-    void initialise(GameEngine* engine) { m_engine = engine; }
+    void initialise(GameEngine* engine,
+                    std::shared_ptr<EntityManager> entities) {
+        m_engine = engine;
+        m_entities = entities;
+    }
     void calculateFov();
 
 private:
@@ -36,5 +42,5 @@ private:
 
 private:
     GameEngine* m_engine = nullptr;
+    std::shared_ptr<EntityManager> m_entities = nullptr;
 };
-

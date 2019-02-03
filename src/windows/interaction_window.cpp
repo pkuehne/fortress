@@ -64,8 +64,8 @@ void InteractionWindow::registerWidgets() {
         ->setCommandCharCallback([&](Label* l) {
             ListBox* lstEntities = this->getWidget<ListBox>("lstEntities");
             EntityId entity = m_entities[lstEntities->getSelection()];
-            EntityId playerId = getEngine()->state()->player();
-            getEngine()->events()->raise(
+            EntityId playerId = entities()->getPlayer();
+            events()->raise(
                 std::make_shared<StartConversationEvent>(playerId, entity));
         })
         ->setSensitive(false);
@@ -75,8 +75,8 @@ void InteractionWindow::registerWidgets() {
         ->setCommandCharCallback([&](Label* l) {
             ListBox* lstEntities = this->getWidget<ListBox>("lstEntities");
             EntityId entity = m_entities[lstEntities->getSelection()];
-            EntityId playerId = getEngine()->state()->player();
-            getEngine()->events()->raise(
+            EntityId playerId = entities()->getPlayer();
+            events()->raise(
                 std::make_shared<PickupEquipmentEvent>(playerId, entity));
             events()->raise(std::make_shared<EndTurnEvent>());
         })

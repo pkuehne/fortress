@@ -6,12 +6,18 @@
 #include "../core/location.h"
 #include <glog/logging.h>
 
+Camera* Camera::setGameState(GameState* state) {
+    m_state = state;
+    m_entities = state->entityManager();
+    return this;
+}
+
 void Camera::render() {
     if (!m_state) {
         throw("Game State must be set on Camera");
     }
 
-    Location l_playerLoc = m_state->location(m_state->player());
+    Location l_playerLoc = m_state->location(m_entities->getPlayer());
 
     m_mapOffsetX = l_playerLoc.x - (getWidth() / 2);
     m_mapOffsetY = l_playerLoc.y - (getHeight() / 2);
@@ -73,7 +79,7 @@ void Camera::renderSprites() {
 }
 
 void Camera::renderNpcPaths() {
-    Location l_playerLoc = m_state->location(m_state->player());
+    Location l_playerLoc = m_state->location(m_entities->getPlayer());
 
     for (EntityId entity : m_state->entities(l_playerLoc.area)) {
         Location loc = m_state->location(entity);

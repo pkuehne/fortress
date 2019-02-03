@@ -41,7 +41,8 @@ void MovementSystem::handleMoveEntityEvent(
             }
             ConnectorComponent* l_stair =
                 components()->get<ConnectorComponent>(l_target);
-            if (l_stair && l_stair->target && l_entity == state()->player()) {
+            if (l_stair && l_stair->target &&
+                l_entity == entities()->getPlayer()) {
                 l_newLocation = state()->location(l_stair->target);
             }
         }
