@@ -160,15 +160,15 @@ class UpdateExperienceEvent : public Event {
 public:
     UpdateExperienceEvent(EntityId e, unsigned int x)
         : entity(e), experience(x) {}
-    EntityId entity;
-    unsigned int experience;
+    EntityId entity = 0;
+    unsigned int experience = 0;
 };
 
 class LevelUpEvent : public Event {
 public:
     LevelUpEvent(EntityId e, unsigned int l) : entity(e), level(l) {}
-    EntityId entity;
-    unsigned int level;
+    EntityId entity = 0;
+    unsigned int level = 0;
 };
 
 class QuitEvent : public Event {

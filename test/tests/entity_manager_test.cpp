@@ -47,19 +47,6 @@ TEST_F(EntityManager_addEntity, addsEntityforAllList) {
     ASSERT_EQ(1, manager.all().size());
 }
 
-TEST_F(EntityManager_addEntity, setsLocation) {
-    // Given
-    location = Location(1, 2, 3, 4);
-    Tile tile;
-    EXPECT_CALL(state, tile(_)).WillOnce(ReturnRef(tile));
-
-    // When
-    manager.addEntity(entity, location);
-
-    // Then
-    ASSERT_EQ(location, manager.getLocation(entity));
-}
-
 class EntityManager_destroyEntity : public ::testing::Test {
 public:
     void SetUp() {
