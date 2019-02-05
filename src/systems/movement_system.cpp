@@ -13,6 +13,28 @@ void MovementSystem::registerHandlers() {
         [=](std::shared_ptr<MoveEntityEvent> event) {
             handleMoveEntityEvent(event);
         });
+    events()->subscribe<ChangeLocationEvent>([&](auto event) {
+        if (this->map()->isValidTile(event->oldLocation)) {
+            this->map()
+                ->getTile(event->oldLocation)
+                .removeEntity(event->entity);
+        }
+        if (this->map()->isValidTile(event->newLocation)) {
+            this->map()->getTile(event->newLocation).addEntity(event->entity);
+        }
+    });
+    events()->subscribe<RemoveEntityEvent>([&](auto event) {
+        if (!this->map()->isValidTile(event->location)) {
+            return;
+        }
+        this->map()->getTile(event->location).removeEntity(event->entity);
+    });
+    events()->subscribe<AddEntityEvent>([&](auto event) {
+        if (!this->map()->isValidTile(event->location)) {
+            return;
+        }
+        this->map()->getTile(event->location).addEntity(event->entity);
+    });
 }
 
 void MovementSystem::handleMoveEntityEvent(

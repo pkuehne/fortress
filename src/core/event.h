@@ -15,14 +15,16 @@ public:
 
 class AddEntityEvent : public Event {
 public:
-    explicit AddEntityEvent(EntityId e) : entity(e) {}
+    AddEntityEvent(EntityId e, Location l) : entity(e), location(l) {}
     EntityId entity = 0;
+    Location location;
 };
 
 class RemoveEntityEvent : public Event {
 public:
-    explicit RemoveEntityEvent(EntityId e) : entity(e) {}
+    RemoveEntityEvent(EntityId e, Location l) : entity(e), location(l) {}
     EntityId entity = 0;
+    Location location;
 };
 
 class MoveEntityEvent : public Event {

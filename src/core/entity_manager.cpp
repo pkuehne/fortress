@@ -28,11 +28,8 @@ void EntityManager::addEntity(EntityId id, const Location& location) {
     m_locations[id] = location;
     m_entities[location.area].insert(id);
     m_allEntities.insert(id);
-    if (location.isValid()) {
-        m_engine->state()->tile(location).addEntity(id);
-    }
 
-    m_engine->events()->raise(std::make_shared<AddEntityEvent>(id));
+    m_engine->events()->raise(std::make_shared<AddEntityEvent>(id, location));
 }
 
 void EntityManager::destroyEntity(EntityId id) {
@@ -40,14 +37,14 @@ void EntityManager::destroyEntity(EntityId id) {
 
     m_engine->state()->components()->removeAll(id);
     if (location.isValid()) {
-        m_engine->state()->tile(m_locations[id]).removeEntity(id);
         m_entities[m_locations[id].area].erase(id);
     }
     m_locations.erase(id);
     m_allEntities.erase(id);
 
     // Raise event for removal
-    m_engine->events()->raise(std::make_shared<RemoveEntityEvent>(id));
+    m_engine->events()->raise(
+        std::make_shared<RemoveEntityEvent>(id, location));
 }
 
 void EntityManager::setLocation(EntityId entity, const Location& location) {
@@ -55,14 +52,15 @@ void EntityManager::setLocation(EntityId entity, const Location& location) {
         return;
     }
     if (m_locations[entity].isValid()) {
-        m_engine->state()->tile(m_locations[entity]).removeEntity(entity);
         m_entities[location.area].erase(entity);
     }
+    Location prev = m_locations[entity];
     m_locations[entity] = location;
     if (m_locations[entity].isValid()) {
-        m_engine->state()->tile(m_locations[entity]).addEntity(entity);
         m_entities[location.area].insert(entity);
     }
+    m_engine->events()->raise(
+        std::make_shared<ChangeLocationEvent>(entity, prev, location));
 }
 
 EntityId EntityManager::getPlayer() {

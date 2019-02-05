@@ -50,11 +50,11 @@ void CombatSystem::handleAttack(EntityId attacker, EntityId defender) {
 }
 
 void CombatSystem::killEntity(EntityId id) {
+    const Location location = state()->location(id);
     if (id == entities()->getPlayer()) {
-        events()->raise(std::make_shared<RemoveEntityEvent>(id));
+        events()->raise(std::make_shared<RemoveEntityEvent>(id, location));
         return;
     }
-    const Location location = state()->location(id);
 
     // Create the corpse
     EntityId corpse = state()->createEntity(location);
