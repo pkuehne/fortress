@@ -19,9 +19,6 @@ bool canSeeTarget(GameEngine* engine, EntityId entity, NpcComponent* npc);
 bool canAttackTarget(GameEngine* engine, EntityId entity, NpcComponent* npc);
 bool canMoveTo(GameEngine* engine, Location& location);
 
-EntityId findNearestVisibleMatching(GameState* state, const Location& location,
-                                    unsigned int radius, std::string name);
-
 void setPathToTarget(GameEngine* engine, EntityId entity, EntityId target,
                      NpcComponent* npc);
 
@@ -58,10 +55,9 @@ void NpcSystem::createHumanStateMachine() {
     };
     SeekingToMoving.endState = "Moving";
     SeekingState.transitions.push_back(SeekingToMoving);
-    SeekingState.onUpdate = [](GameEngine* g, EntityId e, NpcComponent* n) {
+    SeekingState.onUpdate = [&](GameEngine* g, EntityId e, NpcComponent* n) {
         n->target = findNearestVisibleMatching(
-            g->state(), g->state()->location(e), n->losDistance,
-            n->attribs["seek_target"]);
+            g->state()->location(e), n->losDistance, n->attribs["seek_target"]);
     };
     human["Seeking"] = SeekingState;
 
@@ -112,10 +108,9 @@ void NpcSystem::createDogStateMachine() {
 
     State IdleState;
     Transition IdleToSeeking;
-    IdleToSeeking.condition = [](GameEngine* g, EntityId e, NpcComponent* n) {
+    IdleToSeeking.condition = [&](GameEngine* g, EntityId e, NpcComponent* n) {
         // When human is too far away - 5 tiles
-        return 0 == findNearestVisibleMatching(g->state(),
-                                               g->state()->location(e), 3,
+        return 0 == findNearestVisibleMatching(g->state()->location(e), 3,
                                                n->attribs["seek_target"]);
         ;
     };
@@ -130,19 +125,17 @@ void NpcSystem::createDogStateMachine() {
     };
     SeekingToMoving.endState = "Moving";
     SeekingState.transitions.push_back(SeekingToMoving);
-    SeekingState.onUpdate = [](GameEngine* g, EntityId e, NpcComponent* n) {
+    SeekingState.onUpdate = [&](GameEngine* g, EntityId e, NpcComponent* n) {
         n->target = findNearestVisibleMatching(
-            g->state(), g->state()->location(e), n->losDistance,
-            n->attribs["seek_target"]);
+            g->state()->location(e), n->losDistance, n->attribs["seek_target"]);
     };
     dog["Seeking"] = SeekingState;
 
     State MovingState;
     Transition MovingToIdle;
-    MovingToIdle.condition = [](GameEngine* g, EntityId e, NpcComponent* n) {
+    MovingToIdle.condition = [&](GameEngine* g, EntityId e, NpcComponent* n) {
         // When human is too far away - x tiles
-        return 0 != findNearestVisibleMatching(g->state(),
-                                               g->state()->location(e), 3,
+        return 0 != findNearestVisibleMatching(g->state()->location(e), 3,
                                                n->attribs["seek_target"]);
         ;
     };
@@ -266,14 +259,16 @@ bool canMoveTo(GameEngine* engine, Location& location) {
     return true;
 }
 
-EntityId findNearestVisibleMatching(GameState* state, const Location& location,
-                                    unsigned int radius, std::string name) {
+EntityId NpcSystem::findNearestVisibleMatching(const Location& location,
+                                               unsigned int radius,
+                                               std::string name) {
     EntityId retval = 0;
     unsigned int minDist = 1000.0;
-    EntityHolder entities = state->map()->findEntitiesNear(location, radius);
+    EntityHolder entities = map()->findEntitiesNear(location, radius);
     for (EntityId entity : entities) {
-        unsigned int dist = getDistance(location, state->location(entity));
-        auto* desc = state->components()->get<DescriptionComponent>(entity);
+        unsigned int dist =
+            getDistance(location, this->entities()->getLocation(entity));
+        auto* desc = components()->get<DescriptionComponent>(entity);
         if (desc == 0)
             continue;
         if (desc->title == name && dist < minDist) {

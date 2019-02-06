@@ -20,6 +20,7 @@ public:
 
 private:
     void selectItem(Label* l);
+    const char* nameOrNothing(EntityId item);
 
 private:
     EntityId m_selectedItem = 0;

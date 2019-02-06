@@ -50,14 +50,14 @@ void CombatSystem::handleAttack(EntityId attacker, EntityId defender) {
 }
 
 void CombatSystem::killEntity(EntityId id) {
-    const Location location = state()->location(id);
+    const Location location = entities()->getLocation(id);
     if (id == entities()->getPlayer()) {
         events()->raise(std::make_shared<RemoveEntityEvent>(id, location));
         return;
     }
 
     // Create the corpse
-    EntityId corpse = state()->createEntity(location);
+    EntityId corpse = entities()->createEntity(location);
     events()->raise(std::make_shared<InstantiatePrefabEvent>(corpse, "corpse"));
     components()->make<SpriteComponent>(corpse)->sprite =
         components()->get<SpriteComponent>(id)->sprite;

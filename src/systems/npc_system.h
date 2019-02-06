@@ -8,8 +8,8 @@
 
 class GameEngine;
 
-typedef bool (*ConditionFunc)(GameEngine*, EntityId, NpcComponent*);
-typedef void (*ActionFunc)(GameEngine*, EntityId, NpcComponent*);
+using ConditionFunc = std::function<bool(GameEngine*, EntityId, NpcComponent*)>;
+using ActionFunc = std::function<void(GameEngine*, EntityId, NpcComponent*)>;
 
 struct Transition {
     ConditionFunc condition;
@@ -34,6 +34,8 @@ public:
 private:
     void createHumanStateMachine();
     void createDogStateMachine();
+    EntityId findNearestVisibleMatching(const Location& location,
+                                        unsigned int radius, std::string name);
 
     std::map<std::string, StateMachine> m_stateMachines;
 };

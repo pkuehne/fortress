@@ -6,7 +6,6 @@ void GameSystemBase::initialise(GameEngine* engine,
                                 std::shared_ptr<EntityManager> entities,
                                 std::shared_ptr<MapManager> map) {
     m_engine = engine;
-    m_state = engine->state();
     m_events = events;
     m_components = components;
     m_entities = entities;

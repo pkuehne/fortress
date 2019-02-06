@@ -21,7 +21,6 @@ public:
     virtual void onTurn() {}
 
 protected:
-    GameState* state() const { return m_state; }
     std::shared_ptr<ComponentManager> components() const {
         return m_components;
     }
@@ -36,7 +35,6 @@ protected:
     GameEngine* m_engine = nullptr;
 
 private:
-    GameState* m_state = nullptr;
     std::shared_ptr<EventManager> m_events = nullptr;
     std::shared_ptr<ComponentManager> m_components = nullptr;
     std::shared_ptr<EntityManager> m_entities = nullptr;

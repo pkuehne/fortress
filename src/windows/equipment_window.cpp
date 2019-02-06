@@ -9,17 +9,15 @@
 #include "../widgets/tab.h"
 #include "inspection_window.h"
 
-namespace {
-const char* nameOrNothing(EntityId item, GameEngine* engine) {
+const char* EquipmentWindow::nameOrNothing(EntityId item) {
     DescriptionComponent* description =
-        engine->state()->components()->get<DescriptionComponent>(item);
+        components()->get<DescriptionComponent>(item);
     if (item == 0)
         return "<Nothing>";
     if (description == 0)
         return "?Something?";
     return description->title.c_str();
 }
-} // namespace
 
 void EquipmentWindow::selectItem(Label* l) {
     EntityId player = entities()->getPlayer();
@@ -251,8 +249,7 @@ void EquipmentWindow::setSelectedItem(EntityId item) {
     getWidget<Label>("lblEquip")
         ->setVisible((m_selectedItem > 0 && tab->getCurrentPage() == 1));
 
-    getWidget<Label>("lblSelectedItem")
-        ->setText(nameOrNothing(m_selectedItem, getEngine()));
+    getWidget<Label>("lblSelectedItem")->setText(nameOrNothing(m_selectedItem));
 }
 
 void EquipmentWindow::nextTurn() { updateItemNames(); }
@@ -263,23 +260,23 @@ void EquipmentWindow::updateItemNames() {
         components()->get<EquipmentComponent>(player);
 
     getWidget<Label>("lblRightItem")
-        ->setText(nameOrNothing(equipment->rightHandWieldable, getEngine()));
+        ->setText(nameOrNothing(equipment->rightHandWieldable));
     getWidget<Label>("lblLeftItem")
-        ->setText(nameOrNothing(equipment->leftHandWieldable, getEngine()));
+        ->setText(nameOrNothing(equipment->leftHandWieldable));
     getWidget<Label>("lblHeadItem")
-        ->setText(nameOrNothing(equipment->headWearable, getEngine()));
+        ->setText(nameOrNothing(equipment->headWearable));
     getWidget<Label>("lblFaceItem")
-        ->setText(nameOrNothing(equipment->faceWearable, getEngine()));
+        ->setText(nameOrNothing(equipment->faceWearable));
     getWidget<Label>("lblChestItem")
-        ->setText(nameOrNothing(equipment->chestWearable, getEngine()));
+        ->setText(nameOrNothing(equipment->chestWearable));
     getWidget<Label>("lblArmsItem")
-        ->setText(nameOrNothing(equipment->armsWearable, getEngine()));
+        ->setText(nameOrNothing(equipment->armsWearable));
     getWidget<Label>("lblHandsItem")
-        ->setText(nameOrNothing(equipment->handsWearable, getEngine()));
+        ->setText(nameOrNothing(equipment->handsWearable));
     getWidget<Label>("lblLegsItem")
-        ->setText(nameOrNothing(equipment->legsWearable, getEngine()));
+        ->setText(nameOrNothing(equipment->legsWearable));
     getWidget<Label>("lblFeetItem")
-        ->setText(nameOrNothing(equipment->feetWearable, getEngine()));
+        ->setText(nameOrNothing(equipment->feetWearable));
 
     ListBox* list = getWidget<ListBox>("lstRucksack");
     list->clearItems();
@@ -287,7 +284,7 @@ void EquipmentWindow::updateItemNames() {
     EquipmentComponent* carried = components()->get<EquipmentComponent>(player);
     for (unsigned int ii = 0; ii < carried->carriedEquipment.size(); ii++) {
         ListBoxItem item;
-        item.setText(nameOrNothing(carried->carriedEquipment[ii], getEngine()));
+        item.setText(nameOrNothing(carried->carriedEquipment[ii]));
         item.setValue(carried->carriedEquipment[ii]);
         list->addItem(item);
     }

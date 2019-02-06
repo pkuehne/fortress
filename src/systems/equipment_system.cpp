@@ -107,7 +107,7 @@ void EquipmentSystem::handleDropEquipmentEvent(
         }
     }
 
-    Location location = state()->location(event->entity);
+    Location location = entities()->getLocation(event->entity);
     entities()->setLocation(event->item, location);
 }
 

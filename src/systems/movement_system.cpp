@@ -40,10 +40,10 @@ void MovementSystem::registerHandlers() {
 void MovementSystem::handleMoveEntityEvent(
     std::shared_ptr<MoveEntityEvent> event) {
     EntityId l_entity = event->entity;
-    Location l_oldLocation = state()->location(l_entity);
+    Location l_oldLocation = entities()->getLocation(l_entity);
     Location l_newLocation = event->newLocation;
 
-    if (!state()->isValidTile(l_newLocation)) {
+    if (!map()->isValidTile(l_newLocation)) {
         GraphicsEffectComponent* effect =
             components()->make<GraphicsEffectComponent>(l_entity);
         effect->type = EFFECT_BLINK_FAST;
@@ -53,7 +53,7 @@ void MovementSystem::handleMoveEntityEvent(
 
     // Check if we're running into a collidable or stairs, etc
     {
-        Tile& tile = state()->tile(l_newLocation);
+        Tile& tile = map()->getTile(l_newLocation);
         const EntityHolder& l_targets = tile.entities();
 
         bool blocked = tile.blocked();
@@ -65,7 +65,7 @@ void MovementSystem::handleMoveEntityEvent(
                 components()->get<ConnectorComponent>(l_target);
             if (l_stair && l_stair->target &&
                 l_entity == entities()->getPlayer()) {
-                l_newLocation = state()->location(l_stair->target);
+                l_newLocation = entities()->getLocation(l_stair->target);
             }
         }
         if (blocked) {

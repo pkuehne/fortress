@@ -31,7 +31,7 @@ void ObjectivesSystem::handleAddEntityEvent(
         KillQuest* quest =
             new KillQuest(entities()->getPlayer(), event->entity);
         quest->title() = "Kill the Troll";
-        state()->getQuests().push_back(quest);
+        // state()->getQuests().push_back(quest);
     }
 }
 
@@ -48,19 +48,20 @@ void ObjectivesSystem::handleRemoveEntityEvent(
 
 bool ObjectivesSystem::updateQuests() {
     bool allComplete = true;
-    for (Quest* quest : state()->getQuests()) {
-        if (!quest->isCompleted() && !quest->isFailed()) {
-            quest->update(*(state()));
-            if (quest->isCompleted()) {
-                std::cout << "Quest " << quest->title()
-                          << " has just completed!" << std::endl;
-                continue;
-            } else if (quest->isFailed()) {
-                std::cout << "Quest " << quest->title() << " has just failed!"
-                          << std::endl;
-            }
-            allComplete = false;
-        }
-    }
+    // for (Quest* quest : state()->getQuests()) {
+    //     if (!quest->isCompleted() && !quest->isFailed()) {
+    //         quest->update(*(state()));
+    //         if (quest->isCompleted()) {
+    //             std::cout << "Quest " << quest->title()
+    //                       << " has just completed!" << std::endl;
+    //             continue;
+    //         } else if (quest->isFailed()) {
+    //             std::cout << "Quest " << quest->title() << " has just
+    //             failed!"
+    //                       << std::endl;
+    //         }
+    //         allComplete = false;
+    //     }
+    // }
     return allComplete;
 }
