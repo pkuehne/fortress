@@ -36,7 +36,7 @@ void InteractionWindow::registerWidgets() {
         ->setCommandCharCallback([&](Label* l) {
             ListBox* lstEntities = this->getWidget<ListBox>("lstEntities");
             EntityId entity = m_entities[lstEntities->getSelection()];
-            getEngine()->events()->raise(std::make_shared<RegisterWindowEvent>(
+            events()->raise(std::make_shared<RegisterWindowEvent>(
                 std::make_shared<InspectionWindow>(entity)));
         })
         ->setSensitive(false);
@@ -49,11 +49,9 @@ void InteractionWindow::registerWidgets() {
             ComponentStore& store = m_components[lstEntities->getSelection()];
 
             if (store.open->open) {
-                getEngine()->events()->raise(
-                    std::make_shared<CloseEntityEvent>(entity));
+                events()->raise(std::make_shared<CloseEntityEvent>(entity));
             } else {
-                getEngine()->events()->raise(
-                    std::make_shared<OpenEntityEvent>(entity));
+                events()->raise(std::make_shared<OpenEntityEvent>(entity));
             }
             events()->raise(std::make_shared<EndTurnEvent>());
         })
@@ -88,15 +86,10 @@ void InteractionWindow::registerWidgets() {
     lstEntities->clearItems();
     for (EntityId entity : m_inputEntities) {
         ComponentStore store;
-        store.desc =
-            getEngine()->state()->components()->get<DescriptionComponent>(
-                entity);
-        store.open =
-            getEngine()->state()->components()->get<OpenableComponent>(entity);
-        store.drop =
-            getEngine()->state()->components()->get<DroppableComponent>(entity);
-        store.npc =
-            getEngine()->state()->components()->get<NpcComponent>(entity);
+        store.desc = components()->get<DescriptionComponent>(entity);
+        store.open = components()->get<OpenableComponent>(entity);
+        store.drop = components()->get<DroppableComponent>(entity);
+        store.npc = components()->get<NpcComponent>(entity);
 
         ListBoxItem item;
         item.setText(store.desc ? store.desc->title : "<Unknown>");
