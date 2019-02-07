@@ -2,6 +2,7 @@
 
 #include "../core/location.h"
 #include "../core/utility.h"
+#include <functional>
 #include <map>
 #include <vector>
 
@@ -22,11 +23,11 @@ typedef std::map<Location, Node> NodeMap;
 typedef std::map<Location, Node>::iterator NodeMapIter;
 typedef std::vector<Location> PathVector;
 
-typedef int (*costFunc)(const Location& location, void* customData);
-typedef unsigned int (*neighbourFunc)(const Location& location,
-                                      Location* neighbours, void* customData);
-typedef unsigned int (*distanceFunc)(const Location& start, const Location& end,
-                                     void* customData);
+using costFunc = std::function<int(const Location& location, void* customData)>;
+using neighbourFunc = std::function<int(
+    const Location& location, Location* neighbours, void* customData)>;
+using distanceFunc = std::function<unsigned int(
+    const Location& start, const Location& end, void* customData)>;
 
 class Algorithm {
 public:
@@ -53,4 +54,3 @@ private:
     void* m_customData = 0;
     unsigned int m_numNeighbours = 0;
 };
-

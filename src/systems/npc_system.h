@@ -8,8 +8,8 @@
 
 class GameEngine;
 
-using ConditionFunc = std::function<bool(GameEngine*, EntityId, NpcComponent*)>;
-using ActionFunc = std::function<void(GameEngine*, EntityId, NpcComponent*)>;
+using ConditionFunc = std::function<bool(EntityId, NpcComponent*)>;
+using ActionFunc = std::function<void(EntityId, NpcComponent*)>;
 
 struct Transition {
     ConditionFunc condition;
@@ -36,6 +36,9 @@ private:
     void createDogStateMachine();
     EntityId findNearestVisibleMatching(const Location& location,
                                         unsigned int radius, std::string name);
+    void setPathToTarget(EntityId entity, EntityId target, NpcComponent* npc);
+    bool canAttackTarget(EntityId entity, NpcComponent* npc);
 
+private:
     std::map<std::string, StateMachine> m_stateMachines;
 };

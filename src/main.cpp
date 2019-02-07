@@ -55,7 +55,7 @@ int main(int argc, char** argv) {
         l_engine->addSystem(new MovementSystem());
         l_engine->addSystem(new CombatSystem());
         l_engine->addSystem(new NpcSystem());
-        l_engine->addSystem(new ObjectivesSystem());
+        // l_engine->addSystem(new ObjectivesSystem());
         l_engine->addSystem(new EquipmentSystem());
         l_engine->addSystem(new ConsumableSystem());
         l_engine->addSystem(new GraphicsEffectSystem());
