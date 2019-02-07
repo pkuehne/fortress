@@ -89,7 +89,7 @@ void SaveWindow::saveState(const std::string& filename) {
 
     // Kick off background save
     std::thread update([=]() {
-        FileSaver saver(this->getEngine()->state());
+        FileSaver saver(this->map(), this->entities(), this->components());
         saver.setStatusCallback([=](unsigned int current, unsigned int max,
                                     const std::string& status) {
             lblStatus->setText(status);

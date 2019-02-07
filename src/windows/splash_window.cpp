@@ -16,8 +16,8 @@ extern int BUILD;
 void SplashWindow::setup() { setFullscreen(); }
 
 void SplashWindow::registerWidgets() {
-    int xOffset = getEngine()->getGraphics()->getScreenWidth() / 2 - 25;
-    int yOffset = getEngine()->getGraphics()->getScreenHeight() / 2;
+    int xOffset = getWidth() / 2 - 22;
+    int yOffset = getHeight() / 2;
     unsigned char tile = 178;
 
     createWidget<Label>("lblWelcome", -2, -3)

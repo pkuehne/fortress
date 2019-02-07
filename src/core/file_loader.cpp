@@ -20,15 +20,15 @@ void FileLoader::loadState(const std::string& filename) {
         updateStatus(std::string("Loading Area " + std::to_string(ii)));
         if (ii) {
             AreaInfo area = node[ii].as<AreaInfo>();
-            m_state->map()->addArea(area, ii);
+            m_map->addArea(area, ii);
         }
         YAML::Node&& entityNode = node[ii]["entities"];
         decodeEntities(entityNode);
     }
 }
 
-void FileLoader::decodeEntities(YAML::Node& node) {
+void FileLoader::decodeEntities(const YAML::Node& node) {
     for (YAML::const_iterator iter = node.begin(); iter != node.end(); ++iter) {
-        decodeEntity(m_state, iter->second, iter->first.as<EntityId>());
+        m_yaml.decodeEntity(iter->second, iter->first.as<EntityId>());
     }
 }

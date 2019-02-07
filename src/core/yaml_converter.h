@@ -25,8 +25,30 @@
 #include <vector>
 #include <yaml-cpp/yaml.h>
 
-void encodeEntity(GameState* state, YAML::Node& node, EntityId entity);
-void decodeEntity(GameState* state, const YAML::Node& node, EntityId entity);
+class YamlConverter {
+public:
+    YamlConverter(std::shared_ptr<EntityManager> entities,
+                  std::shared_ptr<ComponentManager> components)
+        : m_entities(entities), m_components(components) {}
+    void encodeEntity(YAML::Node& node, EntityId entity);
+    void decodeEntity(const YAML::Node& node, EntityId entity);
+
+private:
+    template <typename T>
+    void encodeComponent(const std::string& name, YAML::Node& node,
+                         EntityId entity);
+    template <typename T>
+    void decodeComponent(const std::string& name, const YAML::Node& node,
+                         EntityId entity);
+
+private:
+    std::shared_ptr<EntityManager> entities() { return m_entities; }
+    std::shared_ptr<ComponentManager> components() { return m_components; }
+
+private:
+    std::shared_ptr<EntityManager> m_entities;
+    std::shared_ptr<ComponentManager> m_components;
+};
 
 namespace YAML {
 

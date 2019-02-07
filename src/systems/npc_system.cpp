@@ -25,7 +25,6 @@ NpcSystem::NpcSystem() {
 }
 
 void NpcSystem::createHumanStateMachine() {
-
     StateMachine human;
 
     State NoneState;
@@ -198,7 +197,6 @@ EntityId NpcSystem::findNearestVisibleMatching(const Location& location,
 
 void NpcSystem::setPathToTarget(EntityId entity, EntityId target,
                                 NpcComponent* npc) {
-
     auto getPathCost = [&](const Location& location, void* c) {
         for (EntityId entity : map()->getTile(location).entities()) {
             if (entity == entities()->getPlayer())

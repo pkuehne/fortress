@@ -1,62 +1,62 @@
 #include "yaml_converter.h"
 #include "../components/experience_component.h"
 
+void YamlConverter::encodeEntity(YAML::Node& node, EntityId entity) {
+    encodeComponent<ColliderComponent>("collide", node, entity);
+    encodeComponent<ConsumableComponent>("consue", node, entity);
+    encodeComponent<DescriptionComponent>("describe", node, entity);
+    encodeComponent<DroppableComponent>("drop", node, entity);
+    encodeComponent<EquipmentComponent>("equip", node, entity);
+    encodeComponent<GraphicsEffectComponent>("graphics", node, entity);
+    encodeComponent<HealthComponent>("health", node, entity);
+    encodeComponent<NpcComponent>("npc", node, entity);
+    encodeComponent<OpenableComponent>("open", node, entity);
+    encodeComponent<PlayerComponent>("player", node, entity);
+    encodeComponent<SpriteComponent>("sprite", node, entity);
+    encodeComponent<ConnectorComponent>("connector", node, entity);
+    encodeComponent<WearableComponent>("wear", node, entity);
+    encodeComponent<WieldableComponent>("wield", node, entity);
+    encodeComponent<GroupingComponent>("grouping", node, entity);
+    encodeComponent<ExperienceComponent>("experience", node, entity);
+
+    node[entity]["location"] = entities()->getLocation(entity);
+}
+
+void YamlConverter::decodeEntity(const YAML::Node& node, EntityId entity) {
+    // Add Entity
+    entities()->addEntity(entity, node["location"].as<Location>());
+
+    decodeComponent<ColliderComponent>("collide", node, entity);
+    decodeComponent<ConsumableComponent>("consume", node, entity);
+    decodeComponent<DescriptionComponent>("describe", node, entity);
+    decodeComponent<DroppableComponent>("drop", node, entity);
+    decodeComponent<EquipmentComponent>("equip", node, entity);
+    decodeComponent<GraphicsEffectComponent>("graphics", node, entity);
+    decodeComponent<HealthComponent>("health", node, entity);
+    decodeComponent<NpcComponent>("npc", node, entity);
+    decodeComponent<OpenableComponent>("open", node, entity);
+    decodeComponent<PlayerComponent>("player", node, entity);
+    decodeComponent<SpriteComponent>("sprite", node, entity);
+    decodeComponent<ConnectorComponent>("connector", node, entity);
+    decodeComponent<WearableComponent>("wear", node, entity);
+    decodeComponent<WieldableComponent>("wield", node, entity);
+    decodeComponent<GroupingComponent>("grouping", node, entity);
+    decodeComponent<ExperienceComponent>("experience", node, entity);
+}
+
 template <typename T>
-void loadComponent(const std::string& name, GameState* state, YAML::Node& node,
-                   EntityId entity) {
-    auto* comp = state->components()->get<T>(entity);
+void YamlConverter::encodeComponent(const std::string& name, YAML::Node& node,
+                                    EntityId entity) {
+    auto* comp = components()->get<T>(entity);
     if (comp) {
         node[entity][name] = *comp;
     }
 }
 
-void encodeEntity(GameState* state, YAML::Node& node, EntityId entity) {
-    loadComponent<ColliderComponent>("collide", state, node, entity);
-    loadComponent<ConsumableComponent>("consue", state, node, entity);
-    loadComponent<DescriptionComponent>("describe", state, node, entity);
-    loadComponent<DroppableComponent>("drop", state, node, entity);
-    loadComponent<EquipmentComponent>("equip", state, node, entity);
-    loadComponent<GraphicsEffectComponent>("graphics", state, node, entity);
-    loadComponent<HealthComponent>("health", state, node, entity);
-    loadComponent<NpcComponent>("npc", state, node, entity);
-    loadComponent<OpenableComponent>("open", state, node, entity);
-    loadComponent<PlayerComponent>("player", state, node, entity);
-    loadComponent<SpriteComponent>("sprite", state, node, entity);
-    loadComponent<ConnectorComponent>("connector", state, node, entity);
-    loadComponent<WearableComponent>("wear", state, node, entity);
-    loadComponent<WieldableComponent>("wield", state, node, entity);
-    loadComponent<GroupingComponent>("grouping", state, node, entity);
-    loadComponent<ExperienceComponent>("experience", state, node, entity);
-
-    node[entity]["location"] = state->entityManager()->getLocation(entity);
-}
-
 template <typename T>
-void decodeComponent(GameState* state, const YAML::Node& node, EntityId entity,
-                     const std::string& nodeName) {
-    if (node[nodeName].IsDefined()) {
-        *state->components()->make<T>(entity) = node[nodeName].as<T>();
+void YamlConverter::decodeComponent(const std::string& name,
+                                    const YAML::Node& node, EntityId entity) {
+    if (node[name].IsDefined()) {
+        *(components()->make<T>(entity)) = node[name].as<T>();
     }
-}
-
-void decodeEntity(GameState* state, const YAML::Node& node, EntityId entity) {
-    // Add Entity
-    state->entityManager()->addEntity(entity, node["location"].as<Location>());
-
-    decodeComponent<ColliderComponent>(state, node, entity, "collide");
-    decodeComponent<ConsumableComponent>(state, node, entity, "consume");
-    decodeComponent<DescriptionComponent>(state, node, entity, "describe");
-    decodeComponent<DroppableComponent>(state, node, entity, "drop");
-    decodeComponent<EquipmentComponent>(state, node, entity, "equip");
-    decodeComponent<GraphicsEffectComponent>(state, node, entity, "graphics");
-    decodeComponent<HealthComponent>(state, node, entity, "health");
-    decodeComponent<NpcComponent>(state, node, entity, "npc");
-    decodeComponent<OpenableComponent>(state, node, entity, "open");
-    decodeComponent<PlayerComponent>(state, node, entity, "player");
-    decodeComponent<SpriteComponent>(state, node, entity, "sprite");
-    decodeComponent<ConnectorComponent>(state, node, entity, "connector");
-    decodeComponent<WearableComponent>(state, node, entity, "wear");
-    decodeComponent<WieldableComponent>(state, node, entity, "wield");
-    decodeComponent<GroupingComponent>(state, node, entity, "grouping");
-    decodeComponent<ExperienceComponent>(state, node, entity, "experience");
 }
