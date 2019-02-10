@@ -300,7 +300,7 @@ Texture Graphics::loadTexture(std::string name, unsigned int cols,
     LOG(INFO) << "Loading texture: " << name << " " << cols << "x" << rows
               << std::endl;
 
-    texture.name = std::string("graphics/");
+    texture.name = std::string("../graphics/");
     // std::string tileset ("graphics/");
     texture.name.append(name);
     texture.id = SOIL_load_OGL_texture(

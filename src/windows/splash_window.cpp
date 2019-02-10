@@ -6,11 +6,11 @@
 #include "main_window.h"
 #include <sstream>
 
-#ifndef MAJOR
-extern int MAJOR;
-extern int MINOR;
-extern int PATCH;
-extern int BUILD;
+#ifndef FORTRESS_VERSION_MAJOR
+extern int FORTRESS_VERSION_MAJOR;
+extern int FORTRESS_VERSION_MINOR;
+extern int FORTRESS_VERSION_PATCH;
+extern int FORTRESS_VERSION_BUILD;
 #endif
 
 void SplashWindow::setup() { setFullscreen(); }
@@ -146,7 +146,8 @@ void SplashWindow::registerWidgets() {
     createWidget<Icon>("icon387", xOffset + 38, yOffset + 7)->setIcon(tile);
 
     std::stringstream ss;
-    ss << MAJOR << "." << MINOR << "." << PATCH << " Build: " << BUILD;
+    ss << FORTRESS_VERSION_MAJOR << "." << FORTRESS_VERSION_MINOR << "."
+       << FORTRESS_VERSION_PATCH << " Build: " << FORTRESS_VERSION_BUILD;
 
     createWidget<Label>("lblVersion", 1, 1)
         ->setText(ss.str())

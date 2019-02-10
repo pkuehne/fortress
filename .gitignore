@@ -27,7 +27,7 @@
 *.out
 *.app
 fortress
-unit_tests
+unit_test
 
 #gcov files
 *.gcda
@@ -63,3 +63,5 @@ fortress.tgz
 doxygen/
 lint-errors.txt
 saves/
+build/
+third-party/

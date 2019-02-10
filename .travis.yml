@@ -2,18 +2,13 @@ language: cpp
 
 sudo: required
 
-
 services:
   - docker
 
 before_install:
-    - docker build -t fortress .
+  - docker build -t fortress .
 
 jobs:
-    include:
-        - stage: build
-          script: docker run --rm fortress /bin/sh -c 'make build'
-        - stage: test
-          script: docker run --rm fortress /bin/sh -c 'make test'
-        - stage: analysis
-          script: docker run --rm fortress /bin/sh -c 'make lint'
+  include:
+    - stage: build and test
+      script: docker run --rm fortress /bin/sh -c 'make && make test'

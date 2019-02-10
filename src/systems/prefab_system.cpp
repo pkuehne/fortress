@@ -39,7 +39,7 @@ void PrefabSystem::registerHandlers() {
                 event->entity, event->prefab));
         });
 
-    std::string path = "./data/prefabs/";
+    std::string path = "../data/prefabs/";
     loadPrefabsFromDirectory(path);
 }
 

@@ -4,7 +4,12 @@
 #include <yaml-cpp/yaml.h>
 
 ConfigManager::ConfigManager(const std::string& filename) {
-    YAML::Node config = YAML::LoadFile(filename);
+    YAML::Node config;
+    try {
+        config = YAML::LoadFile(filename);
+    } catch (const std::exception& e) {
+        //
+    }
     fullscreen = config["fullscreen"].as<bool>(true);
     windowWidth = config["WindowWidth"].as<int>(800);
     windowHeight = config["WindowHeight"].as<int>(600);

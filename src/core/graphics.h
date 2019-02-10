@@ -61,7 +61,7 @@ private:
                           Color fg, Color bg);
 
 private:
-    ConfigManager m_config = ConfigManager("config/config.yaml");
+    ConfigManager m_config = ConfigManager("../config/config.yaml");
     int m_width = 0;
     int m_height = 0;
     GLFWwindow* m_window = 0;
