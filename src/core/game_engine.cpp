@@ -28,6 +28,11 @@ void GameEngine::initialise() {
     m_eventManager->subscribe<EndTurnEvent>(
         [&](auto event) { this->swapTurn(); });
 
+    m_eventManager->subscribe<RemoveEntityEvent>([&](auto event) {
+        m_state->components()->removeAll(event->entity);
+        m_state->entityManager()->destroyEntity(event->entity);
+    });
+
     // Initialise Managers
     m_windowManager->initialise(this);
 

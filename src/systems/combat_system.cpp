@@ -52,7 +52,7 @@ void CombatSystem::handleAttack(EntityId attacker, EntityId defender) {
 void CombatSystem::killEntity(EntityId id) {
     const Location location = entities()->getLocation(id);
     if (id == entities()->getPlayer()) {
-        events()->raise(std::make_shared<RemoveEntityEvent>(id, location));
+        events()->raise(std::make_shared<RemoveEntityEvent>(id));
         return;
     }
 
@@ -80,7 +80,7 @@ void CombatSystem::killEntity(EntityId id) {
             entities()->setLocation(entity, location);
         }
     }
-    entities()->destroyEntity(id);
+    events()->raise(std::make_shared<RemoveEntityEvent>(id));
 }
 
 void CombatSystem::updateLog(const EntityId& attacker, const EntityId& target,

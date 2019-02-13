@@ -22,9 +22,8 @@ public:
 
 class RemoveEntityEvent : public Event {
 public:
-    RemoveEntityEvent(EntityId e, Location l) : entity(e), location(l) {}
+    explicit RemoveEntityEvent(EntityId e) : entity(e) {}
     EntityId entity = 0;
-    Location location;
 };
 
 class MoveEntityEvent : public Event {

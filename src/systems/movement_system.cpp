@@ -24,10 +24,11 @@ void MovementSystem::registerHandlers() {
         }
     });
     events()->subscribe<RemoveEntityEvent>([&](auto event) {
-        if (!this->map()->isValidTile(event->location)) {
+        auto loc = this->entities()->getLocation(event->entity);
+        if (!this->map()->isValidTile(loc)) {
             return;
         }
-        this->map()->getTile(event->location).removeEntity(event->entity);
+        this->map()->getTile(loc).removeEntity(event->entity);
     });
     events()->subscribe<AddEntityEvent>([&](auto event) {
         if (!this->map()->isValidTile(event->location)) {

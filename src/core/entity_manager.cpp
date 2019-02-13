@@ -35,16 +35,11 @@ void EntityManager::addEntity(EntityId id, const Location& location) {
 void EntityManager::destroyEntity(EntityId id) {
     Location& location = m_locations[id];
 
-    m_engine->state()->components()->removeAll(id);
     if (location.isValid()) {
         m_entities[m_locations[id].area].erase(id);
     }
     m_locations.erase(id);
     m_allEntities.erase(id);
-
-    // Raise event for removal
-    m_engine->events()->raise(
-        std::make_shared<RemoveEntityEvent>(id, location));
 }
 
 void EntityManager::setLocation(EntityId entity, const Location& location) {

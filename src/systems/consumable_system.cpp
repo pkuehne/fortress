@@ -43,6 +43,5 @@ void ConsumableSystem::handleConsumeItemEvent(
 
     // Check whether this has a health impact
     updateHealth(consumable, health);
-
-    entities()->destroyEntity(event->item);
+    events()->raise(std::make_shared<RemoveEntityEvent>(event->item));
 }

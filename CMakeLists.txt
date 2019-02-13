@@ -78,5 +78,5 @@ add_custom_target(lint ALL
 )
 
 add_custom_target(check ALL
-    COMMAND cppcheck ../src/ --enable=style,information,warning --error-exitcode=1 -DMAJOR=1 --inline-suppr 2>lint-errors.txt
+    COMMAND cppcheck ../src/ --enable=style,information,warning --error-exitcode=1 -DMAJOR=1 --inline-suppr
 )
