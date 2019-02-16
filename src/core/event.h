@@ -185,3 +185,14 @@ class EndTurnEvent : public Event {
 public:
     EndTurnEvent() = default;
 };
+
+class UpdateTileSizeEvent : public Event {
+public:
+    explicit UpdateTileSizeEvent(int a) : adjustment(a) {}
+    int adjustment = 0;
+};
+
+class ResizeWindowsEvent : public Event {
+public:
+    ResizeWindowsEvent() {}
+};

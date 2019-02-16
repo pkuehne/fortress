@@ -50,4 +50,4 @@ target_link_libraries(unit_test c)
 target_link_libraries(unit_test m)
 target_link_libraries(unit_test pthread)
     
-add_test(unit_test unit_test)
+add_test(fortress_unit_test unit_test)

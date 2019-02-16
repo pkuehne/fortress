@@ -124,21 +124,15 @@ void MapWindow::registerWidgets() {
     createWidget<Label>("lblTileSizeIncr", 0, 0)
         ->setText("]")
         ->setCommandChar(1)
-        ->setCommandCharCallback([&](Label* l) {
-            unsigned int height = getEngine()->getGraphics()->getTileHeight();
-            unsigned int width = getEngine()->getGraphics()->getTileWidth();
-            getEngine()->getGraphics()->updateTileSize(width + 1, height + 1);
-            getEngine()->getWindows()->resize();
+        ->setCommandCharCallback([this](Label* l) {
+            this->events()->raise(std::make_shared<UpdateTileSizeEvent>(1));
         })
         ->setVisible(false);
     createWidget<Label>("lblTileSizeDecr", 0, 0)
         ->setText("[")
         ->setCommandChar(1)
-        ->setCommandCharCallback([&](Label* l) {
-            unsigned int height = getEngine()->getGraphics()->getTileHeight();
-            unsigned int width = getEngine()->getGraphics()->getTileWidth();
-            getEngine()->getGraphics()->updateTileSize(width - 1, height - 1);
-            getEngine()->getWindows()->resize();
+        ->setCommandCharCallback([this](Label* l) {
+            this->events()->raise(std::make_shared<UpdateTileSizeEvent>(-1));
         })
         ->setVisible(false);
     createWidget<Label>("lblDebugWindow", 0, 0)
@@ -174,7 +168,7 @@ void updateLocation(unsigned char key, Location& location) {
 void MapWindow::keyPress(unsigned char key) {
     EntityId playerId = entities()->getPlayer();
     if (key == 'w' || key == 'a' || key == 's' || key == 'd') {
-        Location oldLocation = getEngine()->state()->location(playerId);
+        Location oldLocation = entities()->getLocation(playerId);
         Location newLocation = oldLocation;
         updateLocation(key, newLocation);
 

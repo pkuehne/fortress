@@ -32,6 +32,14 @@ void GameEngine::initialise() {
         m_state->components()->removeAll(event->entity);
         m_state->entityManager()->destroyEntity(event->entity);
     });
+    m_eventManager->subscribe<UpdateTileSizeEvent>([this](auto event) {
+        unsigned int height =
+            this->getGraphics()->getTileHeight() + event->adjustment;
+        unsigned int width =
+            this->getGraphics()->getTileWidth() + event->adjustment;
+        this->getGraphics()->updateTileSize(width, height);
+        this->events()->raise(std::make_shared<ResizeWindowsEvent>());
+    });
 
     // Initialise Managers
     m_windowManager->initialise(this);

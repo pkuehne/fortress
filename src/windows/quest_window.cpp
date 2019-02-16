@@ -25,11 +25,11 @@ void QuestWindow::registerWidgets() {
     b = this->createWidget<ListBox>("lstQuests", 1, 3);
     b->setHeight(5)->setWidth(10);
 
-    for (Quest* quest : getEngine()->state()->getQuests()) {
-        ListBoxItem item;
-        item.setText(quest->title());
-        b->addItem(item);
-    }
+    // for (Quest* quest : getEngine()->state()->getQuests()) {
+    //     ListBoxItem item;
+    //     item.setText(quest->title());
+    //     b->addItem(item);
+    // }
     b->setItemSelectedCallback([](ListBox* b) {
         Label* l = b->getWindow()->getWidget<Label>("lblQuestDetail");
         l->setText(b->getSelectedItem().getText().c_str());

@@ -19,7 +19,7 @@
     {
       "label": "Run",
       "type": "shell",
-      "command": "make run",
+      "command": "make fortress -j 8 && make run",
       "group": {
         "kind": "build",
         "isDefault": true

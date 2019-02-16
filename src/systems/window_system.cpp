@@ -25,7 +25,11 @@ void WindowSystem::registerHandlers() {
     auto closeHandler = [&](std::shared_ptr<CloseWindowEvent> event) {
         getEngine()->getWindows()->popWindow();
     };
+    auto resizeHandler = [&](std::shared_ptr<ResizeWindowsEvent> event) {
+        getEngine()->getWindows()->resize();
+    };
 
     events()->subscribe<RegisterWindowEvent>(registerHandler);
     events()->subscribe<CloseWindowEvent>(closeHandler);
+    events()->subscribe<ResizeWindowsEvent>(resizeHandler);
 }
