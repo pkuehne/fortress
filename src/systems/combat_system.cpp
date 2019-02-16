@@ -11,9 +11,11 @@
 
 void CombatSystem::registerHandlers() {
     events()->subscribe<AttackEntityEvent>(
-        [=](std::shared_ptr<AttackEntityEvent> event) {
-            handleAttack(event->attacker, event->defender);
+        [&](std::shared_ptr<AttackEntityEvent> event) {
+            this->handleAttack(event->attacker, event->defender);
         });
+    events()->subscribe<KillEntityEvent>(
+        [&](auto event) { this->killEntity(event->entity); });
 }
 
 void CombatSystem::handleAttack(EntityId attacker, EntityId defender) {
@@ -44,7 +46,8 @@ void CombatSystem::handleAttack(EntityId attacker, EntityId defender) {
         l_health->health -= damage;
         events()->raise(std::make_shared<UpdateExperienceEvent>(attacker, 100));
     } else {
-        killEntity(defender);
+        // killEntity(defender);
+        events()->raise(std::make_shared<KillEntityEvent>(defender));
         events()->raise(std::make_shared<UpdateExperienceEvent>(attacker, 500));
     }
 }
@@ -62,24 +65,6 @@ void CombatSystem::killEntity(EntityId id) {
     components()->make<SpriteComponent>(corpse)->sprite =
         components()->get<SpriteComponent>(id)->sprite;
 
-    // Drop the equipment
-    EquipmentComponent* equipment = components()->get<EquipmentComponent>(id);
-    if (equipment) {
-        equipment->carriedEquipment.push_back(equipment->headWearable);
-        equipment->carriedEquipment.push_back(equipment->faceWearable);
-        equipment->carriedEquipment.push_back(equipment->chestWearable);
-        equipment->carriedEquipment.push_back(equipment->armsWearable);
-        equipment->carriedEquipment.push_back(equipment->handsWearable);
-        equipment->carriedEquipment.push_back(equipment->legsWearable);
-        equipment->carriedEquipment.push_back(equipment->feetWearable);
-        equipment->carriedEquipment.push_back(equipment->rightHandWieldable);
-        equipment->carriedEquipment.push_back(equipment->leftHandWieldable);
-        equipment->carriedEquipment.push_back(equipment->armsWearable);
-
-        for (auto entity : equipment->carriedEquipment) {
-            entities()->setLocation(entity, location);
-        }
-    }
     events()->raise(std::make_shared<RemoveEntityEvent>(id));
 }
 

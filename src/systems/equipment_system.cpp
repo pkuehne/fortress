@@ -71,25 +71,17 @@ bool equipItem(EntityId item, WieldableComponent* wieldable,
 
 void EquipmentSystem::registerHandlers() {
     events()->subscribe<DropEquipmentEvent>(
-        [=](std::shared_ptr<DropEquipmentEvent> event) {
-            handleDropEquipmentEvent(event);
-        });
+        [this](auto event) { this->handleDropEquipmentEvent(event); });
     events()->subscribe<PickupEquipmentEvent>(
-        [=](std::shared_ptr<PickupEquipmentEvent> event) {
-            handlePickupEquipmentEvent(event);
-        });
+        [this](auto event) { this->handlePickupEquipmentEvent(event); });
     events()->subscribe<EquipItemEvent>(
-        [=](std::shared_ptr<EquipItemEvent> event) {
-            handleEquipItemEvent(event);
-        });
+        [this](auto event) { this->handleEquipItemEvent(event); });
     events()->subscribe<UnequipItemEvent>(
-        [=](std::shared_ptr<UnequipItemEvent> event) {
-            handleUnequipItemEvent(event);
-        });
+        [this](auto event) { this->handleUnequipItemEvent(event); });
     events()->subscribe<ConsumeItemEvent>(
-        [=](std::shared_ptr<ConsumeItemEvent> event) {
-            handleConsumeItemEvent(event);
-        });
+        [this](auto event) { this->handleConsumeItemEvent(event); });
+    events()->subscribe<KillEntityEvent>(
+        [this](auto event) { this->handleKillEntityEvent(event); });
 }
 
 void EquipmentSystem::handleDropEquipmentEvent(
@@ -161,5 +153,31 @@ void EquipmentSystem::handleConsumeItemEvent(
             equipment->carriedEquipment.erase(it);
             break;
         }
+    }
+}
+
+void EquipmentSystem::handleKillEntityEvent(
+    std::shared_ptr<KillEntityEvent> event) {
+    // Drop the equipment
+    EquipmentComponent* equipment =
+        components()->get<EquipmentComponent>(event->entity);
+    if (!equipment) {
+        return;
+    }
+    const Location location = entities()->getLocation(event->entity);
+
+    equipment->carriedEquipment.push_back(equipment->headWearable);
+    equipment->carriedEquipment.push_back(equipment->faceWearable);
+    equipment->carriedEquipment.push_back(equipment->chestWearable);
+    equipment->carriedEquipment.push_back(equipment->armsWearable);
+    equipment->carriedEquipment.push_back(equipment->handsWearable);
+    equipment->carriedEquipment.push_back(equipment->legsWearable);
+    equipment->carriedEquipment.push_back(equipment->feetWearable);
+    equipment->carriedEquipment.push_back(equipment->rightHandWieldable);
+    equipment->carriedEquipment.push_back(equipment->leftHandWieldable);
+    equipment->carriedEquipment.push_back(equipment->armsWearable);
+
+    for (auto entity : equipment->carriedEquipment) {
+        entities()->setLocation(entity, location);
     }
 }

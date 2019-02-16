@@ -13,4 +13,5 @@ private:
     void handleUnequipItemEvent(std::shared_ptr<UnequipItemEvent> event);
     void handleEquipItemEvent(std::shared_ptr<EquipItemEvent> event);
     void handleConsumeItemEvent(std::shared_ptr<ConsumeItemEvent> event);
+    void handleKillEntityEvent(std::shared_ptr<KillEntityEvent> event);
 };

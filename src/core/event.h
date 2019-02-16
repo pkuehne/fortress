@@ -49,6 +49,12 @@ public:
     EntityId defender = 0;
 };
 
+class KillEntityEvent : public Event {
+public:
+    explicit KillEntityEvent(EntityId e) : entity(e) {}
+    EntityId entity = 0;
+};
+
 class DropEquipmentEvent : public Event {
 public:
     DropEquipmentEvent(EntityId e, EntityId i) : entity(e), item(i) {}
