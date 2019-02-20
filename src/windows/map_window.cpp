@@ -118,6 +118,7 @@ void MapWindow::registerWidgets() {
 
     createWidget<Camera>("camCamera", 0, m_messagesHeight)
         ->setGameState(getState())
+        ->setManagerRefs(entities(), components(), map())
         ->setHeightStretchMargin(0)
         ->setWidthStretchMargin(m_sidebarWidth);
 

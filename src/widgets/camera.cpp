@@ -13,11 +13,7 @@ Camera* Camera::setGameState(GameState* state) {
 }
 
 void Camera::render() {
-    if (!m_state) {
-        throw("Game State must be set on Camera");
-    }
-
-    Location l_playerLoc = m_state->location(m_entities->getPlayer());
+    Location l_playerLoc = m_entities->getLocation(m_entities->getPlayer());
 
     m_mapOffsetX = l_playerLoc.x - (getWidth() / 2);
     m_mapOffsetY = l_playerLoc.y - (getHeight() / 2);
@@ -25,7 +21,7 @@ void Camera::render() {
     m_area = l_playerLoc.area;
 
     renderSprites();
-    if (m_state->debug().showNpcPaths) {
+    if (m_debug) {
         renderNpcPaths();
     }
 }
@@ -37,17 +33,16 @@ void Camera::renderSprites() {
         for (unsigned int xx = 0; xx < getWidth(); xx++) {
             unsigned int tileX = xx + m_mapOffsetX;
             Location loc(tileX, tileY, tileZ, m_area);
-            if (!m_state->isValidTile(loc)) {
+            if (!m_map->isValidTile(loc)) {
                 continue;
             }
-            Tile& l_tile = m_state->tile(loc);
+            Tile& l_tile = m_map->getTile(loc);
             std::map<unsigned int, std::vector<const SpriteComponent*>>
                 l_sprites;
             for (EntityId entity : l_tile.entities()) {
                 SpriteComponent* l_sprite =
-                    m_state->components()->get<SpriteComponent>(entity);
-                NpcComponent* l_npc =
-                    m_state->components()->get<NpcComponent>(entity);
+                    m_components->get<SpriteComponent>(entity);
+                NpcComponent* l_npc = m_components->get<NpcComponent>(entity);
                 if (!l_sprite)
                     continue;
                 if (l_npc && l_tile.lastVisited() < m_state->turn()) {
@@ -68,7 +63,7 @@ void Camera::renderSprites() {
                         l_tile.lastVisited() > 0 &&
                         l_tile.lastVisited() + 200 > m_state->turn();
 
-                    if (m_state->debug().revealAllTiles || inMemory) {
+                    if (m_debug || inMemory) {
                         drawTile(xx, yy, l_sprite->sprite, fgColor,
                                  l_sprite->bgColor);
                     }
@@ -79,17 +74,17 @@ void Camera::renderSprites() {
 }
 
 void Camera::renderNpcPaths() {
-    Location l_playerLoc = m_state->location(m_entities->getPlayer());
+    Location l_playerLoc = m_entities->getLocation(m_entities->getPlayer());
 
-    for (EntityId entity : m_state->entities(l_playerLoc.area)) {
-        Location loc = m_state->location(entity);
+    for (EntityId entity : m_entities->get(l_playerLoc.area)) {
+        Location loc = m_entities->getLocation(entity);
         int x = loc.x;
         int y = loc.y;
         if (x < m_mapOffsetX || x + m_mapOffsetX > (int)getWidth() ||
             y < m_mapOffsetY || y + m_mapOffsetY > (int)getHeight()) {
             continue;
         }
-        NpcComponent* npc = m_state->components()->get<NpcComponent>(entity);
+        NpcComponent* npc = m_components->get<NpcComponent>(entity);
         if (npc) {
             for (Location stepLoc : npc->path) {
                 drawTile(stepLoc.x - m_mapOffsetX, stepLoc.y - m_mapOffsetY,
