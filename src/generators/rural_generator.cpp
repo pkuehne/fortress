@@ -15,9 +15,8 @@ const unsigned char DOG = 'D';
 
 EntityId RuralGenerator::createPrefab(const std::string& type,
                                       Location& location) {
-    EntityId entity = m_engine->state()->createEntity(location);
-    m_engine->events()->raise(
-        std::make_shared<InstantiatePrefabEvent>(entity, type));
+    EntityId entity = entities()->createEntity(location);
+    events()->raise(std::make_shared<InstantiatePrefabEvent>(entity, type));
     return entity;
 }
 
@@ -39,7 +38,6 @@ bool RuralGenerator::generate() {
 void RuralGenerator::createEntitiesFromMap() {
     EntityId l_entity = 0;
     Location location;
-    auto state = m_engine->state();
 
     for (unsigned int yy = 0; yy < m_mapHeight; yy++) {
         for (unsigned int xx = 0; xx < m_mapWidth; xx++) {
@@ -47,7 +45,7 @@ void RuralGenerator::createEntitiesFromMap() {
             location.y = yy;
             location.z = 0;
             location.area = m_area;
-            state->tile(location).setFloorMaterial(FloorMaterial::Grass);
+            map()->getTile(location).setFloorMaterial(FloorMaterial::Grass);
             switch (getByCoordinate(xx, yy)) {
                 case EMPTY:
                     break;

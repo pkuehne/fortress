@@ -107,102 +107,28 @@ void GeneratorWindow::registerWidgets() {
         ->setNumber(2)
         ->setVerticalAlign(Widget::VerticalAlign::Bottom)
         ->setSensitive(false);
-}
 
-void GeneratorWindow::redraw() {
-    if (m_hideWindow && m_status == WAITING) {
-        startGenerating();
-        startPlaying();
-        return;
+    if (m_hideWindow) {
+        this->startGenerating();
+        events()->subscribe<MapGeneratedEvent>(
+            [this](auto event) { this->startPlaying(); });
+    } else {
+        events()->subscribe<MapGeneratedEvent>([this](auto event) {
+            this->m_status = COMPLETED;
+            this->getWidget<Label>("lblPlay")->setSensitive(true);
+        });
     }
-}
-
-void GeneratorWindow::generateGroupings() {
-    // GameState* state = getEngine()->state();
-
-    // Grouping herbivores("Herbivore");
-    // herbivores.setDefaultRelationship(-40);
-    // herbivores.setRelationship("Carnivore", -100);
-    // state->world().addGrouping(herbivores);
-
-    // Grouping carnivores("Carnivore");
-    // carnivores.setDefaultRelationship(-40);
-    // state->world().addGrouping(carnivores);
-
-    // Grouping orcs("Orc");
-    // orcs.setDefaultRelationship(-100);
-    // state->world().addGrouping(orcs);
-
-    // Grouping humans("Human");
-    // humans.setDefaultRelationship(0);
-    // humans.setRelationship("Herbivore", 20);
-    // humans.setRelationship("Carnivore", -60);
-    // humans.setRelationship("Orc", -100);
-    // state->world().addGrouping(humans);
 }
 
 void GeneratorWindow::startGenerating() {
-    generateGroupings();
-
     m_progress = 1;
     m_status = PROGRESS;
-    unsigned int l_levelWidth =
-        getWidget<NumericEntry>("numWidth")->getNumber();
-    unsigned int l_levelHeight =
-        getWidget<NumericEntry>("numHeight")->getNumber();
-    unsigned int l_levelRooms =
-        getWidget<NumericEntry>("numRooms")->getNumber();
-    unsigned int l_levelDepth =
-        getWidget<NumericEntry>("numDepth")->getNumber();
 
-    unsigned int startArea = map()->createArea(l_levelWidth, l_levelHeight, 1);
-
-    RuralGenerator rural;
-    rural.initialise(getEngine());
-    rural.mapHeight() = l_levelHeight;
-    rural.mapWidth() = l_levelWidth;
-    rural.area() = startArea;
-    rural.generate();
-
-    for (EntityId stair : rural.getAreaLinks()) {
-        int retries = 0;
-        bool success = false;
-        unsigned int area =
-            map()->createArea(l_levelWidth, l_levelHeight, l_levelDepth);
-
-        LOG(INFO) << "Generating area: " << area << std::endl;
-        DungeonGenerator l_generator;
-        l_generator.initialise(getEngine());
-        l_generator.maxDepth() = l_levelDepth;
-        l_generator.mapHeight() = l_levelHeight;
-        l_generator.mapWidth() = l_levelWidth;
-        l_generator.area() = area;
-        l_generator.numberOfRooms() = l_levelRooms;
-        l_generator.downStairTarget() = 0;
-        l_generator.upStairTarget() = stair;
-        if (area == 2) {
-            l_generator.createBoss() = true;
-        }
-        do {
-            success = l_generator.generate();
-        } while (!success && retries++ < 20);
-        if (!success) {
-            LOG(ERROR) << "Failed to generate a valid map" << std::endl;
-        }
-        components()->make<ConnectorComponent>(stair)->target =
-            l_generator.upStairLink();
-
-        // getEngine()
-        //     ->state()
-        //     ->components()
-        //     ->get<ConnectorComponent>(stair)
-        //     ->target = l_generator.upStairLink();
-    }
-    LOG(INFO) << "Placed " << entities()->getMaxId() << " entities!"
-              << std::endl;
-
-    m_status = COMPLETED;
-    getWidget<Label>("lblPlay")->setSensitive(true);
+    events()->raise(std::make_shared<GenerateRuralMapEvent>(
+        getWidget<NumericEntry>("numWidth")->getNumber(),
+        getWidget<NumericEntry>("numHeight")->getNumber(),
+        getWidget<NumericEntry>("numDepth")->getNumber(),
+        getWidget<NumericEntry>("numRooms")->getNumber()));
 }
 
 void GeneratorWindow::startPlaying() {

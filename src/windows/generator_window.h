@@ -17,14 +17,11 @@ public:
     virtual void setup();
     virtual void registerWidgets();
 
-    virtual void redraw();
-
     void setArguments(std::shared_ptr<GeneratorWindowArgs>& args) {
         m_arguments = args;
     }
 
 private:
-    void generateGroupings();
     void startGenerating();
     void startPlaying();
 

@@ -9,6 +9,7 @@
 #include "systems/health_system.h"
 #include "systems/interaction_system.h"
 #include "systems/logmessage_system.h"
+#include "systems/map_generator_system.h"
 #include "systems/movement_system.h"
 #include "systems/npc_system.h"
 #include "systems/objectives_system.h"
@@ -65,6 +66,7 @@ int main(int argc, char** argv) {
         l_engine->addSystem(new PrefabSystem());
         l_engine->addSystem(new ExperienceSystem());
         l_engine->addSystem(new LogMessageSystem());
+        l_engine->addSystem(new MapGeneratorSystem());
         l_engine->addSystem(new WindowSystem());
         l_engine->initialise();
         l_graphics->spin();

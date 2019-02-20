@@ -10,10 +10,12 @@ target_sources (fortresslib
     ${CMAKE_CURRENT_LIST_DIR}/health_system.cpp
     ${CMAKE_CURRENT_LIST_DIR}/interaction_system.cpp
     ${CMAKE_CURRENT_LIST_DIR}/logmessage_system.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/map_generator_system.cpp
     ${CMAKE_CURRENT_LIST_DIR}/movement_system.cpp
     ${CMAKE_CURRENT_LIST_DIR}/npc_system.cpp
     ${CMAKE_CURRENT_LIST_DIR}/objectives_system.cpp
     ${CMAKE_CURRENT_LIST_DIR}/prefab_system.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/rural_generator_system.cpp
     ${CMAKE_CURRENT_LIST_DIR}/window_system.cpp
     PUBLIC
     ${CMAKE_CURRENT_LIST_DIR}/combat_system.h
@@ -25,9 +27,11 @@ target_sources (fortresslib
     ${CMAKE_CURRENT_LIST_DIR}/health_system.h
     ${CMAKE_CURRENT_LIST_DIR}/interaction_system.h
     ${CMAKE_CURRENT_LIST_DIR}/logmessage_system.h
+    ${CMAKE_CURRENT_LIST_DIR}/map_generator_system.h
     ${CMAKE_CURRENT_LIST_DIR}/movement_system.h
     ${CMAKE_CURRENT_LIST_DIR}/npc_system.h
     ${CMAKE_CURRENT_LIST_DIR}/objectives_system.h
     ${CMAKE_CURRENT_LIST_DIR}/prefab_system.h
+    ${CMAKE_CURRENT_LIST_DIR}/rural_generator_system.h
     ${CMAKE_CURRENT_LIST_DIR}/window_system.h
     )

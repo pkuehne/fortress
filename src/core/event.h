@@ -196,3 +196,21 @@ class ResizeWindowsEvent : public Event {
 public:
     ResizeWindowsEvent() {}
 };
+
+class MapGeneratedEvent : public Event {
+public:
+    MapGeneratedEvent() {}
+};
+
+class GenerateRuralMapEvent : public Event {
+public:
+    GenerateRuralMapEvent(unsigned int h, unsigned int w, unsigned int d,
+                          unsigned int r)
+        : height(h), width(w), depth(d), rooms(r) {}
+
+public:
+    unsigned int height = 0;
+    unsigned int width = 0;
+    unsigned int depth = 0;
+    unsigned int rooms = 0;
+};

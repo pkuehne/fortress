@@ -75,7 +75,7 @@ void GameEngine::initialise() {
         getWindows()->resize();
     });
 
-    m_eventManager->raise(std::make_shared<RegisterWindowEvent>(
+    events()->raise(std::make_shared<RegisterWindowEvent>(
         std::make_shared<SplashWindow>()));
 
     events()->raise(std::make_shared<EndTurnEvent>());
