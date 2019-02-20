@@ -4,7 +4,7 @@
 #include <iostream>
 #include <sstream>
 
-LuaWrapper::LuaWrapper() : m_state(0), m_runtime(luaL_newstate()) {
+LuaWrapper::LuaWrapper() : m_runtime(luaL_newstate()) {
     if (m_runtime == nullptr) {
         LOG(ERROR) << "Failed to open Lua runtime environment" << std::endl;
         throw std::runtime_error("Failed to initialize LUA environment");
@@ -16,12 +16,6 @@ LuaWrapper::LuaWrapper() : m_state(0), m_runtime(luaL_newstate()) {
 }
 
 LuaWrapper::~LuaWrapper() { lua_close(m_runtime); }
-
-void LuaWrapper::setGameState(GameState* state) {
-    m_state = state;
-    lua_pushlightuserdata(m_runtime, state);
-    lua_setglobal(m_runtime, "game_state");
-}
 
 void LuaWrapper::loadFile(const std::string& filename) {
     int result = luaL_dofile(m_runtime, filename.c_str());
@@ -58,16 +52,6 @@ std::string LuaWrapper::executeCommand(const std::string& command) {
             std::string("Parse error: ").append(lua_tostring(m_runtime, -1)));
     }
     return "Command success";
-}
-
-GameState* getState(lua_State* runtime) {
-    lua_getglobal(runtime, "game_state");
-    if (lua_isnil(runtime, -1)) {
-        lua_pushstring(runtime, "GameState not defined!");
-        lua_error(runtime);
-    }
-    GameState* state = static_cast<GameState*>(lua_touserdata(runtime, -1));
-    return state;
 }
 
 int createOrc(lua_State* runtime) {
@@ -111,16 +95,16 @@ int playerLocation(lua_State* runtime) {
 }
 
 int revealMap(lua_State* runtime) {
-    GameState* state = getState(runtime);
-    state->debug().revealAllTiles = true;
+    // GameState* state = getState(runtime);
+    // state->debug().revealAllTiles = true;
 
     return 0;
 }
 
 int togglePaths(lua_State* runtime) {
-    GameState* state = getState(runtime);
+    // GameState* state = getState(runtime);
 
-    state->debug().showNpcPaths = !state->debug().showNpcPaths;
+    // state->debug().showNpcPaths = !state->debug().showNpcPaths;
     return 0;
 }
 

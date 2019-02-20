@@ -10,7 +10,6 @@
 const char CONSOLE_DIR[] = "./scripts/console";
 
 void DebugWindow::setupLua() {
-    m_lua.setGameState(getEngine()->state());
     try {
         loadLuaScripts();
     } catch (const std::runtime_error& error) {
