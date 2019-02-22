@@ -1,5 +1,6 @@
 #include "camera.h"
 #include "../components/npc_component.h"
+#include "../components/player_component.h"
 #include "../components/sprite_component.h"
 #include "../core/game_state.h"
 #include "../core/graphics.h"
@@ -27,6 +28,12 @@ void Camera::render() {
 }
 
 void Camera::renderSprites() {
+    auto player = m_components->get<PlayerComponent>(m_entities->getPlayer());
+    auto currentTurn = 0;
+    if (player) {
+        currentTurn = player->turn;
+    }
+
     unsigned int tileZ = m_mapOffsetZ;
     for (unsigned int yy = 0; yy < getHeight(); yy++) {
         unsigned int tileY = yy + m_mapOffsetY;
@@ -45,7 +52,7 @@ void Camera::renderSprites() {
                 NpcComponent* l_npc = m_components->get<NpcComponent>(entity);
                 if (!l_sprite)
                     continue;
-                if (l_npc && l_tile.lastVisited() < m_state->turn()) {
+                if (l_npc && l_tile.lastVisited() < currentTurn) {
                     continue;
                 }
                 l_sprites[l_sprite->renderLayer].push_back(l_sprite);
@@ -55,13 +62,12 @@ void Camera::renderSprites() {
             for (auto& layer : l_sprites) {
                 for (auto l_sprite : layer.second) {
                     Color fgColor = l_sprite->fgColor;
-                    if (l_tile.lastVisited() < m_state->turn()) {
+                    if (l_tile.lastVisited() < currentTurn) {
                         fgColor *= 0.4;
                     }
 
-                    bool inMemory =
-                        l_tile.lastVisited() > 0 &&
-                        l_tile.lastVisited() + 200 > m_state->turn();
+                    bool inMemory = l_tile.lastVisited() > 0 &&
+                                    l_tile.lastVisited() + 200 > currentTurn;
 
                     if (m_debug || inMemory) {
                         drawTile(xx, yy, l_sprite->sprite, fgColor,

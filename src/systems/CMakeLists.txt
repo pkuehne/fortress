@@ -6,6 +6,7 @@ target_sources (fortresslib
     ${CMAKE_CURRENT_LIST_DIR}/dialog_system.cpp
     ${CMAKE_CURRENT_LIST_DIR}/equipment_system.cpp
     ${CMAKE_CURRENT_LIST_DIR}/experience_system.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/fov_system.cpp
     ${CMAKE_CURRENT_LIST_DIR}/graphics_effect_system.cpp
     ${CMAKE_CURRENT_LIST_DIR}/health_system.cpp
     ${CMAKE_CURRENT_LIST_DIR}/interaction_system.cpp
@@ -23,6 +24,7 @@ target_sources (fortresslib
     ${CMAKE_CURRENT_LIST_DIR}/dialog_system.h
     ${CMAKE_CURRENT_LIST_DIR}/equipment_system.h
     ${CMAKE_CURRENT_LIST_DIR}/experience_system.h
+    ${CMAKE_CURRENT_LIST_DIR}/fov_system.h
     ${CMAKE_CURRENT_LIST_DIR}/graphics_effect_system.h
     ${CMAKE_CURRENT_LIST_DIR}/health_system.h
     ${CMAKE_CURRENT_LIST_DIR}/interaction_system.h

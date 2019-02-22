@@ -22,12 +22,6 @@ public:
     void initialise(void);
     void tick(void);
 
-    virtual bool isPlayerTurn() { return m_playerTurn; }
-    unsigned int getTurn() { return m_turn; }
-    void setTurn(unsigned int turn) { m_turn = turn; }
-
-    unsigned long long getTick() { return m_tick; }
-
     GraphicsInterface* getGraphics() { return m_graphics; }
 
     void setWindowManager(WindowManager* a_manager) {

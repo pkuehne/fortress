@@ -1,5 +1,5 @@
 #include "game_engine.h"
-#include "../algos/fov_algorithm.h"
+#include "../components/player_component.h"
 #include "../windows/splash_window.h"
 #include "../windows/window.h"
 #include "entity_manager.h"
@@ -25,8 +25,15 @@ void GameEngine::initialise() {
     m_eventManager->subscribe<QuitEvent>(
         [&](auto event) { m_graphics->terminate(); });
 
-    m_eventManager->subscribe<EndTurnEvent>(
-        [&](auto event) { this->swapTurn(); });
+    m_eventManager->subscribe<EndTurnEvent>([&](auto event) {
+        auto player = m_state->components()->get<PlayerComponent>(
+            m_state->entityManager()->getPlayer());
+        if (player) {
+            player->turn += 1;
+            player->playerTurn = !player->playerTurn;
+        }
+        this->swapTurn();
+    });
 
     m_eventManager->subscribe<RemoveEntityEvent>([&](auto event) {
         m_state->components()->removeAll(event->entity);
@@ -82,8 +89,6 @@ void GameEngine::initialise() {
 }
 
 void GameEngine::tick() {
-    m_tick++; // Move the engine on
-
     m_eventManager->processEvents();
 
     // Update Systems
@@ -100,18 +105,10 @@ void GameEngine::tick() {
 }
 
 void GameEngine::swapTurn() {
-    m_playerTurn = !m_playerTurn;
-    m_turn++;
-
-    m_state->nextTurn();
     getWindows()->nextTurn();
 
     // Update Systems
     for (unsigned int ii = 0; ii < m_systems.size(); ii++) {
         m_systems[ii]->onTurn();
     }
-
-    FovAlgorithm l_algo;
-    l_algo.initialise(this, state()->entityManager());
-    l_algo.calculateFov();
 }

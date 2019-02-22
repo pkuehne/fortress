@@ -1,5 +1,4 @@
 #include "map_window.h"
-#include "../algos/fov_algorithm.h"
 #include "../components/droppable_component.h"
 #include "../components/graphics_effect_component.h"
 #include "../components/health_component.h"

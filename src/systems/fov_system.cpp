@@ -1,18 +1,23 @@
-#include "fov_algorithm.h"
+#include "fov_system.h"
 #include "../components/collider_component.h"
-#include "../components/description_component.h"
-#include "../core/entity.h"
-#include "../core/game_engine.h"
-#include <iostream>
+#include "../components/player_component.h"
 
-void FovAlgorithm::calculateFov() {
-    EntityId player = m_entities->getPlayer();
-    Location playerLoc = m_engine->state()->location(player);
+void FovSystem::registerHandlers() {
+    events()->subscribe<EndTurnEvent>(
+        [this](auto event) { this->calculateFov(); });
+}
+void FovSystem::calculateFov() {
+    std::cout << "Calculating FOV" << std::endl;
 
-    if (player == 0)
+    EntityId player = entities()->getPlayer();
+    if (player == 0) {
         return;
+    }
 
-    m_engine->state()->tile(playerLoc).lastVisited() = m_engine->getTurn();
+    Location playerLoc = entities()->getLocation(player);
+    auto currentTurn = components()->get<PlayerComponent>(player)->turn;
+
+    map()->getTile(playerLoc).lastVisited() = currentTurn;
 
     int x = 0;
     int y = 0;
@@ -32,15 +37,13 @@ void FovAlgorithm::calculateFov() {
                 y += playerLoc.y;
                 x += playerLoc.x;
                 Location loc(x, y, playerLoc.z, playerLoc.area);
-                Tile& tile = m_engine->state()->tile(loc);
-                if (m_engine->state()->isValidTile(loc) && visible) {
+                Tile& tile = map()->getTile(loc);
+                if (map()->isValidTile(loc) && visible) {
                     bool blocked = tile.blocked();
-                    tile.lastVisited() = m_engine->getTurn();
+                    tile.lastVisited() = currentTurn;
                     for (const EntityId entity :
-                         m_engine->state()->tile(loc).entities()) {
-                        if (m_engine->state()
-                                ->components()
-                                ->get<ColliderComponent>(entity)) {
+                         map()->getTile(loc).entities()) {
+                        if (components()->get<ColliderComponent>(entity)) {
                             blocked = true;
                             break;
                         }
@@ -55,8 +58,8 @@ void FovAlgorithm::calculateFov() {
     }
 }
 
-void FovAlgorithm::transformOctant(unsigned int row, unsigned int col,
-                                   unsigned int octant, int& outY, int& outX) {
+void FovSystem::transformOctant(unsigned int row, unsigned int col,
+                                unsigned int octant, int& outY, int& outX) {
     if (octant == 0) {
         outX = col;
         outY = -row;
@@ -91,7 +94,7 @@ void FovAlgorithm::transformOctant(unsigned int row, unsigned int col,
     }
 }
 
-Shadow FovAlgorithm::projectTile(double row, double col) {
+Shadow FovSystem::projectTile(double row, double col) {
     double topLeft = col / (row + 2);
     double bottomRight = (col + 1) / (row + 1);
     return Shadow(topLeft, bottomRight);

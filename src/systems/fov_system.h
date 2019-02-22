@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../core/game_engine.h"
+#include "../core/game_system_base.h"
 
 class Shadow {
 public:
@@ -22,25 +22,13 @@ private:
     std::vector<Shadow> m_shadows;
 };
 
-class EntityManager;
-
-class FovAlgorithm {
+class FovSystem : public GameSystemBase {
 public:
-    FovAlgorithm() {}
-    ~FovAlgorithm() {}
-    void initialise(GameEngine* engine,
-                    std::shared_ptr<EntityManager> entities) {
-        m_engine = engine;
-        m_entities = entities;
-    }
-    void calculateFov();
+    void registerHandlers();
 
 private:
+    void calculateFov();
     void transformOctant(unsigned int row, unsigned int col,
                          unsigned int octant, int& outY, int& outX);
     Shadow projectTile(double row, double col);
-
-private:
-    GameEngine* m_engine = nullptr;
-    std::shared_ptr<EntityManager> m_entities = nullptr;
 };
