@@ -7,12 +7,6 @@
 #include "../core/location.h"
 #include <glog/logging.h>
 
-Camera* Camera::setGameState(GameState* state) {
-    m_state = state;
-    m_entities = state->entityManager();
-    return this;
-}
-
 void Camera::render() {
     Location l_playerLoc = m_entities->getLocation(m_entities->getPlayer());
 

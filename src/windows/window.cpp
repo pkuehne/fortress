@@ -8,9 +8,7 @@ void Window::initialise(GameEngine* a_engine,
                         std::shared_ptr<ComponentManager> components,
                         std::shared_ptr<EntityManager> entities,
                         std::shared_ptr<MapManager> map) {
-    m_engine = a_engine;
-    m_graphics = m_engine->getGraphics();
-    m_state = m_engine->state();
+    m_graphics = a_engine->getGraphics();
     m_events = events;
     m_components = components;
     m_entities = entities;

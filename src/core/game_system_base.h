@@ -5,7 +5,6 @@
 #include <memory>
 #include <vector>
 
-class GameState;
 class EventManager;
 class GameSystemBase {
 public:

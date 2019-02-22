@@ -97,9 +97,6 @@ public:
     }
     void setEscapeBehaviour(EscapeBehaviour b) { m_onEscape = b; }
 
-    virtual GameEngine* getEngine() { return m_engine; }
-    virtual GameState* getState() { return m_state; }
-
     // Overrideable methods
     virtual void keyPress(unsigned char key) { /* Overrideable */
     }
@@ -112,9 +109,7 @@ private:
 
 private:
     int m_buttons[MAX_BUTTONS] = {0};
-    GameEngine* m_engine = nullptr;
     GraphicsInterface* m_graphics = nullptr;
-    GameState* m_state = nullptr;
     std::shared_ptr<EventManager> m_events = nullptr;
     std::shared_ptr<ComponentManager> m_components = nullptr;
     std::shared_ptr<EntityManager> m_entities = nullptr;

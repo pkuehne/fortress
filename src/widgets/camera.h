@@ -3,7 +3,6 @@
 #include "widget.h"
 #include <memory>
 
-class GameState;
 class EntityManager;
 class MapManager;
 class ComponentManager;
@@ -12,7 +11,6 @@ class Camera : public Widget {
 public:
     Camera() = default;
     ~Camera() = default;
-    Camera* setGameState(GameState* state);
     Camera* setManagerRefs(std::shared_ptr<EntityManager> entities,
                            std::shared_ptr<ComponentManager> components,
                            std::shared_ptr<MapManager> map
@@ -35,7 +33,6 @@ private:
     void renderNpcPaths();
 
 private:
-    GameState* m_state = 0;
     std::shared_ptr<EntityManager> m_entities = nullptr;
     std::shared_ptr<ComponentManager> m_components = nullptr;
     std::shared_ptr<MapManager> m_map = nullptr;
