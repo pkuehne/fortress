@@ -6,16 +6,16 @@
 using namespace ::testing;
 
 TEST(NumericEntry, drawsNumber) {
-    GraphicsMock graphics;
+    std::shared_ptr<GraphicsMock> graphics = std::make_shared<GraphicsMock>();
     NumericEntry num;
 
     const char* text = nullptr;
-    EXPECT_CALL(graphics, drawString(_, Ne(1), _, _, _))
+    EXPECT_CALL(*graphics, drawString(_, Ne(1), _, _, _))
         .WillRepeatedly(Return(0));
-    EXPECT_CALL(graphics, drawString(_, Eq(1), _, _, _))
+    EXPECT_CALL(*graphics, drawString(_, Eq(1), _, _, _))
         .WillOnce(SaveArg<2>(&text));
 
-    num.setGraphics(&graphics);
+    num.setGraphics(graphics);
     num.setNumber(23);
 
     num.render();
@@ -24,15 +24,15 @@ TEST(NumericEntry, drawsNumber) {
 }
 
 TEST(NumericEntry, DoesNotPrintAngleBracketsWhenNotSensitive) {
-    GraphicsMock graphics;
+    std::shared_ptr<GraphicsMock> graphics = std::make_shared<GraphicsMock>();
     NumericEntry num;
 
     const char* text = nullptr;
-    EXPECT_CALL(graphics, drawString(_, Ne(1), _, _, _)).Times(0);
-    EXPECT_CALL(graphics, drawString(_, Eq(1), _, _, _))
+    EXPECT_CALL(*graphics, drawString(_, Ne(1), _, _, _)).Times(0);
+    EXPECT_CALL(*graphics, drawString(_, Eq(1), _, _, _))
         .WillOnce(SaveArg<2>(&text));
 
-    num.setGraphics(&graphics);
+    num.setGraphics(graphics);
     num.setNumber(23);
     num.setSensitive(false);
 

@@ -9,7 +9,7 @@
 #include "window_manager.h"
 #include <string>
 
-GameEngine::GameEngine(GraphicsInterface* a_graphics)
+GameEngine::GameEngine(std::shared_ptr<GraphicsInterface> a_graphics)
     : m_graphics(a_graphics), m_eventManager(std::make_shared<EventManager>()) {
 }
 
@@ -49,7 +49,10 @@ void GameEngine::initialise() {
     });
 
     // Initialise Managers
-    m_windowManager->initialise(this);
+    m_windowManager->initialise(this, m_graphics, m_eventManager,
+                                state()->components(), state()->entityManager(),
+                                state()->map());
+    m_windowManager->registerHandlers();
 
     // TODO: this needs to be removed
     // and EntityManager no longer

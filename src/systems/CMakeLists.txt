@@ -17,7 +17,6 @@ target_sources (fortresslib
     ${CMAKE_CURRENT_LIST_DIR}/objectives_system.cpp
     ${CMAKE_CURRENT_LIST_DIR}/prefab_system.cpp
     ${CMAKE_CURRENT_LIST_DIR}/rural_generator_system.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/window_system.cpp
     PUBLIC
     ${CMAKE_CURRENT_LIST_DIR}/combat_system.h
     ${CMAKE_CURRENT_LIST_DIR}/consumable_system.h
@@ -35,5 +34,4 @@ target_sources (fortresslib
     ${CMAKE_CURRENT_LIST_DIR}/objectives_system.h
     ${CMAKE_CURRENT_LIST_DIR}/prefab_system.h
     ${CMAKE_CURRENT_LIST_DIR}/rural_generator_system.h
-    ${CMAKE_CURRENT_LIST_DIR}/window_system.h
     )

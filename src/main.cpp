@@ -15,7 +15,6 @@
 #include "systems/npc_system.h"
 #include "systems/objectives_system.h"
 #include "systems/prefab_system.h"
-#include "systems/window_system.h"
 #include <cstdlib>
 #include <execinfo.h>
 #include <glog/logging.h>
@@ -50,7 +49,8 @@ int main(int argc, char** argv) {
     google::InitGoogleLogging(argv[0]);
 
     try {
-        Graphics* l_graphics = new Graphics();
+        std::shared_ptr<GraphicsInterface> l_graphics =
+            std::make_shared<Graphics>();
         l_graphics->initialise(argc, argv);
         GameEngine* l_engine = new GameEngine(l_graphics);
 
@@ -69,7 +69,6 @@ int main(int argc, char** argv) {
         l_engine->addSystem(new ExperienceSystem());
         l_engine->addSystem(new LogMessageSystem());
         l_engine->addSystem(new MapGeneratorSystem());
-        l_engine->addSystem(new WindowSystem());
         l_engine->initialise();
         l_graphics->spin();
     } catch (char const* err) {

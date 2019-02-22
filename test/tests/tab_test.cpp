@@ -20,9 +20,9 @@ TEST(Tab, AddingPageCreatesNewFrame) {
 }
 
 TEST(Tab, RendersAllPageTitlesAndSelector) {
-    GraphicsMock graphics;
+    std::shared_ptr<GraphicsMock> graphics = std::make_shared<GraphicsMock>();
     Tab tab;
-    tab.setGraphics(&graphics);
+    tab.setGraphics(graphics);
 
     std::string titleOne("Foor");
     std::string titleTwo("Bar");
@@ -32,10 +32,10 @@ TEST(Tab, RendersAllPageTitlesAndSelector) {
     tab.addPage(titleTwo);
     tab.addPage(titleThree);
 
-    EXPECT_CALL(graphics, drawString(_, _, StrEq(titleOne.c_str()), _, _));
-    EXPECT_CALL(graphics, drawString(_, _, StrEq(titleTwo.c_str()), _, _));
-    EXPECT_CALL(graphics, drawString(_, _, StrEq(titleThree.c_str()), _, _));
-    EXPECT_CALL(graphics, drawString(_, _, StrEq(">"), _, _));
+    EXPECT_CALL(*graphics, drawString(_, _, StrEq(titleOne.c_str()), _, _));
+    EXPECT_CALL(*graphics, drawString(_, _, StrEq(titleTwo.c_str()), _, _));
+    EXPECT_CALL(*graphics, drawString(_, _, StrEq(titleThree.c_str()), _, _));
+    EXPECT_CALL(*graphics, drawString(_, _, StrEq(">"), _, _));
 
     tab.render();
 }
@@ -43,10 +43,10 @@ TEST(Tab, RendersAllPageTitlesAndSelector) {
 TEST(Tab, rendersOnlySelectedTab) {
     WidgetMock wOne;
     WidgetMock wTwo;
-    GraphicsMock graphics;
+    std::shared_ptr<GraphicsMock> graphics = std::make_shared<GraphicsMock>();
 
     Tab tab;
-    tab.setGraphics(&graphics);
+    tab.setGraphics(graphics);
 
     std::string titleOne("Foor");
     std::string titleTwo("Bar");
@@ -54,7 +54,7 @@ TEST(Tab, rendersOnlySelectedTab) {
     tab.addPage(titleOne)->getFrame()->addChild(&wOne);
     tab.addPage(titleTwo)->getFrame()->addChild(&wTwo);
 
-    EXPECT_CALL(graphics, drawString(_, _, _, _, _)).Times(AtLeast(1));
+    EXPECT_CALL(*graphics, drawString(_, _, _, _, _)).Times(AtLeast(1));
     EXPECT_CALL(wOne, render()).Times(1);
     EXPECT_CALL(wTwo, render()).Times(0);
 
@@ -67,10 +67,10 @@ TEST(Tab, setsYOffsetForAllPagesToAccountForPageNames) {
     unsigned int width = 100;
     unsigned int height = 200;
 
-    GraphicsMock graphics;
+    std::shared_ptr<GraphicsMock> graphics = std::make_shared<GraphicsMock>();
 
     Tab tab;
-    tab.setGraphics(&graphics);
+    tab.setGraphics(graphics);
     tab.setHeight(height);
     tab.setWidth(width);
 
@@ -93,10 +93,10 @@ TEST(Tab, setsYOffsetForAllPagesToAccountForPageNames) {
 TEST(Tab, passedOnKeyPressOnlyForSelectedFrame) {
     WidgetMock wOne;
     WidgetMock wTwo;
-    GraphicsMock graphics;
+    std::shared_ptr<GraphicsMock> graphics = std::make_shared<GraphicsMock>();
 
     Tab tab;
-    tab.setGraphics(&graphics);
+    tab.setGraphics(graphics);
 
     std::string titleOne("Foor");
     std::string titleTwo("Bar");

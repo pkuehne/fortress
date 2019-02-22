@@ -16,11 +16,11 @@ TEST(TextEntry, CanSetAndGetText) {
 }
 
 TEST(TextEntry, HasBlinkingCursor) {
-    GraphicsMock graphics;
+    std::shared_ptr<GraphicsMock> graphics = std::make_shared<GraphicsMock>();
     TextEntry entry;
-    entry.setGraphics(&graphics);
+    entry.setGraphics(graphics);
 
-    EXPECT_CALL(graphics, drawString(Eq(0), Eq(0), StrEq("_"), _, _)).Times(1);
+    EXPECT_CALL(*graphics, drawString(Eq(0), Eq(0), StrEq("_"), _, _)).Times(1);
 
     // Run render twice, underscore should render only once!
     entry.render();
@@ -28,15 +28,15 @@ TEST(TextEntry, HasBlinkingCursor) {
 }
 
 TEST(TextEntry, renderShowsTextPlusCursor) {
-    GraphicsMock graphics;
+    std::shared_ptr<GraphicsMock> graphics = std::make_shared<GraphicsMock>();
     TextEntry entry;
-    entry.setGraphics(&graphics);
+    entry.setGraphics(graphics);
     entry.setText(std::string("Foo"));
     entry.setSensitive(false);
 
-    EXPECT_CALL(graphics, drawString(Eq(0), Eq(0), StrEq("Foo"), _, _))
+    EXPECT_CALL(*graphics, drawString(Eq(0), Eq(0), StrEq("Foo"), _, _))
         .Times(2);
-    EXPECT_CALL(graphics, drawString(Eq(0), Eq(3), StrEq("_"), _, _)).Times(0);
+    EXPECT_CALL(*graphics, drawString(Eq(0), Eq(3), StrEq("_"), _, _)).Times(0);
 
     // Run render twice, underscore should not!
     entry.render();
@@ -44,14 +44,14 @@ TEST(TextEntry, renderShowsTextPlusCursor) {
 }
 
 TEST(TextEntry, renderShowsTextButNoCursorWhenNotSensitive) {
-    GraphicsMock graphics;
+    std::shared_ptr<GraphicsMock> graphics = std::make_shared<GraphicsMock>();
     TextEntry entry;
-    entry.setGraphics(&graphics);
+    entry.setGraphics(graphics);
     entry.setText(std::string("Foo"));
 
-    EXPECT_CALL(graphics, drawString(Eq(0), Eq(0), StrEq("Foo"), _, _))
+    EXPECT_CALL(*graphics, drawString(Eq(0), Eq(0), StrEq("Foo"), _, _))
         .Times(2);
-    EXPECT_CALL(graphics, drawString(Eq(0), Eq(3), StrEq("_"), _, _)).Times(1);
+    EXPECT_CALL(*graphics, drawString(Eq(0), Eq(3), StrEq("_"), _, _)).Times(1);
 
     // Run render twice, underscore should render only once!
     entry.render();
@@ -119,18 +119,18 @@ TEST(TextEntry, ReturnCallsCallback) {
 
 TEST(TextEntry, SuffixIsDrawn) {
     // Given
-    GraphicsMock graphics;
+    std::shared_ptr<GraphicsMock> graphics = std::make_shared<GraphicsMock>();
     TextEntry entry;
-    entry.setGraphics(&graphics);
+    entry.setGraphics(graphics);
     entry.setText(std::string("Foo"));
     entry.setSuffix(std::string("Bar"));
 
     // Then
-    EXPECT_CALL(graphics, drawString(Eq(0), Eq(0), StrEq("Foo"), _, _))
+    EXPECT_CALL(*graphics, drawString(Eq(0), Eq(0), StrEq("Foo"), _, _))
         .Times(2);
-    EXPECT_CALL(graphics, drawString(Eq(0), Eq(4), StrEq("Bar"), _, _))
+    EXPECT_CALL(*graphics, drawString(Eq(0), Eq(4), StrEq("Bar"), _, _))
         .Times(2);
-    EXPECT_CALL(graphics, drawString(Eq(0), Eq(3), StrEq("_"), _, _)).Times(1);
+    EXPECT_CALL(*graphics, drawString(Eq(0), Eq(3), StrEq("_"), _, _)).Times(1);
 
     // When
     // Run render twice, underscore should not!
@@ -140,17 +140,17 @@ TEST(TextEntry, SuffixIsDrawn) {
 
 TEST(TextEntry, SuffixIsDrawnWithoutCursorSpaceIfNotSensitive) {
     // Given
-    GraphicsMock graphics;
+    std::shared_ptr<GraphicsMock> graphics = std::make_shared<GraphicsMock>();
     TextEntry entry;
-    entry.setGraphics(&graphics);
+    entry.setGraphics(graphics);
     entry.setText(std::string("Foo"));
     entry.setSuffix(std::string("Bar"));
     entry.setSensitive(false);
 
     // Then
-    EXPECT_CALL(graphics, drawString(Eq(0), Eq(0), StrEq("Foo"), _, _))
+    EXPECT_CALL(*graphics, drawString(Eq(0), Eq(0), StrEq("Foo"), _, _))
         .Times(2);
-    EXPECT_CALL(graphics, drawString(Eq(0), Eq(3), StrEq("Bar"), _, _))
+    EXPECT_CALL(*graphics, drawString(Eq(0), Eq(3), StrEq("Bar"), _, _))
         .Times(2);
 
     // When

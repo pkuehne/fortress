@@ -16,13 +16,13 @@ class GameSystemBase;
 
 class GameEngine {
 public:
-    explicit GameEngine(GraphicsInterface* a_graphics);
+    explicit GameEngine(std::shared_ptr<GraphicsInterface> a_graphics);
     ~GameEngine() = default;
 
     void initialise(void);
     void tick(void);
 
-    GraphicsInterface* getGraphics() { return m_graphics; }
+    std::shared_ptr<GraphicsInterface> getGraphics() { return m_graphics; }
 
     void setWindowManager(WindowManager* a_manager) {
         m_windowManager = a_manager;
@@ -39,7 +39,7 @@ private:
     void swapTurn();
 
 private:
-    GraphicsInterface* m_graphics = nullptr;
+    std::shared_ptr<GraphicsInterface> m_graphics = nullptr;
     unsigned long long m_tick = 0;
     bool m_playerTurn = true;
     unsigned int m_turn = 1;

@@ -121,48 +121,48 @@ TEST_F(ListBoxTest, settingSelectedItemCallsCallback) {
 }
 
 TEST_F(ListBoxTest, ItemsAreRenderedWithColour) {
-    GraphicsMock graphics;
-    box.setGraphics(&graphics);
+    std::shared_ptr<GraphicsMock> graphics = std::make_shared<GraphicsMock>();
+    box.setGraphics(graphics);
     box.setHeight(10);       // give enough space
     box.setSensitive(false); // Hide the selector
 
-    EXPECT_CALL(graphics,
+    EXPECT_CALL(*graphics,
                 drawString(Eq(0), Eq(0), StrEq(item1.getText()), _, _))
         .Times(1);
-    EXPECT_CALL(graphics,
+    EXPECT_CALL(*graphics,
                 drawString(Eq(1), Eq(0), StrEq(item2.getText()), _, _))
         .Times(1);
-    EXPECT_CALL(graphics,
+    EXPECT_CALL(*graphics,
                 drawString(Eq(2), Eq(0), StrEq(item3.getText()), _, _))
         .Times(1);
-    EXPECT_CALL(graphics,
+    EXPECT_CALL(*graphics,
                 drawString(Eq(3), Eq(0), StrEq(item4.getText()), _, _))
         .Times(1);
-    EXPECT_CALL(graphics, drawString(Eq(4), Eq(0), StrEq(item5.getText()),
-                                     Eq(Color(RED)), _))
+    EXPECT_CALL(*graphics, drawString(Eq(4), Eq(0), StrEq(item5.getText()),
+                                      Eq(Color(RED)), _))
         .Times(1);
 
     box.render();
 }
 
 TEST_F(ListBoxTest, SelectorIsDrawnNextToSelectedItem) {
-    GraphicsMock graphics;
-    box.setGraphics(&graphics);
+    std::shared_ptr<GraphicsMock> graphics = std::make_shared<GraphicsMock>();
+    box.setGraphics(graphics);
 
-    EXPECT_CALL(graphics, drawString(Eq(0), Eq(0), StrEq(">"), _, _)).Times(1);
-    EXPECT_CALL(graphics, drawString(_, Eq(1), StrNe(">"), _, _))
+    EXPECT_CALL(*graphics, drawString(Eq(0), Eq(0), StrEq(">"), _, _)).Times(1);
+    EXPECT_CALL(*graphics, drawString(_, Eq(1), StrNe(">"), _, _))
         .Times(AtLeast(1));
 
     box.render();
 }
 
 TEST_F(ListBoxTest, SelectorIsNotDrawnWhenListBoxIsNotSensitive) {
-    GraphicsMock graphics;
-    box.setGraphics(&graphics);
+    std::shared_ptr<GraphicsMock> graphics = std::make_shared<GraphicsMock>();
+    box.setGraphics(graphics);
     box.setSensitive(false);
 
-    EXPECT_CALL(graphics, drawString(Eq(0), Eq(0), StrEq(">"), _, _)).Times(0);
-    EXPECT_CALL(graphics, drawString(_, Eq(0), StrNe(">"), _, _))
+    EXPECT_CALL(*graphics, drawString(Eq(0), Eq(0), StrEq(">"), _, _)).Times(0);
+    EXPECT_CALL(*graphics, drawString(_, Eq(0), StrNe(">"), _, _))
         .Times(AtLeast(1));
 
     box.render();

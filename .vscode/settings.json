@@ -39,7 +39,10 @@
     "strstream": "cpp",
     "cinttypes": "cpp",
     "typeindex": "cpp",
-    "filesystem": "cpp"
+    "filesystem": "cpp",
+    "hash_map": "cpp",
+    "hash_set": "cpp",
+    "forward_list": "cpp"
   },
   "C_Cpp.errorSquiggles": "Disabled"
 }

@@ -3,6 +3,7 @@
 #include "../core/graphics.h"
 #include <functional>
 #include <map>
+#include <memory>
 
 typedef std::function<void(unsigned char)> KeyFunc;
 
@@ -33,7 +34,7 @@ public:
     Widget() {}
     virtual ~Widget() {}
 
-    virtual Widget* setGraphics(GraphicsInterface* graphics) {
+    virtual Widget* setGraphics(std::shared_ptr<GraphicsInterface> graphics) {
         m_graphics = graphics;
         return this;
     }
@@ -174,7 +175,7 @@ private:
     unsigned int m_widthStretchMargin = 0;
     unsigned int m_heightStretchMargin = 0;
 
-    GraphicsInterface* m_graphics = nullptr;
+    std::shared_ptr<GraphicsInterface> m_graphics = nullptr;
     std::string m_name = "";
     bool m_visible = true;
     bool m_sensitive = true;

@@ -109,7 +109,7 @@ private:
 
 private:
     int m_buttons[MAX_BUTTONS] = {0};
-    GraphicsInterface* m_graphics = nullptr;
+    std::shared_ptr<GraphicsInterface> m_graphics = nullptr;
     std::shared_ptr<EventManager> m_events = nullptr;
     std::shared_ptr<ComponentManager> m_components = nullptr;
     std::shared_ptr<EntityManager> m_entities = nullptr;

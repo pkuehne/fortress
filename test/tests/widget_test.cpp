@@ -6,8 +6,8 @@ using namespace ::testing;
 
 TEST(Widget, drawBorderUsesWidgetWidthAndHeightWhenSetToZero) {
     Widget w;
-    GraphicsMock graphics;
-    w.setGraphics(&graphics);
+    std::shared_ptr<GraphicsMock> graphics = std::make_shared<GraphicsMock>();
+    w.setGraphics(graphics);
 
     unsigned int x = 5;
     unsigned int y = 7;
@@ -18,7 +18,7 @@ TEST(Widget, drawBorderUsesWidgetWidthAndHeightWhenSetToZero) {
     w.setHeight(height);
     w.realign(x, y, width, height);
 
-    EXPECT_CALL(graphics,
+    EXPECT_CALL(*graphics,
                 drawBorder(Eq(y), Eq(x), Eq(height - 2), Eq(width - 2)));
 
     w.drawBorder();
