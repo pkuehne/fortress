@@ -6,7 +6,7 @@
 
 void WindowManager::registerHandlers() {
     auto registerHandler = [this](std::shared_ptr<RegisterWindowEvent> event) {
-        event->window->initialise(this->m_engine, events(), components(),
+        event->window->initialise(graphics(), events(), components(),
                                   entities(), map());
 
         switch (event->action) {
@@ -40,18 +40,17 @@ void WindowManager::removeWindow(std::shared_ptr<Window> win) {
     win->destroy();
 }
 
-void WindowManager::initialise(GameEngine* engine,
-                               std::shared_ptr<GraphicsInterface> graphics,
+void WindowManager::initialise(std::shared_ptr<GraphicsInterface> graphics,
                                std::shared_ptr<EventManager> events,
                                std::shared_ptr<ComponentManager> components,
                                std::shared_ptr<EntityManager> entities,
                                std::shared_ptr<MapManager> map) {
-    m_engine = engine;
     m_graphics = graphics;
     m_events = events;
     m_components = components;
     m_entities = entities;
     m_map = map;
+    registerHandlers();
 }
 
 void WindowManager::pushWindow(std::shared_ptr<Window> win) {
@@ -86,7 +85,7 @@ std::shared_ptr<Window> WindowManager::getActive() {
 }
 
 void WindowManager::nextTick() {
-    m_engine->getGraphics()->beginScreenUpdate();
+    graphics()->beginScreenUpdate();
 
     for (size_t ii = 0; ii < m_windows.size(); ii++) {
         m_windows[ii]->beforeRedraw();
@@ -94,7 +93,7 @@ void WindowManager::nextTick() {
         m_windows[ii]->renderWidgets();
         m_windows[ii]->afterRedraw();
     }
-    m_engine->getGraphics()->endScreenUpdate();
+    graphics()->endScreenUpdate();
 }
 
 void WindowManager::resize() {

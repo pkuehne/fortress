@@ -7,8 +7,6 @@ void FovSystem::registerHandlers() {
         [this](auto event) { this->calculateFov(); });
 }
 void FovSystem::calculateFov() {
-    std::cout << "Calculating FOV" << std::endl;
-
     EntityId player = entities()->getPlayer();
     if (player == 0) {
         return;

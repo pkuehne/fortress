@@ -3,12 +3,12 @@
 #include "../widgets/frame.h"
 #include <iostream>
 
-void Window::initialise(GameEngine* a_engine,
+void Window::initialise(std::shared_ptr<GraphicsInterface> graphics,
                         std::shared_ptr<EventManager> events,
                         std::shared_ptr<ComponentManager> components,
                         std::shared_ptr<EntityManager> entities,
                         std::shared_ptr<MapManager> map) {
-    m_graphics = a_engine->getGraphics();
+    m_graphics = graphics;
     m_events = events;
     m_components = components;
     m_entities = entities;

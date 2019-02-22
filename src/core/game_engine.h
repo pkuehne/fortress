@@ -22,18 +22,17 @@ public:
     void initialise(void);
     void tick(void);
 
-    std::shared_ptr<GraphicsInterface> getGraphics() { return m_graphics; }
+    std::shared_ptr<GraphicsInterface> graphics() { return m_graphics; }
+    virtual std::shared_ptr<EventManager> events() { return m_eventManager; }
+    virtual WindowManager* windows() { return m_windowManager; }
 
     void setWindowManager(WindowManager* a_manager) {
         m_windowManager = a_manager;
     }
 
-    virtual WindowManager* getWindows() { return m_windowManager; }
-
     void addSystem(GameSystemBase* a_system) { m_systems.push_back(a_system); }
 
     virtual GameState* state() { return m_state; }
-    virtual std::shared_ptr<EventManager> events() { return m_eventManager; }
 
 private:
     void swapTurn();

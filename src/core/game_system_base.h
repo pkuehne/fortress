@@ -10,8 +10,7 @@ class GameSystemBase {
 public:
     virtual ~GameSystemBase() {}
 
-    virtual void initialise(GameEngine* engine,
-                            std::shared_ptr<EventManager> events,
+    virtual void initialise(std::shared_ptr<EventManager> events,
                             std::shared_ptr<ComponentManager> components,
                             std::shared_ptr<EntityManager> entities,
                             std::shared_ptr<MapManager> map);
@@ -28,10 +27,6 @@ protected:
     std::shared_ptr<MapManager> map() const { return m_map; }
     virtual EntityId instantiatePrefab(const std::string& type,
                                        Location& loc) const;
-    virtual GameEngine* getEngine() { return m_engine; }
-
-protected:
-    GameEngine* m_engine = nullptr;
 
 private:
     std::shared_ptr<EventManager> m_events = nullptr;

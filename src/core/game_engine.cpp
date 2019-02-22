@@ -23,7 +23,7 @@ void GameEngine::initialise() {
     }
 
     m_eventManager->subscribe<QuitEvent>(
-        [&](auto event) { m_graphics->terminate(); });
+        [this](auto event) { this->graphics()->terminate(); });
 
     m_eventManager->subscribe<EndTurnEvent>([&](auto event) {
         auto player = m_state->components()->get<PlayerComponent>(
@@ -41,48 +41,45 @@ void GameEngine::initialise() {
     });
     m_eventManager->subscribe<UpdateTileSizeEvent>([this](auto event) {
         unsigned int height =
-            this->getGraphics()->getTileHeight() + event->adjustment;
+            this->graphics()->getTileHeight() + event->adjustment;
         unsigned int width =
-            this->getGraphics()->getTileWidth() + event->adjustment;
-        this->getGraphics()->updateTileSize(width, height);
+            this->graphics()->getTileWidth() + event->adjustment;
+        this->graphics()->updateTileSize(width, height);
         this->events()->raise(std::make_shared<ResizeWindowsEvent>());
     });
 
     // Initialise Managers
-    m_windowManager->initialise(this, m_graphics, m_eventManager,
-                                state()->components(), state()->entityManager(),
-                                state()->map());
-    m_windowManager->registerHandlers();
+    windows()->initialise(graphics(), events(), state()->components(),
+                          state()->entityManager(), state()->map());
 
     // TODO: this needs to be removed
     // and EntityManager no longer
-    // dependent on GameEngine or
-    // GameState
+    // dependent on GameEngine
     m_state->entityManager()->initialise(this);
 
     // Initialise Systems
     for (unsigned int ii = 0; ii < m_systems.size(); ii++) {
-        m_systems[ii]->initialise(this, m_eventManager, state()->components(),
+        m_systems[ii]->initialise(events(), state()->components(),
                                   state()->entityManager(), state()->map());
     }
 
-    m_graphics->setKeyDownFunc([&](unsigned char key, int x, int y) {
-        getWindows()->getActive()->keyDown(key);
+    graphics()->setKeyDownFunc([this](unsigned char key, int x, int y) {
+        this->windows()->getActive()->keyDown(key);
     });
-    m_graphics->setKeyUpFunc([&](unsigned char key, int x, int y) {
-        getWindows()->getActive()->keyUp(key);
+    graphics()->setKeyUpFunc([this](unsigned char key, int x, int y) {
+        this->windows()->getActive()->keyUp(key);
     });
-    m_graphics->setDisplayFunc([&]() { tick(); });
-    m_graphics->setMouseFunc([&](int button, int state, int x, int y) {
+    graphics()->setDisplayFunc([this]() { this->tick(); });
+    graphics()->setMouseFunc([this](int button, int state, int x, int y) {
         if (state) {
-            getWindows()->getActive()->mouseUp(x, y, button);
+            this->windows()->getActive()->mouseUp(x, y, button);
         } else {
-            getWindows()->getActive()->mouseDown(x, y, button);
+            this->windows()->getActive()->mouseDown(x, y, button);
         }
     });
-    m_graphics->setResizeFunc([&](int width, int height) {
-        getGraphics()->updateScreenSize(width, height);
-        getWindows()->resize();
+    graphics()->setResizeFunc([this](int width, int height) {
+        this->graphics()->updateScreenSize(width, height);
+        this->windows()->resize();
     });
 
     events()->raise(std::make_shared<RegisterWindowEvent>(
@@ -99,7 +96,7 @@ void GameEngine::tick() {
         m_systems[ii]->onTick();
     }
 
-    getWindows()->nextTick();
+    windows()->nextTick();
 
     if (!m_playerTurn) {
         swapTurn();
@@ -108,7 +105,7 @@ void GameEngine::tick() {
 }
 
 void GameEngine::swapTurn() {
-    getWindows()->nextTurn();
+    windows()->nextTurn();
 
     // Update Systems
     for (unsigned int ii = 0; ii < m_systems.size(); ii++) {

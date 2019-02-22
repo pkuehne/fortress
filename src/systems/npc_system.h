@@ -6,8 +6,6 @@
 #include <map>
 #include <vector>
 
-class GameEngine;
-
 using ConditionFunc = std::function<bool(EntityId, NpcComponent*)>;
 using ActionFunc = std::function<void(EntityId, NpcComponent*)>;
 

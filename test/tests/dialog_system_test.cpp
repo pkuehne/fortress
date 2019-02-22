@@ -16,21 +16,13 @@ public:
         entityManager = std::make_shared<EntityManager>();
         mapManager = std::make_shared<MapManager>();
 
-        comp = state.components()->make<PlayerComponent>(player);
+        comp = componentManager->make<PlayerComponent>(player);
     }
 
     void SetUp() {
-
-        EXPECT_CALL(state, player()).WillRepeatedly(Return(player));
-        EXPECT_CALL(engine, getWindows())
-            .WillRepeatedly(Return(&windowManager));
-        EXPECT_CALL(engine, state()).WillRepeatedly(Return(&state));
-
-        system.initialise(&engine, eventManager, componentManager,
-                          entityManager, mapManager);
+        system.initialise(eventManager, componentManager, entityManager,
+                          mapManager);
     }
-    GameEngineMock engine;
-    GameStateMock state;
     WindowManagerMock windowManager;
     std::shared_ptr<EventManager> eventManager = nullptr;
     std::shared_ptr<ComponentManager> componentManager = nullptr;

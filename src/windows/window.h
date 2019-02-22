@@ -24,7 +24,8 @@ public:
         }
     }
 
-    void initialise(GameEngine* a_engine, std::shared_ptr<EventManager> events,
+    void initialise(std::shared_ptr<GraphicsInterface> graphics,
+                    std::shared_ptr<EventManager> events,
                     std::shared_ptr<ComponentManager> components,
                     std::shared_ptr<EntityManager> entities,
                     std::shared_ptr<MapManager> map);
