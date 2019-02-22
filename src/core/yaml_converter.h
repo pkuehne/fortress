@@ -412,22 +412,6 @@ template <> struct convert<OpenableComponent> {
     }
 };
 
-// PlayerComponent
-template <> struct convert<PlayerComponent> {
-    static Node encode(const PlayerComponent& rhs) {
-        Node node;
-        node = true;
-        return node;
-    }
-
-    static bool decode(const Node& node, PlayerComponent& rhs) {
-        if (!node.IsScalar()) {
-            return false;
-        }
-        return true;
-    }
-};
-
 // ConnectorComponent
 template <> struct convert<ConnectorComponent> {
     static Node encode(const ConnectorComponent& rhs) {
