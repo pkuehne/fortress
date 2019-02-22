@@ -10,14 +10,11 @@
 #include <string>
 
 GameEngine::GameEngine(std::shared_ptr<GraphicsInterface> a_graphics)
-    : m_graphics(a_graphics), m_eventManager(std::make_shared<EventManager>()) {
-}
+    : m_graphics(a_graphics), m_eventManager(std::make_shared<EventManager>()),
+      m_windowManager(std::make_unique<WindowManager>()) {}
 
 void GameEngine::initialise() {
     // Create if not exist
-    if (!m_windowManager) {
-        m_windowManager = new WindowManager();
-    }
     if (!m_state) {
         m_state = new GameState();
     }
@@ -52,10 +49,8 @@ void GameEngine::initialise() {
     windows()->initialise(graphics(), events(), state()->components(),
                           state()->entityManager(), state()->map());
 
-    // TODO: this needs to be removed
-    // and EntityManager no longer
-    // dependent on GameEngine
-    m_state->entityManager()->initialise(this);
+    m_state->entityManager()->initialise(events(), state()->map(),
+                                         state()->components());
 
     // Initialise Systems
     for (unsigned int ii = 0; ii < m_systems.size(); ii++) {

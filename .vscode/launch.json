@@ -27,12 +27,12 @@
       "name": "(gdb) Tests",
       "type": "cppdbg",
       "request": "launch",
-      "program": "${workspaceFolder}/unit_tests",
+      "program": "${workspaceFolder}/build/test/unit_test",
       "args": [],
       "stopAtEntry": false,
-      "cwd": "${workspaceFolder}",
+      "cwd": "${workspaceFolder}/build/test/",
       "environment": [],
-      "externalConsole": true,
+      "externalConsole": false,
       "MIMode": "gdb",
       "setupCommands": [
         {

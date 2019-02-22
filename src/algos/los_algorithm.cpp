@@ -1,7 +1,8 @@
 #include "los_algorithm.h"
 #include "../components/collider_component.h"
-#include "../core/game_engine.h"
+#include "../core/component_manager.h"
 #include "../core/location.h"
+#include "../core/map_manager.h"
 
 bool LosAlgorithm::hasLos(const Location& start, const Location& end) {
     if (start.z != end.z)
@@ -59,9 +60,9 @@ bool LosAlgorithm::hasLos(const Location& start, const Location& end) {
 }
 
 bool LosAlgorithm::viewBlocked(const Location& loc) {
-    EntityHolder entities = m_engine->state()->map()->findEntitiesAt(loc);
+    EntityHolder entities = m_map->findEntitiesAt(loc);
     for (EntityId entity : entities) {
-        if (m_engine->state()->components()->get<ColliderComponent>(entity)) {
+        if (m_components->get<ColliderComponent>(entity)) {
             return true;
         }
     }

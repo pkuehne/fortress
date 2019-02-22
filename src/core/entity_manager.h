@@ -4,9 +4,13 @@
 #include "location.h"
 #include "utility.h"
 #include <map>
+#include <memory>
 #include <vector>
 
 class GameEngine;
+class MapManager;
+class ComponentManager;
+class EventManager;
 
 typedef std::map<EntityId, Location> LocationMap;
 typedef LocationMap::const_iterator LocationConstIter;
@@ -17,7 +21,13 @@ public:
     EntityManager() = default;
     virtual ~EntityManager() = default;
 
-    void initialise(GameEngine* engine);
+    void initialise(std::shared_ptr<EventManager> events,
+                    std::shared_ptr<MapManager> map,
+                    std::shared_ptr<ComponentManager> components) {
+        m_events = events;
+        m_map = map;
+        m_components = components;
+    }
     void destroy() {}
 
     virtual EntityId createEntity(const Location& location);
@@ -36,8 +46,11 @@ public:
     virtual unsigned int count() { return m_locations.size(); }
 
 private:
-    GameEngine* m_engine = nullptr;
-    unsigned long m_maxId = 0;
+    std::shared_ptr<EventManager> m_events;
+    std::shared_ptr<MapManager> m_map;
+    std::shared_ptr<ComponentManager> m_components;
+
+    unsigned long m_maxId = 1;
     EntityId m_player = 0;
     LocationMap m_locations;
     EntityHolder m_allEntities;

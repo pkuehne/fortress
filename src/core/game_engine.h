@@ -24,10 +24,8 @@ public:
 
     std::shared_ptr<GraphicsInterface> graphics() { return m_graphics; }
     virtual std::shared_ptr<EventManager> events() { return m_eventManager; }
-    virtual WindowManager* windows() { return m_windowManager; }
-
-    void setWindowManager(WindowManager* a_manager) {
-        m_windowManager = a_manager;
+    virtual std::unique_ptr<WindowManager>& windows() {
+        return m_windowManager;
     }
 
     void addSystem(GameSystemBase* a_system) { m_systems.push_back(a_system); }
@@ -39,12 +37,13 @@ private:
 
 private:
     std::shared_ptr<GraphicsInterface> m_graphics = nullptr;
+    std::shared_ptr<EventManager> m_eventManager = nullptr;
+    std::unique_ptr<WindowManager> m_windowManager = nullptr;
+
     unsigned long long m_tick = 0;
     bool m_playerTurn = true;
     unsigned int m_turn = 1;
 
-    std::shared_ptr<EventManager> m_eventManager;
-    WindowManager* m_windowManager = nullptr;
     GameState* m_state = nullptr;
 
     std::vector<GameSystemBase*> m_systems;

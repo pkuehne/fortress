@@ -8,12 +8,6 @@
 
 #include "../components/player_component.h"
 
-void EntityManager::initialise(GameEngine* engine) {
-    m_maxId = 1;
-    m_engine = engine;
-    m_player = 0;
-}
-
 EntityId EntityManager::createEntity(const Location& location) {
     EntityId l_entity = m_maxId++;
 
@@ -29,7 +23,7 @@ void EntityManager::addEntity(EntityId id, const Location& location) {
     m_entities[location.area].insert(id);
     m_allEntities.insert(id);
 
-    m_engine->events()->raise(std::make_shared<AddEntityEvent>(id, location));
+    m_events->raise(std::make_shared<AddEntityEvent>(id, location));
 }
 
 void EntityManager::destroyEntity(EntityId id) {
@@ -54,16 +48,15 @@ void EntityManager::setLocation(EntityId entity, const Location& location) {
     if (m_locations[entity].isValid()) {
         m_entities[location.area].insert(entity);
     }
-    m_engine->events()->raise(
+    m_events->raise(
         std::make_shared<ChangeLocationEvent>(entity, prev, location));
 }
 
 EntityId EntityManager::getPlayer() {
     if (m_player == 0) {
-        for (auto map : m_engine->state()->map()->getAreas()) {
+        for (auto map : m_map->getAreas()) {
             for (EntityId entity : get(map.first)) {
-                if (m_engine->state()->components()->get<PlayerComponent>(
-                        entity)) {
+                if (m_components->get<PlayerComponent>(entity)) {
                     m_player = entity;
                 }
             }
