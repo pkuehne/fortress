@@ -1,4 +1,6 @@
 #include "interaction_window.h"
+#include "../core/component_manager.h"
+#include "../core/entity_manager.h"
 #include "../core/event_manager.h"
 #include "../widgets/frame.h"
 #include "../widgets/label.h"

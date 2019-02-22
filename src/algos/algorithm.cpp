@@ -1,5 +1,4 @@
 #include "algorithm.h"
-#include "../core/game_engine.h"
 #include "../core/location.h"
 #include <cstdio>
 #include <cstdlib>

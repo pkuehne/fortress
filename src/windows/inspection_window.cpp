@@ -1,6 +1,6 @@
 #include "inspection_window.h"
 #include "../components/description_component.h"
-#include "../core/game_engine.h"
+#include "../core/component_manager.h"
 #include "../widgets/text_block.h"
 
 void InspectionWindow::setup() {

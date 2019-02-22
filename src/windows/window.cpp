@@ -1,5 +1,9 @@
 #include "window.h"
-#include "../core/game_engine.h"
+#include "../core/component_manager.h"
+#include "../core/entity_manager.h"
+#include "../core/event_manager.h"
+#include "../core/graphics_interface.h"
+#include "../core/map_manager.h"
 #include "../widgets/frame.h"
 #include <iostream>
 

@@ -1,9 +1,14 @@
 #pragma once
 
-#include "../core/game_engine.h"
 #include "../widgets/widget.h"
-
 #include <map>
+#include <memory>
+
+class GraphicsInterface;
+class EventManager;
+class ComponentManager;
+class EntityManager;
+class MapManager;
 
 class Window {
 public:

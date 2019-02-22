@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../core/entity.h"
 #include "window.h"
 
 class InspectionWindow : public Window {

@@ -11,30 +11,30 @@
 
 GameEngine::GameEngine(std::shared_ptr<GraphicsInterface> a_graphics)
     : m_graphics(a_graphics), m_eventManager(std::make_shared<EventManager>()),
-      m_windowManager(std::make_unique<WindowManager>()) {}
+      m_windowManager(std::make_unique<WindowManager>()),
+      m_map(std::make_shared<MapManager>()),
+      m_entities(std::make_shared<EntityManager>()),
+      m_components(std::make_shared<ComponentManager>()) {
+    //
+}
 
 void GameEngine::initialise() {
-    // Create if not exist
-    if (!m_state) {
-        m_state = new GameState();
-    }
-
     m_eventManager->subscribe<QuitEvent>(
         [this](auto event) { this->graphics()->terminate(); });
 
-    m_eventManager->subscribe<EndTurnEvent>([&](auto event) {
-        auto player = m_state->components()->get<PlayerComponent>(
-            m_state->entityManager()->getPlayer());
+    m_eventManager->subscribe<EndTurnEvent>([this](auto event) {
+        auto player = this->components()->get<PlayerComponent>(
+            this->entities()->getPlayer());
         if (player) {
             player->turn += 1;
             player->playerTurn = !player->playerTurn;
         }
-        this->swapTurn();
+        this->turn();
     });
 
-    m_eventManager->subscribe<RemoveEntityEvent>([&](auto event) {
-        m_state->components()->removeAll(event->entity);
-        m_state->entityManager()->destroyEntity(event->entity);
+    m_eventManager->subscribe<RemoveEntityEvent>([this](auto event) {
+        this->components()->removeAll(event->entity);
+        this->entities()->destroyEntity(event->entity);
     });
     m_eventManager->subscribe<UpdateTileSizeEvent>([this](auto event) {
         unsigned int height =
@@ -46,16 +46,14 @@ void GameEngine::initialise() {
     });
 
     // Initialise Managers
-    windows()->initialise(graphics(), events(), state()->components(),
-                          state()->entityManager(), state()->map());
+    windows()->initialise(graphics(), events(), components(), entities(),
+                          map());
 
-    m_state->entityManager()->initialise(events(), state()->map(),
-                                         state()->components());
+    entities()->initialise(events(), map(), components());
 
     // Initialise Systems
     for (unsigned int ii = 0; ii < m_systems.size(); ii++) {
-        m_systems[ii]->initialise(events(), state()->components(),
-                                  state()->entityManager(), state()->map());
+        m_systems[ii]->initialise(events(), components(), entities(), map());
     }
 
     graphics()->setKeyDownFunc([this](unsigned char key, int x, int y) {
@@ -92,18 +90,13 @@ void GameEngine::tick() {
     }
 
     windows()->nextTick();
-
-    if (!m_playerTurn) {
-        swapTurn();
-    }
     return;
 }
 
-void GameEngine::swapTurn() {
-    windows()->nextTurn();
-
+void GameEngine::turn() {
     // Update Systems
     for (unsigned int ii = 0; ii < m_systems.size(); ii++) {
         m_systems[ii]->onTurn();
     }
+    windows()->nextTurn();
 }

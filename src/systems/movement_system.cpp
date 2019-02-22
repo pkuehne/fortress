@@ -4,7 +4,6 @@
 #include "../components/graphics_effect_component.h"
 #include "../core/entity.h"
 #include "../core/event.h"
-#include "../core/game_engine.h"
 #include "../windows/game_over_window.h"
 #include <iostream>
 

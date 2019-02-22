@@ -1,16 +1,14 @@
 #pragma once
 
+#include "../core/component_manager.h"
+#include "../core/event_manager.h"
+#include "../core/map_manager.h"
 #include "entity.h"
 #include "location.h"
 #include "utility.h"
 #include <map>
 #include <memory>
 #include <vector>
-
-class GameEngine;
-class MapManager;
-class ComponentManager;
-class EventManager;
 
 typedef std::map<EntityId, Location> LocationMap;
 typedef LocationMap::const_iterator LocationConstIter;

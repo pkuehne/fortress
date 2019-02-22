@@ -1,4 +1,5 @@
 #include "game_system_base.h"
+#include "event.h"
 
 void GameSystemBase::initialise(std::shared_ptr<EventManager> events,
                                 std::shared_ptr<ComponentManager> components,

@@ -1,5 +1,4 @@
 #include "rural_generator_system.h"
-#include "../core/game_engine.h"
 #include "../core/utility.h"
 #include <cstring>
 #include <glog/logging.h>

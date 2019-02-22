@@ -1,5 +1,8 @@
 #include "rural_generator.h"
-#include "../core/game_engine.h"
+#include "../core/component_manager.h"
+#include "../core/entity_manager.h"
+#include "../core/event_manager.h"
+#include "../core/map_manager.h"
 #include "../core/utility.h"
 #include <cstring>
 #include <glog/logging.h>

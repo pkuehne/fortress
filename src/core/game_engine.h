@@ -20,31 +20,27 @@ public:
     ~GameEngine() = default;
 
     void initialise(void);
-    void tick(void);
 
     std::shared_ptr<GraphicsInterface> graphics() { return m_graphics; }
-    virtual std::shared_ptr<EventManager> events() { return m_eventManager; }
-    virtual std::unique_ptr<WindowManager>& windows() {
-        return m_windowManager;
-    }
+    std::shared_ptr<EventManager> events() { return m_eventManager; }
+    std::unique_ptr<WindowManager>& windows() { return m_windowManager; }
+    std::shared_ptr<MapManager> map() { return m_map; }
+    std::shared_ptr<EntityManager> entities() { return m_entities; }
+    std::shared_ptr<ComponentManager> components() { return m_components; }
 
     void addSystem(GameSystemBase* a_system) { m_systems.push_back(a_system); }
 
-    virtual GameState* state() { return m_state; }
-
 private:
-    void swapTurn();
+    void tick();
+    void turn();
 
 private:
     std::shared_ptr<GraphicsInterface> m_graphics = nullptr;
     std::shared_ptr<EventManager> m_eventManager = nullptr;
     std::unique_ptr<WindowManager> m_windowManager = nullptr;
-
-    unsigned long long m_tick = 0;
-    bool m_playerTurn = true;
-    unsigned int m_turn = 1;
-
-    GameState* m_state = nullptr;
+    std::shared_ptr<MapManager> m_map = nullptr;
+    std::shared_ptr<EntityManager> m_entities = nullptr;
+    std::shared_ptr<ComponentManager> m_components = nullptr;
 
     std::vector<GameSystemBase*> m_systems;
 };

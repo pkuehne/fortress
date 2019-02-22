@@ -1,5 +1,4 @@
 #include "debug_window.h"
-#include "../core/game_engine.h"
 #include "../widgets/frame.h"
 #include "../widgets/listbox.h"
 #include "../widgets/text_entry.h"

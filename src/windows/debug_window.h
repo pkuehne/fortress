@@ -3,6 +3,7 @@
 #include "../core/lua_wrapper.h"
 #include "../core/utility.h"
 #include "window.h"
+#include <vector>
 
 struct Output {
     Output(const std::string& t, const Color& c) : text(t), color(c) {}
@@ -29,4 +30,3 @@ private:
     std::vector<Output> m_history;
     LuaWrapper m_lua;
 };
-

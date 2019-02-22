@@ -1,6 +1,6 @@
 #include "main_window.h"
+#include "../core/event_manager.h"
 #include "../core/file_loader.h"
-#include "../core/game_engine.h"
 #include "../widgets/label.h"
 #include "generator_window.h"
 #include "load_window.h"

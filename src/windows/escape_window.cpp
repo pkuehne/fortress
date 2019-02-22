@@ -1,5 +1,5 @@
 #include "escape_window.h"
-#include "../core/game_engine.h"
+#include "../core/event_manager.h"
 #include "../widgets/label.h"
 #include "save_window.h"
 

@@ -2,6 +2,7 @@
 
 #include "../core/entity.h"
 #include "window.h"
+#include <vector>
 
 class Label;
 

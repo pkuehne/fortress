@@ -2,7 +2,10 @@
 #include "../algos/algorithm.h"
 #include "../components/connector_component.h"
 #include "../components/sprite_component.h"
-#include "../core/game_engine.h"
+#include "../core/component_manager.h"
+#include "../core/entity_manager.h"
+#include "../core/event_manager.h"
+#include "../core/map_manager.h"
 #include <cstdlib>
 #include <ctime>
 #include <fstream>

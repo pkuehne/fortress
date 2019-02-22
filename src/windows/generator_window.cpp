@@ -1,6 +1,6 @@
 #include "generator_window.h"
 #include "../components/connector_component.h"
-#include "../core/game_engine.h"
+#include "../core/event_manager.h"
 #include "../generators/dungeon_generator.h"
 #include "../generators/rural_generator.h"
 #include "../widgets/label.h"

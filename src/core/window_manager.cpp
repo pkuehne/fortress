@@ -1,7 +1,11 @@
 #include "window_manager.h"
+#include "../core/component_manager.h"
+#include "../core/entity_manager.h"
+#include "../core/event_manager.h"
+#include "../core/map_manager.h"
+#include "../core/window_manager.h"
 #include "../windows/window.h"
 #include "event.h"
-#include "game_engine.h"
 #include <glog/logging.h>
 
 void WindowManager::registerHandlers() {

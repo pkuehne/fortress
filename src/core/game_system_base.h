@@ -1,11 +1,16 @@
 #pragma once
 
-#include "event.h"
-#include "game_engine.h"
+#include "../core/component_manager.h"
+#include "../core/entity.h"
+#include "../core/entity_manager.h"
+#include "../core/event.h"
+#include "../core/event_manager.h"
+#include "../core/map_manager.h"
+#include "entity.h"
+#include "location.h"
 #include <memory>
 #include <vector>
 
-class EventManager;
 class GameSystemBase {
 public:
     virtual ~GameSystemBase() {}

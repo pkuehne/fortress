@@ -1,6 +1,5 @@
 #include "entity_manager.h"
 #include "event_manager.h"
-#include "game_engine.h"
 #include "location.h"
 #include <climits>
 #include <fstream>
