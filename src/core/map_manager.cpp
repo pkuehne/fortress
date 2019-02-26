@@ -5,8 +5,9 @@
 unsigned int MapManager::createArea(unsigned int width, unsigned int height,
                                     unsigned int depth) {
     if (width == 0 || height == 0 || depth == 0) {
-        LOG(ERROR) << "Cannot reset map with 0 values" << std::endl;
-        exit(1);
+        LOG(ERROR) << "Cannot reset map with 0 values. W: " << width
+                   << " H: " << height << " D: " << depth << std::endl;
+        throw std::runtime_error("Invalid map creation parameters!");
     }
 
     AreaInfo area;

@@ -30,6 +30,19 @@
       "problemMatcher": []
     },
     {
+      "label": "Run Unit Tests",
+      "type": "shell",
+      "command": "make unit_test -j 8 && ./test/unit_tests/unit_test",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "options": {
+        "cwd": "${workspaceRoot}/build"
+      },
+      "problemMatcher": []
+    },
+    {
       "label": "Test",
       "type": "shell",
       "command": "make test",

@@ -39,7 +39,8 @@
                 "${workspaceFolder}/third-party/yaml-cpp/include",
                 "${workspaceFolder}/build/third-party/glog",
                 "${workspaceFolder}/third-party/glog/src",
-                "${workspaceFolder}/third-party/glfw/include"
+                "${workspaceFolder}/third-party/glfw/include",
+                "${workspaceFolder}/src"
             ],
             "defines": [
                 "MAJOR=0",
