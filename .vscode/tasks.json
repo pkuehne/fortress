@@ -6,7 +6,7 @@
     {
       "label": "Build",
       "type": "shell",
-      "command": "make fortress unit_test -j 8",
+      "command": "make fortress unit_test save_load_test -j 8",
       "group": {
         "kind": "build",
         "isDefault": true
