@@ -1,5 +1,5 @@
-#include "../../src/components/component_base.h"
-#include "../../src/core/component_manager.h"
+#include "component_base.h"
+#include "component_manager.h"
 #include <gtest/gtest.h>
 
 using namespace ::testing;
@@ -43,6 +43,18 @@ TEST_F(ComponentManagerTest, makeDoesNotAddSameComponentTwice) {
     EXPECT_EQ(1, test->indicator);
 }
 
+TEST_F(ComponentManagerTest, makeReturnsTheOriginalComponentWhenAddingTwice) {
+    // Given
+    auto component = manager.make<TestComponent>(entity);
+    manager.get<TestComponent>(entity)->indicator = 1;
+
+    // When
+    auto component2 = manager.make<TestComponent>(entity);
+
+    // Then
+    EXPECT_EQ(component, component2);
+}
+
 TEST_F(ComponentManagerTest, getReturnsNullptrIfNotFound) {
     // Given
 
@@ -75,7 +87,7 @@ TEST_F(ComponentManagerTest, getAllReturnsAllMakedComponents) {
     manager.make<Test2Component>(entity);
 
     // When
-    auto holder = manager.getAll(entity);
+    const ComponentHolder& holder = manager.getAll(entity);
 
     // Then
     EXPECT_EQ(2, holder.size());
@@ -92,7 +104,7 @@ TEST_F(ComponentManagerTest, removeOnlyRemovesSpecificComponent) {
     // Then
     auto test = manager.get<TestComponent>(entity);
     auto test2 = manager.get<Test2Component>(entity);
-    auto holder = manager.getAll(entity);
+    const ComponentHolder& holder = manager.getAll(entity);
 
     EXPECT_NE(nullptr, test);
     EXPECT_EQ(nullptr, test2);
@@ -109,7 +121,7 @@ TEST_F(ComponentManagerTest, removesNothingIfNotFound) {
     // Then
     auto test = manager.get<TestComponent>(entity);
     auto test2 = manager.get<Test2Component>(entity);
-    auto holder = manager.getAll(entity);
+    const ComponentHolder& holder = manager.getAll(entity);
 
     EXPECT_NE(nullptr, test);
     EXPECT_EQ(nullptr, test2);
@@ -127,9 +139,39 @@ TEST_F(ComponentManagerTest, removeAllRemovesAll) {
     // Then
     auto test = manager.get<TestComponent>(entity);
     auto test2 = manager.get<Test2Component>(entity);
-    auto holder = manager.getAll(entity);
+    const ComponentHolder& holder = manager.getAll(entity);
 
     EXPECT_EQ(nullptr, test);
     EXPECT_EQ(nullptr, test2);
     EXPECT_EQ(0, holder.size());
+}
+
+TEST_F(ComponentManagerTest, existsReturnsFalseIfNoComponentsAtAll) {
+    // When
+    bool retval = manager.exists<Test2Component>(entity);
+
+    // Then
+    EXPECT_FALSE(retval);
+}
+
+TEST_F(ComponentManagerTest, existsReturnsFalseIfNoComponentExists) {
+    // Given
+    manager.make<TestComponent>(entity);
+
+    // When
+    bool retval = manager.exists<Test2Component>(entity);
+
+    // Then
+    EXPECT_FALSE(retval);
+}
+
+TEST_F(ComponentManagerTest, existsReturnsTrueIfComponentExists) {
+    // Given
+    manager.make<TestComponent>(entity);
+
+    // When
+    bool retval = manager.exists<TestComponent>(entity);
+
+    // Then
+    EXPECT_TRUE(retval);
 }
