@@ -24,12 +24,14 @@ set(GLFW_INSTALL OFF CACHE BOOL "Generate installation target" FORCE)
 add_subdirectory(third-party/glfw)
 set(INSTALL_GTEST OFF CACHE BOOL "Enable installation of googletest. (Projects embedding googletest may want to turn this OFF.)" FORCE)
 add_subdirectory(third-party/googletest)
+add_subdirectory(third-party/lua)
 
 # Ensure they are added to compiler and linker paths
 target_link_libraries(fortresslib soil)
 target_link_libraries(fortresslib glog::glog)
 target_link_libraries(fortresslib yaml-cpp)
 target_link_libraries(fortresslib glfw)
+target_link_libraries(fortresslib lua_static)
 
 # Add Compiler definitions
 if(${CMAKE_VERSION} VERSION_LESS "3.13.0") 
@@ -58,7 +60,7 @@ add_subdirectory(src/world)
 target_compile_options(fortress PRIVATE -Wall -Wpedantic -Werror)
 
 # Additional libraries
-target_link_libraries(fortress -llua5.3 -lm -ldl)
+target_link_libraries(fortress dl)
 target_link_libraries(fortress stdc++fs)
 target_link_libraries(fortress GL)
 target_link_libraries(fortress c)
