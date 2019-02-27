@@ -7,7 +7,8 @@
 #include <memory>
 #include <typeinfo>
 
-using ComponentHolder = std::map<size_t, std::unique_ptr<ComponentBase>>;
+using ComponentHolder = std::map<size_t, std::shared_ptr<ComponentBase>>;
+using EntityMapping = std::map<size_t, EntityHolder>;
 
 /// @brief Manages the lifetime of components
 class ComponentManager {
@@ -22,7 +23,8 @@ public:
         ComponentHolder& holder = m_components[entity];
         size_t hash_code = typeid(T).hash_code();
         if (holder.find(hash_code) == holder.end()) {
-            holder[hash_code] = std::make_unique<T>();
+            holder[hash_code] = std::make_shared<T>();
+            m_mapping[hash_code].insert(entity);
         } else {
             LOG(WARNING) << "Tried to add existing component "
                          << typeid(T).name() << " to Entity " << entity
@@ -55,11 +57,13 @@ public:
     /// @brief Remove a given component attached
     /// @param[in] entity The entity to remove the component from
     template <class T> void remove(EntityId entity) {
+        size_t hash_code = typeid(T).hash_code();
         auto& components = m_components[entity];
-        auto it = components.find(typeid(T).hash_code());
+        auto it = components.find(hash_code);
         if (it != components.end()) {
             components.erase(it);
         }
+        m_mapping[hash_code].erase(entity);
     }
 
     /// @brief Removes all components from an entity
@@ -71,6 +75,15 @@ public:
     /// @returns A list of components
     const ComponentHolder& getAll(EntityId id) { return m_components[id]; }
 
+    template <class T> EntityHolder entitiesFor() const {
+        auto iter = m_mapping.find(typeid(T).hash_code());
+        if (iter == m_mapping.end()) {
+            return EntityHolder();
+        }
+        return iter->second;
+    }
+
 private:
     std::map<EntityId, ComponentHolder> m_components;
+    EntityMapping m_mapping;
 };

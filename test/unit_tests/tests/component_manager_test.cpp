@@ -175,3 +175,50 @@ TEST_F(ComponentManagerTest, existsReturnsTrueIfComponentExists) {
     // Then
     EXPECT_TRUE(retval);
 }
+
+TEST_F(ComponentManagerTest, entitiesForReturnsEmptyListIfNoneExist) {
+    // Given
+
+    // When
+    EntityHolder entities = manager.entitiesFor<TestComponent>();
+
+    // Then
+    EXPECT_TRUE(entities.empty());
+}
+
+TEST_F(ComponentManagerTest,
+       entitiesForReturnsEmptyListIfNothingForThatComponent) {
+    // Given
+    manager.make<Test2Component>(entity);
+
+    // When
+    EntityHolder entities = manager.entitiesFor<TestComponent>();
+
+    // Then
+    EXPECT_TRUE(entities.empty());
+}
+
+TEST_F(ComponentManagerTest, entitiesForReturnsHolderWithEntity) {
+    // Given
+    manager.make<TestComponent>(entity);
+
+    // When
+    EntityHolder entities = manager.entitiesFor<TestComponent>();
+
+    // Then
+    EXPECT_EQ(1, entities.size());
+    auto iter = entities.find(entity);
+    EXPECT_FALSE(iter == entities.end());
+}
+
+TEST_F(ComponentManagerTest, entitiesReturnsNothingAfterRemoval) {
+    // Given
+    manager.make<TestComponent>(entity);
+    manager.remove<TestComponent>(entity);
+
+    // When
+    EntityHolder entities = manager.entitiesFor<TestComponent>();
+
+    // Then
+    EXPECT_TRUE(entities.empty());
+}
