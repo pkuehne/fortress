@@ -85,8 +85,6 @@ bool DungeonGenerator::generateLevel() {
 void DungeonGenerator::createStair(const Location& location,
                                    unsigned int& stair, bool down) {
     stair = createPrefab("stair", location);
-    // components()->get<SpriteComponent>(stair)->sprite =
-    //     (30 + (down ? 1 : 0));
 }
 
 void DungeonGenerator::createOrc(const Location& location) {

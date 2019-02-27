@@ -62,7 +62,7 @@ bool LosAlgorithm::hasLos(const Location& start, const Location& end) {
 bool LosAlgorithm::viewBlocked(const Location& loc) {
     EntityHolder entities = m_map->findEntitiesAt(loc);
     for (EntityId entity : entities) {
-        if (m_components->get<ColliderComponent>(entity)) {
+        if (m_components->exists<ColliderComponent>(entity)) {
             return true;
         }
     }

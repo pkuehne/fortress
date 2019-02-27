@@ -30,16 +30,16 @@ void updateHealth(ConsumableComponent* consumable, HealthComponent* health) {
 
 void ConsumableSystem::handleConsumeItemEvent(
     std::shared_ptr<ConsumeItemEvent> event) {
-    ConsumableComponent* consumable =
-        components()->get<ConsumableComponent>(event->item);
-    HealthComponent* health = components()->get<HealthComponent>(event->entity);
-
     // Validate
-    if (!consumable) {
+    if (!components()->exists<ConsumableComponent>(event->item)) {
         LOG(ERROR) << "Consume event on non-consumable item: " << event->item
                    << " !" << std::endl;
         return;
     }
+
+    ConsumableComponent* consumable =
+        components()->get<ConsumableComponent>(event->item);
+    HealthComponent* health = components()->get<HealthComponent>(event->entity);
 
     // Check whether this has a health impact
     updateHealth(consumable, health);
