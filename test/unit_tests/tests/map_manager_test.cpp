@@ -90,3 +90,176 @@ TEST_F(MapManager_createArea, createsAnArea) {
     EXPECT_EQ(1, manager.getAreas().size());
     EXPECT_NE(0, id);
 }
+
+class MapManager_isValidTile : public MapManagerFixture {
+    void SetUp() {
+        area.setSize(width, height, depth);
+        ASSERT_EQ(id, manager.addArea(area, id));
+    }
+
+protected:
+    unsigned int width = 5;
+    unsigned int height = 5;
+    unsigned int depth = 5;
+    unsigned int id = 1;
+    AreaInfo area;
+};
+
+TEST_F(MapManager_isValidTile, returnsFalseForZeroArea) {
+    // Given
+    Location loc(1, 1, 1, 0);
+
+    // When
+    bool retval = manager.isValidTile(loc);
+
+    // Then
+    EXPECT_FALSE(retval);
+}
+
+TEST_F(MapManager_isValidTile, returnsTrueForLocationInsideArea) {
+    // Given
+    Location loc(width - 1, height - 1, depth - 1, id);
+
+    // When
+    bool retval = manager.isValidTile(loc);
+
+    // Then
+    EXPECT_TRUE(retval);
+}
+
+TEST_F(MapManager_isValidTile, returnsFalseForXOutsideArea) {
+    // Given
+    Location loc(width, height - 1, depth - 1, id);
+
+    // When
+    bool retval = manager.isValidTile(loc);
+
+    // Then
+    EXPECT_FALSE(retval);
+}
+
+TEST_F(MapManager_isValidTile, returnsFalseForYOutsideArea) {
+    // Given
+    Location loc(width - 1, height, depth - 1, id);
+
+    // When
+    bool retval = manager.isValidTile(loc);
+
+    // Then
+    EXPECT_FALSE(retval);
+}
+
+TEST_F(MapManager_isValidTile, returnsFalseForZOutsideArea) {
+    // Given
+    Location loc(width - 1, height - 1, depth, id);
+
+    // When
+    bool retval = manager.isValidTile(loc);
+
+    // Then
+    EXPECT_FALSE(retval);
+}
+
+class MapManager_location : public MapManagerFixture {
+    void SetUp() {
+        area.setSize(width, height, depth);
+        ASSERT_EQ(id, manager.addArea(area, id));
+        loc = Location(3, 3, 3, id);
+    }
+
+protected:
+    unsigned int width = 5;
+    unsigned int height = 5;
+    unsigned int depth = 5;
+    unsigned int id = 1;
+    AreaInfo area;
+    Location loc;
+};
+
+TEST_F(MapManager_location, changesYForNorthDirection) {
+    // When
+    Location result = manager.location(loc, Direction::North);
+
+    // Then
+    EXPECT_EQ(result.x, loc.x);
+    EXPECT_EQ(result.y, loc.y - 1);
+    EXPECT_EQ(result.z, loc.z);
+    EXPECT_EQ(result.area, loc.area);
+}
+
+TEST_F(MapManager_location, changesYForSouthDirection) {
+    // When
+    Location result = manager.location(loc, Direction::South);
+
+    // Then
+    EXPECT_EQ(result.x, loc.x);
+    EXPECT_EQ(result.y, loc.y + 1);
+    EXPECT_EQ(result.z, loc.z);
+    EXPECT_EQ(result.area, loc.area);
+}
+
+TEST_F(MapManager_location, changesXForWestDirection) {
+    // When
+    Location result = manager.location(loc, Direction::West);
+
+    // Then
+    EXPECT_EQ(result.x, loc.x - 1);
+    EXPECT_EQ(result.y, loc.y);
+    EXPECT_EQ(result.z, loc.z);
+    EXPECT_EQ(result.area, loc.area);
+}
+
+TEST_F(MapManager_location, changesXForEastDirection) {
+    // When
+    Location result = manager.location(loc, Direction::East);
+
+    // Then
+    EXPECT_EQ(result.x, loc.x + 1);
+    EXPECT_EQ(result.y, loc.y);
+    EXPECT_EQ(result.z, loc.z);
+    EXPECT_EQ(result.area, loc.area);
+}
+
+TEST_F(MapManager_location, XDirectionMustBeInMapWhenGoingWest) {
+    // Given
+    loc.x = 0;
+
+    // When
+    Location result = manager.location(loc, Direction::West);
+
+    // Then
+    EXPECT_EQ(result, loc);
+}
+
+TEST_F(MapManager_location, XDirectionMustBeInMapWhenGoingEast) {
+    // Given
+    loc.x = area.getWidth();
+
+    // When
+    Location result = manager.location(loc, Direction::East);
+
+    // Then
+    EXPECT_EQ(result, loc);
+}
+
+TEST_F(MapManager_location, XDirectionMustBeInMapWhenGoingNorth) {
+    // Given
+    loc.y = 0;
+
+    // When
+    Location result = manager.location(loc, Direction::North);
+
+    // Then
+    EXPECT_EQ(result, loc);
+}
+
+TEST_F(MapManager_location, XDirectionMustBeInMapWhenGoingSouth) {
+    // Given
+    loc.y = area.getHeight();
+
+    // When
+    Location result = manager.location(loc, Direction::South);
+
+    // Then
+    EXPECT_EQ(result, loc);
+}

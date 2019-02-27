@@ -37,6 +37,7 @@ unsigned int MapManager::addArea(const AreaInfo& area, unsigned int id) {
 bool MapManager::isValidTile(const Location& loc) {
     if (!loc.area) {
         LOG(ERROR) << "Called isValidTile with zero area" << std::endl;
+        return false;
     }
     bool xValid = (loc.x < m_areas[loc.area].getWidth());
     bool yValid = (loc.y < m_areas[loc.area].getHeight());
