@@ -222,3 +222,18 @@ TEST_F(ComponentManagerTest, entitiesReturnsNothingAfterRemoval) {
     // Then
     EXPECT_TRUE(entities.empty());
 }
+
+TEST_F(ComponentManagerTest, entitiesReturnsNothingAfterRemovAll) {
+    // Given
+    manager.make<TestComponent>(entity);
+    manager.make<TestComponent>(entity);
+    manager.removeAll(entity);
+
+    // When
+    EntityHolder entities1 = manager.entitiesFor<TestComponent>();
+    EntityHolder entities2 = manager.entitiesFor<TestComponent>();
+
+    // Then
+    EXPECT_TRUE(entities1.empty());
+    EXPECT_TRUE(entities2.empty());
+}

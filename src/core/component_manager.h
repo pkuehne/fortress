@@ -68,7 +68,13 @@ public:
 
     /// @brief Removes all components from an entity
     /// @param[in] entity The entity to remove the components from
-    void removeAll(EntityId entity) { m_components[entity].clear(); }
+    void removeAll(EntityId entity) {
+        auto& components = m_components[entity];
+        for (auto comp : components) {
+            m_mapping[typeid(*comp.second).hash_code()].erase(entity);
+        }
+        components.clear();
+    }
 
     /// @brief Returns all components attached to an entity
     /// @param[in] entity The entity to return all components for
