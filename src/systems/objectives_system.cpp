@@ -24,23 +24,23 @@ void ObjectivesSystem::showGameOverWindow(bool gameWon) {
 
 void ObjectivesSystem::handleAddEntityEvent(
     std::shared_ptr<PrefabCreatedEvent> event) {
-    DescriptionComponent* l_desc =
-        components()->get<DescriptionComponent>(event->entity);
-    if (l_desc && l_desc->title == "Troll") {
-        m_boss = event->entity;
-        KillQuest* quest =
-            new KillQuest(entities()->getPlayer(), event->entity);
-        quest->title() = "Kill the Troll";
-        // state()->getQuests().push_back(quest);
-    }
+    // DescriptionComponent* l_desc =
+    //     components()->get<DescriptionComponent>(event->entity);
+    // if (l_desc && l_desc->title == "Troll") {
+    //     m_boss = event->entity;
+    //     KillQuest* quest =
+    //         new KillQuest(entities()->getPlayer(), event->entity);
+    //     quest->title() = "Kill the Troll";
+    //     // state()->getQuests().push_back(quest);
+    // }
 }
 
 void ObjectivesSystem::handleRemoveEntityEvent(
     std::shared_ptr<RemoveEntityEvent> event) {
-    if (event->entity == entities()->getPlayer()) {
-        showGameOverWindow(false);
-        return;
-    }
+    // if (event->entity == entities()->getPlayer()) {
+    //     showGameOverWindow(false);
+    //     return;
+    // }
     if (updateQuests()) {
         showGameOverWindow(true);
     }

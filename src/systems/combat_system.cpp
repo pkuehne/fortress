@@ -4,6 +4,7 @@
 #include "../components/experience_component.h"
 #include "../components/graphics_effect_component.h"
 #include "../components/health_component.h"
+#include "../components/player_component.h"
 #include "../components/sprite_component.h"
 #include "../components/wieldable_component.h"
 #include <iostream>
@@ -54,7 +55,7 @@ void CombatSystem::handleAttack(EntityId attacker, EntityId defender) {
 
 void CombatSystem::killEntity(EntityId id) {
     const Location location = entities()->getLocation(id);
-    if (id == entities()->getPlayer()) {
+    if (id == components()->getUnique<PlayerComponent>().id) {
         events()->raise(std::make_shared<RemoveEntityEvent>(id));
         return;
     }
@@ -92,7 +93,7 @@ void CombatSystem::updateLog(const EntityId& attacker, const EntityId& target,
 
     str << " and causes " << damage << " damage!";
 
-    if (attacker == entities()->getPlayer()) {
+    if (attacker == components()->getUnique<PlayerComponent>().id) {
         events()->raise(std::make_shared<AddLogMessageEvent>(str.str()));
     } else {
         events()->raise(

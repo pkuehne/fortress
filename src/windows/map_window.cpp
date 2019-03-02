@@ -4,6 +4,7 @@
 #include "../components/health_component.h"
 #include "../components/logmessage_component.h"
 #include "../components/npc_component.h"
+#include "../components/player_component.h"
 #include "../core/component_manager.h"
 #include "../core/entity_manager.h"
 #include "../core/event.h"
@@ -167,22 +168,22 @@ void updateLocation(unsigned char key, Location& location) {
 }
 
 void MapWindow::keyPress(unsigned char key) {
-    EntityId playerId = entities()->getPlayer();
+    auto player = components()->getUnique<PlayerComponent>();
     if (key == 'w' || key == 'a' || key == 's' || key == 'd') {
-        Location oldLocation = entities()->getLocation(playerId);
+        Location oldLocation = entities()->getLocation(player.id);
         Location newLocation = oldLocation;
         updateLocation(key, newLocation);
 
         if (m_action == 'm') {
             events()->raise(
-                std::make_shared<MoveEntityEvent>(playerId, newLocation));
+                std::make_shared<MoveEntityEvent>(player.id, newLocation));
 
             events()->raise(std::make_shared<EndTurnEvent>());
         } else if (m_action == 'k') {
             EntityHolder l_entities = map()->findEntitiesAt(newLocation);
             for (EntityId entity : l_entities) {
                 events()->raise(
-                    std::make_shared<AttackEntityEvent>(playerId, entity));
+                    std::make_shared<AttackEntityEvent>(player.id, entity));
             }
             events()->raise(std::make_shared<EndTurnEvent>());
         } else if (m_action == 'i') {
@@ -201,11 +202,11 @@ void MapWindow::keyPress(unsigned char key) {
 }
 
 void MapWindow::nextTurn() {
-    EntityId player = entities()->getPlayer();
-    if (!player) {
+    auto player = components()->getUnique<PlayerComponent>();
+    if (player.id == 0) {
         return;
     }
-    HealthComponent* l_health = components()->get<HealthComponent>(player);
+    HealthComponent* l_health = components()->get<HealthComponent>(player.id);
     if (!l_health) {
         throw std::string("Player must have a health component!");
     }
@@ -213,7 +214,7 @@ void MapWindow::nextTurn() {
     getWidget<ProgressBar>("pgbHunger")->setValue(l_health->hunger);
     getWidget<ProgressBar>("pgbThirst")->setValue(l_health->thirst);
 
-    auto l_messages = components()->get<LogMessageComponent>(player);
+    auto l_messages = components()->get<LogMessageComponent>(player.id);
     if (!l_messages) {
         return;
     }

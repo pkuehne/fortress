@@ -4,6 +4,7 @@
 #include "../components/collider_component.h"
 #include "../components/description_component.h"
 #include "../components/npc_component.h"
+#include "../components/player_component.h"
 #include <cmath>
 #include <glog/logging.h>
 #include <iostream>
@@ -197,11 +198,15 @@ EntityId NpcSystem::findNearestVisibleMatching(const Location& location,
 void NpcSystem::setPathToTarget(EntityId entity, EntityId target,
                                 NpcComponent* npc) {
     auto getPathCost = [&](const Location& location, void* c) {
+        auto player = components()->getUnique<PlayerComponent>();
+
         for (EntityId entity : map()->getTile(location).entities()) {
-            if (entity == entities()->getPlayer())
+            if (entity == player.id) {
                 continue;
-            if (components()->get<ColliderComponent>(entity))
+            }
+            if (components()->get<ColliderComponent>(entity)) {
                 return 99;
+            }
         }
         return 1;
     };

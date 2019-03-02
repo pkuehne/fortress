@@ -1,4 +1,5 @@
 #include "interaction_window.h"
+#include "../components/player_component.h"
 #include "../core/component_manager.h"
 #include "../core/entity_manager.h"
 #include "../core/event_manager.h"
@@ -64,9 +65,9 @@ void InteractionWindow::registerWidgets() {
         ->setCommandCharCallback([&](Label* l) {
             ListBox* lstEntities = this->getWidget<ListBox>("lstEntities");
             EntityId entity = m_entities[lstEntities->getSelection()];
-            EntityId playerId = entities()->getPlayer();
+            auto player = components()->getUnique<PlayerComponent>();
             events()->raise(
-                std::make_shared<StartConversationEvent>(playerId, entity));
+                std::make_shared<StartConversationEvent>(player.id, entity));
         })
         ->setSensitive(false);
     createWidget<Label>("txtDrop", descriptionWidth, 4)
@@ -75,9 +76,9 @@ void InteractionWindow::registerWidgets() {
         ->setCommandCharCallback([&](Label* l) {
             ListBox* lstEntities = this->getWidget<ListBox>("lstEntities");
             EntityId entity = m_entities[lstEntities->getSelection()];
-            EntityId playerId = entities()->getPlayer();
+            auto player = components()->getUnique<PlayerComponent>();
             events()->raise(
-                std::make_shared<PickupEquipmentEvent>(playerId, entity));
+                std::make_shared<PickupEquipmentEvent>(player.id, entity));
             events()->raise(std::make_shared<EndTurnEvent>());
         })
         ->setSensitive(false);

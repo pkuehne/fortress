@@ -40,7 +40,8 @@
                 "${workspaceFolder}/build/third-party/glog",
                 "${workspaceFolder}/third-party/glog/src",
                 "${workspaceFolder}/third-party/glfw/include",
-                "${workspaceFolder}/src"
+                "${workspaceFolder}/src",
+                "${workspaceFolder}/src/core"
             ],
             "defines": [
                 "MAJOR=0",

@@ -7,13 +7,13 @@ void FovSystem::registerHandlers() {
         [this](auto event) { this->calculateFov(); });
 }
 void FovSystem::calculateFov() {
-    EntityId player = entities()->getPlayer();
-    if (player == 0) {
+    auto player = components()->getUnique<PlayerComponent>();
+    if (player.id == 0) {
         return;
     }
 
-    Location playerLoc = entities()->getLocation(player);
-    auto currentTurn = components()->get<PlayerComponent>(player)->turn;
+    Location playerLoc = entities()->getLocation(player.id);
+    auto currentTurn = player.component->turn;
 
     map()->getTile(playerLoc).lastVisited() = currentTurn;
 

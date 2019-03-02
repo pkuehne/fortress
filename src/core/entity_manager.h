@@ -19,19 +19,12 @@ public:
     EntityManager() = default;
     virtual ~EntityManager() = default;
 
-    void initialise(std::shared_ptr<EventManager> events,
-                    std::shared_ptr<MapManager> map,
-                    std::shared_ptr<ComponentManager> components) {
-        m_events = events;
-        m_map = map;
-        m_components = components;
-    }
+    void initialise(std::shared_ptr<EventManager> events) { m_events = events; }
     void destroy() {}
 
     virtual EntityId createEntity(const Location& location);
     virtual void addEntity(EntityId id, const Location& location);
     virtual void destroyEntity(EntityId);
-    virtual EntityId getPlayer();
     virtual EntityId getMaxId() { return m_maxId; }
 
     virtual Location getLocation(EntityId entity) {
@@ -45,8 +38,6 @@ public:
 
 private:
     std::shared_ptr<EventManager> m_events;
-    std::shared_ptr<MapManager> m_map;
-    std::shared_ptr<ComponentManager> m_components;
 
     unsigned long m_maxId = 1;
     EntityId m_player = 0;

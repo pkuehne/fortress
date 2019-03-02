@@ -20,22 +20,21 @@ void DialogSystem::registerHandlers() {
 void DialogSystem::handleStartConversationEvent(
     std::shared_ptr<StartConversationEvent> event) {
 
-    auto playerId = entities()->getPlayer();
-    auto player = components()->get<PlayerComponent>(playerId);
-    if (player == nullptr) {
+    auto player = components()->getUnique<PlayerComponent>();
+    if (player.id == 0) {
         throw std::string("Player has no PlayerComponent");
     }
 
-    if (player->inConversationWith != 0) {
+    if (player.component->inConversationWith != 0) {
         return;
     }
-    if (event->initiatedBy == playerId) {
-        player->inConversationWith = event->target;
+    if (event->initiatedBy == player.id) {
+        player.component->inConversationWith = event->target;
     } else {
-        player->inConversationWith = event->initiatedBy;
+        player.component->inConversationWith = event->initiatedBy;
     }
 
-    generateDialog(player);
+    generateDialog(player.component);
 
     // Show the dialog window
     events()->raise(std::make_shared<RegisterWindowEvent>(
@@ -44,24 +43,22 @@ void DialogSystem::handleStartConversationEvent(
 
 void DialogSystem::handleChooseDialogOptionEvent(
     std::shared_ptr<ChooseDialogOptionEvent> event) {
-    auto playerId = entities()->getPlayer();
-    auto player = components()->get<PlayerComponent>(playerId);
+    auto player = components()->getUnique<PlayerComponent>();
 
     if (event->option == 1) {
-        player->dialogText = "I don't know you well enough to say.";
+        player.component->dialogText = "I don't know you well enough to say.";
     }
     if (event->option == 2) {
-        player->dialogText = "Do I look human to you?";
+        player.component->dialogText = "Do I look human to you?";
     }
     events()->raise(std::make_shared<EndTurnEvent>());
 }
 
 void DialogSystem::handleEndConversationEvent(
     std::shared_ptr<EndConversationEvent> event) {
-    auto playerId = entities()->getPlayer();
-    auto player = components()->get<PlayerComponent>(playerId);
+    auto player = components()->getUnique<PlayerComponent>();
 
-    player->inConversationWith = 0;
+    player.component->inConversationWith = 0;
 }
 
 void DialogSystem::generateDialog(PlayerComponent* player) {

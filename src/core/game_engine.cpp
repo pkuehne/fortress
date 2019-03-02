@@ -23,11 +23,10 @@ void GameEngine::initialise() {
         [this](auto event) { this->graphics()->terminate(); });
 
     m_eventManager->subscribe<EndTurnEvent>([this](auto event) {
-        auto player = this->components()->get<PlayerComponent>(
-            this->entities()->getPlayer());
-        if (player) {
-            player->turn += 1;
-            player->playerTurn = !player->playerTurn;
+        auto player = this->components()->getUnique<PlayerComponent>();
+        if (player.id) {
+            player.component->turn += 1;
+            player.component->playerTurn = !player.component->playerTurn;
         }
         this->turn();
     });
@@ -49,7 +48,7 @@ void GameEngine::initialise() {
     windows()->initialise(graphics(), events(), components(), entities(),
                           map());
 
-    entities()->initialise(events(), map(), components());
+    entities()->initialise(events());
 
     // Initialise Systems
     for (unsigned int ii = 0; ii < m_systems.size(); ii++) {

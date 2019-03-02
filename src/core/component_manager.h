@@ -10,6 +10,11 @@
 using ComponentHolder = std::map<size_t, std::shared_ptr<ComponentBase>>;
 using EntityMapping = std::map<size_t, EntityHolder>;
 
+template <class T> struct SingleComponent {
+    EntityId id;
+    T* component;
+};
+
 /// @brief Manages the lifetime of components
 class ComponentManager {
 public:
@@ -87,6 +92,13 @@ public:
             return EntityHolder();
         }
         return iter->second;
+    }
+
+    template <class T> SingleComponent<T> getUnique() {
+        EntityHolder entities = entitiesFor<T>();
+        EntityId id = *entities.begin();
+
+        return SingleComponent<T>{id, get<T>(id)};
     }
 
 private:

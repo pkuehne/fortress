@@ -8,7 +8,14 @@
 #include <glog/logging.h>
 
 void Camera::render() {
-    Location l_playerLoc = m_entities->getLocation(m_entities->getPlayer());
+    if (m_player == 0) {
+        auto player = m_components->getUnique<PlayerComponent>();
+        if (player.id == 0) {
+            return;
+        }
+        m_player = player.id;
+    }
+    Location l_playerLoc = m_entities->getLocation(m_player);
 
     m_mapOffsetX = l_playerLoc.x - (getWidth() / 2);
     m_mapOffsetY = l_playerLoc.y - (getHeight() / 2);
@@ -22,11 +29,8 @@ void Camera::render() {
 }
 
 void Camera::renderSprites() {
-    auto player = m_components->get<PlayerComponent>(m_entities->getPlayer());
-    auto currentTurn = 0;
-    if (player) {
-        currentTurn = player->turn;
-    }
+    auto player = m_components->get<PlayerComponent>(m_player);
+    auto currentTurn = player->turn;
 
     unsigned int tileZ = m_mapOffsetZ;
     for (unsigned int yy = 0; yy < getHeight(); yy++) {
@@ -74,7 +78,7 @@ void Camera::renderSprites() {
 }
 
 void Camera::renderNpcPaths() {
-    Location l_playerLoc = m_entities->getLocation(m_entities->getPlayer());
+    Location l_playerLoc = m_entities->getLocation(m_player);
 
     for (EntityId entity : m_entities->get(l_playerLoc.area)) {
         Location loc = m_entities->getLocation(entity);

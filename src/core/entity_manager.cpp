@@ -5,8 +5,6 @@
 #include <fstream>
 #include <iostream>
 
-#include "../components/player_component.h"
-
 EntityId EntityManager::createEntity(const Location& location) {
     EntityId l_entity = m_maxId++;
 
@@ -15,9 +13,9 @@ EntityId EntityManager::createEntity(const Location& location) {
 }
 
 void EntityManager::addEntity(EntityId id, const Location& location) {
-    if (id >= m_maxId)
+    if (id >= m_maxId) {
         m_maxId = id + 1;
-
+    }
     m_locations[id] = location;
     m_entities[location.area].insert(id);
     m_allEntities.insert(id);
@@ -49,17 +47,4 @@ void EntityManager::setLocation(EntityId entity, const Location& location) {
     }
     m_events->raise(
         std::make_shared<ChangeLocationEvent>(entity, prev, location));
-}
-
-EntityId EntityManager::getPlayer() {
-    if (m_player == 0) {
-        for (auto map : m_map->getAreas()) {
-            for (EntityId entity : get(map.first)) {
-                if (m_components->get<PlayerComponent>(entity)) {
-                    m_player = entity;
-                }
-            }
-        }
-    }
-    return m_player;
 }

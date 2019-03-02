@@ -1,5 +1,6 @@
 #pragma once
 
+#include "entity.h"
 #include "widget.h"
 #include <memory>
 
@@ -42,4 +43,5 @@ private:
     int m_mapOffsetZ = 0;
     unsigned int m_area = 0;
     bool m_debug = false;
+    EntityId m_player = 0;
 };

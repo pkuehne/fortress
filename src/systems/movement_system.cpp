@@ -2,6 +2,8 @@
 #include "../components/collider_component.h"
 #include "../components/connector_component.h"
 #include "../components/graphics_effect_component.h"
+#include "../components/logmessage_component.h"
+#include "../components/player_component.h"
 #include "../core/entity.h"
 #include "../core/event.h"
 #include "../windows/game_over_window.h"
@@ -55,6 +57,7 @@ void MovementSystem::handleMoveEntityEvent(
     {
         Tile& tile = map()->getTile(l_newLocation);
         const EntityHolder& l_targets = tile.entities();
+        auto player = components()->getUnique<PlayerComponent>();
 
         bool blocked = tile.blocked();
         for (EntityId l_target : l_targets) {
@@ -63,8 +66,7 @@ void MovementSystem::handleMoveEntityEvent(
             }
             ConnectorComponent* l_stair =
                 components()->get<ConnectorComponent>(l_target);
-            if (l_stair && l_stair->target &&
-                l_entity == entities()->getPlayer()) {
+            if (l_stair && l_stair->target && l_entity == player.id) {
                 l_newLocation = entities()->getLocation(l_stair->target);
             }
         }

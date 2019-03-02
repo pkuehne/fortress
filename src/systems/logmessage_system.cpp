@@ -1,14 +1,15 @@
 
 #include "logmessage_system.h"
 #include "../components/logmessage_component.h"
+#include "../components/player_component.h"
 
 void LogMessageSystem::registerHandlers() {
     events()->subscribe<AddLogMessageEvent>(
         [=](std::shared_ptr<AddLogMessageEvent> event) {
-            EntityId player = entities()->getPlayer();
-            auto messages = components()->get<LogMessageComponent>(player);
+            auto player = components()->getUnique<PlayerComponent>();
+            auto messages = components()->get<LogMessageComponent>(player.id);
             if (!messages) {
-                messages = components()->make<LogMessageComponent>(player);
+                messages = components()->make<LogMessageComponent>(player.id);
             }
             messages->messages.push_back(
                 LogMessageComponent::Message(event->message, event->category));

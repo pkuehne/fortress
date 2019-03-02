@@ -1,7 +1,5 @@
-#include "../../src/core/component_manager.h"
 #include "../../src/core/entity_manager.h"
 #include "../../src/core/event_manager.h"
-#include "../../src/core/map_manager.h"
 #include "../mocks/component_manager_mock.h"
 #include <gtest/gtest.h>
 
@@ -11,16 +9,12 @@ class EntityManagerFixture : public ::testing::Test {
 public:
     void SetUp() {
         events = std::make_shared<EventManager>();
-        components = std::make_shared<ComponentManager>();
-        map = std::make_shared<MapManager>();
-        manager.initialise(events, map, components);
+        manager.initialise(events);
     }
 
 protected:
     EntityManager manager;
     std::shared_ptr<EventManager> events;
-    std::shared_ptr<ComponentManager> components;
-    std::shared_ptr<MapManager> map;
 };
 
 class EntityManager_createEntity : public EntityManagerFixture {

@@ -237,3 +237,27 @@ TEST_F(ComponentManagerTest, entitiesReturnsNothingAfterRemovAll) {
     EXPECT_TRUE(entities1.empty());
     EXPECT_TRUE(entities2.empty());
 }
+
+TEST_F(ComponentManagerTest, getUniqueReturnsEmptyIfNotFound) {
+    // Given
+    manager.make<TestComponent>(entity);
+
+    // When
+    auto retval = manager.getUnique<Test2Component>();
+
+    // Then
+    EXPECT_EQ(0, retval.id);
+    EXPECT_EQ(nullptr, retval.component);
+}
+
+TEST_F(ComponentManagerTest, getUniqueReturnsFilledStructIfFound) {
+    // Given
+    manager.make<TestComponent>(entity);
+
+    // When
+    auto retval = manager.getUnique<TestComponent>();
+
+    // Then
+    EXPECT_EQ(entity, retval.id);
+    EXPECT_EQ(manager.get<TestComponent>(entity), retval.component);
+}

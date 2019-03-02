@@ -1,6 +1,7 @@
 #include "equipment_window.h"
 #include "../components/description_component.h"
 #include "../components/equipment_component.h"
+#include "../components/player_component.h"
 #include "../components/wearable_component.h"
 #include "../components/wieldable_component.h"
 #include "../core/component_manager.h"
@@ -21,9 +22,9 @@ const char* EquipmentWindow::nameOrNothing(EntityId item) {
 }
 
 void EquipmentWindow::selectItem(Label* l) {
-    EntityId player = entities()->getPlayer();
+    auto player = components()->getUnique<PlayerComponent>();
     EquipmentComponent* equipment =
-        components()->get<EquipmentComponent>(player);
+        components()->get<EquipmentComponent>(player.id);
     EquipmentWindow* win = dynamic_cast<EquipmentWindow*>(l->getWindow());
 
     if (l->getName() == "lblRight")
@@ -162,7 +163,8 @@ void EquipmentWindow::registerWidgets() {
         ->setCommandChar(1)
         ->setCommandCharCallback([&](Label* l) {
             events()->raise(std::make_shared<ConsumeItemEvent>(
-                entities()->getPlayer(), getSelectedItem()));
+                components()->getUnique<PlayerComponent>().id,
+                getSelectedItem()));
             setSelectedItem(0);
 
             events()->raise(std::make_shared<EndTurnEvent>());
@@ -187,7 +189,8 @@ void EquipmentWindow::registerWidgets() {
             EquipmentWindow* win =
                 dynamic_cast<EquipmentWindow*>(l->getWindow());
             events()->raise(std::make_shared<UnequipItemEvent>(
-                entities()->getPlayer(), win->getSelectedItem()));
+                components()->getUnique<PlayerComponent>().id,
+                win->getSelectedItem()));
             win->setSelectedItem(0);
             events()->raise(std::make_shared<EndTurnEvent>());
         })
@@ -201,7 +204,8 @@ void EquipmentWindow::registerWidgets() {
             EquipmentWindow* win =
                 dynamic_cast<EquipmentWindow*>(l->getWindow());
             events()->raise(std::make_shared<EquipItemEvent>(
-                entities()->getPlayer(), win->getSelectedItem()));
+                components()->getUnique<PlayerComponent>().id,
+                win->getSelectedItem()));
             win->setSelectedItem(0);
             events()->raise(std::make_shared<EndTurnEvent>());
         })
@@ -215,7 +219,8 @@ void EquipmentWindow::registerWidgets() {
             EquipmentWindow* win =
                 dynamic_cast<EquipmentWindow*>(l->getWindow());
             events()->raise(std::make_shared<DropEquipmentEvent>(
-                entities()->getPlayer(), win->getSelectedItem()));
+                components()->getUnique<PlayerComponent>().id,
+                win->getSelectedItem()));
             win->setSelectedItem(0);
             events()->raise(std::make_shared<EndTurnEvent>());
         })
@@ -256,9 +261,9 @@ void EquipmentWindow::setSelectedItem(EntityId item) {
 void EquipmentWindow::nextTurn() { updateItemNames(); }
 
 void EquipmentWindow::updateItemNames() {
-    EntityId player = entities()->getPlayer();
+    auto player = components()->getUnique<PlayerComponent>();
     EquipmentComponent* equipment =
-        components()->get<EquipmentComponent>(player);
+        components()->get<EquipmentComponent>(player.id);
 
     getWidget<Label>("lblRightItem")
         ->setText(nameOrNothing(equipment->rightHandWieldable));
@@ -282,11 +287,10 @@ void EquipmentWindow::updateItemNames() {
     ListBox* list = getWidget<ListBox>("lstRucksack");
     list->clearItems();
 
-    EquipmentComponent* carried = components()->get<EquipmentComponent>(player);
-    for (unsigned int ii = 0; ii < carried->carriedEquipment.size(); ii++) {
+    for (unsigned int ii = 0; ii < equipment->carriedEquipment.size(); ii++) {
         ListBoxItem item;
-        item.setText(nameOrNothing(carried->carriedEquipment[ii]));
-        item.setValue(carried->carriedEquipment[ii]);
+        item.setText(nameOrNothing(equipment->carriedEquipment[ii]));
+        item.setValue(equipment->carriedEquipment[ii]);
         list->addItem(item);
     }
 }
