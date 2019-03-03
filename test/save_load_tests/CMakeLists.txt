@@ -4,7 +4,7 @@ target_link_libraries(save_load_test fortresslib)
 target_include_directories(save_load_test PUBLIC ${CMAKE_CURRENT_LIST_DIR})
 target_sources (save_load_test 
     PRIVATE
-    save_load_tests.cpp
+    component_tests.cpp
     )
 
 target_link_libraries(save_load_test soil)
