@@ -10,8 +10,6 @@
 #include "../components/grouping_component.h"
 #include "../components/health_component.h"
 #include "../components/npc_component.h"
-#include "../components/openable_component.h"
-#include "../components/player_component.h"
 #include "../components/sprite_component.h"
 #include "../components/wearable_component.h"
 #include "../components/wieldable_component.h"
@@ -390,24 +388,6 @@ template <> struct convert<NpcComponent> {
         rhs.stateMachine = node["stateMachine"].as<std::string>();
         rhs.losDistance = node["losDistance"].as<unsigned int>();
         // Todo
-        return true;
-    }
-};
-
-// OpenableComponent
-template <> struct convert<OpenableComponent> {
-    static Node encode(const OpenableComponent& rhs) {
-        Node node;
-        node["open"] = rhs.open;
-        return node;
-    }
-
-    static bool decode(const Node& node, OpenableComponent& rhs) {
-        if (!node.IsMap() || node.size() != 1) {
-            return false;
-        }
-
-        rhs.open = node["open"].as<bool>();
         return true;
     }
 };

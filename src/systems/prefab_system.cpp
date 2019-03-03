@@ -1,5 +1,7 @@
 #include "prefab_system.h"
 #include "../components/experience_component.h"
+#include "../components/openable_component.h"
+#include "../components/player_component.h"
 #include "../core/yaml_converter.h"
 #include <experimental/filesystem>
 #include <glog/logging.h>

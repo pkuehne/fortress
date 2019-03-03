@@ -1,5 +1,7 @@
 #include "yaml_converter.h"
 #include "../components/experience_component.h"
+#include "../components/openable_component.h"
+#include "../components/player_component.h"
 
 void YamlConverter::encodeEntity(YAML::Node& node, EntityId entity) {
     encodeComponent<ColliderComponent>("collide", node, entity);

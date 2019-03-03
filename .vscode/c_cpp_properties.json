@@ -42,7 +42,8 @@
                 "${workspaceFolder}/third-party/glfw/include",
                 "${workspaceFolder}/src",
                 "${workspaceFolder}/src/core",
-                "${workspaceFolder}/src/components"
+                "${workspaceFolder}/src/components",
+                "${workspaceFolder}/src/systems"
             ],
             "defines": [
                 "MAJOR=0",

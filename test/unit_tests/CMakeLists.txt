@@ -20,6 +20,7 @@ target_sources (unit_test
         tests/grouping_manager_test.cpp
         tests/grouping_test.cpp
         tests/icon_test.cpp
+        tests/interaction_system_test.cpp
         tests/label_test.cpp
         tests/listbox_test.cpp
         tests/location_test.cpp

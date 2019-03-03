@@ -1,4 +1,4 @@
-add_executable(save_load_test)
+add_executable(save_load_test "")
 target_link_libraries(save_load_test fortresslib)
 
 target_include_directories(save_load_test PUBLIC ${CMAKE_CURRENT_LIST_DIR})

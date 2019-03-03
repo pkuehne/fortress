@@ -6,7 +6,7 @@ class InteractionSystem : public GameSystemBase {
 public:
     void registerHandlers();
 
-private:
+public:
     void handleOpenEntityEvent(std::shared_ptr<OpenEntityEvent> event);
     void handleCloseEntityEvent(std::shared_ptr<CloseEntityEvent> event);
 };
