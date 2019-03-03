@@ -6,6 +6,7 @@ target_sources (fortresslib
     ${CMAKE_CURRENT_LIST_DIR}/connector_component.h
     ${CMAKE_CURRENT_LIST_DIR}/consumable_component.h
     ${CMAKE_CURRENT_LIST_DIR}/description_component.h
+    ${CMAKE_CURRENT_LIST_DIR}/dialog_component.h
     ${CMAKE_CURRENT_LIST_DIR}/droppable_component.h
     ${CMAKE_CURRENT_LIST_DIR}/equipment_component.h
     ${CMAKE_CURRENT_LIST_DIR}/experience_component.h

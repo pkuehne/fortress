@@ -3,7 +3,7 @@
 #include "../core/game_system_base.h"
 #include "../core/utility.h"
 
-class PlayerComponent;
+class DialogComponent;
 
 class DialogSystem : public GameSystemBase {
 public:
@@ -15,5 +15,5 @@ public:
     void
     handleEndConversationEvent(std::shared_ptr<EndConversationEvent> event);
 
-    void generateDialog(PlayerComponent* player);
+    void generateDialog(DialogComponent* player);
 };

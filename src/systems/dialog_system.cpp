@@ -1,4 +1,5 @@
 #include "dialog_system.h"
+#include "../components/dialog_component.h"
 #include "../components/player_component.h"
 #include "../windows/dialog_window.h"
 
@@ -21,20 +22,21 @@ void DialogSystem::handleStartConversationEvent(
     std::shared_ptr<StartConversationEvent> event) {
 
     auto player = components()->getUnique<PlayerComponent>();
-    if (player.id == 0) {
-        throw std::string("Player has no PlayerComponent");
+    auto component = components()->getUnique<DialogComponent>().component;
+    if (component == nullptr) {
+        component = components()->make<DialogComponent>(player.id);
     }
 
-    if (player.component->inConversationWith != 0) {
+    if (component->inConversationWith != 0) {
         return;
     }
     if (event->initiatedBy == player.id) {
-        player.component->inConversationWith = event->target;
+        component->inConversationWith = event->target;
     } else {
-        player.component->inConversationWith = event->initiatedBy;
+        component->inConversationWith = event->initiatedBy;
     }
 
-    generateDialog(player.component);
+    generateDialog(component);
 
     // Show the dialog window
     events()->raise(std::make_shared<RegisterWindowEvent>(
@@ -43,7 +45,7 @@ void DialogSystem::handleStartConversationEvent(
 
 void DialogSystem::handleChooseDialogOptionEvent(
     std::shared_ptr<ChooseDialogOptionEvent> event) {
-    auto player = components()->getUnique<PlayerComponent>();
+    auto player = components()->getUnique<DialogComponent>();
 
     if (event->option == 1) {
         player.component->dialogText = "I don't know you well enough to say.";
@@ -56,12 +58,12 @@ void DialogSystem::handleChooseDialogOptionEvent(
 
 void DialogSystem::handleEndConversationEvent(
     std::shared_ptr<EndConversationEvent> event) {
-    auto player = components()->getUnique<PlayerComponent>();
+    auto player = components()->getUnique<DialogComponent>();
 
     player.component->inConversationWith = 0;
 }
 
-void DialogSystem::generateDialog(PlayerComponent* player) {
+void DialogSystem::generateDialog(DialogComponent* player) {
     player->dialogText = "Hello there! What can I do for you?";
     player->dialogOptions.clear();
     player->dialogOptions.push_back("What's your name?");

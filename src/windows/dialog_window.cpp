@@ -1,5 +1,5 @@
 #include "dialog_window.h"
-#include "../components/player_component.h"
+#include "../components/dialog_component.h"
 #include "../core/component_manager.h"
 #include "../core/entity_manager.h"
 #include "../core/event_manager.h"
@@ -44,7 +44,7 @@ void DialogWindow::registerWidgets() {
 void DialogWindow::nextTurn() {
     auto lstQuestions = getWidget<ListBox>("lstQuestions");
     auto lblResponse = getWidget<Label>("lblResponse");
-    auto player = components()->getUnique<PlayerComponent>().component;
+    auto player = components()->getUnique<DialogComponent>().component;
 
     lstQuestions->clearItems();
     for (unsigned int ii = 0; ii < player->dialogOptions.size(); ii++) {
