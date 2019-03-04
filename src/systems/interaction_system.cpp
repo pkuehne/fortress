@@ -20,6 +20,9 @@ void InteractionSystem::handleOpenEntityEvent(
     if (!openable) {
         return;
     }
+    if (openable->locked) {
+        return;
+    }
     openable->open = true;
 
     components()->remove<ColliderComponent>(event->entity);

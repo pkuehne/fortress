@@ -57,11 +57,43 @@ TEST_F(InteractionSystemTest, handleOpenForNonOpenable) {
     EXPECT_TRUE(componentManager->exists<ColliderComponent>(entity));
 }
 
+TEST_F(InteractionSystemTest, handleOpenDoesNotWorkIfLocked) {
+    // Given
+    EntityId entity = 1234;
+    auto openable = componentManager->make<OpenableComponent>(entity);
+    auto collidable = componentManager->make<ColliderComponent>(entity);
+    openable->locked = true;
+
+    // When
+    auto event = std::make_shared<OpenEntityEvent>(entity);
+    system.handleOpenEntityEvent(event);
+
+    // Then
+    EXPECT_FALSE(openable->open);
+    EXPECT_TRUE(componentManager->exists<ColliderComponent>(entity));
+}
+
 TEST_F(InteractionSystemTest, handleCloseForOpenable) {
     // Given
     EntityId entity = 1234;
     auto openable = componentManager->make<OpenableComponent>(entity);
     openable->open = true;
+
+    // When
+    auto event = std::make_shared<CloseEntityEvent>(entity);
+    system.handleCloseEntityEvent(event);
+
+    // Then
+    EXPECT_FALSE(openable->open);
+    EXPECT_TRUE(componentManager->exists<ColliderComponent>(entity));
+}
+
+TEST_F(InteractionSystemTest, handleCloseForOpenableIgnoresLocked) {
+    // Given
+    EntityId entity = 1234;
+    auto openable = componentManager->make<OpenableComponent>(entity);
+    openable->open = true;
+    openable->locked = true;
 
     // When
     auto event = std::make_shared<CloseEntityEvent>(entity);

@@ -46,6 +46,7 @@ TEST_F(SaveLoadTest, OpenableComponent) {
     using T = OpenableComponent;
     auto save = new T();
     save->open = true;
+    save->locked = true;
 
     YAML::Node node;
     node = *save;
@@ -55,4 +56,5 @@ TEST_F(SaveLoadTest, OpenableComponent) {
 
     EXPECT_NE(save, load);
     EXPECT_EQ(save->open, load->open);
+    EXPECT_EQ(save->locked, load->locked);
 }
