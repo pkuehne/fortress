@@ -70,7 +70,6 @@ target_link_libraries(fortress pthread)
 # Add Testing target
 enable_testing()
 add_subdirectory(test/unit_tests)
-add_subdirectory(test/save_load_tests)
 
 # Add 'run' command
 add_custom_target(run

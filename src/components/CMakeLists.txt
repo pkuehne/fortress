@@ -13,6 +13,7 @@ target_sources (fortresslib
     ${CMAKE_CURRENT_LIST_DIR}/graphics_effect_component.h
     ${CMAKE_CURRENT_LIST_DIR}/grouping_component.h
     ${CMAKE_CURRENT_LIST_DIR}/health_component.h
+    ${CMAKE_CURRENT_LIST_DIR}/key_component.h
     ${CMAKE_CURRENT_LIST_DIR}/logmessage_component.h
     ${CMAKE_CURRENT_LIST_DIR}/npc_component.h
     ${CMAKE_CURRENT_LIST_DIR}/openable_component.h

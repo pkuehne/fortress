@@ -14,6 +14,7 @@ target_sources (unit_test
         mocks/window_manager_mock.h
         mocks/world_info_mock.h
         tests/component_manager_test.cpp
+        tests/component_tests.cpp
         tests/dialog_system_test.cpp
         tests/entity_manager_test.cpp
         tests/frame_test.cpp
@@ -52,3 +53,4 @@ target_link_libraries(unit_test m)
 target_link_libraries(unit_test pthread)
     
 add_test(fortress_unit_test unit_test)
+# gtest_discover_tests (fortress_unit_test)

@@ -1,4 +1,5 @@
 #include "dialog_component.h"
+#include "key_component.h"
 #include "openable_component.h"
 #include "player_component.h"
 #include <gtest/gtest.h>
@@ -57,4 +58,17 @@ TEST_F(SaveLoadTest, OpenableComponent) {
     EXPECT_NE(save, load);
     EXPECT_EQ(save->open, load->open);
     EXPECT_EQ(save->locked, load->locked);
+}
+
+TEST_F(SaveLoadTest, KeyComponent) {
+    using T = KeyComponent;
+    auto save = new T();
+
+    YAML::Node node;
+    node = *save;
+
+    auto load = new T();
+    *load = node.as<T>();
+
+    EXPECT_NE(save, load);
 }
