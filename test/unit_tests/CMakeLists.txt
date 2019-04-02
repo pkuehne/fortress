@@ -51,6 +51,6 @@ target_link_libraries(unit_test GL)
 target_link_libraries(unit_test c)
 target_link_libraries(unit_test m)
 target_link_libraries(unit_test pthread)
-    
-add_test(fortress_unit_test unit_test)
-# gtest_discover_tests (fortress_unit_test)
+
+include(GoogleTest)
+gtest_discover_tests (unit_test)

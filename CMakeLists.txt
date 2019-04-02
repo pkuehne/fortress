@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 3.5)
+cmake_minimum_required (VERSION 3.13)
 project (Fortress)
 
 set(CMAKE_CXX_STANDARD 14)
@@ -34,17 +34,10 @@ target_link_libraries(fortresslib glfw)
 target_link_libraries(fortresslib lua_static)
 
 # Add Compiler definitions
-if(${CMAKE_VERSION} VERSION_LESS "3.13.0") 
-    add_definitions(-DFORTRESS_VERSION_MAJOR=0)
-    add_definitions(-DFORTRESS_VERSION_MINOR=5)
-    add_definitions(-DFORTRESS_VERSION_PATCH=0)
-    add_definitions(-DFORTRESS_VERSION_BUILD="dev-build")
-else()
-    add_compile_definitions(FORTRESS_VERSION_MAJOR=0)
-    add_compile_definitions(FORTRESS_VERSION_MINOR=5)
-    add_compile_definitions(FORTRESS_VERSION_PATCH=0)
-    add_compile_definitions(FORTRESS_VERSION_BUILD="dev-build")
-endif()
+add_compile_definitions(FORTRESS_VERSION_MAJOR=0)
+add_compile_definitions(FORTRESS_VERSION_MINOR=5)
+add_compile_definitions(FORTRESS_VERSION_PATCH=0)
+add_compile_definitions(FORTRESS_VERSION_BUILD="dev-build")
 
 # Include source files
 add_subdirectory(src/core)
