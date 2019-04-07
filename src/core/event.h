@@ -214,3 +214,17 @@ public:
     unsigned int depth = 0;
     unsigned int rooms = 0;
 };
+
+class UnlockEntityEvent : public Event {
+public:
+    UnlockEntityEvent(EntityId k, EntityId l) : key(k), lock(l) {}
+    EntityId key;
+    EntityId lock;
+};
+
+class LockEntityEvent : public Event {
+public:
+    LockEntityEvent(EntityId k, EntityId l) : key(k), lock(l) {}
+    EntityId key;
+    EntityId lock;
+};

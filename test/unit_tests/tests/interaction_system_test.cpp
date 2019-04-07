@@ -3,6 +3,7 @@
 #include "entity_manager.h"
 #include "event_manager.h"
 #include "interaction_system.h"
+#include "key_component.h"
 #include "map_manager.h"
 #include "openable_component.h"
 #include <gtest/gtest.h>
@@ -114,4 +115,68 @@ TEST_F(InteractionSystemTest, handleCloseForNonOpenable) {
 
     // Then
     EXPECT_FALSE(componentManager->exists<ColliderComponent>(entity));
+}
+
+TEST_F(InteractionSystemTest, handleLockEntityEvent_locksLockableWithKey) {
+    // Given
+    EntityId key = 1234;
+    EntityId lock = 9876;
+    auto openable = componentManager->make<OpenableComponent>(lock);
+    auto keyable = componentManager->make<KeyComponent>(key);
+    openable->locked = false;
+
+    // When
+    auto event = std::make_shared<LockEntityEvent>(key, lock);
+    system.handleLockEntityEvent(event);
+
+    // Then
+    EXPECT_TRUE(openable->locked);
+}
+
+TEST_F(InteractionSystemTest,
+       handleLockEntityEvent_doesntlockLockableWithoutKey) {
+    // Given
+    EntityId key = 1234;
+    EntityId lock = 9876;
+    auto openable = componentManager->make<OpenableComponent>(lock);
+    openable->locked = false;
+
+    // When
+    auto event = std::make_shared<LockEntityEvent>(key, lock);
+    system.handleLockEntityEvent(event);
+
+    // Then
+    EXPECT_FALSE(openable->locked);
+}
+
+TEST_F(InteractionSystemTest, handleUnlockEntityEvent_unlocksLockableWithKey) {
+    // Given
+    EntityId key = 1234;
+    EntityId lock = 9876;
+    auto openable = componentManager->make<OpenableComponent>(lock);
+    auto keyable = componentManager->make<KeyComponent>(key);
+    openable->locked = true;
+
+    // When
+    auto event = std::make_shared<UnlockEntityEvent>(key, lock);
+    system.handleUnlockEntityEvent(event);
+
+    // Then
+    EXPECT_FALSE(openable->locked);
+}
+
+TEST_F(InteractionSystemTest,
+       handleUnlockEntityEvent_doesntunlockLockableWithitoutKey) {
+    // Given
+    EntityId key = 1234;
+    EntityId lock = 9876;
+    auto openable = componentManager->make<OpenableComponent>(lock);
+    openable->locked = true;
+
+    // When
+    auto event = std::make_shared<UnlockEntityEvent>(key, lock);
+    system.handleUnlockEntityEvent(event);
+
+    // Then
+    EXPECT_TRUE(openable->locked);
 }

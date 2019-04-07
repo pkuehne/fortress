@@ -82,6 +82,18 @@ void InteractionWindow::registerWidgets() {
             events()->raise(std::make_shared<EndTurnEvent>());
         })
         ->setSensitive(false);
+    createWidget<Label>("txtLock", descriptionWidth, 5)
+        ->setText("lock")
+        ->setCommandChar(1)
+        ->setCommandCharCallback([&](Label* l) {
+            ListBox* lstEntities = this->getWidget<ListBox>("lstEntities");
+            EntityId lock = m_entities[lstEntities->getSelection()];
+            auto player = components()->getUnique<PlayerComponent>();
+            auto key = 1;
+            events()->raise(std::make_shared<LockEntityEvent>(key, lock));
+            events()->raise(std::make_shared<EndTurnEvent>());
+        })
+        ->setSensitive(false);
 
     setHeight(windowHeight);
     setWidth(descriptionWidth + commandWidth);
@@ -109,6 +121,7 @@ void InteractionWindow::updateScreen() {
     Label* txtOpen = getWidget<Label>("txtOpen");
     Label* txtDrop = getWidget<Label>("txtDrop");
     Label* txtTalk = getWidget<Label>("txtTalk");
+    Label* txtLock = getWidget<Label>("txtLock");
 
     ComponentStore& store = m_components[lstEntities->getSelection()];
 
@@ -116,12 +129,14 @@ void InteractionWindow::updateScreen() {
     txtOpen->setSensitive(store.open != nullptr);
     txtDrop->setSensitive(store.drop != nullptr);
     txtTalk->setSensitive(store.npc == nullptr);
+    txtLock->setSensitive(store.open != nullptr);
 
     if (store.desc) {
         setTitle(store.desc->title);
     }
     if (store.open) {
         txtOpen->setText(store.open->open ? "close" : "open");
+        txtLock->setText(store.open->locked ? "unlock" : "lock");
     }
 }
 
