@@ -14,6 +14,9 @@ equipment:
   rightHand: "sword"
   leftHand: "shield"
   head: "helmet"
+  carried:
+    - "apple"
+    - "key"
 player: true
 experience: true
 groupings:

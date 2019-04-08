@@ -1,6 +1,6 @@
-name: Corpse
-description: "A dead thing"
-symbol: 88
+name: Stair
+description: "Where it leads, no-one knows"
+symbol: 231
 foreground-color:
   - 128
   - 128

@@ -1,0 +1,14 @@
+name: Key
+description: "Locks and unlocks things"
+symbol: 75
+foreground-color:
+  - 256
+  - 256
+  - 256
+background-color:
+  - 0
+  - 0
+  - 0
+collidable: false
+droppable: true
+key: true

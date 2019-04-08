@@ -33,6 +33,7 @@ private:
     void addPlayerComponent(YAML::Node& node, EntityId entity) const;
     void addExperienceComponent(YAML::Node& node, EntityId entity) const;
     void addGroupingComponent(YAML::Node& node, EntityId entity) const;
+    void addKeyComponent(YAML::Node& node, EntityId entity) const;
 
 private:
     std::map<std::string, YAML::Node> m_prefabs;

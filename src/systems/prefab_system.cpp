@@ -1,5 +1,6 @@
 #include "prefab_system.h"
 #include "../components/experience_component.h"
+#include "../components/key_component.h"
 #include "../components/openable_component.h"
 #include "../components/player_component.h"
 #include "../core/yaml_converter.h"
@@ -36,6 +37,7 @@ void PrefabSystem::registerHandlers() {
             addPlayerComponent(node, entity);
             addExperienceComponent(node, entity);
             addGroupingComponent(node, entity);
+            addKeyComponent(node, entity);
 
             events()->raise(std::make_shared<PrefabCreatedEvent>(
                 event->entity, event->prefab));
@@ -173,6 +175,14 @@ void PrefabSystem::addEquipmentComponent(YAML::Node& node,
         node["equipment"]["rightHand"].as<std::string>(""), invalidLoc);
     l_equipment->leftHandWieldable = instantiatePrefab(
         node["equipment"]["leftHand"].as<std::string>(""), invalidLoc);
+
+    if (node["equipment"]["carried"].IsSequence()) {
+        for (auto& item :
+             node["equipment"]["carried"].as<std::vector<std::string>>()) {
+            l_equipment->carriedEquipment.push_back(
+                instantiatePrefab(item, invalidLoc));
+        }
+    }
 }
 
 void PrefabSystem::addConnectorComponent(YAML::Node& node,
@@ -220,4 +230,11 @@ void PrefabSystem::addGroupingComponent(YAML::Node& node,
         //        m_world->getGroupings().addEntityToGrouping(entity, group);
         l_grouping->groupings.push_back(group);
     }
+}
+
+void PrefabSystem::addKeyComponent(YAML::Node& node, EntityId entity) const {
+    if (!node["key"].IsDefined()) {
+        return;
+    }
+    components()->make<KeyComponent>(entity);
 }

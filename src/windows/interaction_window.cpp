@@ -55,6 +55,9 @@ void InteractionWindow::registerWidgets() {
 
             if (store.open->open) {
                 events()->raise(std::make_shared<CloseEntityEvent>(entity));
+            } else if (store.open->locked) {
+                events()->raise(
+                    std::make_shared<AddLogMessageEvent>("It's locked!"));
             } else {
                 events()->raise(std::make_shared<OpenEntityEvent>(entity));
             }
