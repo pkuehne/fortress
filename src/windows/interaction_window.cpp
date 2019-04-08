@@ -100,10 +100,17 @@ void InteractionWindow::registerWidgets() {
                     "You don't carry any equipement"));
                 return;
             }
+            ComponentStore& store = m_components[lstEntities->getSelection()];
+
             for (auto item : equipment->carriedEquipment) {
                 if (components()->get<KeyComponent>(item)) {
-                    events()->raise(
-                        std::make_shared<LockEntityEvent>(item, lock));
+                    if (store.open->locked) {
+                        events()->raise(
+                            std::make_shared<UnlockEntityEvent>(item, lock));
+                    } else {
+                        events()->raise(
+                            std::make_shared<LockEntityEvent>(item, lock));
+                    }
                     return;
                 }
             }
