@@ -1,5 +1,7 @@
 #pragma once
 
+#include <functional>
+
 enum class Direction {
     None = 0,
     North = 1,
@@ -26,3 +28,12 @@ namespace Utility {
 unsigned int randBetween(unsigned int start, unsigned int end);
 bool randChance(unsigned int percentage);
 } // namespace Utility
+
+class Defer {
+public:
+    explicit Defer(std::function<void()> f) : m_func(f) {}
+    ~Defer() { m_func(); }
+
+public:
+    std::function<void()> m_func;
+};

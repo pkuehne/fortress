@@ -88,6 +88,9 @@ void InteractionWindow::registerWidgets() {
         ->setText("lock")
         ->setCommandChar(1)
         ->setCommandCharCallback([&](Label* l) {
+            Defer d([this]() {
+                this->events()->raise(std::make_shared<EndTurnEvent>());
+            });
             ListBox* lstEntities = this->getWidget<ListBox>("lstEntities");
             EntityId lock = m_entities[lstEntities->getSelection()];
             auto player = components()->getUnique<PlayerComponent>();
@@ -95,20 +98,17 @@ void InteractionWindow::registerWidgets() {
             if (!equipment) {
                 events()->raise(std::make_shared<AddLogMessageEvent>(
                     "You don't carry any equipement"));
-                events()->raise(std::make_shared<EndTurnEvent>());
                 return;
             }
             for (auto item : equipment->carriedEquipment) {
                 if (components()->get<KeyComponent>(item)) {
                     events()->raise(
                         std::make_shared<LockEntityEvent>(item, lock));
-                    events()->raise(std::make_shared<EndTurnEvent>());
                     return;
                 }
             }
             events()->raise(std::make_shared<AddLogMessageEvent>(
                 "None of your equipment can be used as a key"));
-            events()->raise(std::make_shared<EndTurnEvent>());
         })
         ->setSensitive(false);
 
