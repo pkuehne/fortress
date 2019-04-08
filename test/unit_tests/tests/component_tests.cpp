@@ -1,3 +1,4 @@
+#include "combat_component.h"
 #include "dialog_component.h"
 #include "key_component.h"
 #include "openable_component.h"
@@ -71,4 +72,23 @@ TEST_F(SaveLoadTest, KeyComponent) {
     *load = node.as<T>();
 
     EXPECT_NE(save, load);
+}
+
+TEST_F(SaveLoadTest, CombatComponent) {
+    // Given
+    using T = CombatComponent;
+    auto save = new T();
+
+    // When
+    save->opponent = 123;
+
+    // Then
+    YAML::Node node;
+    node = *save;
+
+    auto load = new T();
+    *load = node.as<T>();
+
+    EXPECT_NE(save, load);
+    EXPECT_EQ(save->opponent, load->opponent);
 }

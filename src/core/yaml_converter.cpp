@@ -1,5 +1,7 @@
 #include "yaml_converter.h"
+#include "../components/combat_component.h"
 #include "../components/experience_component.h"
+#include "../components/key_component.h"
 #include "../components/openable_component.h"
 #include "../components/player_component.h"
 
@@ -20,6 +22,8 @@ void YamlConverter::encodeEntity(YAML::Node& node, EntityId entity) {
     encodeComponent<WieldableComponent>("wield", node, entity);
     encodeComponent<GroupingComponent>("grouping", node, entity);
     encodeComponent<ExperienceComponent>("experience", node, entity);
+    encodeComponent<ExperienceComponent>("key", node, entity);
+    encodeComponent<ExperienceComponent>("fight", node, entity);
 
     node[entity]["location"] = entities()->getLocation(entity);
 }
@@ -44,6 +48,8 @@ void YamlConverter::decodeEntity(const YAML::Node& node, EntityId entity) {
     decodeComponent<WieldableComponent>("wield", node, entity);
     decodeComponent<GroupingComponent>("grouping", node, entity);
     decodeComponent<ExperienceComponent>("experience", node, entity);
+    decodeComponent<ExperienceComponent>("key", node, entity);
+    decodeComponent<ExperienceComponent>("fight", node, entity);
 }
 
 template <typename T>

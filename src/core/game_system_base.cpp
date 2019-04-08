@@ -13,7 +13,7 @@ void GameSystemBase::initialise(std::shared_ptr<EventManager> events,
 }
 
 EntityId GameSystemBase::instantiatePrefab(const std::string& type,
-                                           Location& location) const {
+                                           const Location& location) const {
     if (type.empty()) {
         return 0;
     }

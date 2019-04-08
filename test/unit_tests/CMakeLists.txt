@@ -13,6 +13,7 @@ target_sources (unit_test
         mocks/widget_mock.h
         mocks/window_manager_mock.h
         mocks/world_info_mock.h
+        tests/combat_system_test.cpp
         tests/component_manager_test.cpp
         tests/component_tests.cpp
         tests/dialog_system_test.cpp

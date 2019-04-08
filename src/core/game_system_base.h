@@ -31,7 +31,7 @@ protected:
     std::shared_ptr<EventManager> events() const { return m_events; }
     std::shared_ptr<MapManager> map() const { return m_map; }
     virtual EntityId instantiatePrefab(const std::string& type,
-                                       Location& loc) const;
+                                       const Location& loc) const;
 
 private:
     std::shared_ptr<EventManager> m_events = nullptr;

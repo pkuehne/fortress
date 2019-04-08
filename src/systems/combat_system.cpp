@@ -61,8 +61,7 @@ void CombatSystem::killEntity(EntityId id) {
     }
 
     // Create the corpse
-    EntityId corpse = entities()->createEntity(location);
-    events()->raise(std::make_shared<InstantiatePrefabEvent>(corpse, "corpse"));
+    EntityId corpse = instantiatePrefab("corpse", location);
     components()->make<SpriteComponent>(corpse)->sprite =
         components()->get<SpriteComponent>(id)->sprite;
 
