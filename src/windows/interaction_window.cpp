@@ -1,4 +1,6 @@
 #include "interaction_window.h"
+#include "../components/equipment_component.h"
+#include "../components/key_component.h"
 #include "../components/player_component.h"
 #include "../core/component_manager.h"
 #include "../core/entity_manager.h"
@@ -89,15 +91,29 @@ void InteractionWindow::registerWidgets() {
             ListBox* lstEntities = this->getWidget<ListBox>("lstEntities");
             EntityId lock = m_entities[lstEntities->getSelection()];
             auto player = components()->getUnique<PlayerComponent>();
-            auto key = 1;
-            events()->raise(std::make_shared<LockEntityEvent>(key, lock));
+            auto equipment = components()->get<EquipmentComponent>(player.id);
+            if (!equipment) {
+                events()->raise(std::make_shared<AddLogMessageEvent>(
+                    "You don't carry any equipement"));
+                events()->raise(std::make_shared<EndTurnEvent>());
+                return;
+            }
+            for (auto item : equipment->carriedEquipment) {
+                if (components()->get<KeyComponent>(item)) {
+                    events()->raise(
+                        std::make_shared<LockEntityEvent>(item, lock));
+                    events()->raise(std::make_shared<EndTurnEvent>());
+                    return;
+                }
+            }
+            events()->raise(std::make_shared<AddLogMessageEvent>(
+                "None of your equipment can be used as a key"));
             events()->raise(std::make_shared<EndTurnEvent>());
         })
         ->setSensitive(false);
 
     setHeight(windowHeight);
     setWidth(descriptionWidth + commandWidth);
-
     lstEntities->clearItems();
     for (EntityId entity : m_inputEntities) {
         ComponentStore store;
