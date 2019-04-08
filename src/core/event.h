@@ -218,13 +218,13 @@ public:
 class UnlockEntityEvent : public Event {
 public:
     UnlockEntityEvent(EntityId k, EntityId l) : key(k), lock(l) {}
-    EntityId key;
-    EntityId lock;
+    EntityId key = 0;
+    EntityId lock = 0;
 };
 
 class LockEntityEvent : public Event {
 public:
     LockEntityEvent(EntityId k, EntityId l) : key(k), lock(l) {}
-    EntityId key;
-    EntityId lock;
+    EntityId key = 0;
+    EntityId lock = 0;
 };
