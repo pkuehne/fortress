@@ -10,7 +10,7 @@
 #include <iostream>
 
 namespace {
-auto getDistance = [&](const Location& start, const Location& end,
+auto getDistance = [](const Location& start, const Location& end,
                        void* c = 0) {
     int xdist = start.x - end.x;
     int ydist = start.y - end.y;
