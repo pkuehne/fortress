@@ -71,8 +71,8 @@ private:
     KeyboardFuncPtr m_keyUpFunc = nullptr;
     Texture m_tileTexture;
     Texture m_fontTexture;
-    unsigned int m_tileWidth = 16; // How big the tiles are on screen
-    unsigned int m_tileHeight = 16;
+    unsigned int m_tileWidth = 0; // How big the tiles are on screen
+    unsigned int m_tileHeight = 0;
 };
 
 void start_graphics();

@@ -15,4 +15,6 @@ public:
     std::string fontset;
     int fontset_rows;
     int fontset_cols;
+    unsigned int tileHeight;
+    unsigned int tileWidth;
 };

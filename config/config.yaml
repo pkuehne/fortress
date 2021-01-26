@@ -9,3 +9,5 @@ Tileset_Cols: 16
 Fontset: fontset.png  # Used for text not on the map
 Fontset_Rows: 16
 Fontset_Cols: 16
+TileHeight: 32
+TileWidth: 32

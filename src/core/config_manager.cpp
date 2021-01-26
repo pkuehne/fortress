@@ -19,4 +19,6 @@ ConfigManager::ConfigManager(const std::string& filename) {
     fontset = config["Fontset"].as<std::string>("");
     fontset_rows = config["Fontset_Rows"].as<int>(16);
     fontset_cols = config["Fontset_Cols"].as<int>(16);
+    tileHeight = config["TileHeight"].as<unsigned int>(16);
+    tileWidth = config["TileWidth"].as<unsigned int>(16);
 }

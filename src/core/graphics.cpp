@@ -249,6 +249,8 @@ void Graphics::initialise(int argc, char** argv) {
 
     m_width = 640;
     m_height = 480;
+    m_tileHeight = m_config.tileHeight;
+    m_tileWidth = m_config.tileWidth;
 
     if (m_config.fullscreen) {
         const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());

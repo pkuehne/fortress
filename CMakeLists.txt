@@ -67,6 +67,7 @@ add_subdirectory(test/unit_tests)
 # Add 'run' command
 add_custom_target(run
     COMMAND ./fortress
+    DEPENDS fortress
 )
 
 add_custom_target(lint ALL
