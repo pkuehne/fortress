@@ -154,7 +154,7 @@ void InteractionWindow::updateScreen() {
     txtInspect->setSensitive(store.desc != nullptr);
     txtOpen->setSensitive(store.open != nullptr);
     txtDrop->setSensitive(store.drop != nullptr);
-    txtTalk->setSensitive(store.npc == nullptr);
+    txtTalk->setSensitive(store.npc != nullptr);
     txtLock->setSensitive(store.open != nullptr);
 
     if (store.desc) {
