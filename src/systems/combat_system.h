@@ -5,7 +5,7 @@
 
 class CombatSystem : public GameSystemBase {
 public:
-    void registerHandlers();
+    void registerHandlers() override;
     void handleAttack(EntityId attacker, EntityId defender);
     void updateLog(const EntityId& attacker, const EntityId& target,
                    int damage);

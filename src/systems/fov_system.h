@@ -24,7 +24,7 @@ private:
 
 class FovSystem : public GameSystemBase {
 public:
-    void registerHandlers();
+    void registerHandlers() override;
 
 private:
     void calculateFov();

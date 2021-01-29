@@ -4,7 +4,7 @@
 
 class SplashWindow : public Window {
 public:
-    virtual void setup();
-    virtual void registerWidgets();
-    virtual void keyPress(unsigned char key);
+    void setup() override;
+    void registerWidgets() override;
+    void keyPress(unsigned char key) override;
 };

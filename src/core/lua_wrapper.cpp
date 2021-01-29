@@ -55,29 +55,29 @@ std::string LuaWrapper::executeCommand(const std::string& command) {
 }
 
 int createOrc(lua_State* runtime) {
-    unsigned int x = 0;
-    unsigned int y = 0;
-    if (lua_gettop(runtime) != 2) {
-        lua_pushstring(runtime, "Incorrect number of arguments");
-        lua_error(runtime);
-    }
-    if (!lua_isnumber(runtime, 1)) {
-        lua_pushstring(runtime, "First argument must be a number!");
-        lua_error(runtime);
-    }
-    x = lua_tonumber(runtime, 1);
+    // unsigned int x = 0;
+    // unsigned int y = 0;
+    // if (lua_gettop(runtime) != 2) {
+    //     lua_pushstring(runtime, "Incorrect number of arguments");
+    //     lua_error(runtime);
+    // }
+    // if (!lua_isnumber(runtime, 1)) {
+    //     lua_pushstring(runtime, "First argument must be a number!");
+    //     lua_error(runtime);
+    // }
+    // x = lua_tonumber(runtime, 1);
 
-    if (!lua_isnumber(runtime, 2)) {
-        lua_pushstring(runtime, "Second argument must be a number!");
-        lua_error(runtime);
-    }
-    y = lua_tonumber(runtime, 2);
+    // if (!lua_isnumber(runtime, 2)) {
+    //     lua_pushstring(runtime, "Second argument must be a number!");
+    //     lua_error(runtime);
+    // }
+    // y = lua_tonumber(runtime, 2);
 
     // GameState* state = getState(runtime);
 
-    Location location; // = state->location(state->player());
-    location.x += x;
-    location.y += y;
+    // Location location; // = state->location(state->player());
+    // location.x += x;
+    // location.y += y;
     // state->prefabs().create("orc", location);
 
     return 0;

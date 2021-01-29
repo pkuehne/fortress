@@ -10,11 +10,11 @@ public:
     MapWindow() {}
     ~MapWindow() {}
 
-    virtual void setup();
-    virtual void registerWidgets();
+    void setup() override;
+    void registerWidgets() override;
 
-    virtual void nextTurn();
-    virtual void keyPress(unsigned char key);
+    void nextTurn() override;
+    void keyPress(unsigned char key) override;
     void setAction(char action, unsigned int yPos);
 
 private:

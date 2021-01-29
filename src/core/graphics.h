@@ -19,42 +19,42 @@ struct Texture {
 class Graphics : public GraphicsInterface {
 public:
     virtual ~Graphics() {}
-    virtual void initialise(int argc, char** argv);
-    virtual void spin();
+    void initialise(int argc, char** argv) override;
+    void spin() override;
 
     virtual Texture loadTexture(std::string, unsigned int cols,
                                 unsigned int rows);
 
-    virtual unsigned int drawString(int y, int x, const char* s,
-                                    Color fg = Color(WHITE),
-                                    Color bg = Color(BLACK));
-    virtual void drawTile(int y, int x, unsigned int tile, Color fg, Color bg);
+    unsigned int drawString(int y, int x, const char* s,
+                            Color fg = Color(WHITE),
+                            Color bg = Color(BLACK)) override;
+    void drawTile(int y, int x, unsigned int tile, Color fg, Color bg) override;
 
-    virtual void drawBorder(int y, int x, int height, int width);
-    virtual void clearArea(int y, int x, int height, int width);
-    virtual void calculateWindowOffsetsFromCentre(int height, int width, int& y,
-                                                  int& x);
-    virtual void terminate() { glfwSetWindowShouldClose(m_window, 1); }
+    void drawBorder(int y, int x, int height, int width) override;
+    void clearArea(int y, int x, int height, int width) override;
+    void calculateWindowOffsetsFromCentre(int height, int width, int& y,
+                                          int& x) override;
+    void terminate() override { glfwSetWindowShouldClose(m_window, 1); }
 
-    virtual void beginScreenUpdate();
-    virtual void endScreenUpdate();
+    void beginScreenUpdate() override;
+    void endScreenUpdate() override;
 
-    virtual int getScreenHeight();
-    virtual int getScreenWidth();
+    int getScreenHeight() override;
+    int getScreenWidth() override;
 
-    virtual void updateScreenSize(int width, int height);
-    virtual void updateTileSize(unsigned int width, unsigned int height);
-    virtual unsigned int getTileWidth() { return m_tileWidth; }
-    virtual unsigned int getTileHeight() { return m_tileHeight; }
+    void updateScreenSize(int width, int height) override;
+    void updateTileSize(unsigned int width, unsigned int height) override;
+    unsigned int getTileWidth() override { return m_tileWidth; }
+    unsigned int getTileHeight() override { return m_tileHeight; }
 
-    virtual void setKeyDownFunc(KeyboardFuncPtr func);
-    virtual void setKeyUpFunc(KeyboardFuncPtr func);
-    virtual void setDisplayFunc(DisplayFuncPtr func);
-    virtual void setMouseFunc(MouseFuncPtr func);
-    virtual void setResizeFunc(ResizeFuncPtr func);
+    void setKeyDownFunc(KeyboardFuncPtr func) override;
+    void setKeyUpFunc(KeyboardFuncPtr func) override;
+    void setDisplayFunc(DisplayFuncPtr func) override;
+    void setMouseFunc(MouseFuncPtr func) override;
+    void setResizeFunc(ResizeFuncPtr func) override;
 
-    virtual void callResizeFunc(int width, int height);
-    virtual void callKeyboardFunc(int key, int scancode, int action, int mods);
+    void callResizeFunc(int width, int height) override;
+    void callKeyboardFunc(int key, int scancode, int action, int mods) override;
 
 private:
     virtual void drawRect(Texture& texture, int x, int y, unsigned int tile,

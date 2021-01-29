@@ -5,6 +5,6 @@
 
 class MainWindow : public Window {
 public:
-    virtual void setup();
-    virtual void registerWidgets();
+    void setup() override;
+    void registerWidgets() override;
 };

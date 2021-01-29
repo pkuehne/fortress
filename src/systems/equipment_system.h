@@ -4,7 +4,7 @@
 
 class EquipmentSystem : public GameSystemBase {
 public:
-    void registerHandlers();
+    void registerHandlers() override;
 
 private:
     void handleDropEquipmentEvent(std::shared_ptr<DropEquipmentEvent> event);

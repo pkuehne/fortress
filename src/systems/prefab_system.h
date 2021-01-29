@@ -5,7 +5,7 @@
 
 class PrefabSystem : public GameSystemBase {
 public:
-    void registerHandlers();
+    void registerHandlers() override;
 
 private:
     /// @brief Finds all yaml files in the given directory and loads them as

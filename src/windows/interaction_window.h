@@ -17,11 +17,11 @@ typedef struct {
 
 class InteractionWindow : public Window {
 public:
-    explicit InteractionWindow(EntityHolder& entities)
+    explicit InteractionWindow(const EntityHolder& entities)
         : m_inputEntities(entities) {}
-    void setup();
-    void registerWidgets();
-    void nextTurn();
+    void setup() override;
+    void registerWidgets() override;
+    void nextTurn() override;
 
 private:
     void listSelection(ListBox* box);

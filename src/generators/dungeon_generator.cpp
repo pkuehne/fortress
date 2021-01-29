@@ -208,7 +208,7 @@ bool DungeonGenerator::generateRoom() {
     return true;
 }
 
-void DungeonGenerator::connectRooms(Room& start, Room& end) {
+void DungeonGenerator::connectRooms(const Room& start, const Room& end) {
     Algorithm algo;
     algo.setCustomData(this);
     algo.setCostFunction(getPathCost);

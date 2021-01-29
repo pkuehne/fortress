@@ -58,10 +58,10 @@ protected:
 
 class RuralGenerator : public GeneratorInterface {
 public:
-    void registerHandlers();
-    bool generate();
-    void reset();
-    void createEntitiesFromMap();
+    void registerHandlers() override;
+    bool generate() override;
+    void reset() override;
+    void createEntitiesFromMap() override;
     std::vector<EntityId>& getAreaLinks() { return m_areaLinks; }
     EntityId createPrefab(const std::string& type, Location& location);
 

@@ -4,7 +4,7 @@
 
 class MovementSystem : public GameSystemBase {
 public:
-    void registerHandlers();
+    void registerHandlers() override;
     virtual ~MovementSystem() {}
     void handleMoveEntityEvent(std::shared_ptr<MoveEntityEvent> event);
 

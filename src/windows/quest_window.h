@@ -4,6 +4,6 @@
 
 class QuestWindow : public Window {
 public:
-    void setup();
-    void registerWidgets();
+    void setup() override;
+    void registerWidgets() override;
 };

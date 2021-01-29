@@ -4,5 +4,5 @@
 
 class LogMessageSystem : public GameSystemBase {
 public:
-    void registerHandlers();
+    void registerHandlers() override;
 };

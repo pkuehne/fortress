@@ -33,10 +33,10 @@ public:
         m_pageSwitchCallback = cb;
         return this;
     }
-    void render();
-    void keyPress(unsigned char key);
+    void render() override;
+    void keyPress(unsigned char key) override;
     void realign(unsigned int xOrigin, unsigned int yOrigin,
-                 unsigned int parentWidth, unsigned int parentHeight);
+                 unsigned int parentWidth, unsigned int parentHeight) override;
 
 private:
     std::vector<Page*> m_pages;

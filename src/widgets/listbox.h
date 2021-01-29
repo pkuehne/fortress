@@ -75,8 +75,8 @@ public:
 
     void scrollToBottom();
 
-    virtual void render();
-    virtual void keyPress(unsigned char key);
+    void render() override;
+    void keyPress(unsigned char key) override;
 
 private:
     void updateTopOffset();

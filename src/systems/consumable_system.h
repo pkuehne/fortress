@@ -3,7 +3,7 @@
 
 class ConsumableSystem : public GameSystemBase {
 public:
-    void registerHandlers();
+    void registerHandlers() override;
 
 private:
     void handleConsumeItemEvent(std::shared_ptr<ConsumeItemEvent> event);

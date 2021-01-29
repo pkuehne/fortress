@@ -12,8 +12,8 @@ public:
     DungeonGenerator() = default;
     virtual ~DungeonGenerator() = default;
 
-    bool generate();
-    void reset();
+    bool generate() override;
+    void reset() override;
     unsigned int& numberOfRooms() { return m_roomTarget; }
     unsigned int& maxDepth() { return m_maxDepth; }
     unsigned int& upStairTarget() { return m_upStairTarget; }
@@ -23,13 +23,13 @@ public:
     bool& createBoss() { return m_createBoss; }
 
 private:
-    void createEntitiesFromMap();
+    void createEntitiesFromMap() override;
     EntityId createPrefab(const std::string& type, const Location& location);
     void createEntity(const Location& location);
     void connectStairs();
     bool generateRoom();
     bool generateLevel();
-    void connectRooms(Room& start, Room& end);
+    void connectRooms(const Room& start, const Room& end);
     void placeUpStair();
     void placeDownStair();
     void placeOrcs();

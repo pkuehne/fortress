@@ -7,7 +7,7 @@
 class GraphicsEffectSystem : public GameSystemBase {
 public:
     virtual ~GraphicsEffectSystem() {}
-    virtual void onTick();
+    void onTick() override;
 
 private:
     void blinkEffect(GraphicsEffectComponent* effect, SpriteComponent* sprite);

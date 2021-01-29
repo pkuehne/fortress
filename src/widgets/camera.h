@@ -27,7 +27,7 @@ public:
         return this;
     }
 
-    void render();
+    void render() override;
 
 private:
     void renderSprites();

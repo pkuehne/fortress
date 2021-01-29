@@ -44,5 +44,5 @@
     "hash_set": "cpp",
     "forward_list": "cpp"
   },
-  "C_Cpp.errorSquiggles": "Disabled"
+  "C_Cpp.errorSquiggles": "Enabled"
 }

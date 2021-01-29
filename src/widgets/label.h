@@ -30,8 +30,8 @@ public:
     }
     bool getIgnoreCommandCharCase() { return m_ignoreCase; }
 
-    virtual void keyPress(unsigned char key);
-    virtual void render();
+    void keyPress(unsigned char key) override;
+    void render() override;
 
 private:
     std::string m_text = "";

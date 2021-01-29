@@ -6,8 +6,8 @@
 class InspectionWindow : public Window {
 public:
     explicit InspectionWindow(EntityId entity) : m_entity(entity) {}
-    void setup();
-    void registerWidgets();
+    void setup() override;
+    void registerWidgets() override;
 
 private:
     EntityId m_entity;

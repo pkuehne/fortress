@@ -10,7 +10,7 @@
 #include <sstream>
 
 void updateNumericEntrySensitivity(GeneratorWindow* win, std::string numName) {
-    auto setSensitive = [](NumericEntry* l, std::string name) {
+    auto setSensitive = [](NumericEntry* l, const std::string& name) {
         l->setSensitive(l->getName() == name);
     };
 

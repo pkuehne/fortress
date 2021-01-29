@@ -14,7 +14,7 @@ public:
     }
     unsigned int getValue() { return m_value; }
 
-    void render();
+    void render() override;
 
 private:
     unsigned int m_value = 0;

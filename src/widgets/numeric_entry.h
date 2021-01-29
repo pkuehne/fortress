@@ -6,7 +6,7 @@ class NumericEntry : public Widget {
 public:
     NumericEntry() {}
     ~NumericEntry() {}
-    void render();
+    void render() override;
     NumericEntry* setNumber(int number) {
         m_number = number;
         m_text = std::to_string(number);
@@ -15,7 +15,7 @@ public:
     }
     int getNumber() { return m_number; }
 
-    void keyPress(unsigned char key);
+    void keyPress(unsigned char key) override;
 
 private:
     int m_number = 0;

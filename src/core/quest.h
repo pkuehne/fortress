@@ -29,7 +29,7 @@ public:
     explicit KillQuest(EntityId owner, EntityId target)
         : Quest(owner), m_target(target) {}
 
-    virtual void update(GameState& state);
+    void update(GameState& state) override;
 
 private:
     EntityId m_target = 0;

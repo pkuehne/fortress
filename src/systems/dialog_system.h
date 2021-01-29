@@ -7,7 +7,7 @@ class DialogComponent;
 
 class DialogSystem : public GameSystemBase {
 public:
-    void registerHandlers();
+    void registerHandlers() override;
     void
     handleStartConversationEvent(std::shared_ptr<StartConversationEvent> event);
     void handleChooseDialogOptionEvent(

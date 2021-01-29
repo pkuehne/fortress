@@ -24,7 +24,7 @@ void EntityManager::addEntity(EntityId id, const Location& location) {
 }
 
 void EntityManager::destroyEntity(EntityId id) {
-    Location& location = m_locations[id];
+    const Location& location = m_locations[id];
 
     if (location.isValid()) {
         m_entities[m_locations[id].area].erase(id);

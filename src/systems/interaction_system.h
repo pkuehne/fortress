@@ -4,7 +4,7 @@
 
 class InteractionSystem : public GameSystemBase {
 public:
-    void registerHandlers();
+    void registerHandlers() override;
 
 public:
     void handleOpenEntityEvent(std::shared_ptr<OpenEntityEvent> event);

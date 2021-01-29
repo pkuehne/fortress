@@ -10,11 +10,6 @@ using namespace ::testing;
 class CombatSystemTest : public ::testing::Test {
 public:
     CombatSystemTest() {
-        eventManager = std::make_shared<EventManager>();
-        componentManager = std::make_shared<ComponentManager>();
-        entityManager = std::make_shared<EntityManager>();
-        mapManager = std::make_shared<MapManager>();
-
         comp = componentManager->make<PlayerComponent>(player);
     }
 
@@ -23,10 +18,10 @@ public:
                           mapManager);
     }
     WindowManagerMock windowManager;
-    std::shared_ptr<EventManager> eventManager = nullptr;
-    std::shared_ptr<ComponentManager> componentManager = nullptr;
-    std::shared_ptr<EntityManager> entityManager = nullptr;
-    std::shared_ptr<MapManager> mapManager = nullptr;
+    std::shared_ptr<EventManager> eventManager = std::make_shared<EventManager>();
+    std::shared_ptr<ComponentManager> componentManager = std::make_shared<ComponentManager>();
+    std::shared_ptr<EntityManager> entityManager = std::make_shared<EntityManager>();
+    std::shared_ptr<MapManager> mapManager = std::make_shared<MapManager>();
     CombatSystem system;
     EntityId player = 1234;
     PlayerComponent* comp = nullptr;

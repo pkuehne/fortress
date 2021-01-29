@@ -4,7 +4,7 @@
 
 class TextBlock : public Widget {
 public:
-    Widget* setWidth(unsigned int width) {
+    Widget* setWidth(unsigned int width) override {
         Widget::setWidth(width);
         wrapText();
         setHeight(m_lines.size());
@@ -19,7 +19,7 @@ public:
     void wrapText();
     std::vector<std::string>& getLines() { return m_lines; }
 
-    void render();
+    void render() override;
 
 private:
     std::string m_text = "";

@@ -4,5 +4,5 @@
 
 class ExperienceSystem : public GameSystemBase {
 public:
-    void registerHandlers();
+    void registerHandlers() override;
 };

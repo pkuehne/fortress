@@ -4,8 +4,8 @@
 
 class LoadWindow : public Window {
 public:
-    void setup();
-    void registerWidgets();
+    void setup() override;
+    void registerWidgets() override;
     void loadFiles();
 
 private:

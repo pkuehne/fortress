@@ -27,13 +27,13 @@ typedef std::map<std::string, State> StateMachine;
 class NpcSystem : public GameSystemBase {
 public:
     NpcSystem();
-    virtual void onTurn();
+    void onTurn() override;
 
 private:
     void createHumanStateMachine();
     void createDogStateMachine();
     EntityId findNearestVisibleMatching(const Location& location,
-                                        unsigned int radius, std::string name);
+                                        unsigned int radius, const std::string& name);
     void setPathToTarget(EntityId entity, EntityId target, NpcComponent* npc);
     bool canAttackTarget(EntityId entity, NpcComponent* npc);
 

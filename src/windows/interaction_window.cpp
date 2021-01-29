@@ -51,7 +51,7 @@ void InteractionWindow::registerWidgets() {
         ->setCommandCharCallback([&](Label* l) {
             ListBox* lstEntities = this->getWidget<ListBox>("lstEntities");
             EntityId entity = m_entities[lstEntities->getSelection()];
-            ComponentStore& store = m_components[lstEntities->getSelection()];
+            const ComponentStore& store = m_components[lstEntities->getSelection()];
 
             if (store.open->open) {
                 events()->raise(std::make_shared<CloseEntityEvent>(entity));
@@ -103,7 +103,7 @@ void InteractionWindow::registerWidgets() {
                     "You don't carry any equipement"));
                 return;
             }
-            ComponentStore& store = m_components[lstEntities->getSelection()];
+            const ComponentStore& store = m_components[lstEntities->getSelection()];
 
             for (auto item : equipment->carriedEquipment) {
                 if (components()->get<KeyComponent>(item)) {
@@ -149,7 +149,7 @@ void InteractionWindow::updateScreen() {
     Label* txtTalk = getWidget<Label>("txtTalk");
     Label* txtLock = getWidget<Label>("txtLock");
 
-    ComponentStore& store = m_components[lstEntities->getSelection()];
+    const ComponentStore& store = m_components[lstEntities->getSelection()];
 
     txtInspect->setSensitive(store.desc != nullptr);
     txtOpen->setSensitive(store.open != nullptr);

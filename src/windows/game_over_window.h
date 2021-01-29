@@ -5,8 +5,8 @@
 class GameOverWindow : public Window {
 public:
     explicit GameOverWindow(bool win) : m_win(win){};
-    void setup();
-    void registerWidgets();
+    void setup() override;
+    void registerWidgets() override;
 
 private:
     bool m_win;

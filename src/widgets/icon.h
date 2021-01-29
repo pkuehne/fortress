@@ -6,7 +6,7 @@ class Icon : public Widget {
 public:
     Icon() {}
     ~Icon() {}
-    virtual void render();
+    void render() override;
     virtual Icon* setIcon(unsigned char i) {
         m_icon = i;
         return this;

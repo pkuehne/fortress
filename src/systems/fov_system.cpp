@@ -104,8 +104,9 @@ bool Shadow::contains(const Shadow& other) const {
 
 bool ShadowLine::isInShadow(const Shadow& projection) {
     for (Shadow shadow : m_shadows) {
-        if (shadow.contains(projection))
+        if (shadow.contains(projection)) { // use std::any_of instead
             return true;
+        }
     }
     return false;
 }

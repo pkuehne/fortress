@@ -177,7 +177,7 @@ void NpcSystem::onTurn() {
 
 EntityId NpcSystem::findNearestVisibleMatching(const Location& location,
                                                unsigned int radius,
-                                               std::string name) {
+                                               const std::string& name) {
     EntityId retval = 0;
     unsigned int minDist = 1000.0;
     EntityHolder entities = map()->findEntitiesNear(location, radius);
@@ -256,7 +256,7 @@ bool NpcSystem::canAttackTarget(EntityId entity, NpcComponent* npc) {
     for (EntityId iter : map()->findEntitiesNear(location, 1)) {
         // LOG(INFO) << "Potential: " << iter << " v " << npc->target <<
         // std::endl;
-        if (iter == npc->target) {
+        if (iter == npc->target) { //TODO use std::find_if instead
             Location oLoc = entities()->getLocation(iter);
             if (location.x != oLoc.x && location.y != oLoc.y)
                 continue;

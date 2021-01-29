@@ -31,7 +31,7 @@ Grouping& GroupingManager::getOrCreateGrouping(const std::string& name) {
 }
 
 /// Effectively sets the relation between A -> B, but not B -> A
-void GroupingManager::setRelationship(Grouping& from, Grouping& to,
+void GroupingManager::setRelationship(const Grouping& from, const Grouping& to,
                                       int relationship) {
     getGrouping(from.getName()).setRelationship(to.getName(), relationship);
 }

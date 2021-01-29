@@ -23,8 +23,8 @@ public:
         m_enterCb = cb;
         return this;
     }
-    void keyPress(unsigned char key);
-    void render();
+    void keyPress(unsigned char key) override;
+    void render() override;
 
 private:
     std::string m_text = std::string("");

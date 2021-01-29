@@ -14,10 +14,10 @@ typedef struct {
 class GeneratorWindow : public Window {
 public:
     explicit GeneratorWindow(bool hideWindow) : m_hideWindow(hideWindow) {}
-    virtual void setup();
-    virtual void registerWidgets();
+    void setup() override;
+    void registerWidgets() override;
 
-    void setArguments(std::shared_ptr<GeneratorWindowArgs>& args) {
+    void setArguments(const std::shared_ptr<GeneratorWindowArgs>& args) {
         m_arguments = args;
     }
 

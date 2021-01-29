@@ -4,8 +4,8 @@
 
 class DialogWindow : public Window {
 public:
-    void setup();
-    void registerWidgets();
-    void nextTurn();
-    void destroy();
+    void setup() override;
+    void registerWidgets() override;
+    void nextTurn() override;
+    void destroy() override;
 };

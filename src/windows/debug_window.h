@@ -18,9 +18,9 @@ const Color OUTPUT_COLOR = Color(GREY);
 
 class DebugWindow : public Window {
 public:
-    void setup();
-    void registerWidgets();
-    void nextTurn();
+    void setup() override;
+    void registerWidgets() override;
+    void nextTurn() override;
 
 private:
     void setupLua();

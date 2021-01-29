@@ -34,7 +34,7 @@ public:
     /// @param[in] from The group to set the relationship for
     /// @param[in] to The group to whom the relationship is set
     /// @param[in] relationship The value of the relationship
-    void setRelationship(Grouping& from, Grouping& to, int relationship);
+    void setRelationship(const Grouping& from, const Grouping& to, int relationship);
 
     /// @brief Set the relationship from one group to another
     /// @param[in] from The group to set the relationship for

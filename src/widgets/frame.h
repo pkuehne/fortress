@@ -21,9 +21,9 @@ public:
         return this;
     }
     void realign(unsigned int xOrigin, unsigned int yOrigin,
-                 unsigned int parentWidth, unsigned int parentHeight);
-    void render();
-    void keyPress(unsigned char key);
+                 unsigned int parentWidth, unsigned int parentHeight) override;
+    void render() override;
+    void keyPress(unsigned char key) override;
 
 private:
     bool m_border = false;
