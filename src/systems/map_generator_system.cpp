@@ -50,5 +50,5 @@ void MapGeneratorSystem::generate(
     }
     LOG(INFO) << "Placed " << entities()->getMaxId() << " entities!"
               << std::endl;
-    events()->raise(std::make_shared<MapGeneratedEvent>());
+    events()->fire(std::make_shared<MapGeneratedEvent>());
 }

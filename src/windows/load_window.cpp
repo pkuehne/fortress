@@ -47,7 +47,7 @@ void LoadWindow::registerWidgets() {
         ->setCommandChar(1)
         ->setIgnoreCommandCharCase(true)
         ->setCommandCharCallback([=](Label* l) {
-            events()->raise(std::make_shared<RegisterWindowEvent>(
+            events()->fire(std::make_shared<RegisterWindowEvent>(
                 std::make_shared<MapWindow>(),
                 RegisterWindowEvent::WindowAction::ReplaceAll));
         })

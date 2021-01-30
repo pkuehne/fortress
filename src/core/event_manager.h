@@ -47,7 +47,7 @@ public:
     /// @brief Notify the listeners of any new events
     void processEvents();
 
-    template <typename EventType> void raise(std::shared_ptr<EventType> event) {
+    template <typename EventType> void fire(std::shared_ptr<EventType> event) {
         m_eventList.push(std::make_pair(typeid(EventType).hash_code(), event));
     }
 

@@ -57,15 +57,14 @@ void MapWindow::registerWidgets() {
     createWidget<Label>("lblSkipTurn", 1, 0, sidebar)
         ->setText("Skip Turn (.)")
         ->setCommandChar(12)
-        ->setCommandCharCallback([&](Label* l) {
-            events()->raise(std::make_shared<EndTurnEvent>());
-        })
+        ->setCommandCharCallback(
+            [&](Label* l) { events()->fire(std::make_shared<EndTurnEvent>()); })
         ->setVerticalAlign(Widget::VerticalAlign::Bottom);
     createWidget<Label>("lblEquipment", 1, 2, sidebar)
         ->setText("View Equipment")
         ->setCommandChar(6)
         ->setCommandCharCallback([&](Label* l) {
-            events()->raise(std::make_shared<RegisterWindowEvent>(
+            events()->fire(std::make_shared<RegisterWindowEvent>(
                 std::make_shared<EquipmentWindow>()));
         })
         ->setVerticalAlign(Widget::VerticalAlign::Bottom);
@@ -73,7 +72,7 @@ void MapWindow::registerWidgets() {
         ->setText("View Quests")
         ->setCommandChar(6)
         ->setCommandCharCallback([&](Label* l) {
-            events()->raise(std::make_shared<RegisterWindowEvent>(
+            events()->fire(std::make_shared<RegisterWindowEvent>(
                 std::make_shared<QuestWindow>()));
         })
         ->setVerticalAlign(Widget::VerticalAlign::Bottom);
@@ -127,26 +126,26 @@ void MapWindow::registerWidgets() {
         ->setText("]")
         ->setCommandChar(1)
         ->setCommandCharCallback([this](Label* l) {
-            this->events()->raise(std::make_shared<UpdateTileSizeEvent>(1));
+            this->events()->fire(std::make_shared<UpdateTileSizeEvent>(1));
         })
         ->setVisible(false);
     createWidget<Label>("lblTileSizeDecr", 0, 0)
         ->setText("[")
         ->setCommandChar(1)
         ->setCommandCharCallback([this](Label* l) {
-            this->events()->raise(std::make_shared<UpdateTileSizeEvent>(-1));
+            this->events()->fire(std::make_shared<UpdateTileSizeEvent>(-1));
         })
         ->setVisible(false);
     createWidget<Label>("lblDebugWindow", 0, 0)
         ->setText("`")
         ->setCommandChar(1)
         ->setCommandCharCallback([&](Label* l) {
-            events()->raise(std::make_shared<RegisterWindowEvent>(
+            events()->fire(std::make_shared<RegisterWindowEvent>(
                 std::make_shared<DebugWindow>()));
         })
         ->setVisible(false);
 
-    events()->raise(std::make_shared<EndTurnEvent>());
+    events()->fire(std::make_shared<EndTurnEvent>());
 }
 
 void MapWindow::setAction(char action, unsigned int yPos) {
@@ -175,27 +174,27 @@ void MapWindow::keyPress(unsigned char key) {
         updateLocation(key, newLocation);
 
         if (m_action == 'm') {
-            events()->raise(
+            events()->fire(
                 std::make_shared<MoveEntityEvent>(player.id, newLocation));
 
-            events()->raise(std::make_shared<EndTurnEvent>());
+            events()->fire(std::make_shared<EndTurnEvent>());
         } else if (m_action == 'k') {
             EntityHolder l_entities = map()->findEntitiesAt(newLocation);
             for (EntityId entity : l_entities) {
-                events()->raise(
+                events()->fire(
                     std::make_shared<AttackEntityEvent>(player.id, entity));
             }
-            events()->raise(std::make_shared<EndTurnEvent>());
+            events()->fire(std::make_shared<EndTurnEvent>());
         } else if (m_action == 'i') {
             EntityHolder l_entities = map()->findEntitiesAt(newLocation);
             if (l_entities.size() > 0) {
-                events()->raise(std::make_shared<RegisterWindowEvent>(
+                events()->fire(std::make_shared<RegisterWindowEvent>(
                     std::make_shared<InteractionWindow>(l_entities)));
             }
         }
         m_action = 'm';
     } else if (key == KEY_ESC) {
-        events()->raise(std::make_shared<RegisterWindowEvent>(
+        events()->fire(std::make_shared<RegisterWindowEvent>(
             std::make_shared<EscapeWindow>()));
     }
     // std::cout << "Key: " << key << std::endl;

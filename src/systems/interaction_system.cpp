@@ -30,7 +30,7 @@ void InteractionSystem::handleOpenEntityEvent(
         return;
     }
     if (openable->locked) {
-        events()->raise(std::make_shared<AddLogMessageEvent>("It's locked"));
+        events()->fire(std::make_shared<AddLogMessageEvent>("It's locked"));
         return;
     }
     openable->open = true;

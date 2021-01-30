@@ -18,7 +18,7 @@ void EscapeWindow::registerWidgets() {
         ->setText("Save Game")
         ->setCommandChar(1)
         ->setCommandCharCallback([&](Label* l) {
-            events()->raise(std::make_shared<RegisterWindowEvent>(
+            events()->fire(std::make_shared<RegisterWindowEvent>(
                 std::make_shared<SaveWindow>()));
         })
         ->setIgnoreCommandCharCase(true)
@@ -34,7 +34,7 @@ void EscapeWindow::registerWidgets() {
         ->setText("Quit Game")
         ->setCommandChar(1)
         ->setCommandCharCallback(
-            [&](Label* l) { events()->raise(std::make_shared<QuitEvent>()); })
+            [&](Label* l) { events()->fire(std::make_shared<QuitEvent>()); })
         ->setIgnoreCommandCharCase(true)
         ->setVerticalAlign(Widget::VerticalAlign::Top)
         ->setHorizontalAlign(Widget::HorizontalAlign::Centre);

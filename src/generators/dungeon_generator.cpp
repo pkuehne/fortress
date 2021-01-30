@@ -33,7 +33,7 @@ const char DOWN = '>';
 EntityId DungeonGenerator::createPrefab(const std::string& type,
                                         const Location& location) {
     EntityId entity = entities()->createEntity(location);
-    events()->raise(std::make_shared<InstantiatePrefabEvent>(entity, type));
+    events()->fire(std::make_shared<InstantiatePrefabEvent>(entity, type));
     return entity;
 }
 

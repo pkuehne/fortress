@@ -19,6 +19,6 @@ EntityId GameSystemBase::instantiatePrefab(const std::string& type,
     }
 
     EntityId entity = entities()->createEntity(location);
-    events()->raise(std::make_shared<InstantiatePrefabEvent>(entity, type));
+    events()->fire(std::make_shared<InstantiatePrefabEvent>(entity, type));
     return entity;
 }

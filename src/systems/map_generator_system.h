@@ -6,7 +6,7 @@ class GenerateRuralMapEvent;
 
 class MapGeneratorSystem : public GameSystemBase {
 public:
-    void registerHandlers();
+    void registerHandlers() override;
 
 private:
     void generate(std::shared_ptr<GenerateRuralMapEvent> event);

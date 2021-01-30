@@ -41,7 +41,7 @@ void GameEngine::initialise() {
         unsigned int width =
             this->graphics()->getTileWidth() + event->adjustment;
         this->graphics()->updateTileSize(width, height);
-        this->events()->raise(std::make_shared<ResizeWindowsEvent>());
+        this->events()->fire(std::make_shared<ResizeWindowsEvent>());
     });
 
     // Initialise Managers
@@ -74,10 +74,10 @@ void GameEngine::initialise() {
         this->windows()->resize();
     });
 
-    events()->raise(std::make_shared<RegisterWindowEvent>(
+    events()->fire(std::make_shared<RegisterWindowEvent>(
         std::make_shared<SplashWindow>()));
 
-    events()->raise(std::make_shared<EndTurnEvent>());
+    events()->fire(std::make_shared<EndTurnEvent>());
 }
 
 void GameEngine::tick() {

@@ -18,7 +18,7 @@ void ObjectivesSystem::registerHandlers() {
 }
 
 void ObjectivesSystem::showGameOverWindow(bool gameWon) {
-    events()->raise(std::make_shared<RegisterWindowEvent>(
+    events()->fire(std::make_shared<RegisterWindowEvent>(
         std::make_shared<GameOverWindow>(gameWon)));
 }
 

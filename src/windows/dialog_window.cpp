@@ -33,9 +33,9 @@ void DialogWindow::registerWidgets() {
         ->setVerticalAlign(Widget::VerticalAlign::Bottom);
     lstQuestions->setItemSelectedCallback([=](ListBox* l) {
         ListBoxItem item = l->getSelectedItem();
-        events()->raise(
+        events()->fire(
             std::make_shared<ChooseDialogOptionEvent>(item.getValue()));
-        events()->raise(std::make_shared<EndTurnEvent>());
+        events()->fire(std::make_shared<EndTurnEvent>());
     });
 
     this->nextTurn();
@@ -57,5 +57,5 @@ void DialogWindow::nextTurn() {
 }
 
 void DialogWindow::destroy() {
-    events()->raise(std::make_shared<EndConversationEvent>());
+    events()->fire(std::make_shared<EndConversationEvent>());
 }

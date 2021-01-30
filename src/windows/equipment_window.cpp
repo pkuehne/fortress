@@ -162,12 +162,12 @@ void EquipmentWindow::registerWidgets() {
         ->setText("consume")
         ->setCommandChar(1)
         ->setCommandCharCallback([&](Label* l) {
-            events()->raise(std::make_shared<ConsumeItemEvent>(
+            events()->fire(std::make_shared<ConsumeItemEvent>(
                 components()->getUnique<PlayerComponent>().id,
                 getSelectedItem()));
             setSelectedItem(0);
 
-            events()->raise(std::make_shared<EndTurnEvent>());
+            events()->fire(std::make_shared<EndTurnEvent>());
         })
         ->setVerticalAlign(Widget::VerticalAlign::Bottom)
         ->setVisible(false);
@@ -176,7 +176,7 @@ void EquipmentWindow::registerWidgets() {
         ->setText("inspect")
         ->setCommandChar(1)
         ->setCommandCharCallback([&](Label* l) {
-            events()->raise(std::make_shared<RegisterWindowEvent>(
+            events()->fire(std::make_shared<RegisterWindowEvent>(
                 std::make_shared<InspectionWindow>(getSelectedItem())));
         })
         ->setVerticalAlign(Widget::VerticalAlign::Bottom)
@@ -188,11 +188,11 @@ void EquipmentWindow::registerWidgets() {
         ->setCommandCharCallback([&](Label* l) {
             EquipmentWindow* win =
                 dynamic_cast<EquipmentWindow*>(l->getWindow());
-            events()->raise(std::make_shared<UnequipItemEvent>(
+            events()->fire(std::make_shared<UnequipItemEvent>(
                 components()->getUnique<PlayerComponent>().id,
                 win->getSelectedItem()));
             win->setSelectedItem(0);
-            events()->raise(std::make_shared<EndTurnEvent>());
+            events()->fire(std::make_shared<EndTurnEvent>());
         })
         ->setVerticalAlign(Widget::VerticalAlign::Bottom)
         ->setVisible(false);
@@ -203,11 +203,11 @@ void EquipmentWindow::registerWidgets() {
         ->setCommandCharCallback([&](Label* l) {
             EquipmentWindow* win =
                 dynamic_cast<EquipmentWindow*>(l->getWindow());
-            events()->raise(std::make_shared<EquipItemEvent>(
+            events()->fire(std::make_shared<EquipItemEvent>(
                 components()->getUnique<PlayerComponent>().id,
                 win->getSelectedItem()));
             win->setSelectedItem(0);
-            events()->raise(std::make_shared<EndTurnEvent>());
+            events()->fire(std::make_shared<EndTurnEvent>());
         })
         ->setVerticalAlign(Widget::VerticalAlign::Bottom)
         ->setVisible(false);
@@ -218,11 +218,11 @@ void EquipmentWindow::registerWidgets() {
         ->setCommandCharCallback([&](Label* l) {
             EquipmentWindow* win =
                 dynamic_cast<EquipmentWindow*>(l->getWindow());
-            events()->raise(std::make_shared<DropEquipmentEvent>(
+            events()->fire(std::make_shared<DropEquipmentEvent>(
                 components()->getUnique<PlayerComponent>().id,
                 win->getSelectedItem()));
             win->setSelectedItem(0);
-            events()->raise(std::make_shared<EndTurnEvent>());
+            events()->fire(std::make_shared<EndTurnEvent>());
         })
         ->setVerticalAlign(Widget::VerticalAlign::Bottom)
         ->setVisible(false);
