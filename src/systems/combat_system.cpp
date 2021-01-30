@@ -4,6 +4,7 @@
 #include "../components/experience_component.h"
 #include "../components/graphics_effect_component.h"
 #include "../components/health_component.h"
+#include "../components/npc_component.h"
 #include "../components/player_component.h"
 #include "../components/sprite_component.h"
 #include "../components/wieldable_component.h"
@@ -60,10 +61,12 @@ void CombatSystem::killEntity(EntityId id) {
         return;
     }
 
-    // Create the corpse
-    EntityId corpse = instantiatePrefab("corpse", location);
-    components()->make<SpriteComponent>(corpse)->sprite =
-        components()->get<SpriteComponent>(id)->sprite;
+    // Create the corpse if it's an NPC
+    if (components()->get<NpcComponent>(id) != nullptr) {
+        EntityId corpse = instantiatePrefab("corpse", location);
+        components()->make<SpriteComponent>(corpse)->sprite =
+            components()->get<SpriteComponent>(id)->sprite;
+    }
 
     events()->fire(std::make_shared<RemoveEntityEvent>(id));
 }

@@ -32,8 +32,6 @@ private:
     std::function<void(std::shared_ptr<EventType> event)> m_func;
 };
 
-typedef std::queue<std::shared_ptr<Event>> EventQueue;
-
 template <typename T>
 using HandlerFunc = std::function<void(std::shared_ptr<T>)>;
 
@@ -64,8 +62,7 @@ public:
 
     unsigned int getEventQueueSize() { return m_eventList.size(); }
 
-private:
-    EventQueue m_events;
+protected:
     std::map<size_t, std::vector<std::unique_ptr<BaseHandler>>> m_handlerList;
     std::queue<std::pair<size_t, std::shared_ptr<Event>>> m_eventList;
 };
