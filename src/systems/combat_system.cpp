@@ -57,7 +57,7 @@ void CombatSystem::handleAttack(EntityId attacker, EntityId defender) {
 void CombatSystem::killEntity(EntityId id) {
     const Location location = entities()->getLocation(id);
     if (id == components()->getUnique<PlayerComponent>().id) {
-        events()->fire(std::make_shared<RemoveEntityEvent>(id));
+        events()->fire(std::make_shared<RemoveEntityEvent>(id, location));
         return;
     }
 
@@ -68,7 +68,7 @@ void CombatSystem::killEntity(EntityId id) {
             components()->get<SpriteComponent>(id)->sprite;
     }
 
-    events()->fire(std::make_shared<RemoveEntityEvent>(id));
+    events()->fire(std::make_shared<RemoveEntityEvent>(id, location));
 }
 
 void CombatSystem::updateLog(const EntityId& attacker, const EntityId& target,

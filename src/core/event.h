@@ -22,8 +22,9 @@ public:
 
 class RemoveEntityEvent : public Event {
 public:
-    explicit RemoveEntityEvent(EntityId e) : entity(e) {}
+    RemoveEntityEvent(EntityId e, Location l) : entity(e), location(l) {}
     EntityId entity = 0;
+    Location location;
 };
 
 class MoveEntityEvent : public Event {
@@ -139,7 +140,8 @@ public:
 
 class AddLogMessageEvent : public Event {
 public:
-    explicit AddLogMessageEvent(const std::string& m, const std::string& c = "info")
+    explicit AddLogMessageEvent(const std::string& m,
+                                const std::string& c = "info")
         : message(m), category(c) {}
     std::string message;
     std::string category;
@@ -150,7 +152,7 @@ public:
     enum class WindowAction { None, Add, Replace, ReplaceAll };
 
     explicit RegisterWindowEvent(std::shared_ptr<Window> w,
-                        WindowAction a = WindowAction::Add)
+                                 WindowAction a = WindowAction::Add)
         : window(w), action(a) {}
     std::shared_ptr<Window> window = nullptr;
     WindowAction action = WindowAction::None;

@@ -24,7 +24,9 @@ void GraphicsEffectSystem::onTick() {
             sprite->sprite = effect->org_tile;
             components()->remove<GraphicsEffectComponent>(l_entity);
             if (effect->removeEntity) {
-                events()->fire(std::make_shared<RemoveEntityEvent>(l_entity));
+                const Location location = entities()->getLocation(l_entity);
+                events()->fire(
+                    std::make_shared<RemoveEntityEvent>(l_entity, location));
             }
             continue;
         }
