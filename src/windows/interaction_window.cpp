@@ -46,8 +46,7 @@ void InteractionWindow::registerWidgets() {
         }
         descriptionWidth = title.length() > descriptionWidth ? title.length()
                                                              : descriptionWidth;
-        std::cout << "Desc: " << descriptionWidth
-                  << " title: " << title.length() << std::endl;
+
         ListBoxItem item;
         item.setText(title);
         lstEntities->addItem(item);

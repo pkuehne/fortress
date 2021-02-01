@@ -25,6 +25,13 @@ void Frame::realign(unsigned int xOrigin, unsigned int yOrigin,
 void Frame::render() {
     Widget::render();
 
+    for (auto iter : getChildren()) {
+        Widget* w = iter.second;
+        if (!w->getVisible()) {
+            continue;
+        }
+        w->render();
+    }
     if (m_border) {
         drawBorder();
         if (m_title.length()) {
@@ -33,13 +40,6 @@ void Frame::render() {
             clearArea(x - 1, 0, m_title.length() + 2, 1);
             drawString(x, 0, m_title.c_str());
         }
-    }
-    for (auto iter : getChildren()) {
-        Widget* w = iter.second;
-        if (!w->getVisible()) {
-            continue;
-        }
-        w->render();
     }
 }
 
