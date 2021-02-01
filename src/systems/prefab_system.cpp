@@ -75,7 +75,8 @@ void PrefabSystem::addSpriteComponent(YAML::Node& node, EntityId entity) const {
     auto l_sprite = components()->make<SpriteComponent>(entity);
     l_sprite->fgColor = node["foreground-color"].as<Color>(Color(WHITE));
     l_sprite->bgColor = node["background-color"].as<Color>(Color(BLACK));
-    l_sprite->sprite = node["symbol"].as<unsigned int>('?');
+    unsigned int sprite = node["symbol"].as<unsigned int>(0);
+    l_sprite->sprite = sprite ? sprite : node["symbol"].as<char>('?');
 }
 
 void PrefabSystem::addColliderComponent(YAML::Node& node,

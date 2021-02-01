@@ -1,6 +1,6 @@
 name: Apple
 description: "Shiny, red, don't accept from old ladies"
-symbol: 65
+symbol: 'A'
 foreground-color:
   - 256
   - 0
