@@ -2,7 +2,6 @@
 #include "../components/npc_component.h"
 #include "../components/sprite_component.h"
 #include "../mocks/game_engine_mock.h"
-#include "../mocks/game_state_mock.h"
 #include "../mocks/window_manager_mock.h"
 #include "player_component.h"
 #include <gtest/gtest.h>

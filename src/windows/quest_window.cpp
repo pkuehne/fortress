@@ -1,6 +1,4 @@
 #include "quest_window.h"
-#include "../core/game_state.h"
-#include "../core/quest.h"
 #include "../core/window_manager.h"
 #include "../widgets/label.h"
 #include "../widgets/listbox.h"

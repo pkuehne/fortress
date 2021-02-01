@@ -1,8 +1,8 @@
 #include "../../src/components/player_component.h"
 #include "../../src/core/component_manager.h"
+#include "../../src/core/entity_manager.h"
 #include "../../src/systems/dialog_system.h"
 #include "../mocks/game_engine_mock.h"
-#include "../mocks/game_state_mock.h"
 #include "../mocks/window_manager_mock.h"
 #include <gtest/gtest.h>
 

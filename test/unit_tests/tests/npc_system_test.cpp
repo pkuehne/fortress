@@ -1,7 +1,6 @@
 #include "../../src/systems/npc_system.h"
 #include "../mocks/entity_manager_mock.h"
 #include "../mocks/game_engine_mock.h"
-#include "../mocks/game_state_mock.h"
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 

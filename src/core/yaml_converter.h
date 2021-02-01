@@ -15,7 +15,7 @@
 #include "../components/wieldable_component.h"
 #include "area_info.h"
 #include "color.h"
-#include "game_state.h"
+#include "entity_manager.h"
 #include "location.h"
 #include "map_manager.h"
 #include "tile.h"

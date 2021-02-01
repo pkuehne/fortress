@@ -2,7 +2,8 @@
 #include "../components/npc_component.h"
 #include "../components/player_component.h"
 #include "../components/sprite_component.h"
-#include "../core/game_state.h"
+#include "../core/component_manager.h"
+#include "../core/entity_manager.h"
 #include "../core/graphics.h"
 #include "../core/location.h"
 #include <glog/logging.h>

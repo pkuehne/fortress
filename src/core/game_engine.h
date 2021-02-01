@@ -1,6 +1,5 @@
 #pragma once
 
-#include "../core/game_state.h"
 #include "../core/window_manager.h"
 #include "event_manager.h"
 #include "graphics_interface.h"

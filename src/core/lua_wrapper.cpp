@@ -1,5 +1,5 @@
 #include "lua_wrapper.h"
-#include "game_state.h"
+#include "../core/location.h"
 #include <glog/logging.h>
 #include <iostream>
 #include <sstream>
