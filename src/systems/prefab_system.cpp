@@ -1,4 +1,5 @@
 #include "prefab_system.h"
+#include "../components/debug_component.h"
 #include "../components/experience_component.h"
 #include "../components/key_component.h"
 #include "../components/openable_component.h"
@@ -208,6 +209,7 @@ void PrefabSystem::addPlayerComponent(YAML::Node& node, EntityId entity) const {
         return;
     }
     components()->make<PlayerComponent>(entity);
+    components()->make<DebugComponent>(entity);
 }
 
 void PrefabSystem::addExperienceComponent(YAML::Node& node,

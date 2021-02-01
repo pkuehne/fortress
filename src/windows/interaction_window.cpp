@@ -1,4 +1,5 @@
 #include "interaction_window.h"
+#include "../components/debug_component.h"
 #include "../components/equipment_component.h"
 #include "../components/key_component.h"
 #include "../components/player_component.h"
@@ -17,23 +18,48 @@ void InteractionWindow::setup() {
 }
 
 void InteractionWindow::registerWidgets() {
-    const unsigned int descriptionWidth = 15;
+    unsigned int descriptionWidth = 5;
     const unsigned int commandWidth = 10;
     const unsigned int windowHeight = 10;
 
     getWidget<Frame>("frmBase")->setMergeBorders();
 
     Frame* frmEntityList = createWidget<Frame>("frmEntityList", 0, 0);
-    frmEntityList->setMargin()
-        ->setBorder()
-        ->setWidth(descriptionWidth)
-        ->setHeight(windowHeight);
-
     ListBox* lstEntities =
         createWidget<ListBox>("lstEntities", 0, 0, frmEntityList);
     lstEntities->setItemSelectedCallback(std::bind(
         &InteractionWindow::listSelection, this, std::placeholders::_1));
     lstEntities->setWidthStretchMargin(0)->setHeightStretchMargin(0);
+    lstEntities->clearItems();
+
+    for (EntityId entity : m_inputEntities) {
+        ComponentStore store;
+        store.desc = components()->get<DescriptionComponent>(entity);
+        store.open = components()->get<OpenableComponent>(entity);
+        store.drop = components()->get<DroppableComponent>(entity);
+        store.npc = components()->get<NpcComponent>(entity);
+        auto debug = components()->getUnique<DebugComponent>().component;
+
+        std::string title = store.desc ? store.desc->title : "<Unknown>";
+        if (debug != nullptr) {
+            title.append(" (" + std::to_string(entity) + ")");
+        }
+        descriptionWidth = title.length() > descriptionWidth ? title.length()
+                                                             : descriptionWidth;
+        std::cout << "Desc: " << descriptionWidth
+                  << " title: " << title.length() << std::endl;
+        ListBoxItem item;
+        item.setText(title);
+        lstEntities->addItem(item);
+        m_entities.push_back(entity);
+        m_components.push_back(store);
+    }
+
+    descriptionWidth += 5;
+    frmEntityList->setMargin()
+        ->setBorder()
+        ->setWidth(descriptionWidth)
+        ->setHeight(windowHeight);
 
     createWidget<Label>("txtInspect", descriptionWidth, 1)
         ->setText("inspect")
@@ -126,20 +152,6 @@ void InteractionWindow::registerWidgets() {
 
     setHeight(windowHeight);
     setWidth(descriptionWidth + commandWidth);
-    lstEntities->clearItems();
-    for (EntityId entity : m_inputEntities) {
-        ComponentStore store;
-        store.desc = components()->get<DescriptionComponent>(entity);
-        store.open = components()->get<OpenableComponent>(entity);
-        store.drop = components()->get<DroppableComponent>(entity);
-        store.npc = components()->get<NpcComponent>(entity);
-
-        ListBoxItem item;
-        item.setText(store.desc ? store.desc->title : "<Unknown>");
-        lstEntities->addItem(item);
-        m_entities.push_back(entity);
-        m_components.push_back(store);
-    }
     lstEntities->setSelection(0);
 }
 
