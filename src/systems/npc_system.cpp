@@ -5,6 +5,7 @@
 #include "../components/description_component.h"
 #include "../components/npc_component.h"
 #include "../components/player_component.h"
+#include <algorithm>
 #include <cmath>
 #include <glog/logging.h>
 #include <iostream>
@@ -252,15 +253,19 @@ void NpcSystem::setPathToTarget(EntityId entity, EntityId target,
 
 bool NpcSystem::canAttackTarget(EntityId entity, NpcComponent* npc) {
     Location location = entities()->getLocation(entity);
-    for (EntityId iter : map()->findEntitiesNear(location, 1)) {
-        // LOG(INFO) << "Potential: " << iter << " v " << npc->target <<
-        // std::endl;
-        if (iter == npc->target) { // TODO use std::find_if instead
-            Location oLoc = entities()->getLocation(iter);
-            if (location.x != oLoc.x && location.y != oLoc.y)
-                continue;
-            return true;
+    EntityHolder entitiesNear = map()->findEntitiesNear(location, 1);
+
+    auto entityInReach = [&](EntityId id) {
+        // Check it's the target that's in reach
+        if (id != npc->target) {
+            return false;
         }
-    }
-    return false;
+        // Check it's not at a diagonal
+        Location oLoc = entities()->getLocation(id);
+        return !(location.x != oLoc.x && location.y != oLoc.y);
+    };
+
+    return entitiesNear.end() != std::find_if(entitiesNear.begin(),
+                                              entitiesNear.end(),
+                                              entityInReach);
 }
