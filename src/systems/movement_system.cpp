@@ -12,41 +12,36 @@
 
 void MovementSystem::registerHandlers() {
     events()->subscribe<MoveEntityEvent>(
-        [=](std::shared_ptr<MoveEntityEvent> event) {
-            handleMoveEntityEvent(event);
-        });
+        [=](auto event) { handleMoveEntityEvent(event); });
     events()->subscribe<ChangeLocationEvent>([&](auto event) {
-        if (this->map()->isValidTile(event->oldLocation)) {
-            this->map()
-                ->getTile(event->oldLocation)
-                .removeEntity(event->entity);
+        if (this->map()->isValidTile(event.oldLocation)) {
+            this->map()->getTile(event.oldLocation).removeEntity(event.entity);
         }
-        if (this->map()->isValidTile(event->newLocation)) {
-            this->map()->getTile(event->newLocation).addEntity(event->entity);
+        if (this->map()->isValidTile(event.newLocation)) {
+            this->map()->getTile(event.newLocation).addEntity(event.entity);
         }
     });
     events()->subscribe<RemoveEntityEvent>([&](auto event) {
-        if (!this->map()->isValidTile(event->location)) {
-            LOG(ERROR) << "Attempted to remove " << event->entity
-                       << " at illegal location " << event->location
+        if (!this->map()->isValidTile(event.location)) {
+            LOG(ERROR) << "Attempted to remove " << event.entity
+                       << " at illegal location " << event.location
                        << std::endl;
             return;
         }
-        this->map()->getTile(event->location).removeEntity(event->entity);
+        this->map()->getTile(event.location).removeEntity(event.entity);
     });
     events()->subscribe<AddEntityEvent>([&](auto event) {
-        if (!this->map()->isValidTile(event->location)) {
+        if (!this->map()->isValidTile(event.location)) {
             return;
         }
-        this->map()->getTile(event->location).addEntity(event->entity);
+        this->map()->getTile(event.location).addEntity(event.entity);
     });
 }
 
-void MovementSystem::handleMoveEntityEvent(
-    std::shared_ptr<MoveEntityEvent> event) {
-    EntityId l_entity = event->entity;
+void MovementSystem::handleMoveEntityEvent(const MoveEntityEvent& event) {
+    EntityId l_entity = event.entity;
     Location l_oldLocation = entities()->getLocation(l_entity);
-    Location l_newLocation = event->newLocation;
+    Location l_newLocation = event.newLocation;
 
     if (!map()->isValidTile(l_newLocation)) {
         GraphicsEffectComponent* effect =
@@ -82,7 +77,7 @@ void MovementSystem::handleMoveEntityEvent(
         }
     }
 
-    entities()->setLocation(event->entity, l_newLocation);
-    events()->fire<ChangeLocationEvent>(event->entity, l_oldLocation,
+    entities()->setLocation(event.entity, l_newLocation);
+    events()->fire<ChangeLocationEvent>(event.entity, l_oldLocation,
                                         l_newLocation);
 }

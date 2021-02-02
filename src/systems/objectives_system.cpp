@@ -7,13 +7,9 @@ void ObjectivesSystem::registerHandlers() {
     //     &ObjectivesSystem::handleAddEntityEvent, this,
     //     std::placeholders::_1));
     events()->subscribe<PrefabCreatedEvent>(
-        [=](std::shared_ptr<PrefabCreatedEvent> event) {
-            handleAddEntityEvent(event);
-        });
+        [=](auto event) { handleAddEntityEvent(event); });
     events()->subscribe<RemoveEntityEvent>(
-        [=](std::shared_ptr<RemoveEntityEvent> event) {
-            handleRemoveEntityEvent(event);
-        });
+        [=](auto event) { handleRemoveEntityEvent(event); });
 }
 
 void ObjectivesSystem::showGameOverWindow(bool gameWon) {
@@ -21,8 +17,7 @@ void ObjectivesSystem::showGameOverWindow(bool gameWon) {
         std::make_shared<GameOverWindow>(gameWon));
 }
 
-void ObjectivesSystem::handleAddEntityEvent(
-    std::shared_ptr<PrefabCreatedEvent> event) {
+void ObjectivesSystem::handleAddEntityEvent(const PrefabCreatedEvent& event) {
     // DescriptionComponent* l_desc =
     //     components()->get<DescriptionComponent>(event->entity);
     // if (l_desc && l_desc->title == "Troll") {
@@ -34,8 +29,7 @@ void ObjectivesSystem::handleAddEntityEvent(
     // }
 }
 
-void ObjectivesSystem::handleRemoveEntityEvent(
-    std::shared_ptr<RemoveEntityEvent> event) {
+void ObjectivesSystem::handleRemoveEntityEvent(const RemoveEntityEvent& event) {
     // if (event->entity == entities()->getPlayer()) {
     //     showGameOverWindow(false);
     //     return;

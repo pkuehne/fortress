@@ -9,29 +9,27 @@
 #include <glog/logging.h>
 
 void WindowManager::registerHandlers() {
-    auto registerHandler = [this](std::shared_ptr<RegisterWindowEvent> event) {
-        event->window->initialise(graphics(), events(), components(),
-                                  entities(), map());
+    auto registerHandler = [this](const RegisterWindowEvent& event) {
+        event.window->initialise(graphics(), events(), components(), entities(),
+                                 map());
 
-        switch (event->action) {
+        switch (event.action) {
             case RegisterWindowEvent::WindowAction::Add:
-                this->pushWindow(event->window);
+                this->pushWindow(event.window);
                 break;
             case RegisterWindowEvent::WindowAction::Replace:
                 this->popWindow();
-                this->pushWindow(event->window);
+                this->pushWindow(event.window);
                 break;
             case RegisterWindowEvent::WindowAction::ReplaceAll:
                 this->popAllWindows();
-                this->pushWindow(event->window);
+                this->pushWindow(event.window);
             default:
                 break;
         }
     };
-    auto closeHandler = [this](std::shared_ptr<CloseWindowEvent> event) {
-        popWindow();
-    };
-    auto resizeHandler = [this](std::shared_ptr<ResizeWindowsEvent> event) {
+    auto closeHandler = [this](const CloseWindowEvent& event) { popWindow(); };
+    auto resizeHandler = [this](const ResizeWindowsEvent& event) {
         this->resize();
     };
 

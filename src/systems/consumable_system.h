@@ -6,5 +6,5 @@ public:
     void registerHandlers() override;
 
 private:
-    void handleConsumeItemEvent(std::shared_ptr<ConsumeItemEvent> event);
+    void handleConsumeItemEvent(const ConsumeItemEvent& event);
 };

@@ -32,14 +32,14 @@ void GameEngine::initialise() {
     });
 
     m_eventManager->subscribe<RemoveEntityEvent>([this](auto event) {
-        this->components()->removeAll(event->entity);
-        this->entities()->destroyEntity(event->entity);
+        this->components()->removeAll(event.entity);
+        this->entities()->destroyEntity(event.entity);
     });
     m_eventManager->subscribe<UpdateTileSizeEvent>([this](auto event) {
         unsigned int height =
-            this->graphics()->getTileHeight() + event->adjustment;
+            this->graphics()->getTileHeight() + event.adjustment;
         unsigned int width =
-            this->graphics()->getTileWidth() + event->adjustment;
+            this->graphics()->getTileWidth() + event.adjustment;
         this->graphics()->updateTileSize(width, height);
         this->events()->fire<ResizeWindowsEvent>();
     });

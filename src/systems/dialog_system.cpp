@@ -5,21 +5,21 @@
 
 void DialogSystem::registerHandlers() {
     events()->subscribe<StartConversationEvent>(
-        [=](std::shared_ptr<StartConversationEvent> event) {
+        [=](const StartConversationEvent& event) {
             handleStartConversationEvent(event);
         });
     events()->subscribe<ChooseDialogOptionEvent>(
-        [=](std::shared_ptr<ChooseDialogOptionEvent> event) {
+        [=](const ChooseDialogOptionEvent& event) {
             handleChooseDialogOptionEvent(event);
         });
     events()->subscribe<EndConversationEvent>(
-        [=](std::shared_ptr<EndConversationEvent> event) {
+        [=](const EndConversationEvent& event) {
             handleEndConversationEvent(event);
         });
 }
 
 void DialogSystem::handleStartConversationEvent(
-    std::shared_ptr<StartConversationEvent> event) {
+    const StartConversationEvent& event) {
 
     auto player = components()->getUnique<PlayerComponent>();
     auto component = components()->getUnique<DialogComponent>().component;
@@ -30,10 +30,10 @@ void DialogSystem::handleStartConversationEvent(
     if (component->inConversationWith != 0) {
         return;
     }
-    if (event->initiatedBy == player.id) {
-        component->inConversationWith = event->target;
+    if (event.initiatedBy == player.id) {
+        component->inConversationWith = event.target;
     } else {
-        component->inConversationWith = event->initiatedBy;
+        component->inConversationWith = event.initiatedBy;
     }
 
     generateDialog(component);
@@ -43,20 +43,20 @@ void DialogSystem::handleStartConversationEvent(
 }
 
 void DialogSystem::handleChooseDialogOptionEvent(
-    std::shared_ptr<ChooseDialogOptionEvent> event) {
+    const ChooseDialogOptionEvent& event) {
     auto player = components()->getUnique<DialogComponent>();
 
-    if (event->option == 1) {
+    if (event.option == 1) {
         player.component->dialogText = "I don't know you well enough to say.";
     }
-    if (event->option == 2) {
+    if (event.option == 2) {
         player.component->dialogText = "Do I look human to you?";
     }
     events()->fire<EndTurnEvent>();
 }
 
 void DialogSystem::handleEndConversationEvent(
-    std::shared_ptr<EndConversationEvent> event) {
+    const EndConversationEvent& event) {
     auto player = components()->getUnique<DialogComponent>();
 
     player.component->inConversationWith = 0;

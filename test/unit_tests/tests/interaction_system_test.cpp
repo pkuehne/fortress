@@ -37,7 +37,7 @@ TEST_F(InteractionSystemTest, handleOpenForOpenable) {
     auto collidable = componentManager->make<ColliderComponent>(entity);
 
     // When
-    auto event = std::make_shared<OpenEntityEvent>(entity);
+    auto event = OpenEntityEvent(entity);
     system.handleOpenEntityEvent(event);
 
     // Then
@@ -51,7 +51,7 @@ TEST_F(InteractionSystemTest, handleOpenForNonOpenable) {
     auto collidable = componentManager->make<ColliderComponent>(entity);
 
     // When
-    auto event = std::make_shared<OpenEntityEvent>(entity);
+    auto event = OpenEntityEvent(entity);
     system.handleOpenEntityEvent(event);
 
     // Then
@@ -66,7 +66,7 @@ TEST_F(InteractionSystemTest, handleOpenDoesNotWorkIfLocked) {
     openable->locked = true;
 
     // When
-    auto event = std::make_shared<OpenEntityEvent>(entity);
+    auto event = OpenEntityEvent(entity);
     system.handleOpenEntityEvent(event);
 
     // Then
@@ -81,7 +81,7 @@ TEST_F(InteractionSystemTest, handleCloseForOpenable) {
     openable->open = true;
 
     // When
-    auto event = std::make_shared<CloseEntityEvent>(entity);
+    auto event = CloseEntityEvent(entity);
     system.handleCloseEntityEvent(event);
 
     // Then
@@ -97,7 +97,7 @@ TEST_F(InteractionSystemTest, handleCloseForOpenableIgnoresLocked) {
     openable->locked = true;
 
     // When
-    auto event = std::make_shared<CloseEntityEvent>(entity);
+    auto event = CloseEntityEvent(entity);
     system.handleCloseEntityEvent(event);
 
     // Then
@@ -110,7 +110,7 @@ TEST_F(InteractionSystemTest, handleCloseForNonOpenable) {
     EntityId entity = 1234;
 
     // When
-    auto event = std::make_shared<CloseEntityEvent>(entity);
+    auto event = CloseEntityEvent(entity);
     system.handleCloseEntityEvent(event);
 
     // Then
@@ -126,7 +126,7 @@ TEST_F(InteractionSystemTest, handleLockEntityEvent_locksLockableWithKey) {
     openable->locked = false;
 
     // When
-    auto event = std::make_shared<LockEntityEvent>(key, lock);
+    auto event = LockEntityEvent(key, lock);
     system.handleLockEntityEvent(event);
 
     // Then
@@ -142,7 +142,7 @@ TEST_F(InteractionSystemTest,
     openable->locked = false;
 
     // When
-    auto event = std::make_shared<LockEntityEvent>(key, lock);
+    auto event = LockEntityEvent(key, lock);
     system.handleLockEntityEvent(event);
 
     // Then
@@ -158,7 +158,7 @@ TEST_F(InteractionSystemTest, handleUnlockEntityEvent_unlocksLockableWithKey) {
     openable->locked = true;
 
     // When
-    auto event = std::make_shared<UnlockEntityEvent>(key, lock);
+    auto event = UnlockEntityEvent(key, lock);
     system.handleUnlockEntityEvent(event);
 
     // Then
@@ -174,7 +174,7 @@ TEST_F(InteractionSystemTest,
     openable->locked = true;
 
     // When
-    auto event = std::make_shared<UnlockEntityEvent>(key, lock);
+    auto event = UnlockEntityEvent(key, lock);
     system.handleUnlockEntityEvent(event);
 
     // Then

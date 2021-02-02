@@ -85,49 +85,48 @@ void EquipmentSystem::registerHandlers() {
 }
 
 void EquipmentSystem::handleDropEquipmentEvent(
-    std::shared_ptr<DropEquipmentEvent> event) {
+    const DropEquipmentEvent& event) {
     EquipmentComponent* equipment =
-        components()->get<EquipmentComponent>(event->entity);
+        components()->get<EquipmentComponent>(event.entity);
 
-    unequipItem(event->item, equipment);
+    unequipItem(event.item, equipment);
 
     std::vector<EntityId>::iterator it = equipment->carriedEquipment.begin();
     for (; it != equipment->carriedEquipment.end(); ++it) {
-        if (*it == event->item) {
+        if (*it == event.item) {
             equipment->carriedEquipment.erase(it);
             break;
         }
     }
 
-    Location location = entities()->getLocation(event->entity);
-    entities()->setLocation(event->item, location);
+    Location location = entities()->getLocation(event.entity);
+    entities()->setLocation(event.item, location);
 }
 
 void EquipmentSystem::handlePickupEquipmentEvent(
-    std::shared_ptr<PickupEquipmentEvent> event) {
+    const PickupEquipmentEvent& event) {
     EquipmentComponent* equipment =
-        components()->get<EquipmentComponent>(event->entity);
+        components()->get<EquipmentComponent>(event.entity);
 
     Location invalid;
-    entities()->setLocation(event->item, invalid);
+    entities()->setLocation(event.item, invalid);
 
-    equipment->carriedEquipment.push_back(event->item);
+    equipment->carriedEquipment.push_back(event.item);
 }
 
-void EquipmentSystem::handleEquipItemEvent(
-    std::shared_ptr<EquipItemEvent> event) {
+void EquipmentSystem::handleEquipItemEvent(const EquipItemEvent& event) {
     EquipmentComponent* equipment =
-        components()->get<EquipmentComponent>(event->entity);
+        components()->get<EquipmentComponent>(event.entity);
     WearableComponent* wearable =
-        components()->get<WearableComponent>(event->item);
+        components()->get<WearableComponent>(event.item);
     WieldableComponent* wieldable =
-        components()->get<WieldableComponent>(event->item);
+        components()->get<WieldableComponent>(event.item);
 
-    if (equipItem(event->item, wieldable, wearable, equipment)) {
+    if (equipItem(event.item, wieldable, wearable, equipment)) {
         std::vector<EntityId>::iterator it =
             equipment->carriedEquipment.begin();
         for (; it != equipment->carriedEquipment.end(); ++it) {
-            if (*it == event->item) {
+            if (*it == event.item) {
                 equipment->carriedEquipment.erase(it);
                 break;
             }
@@ -135,36 +134,33 @@ void EquipmentSystem::handleEquipItemEvent(
     }
 }
 
-void EquipmentSystem::handleUnequipItemEvent(
-    std::shared_ptr<UnequipItemEvent> event) {
+void EquipmentSystem::handleUnequipItemEvent(const UnequipItemEvent& event) {
     EquipmentComponent* equipment =
-        components()->get<EquipmentComponent>(event->entity);
-    unequipItem(event->item, equipment);
-    equipment->carriedEquipment.push_back(event->item);
+        components()->get<EquipmentComponent>(event.entity);
+    unequipItem(event.item, equipment);
+    equipment->carriedEquipment.push_back(event.item);
 }
 
-void EquipmentSystem::handleConsumeItemEvent(
-    std::shared_ptr<ConsumeItemEvent> event) {
+void EquipmentSystem::handleConsumeItemEvent(const ConsumeItemEvent& event) {
     EquipmentComponent* equipment =
-        components()->get<EquipmentComponent>(event->entity);
+        components()->get<EquipmentComponent>(event.entity);
     std::vector<EntityId>::iterator it = equipment->carriedEquipment.begin();
     for (; it != equipment->carriedEquipment.end(); ++it) {
-        if (*it == event->item) {
+        if (*it == event.item) {
             equipment->carriedEquipment.erase(it);
             break;
         }
     }
 }
 
-void EquipmentSystem::handleKillEntityEvent(
-    std::shared_ptr<KillEntityEvent> event) {
+void EquipmentSystem::handleKillEntityEvent(const KillEntityEvent& event) {
     // Drop the equipment
     EquipmentComponent* equipment =
-        components()->get<EquipmentComponent>(event->entity);
+        components()->get<EquipmentComponent>(event.entity);
     if (!equipment) {
         return;
     }
-    const Location location = entities()->getLocation(event->entity);
+    const Location location = entities()->getLocation(event.entity);
 
     equipment->carriedEquipment.push_back(equipment->headWearable);
     equipment->carriedEquipment.push_back(equipment->faceWearable);

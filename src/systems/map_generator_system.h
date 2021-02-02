@@ -9,5 +9,5 @@ public:
     void registerHandlers() override;
 
 private:
-    void generate(std::shared_ptr<GenerateRuralMapEvent> event);
+    void generate(const GenerateRuralMapEvent& event);
 };

@@ -7,8 +7,8 @@ public:
     void registerHandlers() override;
 
 public:
-    void handleOpenEntityEvent(std::shared_ptr<OpenEntityEvent> event);
-    void handleCloseEntityEvent(std::shared_ptr<CloseEntityEvent> event);
-    void handleLockEntityEvent(std::shared_ptr<LockEntityEvent> event);
-    void handleUnlockEntityEvent(std::shared_ptr<UnlockEntityEvent> event);
+    void handleOpenEntityEvent(const OpenEntityEvent& event);
+    void handleCloseEntityEvent(const CloseEntityEvent& event);
+    void handleLockEntityEvent(const LockEntityEvent& event);
+    void handleUnlockEntityEvent(const UnlockEntityEvent& event);
 };

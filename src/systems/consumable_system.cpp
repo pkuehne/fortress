@@ -5,9 +5,7 @@
 
 void ConsumableSystem::registerHandlers() {
     events()->subscribe<ConsumeItemEvent>(
-        [=](std::shared_ptr<ConsumeItemEvent> event) {
-            handleConsumeItemEvent(event);
-        });
+        [=](const ConsumeItemEvent& event) { handleConsumeItemEvent(event); });
 }
 
 void updateHealth(ConsumableComponent* consumable, HealthComponent* health) {
@@ -28,23 +26,22 @@ void updateHealth(ConsumableComponent* consumable, HealthComponent* health) {
     }
 }
 
-void ConsumableSystem::handleConsumeItemEvent(
-    std::shared_ptr<ConsumeItemEvent> event) {
+void ConsumableSystem::handleConsumeItemEvent(const ConsumeItemEvent& event) {
     // Validate
-    if (!components()->exists<ConsumableComponent>(event->item)) {
-        LOG(ERROR) << "Consume event on non-consumable item: " << event->item
+    if (!components()->exists<ConsumableComponent>(event.item)) {
+        LOG(ERROR) << "Consume event on non-consumable item: " << event.item
                    << " !" << std::endl;
         return;
     }
 
     ConsumableComponent* consumable =
-        components()->get<ConsumableComponent>(event->item);
-    HealthComponent* health = components()->get<HealthComponent>(event->entity);
+        components()->get<ConsumableComponent>(event.item);
+    HealthComponent* health = components()->get<HealthComponent>(event.entity);
 
     // Check whether this has a health impact
     updateHealth(consumable, health);
 
     // Remove after use
-    const Location location = entities()->getLocation(event->item);
-    events()->fire<RemoveEntityEvent>(event->item, location);
+    const Location location = entities()->getLocation(event.item);
+    events()->fire<RemoveEntityEvent>(event.item, location);
 }

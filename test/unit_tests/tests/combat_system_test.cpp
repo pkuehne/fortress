@@ -10,7 +10,7 @@ using namespace ::testing;
 
 class EventManagerProxy : public EventManager {
 public:
-    std::queue<std::pair<size_t, std::shared_ptr<Event>>>& getEventQueue() {
+    std::queue<std::pair<size_t, std::unique_ptr<Event>>>& getEventQueue() {
         return m_eventList;
     }
 };

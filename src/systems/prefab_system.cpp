@@ -11,37 +11,36 @@
 #include <yaml-cpp/yaml.h>
 
 void PrefabSystem::registerHandlers() {
-    events()->subscribe<InstantiatePrefabEvent>(
-        [=](std::shared_ptr<InstantiatePrefabEvent> event) {
-            auto iter = m_prefabs.find(event->prefab);
-            if (iter == m_prefabs.end()) {
-                LOG(WARNING) << "Invalid prefab '" << event->prefab
-                             << "' requested" << std::endl;
-                return;
-            }
+    events()->subscribe<InstantiatePrefabEvent>([=](auto event) {
+        auto iter = m_prefabs.find(event.prefab);
+        if (iter == m_prefabs.end()) {
+            LOG(WARNING) << "Invalid prefab '" << event.prefab << "' requested"
+                         << std::endl;
+            return;
+        }
 
-            YAML::Node node = iter->second;
-            EntityId entity = event->entity;
+        YAML::Node node = iter->second;
+        EntityId entity = event.entity;
 
-            addDescriptionComponent(node, entity);
-            addSpriteComponent(node, entity);
-            addColliderComponent(node, entity);
-            addHealthComponent(node, entity);
-            addDroppableComponent(node, entity);
-            addConsumableComponent(node, entity);
-            addOpenableComponent(node, entity);
-            addWearableComponent(node, entity);
-            addWieldableComponent(node, entity);
-            addEquipmentComponent(node, entity);
-            addConnectorComponent(node, entity);
-            addNpcComponent(node, entity);
-            addPlayerComponent(node, entity);
-            addExperienceComponent(node, entity);
-            addGroupingComponent(node, entity);
-            addKeyComponent(node, entity);
+        addDescriptionComponent(node, entity);
+        addSpriteComponent(node, entity);
+        addColliderComponent(node, entity);
+        addHealthComponent(node, entity);
+        addDroppableComponent(node, entity);
+        addConsumableComponent(node, entity);
+        addOpenableComponent(node, entity);
+        addWearableComponent(node, entity);
+        addWieldableComponent(node, entity);
+        addEquipmentComponent(node, entity);
+        addConnectorComponent(node, entity);
+        addNpcComponent(node, entity);
+        addPlayerComponent(node, entity);
+        addExperienceComponent(node, entity);
+        addGroupingComponent(node, entity);
+        addKeyComponent(node, entity);
 
-            events()->fire<PrefabCreatedEvent>(event->entity, event->prefab);
-        });
+        events()->fire<PrefabCreatedEvent>(event.entity, event.prefab);
+    });
 
     std::string path = "../data/prefabs/";
     loadPrefabsFromDirectory(path);

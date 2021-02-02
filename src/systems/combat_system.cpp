@@ -12,12 +12,11 @@
 #include <sstream>
 
 void CombatSystem::registerHandlers() {
-    events()->subscribe<AttackEntityEvent>(
-        [&](std::shared_ptr<AttackEntityEvent> event) {
-            this->handleAttack(event->attacker, event->defender);
-        });
+    events()->subscribe<AttackEntityEvent>([&](const AttackEntityEvent& event) {
+        this->handleAttack(event.attacker, event.defender);
+    });
     events()->subscribe<KillEntityEvent>(
-        [&](auto event) { this->killEntity(event->entity); });
+        [&](const KillEntityEvent& event) { this->killEntity(event.entity); });
 }
 
 void CombatSystem::handleAttack(EntityId attacker, EntityId defender) {

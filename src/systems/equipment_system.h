@@ -7,11 +7,10 @@ public:
     void registerHandlers() override;
 
 private:
-    void handleDropEquipmentEvent(std::shared_ptr<DropEquipmentEvent> event);
-    void
-    handlePickupEquipmentEvent(std::shared_ptr<PickupEquipmentEvent> event);
-    void handleUnequipItemEvent(std::shared_ptr<UnequipItemEvent> event);
-    void handleEquipItemEvent(std::shared_ptr<EquipItemEvent> event);
-    void handleConsumeItemEvent(std::shared_ptr<ConsumeItemEvent> event);
-    void handleKillEntityEvent(std::shared_ptr<KillEntityEvent> event);
+    void handleDropEquipmentEvent(const DropEquipmentEvent& event);
+    void handlePickupEquipmentEvent(const PickupEquipmentEvent& event);
+    void handleUnequipItemEvent(const UnequipItemEvent& event);
+    void handleEquipItemEvent(const EquipItemEvent& event);
+    void handleConsumeItemEvent(const ConsumeItemEvent& event);
+    void handleKillEntityEvent(const KillEntityEvent& event);
 };

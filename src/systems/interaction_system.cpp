@@ -5,27 +5,18 @@
 
 void InteractionSystem::registerHandlers() {
     events()->subscribe<OpenEntityEvent>(
-        [=](std::shared_ptr<OpenEntityEvent> event) {
-            handleOpenEntityEvent(event);
-        });
+        [=](auto event) { handleOpenEntityEvent(event); });
     events()->subscribe<CloseEntityEvent>(
-        [=](std::shared_ptr<CloseEntityEvent> event) {
-            handleCloseEntityEvent(event);
-        });
+        [=](auto event) { handleCloseEntityEvent(event); });
     events()->subscribe<LockEntityEvent>(
-        [=](std::shared_ptr<LockEntityEvent> event) {
-            handleLockEntityEvent(event);
-        });
+        [=](auto event) { handleLockEntityEvent(event); });
     events()->subscribe<UnlockEntityEvent>(
-        [=](std::shared_ptr<UnlockEntityEvent> event) {
-            handleUnlockEntityEvent(event);
-        });
+        [=](auto event) { handleUnlockEntityEvent(event); });
 }
 
-void InteractionSystem::handleOpenEntityEvent(
-    std::shared_ptr<OpenEntityEvent> event) {
+void InteractionSystem::handleOpenEntityEvent(const OpenEntityEvent& event) {
     OpenableComponent* openable =
-        components()->get<OpenableComponent>(event->entity);
+        components()->get<OpenableComponent>(event.entity);
     if (!openable) {
         return;
     }
@@ -35,28 +26,26 @@ void InteractionSystem::handleOpenEntityEvent(
     }
     openable->open = true;
 
-    components()->remove<ColliderComponent>(event->entity);
+    components()->remove<ColliderComponent>(event.entity);
 }
 
-void InteractionSystem::handleCloseEntityEvent(
-    std::shared_ptr<CloseEntityEvent> event) {
+void InteractionSystem::handleCloseEntityEvent(const CloseEntityEvent& event) {
     OpenableComponent* openable =
-        components()->get<OpenableComponent>(event->entity);
+        components()->get<OpenableComponent>(event.entity);
     if (!openable) {
         return;
     }
     openable->open = false;
 
-    components()->make<ColliderComponent>(event->entity);
+    components()->make<ColliderComponent>(event.entity);
 }
 
-void InteractionSystem::handleLockEntityEvent(
-    std::shared_ptr<LockEntityEvent> event) {
-    auto openable = components()->get<OpenableComponent>(event->lock);
+void InteractionSystem::handleLockEntityEvent(const LockEntityEvent& event) {
+    auto openable = components()->get<OpenableComponent>(event.lock);
     if (!openable) {
         return;
     }
-    auto keyable = components()->get<KeyComponent>(event->key);
+    auto keyable = components()->get<KeyComponent>(event.key);
     if (!keyable) {
         return;
     }
@@ -64,12 +53,12 @@ void InteractionSystem::handleLockEntityEvent(
 }
 
 void InteractionSystem::handleUnlockEntityEvent(
-    std::shared_ptr<UnlockEntityEvent> event) {
-    auto openable = components()->get<OpenableComponent>(event->lock);
+    const UnlockEntityEvent& event) {
+    auto openable = components()->get<OpenableComponent>(event.lock);
     if (!openable) {
         return;
     }
-    auto keyable = components()->get<KeyComponent>(event->key);
+    auto keyable = components()->get<KeyComponent>(event.key);
     if (!keyable) {
         return;
     }
