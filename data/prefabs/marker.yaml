@@ -2,12 +2,12 @@ name: Marker
 description: "A marker"
 symbol: 88
 foreground-color:
-  - 0
-  - 256
-  - 256
+  red: 0
+  green: 256
+  blue: 256
 background-color:
-  - 0
-  - 0
-  - 0
+  red: 0
+  green: 0
+  blue: 0
 openable:
   open: false

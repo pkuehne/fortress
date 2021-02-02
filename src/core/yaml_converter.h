@@ -71,21 +71,22 @@ namespace YAML {
 template <> struct convert<Location> {
     static Node encode(const Location& rhs) {
         Node node;
-        node.push_back(rhs.x);
-        node.push_back(rhs.y);
-        node.push_back(rhs.z);
-        node.push_back(rhs.area);
+        node["x"] = rhs.x;
+        node["y"] = rhs.y;
+        node["z"] = rhs.z;
+        node["a"] = rhs.area;
+
         return node;
     }
 
     static bool decode(const Node& node, Location& rhs) {
-        if (!node.IsSequence() || node.size() != 4) {
+        if (!node.IsMap() || node.size() != 4) {
             return false;
         }
-        rhs.x = node[0].as<unsigned int>();
-        rhs.y = node[1].as<unsigned int>();
-        rhs.z = node[2].as<unsigned int>();
-        rhs.area = node[3].as<unsigned int>();
+        rhs.x = node["x"].as<unsigned int>();
+        rhs.y = node["y"].as<unsigned int>();
+        rhs.z = node["z"].as<unsigned int>();
+        rhs.area = node["a"].as<unsigned int>();
         return true;
     }
 };
@@ -94,20 +95,20 @@ template <> struct convert<Location> {
 template <> struct convert<Color> {
     static Node encode(const Color& rhs) {
         Node node;
-        node.push_back(rhs.Red());
-        node.push_back(rhs.Green());
-        node.push_back(rhs.Blue());
+        node["red"] = rhs.Red();
+        node["green"] = rhs.Green();
+        node["blue"] = rhs.Blue();
         return node;
     }
 
     static bool decode(const Node& node, Color& rhs) {
-        if (!node.IsSequence() || node.size() != 3) {
+        if (!node.IsMap() || node.size() != 3) {
             return false;
         }
 
-        rhs.Red() = node[0].as<float>();
-        rhs.Green() = node[1].as<float>();
-        rhs.Blue() = node[2].as<float>();
+        rhs.Red() = node["red"].as<float>();
+        rhs.Green() = node["green"].as<float>();
+        rhs.Blue() = node["blue"].as<float>();
 
         return true;
     }

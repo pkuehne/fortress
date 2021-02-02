@@ -2,13 +2,13 @@ name: Dog
 description: "Man's best friend"
 symbol: 100
 foreground-color:
-  - 0
-  - 256
-  - 0
+  red: 0
+  green: 256
+  blue: 0
 background-color:
-  - 0
-  - 0
-  - 0
+  red: 0
+  green: 0
+  blue: 0
 health: 4
 smart:
   fsm: dog

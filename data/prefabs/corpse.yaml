@@ -2,11 +2,11 @@ name: Corpse
 description: "A dead thing"
 symbol: 88
 foreground-color:
-  - 128
-  - 128
-  - 128
+  red: 128
+  green: 128
+  blue: 128
 background-color:
-  - 0
-  - 0
-  - 0
+  red: 0
+  green: 0
+  blue: 0
 collidable: false

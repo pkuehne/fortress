@@ -2,13 +2,13 @@ name: Orc
 description: "Ugh, what's that smell?"
 symbol: 79
 foreground-color:
-  - 256
-  - 0
-  - 0
+  red: 256
+  green: 0
+  blue: 0
 background-color:
-  - 0
-  - 0
-  - 0
+  red: 0
+  green: 0
+  blue: 0
 health: 1
 equipment:
   rightHand: "sword"

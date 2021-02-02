@@ -2,13 +2,13 @@ name: Potion
 description: "Who knows what will happen when you drink it?"
 symbol: 129
 foreground-color:
-  - 0
-  - 256
-  - 256
+  red: 0
+  green: 256
+  blue: 256
 background-color:
-  - 0
-  - 0
-  - 0
+  red: 0
+  green: 0
+  blue: 0
 collidable: false
 droppable: true
 consumable:

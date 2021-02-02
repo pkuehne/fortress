@@ -2,13 +2,13 @@ name: Shield
 description: "Return with your shield, or upon it!"
 symbol: 189
 foreground-color:
-  - 0
-  - 256
-  - 256
+  red: 0
+  green: 256
+  blue: 256
 background-color:
-  - 0
-  - 0
-  - 0
+  red: 0
+  green: 0
+  blue: 0
 droppable: true
 collidable: false
 wieldable:
