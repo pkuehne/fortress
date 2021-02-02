@@ -6,6 +6,7 @@
 #include "../core/component_manager.h"
 #include "../core/entity_manager.h"
 #include "../core/event_manager.h"
+#include "../core/yaml_converter.h"
 #include "../widgets/frame.h"
 #include "../widgets/label.h"
 #include "../widgets/listbox.h"
@@ -21,6 +22,7 @@ void InteractionWindow::registerWidgets() {
     unsigned int descriptionWidth = 5;
     const unsigned int commandWidth = 10;
     const unsigned int windowHeight = 10;
+    auto debug = components()->getUnique<DebugComponent>().component;
 
     getWidget<Frame>("frmBase")->setMergeBorders();
 
@@ -38,7 +40,6 @@ void InteractionWindow::registerWidgets() {
         store.open = components()->get<OpenableComponent>(entity);
         store.drop = components()->get<DroppableComponent>(entity);
         store.npc = components()->get<NpcComponent>(entity);
-        auto debug = components()->getUnique<DebugComponent>().component;
 
         std::string title = store.desc ? store.desc->title : "<Unknown>";
         if (debug != nullptr) {
@@ -148,6 +149,23 @@ void InteractionWindow::registerWidgets() {
                 "None of your equipment can be used as a key"));
         })
         ->setSensitive(false);
+    createWidget<Label>("txtDump", descriptionWidth, 6)
+        ->setText("dump")
+        ->setCommandChar(1)
+        ->setCommandCharCallback([&](Label* l) {
+            YamlConverter converter(entities(), components());
+            YAML::Node node;
+            ListBox* lstEntities = getWidget<ListBox>("lstEntities");
+            EntityId entity = m_entities[lstEntities->getSelection()];
+
+            converter.encodeEntity(node, entity);
+            std::cout << node << std::endl;
+            events()->fire(std::make_shared<AddLogMessageEvent>(
+                "Entity " + std::to_string(entity) + " dumped to stdout"));
+            events()->fire(std::make_shared<EndTurnEvent>());
+        })
+        ->setSensitive(true)
+        ->setVisible(debug != nullptr);
 
     setHeight(windowHeight);
     setWidth(descriptionWidth + commandWidth);
