@@ -19,12 +19,12 @@ void LogMessageSystem::registerHandlers() {
         [=](std::shared_ptr<PrefabCreatedEvent> event) {
             // Todo: This should go into the narrator system...
             if (event->prefab == "player") {
-                events()->fire(std::make_shared<AddLogMessageEvent>(
-                    "You find yourself in a forest."));
-                events()->fire(std::make_shared<AddLogMessageEvent>(
-                    "Stairs will lead you into the dungeons."));
-                events()->fire(std::make_shared<AddLogMessageEvent>(
-                    "Beware the troll, living in the depths", "warning"));
+                events()->fire<AddLogMessageEvent>(
+                    "You find yourself in a forest.");
+                events()->fire<AddLogMessageEvent>(
+                    "Stairs will lead you into the dungeons.");
+                events()->fire<AddLogMessageEvent>(
+                    "Beware the troll, living in the depths", "warning");
             }
         });
 }

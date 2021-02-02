@@ -11,18 +11,15 @@ void ExperienceSystem::registerHandlers() {
                 return;
             }
             experienceComp->xp += event->experience;
-            events()->fire(std::make_shared<AddLogMessageEvent>(
-                "You have gained experience!"));
+            events()->fire<AddLogMessageEvent>("You have gained experience!");
 
             unsigned int newLevel =
                 0.025f * sqrt(static_cast<double>(experienceComp->xp));
 
             if (newLevel > experienceComp->level) {
                 experienceComp->level = newLevel;
-                events()->fire(std::make_shared<AddLogMessageEvent>(
-                    "You have levelled up!"));
-                events()->fire(
-                    std::make_shared<LevelUpEvent>(event->entity, newLevel));
+                events()->fire<AddLogMessageEvent>("You have levelled up!");
+                events()->fire<LevelUpEvent>(event->entity, newLevel);
             }
         }));
 }

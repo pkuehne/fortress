@@ -39,8 +39,7 @@ void DialogSystem::handleStartConversationEvent(
     generateDialog(component);
 
     // Show the dialog window
-    events()->fire(std::make_shared<RegisterWindowEvent>(
-        std::make_shared<DialogWindow>()));
+    events()->fire<RegisterWindowEvent>(std::make_shared<DialogWindow>());
 }
 
 void DialogSystem::handleChooseDialogOptionEvent(
@@ -53,7 +52,7 @@ void DialogSystem::handleChooseDialogOptionEvent(
     if (event->option == 2) {
         player.component->dialogText = "Do I look human to you?";
     }
-    events()->fire(std::make_shared<EndTurnEvent>());
+    events()->fire<EndTurnEvent>();
 }
 
 void DialogSystem::handleEndConversationEvent(

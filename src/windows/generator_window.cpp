@@ -124,15 +124,15 @@ void GeneratorWindow::startGenerating() {
     m_progress = 1;
     m_status = PROGRESS;
 
-    events()->fire(std::make_shared<GenerateRuralMapEvent>(
+    events()->fire<GenerateRuralMapEvent>(
         getWidget<NumericEntry>("numWidth")->getNumber(),
         getWidget<NumericEntry>("numHeight")->getNumber(),
         getWidget<NumericEntry>("numDepth")->getNumber(),
-        getWidget<NumericEntry>("numRooms")->getNumber()));
+        getWidget<NumericEntry>("numRooms")->getNumber());
 }
 
 void GeneratorWindow::startPlaying() {
-    events()->fire(std::make_shared<RegisterWindowEvent>(
+    events()->fire<RegisterWindowEvent>(
         std::make_shared<MapWindow>(),
-        RegisterWindowEvent::WindowAction::Replace));
+        RegisterWindowEvent::WindowAction::Replace);
 }

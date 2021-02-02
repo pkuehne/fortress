@@ -19,7 +19,7 @@ const unsigned char DOG = 'D';
 EntityId RuralGenerator::createPrefab(const std::string& type,
                                       const Location& location) {
     EntityId entity = entities()->createEntity(location);
-    events()->fire(std::make_shared<InstantiatePrefabEvent>(entity, type));
+    events()->fire<InstantiatePrefabEvent>(entity, type);
     return entity;
 }
 

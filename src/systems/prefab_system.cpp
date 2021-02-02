@@ -40,8 +40,7 @@ void PrefabSystem::registerHandlers() {
             addGroupingComponent(node, entity);
             addKeyComponent(node, entity);
 
-            events()->fire(std::make_shared<PrefabCreatedEvent>(event->entity,
-                                                                event->prefab));
+            events()->fire<PrefabCreatedEvent>(event->entity, event->prefab);
         });
 
     std::string path = "../data/prefabs/";

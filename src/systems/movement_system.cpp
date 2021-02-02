@@ -83,6 +83,6 @@ void MovementSystem::handleMoveEntityEvent(
     }
 
     entities()->setLocation(event->entity, l_newLocation);
-    events()->fire(std::make_shared<ChangeLocationEvent>(
-        event->entity, l_oldLocation, l_newLocation));
+    events()->fire<ChangeLocationEvent>(event->entity, l_oldLocation,
+                                        l_newLocation);
 }

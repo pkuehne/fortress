@@ -70,10 +70,10 @@ add_custom_target(run
     DEPENDS fortress
 )
 
-add_custom_target(lint ALL
-    COMMAND cpplint --recursive ../src
-)
+# add_custom_target(lint ALL
+#     COMMAND cpplint --recursive ../src
+# )
 
-add_custom_target(check ALL
-    COMMAND cppcheck ../src/ --enable=information,warning --error-exitcode=1 -DMAJOR=1 --inline-suppr
-)
+# add_custom_target(check ALL
+#     COMMAND cppcheck ../src/ --enable=information,warning --error-exitcode=1 -DMAJOR=1 --inline-suppr
+# )

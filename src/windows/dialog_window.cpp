@@ -33,9 +33,8 @@ void DialogWindow::registerWidgets() {
         ->setVerticalAlign(Widget::VerticalAlign::Bottom);
     lstQuestions->setItemSelectedCallback([=](ListBox* l) {
         ListBoxItem item = l->getSelectedItem();
-        events()->fire(
-            std::make_shared<ChooseDialogOptionEvent>(item.getValue()));
-        events()->fire(std::make_shared<EndTurnEvent>());
+        events()->fire<ChooseDialogOptionEvent>(item.getValue());
+        events()->fire<EndTurnEvent>();
     });
 
     this->nextTurn();
@@ -56,6 +55,4 @@ void DialogWindow::nextTurn() {
     lblResponse->setText(player->dialogText);
 }
 
-void DialogWindow::destroy() {
-    events()->fire(std::make_shared<EndConversationEvent>());
-}
+void DialogWindow::destroy() { events()->fire<EndConversationEvent>(); }

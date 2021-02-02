@@ -20,7 +20,7 @@ void EntityManager::addEntity(EntityId id, const Location& location) {
     m_entities[location.area].insert(id);
     m_allEntities.insert(id);
 
-    m_events->fire(std::make_shared<AddEntityEvent>(id, location));
+    m_events->fire<AddEntityEvent>(id, location);
 }
 
 void EntityManager::destroyEntity(EntityId id) {
@@ -45,6 +45,5 @@ void EntityManager::setLocation(EntityId entity, const Location& location) {
     if (m_locations[entity].isValid()) {
         m_entities[location.area].insert(entity);
     }
-    m_events->fire(
-        std::make_shared<ChangeLocationEvent>(entity, prev, location));
+    m_events->fire<ChangeLocationEvent>(entity, prev, location);
 }

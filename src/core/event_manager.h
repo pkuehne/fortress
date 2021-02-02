@@ -49,6 +49,11 @@ public:
         m_eventList.push(std::make_pair(typeid(EventType).hash_code(), event));
     }
 
+    template <class EventType, class... Args> void fire(Args&&... args) {
+        m_eventList.push(std::make_pair(typeid(EventType).hash_code(),
+                                        std::make_shared<EventType>(args...)));
+    }
+
     template <class FuncType, class EventType> void subscribe(FuncType func) {
         subscribe(std::function<void(std::shared_ptr<EventType>)>(func));
     }

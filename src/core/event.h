@@ -147,6 +147,7 @@ public:
     std::string category;
 };
 
+// TODO: Make this simpler as well with Args...
 class RegisterWindowEvent : public Event {
 public:
     enum class WindowAction { None, Add, Replace, ReplaceAll };

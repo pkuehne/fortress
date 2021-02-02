@@ -12,14 +12,14 @@ void MainWindow::setup() {
 }
 void MainWindow::registerWidgets() {
     Label::CommandCharCB quickstart = [=](Label* l) {
-        events()->fire(std::make_shared<RegisterWindowEvent>(
+        events()->fire<RegisterWindowEvent>(
             std::make_shared<GeneratorWindow>(true),
-            RegisterWindowEvent::WindowAction::Replace));
+            RegisterWindowEvent::WindowAction::Replace);
     };
     Label::CommandCharCB create = [=](Label* l) {
-        events()->fire(std::make_shared<RegisterWindowEvent>(
+        events()->fire<RegisterWindowEvent>(
             std::make_shared<GeneratorWindow>(false),
-            RegisterWindowEvent::WindowAction::Replace));
+            RegisterWindowEvent::WindowAction::Replace);
     };
 
     this->createWidget<Label>("lblQuickstart", 1, 15)
@@ -43,8 +43,7 @@ void MainWindow::registerWidgets() {
         ->setCommandChar(1)
         ->setIgnoreCommandCharCase(true)
         ->setCommandCharCallback([=](Label* l) {
-            events()->fire(std::make_shared<RegisterWindowEvent>(
-                std::make_shared<LoadWindow>()));
+            events()->fire<RegisterWindowEvent>(std::make_shared<LoadWindow>());
         })
         ->setVerticalAlign(Widget::VerticalAlign::Bottom)
         ->setHorizontalAlign(Widget::HorizontalAlign::Centre);

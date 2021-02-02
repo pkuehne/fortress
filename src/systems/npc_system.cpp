@@ -65,7 +65,7 @@ void NpcSystem::createHumanStateMachine() {
     MovingState.onUpdate = [&](EntityId e, NpcComponent* n) {
         setPathToTarget(e, n->target, n);
         if (!n->path.empty()) {
-            events()->fire(std::make_shared<MoveEntityEvent>(e, n->path[0]));
+            events()->fire<MoveEntityEvent>(e, n->path[0]);
             n->path.erase(n->path.begin());
         }
     };
@@ -79,7 +79,7 @@ void NpcSystem::createHumanStateMachine() {
     AttackingNotPossible.endState = "Seeking";
     AttackingState.transitions.push_back(AttackingNotPossible);
     AttackingState.onUpdate = [&](EntityId e, NpcComponent* n) {
-        events()->fire(std::make_shared<AttackEntityEvent>(e, n->target));
+        events()->fire<AttackEntityEvent>(e, n->target);
     };
     AttackingState.onLeave = [&](EntityId e, NpcComponent* n) {
         n->target = 0;
@@ -137,7 +137,7 @@ void NpcSystem::createDogStateMachine() {
     MovingState.onUpdate = [&](EntityId e, NpcComponent* n) {
         setPathToTarget(e, n->target, n);
         if (!n->path.empty()) {
-            events()->fire(std::make_shared<MoveEntityEvent>(e, n->path[0]));
+            events()->fire<MoveEntityEvent>(e, n->path[0]);
             n->path.erase(n->path.begin());
         }
     };

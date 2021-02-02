@@ -46,18 +46,18 @@ void CombatSystem::handleAttack(EntityId attacker, EntityId defender) {
 
     if (damage < l_health->health) {
         l_health->health -= damage;
-        events()->fire(std::make_shared<UpdateExperienceEvent>(attacker, 100));
+        events()->fire<UpdateExperienceEvent>(attacker, 100);
     } else {
         // killEntity(defender);
-        events()->fire(std::make_shared<KillEntityEvent>(defender));
-        events()->fire(std::make_shared<UpdateExperienceEvent>(attacker, 500));
+        events()->fire<KillEntityEvent>(defender);
+        events()->fire<UpdateExperienceEvent>(attacker, 500);
     }
 }
 
 void CombatSystem::killEntity(EntityId id) {
     const Location location = entities()->getLocation(id);
     if (id == components()->getUnique<PlayerComponent>().id) {
-        events()->fire(std::make_shared<RemoveEntityEvent>(id, location));
+        events()->fire<RemoveEntityEvent>(id, location);
         return;
     }
 
@@ -68,7 +68,7 @@ void CombatSystem::killEntity(EntityId id) {
             components()->get<SpriteComponent>(id)->sprite;
     }
 
-    events()->fire(std::make_shared<RemoveEntityEvent>(id, location));
+    events()->fire<RemoveEntityEvent>(id, location);
 }
 
 void CombatSystem::updateLog(const EntityId& attacker, const EntityId& target,
@@ -96,9 +96,8 @@ void CombatSystem::updateLog(const EntityId& attacker, const EntityId& target,
     str << " and causes " << damage << " damage!";
 
     if (attacker == components()->getUnique<PlayerComponent>().id) {
-        events()->fire(std::make_shared<AddLogMessageEvent>(str.str()));
+        events()->fire<AddLogMessageEvent>(str.str());
     } else {
-        events()->fire(
-            std::make_shared<AddLogMessageEvent>(str.str(), "warning"));
+        events()->fire<AddLogMessageEvent>(str.str(), "warning");
     }
 }

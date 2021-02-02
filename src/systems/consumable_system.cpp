@@ -46,5 +46,5 @@ void ConsumableSystem::handleConsumeItemEvent(
 
     // Remove after use
     const Location location = entities()->getLocation(event->item);
-    events()->fire(std::make_shared<RemoveEntityEvent>(event->item, location));
+    events()->fire<RemoveEntityEvent>(event->item, location);
 }

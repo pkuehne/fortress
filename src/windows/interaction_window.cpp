@@ -67,8 +67,8 @@ void InteractionWindow::registerWidgets() {
         ->setCommandCharCallback([&](Label* l) {
             ListBox* lstEntities = this->getWidget<ListBox>("lstEntities");
             EntityId entity = m_entities[lstEntities->getSelection()];
-            events()->fire(std::make_shared<RegisterWindowEvent>(
-                std::make_shared<InspectionWindow>(entity)));
+            events()->fire<RegisterWindowEvent>(
+                std::make_shared<InspectionWindow>(entity));
         })
         ->setSensitive(false);
     createWidget<Label>("txtOpen", descriptionWidth, 2)
@@ -81,14 +81,13 @@ void InteractionWindow::registerWidgets() {
                 m_components[lstEntities->getSelection()];
 
             if (store.open->open) {
-                events()->fire(std::make_shared<CloseEntityEvent>(entity));
+                events()->fire<CloseEntityEvent>(entity);
             } else if (store.open->locked) {
-                events()->fire(
-                    std::make_shared<AddLogMessageEvent>("It's locked!"));
+                events()->fire<AddLogMessageEvent>("It's locked!");
             } else {
-                events()->fire(std::make_shared<OpenEntityEvent>(entity));
+                events()->fire<OpenEntityEvent>(entity);
             }
-            events()->fire(std::make_shared<EndTurnEvent>());
+            events()->fire<EndTurnEvent>();
         })
         ->setSensitive(false);
     createWidget<Label>("txtTalk", descriptionWidth, 3)
@@ -98,8 +97,7 @@ void InteractionWindow::registerWidgets() {
             ListBox* lstEntities = this->getWidget<ListBox>("lstEntities");
             EntityId entity = m_entities[lstEntities->getSelection()];
             auto player = components()->getUnique<PlayerComponent>();
-            events()->fire(
-                std::make_shared<StartConversationEvent>(player.id, entity));
+            events()->fire<StartConversationEvent>(player.id, entity);
         })
         ->setSensitive(false);
     createWidget<Label>("txtDrop", descriptionWidth, 4)
@@ -109,25 +107,22 @@ void InteractionWindow::registerWidgets() {
             ListBox* lstEntities = this->getWidget<ListBox>("lstEntities");
             EntityId entity = m_entities[lstEntities->getSelection()];
             auto player = components()->getUnique<PlayerComponent>();
-            events()->fire(
-                std::make_shared<PickupEquipmentEvent>(player.id, entity));
-            events()->fire(std::make_shared<EndTurnEvent>());
+            events()->fire<PickupEquipmentEvent>(player.id, entity);
+            events()->fire<EndTurnEvent>();
         })
         ->setSensitive(false);
     createWidget<Label>("txtLock", descriptionWidth, 5)
         ->setText("lock")
         ->setCommandChar(1)
         ->setCommandCharCallback([&](Label* l) {
-            Defer d([this]() {
-                this->events()->fire(std::make_shared<EndTurnEvent>());
-            });
+            Defer d([this]() { this->events()->fire<EndTurnEvent>(); });
             ListBox* lstEntities = this->getWidget<ListBox>("lstEntities");
             EntityId lock = m_entities[lstEntities->getSelection()];
             auto player = components()->getUnique<PlayerComponent>();
             auto equipment = components()->get<EquipmentComponent>(player.id);
             if (!equipment) {
-                events()->fire(std::make_shared<AddLogMessageEvent>(
-                    "You don't carry any equipement"));
+                events()->fire<AddLogMessageEvent>(
+                    "You don't carry any equipement");
                 return;
             }
             const ComponentStore& store =
@@ -136,17 +131,15 @@ void InteractionWindow::registerWidgets() {
             for (auto item : equipment->carriedEquipment) {
                 if (components()->get<KeyComponent>(item)) {
                     if (store.open->locked) {
-                        events()->fire(
-                            std::make_shared<UnlockEntityEvent>(item, lock));
+                        events()->fire<UnlockEntityEvent>(item, lock);
                     } else {
-                        events()->fire(
-                            std::make_shared<LockEntityEvent>(item, lock));
+                        events()->fire<LockEntityEvent>(item, lock);
                     }
                     return;
                 }
             }
-            events()->fire(std::make_shared<AddLogMessageEvent>(
-                "None of your equipment can be used as a key"));
+            events()->fire<AddLogMessageEvent>(
+                "None of your equipment can be used as a key");
         })
         ->setSensitive(false);
     createWidget<Label>("txtDump", descriptionWidth, 6)
@@ -160,9 +153,9 @@ void InteractionWindow::registerWidgets() {
 
             converter.encodeEntity(node, entity);
             std::cout << node << std::endl;
-            events()->fire(std::make_shared<AddLogMessageEvent>(
-                "Entity " + std::to_string(entity) + " dumped to stdout"));
-            events()->fire(std::make_shared<EndTurnEvent>());
+            events()->fire<AddLogMessageEvent>(
+                "Entity " + std::to_string(entity) + " dumped to stdout");
+            events()->fire<EndTurnEvent>();
         })
         ->setSensitive(true)
         ->setVisible(debug != nullptr);
