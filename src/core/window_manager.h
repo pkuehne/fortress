@@ -1,9 +1,10 @@
 #pragma once
 
+#include "window.h"
 #include <memory>
 #include <vector>
 
-class Window;
+// class Window;
 class EventManager;
 class EntityManager;
 class ComponentManager;
@@ -19,7 +20,7 @@ public:
                             std::shared_ptr<ComponentManager> components,
                             std::shared_ptr<EntityManager> entities,
                             std::shared_ptr<MapManager> map);
-    virtual std::shared_ptr<Window> getActive();
+    virtual Window* getActive();
     virtual void resize();
     virtual void nextTick();
     virtual void nextTurn();
@@ -27,7 +28,7 @@ public:
 private:
     virtual void registerHandlers();
 
-    virtual void pushWindow(std::shared_ptr<Window> win);
+    virtual void pushWindow(std::unique_ptr<Window> win);
     virtual void popWindow();
     virtual void popAllWindows();
 
@@ -38,10 +39,10 @@ private:
     std::shared_ptr<EntityManager> entities() const { return m_entities; }
     std::shared_ptr<EventManager> events() const { return m_events; }
     std::shared_ptr<MapManager> map() const { return m_map; }
-    virtual void removeWindow(std::shared_ptr<Window> win);
+    virtual void removeWindow(Window& win);
 
 private:
-    std::vector<std::shared_ptr<Window>> m_windows;
+    std::vector<std::unique_ptr<Window>> m_windows;
     std::shared_ptr<GraphicsInterface> m_graphics = nullptr;
     std::shared_ptr<EventManager> m_events = nullptr;
     std::shared_ptr<ComponentManager> m_components = nullptr;

@@ -17,9 +17,8 @@ void EscapeWindow::registerWidgets() {
     this->createWidget<Label>("lblSaveGame", 0, 3)
         ->setText("Save Game")
         ->setCommandChar(1)
-        ->setCommandCharCallback([&](Label* l) {
-            events()->fire<RegisterWindowEvent>(std::make_shared<SaveWindow>());
-        })
+        ->setCommandCharCallback(
+            [&](Label* l) { events()->fire<AddWindowEvent<SaveWindow>>(); })
         ->setIgnoreCommandCharCase(true)
         ->setVerticalAlign(Widget::VerticalAlign::Top)
         ->setHorizontalAlign(Widget::HorizontalAlign::Centre);

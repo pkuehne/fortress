@@ -44,17 +44,18 @@ public:
     void processEvents();
 
     template <class EventType, class... Args> void fire(Args&&... args) {
-        m_eventList.push(std::make_pair(typeid(EventType).hash_code(),
-                                        std::make_unique<EventType>(args...)));
+        auto event = std::make_unique<EventType>(args...);
+        m_eventList.push(std::make_pair(event->type_id(), std::move(event)));
     }
 
     template <class FuncType, class EventType> void subscribe(FuncType func) {
         subscribe(std::function<void(EventType)>(func));
     }
 
-    template <class EventType> void subscribe(HandlerFunc<EventType> func) {
+    template <class EventType, class SubscribeType = EventType>
+    void subscribe(HandlerFunc<EventType> func) {
 
-        m_handlerList[typeid(EventType).hash_code()].push_back(
+        m_handlerList[typeid(SubscribeType).hash_code()].push_back(
             std::make_unique<Handler<EventType>>(func));
     }
 

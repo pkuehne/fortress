@@ -39,7 +39,7 @@ void DialogSystem::handleStartConversationEvent(
     generateDialog(component);
 
     // Show the dialog window
-    events()->fire<RegisterWindowEvent>(std::make_shared<DialogWindow>());
+    events()->fire<AddWindowEvent<DialogWindow>>();
 }
 
 void DialogSystem::handleChooseDialogOptionEvent(

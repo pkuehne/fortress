@@ -67,8 +67,7 @@ void InteractionWindow::registerWidgets() {
         ->setCommandCharCallback([&](Label* l) {
             ListBox* lstEntities = this->getWidget<ListBox>("lstEntities");
             EntityId entity = m_entities[lstEntities->getSelection()];
-            events()->fire<RegisterWindowEvent>(
-                std::make_shared<InspectionWindow>(entity));
+            events()->fire<AddWindowEvent<InspectionWindow>>(entity);
         })
         ->setSensitive(false);
     createWidget<Label>("txtOpen", descriptionWidth, 2)

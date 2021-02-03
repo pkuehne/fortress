@@ -12,14 +12,10 @@ void MainWindow::setup() {
 }
 void MainWindow::registerWidgets() {
     Label::CommandCharCB quickstart = [=](Label* l) {
-        events()->fire<RegisterWindowEvent>(
-            std::make_shared<GeneratorWindow>(true),
-            RegisterWindowEvent::WindowAction::Replace);
+        events()->fire<ReplaceWindowEvent<GeneratorWindow>>(true);
     };
     Label::CommandCharCB create = [=](Label* l) {
-        events()->fire<RegisterWindowEvent>(
-            std::make_shared<GeneratorWindow>(false),
-            RegisterWindowEvent::WindowAction::Replace);
+        events()->fire<ReplaceWindowEvent<GeneratorWindow>>(false);
     };
 
     this->createWidget<Label>("lblQuickstart", 1, 15)
@@ -42,9 +38,8 @@ void MainWindow::registerWidgets() {
         ->setText("Load Existing World")
         ->setCommandChar(1)
         ->setIgnoreCommandCharCase(true)
-        ->setCommandCharCallback([=](Label* l) {
-            events()->fire<RegisterWindowEvent>(std::make_shared<LoadWindow>());
-        })
+        ->setCommandCharCallback(
+            [=](Label* l) { events()->fire<AddWindowEvent<LoadWindow>>(); })
         ->setVerticalAlign(Widget::VerticalAlign::Bottom)
         ->setHorizontalAlign(Widget::HorizontalAlign::Centre);
 

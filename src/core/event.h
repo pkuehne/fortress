@@ -3,14 +3,14 @@
 #include "entity.h"
 #include "location.h"
 #include "utility.h"
+#include "window.h"
 #include <iostream>
 #include <memory>
-
-class Window;
 
 class Event {
 public:
     virtual ~Event() = default;
+    virtual size_t type_id() { return typeid(*this).hash_code(); }
 };
 
 class AddEntityEvent : public Event {
@@ -147,16 +147,51 @@ public:
     std::string category;
 };
 
-// TODO: Make this simpler as well with Args...
 class RegisterWindowEvent : public Event {
 public:
     enum class WindowAction { None, Add, Replace, ReplaceAll };
 
-    explicit RegisterWindowEvent(std::shared_ptr<Window> w,
-                                 WindowAction a = WindowAction::Add)
-        : window(w), action(a) {}
-    std::shared_ptr<Window> window = nullptr;
+    explicit RegisterWindowEvent(std::unique_ptr<Window> w, WindowAction a)
+        : window(std::move(w)), action(a) {}
+
+    mutable std::unique_ptr<Window> window;
     WindowAction action = WindowAction::None;
+};
+
+template <class T> class AddWindowEvent : public RegisterWindowEvent {
+public:
+    template <class... Args>
+    explicit AddWindowEvent(Args&&... args)
+        : RegisterWindowEvent(std::make_unique<T>(args...), WindowAction::Add) {
+    }
+
+    size_t type_id() override {
+        return typeid(RegisterWindowEvent).hash_code();
+    }
+};
+
+template <class T> class ReplaceWindowEvent : public RegisterWindowEvent {
+public:
+    template <class... Args>
+    explicit ReplaceWindowEvent(Args&&... args)
+        : RegisterWindowEvent(std::make_unique<T>(args...),
+                              WindowAction::Replace) {}
+
+    size_t type_id() override {
+        return typeid(RegisterWindowEvent).hash_code();
+    }
+};
+
+template <class T> class ReplaceAllWindowsEvent : public RegisterWindowEvent {
+public:
+    template <class... Args>
+    explicit ReplaceAllWindowsEvent(Args&&... args)
+        : RegisterWindowEvent(std::make_unique<T>(args...),
+                              WindowAction::ReplaceAll) {}
+
+    size_t type_id() override {
+        return typeid(RegisterWindowEvent).hash_code();
+    }
 };
 
 class CloseWindowEvent : public Event {

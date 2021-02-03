@@ -13,8 +13,7 @@ void ObjectivesSystem::registerHandlers() {
 }
 
 void ObjectivesSystem::showGameOverWindow(bool gameWon) {
-    events()->fire<RegisterWindowEvent>(
-        std::make_shared<GameOverWindow>(gameWon));
+    events()->fire<AddWindowEvent<GameOverWindow>>(gameWon);
 }
 
 void ObjectivesSystem::handleAddEntityEvent(const PrefabCreatedEvent& event) {

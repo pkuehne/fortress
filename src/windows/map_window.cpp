@@ -64,17 +64,14 @@ void MapWindow::registerWidgets() {
         ->setText("View Equipment")
         ->setCommandChar(6)
         ->setCommandCharCallback([&](Label* l) {
-            events()->fire<RegisterWindowEvent>(
-                std::make_shared<EquipmentWindow>());
+            events()->fire<AddWindowEvent<EquipmentWindow>>();
         })
         ->setVerticalAlign(Widget::VerticalAlign::Bottom);
     createWidget<Label>("lblQuests", 1, 3, sidebar)
         ->setText("View Quests")
         ->setCommandChar(6)
-        ->setCommandCharCallback([&](Label* l) {
-            events()->fire<RegisterWindowEvent>(
-                std::make_shared<QuestWindow>());
-        })
+        ->setCommandCharCallback(
+            [&](Label* l) { events()->fire<AddWindowEvent<QuestWindow>>(); })
         ->setVerticalAlign(Widget::VerticalAlign::Bottom);
 
     createWidget<Label>("lblInteract", 1, 5, sidebar)
@@ -137,10 +134,8 @@ void MapWindow::registerWidgets() {
     createWidget<Label>("lblDebugWindow", 0, 0)
         ->setText("`")
         ->setCommandChar(1)
-        ->setCommandCharCallback([&](Label* l) {
-            events()->fire<RegisterWindowEvent>(
-                std::make_shared<DebugWindow>());
-        })
+        ->setCommandCharCallback(
+            [&](Label* l) { events()->fire<AddWindowEvent<DebugWindow>>(); })
         ->setVisible(false);
 
     events()->fire<EndTurnEvent>();
@@ -184,13 +179,12 @@ void MapWindow::keyPress(unsigned char key) {
         } else if (m_action == 'i') {
             EntityHolder l_entities = map()->findEntitiesAt(newLocation);
             if (l_entities.size() > 0) {
-                events()->fire<RegisterWindowEvent>(
-                    std::make_shared<InteractionWindow>(l_entities));
+                events()->fire<AddWindowEvent<InteractionWindow>>(l_entities);
             }
         }
         m_action = 'm';
     } else if (key == KEY_ESC) {
-        events()->fire<RegisterWindowEvent>(std::make_shared<EscapeWindow>());
+        events()->fire<AddWindowEvent<EscapeWindow>>();
     }
     // std::cout << "Key: " << key << std::endl;
 }

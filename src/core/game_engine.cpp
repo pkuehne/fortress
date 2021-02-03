@@ -74,7 +74,7 @@ void GameEngine::initialise() {
         this->windows()->resize();
     });
 
-    events()->fire<RegisterWindowEvent>(std::make_shared<SplashWindow>());
+    events()->fire<AddWindowEvent<SplashWindow>>();
 
     events()->fire<EndTurnEvent>();
 }

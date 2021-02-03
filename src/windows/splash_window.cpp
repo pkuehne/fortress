@@ -156,7 +156,5 @@ void SplashWindow::registerWidgets() {
 }
 
 void SplashWindow::keyPress(unsigned char key) {
-    events()->fire<RegisterWindowEvent>(
-        std::make_shared<MainWindow>(),
-        RegisterWindowEvent::WindowAction::ReplaceAll);
+    events()->fire<ReplaceAllWindowsEvent<MainWindow>>();
 }

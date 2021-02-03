@@ -132,7 +132,5 @@ void GeneratorWindow::startGenerating() {
 }
 
 void GeneratorWindow::startPlaying() {
-    events()->fire<RegisterWindowEvent>(
-        std::make_shared<MapWindow>(),
-        RegisterWindowEvent::WindowAction::Replace);
+    events()->fire<ReplaceWindowEvent<MapWindow>>();
 }

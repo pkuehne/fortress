@@ -176,8 +176,8 @@ void EquipmentWindow::registerWidgets() {
         ->setText("inspect")
         ->setCommandChar(1)
         ->setCommandCharCallback([&](Label* l) {
-            events()->fire<RegisterWindowEvent>(
-                std::make_shared<InspectionWindow>(getSelectedItem()));
+            EntityId item = getSelectedItem();
+            events()->fire<AddWindowEvent<InspectionWindow>>(item);
         })
         ->setVerticalAlign(Widget::VerticalAlign::Bottom)
         ->setVisible(false);

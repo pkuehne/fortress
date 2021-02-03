@@ -47,9 +47,7 @@ void LoadWindow::registerWidgets() {
         ->setCommandChar(1)
         ->setIgnoreCommandCharCase(true)
         ->setCommandCharCallback([=](Label* l) {
-            events()->fire<RegisterWindowEvent>(
-                std::make_shared<MapWindow>(),
-                RegisterWindowEvent::WindowAction::ReplaceAll);
+            events()->fire<ReplaceAllWindowsEvent<MapWindow>>();
         })
         ->setHorizontalAlign(Widget::HorizontalAlign::Right)
         ->setVerticalAlign(Widget::VerticalAlign::Bottom)

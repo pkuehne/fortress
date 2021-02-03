@@ -15,15 +15,15 @@ void WindowManager::registerHandlers() {
 
         switch (event.action) {
             case RegisterWindowEvent::WindowAction::Add:
-                this->pushWindow(event.window);
+                this->pushWindow(std::move(event.window));
                 break;
             case RegisterWindowEvent::WindowAction::Replace:
                 this->popWindow();
-                this->pushWindow(event.window);
+                this->pushWindow(std::move(event.window));
                 break;
             case RegisterWindowEvent::WindowAction::ReplaceAll:
                 this->popAllWindows();
-                this->pushWindow(event.window);
+                this->pushWindow(std::move(event.window));
             default:
                 break;
         }
@@ -38,9 +38,7 @@ void WindowManager::registerHandlers() {
     events()->subscribe<ResizeWindowsEvent>(resizeHandler);
 }
 
-void WindowManager::removeWindow(std::shared_ptr<Window> win) {
-    win->destroy();
-}
+void WindowManager::removeWindow(Window& win) { win.destroy(); }
 
 void WindowManager::initialise(std::shared_ptr<GraphicsInterface> graphics,
                                std::shared_ptr<EventManager> events,
@@ -55,35 +53,35 @@ void WindowManager::initialise(std::shared_ptr<GraphicsInterface> graphics,
     registerHandlers();
 }
 
-void WindowManager::pushWindow(std::shared_ptr<Window> win) {
-    m_windows.push_back(win);
-
+void WindowManager::pushWindow(std::unique_ptr<Window> win) {
     win->setup();
     win->registerWidgets();
     win->resize();
     win->nextTurn(); // Force re-fresh on all widgets
+
+    m_windows.push_back(std::move(win));
 }
 
 void WindowManager::popWindow() {
     if (!m_windows.size()) {
         return;
     }
-    removeWindow(m_windows.back());
+    removeWindow(*m_windows.back());
     m_windows.pop_back();
 }
 
 void WindowManager::popAllWindows() {
-    for (auto win : m_windows) {
-        removeWindow(win);
+    for (auto& win : m_windows) {
+        removeWindow(*win);
     }
     m_windows.clear();
 }
 
-std::shared_ptr<Window> WindowManager::getActive() {
+Window* WindowManager::getActive() {
     if (m_windows.size() == 0) {
         throw std::string("There are no active windows!");
     }
-    return m_windows.back();
+    return m_windows.back().get();
 }
 
 void WindowManager::nextTick() {
