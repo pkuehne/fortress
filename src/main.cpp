@@ -16,11 +16,11 @@
 #include "systems/objectives_system.h"
 #include "systems/prefab_system.h"
 #include <cstdlib>
-#include <execinfo.h>
 #include <glog/logging.h>
 #include <iostream>
 #include <signal.h>
 
+/*
 void handler(int signal) {
     const unsigned int numFrames = 100;
     void* frames[numFrames] = {0};
@@ -41,10 +41,11 @@ void handler(int signal) {
 
     exit(1);
 }
+*/
 
 int main(int argc, char** argv) {
     // Install Segmentation Fault handler
-    signal(SIGSEGV, handler);
+    //   signal(SIGSEGV, handler);
     FLAGS_log_dir = ".";
     google::InitGoogleLogging(argv[0]);
 

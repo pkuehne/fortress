@@ -10,6 +10,7 @@ target_link_libraries(fortress fortresslib)
 # Add external projects from git submodules
 add_subdirectory(third-party/soil)
 target_include_directories(fortresslib PRIVATE third-party/soil/inc)
+target_link_libraries(soil opengl32)
 set(WITH_GFLAGS OFF CACHE BOOL "use gflags" FORCE)
 add_subdirectory(third-party/glog)
 #set(YAML_CPP_BUILD_TESTS OFF CACHE BOOL "Enable testing" FORCE)
@@ -51,12 +52,14 @@ add_subdirectory(src/world)
 
 # Compiler options
 target_compile_options(fortress PRIVATE -Wall -Wpedantic -Werror)
+target_link_options(fortress PRIVATE -static)
 
 # Additional libraries
 target_link_libraries(fortress dl)
 target_link_libraries(fortress stdc++fs)
-target_link_libraries(fortress GL)
-target_link_libraries(fortress c)
+# target_link_libraries(fortress GL)
+target_link_libraries(fortress opengl32)
+# target_link_libraries(fortress c)
 target_link_libraries(fortress m)
 target_link_libraries(fortress pthread)
 
