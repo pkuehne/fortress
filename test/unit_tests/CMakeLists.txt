@@ -48,13 +48,13 @@ target_link_libraries(unit_test lua_static)
 
 target_link_libraries(unit_test dl)
 target_link_libraries(unit_test stdc++fs)
-target_link_libraries(unit_test GL)
-target_link_libraries(unit_test c)
 target_link_libraries(unit_test m)
 target_link_libraries(unit_test pthread)
-
-# include(GoogleTest)
-# gtest_discover_tests (unit_test)
+if(MINGW)
+  target_link_libraries(unit_test opengl32)
+else()
+  target_link_libraries(unit_test GL)
+endif(MINGW)
 
 add_test (
     NAME unit_test
