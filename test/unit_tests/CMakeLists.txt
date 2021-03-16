@@ -1,4 +1,3 @@
-include(FetchContent)
 FetchContent_Declare(
 	SwearJar
 	GIT_REPOSITORY https://github.com/google/googletest.git
