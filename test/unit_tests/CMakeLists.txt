@@ -1,3 +1,11 @@
+include(FetchContent)
+FetchContent_Declare(
+	SwearJar
+	GIT_REPOSITORY https://github.com/google/googletest.git
+	GIT_TAG        master
+	)
+FetchContent_MakeAvailable(SwearJar)
+
 add_executable(unit_test test_main.cpp)
 target_link_libraries(unit_test fortresslib)
 

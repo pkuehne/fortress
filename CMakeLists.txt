@@ -29,7 +29,7 @@ set(GLFW_BUILD_DOCS OFF CACHE BOOL "Build the GLFW documentation" FORCE)
 set(GLFW_INSTALL OFF CACHE BOOL "Generate installation target" FORCE)
 add_subdirectory(third-party/glfw)
 set(INSTALL_GTEST OFF CACHE BOOL "Enable installation of googletest. (Projects embedding googletest may want to turn this OFF.)" FORCE)
-add_subdirectory(third-party/googletest)
+# add_subdirectory(third-party/googletest)
 add_subdirectory(third-party/lua)
 
 # Ensure they are added to compiler and linker paths
