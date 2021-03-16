@@ -57,11 +57,13 @@ target_link_options(fortress PRIVATE -static)
 # Additional libraries
 target_link_libraries(fortress dl)
 target_link_libraries(fortress stdc++fs)
-# target_link_libraries(fortress GL)
-target_link_libraries(fortress opengl32)
-# target_link_libraries(fortress c)
 target_link_libraries(fortress m)
 target_link_libraries(fortress pthread)
+if(MINGW)
+  target_link_libraries(fortress opengl32)
+else()
+  target_link_libraries(fortress GL)
+endif(MINGW)
 
 # Add Testing target
 enable_testing()
