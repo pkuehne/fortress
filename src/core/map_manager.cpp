@@ -1,12 +1,12 @@
 #include "map_manager.h"
 #include "location.h"
-#include <glog/logging.h>
+#include <spdlog/spdlog.h>
 
 unsigned int MapManager::createArea(unsigned int width, unsigned int height,
                                     unsigned int depth) {
     if (width == 0 || height == 0 || depth == 0) {
-        LOG(ERROR) << "Cannot reset map with 0 values. W: " << width
-                   << " H: " << height << " D: " << depth << std::endl;
+        spdlog::error("Cannot reset map with 0 values. W: {} H: {} D: {}",
+                      width, height, depth);
         throw std::runtime_error("Invalid map creation parameters!");
     }
 
@@ -14,7 +14,7 @@ unsigned int MapManager::createArea(unsigned int width, unsigned int height,
     area.setSize(width, height, depth);
 
     unsigned int id = addArea(area);
-    LOG(INFO) << "Created area " << id << std::endl;
+    spdlog::info("Created area {}", id);
 
     return id;
 }
@@ -36,7 +36,6 @@ unsigned int MapManager::addArea(const AreaInfo& area, unsigned int id) {
 
 bool MapManager::isValidTile(const Location& loc) {
     if (!loc.area) {
-        // LOG(ERROR) << "Called isValidTile with zero area" << std::endl;
         return false;
     }
     bool xValid = (loc.x < m_areas[loc.area].getWidth());

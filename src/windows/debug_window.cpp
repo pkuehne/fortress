@@ -3,8 +3,8 @@
 #include "../widgets/listbox.h"
 #include "../widgets/text_entry.h"
 #include <dirent.h>
-#include <glog/logging.h>
 #include <iostream>
+#include <spdlog/spdlog.h>
 
 const char CONSOLE_DIR[] = "./scripts/console";
 
@@ -20,7 +20,7 @@ void DebugWindow::setupLua() {
 void DebugWindow::loadLuaScripts() {
     DIR* directory = opendir(CONSOLE_DIR);
     if (directory == nullptr) {
-        LOG(ERROR) << "Failed to open '" << CONSOLE_DIR << "'" << std::endl;
+        spdlog::error("Failed to open '{}', CONSOLE_DIR");
         throw std::runtime_error("Failed to open console directory");
     }
     struct dirent* file = nullptr;
@@ -28,7 +28,7 @@ void DebugWindow::loadLuaScripts() {
         std::string filename(CONSOLE_DIR);
         filename.append("/").append(file->d_name);
         if (filename.find(".lua") != std::string::npos) {
-            LOG(INFO) << "Loading lua script: " << filename << std::endl;
+            spdlog::info("Loading lua script: ", filename);
             try {
                 m_lua.loadFile(filename);
                 Output line(std::string("Loaded: ").append(filename),

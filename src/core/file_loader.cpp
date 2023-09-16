@@ -2,7 +2,6 @@
 #include "area_info.h"
 #include "yaml_converter.h"
 #include <fstream>
-#include <glog/logging.h>
 #include <iostream>
 
 void FileLoader::updateStatus(const std::string& status) {

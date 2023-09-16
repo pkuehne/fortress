@@ -8,9 +8,8 @@
                 "/usr/include",
                 "${workspaceRoot}",
                 ".",
+                "${workspaceFolder}/**",
                 "${workspaceFolder}/third-party/yaml-cpp/include",
-                "${workspaceFolder}/third-party/glog",
-                "${workspaceFolder}/third-party/glog/src",
                 "${workspaceFolder}/third-party/glfw/include",
                 "${workspaceFolder}/src",
                 "${workspaceFolder}/src/core",
@@ -23,7 +22,7 @@
                 "PATCH=0",
                 "BUILD=0"
             ],
-            "intelliSenseMode": "gcc-x64",
+            "intelliSenseMode": "linux-clang-x64",
             "browse": {
                 "path": [
                     "/usr/local/include",

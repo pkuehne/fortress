@@ -17,7 +17,10 @@
 #include "systems/prefab_system.h"
 #include <cstdlib>
 #include <execinfo.h>
-#include <glog/logging.h>
+#include <spdlog/sinks/basic_file_sink.h>
+#include <spdlog/sinks/stdout_color_sinks.h>
+#include <spdlog/spdlog.h>
+
 #include <iostream>
 #include <signal.h>
 
@@ -45,8 +48,11 @@ void handler(int signal) {
 int main(int argc, char** argv) {
     // Install Segmentation Fault handler
     signal(SIGSEGV, handler);
-    FLAGS_log_dir = ".";
-    google::InitGoogleLogging(argv[0]);
+
+    auto logger = spdlog::basic_logger_mt("fortress", "./fortress.log", true);
+    logger->set_level(spdlog::level::debug);
+    logger->flush_on(spdlog::level::info);
+    spdlog::set_default_logger(logger);
 
     try {
         std::shared_ptr<GraphicsInterface> l_graphics =

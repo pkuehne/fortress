@@ -7,8 +7,8 @@
 #include "../components/player_component.h"
 #include <algorithm>
 #include <cmath>
-#include <glog/logging.h>
 #include <iostream>
+#include <spdlog/spdlog.h>
 
 namespace {
 auto getDistance = [](const Location& start, const Location& end, void* c = 0) {
@@ -155,9 +155,8 @@ void NpcSystem::onTurn() {
         State currentState = m_stateMachines[npc->stateMachine][npc->state];
         for (Transition& transition : currentState.transitions) {
             if (transition.condition(entity, npc)) {
-                LOG(INFO) << "Changing state from <" << npc->state << "> to <"
-                          << transition.endState << "> for " << entity
-                          << std::endl;
+                spdlog::info("Chainging state from <{}> to <{}> for {}",
+                             npc->state, transition.endState, entity);
                 if (currentState.onLeave) {
                     currentState.onLeave(entity, npc);
                 }

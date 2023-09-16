@@ -6,7 +6,7 @@
 #include "../core/window_manager.h"
 #include "../windows/window.h"
 #include "event.h"
-#include <glog/logging.h>
+#include <spdlog/spdlog.h>
 
 void WindowManager::registerHandlers() {
     auto registerHandler = [this](const RegisterWindowEvent& event) {

@@ -2,8 +2,8 @@
 #include "utility.h"
 #include <SOIL/SOIL.h>
 #include <chrono>
-#include <glog/logging.h>
 #include <iostream>
+#include <spdlog/spdlog.h>
 #include <stdlib.h>
 #include <string.h>
 #include <thread>
@@ -299,8 +299,7 @@ Texture Graphics::loadTexture(std::string name, unsigned int cols,
     texture.numRows = rows ? rows : 16;
     texture.numCols = cols ? cols : 16;
 
-    LOG(INFO) << "Loading texture: " << name << " " << cols << "x" << rows
-              << std::endl;
+    spdlog::info("Loading texture: {} ({}x{})", name, cols, rows);
 
     texture.name = std::string("../graphics/");
     // std::string tileset ("graphics/");
@@ -310,7 +309,7 @@ Texture Graphics::loadTexture(std::string name, unsigned int cols,
         SOIL_FLAG_MIPMAPS | SOIL_FLAG_NTSC_SAFE_RGB |
             SOIL_FLAG_COMPRESS_TO_DXT);
     if (texture.id == 0) {
-        LOG(ERROR) << "Failed to load texture: " << texture.name << std::endl;
+        spdlog::error("Failed to load texture: {}", texture.name);
         glfwTerminate();
     }
     glBindTexture(GL_TEXTURE_2D, texture.id);
@@ -327,12 +326,11 @@ Texture Graphics::loadTexture(std::string name, unsigned int cols,
     texture.tileWidth = 1.0 / texture.numCols;
     texture.tileHeight = 1.0 / texture.numRows;
 
-    LOG(INFO) << "Created texture " << texture.id << " (" << texture.name << ")"
-              << " width: " << texture.textureWidth
-              << " height: " << texture.textureHeight << std::endl;
-    LOG(INFO) << "Texture is " << texture.numCols << " tiles across @ "
-              << texture.tileWidth << " and " << texture.numRows
-              << " tiles high @ " << texture.tileHeight << std::endl;
+    spdlog::info("Created texture {} ({}) width: {} height: {}", texture.id,
+                 texture.name, texture.textureWidth, texture.textureHeight);
+    spdlog::info("Texture is {} tiles across @ {} and {} tiles high @ {}",
+                 texture.numCols, texture.tileWidth, texture.numRows,
+                 texture.tileHeight);
 
     return texture;
 }

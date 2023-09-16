@@ -6,16 +6,15 @@
 #include "../components/player_component.h"
 #include "../core/yaml_converter.h"
 #include <experimental/filesystem>
-#include <glog/logging.h>
 #include <iostream>
+#include <spdlog/spdlog.h>
 #include <yaml-cpp/yaml.h>
 
 void PrefabSystem::registerHandlers() {
     events()->subscribe<InstantiatePrefabEvent>([=](auto event) {
         auto iter = m_prefabs.find(event.prefab);
         if (iter == m_prefabs.end()) {
-            LOG(WARNING) << "Invalid prefab '" << event.prefab << "' requested"
-                         << std::endl;
+            spdlog::warn("Invalid prefab '{}' requested", event.prefab);
             return;
         }
 

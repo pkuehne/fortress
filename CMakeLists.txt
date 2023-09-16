@@ -3,6 +3,8 @@ project (Fortress)
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_BUILD_TYPE Debug)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 add_executable(fortress src/main.cpp)
 add_library(fortresslib "")
 target_link_libraries(fortress fortresslib)
@@ -30,8 +32,7 @@ FetchContent_MakeAvailable(flecs spdlog googletest)
 # Add external projects from git submodules
 add_subdirectory(third-party/soil)
 target_include_directories(fortresslib PRIVATE third-party/soil/inc)
-set(WITH_GFLAGS OFF CACHE BOOL "use gflags" FORCE)
-add_subdirectory(third-party/glog)
+
 #set(YAML_CPP_BUILD_TESTS OFF CACHE BOOL "Enable testing" FORCE)
 set(YAML_CPP_BUILD_TOOLS OFF CACHE BOOL "Enable parse tools" FORCE)
 set(YAML_CPP_BUILD_CONTRIB OFF CACHE BOOL "Enable contrib stuff in library" FORCE)
@@ -48,10 +49,10 @@ add_subdirectory(third-party/lua)
 
 # Ensure they are added to compiler and linker paths
 target_link_libraries(fortresslib soil)
-target_link_libraries(fortresslib glog::glog)
 target_link_libraries(fortresslib yaml-cpp)
 target_link_libraries(fortresslib glfw)
 target_link_libraries(fortresslib lua_static)
+target_link_libraries(fortresslib spdlog::spdlog)
 
 # Add Compiler definitions
 add_compile_definitions(FORTRESS_VERSION_MAJOR=0)

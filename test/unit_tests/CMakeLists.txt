@@ -40,7 +40,7 @@ target_sources (unit_test
     )
 
 target_link_libraries(unit_test soil)
-target_link_libraries(unit_test glog::glog)
+target_link_libraries(unit_test spdlog::spdlog)
 target_link_libraries(unit_test yaml-cpp)
 target_link_libraries(unit_test glfw)
 target_link_libraries(unit_test gtest gmock)

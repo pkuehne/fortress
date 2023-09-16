@@ -1,9 +1,9 @@
 #include "rural_generator_system.h"
 #include "../core/utility.h"
 #include <cstring>
-#include <glog/logging.h>
 #include <iostream>
 #include <map>
+#include <spdlog/spdlog.h>
 
 // const unsigned char EMPTY = '.';
 // const unsigned char TREE = 'T';
@@ -28,7 +28,6 @@
 //     reset();
 //     initMap(EMPTY);
 
-//     LOG(INFO) << "Generating rural area" << std::endl;
 //     placeWoods();
 //     placePlayer();
 //     placeDungeonStairs();

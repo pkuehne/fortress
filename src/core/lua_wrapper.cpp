@@ -1,12 +1,12 @@
 #include "lua_wrapper.h"
 #include "../core/location.h"
-#include <glog/logging.h>
 #include <iostream>
+#include <spdlog/spdlog.h>
 #include <sstream>
 
 LuaWrapper::LuaWrapper() : m_runtime(luaL_newstate()) {
     if (m_runtime == nullptr) {
-        LOG(ERROR) << "Failed to open Lua runtime environment" << std::endl;
+        spdlog::error("Failed to open Lua runtime environment");
         throw std::runtime_error("Failed to initialize LUA environment");
     }
 
@@ -20,7 +20,7 @@ LuaWrapper::~LuaWrapper() { lua_close(m_runtime); }
 void LuaWrapper::loadFile(const std::string& filename) {
     int result = luaL_dofile(m_runtime, filename.c_str());
     if (result != 0) {
-        LOG(ERROR) << "Failed to parse Lua file: " << filename << std::endl;
+        spdlog::error("Failed to parse Lua file: {}", filename);
         throw std::runtime_error(
             std::string("Parse error: ").append(lua_tostring(m_runtime, -1)));
     }

@@ -5,9 +5,9 @@
 #include "../core/map_manager.h"
 #include "../core/utility.h"
 #include <cstring>
-#include <glog/logging.h>
 #include <iostream>
 #include <map>
+#include <spdlog/spdlog.h>
 
 const unsigned char EMPTY = '.';
 const unsigned char TREE = 'T';
@@ -27,14 +27,14 @@ bool RuralGenerator::generate() {
     reset();
     initMap(EMPTY);
 
-    LOG(INFO) << "Generating rural area" << std::endl;
+    spdlog::info("Generating rural area");
     placeWoods();
     placePlayer();
     placeDungeonStairs();
     placeApples();
     placeForester();
     createEntitiesFromMap();
-    LOG(INFO) << "Done generating area" << std::endl;
+    spdlog::info("Done generating area");
     return true;
 }
 

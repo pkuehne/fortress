@@ -2,9 +2,9 @@
 
 #include "../components/component_base.h"
 #include "../core/entity.h"
-#include <glog/logging.h>
 #include <map>
 #include <memory>
+#include <spdlog/spdlog.h>
 #include <typeinfo>
 
 using ComponentHolder = std::map<size_t, std::shared_ptr<ComponentBase>>;
@@ -31,9 +31,8 @@ public:
             holder[hash_code] = std::make_shared<T>();
             m_mapping[hash_code].insert(entity);
         } else {
-            LOG(WARNING) << "Tried to add existing component "
-                         << typeid(T).name() << " to Entity " << entity
-                         << std::endl;
+            spdlog::warn("Tried to add existing component {} to Entity {}",
+                         typeid(T).name(), entity);
         }
 
         return dynamic_cast<T*>(holder[hash_code].get());

@@ -9,8 +9,9 @@
 #include <cstdlib>
 #include <ctime>
 #include <fstream>
-#include <glog/logging.h>
 #include <iostream>
+#include <spdlog/fmt/ostr.h>
+#include <spdlog/spdlog.h>
 
 static unsigned int getDistance(const Location& start, const Location& end,
                                 void* customData);
@@ -48,8 +49,7 @@ bool DungeonGenerator::generate() {
     for (m_level = 0; m_level < m_maxDepth; m_level++) {
         reset();
         initMap(EMPTY);
-        LOG(INFO) << "Creating level " << m_level << " of area " << m_area
-                  << std::endl;
+        spdlog::info("Creating level {} of area {}", m_level, m_area);
         if (!generateLevel())
             return false;
     }
@@ -64,8 +64,7 @@ bool DungeonGenerator::generateLevel() {
             success = generateRoom();
         } while (!success && x++ < 100);
         if (!success) {
-            LOG(WARNING) << "Tried " << x << " times to create room: " << r
-                         << std::endl;
+            spdlog::warn("Tried {} times to create room", x, r);
             return false;
         }
     }
@@ -125,8 +124,7 @@ void DungeonGenerator::createEntity(const Location& location) {
         case RESTRICTED:
             break;
         default:
-            LOG(WARNING) << "Creating marker prefab at " << location
-                         << std::endl;
+            spdlog::warn("Creating marker prefab at {}", location);
             createPrefab("marker", location);
             break;
     }

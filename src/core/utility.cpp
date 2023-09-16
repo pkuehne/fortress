@@ -1,6 +1,6 @@
 #include "utility.h"
-#include <glog/logging.h>
 #include <random>
+#include <spdlog/spdlog.h>
 
 namespace Utility {
 
@@ -14,7 +14,7 @@ unsigned int randBetween(unsigned int start, unsigned int end) {
 
 bool randChance(unsigned int percentage) {
     if (percentage > 100) {
-        LOG(ERROR) << "randChance percentage must be <100!";
+        spdlog::error("randChance percentage must be <100!");
         return true;
     }
 

@@ -1,5 +1,5 @@
 #include "graphics_effect_system.h"
-#include <glog/logging.h>
+#include <spdlog/spdlog.h>
 
 void GraphicsEffectSystem::onTick() {
     for (EntityId l_entity : entities()->all()) {
@@ -10,8 +10,8 @@ void GraphicsEffectSystem::onTick() {
 
         SpriteComponent* sprite = components()->get<SpriteComponent>(l_entity);
         if (!sprite) {
-            LOG(WARNING) << "GraphicsEffect without a sprite is pointless: "
-                         << l_entity << std::endl;
+            spdlog::warn("GraphicsEffect without a sprite is pointless {}",
+                         l_entity);
             continue;
         }
 
@@ -39,8 +39,7 @@ void GraphicsEffectSystem::onTick() {
                 changeColor(effect, sprite);
                 break;
             default:
-                LOG(ERROR) << "Invalid effect type: " << effect->type
-                           << std::endl;
+                spdlog::error("Invalid effect type: {}", effect->type);
                 break;
         }
         effect->ticks += 1;

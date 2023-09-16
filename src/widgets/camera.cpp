@@ -6,7 +6,7 @@
 #include "../core/entity_manager.h"
 #include "../core/graphics.h"
 #include "../core/location.h"
-#include <glog/logging.h>
+#include <spdlog/spdlog.h>
 
 void Camera::render() {
     if (m_player == 0) {

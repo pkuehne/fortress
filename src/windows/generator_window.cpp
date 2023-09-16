@@ -6,7 +6,7 @@
 #include "../widgets/label.h"
 #include "../widgets/numeric_entry.h"
 #include "map_window.h"
-#include <glog/logging.h>
+#include <spdlog/spdlog.h>
 #include <sstream>
 
 void updateNumericEntrySensitivity(GeneratorWindow* win, std::string numName) {

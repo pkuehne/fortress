@@ -1,7 +1,7 @@
 #include "consumable_system.h"
 #include "../components/consumable_component.h"
 #include "../components/health_component.h"
-#include <glog/logging.h>
+#include <spdlog/spdlog.h>
 
 void ConsumableSystem::registerHandlers() {
     events()->subscribe<ConsumeItemEvent>(
@@ -29,8 +29,7 @@ void updateHealth(ConsumableComponent* consumable, HealthComponent* health) {
 void ConsumableSystem::handleConsumeItemEvent(const ConsumeItemEvent& event) {
     // Validate
     if (!components()->exists<ConsumableComponent>(event.item)) {
-        LOG(ERROR) << "Consume event on non-consumable item: " << event.item
-                   << " !" << std::endl;
+        spdlog::error("Consume event on non-consumable item: {}!", event.item);
         return;
     }
 

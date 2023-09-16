@@ -1,6 +1,6 @@
 #include "health_system.h"
 #include "../components/health_component.h"
-#include <glog/logging.h>
+#include <spdlog/spdlog.h>
 
 void HealthSystem::onTurn() {
     for (EntityId entity : entities()->all()) {

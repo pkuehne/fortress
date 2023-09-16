@@ -7,8 +7,9 @@
 #include "../core/entity.h"
 #include "../core/event.h"
 #include "../windows/game_over_window.h"
-#include <glog/logging.h>
 #include <iostream>
+#include <spdlog/fmt/ostr.h>
+#include <spdlog/spdlog.h>
 
 void MovementSystem::registerHandlers() {
     events()->subscribe<MoveEntityEvent>(
@@ -23,9 +24,8 @@ void MovementSystem::registerHandlers() {
     });
     events()->subscribe<RemoveEntityEvent>([&](auto event) {
         if (!this->map()->isValidTile(event.location)) {
-            LOG(ERROR) << "Attempted to remove " << event.entity
-                       << " at illegal location " << event.location
-                       << std::endl;
+            spdlog::error("Attempted to remove {} at illegal location {}",
+                          event.entity, event.location);
             return;
         }
         this->map()->getTile(event.location).removeEntity(event.entity);

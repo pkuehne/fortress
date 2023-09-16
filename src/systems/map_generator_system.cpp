@@ -2,7 +2,7 @@
 #include "../components/connector_component.h"
 #include "../generators/dungeon_generator.h"
 #include "../generators/rural_generator.h"
-#include <glog/logging.h>
+#include <spdlog/spdlog.h>
 
 void MapGeneratorSystem::registerHandlers() {
     auto generateHandler = [this](auto event) { this->generate(event); };
@@ -25,7 +25,7 @@ void MapGeneratorSystem::generate(const GenerateRuralMapEvent& event) {
         unsigned int area =
             map()->createArea(event.width, event.height, event.depth);
 
-        LOG(INFO) << "Generating area: " << area << std::endl;
+        spdlog::info("Generating area: {}", area);
         DungeonGenerator l_generator;
         l_generator.initialise(events(), components(), entities(), map());
         l_generator.maxDepth() = event.depth;
@@ -42,12 +42,11 @@ void MapGeneratorSystem::generate(const GenerateRuralMapEvent& event) {
             success = l_generator.generate();
         } while (!success && retries++ < 20);
         if (!success) {
-            LOG(ERROR) << "Failed to generate a valid map" << std::endl;
+            spdlog::error("Failed to generate a valid map");
         }
         components()->make<ConnectorComponent>(stair)->target =
             l_generator.upStairLink();
     }
-    LOG(INFO) << "Placed " << entities()->getMaxId() << " entities!"
-              << std::endl;
+    spdlog::info("Placed {} entities!", entities()->getMaxId());
     events()->fire<MapGeneratedEvent>();
 }

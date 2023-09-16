@@ -1,7 +1,6 @@
 #include "file_saver.h"
 #include "yaml_converter.h"
 #include <fstream>
-#include <glog/logging.h>
 #include <iostream>
 
 void FileSaver::updateStatus(const std::string& status) {
