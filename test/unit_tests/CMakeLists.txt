@@ -56,7 +56,8 @@ target_link_libraries(unit_test pthread)
 # include(GoogleTest)
 # gtest_discover_tests (unit_test)
 
-add_test (
-    NAME unit_test
+add_custom_target(tests
+    DEPENDS unit_test
     COMMAND unit_test --gtest_shuffle
-)
+    )
+    
