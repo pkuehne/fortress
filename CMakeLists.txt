@@ -25,6 +25,10 @@ FetchContent_Declare(yaml-cpp
     GIT_REPOSITORY https://github.com/jbeder/yaml-cpp.git
     GIT_TAG yaml-cpp-0.7.0
 )
+FetchContent_Declare(lua
+    GIT_REPOSITORY https://github.com/walterschell/Lua.git
+    GIT_TAG v5.4.5
+)
 FetchContent_Declare(googletest
     GIT_REPOSITORY https://github.com/google/googletest.git
     GIT_TAG        main
@@ -36,7 +40,7 @@ set(YAML_CPP_BUILD_TOOLS OFF CACHE BOOL "Enable parse tools" FORCE)
 set(YAML_CPP_BUILD_CONTRIB OFF CACHE BOOL "Enable contrib stuff in library" FORCE)
 set(YAML_CPP_INSTALL OFF CACHE BOOL "Enable generation of install target" FORCE)
 
-FetchContent_MakeAvailable(flecs spdlog yaml-cpp googletest)
+FetchContent_MakeAvailable(flecs spdlog yaml-cpp lua googletest)
 
 # Add external projects from git submodules
 add_subdirectory(third-party/soil)
@@ -47,7 +51,6 @@ set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "Build the GLFW example programs" FORCE)
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "Build the GLFW documentation" FORCE)
 set(GLFW_INSTALL OFF CACHE BOOL "Generate installation target" FORCE)
 add_subdirectory(third-party/glfw)
-add_subdirectory(third-party/lua)
 
 # Ensure they are added to compiler and linker paths
 target_link_libraries(fortresslib soil)
