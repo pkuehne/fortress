@@ -5,19 +5,19 @@
 #include "graphics_interface.h"
 #include <GLFW/glfw3.h>
 
-struct Texture {
-    GLuint id = 0;
-    std::string name;
-    int textureWidth = 0;
-    int textureHeight = 0;
-    unsigned int numRows = 16;
-    unsigned int numCols = 16;
-    float tileWidth = 0;
-    float tileHeight = 0;
-};
-
 class Graphics : public GraphicsInterface {
 public:
+    struct Texture {
+        GLuint id = 0;
+        std::string name;
+        int textureWidth = 0;
+        int textureHeight = 0;
+        unsigned int numRows = 16;
+        unsigned int numCols = 16;
+        float tileWidth = 0;
+        float tileHeight = 0;
+    };
+
     virtual ~Graphics() {}
     void initialise(int argc, char** argv) override;
     void spin() override;

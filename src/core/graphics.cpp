@@ -292,8 +292,8 @@ void Graphics::initialise(int argc, char** argv) {
                                 m_config.fontset_cols);
 }
 
-Texture Graphics::loadTexture(std::string name, unsigned int cols,
-                              unsigned int rows) {
+Graphics::Texture Graphics::loadTexture(std::string name, unsigned int cols,
+                                        unsigned int rows) {
     Texture texture;
 
     texture.numRows = rows ? rows : 16;

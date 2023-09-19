@@ -4,7 +4,6 @@
 #include "../components/sprite_component.h"
 #include "../core/component_manager.h"
 #include "../core/entity_manager.h"
-#include "../core/graphics.h"
 #include "../core/location.h"
 #include <spdlog/spdlog.h>
 

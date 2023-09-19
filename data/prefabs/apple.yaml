@@ -2,7 +2,7 @@ name: Apple
 description: "Shiny, red, don't accept from old ladies"
 symbol: 'A'
 foreground-color:
-  red: 256
+  red: 255
   green: 0
   blue: 0
 background-color:

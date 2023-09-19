@@ -1,5 +1,5 @@
 #include "core/game_engine.h"
-#include "core/graphics.h"
+#include "core/graphics_sdl.h"
 #include "systems/combat_system.h"
 #include "systems/consumable_system.h"
 #include "systems/dialog_system.h"
@@ -56,7 +56,8 @@ int main(int argc, char** argv) {
 
     try {
         std::shared_ptr<GraphicsInterface> l_graphics =
-            std::make_shared<Graphics>();
+            // std::make_shared<Graphics>();
+            std::make_shared<GraphicsSDL>();
         l_graphics->initialise(argc, argv);
         GameEngine* l_engine = new GameEngine(l_graphics);
 

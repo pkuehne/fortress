@@ -3,18 +3,8 @@
         {
             "name": "Linux",
             "includePath": [
-                "/usr/local/include",
-                "/usr/include/x86_64-linux-gnu",
-                "/usr/include",
-                "${workspaceRoot}",
-                ".",
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/third-party/yaml-cpp/include",
-                "${workspaceFolder}/third-party/glfw/include",
-                "${workspaceFolder}/src",
-                "${workspaceFolder}/src/core",
-                "${workspaceFolder}/src/components",
-                "${workspaceFolder}/src/systems"
+                "/usr/include/SDL2"
             ],
             "defines": [
                 "MAJOR=0",
@@ -23,16 +13,6 @@
                 "BUILD=0"
             ],
             "intelliSenseMode": "linux-clang-x64",
-            "browse": {
-                "path": [
-                    "/usr/local/include",
-                    "/usr/include/x86_64-linux-gnu",
-                    "/usr/include",
-                    "${workspaceRoot}"
-                ],
-                "limitSymbolsToIncludedHeaders": true,
-                "databaseFilename": ""
-            },
             "compilerPath": "/usr/bin/g++",
             "cStandard": "c11",
             "cppStandard": "c++17",

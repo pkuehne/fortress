@@ -3,8 +3,8 @@ description: "Who knows what will happen when you drink it?"
 symbol: 129
 foreground-color:
   red: 0
-  green: 256
-  blue: 256
+  green: 255
+  blue: 255
 background-color:
   red: 0
   green: 0

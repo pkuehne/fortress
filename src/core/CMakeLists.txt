@@ -13,7 +13,7 @@ target_sources (fortresslib
         ${CMAKE_CURRENT_LIST_DIR}/file_saver.cpp
         ${CMAKE_CURRENT_LIST_DIR}/game_engine.cpp
         ${CMAKE_CURRENT_LIST_DIR}/game_system_base.cpp
-        ${CMAKE_CURRENT_LIST_DIR}/graphics.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/graphics_sdl.cpp
         ${CMAKE_CURRENT_LIST_DIR}/location.cpp
         ${CMAKE_CURRENT_LIST_DIR}/lua_wrapper.cpp
         ${CMAKE_CURRENT_LIST_DIR}/map_manager.cpp
@@ -35,7 +35,7 @@ target_sources (fortresslib
         ${CMAKE_CURRENT_LIST_DIR}/game_engine.h
         ${CMAKE_CURRENT_LIST_DIR}/game_system_base.h
         ${CMAKE_CURRENT_LIST_DIR}/graphics_interface.h
-        ${CMAKE_CURRENT_LIST_DIR}/graphics.h
+        ${CMAKE_CURRENT_LIST_DIR}/graphics_sdl.h
         ${CMAKE_CURRENT_LIST_DIR}/location.h
         ${CMAKE_CURRENT_LIST_DIR}/lua_wrapper.h
         ${CMAKE_CURRENT_LIST_DIR}/map_manager.h

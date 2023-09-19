@@ -10,7 +10,7 @@ ConfigManager::ConfigManager(const std::string& filename) {
     } catch (const std::exception& e) {
         //
     }
-    fullscreen = config["fullscreen"].as<bool>(true);
+    fullscreen = config["Fullscreen"].as<bool>(false);
     windowWidth = config["WindowWidth"].as<int>(800);
     windowHeight = config["WindowHeight"].as<int>(600);
     tileset = config["Tileset"].as<std::string>("");

@@ -42,22 +42,21 @@ set(YAML_CPP_INSTALL OFF CACHE BOOL "Enable generation of install target" FORCE)
 
 FetchContent_MakeAvailable(flecs spdlog yaml-cpp lua googletest)
 
-# Add external projects from git submodules
-add_subdirectory(third-party/soil)
-target_include_directories(fortresslib PRIVATE third-party/soil/inc)
+# Add SDL2 depndencies
+INCLUDE(FindPkgConfig)
+PKG_SEARCH_MODULE(SDL2 REQUIRED sdl2)
+PKG_SEARCH_MODULE(SDL2IMAGE REQUIRED SDL2_image>=2.0.0)
 
-set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "Build the GLFW example programs" FORCE)
-#set(GLFW_BUILD_TESTS OFF CACHE BOOL "Build the GLFW test programs" FORCE)
-set(GLFW_BUILD_DOCS OFF CACHE BOOL "Build the GLFW documentation" FORCE)
-set(GLFW_INSTALL OFF CACHE BOOL "Generate installation target" FORCE)
-add_subdirectory(third-party/glfw)
+# Add include paths
+include_directories(fortresslib ${SDL2_INCLUDE_DIRS})
+include_directories(fortresslib ${SDL2IMAGE_INCLUDE_DIRS})
 
 # Ensure they are added to compiler and linker paths
-target_link_libraries(fortresslib soil)
-target_link_libraries(fortresslib glfw)
 target_link_libraries(fortresslib lua_static)
 target_link_libraries(fortresslib spdlog::spdlog)
 target_link_libraries(fortresslib yaml-cpp::yaml-cpp)
+target_link_libraries(fortresslib ${SDL2_LIBRARIES})
+target_link_libraries(fortresslib ${SDL2IMAGE_LIBRARIES})
 
 # Add Compiler definitions
 add_compile_definitions(FORTRESS_VERSION_MAJOR=0)
@@ -81,7 +80,7 @@ target_compile_options(fortress PRIVATE -Wall -Wpedantic -Werror)
 # Additional libraries
 target_link_libraries(fortress dl)
 target_link_libraries(fortress stdc++fs)
-target_link_libraries(fortress GL)
+# target_link_libraries(fortress GL)
 target_link_libraries(fortress c)
 target_link_libraries(fortress m)
 target_link_libraries(fortress pthread)

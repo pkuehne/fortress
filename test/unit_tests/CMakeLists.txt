@@ -39,22 +39,16 @@ target_sources (unit_test
         tests/world_info_test.cpp
     )
 
-target_link_libraries(unit_test soil)
 target_link_libraries(unit_test spdlog::spdlog)
 target_link_libraries(unit_test yaml-cpp)
-target_link_libraries(unit_test glfw)
 target_link_libraries(unit_test gtest gmock)
 target_link_libraries(unit_test lua_static)
 
 target_link_libraries(unit_test dl)
 target_link_libraries(unit_test stdc++fs)
-target_link_libraries(unit_test GL)
 target_link_libraries(unit_test c)
 target_link_libraries(unit_test m)
 target_link_libraries(unit_test pthread)
-
-# include(GoogleTest)
-# gtest_discover_tests (unit_test)
 
 add_custom_target(tests
     DEPENDS unit_test

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../core/graphics.h"
+#include "../core/graphics_sdl.h"
 #include <functional>
 #include <map>
 #include <memory>

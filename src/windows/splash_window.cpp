@@ -1,6 +1,5 @@
 #include "splash_window.h"
 #include "../core/event_manager.h"
-#include "../core/graphics.h"
 #include "../widgets/icon.h"
 #include "../widgets/label.h"
 #include "main_window.h"
@@ -16,14 +15,14 @@ extern int FORTRESS_VERSION_BUILD;
 void SplashWindow::setup() { setFullscreen(); }
 
 void SplashWindow::registerWidgets() {
-    int xOffset = getWidth() / 2 - 22;
-    int yOffset = getHeight() / 2;
+    int xOffset = getWidth() / 2;
+    int yOffset = getHeight() / 2 + 8;
     unsigned char tile = 178;
 
-    createWidget<Label>("lblWelcome", -2, -3)
-        ->setText("Welcome to")
-        ->setHorizontalAlign(Widget::HorizontalAlign::Centre)
-        ->setVerticalAlign(Widget::VerticalAlign::Centre);
+    auto welcome = createWidget<Label>("lblWelcome", -2, -5)
+                       ->setText("Welcome to")
+                       ->setHorizontalAlign(Widget::HorizontalAlign::Centre)
+                       ->setVerticalAlign(Widget::VerticalAlign::Centre);
 
     // 'F'
     createWidget<Icon>("icon00", xOffset + 0, yOffset + 0)->setIcon(tile);

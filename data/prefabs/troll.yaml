@@ -2,7 +2,7 @@ name: Troll
 description: "It towers..."
 symbol: 84
 foreground-color:
-  red: 256
+  red: 255
   green: 0
   blue: 0
 background-color:

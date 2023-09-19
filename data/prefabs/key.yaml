@@ -2,9 +2,9 @@ name: Key
 description: "Locks and unlocks things"
 symbol: 75
 foreground-color:
-  red: 256
-  green: 256
-  blue: 256
+  red: 255
+  green: 255
+  blue: 255
 background-color:
   red: 0
   green: 0

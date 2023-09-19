@@ -1,13 +1,13 @@
 ---
-Fullscreen: 1
-WindowWidth: 800            # Only used if FULLSCREEN is set to 0
-WindowHeight: 600           # Only used if FULLSCREEN is set to 0
+Fullscreen: false
+WindowWidth: 800            # Only used if Fullscreen is set to false
+WindowHeight: 600           # Only used if Fullscreen is set to false
 Tileset: Phoebus_16x16.png  # Used for tiles on the map
 Tileset_Rows: 16
 Tileset_Cols: 16
 #Fontset: curses_16x16.png  # Used for text not on the map
-Fontset: fontset.png  # Used for text not on the map
+Fontset: Md_curses_16x16.png  # Used for text not on the map
 Fontset_Rows: 16
 Fontset_Cols: 16
-TileHeight: 32
-TileWidth: 32
+TileHeight: 24
+TileWidth: 24
