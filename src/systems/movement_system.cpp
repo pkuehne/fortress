@@ -42,12 +42,13 @@ void MovementSystem::handleMoveEntityEvent(const MoveEntityEvent& event) {
     EntityId l_entity = event.entity;
     Location l_oldLocation = entities()->getLocation(l_entity);
     Location l_newLocation = event.newLocation;
+    auto entity = entities()->world().entity(event.entity);
 
     if (!map()->isValidTile(l_newLocation)) {
-        GraphicsEffectComponent* effect =
-            components()->make<GraphicsEffectComponent>(l_entity);
-        effect->type = EFFECT_BLINK_FAST;
-        effect->duration = 10;
+        GraphicsEffectComponent effect = GraphicsEffectComponent();
+        effect.type = EFFECT_BLINK_FAST;
+        effect.duration = 10;
+        entity.set<GraphicsEffectComponent>(effect);
         return; // Don't update position if it's not valid
     }
 
@@ -55,24 +56,27 @@ void MovementSystem::handleMoveEntityEvent(const MoveEntityEvent& event) {
     {
         Tile& tile = map()->getTile(l_newLocation);
         const EntityHolder& l_targets = tile.entities();
-        auto player = components()->getUnique<PlayerComponent>();
+        auto player = entities()->world().lookup("player");
 
         bool blocked = tile.blocked();
         for (EntityId l_target : l_targets) {
-            if (components()->get<ColliderComponent>(l_target)) {
+            auto entity = entities()->world().entity(l_target);
+
+            if (entity.has<ColliderComponent>()) {
                 blocked = true;
             }
-            ConnectorComponent* l_stair =
-                components()->get<ConnectorComponent>(l_target);
-            if (l_stair && l_stair->target && l_entity == player.id) {
-                l_newLocation = entities()->getLocation(l_stair->target);
+            if (entity.has<ConnectorComponent>()) {
+                auto l_stair = entity.get<ConnectorComponent>();
+                if (l_stair->target && l_entity == player.id()) {
+                    l_newLocation = entities()->getLocation(l_stair->target);
+                }
             }
         }
         if (blocked) {
-            GraphicsEffectComponent* effect =
-                components()->make<GraphicsEffectComponent>(l_entity);
-            effect->type = EFFECT_BLINK_FAST;
-            effect->duration = 10;
+            GraphicsEffectComponent effect = GraphicsEffectComponent();
+            effect.type = EFFECT_BLINK_FAST;
+            effect.duration = 10;
+            entity.set<GraphicsEffectComponent>(effect);
             return; // Don't update position if it's a collidable
         }
     }

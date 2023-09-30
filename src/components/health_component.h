@@ -1,8 +1,6 @@
 #pragma once
 
-#include "component_base.h"
-
-struct HealthComponent : public ComponentBase {
+struct HealthComponent {
     unsigned int health = 10;
     unsigned int thirst = 0;
     unsigned int hunger = 0;
@@ -13,4 +11,3 @@ struct HealthComponent : public ComponentBase {
     unsigned int thirstStep = 0;
     unsigned int hungerStep = 0;
 };
-

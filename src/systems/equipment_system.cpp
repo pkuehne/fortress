@@ -86,8 +86,8 @@ void EquipmentSystem::registerHandlers() {
 
 void EquipmentSystem::handleDropEquipmentEvent(
     const DropEquipmentEvent& event) {
-    EquipmentComponent* equipment =
-        components()->get<EquipmentComponent>(event.entity);
+    auto entity = entities()->world().entity(event.entity);
+    EquipmentComponent* equipment = entity.get_mut<EquipmentComponent>();
 
     unequipItem(event.item, equipment);
 
@@ -105,8 +105,8 @@ void EquipmentSystem::handleDropEquipmentEvent(
 
 void EquipmentSystem::handlePickupEquipmentEvent(
     const PickupEquipmentEvent& event) {
-    EquipmentComponent* equipment =
-        components()->get<EquipmentComponent>(event.entity);
+    auto entity = entities()->world().entity(event.entity);
+    EquipmentComponent* equipment = entity.get_mut<EquipmentComponent>();
 
     Location invalid;
     entities()->setLocation(event.item, invalid);
@@ -115,12 +115,11 @@ void EquipmentSystem::handlePickupEquipmentEvent(
 }
 
 void EquipmentSystem::handleEquipItemEvent(const EquipItemEvent& event) {
-    EquipmentComponent* equipment =
-        components()->get<EquipmentComponent>(event.entity);
-    WearableComponent* wearable =
-        components()->get<WearableComponent>(event.item);
-    WieldableComponent* wieldable =
-        components()->get<WieldableComponent>(event.item);
+    auto entity = entities()->world().entity(event.entity);
+    EquipmentComponent* equipment = entity.get_mut<EquipmentComponent>();
+
+    WearableComponent* wearable = entity.get_mut<WearableComponent>();
+    WieldableComponent* wieldable = entity.get_mut<WieldableComponent>();
 
     if (equipItem(event.item, wieldable, wearable, equipment)) {
         std::vector<EntityId>::iterator it =
@@ -135,15 +134,17 @@ void EquipmentSystem::handleEquipItemEvent(const EquipItemEvent& event) {
 }
 
 void EquipmentSystem::handleUnequipItemEvent(const UnequipItemEvent& event) {
-    EquipmentComponent* equipment =
-        components()->get<EquipmentComponent>(event.entity);
+    auto entity = entities()->world().entity(event.entity);
+    EquipmentComponent* equipment = entity.get_mut<EquipmentComponent>();
+
     unequipItem(event.item, equipment);
     equipment->carriedEquipment.push_back(event.item);
 }
 
 void EquipmentSystem::handleConsumeItemEvent(const ConsumeItemEvent& event) {
-    EquipmentComponent* equipment =
-        components()->get<EquipmentComponent>(event.entity);
+    auto entity = entities()->world().entity(event.entity);
+    EquipmentComponent* equipment = entity.get_mut<EquipmentComponent>();
+
     std::vector<EntityId>::iterator it = equipment->carriedEquipment.begin();
     for (; it != equipment->carriedEquipment.end(); ++it) {
         if (*it == event.item) {
@@ -155,8 +156,9 @@ void EquipmentSystem::handleConsumeItemEvent(const ConsumeItemEvent& event) {
 
 void EquipmentSystem::handleKillEntityEvent(const KillEntityEvent& event) {
     // Drop the equipment
-    EquipmentComponent* equipment =
-        components()->get<EquipmentComponent>(event.entity);
+    auto entity = entities()->world().entity(event.entity);
+    EquipmentComponent* equipment = entity.get_mut<EquipmentComponent>();
+
     if (!equipment) {
         return;
     }

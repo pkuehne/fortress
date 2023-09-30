@@ -7,7 +7,11 @@
 #include "game_system_base.h"
 #include "map_manager.h"
 #include "window_manager.h"
+#include <flecs.h>
+#include <spdlog/spdlog.h>
 #include <string>
+
+struct TurnEvent {};
 
 GameEngine::GameEngine(std::shared_ptr<GraphicsInterface> a_graphics)
     : m_graphics(a_graphics), m_eventManager(std::make_shared<EventManager>()),
@@ -19,21 +23,25 @@ GameEngine::GameEngine(std::shared_ptr<GraphicsInterface> a_graphics)
 }
 
 void GameEngine::initialise() {
+
     m_eventManager->subscribe<QuitEvent>(
         [this](auto event) { this->graphics()->terminate(); });
 
     m_eventManager->subscribe<EndTurnEvent>([this](auto event) {
-        auto player = this->components()->getUnique<PlayerComponent>();
-        if (player.id) {
-            player.component->turn += 1;
-            player.component->playerTurn = !player.component->playerTurn;
+        auto player = this->entities()->world().lookup("player");
+        if (!player.is_valid()) {
+            return;
         }
+        auto component = player.get_mut<PlayerComponent>();
+        component->turn += 1;
+        component->playerTurn = !component->playerTurn;
+
         this->turn();
+        entities()->world().lookup("TurnPhase").enable();
     });
 
     m_eventManager->subscribe<RemoveEntityEvent>([this](auto event) {
-        this->components()->removeAll(event.entity);
-        this->entities()->destroyEntity(event.entity);
+        this->entities()->world().delete_with(event.entity);
     });
     m_eventManager->subscribe<UpdateTileSizeEvent>([this](auto event) {
         unsigned int height =
@@ -86,6 +94,8 @@ void GameEngine::tick() {
     for (unsigned int ii = 0; ii < m_systems.size(); ii++) {
         m_systems[ii]->onTick();
     }
+
+    entities()->world().progress();
 
     windows()->nextTick();
     return;

@@ -1,10 +1,9 @@
 #pragma once
 
 #include "../core/entity.h"
-#include "component_base.h"
 #include <vector>
 
-struct EquipmentComponent : public ComponentBase {
+struct EquipmentComponent {
     EntityId headWearable = 0;
     EntityId faceWearable = 0;
     EntityId chestWearable = 0;
@@ -16,8 +15,7 @@ struct EquipmentComponent : public ComponentBase {
     EntityId rightHandWieldable = 0;
     EntityId leftHandWieldable = 0;
 
-    std::vector<EntityId> carriedEquipment;
     int maxCarryWeight = 0;
     int maxCarryVolume = 0;
+    std::vector<EntityId> carriedEquipment;
 };
-

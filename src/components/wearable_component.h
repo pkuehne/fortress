@@ -13,9 +13,8 @@ typedef enum {
     WearableFeet
 } WearablePosition;
 
-struct WearableComponent : public ComponentBase {
+struct WearableComponent {
     int baseDamageAbsorb;
     WearablePosition position;
     int warmth;
 };
-

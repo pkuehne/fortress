@@ -28,14 +28,16 @@ void updateHealth(ConsumableComponent* consumable, HealthComponent* health) {
 
 void ConsumableSystem::handleConsumeItemEvent(const ConsumeItemEvent& event) {
     // Validate
-    if (!components()->exists<ConsumableComponent>(event.item)) {
+    auto item = entities()->world().entity(event.item);
+    auto entity = entities()->world().entity(event.entity);
+
+    if (!item.has<ConsumableComponent>()) {
         spdlog::error("Consume event on non-consumable item: {}!", event.item);
         return;
     }
 
-    ConsumableComponent* consumable =
-        components()->get<ConsumableComponent>(event.item);
-    HealthComponent* health = components()->get<HealthComponent>(event.entity);
+    ConsumableComponent* consumable = item.get_mut<ConsumableComponent>();
+    HealthComponent* health = entity.get_mut<HealthComponent>();
 
     // Check whether this has a health impact
     updateHealth(consumable, health);

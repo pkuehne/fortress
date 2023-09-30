@@ -3,12 +3,13 @@
 
 void GraphicsEffectSystem::onTick() {
     for (EntityId l_entity : entities()->all()) {
-        GraphicsEffectComponent* effect =
-            components()->get<GraphicsEffectComponent>(l_entity);
-        if (!effect)
+        auto entity = entities()->world().entity(l_entity);
+        if (!entity.has<GraphicsEffectComponent>())
             continue;
+        GraphicsEffectComponent* effect =
+            entity.get_mut<GraphicsEffectComponent>();
 
-        SpriteComponent* sprite = components()->get<SpriteComponent>(l_entity);
+        SpriteComponent* sprite = entity.get_mut<SpriteComponent>();
         if (!sprite) {
             spdlog::warn("GraphicsEffect without a sprite is pointless {}",
                          l_entity);
@@ -22,11 +23,11 @@ void GraphicsEffectSystem::onTick() {
         if (effect->duration && effect->ticks > effect->duration) {
             sprite->fgColor = effect->org_color;
             sprite->sprite = effect->org_tile;
-            components()->remove<GraphicsEffectComponent>(l_entity);
             if (effect->removeEntity) {
                 const Location location = entities()->getLocation(l_entity);
                 events()->fire<RemoveEntityEvent>(l_entity, location);
             }
+            entity.remove<GraphicsEffectComponent>();
             continue;
         }
 

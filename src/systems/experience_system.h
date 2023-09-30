@@ -5,4 +5,5 @@
 class ExperienceSystem : public GameSystemBase {
 public:
     void registerHandlers() override;
+    void handleUpdateEvent(const UpdateExperienceEvent& event);
 };

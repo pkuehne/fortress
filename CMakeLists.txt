@@ -52,6 +52,7 @@ include_directories(fortresslib ${SDL2_INCLUDE_DIRS})
 include_directories(fortresslib ${SDL2IMAGE_INCLUDE_DIRS})
 
 # Ensure they are added to compiler and linker paths
+target_link_libraries(fortresslib flecs::flecs_static)
 target_link_libraries(fortresslib lua_static)
 target_link_libraries(fortresslib spdlog::spdlog)
 target_link_libraries(fortresslib yaml-cpp::yaml-cpp)
@@ -80,7 +81,6 @@ target_compile_options(fortress PRIVATE -Wall -Wpedantic -Werror)
 # Additional libraries
 target_link_libraries(fortress dl)
 target_link_libraries(fortress stdc++fs)
-# target_link_libraries(fortress GL)
 target_link_libraries(fortress c)
 target_link_libraries(fortress m)
 target_link_libraries(fortress pthread)

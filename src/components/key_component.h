@@ -1,7 +1,7 @@
 #pragma once
 
 #include "component_base.h"
-struct KeyComponent : public ComponentBase {};
+struct KeyComponent {};
 
 namespace YAML {
 template <> struct convert<KeyComponent> {

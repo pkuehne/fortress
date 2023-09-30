@@ -19,64 +19,69 @@ void CombatSystem::registerHandlers() {
         [&](const KillEntityEvent& event) { this->killEntity(event.entity); });
 }
 
-void CombatSystem::handleAttack(EntityId attacker, EntityId defender) {
-    EquipmentComponent* l_attackerEquipment =
-        components()->get<EquipmentComponent>(attacker);
+void CombatSystem::handleAttack(EntityId attackerId, EntityId defenderId) {
+
+    auto attacker = entities()->world().entity(attackerId);
+    auto defender = entities()->world().entity(defenderId);
+    auto l_attackerEquipment = attacker.get<EquipmentComponent>();
     unsigned int damage = 1;
     if (l_attackerEquipment && l_attackerEquipment->rightHandWieldable != 0) {
         EntityId l_weapon = l_attackerEquipment->rightHandWieldable;
-        WieldableComponent* l_wield =
-            components()->get<WieldableComponent>(l_weapon);
+        auto l_wield =
+            entities()->world().entity(l_weapon).get<WieldableComponent>();
         damage = l_wield->baseDamage;
     }
 
-    HealthComponent* l_health = components()->get<HealthComponent>(defender);
-    if (!l_health) {
+    if (!defender.has<HealthComponent>()) {
         // Invincible?
         return;
     }
-    updateLog(attacker, defender, damage);
+    updateLog(attackerId, defenderId, damage);
 
-    GraphicsEffectComponent* effect =
-        components()->make<GraphicsEffectComponent>(defender);
-    effect->type = EFFECT_CHANGE_COLOR;
-    effect->duration = 15;
-    effect->new_color = Color(RED);
+    GraphicsEffectComponent effect = GraphicsEffectComponent();
+    effect.type = EFFECT_CHANGE_COLOR;
+    effect.duration = 15;
+    effect.new_color = Color(RED);
+    defender.set<GraphicsEffectComponent>(effect);
 
+    auto l_health = defender.get_mut<HealthComponent>();
     if (damage < l_health->health) {
         l_health->health -= damage;
-        events()->fire<UpdateExperienceEvent>(attacker, 100);
+        events()->fire<UpdateExperienceEvent>(attackerId, 100);
     } else {
-        // killEntity(defender);
-        events()->fire<KillEntityEvent>(defender);
-        events()->fire<UpdateExperienceEvent>(attacker, 500);
+        // killEntity(defenderId);
+        events()->fire<KillEntityEvent>(defenderId);
+        events()->fire<UpdateExperienceEvent>(attackerId, 500);
     }
 }
 
 void CombatSystem::killEntity(EntityId id) {
+    auto entity = entities()->world().entity(id);
+
     const Location location = entities()->getLocation(id);
-    if (id == components()->getUnique<PlayerComponent>().id) {
+    if (id == entities()->world().lookup("player").id()) {
         events()->fire<RemoveEntityEvent>(id, location);
         return;
     }
 
     // Create the corpse if it's an NPC
-    if (components()->get<NpcComponent>(id) != nullptr) {
-        EntityId corpse = instantiatePrefab("corpse", location);
-        components()->make<SpriteComponent>(corpse)->sprite =
-            components()->get<SpriteComponent>(id)->sprite;
+    if (entity.has<NpcComponent>()) {
+        EntityId corpseId = instantiatePrefab("corpse", location);
+        auto corpse = entities()->world().entity(corpseId);
+        corpse.get_mut<SpriteComponent>()->sprite =
+            entity.get<SpriteComponent>()->sprite;
     }
 
     events()->fire<RemoveEntityEvent>(id, location);
 }
 
-void CombatSystem::updateLog(const EntityId& attacker, const EntityId& target,
+void CombatSystem::updateLog(const EntityId& attackerId, const EntityId& target,
                              int damage) {
     std::stringstream str;
-    DescriptionComponent* l_attackerDesc =
-        components()->get<DescriptionComponent>(attacker);
-    DescriptionComponent* l_targetDesc =
-        components()->get<DescriptionComponent>(target);
+    auto l_attackerDesc =
+        entities()->world().entity(attackerId).get<DescriptionComponent>();
+    auto l_targetDesc =
+        entities()->world().entity(target).get<DescriptionComponent>();
 
     if (l_attackerDesc != 0) {
         str << "The " << l_attackerDesc->title;
@@ -94,7 +99,7 @@ void CombatSystem::updateLog(const EntityId& attacker, const EntityId& target,
 
     str << " and causes " << damage << " damage!";
 
-    if (attacker == components()->getUnique<PlayerComponent>().id) {
+    if (attackerId == entities()->world().lookup("player").id()) {
         events()->fire<AddLogMessageEvent>(str.str());
     } else {
         events()->fire<AddLogMessageEvent>(str.str(), "warning");

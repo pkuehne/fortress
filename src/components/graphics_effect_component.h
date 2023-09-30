@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../core/color.h"
-#include "component_base.h"
 
 typedef enum {
     EFFECT_NONE = 0,
@@ -11,12 +10,12 @@ typedef enum {
     EFFECT_MAX
 } GRAPHICS_EFFECT;
 
-struct GraphicsEffectComponent : public ComponentBase {
+struct GraphicsEffectComponent {
     unsigned int ticks = 0;
     unsigned int duration = 0;
     unsigned int org_tile = 0;
-    Color org_color;
     GRAPHICS_EFFECT type = EFFECT_NONE;
     bool removeEntity = false;
+    Color org_color;
     Color new_color;
 };

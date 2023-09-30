@@ -12,6 +12,7 @@ target_sources (fortresslib
     ${CMAKE_CURRENT_LIST_DIR}/equipment_component.h
     ${CMAKE_CURRENT_LIST_DIR}/experience_component.h
     ${CMAKE_CURRENT_LIST_DIR}/combat_component.h
+    ${CMAKE_CURRENT_LIST_DIR}/game_component.h
     ${CMAKE_CURRENT_LIST_DIR}/graphics_effect_component.h
     ${CMAKE_CURRENT_LIST_DIR}/grouping_component.h
     ${CMAKE_CURRENT_LIST_DIR}/health_component.h

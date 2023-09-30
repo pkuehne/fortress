@@ -3,8 +3,9 @@
 #include <spdlog/spdlog.h>
 
 void HealthSystem::onTurn() {
-    for (EntityId entity : entities()->all()) {
-        HealthComponent* health = components()->get<HealthComponent>(entity);
+    for (EntityId entityId : entities()->all()) {
+        auto entity = entities()->world().entity(entityId);
+        HealthComponent* health = entity.get_mut<HealthComponent>();
         if (health == nullptr)
             continue;
 

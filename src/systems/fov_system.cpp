@@ -7,13 +7,13 @@ void FovSystem::registerHandlers() {
         [this](auto event) { this->calculateFov(); });
 }
 void FovSystem::calculateFov() {
-    auto player = components()->getUnique<PlayerComponent>();
-    if (player.id == 0) {
+    auto player = entities()->world().lookup("player");
+    if (!player.is_valid()) {
         return;
     }
 
-    Location playerLoc = entities()->getLocation(player.id);
-    auto currentTurn = player.component->turn;
+    Location playerLoc = entities()->getLocation(player.id());
+    auto currentTurn = player.get<PlayerComponent>()->turn;
 
     map()->getTile(playerLoc).lastVisited() = currentTurn;
 
@@ -41,7 +41,8 @@ void FovSystem::calculateFov() {
                     tile.lastVisited() = currentTurn;
                     for (const EntityId entity :
                          map()->getTile(loc).entities()) {
-                        if (components()->get<ColliderComponent>(entity)) {
+                        auto e = entities()->world().entity(entity);
+                        if (e.has<ColliderComponent>()) {
                             blocked = true;
                             break;
                         }

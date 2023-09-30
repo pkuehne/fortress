@@ -9,9 +9,8 @@ typedef enum {
     WieldableBothHands,
 } WieldablePosition;
 
-struct WieldableComponent : public ComponentBase {
+struct WieldableComponent {
     int baseDamage;
     int baseDefence;
     WieldablePosition position;
 };
-

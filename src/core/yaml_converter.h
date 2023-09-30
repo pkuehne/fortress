@@ -165,30 +165,6 @@ template <> struct convert<AreaInfo> {
     }
 };
 
-// SpriteComponent
-template <> struct convert<SpriteComponent> {
-    static Node encode(const SpriteComponent& rhs) {
-        Node node;
-        node["symbol"] = rhs.sprite;
-        node["layer"] = rhs.renderLayer;
-        node["foreground"] = rhs.fgColor;
-        node["background"] = rhs.bgColor;
-        return node;
-    }
-
-    static bool decode(const Node& node, SpriteComponent& rhs) {
-        if (!node.IsMap() || node.size() != 4) {
-            return false;
-        }
-
-        rhs.sprite = node["symbol"].as<unsigned int>();
-        rhs.renderLayer = node["layer"].as<unsigned int>();
-        rhs.fgColor = node["foreground"].as<Color>();
-        rhs.bgColor = node["background"].as<Color>();
-        return true;
-    }
-};
-
 // ColliderComponent
 template <> struct convert<ColliderComponent> {
     static Node encode(const ColliderComponent& rhs) {
@@ -305,36 +281,6 @@ template <> struct convert<EquipmentComponent> {
     }
 };
 
-// GraphicsEffectComponent
-template <> struct convert<GraphicsEffectComponent> {
-    static Node encode(const GraphicsEffectComponent& rhs) {
-        Node node;
-        node["ticks"] = rhs.ticks;
-        node["duration"] = rhs.duration;
-        node["org_tile"] = rhs.org_tile;
-        node["org_color"] = rhs.org_color;
-        node["type"] = static_cast<int>(rhs.type);
-        node["removeEntity"] = rhs.removeEntity;
-        node["new_color"] = rhs.new_color;
-        return node;
-    }
-
-    static bool decode(const Node& node, GraphicsEffectComponent& rhs) {
-        if (!node.IsMap() || node.size() != 7) {
-            return false;
-        }
-        // Todo
-        rhs.ticks = node["ticks"].as<unsigned int>();
-        rhs.duration = node["duration"].as<unsigned int>();
-        rhs.org_tile = node["org_tile"].as<unsigned int>();
-        rhs.org_color = node["org_color"].as<Color>();
-        rhs.new_color = node["org_color"].as<Color>();
-        rhs.type = static_cast<GRAPHICS_EFFECT>(node["type"].as<int>());
-        rhs.removeEntity = node["removeEntity"].as<bool>();
-        return true;
-    }
-};
-
 // Template
 template <> struct convert<HealthComponent> {
     static Node encode(const HealthComponent& rhs) {
@@ -389,88 +335,6 @@ template <> struct convert<NpcComponent> {
         rhs.stateMachine = node["stateMachine"].as<std::string>();
         rhs.losDistance = node["losDistance"].as<unsigned int>();
         // Todo
-        return true;
-    }
-};
-
-// ConnectorComponent
-template <> struct convert<ConnectorComponent> {
-    static Node encode(const ConnectorComponent& rhs) {
-        Node node;
-        node["target"] = rhs.target;
-        return node;
-    }
-
-    static bool decode(const Node& node, ConnectorComponent& rhs) {
-        if (!node.IsMap() || node.size() != 1) {
-            return false;
-        }
-
-        rhs.target = node["target"].as<EntityId>();
-        return true;
-    }
-};
-
-// WearableComponent
-template <> struct convert<WearableComponent> {
-    static Node encode(const WearableComponent& rhs) {
-        Node node;
-        node["baseDamageAbsorb"] = rhs.baseDamageAbsorb;
-        node["position"] = static_cast<int>(rhs.position);
-        node["warmth"] = rhs.warmth;
-        return node;
-    }
-
-    static bool decode(const Node& node, WearableComponent& rhs) {
-        if (!node.IsMap() || node.size() != 3) {
-            return false;
-        }
-        rhs.baseDamageAbsorb = node["baseDamageAbsorb"].as<int>();
-        rhs.position =
-            static_cast<WearablePosition>(node["position"].as<int>());
-        rhs.warmth = node["warmth"].as<int>();
-
-        return true;
-    }
-};
-
-// WieldableComponent
-template <> struct convert<WieldableComponent> {
-    static Node encode(const WieldableComponent& rhs) {
-        Node node;
-        node["baseDamage"] = rhs.baseDamage;
-        node["baseDefence"] = rhs.baseDefence;
-        node["position"] = static_cast<int>(rhs.position);
-        return node;
-    }
-
-    static bool decode(const Node& node, WieldableComponent& rhs) {
-        if (!node.IsMap() || node.size() != 3) {
-            return false;
-        }
-
-        rhs.baseDamage = node["baseDamage"].as<int>();
-        rhs.baseDefence = node["baseDefence"].as<int>();
-        rhs.position =
-            static_cast<WieldablePosition>(node["position"].as<int>());
-        return true;
-    }
-};
-
-// GroupingComponent
-template <> struct convert<GroupingComponent> {
-    static Node encode(const GroupingComponent& rhs) {
-        Node node;
-        node["groupings"] = rhs.groupings;
-        return node;
-    }
-
-    static bool decode(const Node& node, GroupingComponent& rhs) {
-        if (!node.IsSequence()) {
-            return false;
-        }
-
-        rhs.groupings = node["groupings"].as<std::vector<std::string>>();
         return true;
     }
 };

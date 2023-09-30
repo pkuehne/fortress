@@ -15,52 +15,48 @@ void InteractionSystem::registerHandlers() {
 }
 
 void InteractionSystem::handleOpenEntityEvent(const OpenEntityEvent& event) {
-    OpenableComponent* openable =
-        components()->get<OpenableComponent>(event.entity);
-    if (!openable) {
-        return;
-    }
+    auto entity = entities()->world().entity(event.entity);
+
+    auto openable = entity.get_mut<OpenableComponent>();
     if (openable->locked) {
         events()->fire<AddLogMessageEvent>("It's locked");
         return;
     }
-    openable->open = true;
 
-    components()->remove<ColliderComponent>(event.entity);
+    openable->open = true;
+    entity.remove<ColliderComponent>();
 }
 
 void InteractionSystem::handleCloseEntityEvent(const CloseEntityEvent& event) {
-    OpenableComponent* openable =
-        components()->get<OpenableComponent>(event.entity);
-    if (!openable) {
-        return;
-    }
-    openable->open = false;
+    auto entity = entities()->world().entity(event.entity);
 
-    components()->make<ColliderComponent>(event.entity);
+    entity.get_mut<OpenableComponent>()->open = false;
+    entity.add<ColliderComponent>();
 }
 
 void InteractionSystem::handleLockEntityEvent(const LockEntityEvent& event) {
-    auto openable = components()->get<OpenableComponent>(event.lock);
-    if (!openable) {
+    auto lock = entities()->world().entity(event.lock);
+    auto key = entities()->world().entity(event.key);
+
+    if (!lock.has<OpenableComponent>()) {
         return;
     }
-    auto keyable = components()->get<KeyComponent>(event.key);
-    if (!keyable) {
+    if (!key.has<KeyComponent>()) {
         return;
     }
-    openable->locked = true;
+    lock.get_mut<OpenableComponent>()->locked = true;
 }
 
 void InteractionSystem::handleUnlockEntityEvent(
     const UnlockEntityEvent& event) {
-    auto openable = components()->get<OpenableComponent>(event.lock);
-    if (!openable) {
+    auto lock = entities()->world().entity(event.lock);
+    auto key = entities()->world().entity(event.key);
+
+    if (!lock.has<OpenableComponent>()) {
         return;
     }
-    auto keyable = components()->get<KeyComponent>(event.key);
-    if (!keyable) {
+    if (!key.has<KeyComponent>()) {
         return;
     }
-    openable->locked = false;
+    lock.get_mut<OpenableComponent>()->locked = false;
 }

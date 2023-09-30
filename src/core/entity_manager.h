@@ -6,6 +6,7 @@
 #include "entity.h"
 #include "location.h"
 #include "utility.h"
+#include <flecs.h>
 #include <map>
 #include <memory>
 #include <vector>
@@ -19,11 +20,10 @@ public:
     EntityManager() = default;
     virtual ~EntityManager() = default;
 
-    void initialise(std::shared_ptr<EventManager> events) { m_events = events; }
+    void initialise(std::shared_ptr<EventManager> events);
     void destroy() {}
 
     virtual EntityId createEntity(const Location& location);
-    virtual void addEntity(EntityId id, const Location& location);
     virtual void destroyEntity(EntityId);
     virtual EntityId getMaxId() { return m_maxId; }
 
@@ -36,7 +36,10 @@ public:
     virtual EntityHolder& all() { return m_allEntities; }
     virtual unsigned int count() { return m_locations.size(); }
 
+    flecs::world& world() { return m_world; }
+
 private:
+    virtual void addEntity(EntityId id, const Location& location);
     std::shared_ptr<EventManager> m_events;
 
     unsigned long m_maxId = 1;
@@ -44,4 +47,5 @@ private:
     LocationMap m_locations;
     EntityHolder m_allEntities;
     std::map<unsigned int, EntityHolder> m_entities;
+    flecs::world m_world;
 };

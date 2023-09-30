@@ -12,19 +12,18 @@
 #include "inspection_window.h"
 
 const char* EquipmentWindow::nameOrNothing(EntityId item) {
-    DescriptionComponent* description =
-        components()->get<DescriptionComponent>(item);
     if (item == 0)
         return "<Nothing>";
+    auto description =
+        entities()->world().entity(item).get<DescriptionComponent>();
     if (description == 0)
         return "?Something?";
     return description->title.c_str();
 }
 
 void EquipmentWindow::selectItem(Label* l) {
-    auto player = components()->getUnique<PlayerComponent>();
-    EquipmentComponent* equipment =
-        components()->get<EquipmentComponent>(player.id);
+    auto player = entities()->world().lookup("player");
+    auto equipment = player.get<EquipmentComponent>();
     EquipmentWindow* win = dynamic_cast<EquipmentWindow*>(l->getWindow());
 
     if (l->getName() == "lblRight")
@@ -163,8 +162,7 @@ void EquipmentWindow::registerWidgets() {
         ->setCommandChar(1)
         ->setCommandCharCallback([&](Label* l) {
             events()->fire<ConsumeItemEvent>(
-                components()->getUnique<PlayerComponent>().id,
-                getSelectedItem());
+                entities()->world().lookup("player").id(), getSelectedItem());
             setSelectedItem(0);
 
             events()->fire<EndTurnEvent>();
@@ -189,7 +187,7 @@ void EquipmentWindow::registerWidgets() {
             EquipmentWindow* win =
                 dynamic_cast<EquipmentWindow*>(l->getWindow());
             events()->fire<UnequipItemEvent>(
-                components()->getUnique<PlayerComponent>().id,
+                entities()->world().lookup("player").id(),
                 win->getSelectedItem());
             win->setSelectedItem(0);
             events()->fire<EndTurnEvent>();
@@ -204,7 +202,7 @@ void EquipmentWindow::registerWidgets() {
             EquipmentWindow* win =
                 dynamic_cast<EquipmentWindow*>(l->getWindow());
             events()->fire<EquipItemEvent>(
-                components()->getUnique<PlayerComponent>().id,
+                entities()->world().lookup("player").id(),
                 win->getSelectedItem());
             win->setSelectedItem(0);
             events()->fire<EndTurnEvent>();
@@ -219,7 +217,7 @@ void EquipmentWindow::registerWidgets() {
             EquipmentWindow* win =
                 dynamic_cast<EquipmentWindow*>(l->getWindow());
             events()->fire<DropEquipmentEvent>(
-                components()->getUnique<PlayerComponent>().id,
+                entities()->world().lookup("player").id(),
                 win->getSelectedItem());
             win->setSelectedItem(0);
             events()->fire<EndTurnEvent>();
@@ -261,9 +259,8 @@ void EquipmentWindow::setSelectedItem(EntityId item) {
 void EquipmentWindow::nextTurn() { updateItemNames(); }
 
 void EquipmentWindow::updateItemNames() {
-    auto player = components()->getUnique<PlayerComponent>();
-    EquipmentComponent* equipment =
-        components()->get<EquipmentComponent>(player.id);
+    auto player = entities()->world().lookup("player");
+    auto equipment = player.get<EquipmentComponent>();
 
     getWidget<Label>("lblRightItem")
         ->setText(nameOrNothing(equipment->rightHandWieldable));

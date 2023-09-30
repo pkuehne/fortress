@@ -5,11 +5,8 @@
 
 void LogMessageSystem::registerHandlers() {
     events()->subscribe<AddLogMessageEvent>([=](auto event) {
-        auto player = components()->getUnique<PlayerComponent>();
-        auto messages = components()->get<LogMessageComponent>(player.id);
-        if (!messages) {
-            messages = components()->make<LogMessageComponent>(player.id);
-        }
+        auto player = this->entities()->world().lookup("player");
+        auto messages = player.get_mut<LogMessageComponent>();
         messages->messages.push_back(
             LogMessageComponent::Message(event.message, event.category));
     });

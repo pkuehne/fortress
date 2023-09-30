@@ -147,29 +147,30 @@ void NpcSystem::createDogStateMachine() {
 }
 
 void NpcSystem::onTurn() {
-    for (EntityId entity : entities()->all()) {
-        NpcComponent* npc = components()->get<NpcComponent>(entity);
-        if (npc == 0)
+    for (EntityId entityId : entities()->all()) {
+        auto entity = entities()->world().entity(entityId);
+        if (!entity.has<NpcComponent>())
             continue;
+        NpcComponent* npc = entity.get_mut<NpcComponent>();
 
         State currentState = m_stateMachines[npc->stateMachine][npc->state];
         for (Transition& transition : currentState.transitions) {
-            if (transition.condition(entity, npc)) {
+            if (transition.condition(entityId, npc)) {
                 spdlog::info("Chainging state from <{}> to <{}> for {}",
-                             npc->state, transition.endState, entity);
+                             npc->state, transition.endState, entityId);
                 if (currentState.onLeave) {
-                    currentState.onLeave(entity, npc);
+                    currentState.onLeave(entityId, npc);
                 }
                 npc->state = transition.endState;
                 currentState = m_stateMachines[npc->stateMachine][npc->state];
                 if (currentState.onEntry) {
-                    currentState.onEntry(entity, npc);
+                    currentState.onEntry(entityId, npc);
                 }
                 break;
             }
         }
         if (currentState.onUpdate) {
-            currentState.onUpdate(entity, npc);
+            currentState.onUpdate(entityId, npc);
         }
     }
 }
@@ -179,11 +180,12 @@ EntityId NpcSystem::findNearestVisibleMatching(const Location& location,
                                                const std::string& name) {
     EntityId retval = 0;
     unsigned int minDist = 1000.0;
-    EntityHolder entities = map()->findEntitiesNear(location, radius);
-    for (EntityId entity : entities) {
+    EntityHolder nearestEntities = map()->findEntitiesNear(location, radius);
+    for (EntityId entity : nearestEntities) {
         unsigned int dist =
-            getDistance(location, this->entities()->getLocation(entity));
-        auto* desc = components()->get<DescriptionComponent>(entity);
+            getDistance(location, entities()->getLocation(entity));
+        auto desc =
+            entities()->world().entity(entity).get<DescriptionComponent>();
         if (desc == 0)
             continue;
         if (desc->title == name && dist < minDist) {
@@ -197,13 +199,13 @@ EntityId NpcSystem::findNearestVisibleMatching(const Location& location,
 void NpcSystem::setPathToTarget(EntityId entity, EntityId target,
                                 NpcComponent* npc) {
     auto getPathCost = [&](const Location& location, void* c) {
-        auto player = components()->getUnique<PlayerComponent>();
+        auto player = entities()->world().lookup("player");
 
-        for (EntityId entity : map()->getTile(location).entities()) {
-            if (entity == player.id) {
+        for (EntityId entityId : map()->getTile(location).entities()) {
+            if (entityId == player.id()) {
                 continue;
             }
-            if (components()->get<ColliderComponent>(entity)) {
+            if (entities()->world().entity(entityId).has<ColliderComponent>()) {
                 return 99;
             }
         }

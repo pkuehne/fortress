@@ -43,16 +43,17 @@ void DialogWindow::registerWidgets() {
 void DialogWindow::nextTurn() {
     auto lstQuestions = getWidget<ListBox>("lstQuestions");
     auto lblResponse = getWidget<Label>("lblResponse");
-    auto player = components()->getUnique<DialogComponent>().component;
+    auto player = entities()->world().lookup("player");
+    auto component = player.get_mut<DialogComponent>();
 
     lstQuestions->clearItems();
-    for (unsigned int ii = 0; ii < player->dialogOptions.size(); ii++) {
+    for (unsigned int ii = 0; ii < component->dialogOptions.size(); ii++) {
         ListBoxItem item;
         item.setValue(ii + 1);
-        item.setText(player->dialogOptions[ii]);
+        item.setText(component->dialogOptions[ii]);
         lstQuestions->addItem(item);
     }
-    lblResponse->setText(player->dialogText);
+    lblResponse->setText(component->dialogText);
 }
 
 void DialogWindow::destroy() { events()->fire<EndConversationEvent>(); }

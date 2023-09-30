@@ -1,8 +1,7 @@
 #pragma once
 
-#include "component_base.h"
 #include <vector>
 
-struct GroupingComponent : public ComponentBase {
+struct GroupingComponent {
     std::vector<std::string> groupings;
 };

@@ -160,20 +160,20 @@ void updateLocation(unsigned char key, Location& location) {
 }
 
 void MapWindow::keyPress(unsigned char key) {
-    auto player = components()->getUnique<PlayerComponent>();
+    auto player = entities()->world().lookup("player");
     if (key == 'w' || key == 'a' || key == 's' || key == 'd') {
-        Location oldLocation = entities()->getLocation(player.id);
+        Location oldLocation = entities()->getLocation(player.id());
         Location newLocation = oldLocation;
         updateLocation(key, newLocation);
 
         if (m_action == 'm') {
-            events()->fire<MoveEntityEvent>(player.id, newLocation);
+            events()->fire<MoveEntityEvent>(player.id(), newLocation);
 
             events()->fire<EndTurnEvent>();
         } else if (m_action == 'k') {
             EntityHolder l_entities = map()->findEntitiesAt(newLocation);
             for (EntityId entity : l_entities) {
-                events()->fire<AttackEntityEvent>(player.id, entity);
+                events()->fire<AttackEntityEvent>(player.id(), entity);
             }
             events()->fire<EndTurnEvent>();
         } else if (m_action == 'i') {
@@ -190,11 +190,12 @@ void MapWindow::keyPress(unsigned char key) {
 }
 
 void MapWindow::nextTurn() {
-    auto player = components()->getUnique<PlayerComponent>();
-    if (player.id == 0) {
+    auto player = entities()->world().lookup("player");
+    if (!player.is_valid()) {
         return;
     }
-    HealthComponent* l_health = components()->get<HealthComponent>(player.id);
+    auto l_health =
+        entities()->world().entity(player.id()).get<HealthComponent>();
     if (!l_health) {
         throw std::string("Player must have a health component!");
     }
@@ -202,10 +203,7 @@ void MapWindow::nextTurn() {
     getWidget<ProgressBar>("pgbHunger")->setValue(l_health->hunger);
     getWidget<ProgressBar>("pgbThirst")->setValue(l_health->thirst);
 
-    auto l_messages = components()->get<LogMessageComponent>(player.id);
-    if (!l_messages) {
-        return;
-    }
+    auto l_messages = player.get_mut<LogMessageComponent>();
     ListBox* list = getWidget<ListBox>("lstMessages");
     list->clearItems();
     for (auto message : l_messages->messages) {

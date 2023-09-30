@@ -1,7 +1,6 @@
 #pragma once
 
-#include "component_base.h"
-struct ExperienceComponent : public ComponentBase {
+struct ExperienceComponent {
     unsigned int xp = 0;
     unsigned int level = 0;
 };

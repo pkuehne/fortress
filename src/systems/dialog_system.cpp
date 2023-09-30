@@ -21,16 +21,13 @@ void DialogSystem::registerHandlers() {
 void DialogSystem::handleStartConversationEvent(
     const StartConversationEvent& event) {
 
-    auto player = components()->getUnique<PlayerComponent>();
-    auto component = components()->getUnique<DialogComponent>().component;
-    if (component == nullptr) {
-        component = components()->make<DialogComponent>(player.id);
-    }
+    auto player = entities()->world().lookup("player");
+    auto component = player.get_mut<DialogComponent>();
 
     if (component->inConversationWith != 0) {
         return;
     }
-    if (event.initiatedBy == player.id) {
+    if (event.initiatedBy == player.id()) {
         component->inConversationWith = event.target;
     } else {
         component->inConversationWith = event.initiatedBy;
@@ -44,22 +41,24 @@ void DialogSystem::handleStartConversationEvent(
 
 void DialogSystem::handleChooseDialogOptionEvent(
     const ChooseDialogOptionEvent& event) {
-    auto player = components()->getUnique<DialogComponent>();
+    auto player = entities()->world().lookup("player");
+    auto component = player.get_mut<DialogComponent>();
 
     if (event.option == 1) {
-        player.component->dialogText = "I don't know you well enough to say.";
+        component->dialogText = "I don't know you well enough to say.";
     }
     if (event.option == 2) {
-        player.component->dialogText = "Do I look human to you?";
+        component->dialogText = "Do I look human to you?";
     }
     events()->fire<EndTurnEvent>();
 }
 
 void DialogSystem::handleEndConversationEvent(
     const EndConversationEvent& event) {
-    auto player = components()->getUnique<DialogComponent>();
+    auto player = entities()->world().lookup("player");
+    auto component = player.get_mut<DialogComponent>();
 
-    player.component->inConversationWith = 0;
+    component->inConversationWith = 0;
 }
 
 void DialogSystem::generateDialog(DialogComponent* player) {

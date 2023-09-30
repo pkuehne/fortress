@@ -146,21 +146,25 @@ void DungeonGenerator::createEntitiesFromMap() {
 
 void DungeonGenerator::connectStairs() {
     if (m_level == 0) {
-        components()->make<ConnectorComponent>(m_upStair)->target =
-            m_upStairTarget;
+        entities()->world().entity(m_upStair).set<ConnectorComponent>(
+            {m_upStairTarget});
         m_upStairLink = m_upStair;
     } else {
-        components()->make<ConnectorComponent>(m_upStair)->target =
-            m_prevDownStair;
+        entities()->world().entity(m_upStair).set<ConnectorComponent>(
+            {m_prevDownStair});
     }
     if (m_level == m_maxDepth - 1 && m_downStairTarget) {
-        components()->make<ConnectorComponent>(m_downStair)->target =
-            m_downStairTarget;
+        entities()
+            ->world()
+            .entity(m_downStair)
+            .set<ConnectorComponent>({m_downStairTarget});
         m_downStairLink = m_downStair;
     }
     if (m_level > 0 && m_prevDownStair > 0) {
-        components()->make<ConnectorComponent>(m_prevDownStair)->target =
-            m_upStair;
+        entities()
+            ->world()
+            .entity(m_prevDownStair)
+            .set<ConnectorComponent>({m_upStair});
     }
     m_prevDownStair = m_downStair;
 }

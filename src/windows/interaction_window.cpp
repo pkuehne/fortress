@@ -22,7 +22,7 @@ void InteractionWindow::registerWidgets() {
     unsigned int descriptionWidth = 5;
     const unsigned int commandWidth = 10;
     const unsigned int windowHeight = 10;
-    auto debug = components()->getUnique<DebugComponent>().component;
+    bool debug = entities()->world().lookup("player").has<DebugComponent>();
 
     getWidget<Frame>("frmBase")->setMergeBorders();
 
@@ -35,14 +35,21 @@ void InteractionWindow::registerWidgets() {
     lstEntities->clearItems();
 
     for (EntityId entity : m_inputEntities) {
+        auto e = entities()->world().entity(entity);
+
         ComponentStore store;
-        store.desc = components()->get<DescriptionComponent>(entity);
-        store.open = components()->get<OpenableComponent>(entity);
-        store.drop = components()->get<DroppableComponent>(entity);
-        store.npc = components()->get<NpcComponent>(entity);
+        store.desc = e.has<DescriptionComponent>()
+                         ? e.get_mut<DescriptionComponent>()
+                         : nullptr;
+        store.open = e.has<OpenableComponent>() ? e.get_mut<OpenableComponent>()
+                                                : nullptr;
+        store.drop = e.has<DroppableComponent>()
+                         ? e.get_mut<DroppableComponent>()
+                         : nullptr;
+        store.npc = e.has<NpcComponent>() ? e.get_mut<NpcComponent>() : nullptr;
 
         std::string title = store.desc ? store.desc->title : "<Unknown>";
-        if (debug != nullptr) {
+        if (debug) {
             title.append(" (" + std::to_string(entity) + ")");
         }
         descriptionWidth = title.length() > descriptionWidth ? title.length()
@@ -95,8 +102,8 @@ void InteractionWindow::registerWidgets() {
         ->setCommandCharCallback([&](Label* l) {
             ListBox* lstEntities = this->getWidget<ListBox>("lstEntities");
             EntityId entity = m_entities[lstEntities->getSelection()];
-            auto player = components()->getUnique<PlayerComponent>();
-            events()->fire<StartConversationEvent>(player.id, entity);
+            auto player = entities()->world().lookup("player");
+            events()->fire<StartConversationEvent>(player.id(), entity);
         })
         ->setSensitive(false);
     createWidget<Label>("txtDrop", descriptionWidth, 4)
@@ -105,8 +112,8 @@ void InteractionWindow::registerWidgets() {
         ->setCommandCharCallback([&](Label* l) {
             ListBox* lstEntities = this->getWidget<ListBox>("lstEntities");
             EntityId entity = m_entities[lstEntities->getSelection()];
-            auto player = components()->getUnique<PlayerComponent>();
-            events()->fire<PickupEquipmentEvent>(player.id, entity);
+            auto player = entities()->world().lookup("player");
+            events()->fire<PickupEquipmentEvent>(player.id(), entity);
             events()->fire<EndTurnEvent>();
         })
         ->setSensitive(false);
@@ -117,8 +124,8 @@ void InteractionWindow::registerWidgets() {
             Defer d([this]() { this->events()->fire<EndTurnEvent>(); });
             ListBox* lstEntities = this->getWidget<ListBox>("lstEntities");
             EntityId lock = m_entities[lstEntities->getSelection()];
-            auto player = components()->getUnique<PlayerComponent>();
-            auto equipment = components()->get<EquipmentComponent>(player.id);
+            auto player = entities()->world().lookup("player");
+            auto equipment = player.get<EquipmentComponent>();
             if (!equipment) {
                 events()->fire<AddLogMessageEvent>(
                     "You don't carry any equipement");
@@ -127,8 +134,9 @@ void InteractionWindow::registerWidgets() {
             const ComponentStore& store =
                 m_components[lstEntities->getSelection()];
 
-            for (auto item : equipment->carriedEquipment) {
-                if (components()->get<KeyComponent>(item)) {
+            for (auto e : equipment->carriedEquipment) {
+                auto item = entities()->world().entity(e);
+                if (item.has<KeyComponent>()) {
                     if (store.open->locked) {
                         events()->fire<UnlockEntityEvent>(item, lock);
                     } else {
@@ -157,7 +165,7 @@ void InteractionWindow::registerWidgets() {
             events()->fire<EndTurnEvent>();
         })
         ->setSensitive(true)
-        ->setVisible(debug != nullptr);
+        ->setVisible(debug);
 
     setHeight(windowHeight);
     setWidth(descriptionWidth + commandWidth);

@@ -9,11 +9,11 @@
 
 void Camera::render() {
     if (m_player == 0) {
-        auto player = m_components->getUnique<PlayerComponent>();
-        if (player.id == 0) {
+        auto player = m_entities->world().lookup("player");
+        if (!player.is_valid()) {
             return;
         }
-        m_player = player.id;
+        m_player = player.id();
     }
     Location l_playerLoc = m_entities->getLocation(m_player);
 
@@ -29,7 +29,7 @@ void Camera::render() {
 }
 
 void Camera::renderSprites() {
-    auto player = m_components->get<PlayerComponent>(m_player);
+    auto player = m_entities->world().lookup("player").get<PlayerComponent>();
     auto currentTurn = player->turn;
 
     unsigned int tileZ = m_mapOffsetZ;
@@ -44,13 +44,13 @@ void Camera::renderSprites() {
             Tile& l_tile = m_map->getTile(loc);
             std::map<unsigned int, std::vector<const SpriteComponent*>>
                 l_sprites;
-            for (EntityId entity : l_tile.entities()) {
-                SpriteComponent* l_sprite =
-                    m_components->get<SpriteComponent>(entity);
-                NpcComponent* l_npc = m_components->get<NpcComponent>(entity);
+            for (EntityId entityId : l_tile.entities()) {
+                auto entity = m_entities->world().entity(entityId);
+                auto l_sprite = entity.get<SpriteComponent>();
                 if (!l_sprite)
                     continue;
-                if (l_npc && l_tile.lastVisited() < currentTurn) {
+                if (entity.has<NpcComponent>() &&
+                    l_tile.lastVisited() < currentTurn) {
                     continue;
                 }
                 l_sprites[l_sprite->renderLayer].push_back(l_sprite);
@@ -80,15 +80,16 @@ void Camera::renderSprites() {
 void Camera::renderNpcPaths() {
     Location l_playerLoc = m_entities->getLocation(m_player);
 
-    for (EntityId entity : m_entities->get(l_playerLoc.area)) {
-        Location loc = m_entities->getLocation(entity);
+    for (EntityId entityId : m_entities->get(l_playerLoc.area)) {
+        auto entity = m_entities->world().entity(entityId);
+        Location loc = m_entities->getLocation(entityId);
         int x = loc.x;
         int y = loc.y;
         if (x < m_mapOffsetX || x + m_mapOffsetX > (int)getWidth() ||
             y < m_mapOffsetY || y + m_mapOffsetY > (int)getHeight()) {
             continue;
         }
-        NpcComponent* npc = m_components->get<NpcComponent>(entity);
+        auto npc = entity.get<NpcComponent>();
         if (npc) {
             for (Location stepLoc : npc->path) {
                 drawTile(stepLoc.x - m_mapOffsetX, stepLoc.y - m_mapOffsetY,

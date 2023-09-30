@@ -44,8 +44,8 @@ void MapGeneratorSystem::generate(const GenerateRuralMapEvent& event) {
         if (!success) {
             spdlog::error("Failed to generate a valid map");
         }
-        components()->make<ConnectorComponent>(stair)->target =
-            l_generator.upStairLink();
+        entities()->world().entity(stair).set<ConnectorComponent>(
+            {l_generator.upStairLink()});
     }
     spdlog::info("Placed {} entities!", entities()->getMaxId());
     events()->fire<MapGeneratedEvent>();

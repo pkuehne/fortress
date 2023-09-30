@@ -4,7 +4,6 @@
 #include "event_manager.h"
 #include "graphics_interface.h"
 #include "location.h"
-
 #include <cstdlib>
 #include <memory>
 #include <string>
