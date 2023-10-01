@@ -20,7 +20,6 @@ target_sources (fortresslib
         ${CMAKE_CURRENT_LIST_DIR}/tile.cpp
         ${CMAKE_CURRENT_LIST_DIR}/utility.cpp
         ${CMAKE_CURRENT_LIST_DIR}/window_manager.cpp
-        ${CMAKE_CURRENT_LIST_DIR}/yaml_converter.cpp
     PUBLIC
         ${CMAKE_CURRENT_LIST_DIR}/area_info.h
         ${CMAKE_CURRENT_LIST_DIR}/color.h
@@ -42,5 +41,4 @@ target_sources (fortresslib
         ${CMAKE_CURRENT_LIST_DIR}/tile.h
         ${CMAKE_CURRENT_LIST_DIR}/utility.h
         ${CMAKE_CURRENT_LIST_DIR}/window_manager.h
-        ${CMAKE_CURRENT_LIST_DIR}/yaml_converter.h
     )

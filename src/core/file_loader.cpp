@@ -1,6 +1,8 @@
 #include "file_loader.h"
 #include "area_info.h"
-#include "yaml_converter.h"
+#include "entity_manager.h"
+#include "map_manager.h"
+
 #include <fstream>
 #include <iostream>
 
@@ -18,8 +20,8 @@ void FileLoader::loadState(const std::string& filename) {
     for (unsigned int ii = 0; ii < node.size(); ii++) {
         updateStatus(std::string("Loading Area " + std::to_string(ii)));
         if (ii) {
-            AreaInfo area = node[ii].as<AreaInfo>();
-            m_map->addArea(area, ii);
+            // AreaInfo area = node[ii].as<AreaInfo>();
+            // m_map->addArea(area, ii);
         }
         YAML::Node&& entityNode = node[ii]["entities"];
         decodeEntities(entityNode);
@@ -28,6 +30,5 @@ void FileLoader::loadState(const std::string& filename) {
 
 void FileLoader::decodeEntities(const YAML::Node& node) {
     for (YAML::const_iterator iter = node.begin(); iter != node.end(); ++iter) {
-        m_yaml.decodeEntity(iter->second, iter->first.as<EntityId>());
     }
 }

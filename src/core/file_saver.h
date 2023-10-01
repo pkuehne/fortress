@@ -1,6 +1,6 @@
 #pragma once
 
-#include "yaml_converter.h"
+#include <functional>
 #include <yaml-cpp/yaml.h>
 
 class EntityManager;
@@ -16,8 +16,7 @@ public:
     FileSaver(std::shared_ptr<MapManager> map,
               std::shared_ptr<EntityManager> entities,
               std::shared_ptr<ComponentManager> components)
-        : m_map(map), m_entities(entities), m_components(components),
-          m_yaml(entities, components) {}
+        : m_map(map), m_entities(entities), m_components(components) {}
 
     ~FileSaver() = default;
 
@@ -32,7 +31,6 @@ private:
     std::shared_ptr<MapManager> m_map = nullptr;
     std::shared_ptr<EntityManager> m_entities = nullptr;
     std::shared_ptr<ComponentManager> m_components = nullptr;
-    YamlConverter m_yaml;
     StatusCallback m_cb = [](unsigned int current, unsigned int max,
                              const std::string& status) {};
     unsigned int m_totalSteps = 0;

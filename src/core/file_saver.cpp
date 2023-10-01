@@ -1,4 +1,6 @@
 #include "file_saver.h"
+#include "entity_manager.h"
+#include "map_manager.h"
 #include "yaml_converter.h"
 #include <fstream>
 #include <iostream>
@@ -21,20 +23,19 @@ void FileSaver::saveState(const std::string& filename) {
 void FileSaver::encodeMap(YAML::Node& node) {
     for (auto iter : m_map->getAreas()) {
         node[iter.first] = iter.second;
-        encodeArea(node, iter.first);
+        // encodeArea(node, iter.first);
     }
-    encodeArea(node, 0);
+    // encodeArea(node, 0);
 }
 
 void FileSaver::encodeArea(YAML::Node& node, unsigned int area) {
     updateStatus(std::string("Saving Area " + std::to_string(area)));
-    YAML::Node&& entityNode = node[area]["entities"];
-    encodeEntities(entityNode, area);
+    // YAML::Node&& entityNode = node[area]["entities"];
+    // encodeEntities(entityNode, area);
 }
 
 void FileSaver::encodeEntities(YAML::Node& node, unsigned int area) {
     for (auto entity : m_entities->get(area)) {
         updateStatus(std::string("Saving Entity " + std::to_string(entity)));
-        m_yaml.encodeEntity(node, entity);
     }
 }

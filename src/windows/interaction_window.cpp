@@ -6,7 +6,6 @@
 #include "../core/component_manager.h"
 #include "../core/entity_manager.h"
 #include "../core/event_manager.h"
-#include "../core/yaml_converter.h"
 #include "../widgets/frame.h"
 #include "../widgets/label.h"
 #include "../widgets/listbox.h"
@@ -153,13 +152,13 @@ void InteractionWindow::registerWidgets() {
         ->setText("dump")
         ->setCommandChar(1)
         ->setCommandCharCallback([&](Label* l) {
-            YamlConverter converter(entities(), components());
-            YAML::Node node;
+            // YamlConverter converter(entities(), components());
+            // YAML::Node node;
             ListBox* lstEntities = getWidget<ListBox>("lstEntities");
             EntityId entity = m_entities[lstEntities->getSelection()];
 
-            converter.encodeEntity(node, entity);
-            std::cout << node << std::endl;
+            // converter.encodeEntity(node, entity);
+            // std::cout << node << std::endl;
             events()->fire<AddLogMessageEvent>(
                 "Entity " + std::to_string(entity) + " dumped to stdout");
             events()->fire<EndTurnEvent>();

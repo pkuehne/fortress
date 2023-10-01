@@ -1,4 +1,5 @@
 #include "load_window.h"
+#include "../core/event_manager.h"
 #include "../core/file_loader.h"
 #include "../widgets/frame.h"
 #include "../widgets/label.h"
