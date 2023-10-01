@@ -115,7 +115,7 @@ void MapWindow::registerWidgets() {
         ->setSensitive(false);
 
     createWidget<Camera>("camCamera", 0, m_messagesHeight)
-        ->setManagerRefs(entities(), components(), map())
+        ->setManagerRefs(entities(), map())
         ->setHeightStretchMargin(0)
         ->setWidthStretchMargin(m_sidebarWidth);
 

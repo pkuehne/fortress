@@ -9,12 +9,10 @@
 
 void Window::initialise(std::shared_ptr<GraphicsInterface> graphics,
                         std::shared_ptr<EventManager> events,
-                        std::shared_ptr<ComponentManager> components,
                         std::shared_ptr<EntityManager> entities,
                         std::shared_ptr<MapManager> map) {
     m_graphics = graphics;
     m_events = events;
-    m_components = components;
     m_entities = entities;
     m_map = map;
     m_baseWidget = createWidget<Frame>("frmBase", 0, 0)->setBorder(true);

@@ -25,10 +25,7 @@ public:
         componentManager->make<SpriteComponent>(npc);
     }
 
-    void SetUp() {
-        system.initialise(eventManager, componentManager, entityManager,
-                          mapManager);
-    }
+    void SetUp() { system.initialise(eventManager, entityManager, mapManager); }
     WindowManagerMock windowManager;
     std::shared_ptr<EventManagerProxy> eventManager =
         std::make_shared<EventManagerProxy>();

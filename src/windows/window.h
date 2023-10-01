@@ -6,7 +6,6 @@
 
 class GraphicsInterface;
 class EventManager;
-class ComponentManager;
 class EntityManager;
 class MapManager;
 
@@ -31,12 +30,9 @@ public:
 
     void initialise(std::shared_ptr<GraphicsInterface> graphics,
                     std::shared_ptr<EventManager> events,
-                    std::shared_ptr<ComponentManager> components,
                     std::shared_ptr<EntityManager> entities,
                     std::shared_ptr<MapManager> map);
-    std::shared_ptr<ComponentManager> components() const {
-        return m_components;
-    }
+
     std::shared_ptr<EntityManager> entities() const { return m_entities; }
     std::shared_ptr<EventManager> events() const { return m_events; }
     std::shared_ptr<MapManager> map() const { return m_map; }
@@ -117,7 +113,6 @@ private:
     int m_buttons[MAX_BUTTONS] = {0};
     std::shared_ptr<GraphicsInterface> m_graphics = nullptr;
     std::shared_ptr<EventManager> m_events = nullptr;
-    std::shared_ptr<ComponentManager> m_components = nullptr;
     std::shared_ptr<EntityManager> m_entities = nullptr;
     std::shared_ptr<MapManager> m_map = nullptr;
     int m_xOffset = 0;

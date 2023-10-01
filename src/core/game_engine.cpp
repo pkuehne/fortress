@@ -17,8 +17,7 @@ GameEngine::GameEngine(std::shared_ptr<GraphicsInterface> a_graphics)
     : m_graphics(a_graphics), m_eventManager(std::make_shared<EventManager>()),
       m_windowManager(std::make_unique<WindowManager>()),
       m_map(std::make_shared<MapManager>()),
-      m_entities(std::make_shared<EntityManager>()),
-      m_components(std::make_shared<ComponentManager>()) {
+      m_entities(std::make_shared<EntityManager>()) {
     //
 }
 
@@ -53,14 +52,13 @@ void GameEngine::initialise() {
     });
 
     // Initialise Managers
-    windows()->initialise(graphics(), events(), components(), entities(),
-                          map());
+    windows()->initialise(graphics(), events(), entities(), map());
 
     entities()->initialise(events());
 
     // Initialise Systems
     for (unsigned int ii = 0; ii < m_systems.size(); ii++) {
-        m_systems[ii]->initialise(events(), components(), entities(), map());
+        m_systems[ii]->initialise(events(), entities(), map());
     }
 
     graphics()->setKeyDownFunc([this](unsigned char key, int x, int y) {

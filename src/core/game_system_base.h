@@ -16,7 +16,6 @@ public:
     virtual ~GameSystemBase() {}
 
     virtual void initialise(std::shared_ptr<EventManager> events,
-                            std::shared_ptr<ComponentManager> components,
                             std::shared_ptr<EntityManager> entities,
                             std::shared_ptr<MapManager> map);
     virtual void registerHandlers() {}
@@ -24,9 +23,6 @@ public:
     virtual void onTurn() {}
 
 protected:
-    std::shared_ptr<ComponentManager> components() const {
-        return m_components;
-    }
     std::shared_ptr<EntityManager> entities() const { return m_entities; }
     std::shared_ptr<EventManager> events() const { return m_events; }
     std::shared_ptr<MapManager> map() const { return m_map; }
@@ -35,7 +31,6 @@ protected:
 
 private:
     std::shared_ptr<EventManager> m_events = nullptr;
-    std::shared_ptr<ComponentManager> m_components = nullptr;
     std::shared_ptr<EntityManager> m_entities = nullptr;
     std::shared_ptr<MapManager> m_map = nullptr;
 };

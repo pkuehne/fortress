@@ -5,7 +5,6 @@
 
 class EntityManager;
 class MapManager;
-class ComponentManager;
 
 typedef std::function<void(unsigned int current, unsigned int max,
                            const std::string& status)>
@@ -14,9 +13,8 @@ typedef std::function<void(unsigned int current, unsigned int max,
 class FileLoader {
 public:
     explicit FileLoader(std::shared_ptr<MapManager> map,
-                        std::shared_ptr<EntityManager> entities,
-                        std::shared_ptr<ComponentManager> components)
-        : m_map(map), m_entities(entities), m_components(components) {}
+                        std::shared_ptr<EntityManager> entities)
+        : m_map(map), m_entities(entities) {}
 
     ~FileLoader() = default;
 
@@ -29,7 +27,6 @@ public:
 private:
     std::shared_ptr<MapManager> m_map = nullptr;
     std::shared_ptr<EntityManager> m_entities = nullptr;
-    std::shared_ptr<ComponentManager> m_components = nullptr;
 
     StatusCallback m_cb = [](unsigned int current, unsigned int max,
                              const std::string& status) {};

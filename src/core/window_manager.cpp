@@ -10,8 +10,7 @@
 
 void WindowManager::registerHandlers() {
     auto registerHandler = [this](const RegisterWindowEvent& event) {
-        event.window->initialise(graphics(), events(), components(), entities(),
-                                 map());
+        event.window->initialise(graphics(), events(), entities(), map());
 
         switch (event.action) {
             case RegisterWindowEvent::WindowAction::Add:
@@ -42,12 +41,10 @@ void WindowManager::removeWindow(Window& win) { win.destroy(); }
 
 void WindowManager::initialise(std::shared_ptr<GraphicsInterface> graphics,
                                std::shared_ptr<EventManager> events,
-                               std::shared_ptr<ComponentManager> components,
                                std::shared_ptr<EntityManager> entities,
                                std::shared_ptr<MapManager> map) {
     m_graphics = graphics;
     m_events = events;
-    m_components = components;
     m_entities = entities;
     m_map = map;
     registerHandlers();

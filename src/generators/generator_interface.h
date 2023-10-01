@@ -5,7 +5,6 @@
 
 class EntityManager;
 class MapManager;
-class ComponentManager;
 class EventManager;
 
 class GeneratorInterface {
@@ -16,11 +15,9 @@ public:
     virtual void createEntitiesFromMap() = 0;
 
     virtual void initialise(std::shared_ptr<EventManager> events,
-                            std::shared_ptr<ComponentManager> components,
                             std::shared_ptr<EntityManager> entities,
                             std::shared_ptr<MapManager> map) {
         m_events = events;
-        m_components = components;
         m_entities = entities;
         m_map = map;
     }
@@ -60,9 +57,6 @@ public:
     virtual unsigned int& area() { return m_area; }
 
 protected:
-    std::shared_ptr<ComponentManager> components() const {
-        return m_components;
-    }
     std::shared_ptr<EntityManager> entities() const { return m_entities; }
     std::shared_ptr<EventManager> events() const { return m_events; }
     std::shared_ptr<MapManager> map() const { return m_map; }
@@ -77,7 +71,6 @@ protected:
 
 private:
     std::shared_ptr<EventManager> m_events = nullptr;
-    std::shared_ptr<ComponentManager> m_components = nullptr;
     std::shared_ptr<EntityManager> m_entities = nullptr;
     std::shared_ptr<MapManager> m_map = nullptr;
 };

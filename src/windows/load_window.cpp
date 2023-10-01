@@ -78,7 +78,7 @@ void LoadWindow::loadState(const std::string& filename) {
 
     // Kick off background load
     std::thread update([=]() {
-        FileLoader loader(this->map(), this->entities(), this->components());
+        FileLoader loader(this->map(), this->entities());
         loader.setStatusCallback([=](unsigned int current, unsigned int max,
                                      const std::string& status) {
             lblStatus->setText(status);

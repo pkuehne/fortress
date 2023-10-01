@@ -3,17 +3,12 @@
 
 class Location;
 class MapManager;
-class ComponentManager;
 
 class LosAlgorithm {
 public:
     LosAlgorithm() {}
     ~LosAlgorithm() {}
-    void initialise(std::shared_ptr<MapManager> map,
-                    std::shared_ptr<ComponentManager> components) {
-        m_map = map;
-        m_components = components;
-    }
+    void initialise(std::shared_ptr<MapManager> map) { m_map = map; }
     bool hasLos(const Location& start, const Location& end);
 
 private:
@@ -21,5 +16,4 @@ private:
 
 private:
     std::shared_ptr<MapManager> m_map;
-    std::shared_ptr<ComponentManager> m_components;
 };

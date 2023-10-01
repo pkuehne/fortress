@@ -13,7 +13,7 @@ void MapGeneratorSystem::generate(const GenerateRuralMapEvent& event) {
     unsigned int startArea = map()->createArea(event.width, event.height, 1);
 
     RuralGenerator rural;
-    rural.initialise(events(), components(), entities(), map());
+    rural.initialise(events(), entities(), map());
     rural.mapHeight() = event.height;
     rural.mapWidth() = event.width;
     rural.area() = startArea;
@@ -27,7 +27,7 @@ void MapGeneratorSystem::generate(const GenerateRuralMapEvent& event) {
 
         spdlog::info("Generating area: {}", area);
         DungeonGenerator l_generator;
-        l_generator.initialise(events(), components(), entities(), map());
+        l_generator.initialise(events(), entities(), map());
         l_generator.maxDepth() = event.depth;
         l_generator.mapHeight() = event.height;
         l_generator.mapWidth() = event.width;
